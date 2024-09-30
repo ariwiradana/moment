@@ -23,7 +23,7 @@ const Hero: FC<Props> = (props) => {
         }}
         speed={5000}
         effect={"fade"}
-        className="w-full h-[90vh]"
+        className="w-full h-[95vh]"
         spaceBetween={0}
         slidesPerView={1}
         onSlideChange={() => console.log("slide change")}
@@ -52,7 +52,7 @@ const Hero: FC<Props> = (props) => {
         </SwiperSlide>
       </Swiper>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10"></div>
+      <div className="absolute inset-x-0 top-0 h-[95vh] bg-gradient-to-b from-transparent via-transparent to-black z-10"></div>
       <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-10 pb-24 z-20">
         <p className={`text-white text-base mb-1 ${comforta.className}`}>
           The Wedding
