@@ -1,8 +1,9 @@
 import Layout from "@/components/layout";
 import Cover from "@/components/theme1/cover";
 import Hero from "@/components/theme1/hero";
+import useApp from "@/hooks/theme1/useApp";
 import { GetServerSideProps } from "next";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 
 interface Props {
   recipient: string;
@@ -12,29 +13,25 @@ const MainPage: FC<Props> = (props) => {
   const brides = "Ari & Juli";
   const location = "Sukawati";
   const dateEvent = "2024-10-04";
-  const images = [
-    "https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/digital-invitation/wendy/pexels-reneterp-5837408-R8eUDebD2uM7wzHtphATdL3QCCjKzQ.jpg",
-    "https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/digital-invitation/wendy/pexels-trungnguyenphotog-2959192-e9X5heORr1Gf9xcYSVk0jQDuBqC68G.jpg",
-  ];
 
-  const [open, setOpen] = useState<boolean>(false);
+  const { state, actions } = useApp(dateEvent, "digital-invitation/wendy");
 
   return (
     <Layout pageTitle={props.recipient}>
       <Cover
-        images={images}
-        open={open}
-        setOpen={setOpen}
+        state={state}
+        actions={actions}
         brides={brides}
         recipient={props.recipient}
       />
-      {open && (
+      {state.open && (
         <>
           <Hero
-            images={images}
             location={location}
             brides={brides}
             dateEvent={dateEvent}
+            state={state}
+            actions={actions}
           />
         </>
       )}

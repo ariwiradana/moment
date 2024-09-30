@@ -2,19 +2,19 @@ import React, { FC } from "react";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import useHero from "@/hooks/theme1/useHero";
 import moment from "moment";
 import ImageShimmer from "../image.shimmer";
+import { UseApp } from "@/hooks/theme1/useApp";
 
 interface Props {
   dateEvent: string;
   brides: string;
   location: string;
-  images: string[];
+  state: UseApp["state"];
+  actions: UseApp["actions"];
 }
 
 const Hero: FC<Props> = (props) => {
-  const { state } = useHero(props.dateEvent);
   return (
     <div className="relative w-full max-w-screen-md h-[95dvh]">
       <Swiper
@@ -31,7 +31,7 @@ const Hero: FC<Props> = (props) => {
         onSwiper={(swiper) => console.log(swiper)}
         modules={[EffectFade, Autoplay]}
       >
-        {props.images.map((image, index) => (
+        {props.state.blobs.map((blob, index) => (
           <SwiperSlide
             className="relative w-full h-full"
             key={`hero-img-${index}`}
@@ -42,14 +42,14 @@ const Hero: FC<Props> = (props) => {
               priority
               sizes="720px"
               className="object-cover"
-              src={image}
+              src={blob.url}
             />
           </SwiperSlide>
         ))}
       </Swiper>
 
       <div className="absolute inset-x-0 top-0 h-[95dvh] bg-gradient-to-b from-transparent to-black z-10"></div>
-      <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-10 pb-24 z-20">
+      <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 pb-20 z-20">
         <p className={`text-white text-base mb-1 ${comforta.className}`}>
           The Wedding
         </p>
@@ -69,25 +69,25 @@ const Hero: FC<Props> = (props) => {
           <div className="flex items-center gap-x-4">
             <div className="flex items-center flex-col">
               <h2 className={`${comforta.className} text-xl`}>
-                {state.countdown.days}
+                {props.state.countdown.days}
               </h2>
               <p className={`${montserrat.className} text-xs`}>Hari</p>
             </div>
             <div className="flex items-center flex-col">
               <h2 className={`${comforta.className} text-xl`}>
-                {state.countdown.hours}
+                {props.state.countdown.hours}
               </h2>
               <p className={`${montserrat.className} text-xs`}>Jam</p>
             </div>
             <div className="flex items-center flex-col">
               <h2 className={`${comforta.className} text-xl`}>
-                {state.countdown.minutes}
+                {props.state.countdown.minutes}
               </h2>
               <p className={`${montserrat.className} text-xs`}>Menit</p>
             </div>
             <div className="flex items-center flex-col">
               <h2 className={`${comforta.className} text-xl`}>
-                {state.countdown.seconds}
+                {props.state.countdown.seconds}
               </h2>
               <p className={`${montserrat.className} text-xs`}>Detik</p>
             </div>

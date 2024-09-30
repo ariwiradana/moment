@@ -5,20 +5,20 @@ import { MdArrowOutward } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import ImageShimmer from "../image.shimmer";
+import { UseApp } from "@/hooks/theme1/useApp";
 
 interface Props {
   recipient: string;
   brides: string;
-  open: boolean;
-  images: string[];
-  setOpen: (isOpen: boolean) => void;
+  state: UseApp["state"];
+  actions: UseApp["actions"];
 }
 
 const Cover: FC<Props> = (props) => {
   return (
     <div
       className={`w-full max-w-screen-md h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 ${
-        props.open ? "-top-full invisible opacity-0" : "top-0 visible"
+        props.state.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
       <Swiper
@@ -33,7 +33,7 @@ const Cover: FC<Props> = (props) => {
         slidesPerView={1}
         modules={[EffectFade, Autoplay]}
       >
-        {props.images.map((image, index) => (
+        {props.state.blobs.map((blob, index) => (
           <SwiperSlide
             className="relative w-full h-full"
             key={`cover-img-${index}`}
@@ -44,14 +44,14 @@ const Cover: FC<Props> = (props) => {
               priority
               sizes="720px"
               className="object-cover"
-              src={image}
+              src={blob.url}
             />
           </SwiperSlide>
         ))}
       </Swiper>
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black z-10"></div>
-      <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-10 pb-24 z-20">
+      <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 pb-20 z-20">
         <p className={`text-white text-base mb-1 ${comforta.className}`}>
           The Wedding
         </p>
@@ -70,7 +70,7 @@ const Cover: FC<Props> = (props) => {
         </h2>
         <div className="mt-4">
           <Button
-            onClick={() => props.setOpen(true)}
+            onClick={props.actions.handleOpenCover}
             icon={<MdArrowOutward />}
             title="Buka Undangan"
           />
