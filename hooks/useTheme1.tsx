@@ -14,7 +14,7 @@ interface Blobs {
   url: string;
 }
 
-export interface UseApp {
+export interface UseTheme1 {
   state: {
     countdown: Countdown;
     open: boolean;
@@ -25,7 +25,7 @@ export interface UseApp {
   };
 }
 
-const useApp = (dateEvent: string, prefix: string): UseApp => {
+const useTheme1 = (dateEvent: string, prefix: string): UseTheme1 => {
   const [countdown, setCountdown] = useState<Countdown>({
     days: 0,
     hours: 0,
@@ -75,4 +75,4 @@ const useApp = (dateEvent: string, prefix: string): UseApp => {
   };
 };
 
-export default useApp;
+export default useTheme1;

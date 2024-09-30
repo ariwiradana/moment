@@ -1,17 +1,17 @@
 import React, { FC } from "react";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
-import Button from "./elements/button";
+import Button from "../elements/button";
 import { MdArrowOutward } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import ImageShimmer from "../image.shimmer";
-import { UseApp } from "@/hooks/theme1/useApp";
+import ImageShimmer from "../../image.shimmer";
+import { UseTheme1 } from "@/hooks/useTheme1";
 
 interface Props {
   recipient: string;
   brides: string;
-  state: UseApp["state"];
-  actions: UseApp["actions"];
+  state: UseTheme1["state"];
+  actions: UseTheme1["actions"];
 }
 
 const Cover: FC<Props> = (props) => {
@@ -57,7 +57,9 @@ const Cover: FC<Props> = (props) => {
         >
           The Wedding of
         </p>
-        <h1 className={`${tangerine.className} text-6xl lg:text-7xl text-white`}>
+        <h1
+          className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
+        >
           {props.brides}
         </h1>
         <p
@@ -73,7 +75,7 @@ const Cover: FC<Props> = (props) => {
         <div className="mt-4 lg:mt-6">
           <Button
             onClick={props.actions.handleOpenCover}
-            icon={<MdArrowOutward className="lg:text-lg"/>}
+            icon={<MdArrowOutward className="lg:text-lg" />}
             title="Buka Undangan"
           />
         </div>

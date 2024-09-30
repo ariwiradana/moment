@@ -1,7 +1,5 @@
-import Layout from "@/components/layout";
-import Content from "@/components/theme1/content";
-import Cover from "@/components/theme1/cover";
-import useApp from "@/hooks/theme1/useApp";
+import Page from "@/components/theme1/page";
+import useTheme1 from "@/hooks/useTheme1";
 import { Brides } from "@/lib/types";
 import { GetServerSideProps } from "next";
 import React, { FC } from "react";
@@ -39,30 +37,18 @@ const MainPage: FC<Props> = (props) => {
       },
     },
   };
-  const bridesNickname = `${brides.male.nickname} & ${brides.female.nickname}`;
 
-  const { state, actions } = useApp(dateEvent, "wendy");
+  const { state, actions } = useTheme1(dateEvent, "wendy");
 
   return (
-    <Layout pageTitle={bridesNickname}>
-      <Cover
-        state={state}
-        actions={actions}
-        brides={bridesNickname}
-        recipient={props.recipient}
-      />
-      {state.open && (
-        <>
-          <Content
-            location={location}
-            brides={brides}
-            dateEvent={dateEvent}
-            state={state}
-            actions={actions}
-          />
-        </>
-      )}
-    </Layout>
+    <Page
+      actions={actions}
+      brides={brides}
+      dateEvent={dateEvent}
+      location={location}
+      recipient={props.recipient}
+      state={state}
+    />
   );
 };
 

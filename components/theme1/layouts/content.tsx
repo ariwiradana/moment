@@ -9,17 +9,17 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import moment from "moment";
-import ImageShimmer from "../image.shimmer";
-import { UseApp } from "@/hooks/theme1/useApp";
-import Title from "./elements/title";
+import ImageShimmer from "../../image.shimmer";
+import Title from "../elements/title";
 import { Brides } from "@/lib/types";
+import { UseTheme1 } from "@/hooks/useTheme1";
 
 interface Props {
   dateEvent: string;
   brides: Brides;
   location: string;
-  state: UseApp["state"];
-  actions: UseApp["actions"];
+  state: UseTheme1["state"];
+  actions: UseTheme1["actions"];
 }
 
 const Content: FC<Props> = (props) => {
