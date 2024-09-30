@@ -164,7 +164,7 @@ const Content: FC<Props> = (props) => {
               </p>
             </div>
 
-            <div className="flex flex-col justify-center items-center mt-12 gap-10">
+            <div className="flex flex-col justify-center items-center mt-12 gap-10 md:gap-16">
               <div className="flex flex-col justify-center items-center">
                 <div className="w-60 h-60 rounded-full bg-gray-200 relative">
                   <ImageShimmer
