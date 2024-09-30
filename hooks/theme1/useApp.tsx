@@ -34,7 +34,7 @@ const useApp = (targetDate: string, prefix: string): UseApp => {
   });
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, error } = useSWR(`/api/images?pathname=${prefix}`, fetcher);
+  const { data } = useSWR(`/api/images?pathname=${prefix}`, fetcher);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -10,7 +10,7 @@ interface Props {
 }
 
 const MainPage: FC<Props> = (props) => {
-  const brides = "Ari & Juli";
+  const brides = "Wahyu & Eka";
   const location = "Sukawati";
   const dateEvent = "2024-10-04";
 
@@ -33,6 +33,7 @@ const MainPage: FC<Props> = (props) => {
             state={state}
             actions={actions}
           />
+          <div className="bg-gradient-to-b from-transparent to-theme1-primary w-full h-[40vh] -mt-32"></div>
         </>
       )}
     </Layout>

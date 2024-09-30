@@ -17,16 +17,16 @@ interface Props {
 const Cover: FC<Props> = (props) => {
   return (
     <div
-      className={`w-full max-w-screen-md h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 ${
+      className={`w-full h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 ${
         props.state.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
       <Swiper
         loop
         autoplay={{
-          delay: 5000,
+          delay: 4000,
         }}
-        speed={5000}
+        speed={4000}
         effect={"fade"}
         className="w-full h-dvh"
         spaceBetween={0}
@@ -42,8 +42,8 @@ const Cover: FC<Props> = (props) => {
               fill
               alt={`cover-img-${index}`}
               priority
-              sizes="720px"
-              className="object-cover"
+              sizes="1080px"
+              className={`object-cover`}
               src={blob.url}
             />
           </SwiperSlide>
@@ -51,27 +51,29 @@ const Cover: FC<Props> = (props) => {
       </Swiper>
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black z-10"></div>
-      <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 pb-20 z-20">
-        <p className={`text-white text-base mb-1 ${comforta.className}`}>
-          The Wedding
+      <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-32 pb-20 md:pb-32 z-20">
+        <p
+          className={`text-white text-sm lg:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
+        >
+          The Wedding of
         </p>
-        <h1 className={`${tangerine.className} text-6xl text-white`}>
+        <h1 className={`${tangerine.className} text-6xl lg:text-7xl text-white`}>
           {props.brides}
         </h1>
         <p
-          className={`text-white mt-2 font-light text-sm ${montserrat.className}`}
+          className={`text-white mt-2 lg:mt-4 font-light text-sm lg:text-base ${montserrat.className}`}
         >
           Yth. Bpk/Ibu/Saudara/i
         </p>
         <h2
-          className={`text-white font-normal text-2xl mt-1 ${montserrat.className}`}
+          className={`text-white font-normal text-2xl lg:text-3xl mt-1 ${montserrat.className}`}
         >
           {props.recipient}
         </h2>
-        <div className="mt-4">
+        <div className="mt-4 lg:mt-6">
           <Button
             onClick={props.actions.handleOpenCover}
-            icon={<MdArrowOutward />}
+            icon={<MdArrowOutward className="lg:text-lg"/>}
             title="Buka Undangan"
           />
         </div>

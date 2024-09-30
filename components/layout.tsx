@@ -13,9 +13,7 @@ const Layout: FC<Props> = (props) => {
         <title>{props.pageTitle}</title>
       </Head>
       <div className="w-full h-full min-h-screen bg-white">
-        <div className="max-w-screen-md overflow-hidden">
-          <div>{props.children}</div>
-        </div>
+        {props.children}
       </div>
     </>
   );
