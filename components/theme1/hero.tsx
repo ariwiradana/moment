@@ -10,6 +10,7 @@ interface Props {
   dateEvent: string;
   brides: string;
   location: string;
+  images: string[];
 }
 
 const Hero: FC<Props> = (props) => {
@@ -30,26 +31,21 @@ const Hero: FC<Props> = (props) => {
         onSwiper={(swiper) => console.log(swiper)}
         modules={[EffectFade, Autoplay]}
       >
-        <SwiperSlide className="relative w-full h-full">
-          <ImageShimmer
-            fill
-            alt="cover-image"
-            priority
-            sizes="1080px"
-            className="object-cover"
-            src="https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/destination/images/image_1727370257816_ol1y6zy3-aXZByTlvApuMPlUcWJXBwZqNUVDRIr.jpeg"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="relative w-full h-full">
-          <ImageShimmer
-            fill
-            alt="cover-image"
-            priority
-            sizes="1080px"
-            className="object-cover"
-            src="https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/destination/images/image_1727370262861_t38ox9g8-MaKdHpxJBIdPwNF6TSsXqGc5iScswe.jpeg"
-          />
-        </SwiperSlide>
+        {props.images.map((image, index) => (
+          <SwiperSlide
+            className="relative w-full h-full"
+            key={`hero-img-${index}`}
+          >
+            <ImageShimmer
+              fill
+              alt={`hero-img-${index}`}
+              priority
+              sizes="720px"
+              className="object-cover"
+              src={image}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       <div className="absolute inset-x-0 top-0 h-[95dvh] bg-gradient-to-b from-transparent via-transparent to-black z-10"></div>

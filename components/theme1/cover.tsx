@@ -10,6 +10,7 @@ interface Props {
   recipient: string;
   brides: string;
   open: boolean;
+  images: string[];
   setOpen: (isOpen: boolean) => void;
 }
 
@@ -32,26 +33,21 @@ const Cover: FC<Props> = (props) => {
         slidesPerView={1}
         modules={[EffectFade, Autoplay]}
       >
-        <SwiperSlide className="relative w-full h-full">
-          <ImageShimmer
-            fill
-            alt="cover-image"
-            priority
-            sizes="1080px"
-            className="object-cover"
-            src="https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/destination/images/image_1727370257816_ol1y6zy3-aXZByTlvApuMPlUcWJXBwZqNUVDRIr.jpeg"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="relative w-full h-full">
-          <ImageShimmer
-            fill
-            alt="cover-image"
-            priority
-            sizes="1080px"
-            className="object-cover"
-            src="https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/destination/images/image_1727370262861_t38ox9g8-MaKdHpxJBIdPwNF6TSsXqGc5iScswe.jpeg"
-          />
-        </SwiperSlide>
+        {props.images.map((image, index) => (
+          <SwiperSlide
+            className="relative w-full h-full"
+            key={`cover-img-${index}`}
+          >
+            <ImageShimmer
+              fill
+              alt={`cover-img-${index}`}
+              priority
+              sizes="720px"
+              className="object-cover"
+              src={image}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black z-10"></div>
