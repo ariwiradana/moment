@@ -11,7 +11,7 @@ interface Props {
 const MainPage: FC<Props> = (props) => {
   const brides = "Ari & Juli";
   const location = "Sukawati";
-  const dateEvent = "2024-10-04 10:00 AM";
+  const dateEvent = "2024-10-04";
 
   const [open, setOpen] = useState<boolean>(false);
 
