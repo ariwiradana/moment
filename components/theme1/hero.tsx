@@ -48,7 +48,7 @@ const Hero: FC<Props> = (props) => {
         ))}
       </Swiper>
 
-      <div className="absolute inset-x-0 top-0 h-[95dvh] bg-gradient-to-b from-transparent via-transparent to-black z-10"></div>
+      <div className="absolute inset-x-0 top-0 h-[95dvh] bg-gradient-to-b from-transparent to-black z-10"></div>
       <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-10 pb-24 z-20">
         <p className={`text-white text-base mb-1 ${comforta.className}`}>
           The Wedding
