@@ -1,4 +1,11 @@
-import { Comfortaa, Tangerine, Montserrat } from "next/font/google";
+import {
+  Comfortaa,
+  Tangerine,
+  Montserrat,
+  Alex_Brush,
+  Playfair_Display,
+  Satisfy,
+} from "next/font/google";
 
 export const tangerine = Tangerine({
   subsets: ["latin"],
@@ -10,5 +17,19 @@ export const comforta = Comfortaa({
 });
 
 export const montserrat = Montserrat({
+  subsets: ["latin"],
+});
+
+export const alexbrush = Alex_Brush({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+export const satisfy = Satisfy({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+export const playfair = Playfair_Display({
   subsets: ["latin"],
 });

@@ -10,26 +10,22 @@ interface Props {
 }
 
 const MainPage: FC<Props> = (props) => {
-  const brides = "Wahyu & Eka";
-  const location = "Sukawati";
-  const dateEvent = "2024-10-04";
-
-  const { state, actions } = useApp(dateEvent, "digital-invitation/wendy");
+  const { state, actions } = useApp();
 
   return (
-    <Layout pageTitle={brides}>
+    <Layout pageTitle={state.bridesNickname}>
       <Cover
         state={state}
         actions={actions}
-        brides={brides}
+        brides={state.bridesNickname}
         recipient={props.recipient}
       />
       {state.open && (
         <>
           <Content
-            location={location}
-            brides={brides}
-            dateEvent={dateEvent}
+            location={state.location}
+            brides={state.brides}
+            dateEvent={state.dateEvent}
             state={state}
             actions={actions}
           />
