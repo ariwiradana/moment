@@ -13,9 +13,10 @@ interface Props {
 
 const Cover: FC<Props> = (props) => {
   const [open, setOpen] = useState<boolean>(false);
+
   return (
     <div
-      className={`w-full max-w-screen-md h-screen fixed inset-x-0 z-30 transition-all ease-in-out delay-100 duration-1000 ${
+      className={`w-full max-w-screen-md h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-100 duration-1000 ${
         open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
@@ -26,7 +27,7 @@ const Cover: FC<Props> = (props) => {
         }}
         speed={5000}
         effect={"fade"}
-        className="w-full h-screen"
+        className="w-full h-dvh"
         spaceBetween={0}
         slidesPerView={1}
         modules={[EffectFade, Autoplay]}
