@@ -10,7 +10,7 @@ const Button: FC<Props> = (props) => {
   return (
     <button
       {...props}
-      className={`${comforta.className} text-white bg-theme1-primary pl-4 pr-3 py-3 rounded-full text-sm flex items-center gap-x-3 relative overflow-hidden bg-opacity-70`}
+      className={`${comforta.className} text-white bg-theme1-primary pl-4 pr-3 py-3 rounded-full text-sm flex items-center gap-x-3 relative overflow-hidden`}
     >
       <span className="absolute inset-0 bg-[url('/images/pattern2.png')] bg-cover bg-no-repeat opacity-10"></span>
       <span className="text-xs">{props.title}</span>
