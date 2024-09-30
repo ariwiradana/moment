@@ -9,15 +9,15 @@ import { Autoplay, EffectFade } from "swiper/modules";
 interface Props {
   recipient: string;
   brides: string;
+  open: boolean;
+  setOpen: (isOpen: boolean) => void;
 }
 
 const Cover: FC<Props> = (props) => {
-  const [open, setOpen] = useState<boolean>(false);
-
   return (
     <div
       className={`w-full max-w-screen-md h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-100 duration-1000 ${
-        open ? "-top-full invisible opacity-0" : "top-0 visible"
+        props.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
       <Swiper
@@ -74,7 +74,7 @@ const Cover: FC<Props> = (props) => {
         </h2>
         <div className="mt-4">
           <Button
-            onClick={() => setOpen(true)}
+            onClick={() => props.setOpen(true)}
             icon={<MdArrowOutward />}
             title="Buka Undangan"
           />
