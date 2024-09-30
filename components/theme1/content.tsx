@@ -26,14 +26,14 @@ const Content: FC<Props> = (props) => {
   return (
     <>
       <section>
-        <div className="relative w-full h-[110vh] lg:h-[120vh]">
+        <div className="relative w-full h-[115dvh] md:h-[105vh] lg:h-[120dvh]">
           <Swiper
             loop
             autoplay={{
               delay: 5000,
             }}
             speed={10000}
-            className="w-full h-[110vh] lg:h-[120vh]"
+            className="w-full h-[115dvh] md:h-[105vh] lg:h-[120dvh]"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay]}
@@ -55,10 +55,10 @@ const Content: FC<Props> = (props) => {
             ))}
           </Swiper>
 
-          <div className="absolute inset-x-0 top-0 h-[110vh] lg:h-[120vh] bg-gradient-to-b from-transparent to-black z-10"></div>
-          <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-32 pb-36 md:pb-[32vh] z-20">
+          <div className="absolute inset-x-0 top-0 h-[115dvh] md:h-[105vh] lg:h-[120dvh] bg-gradient-to-b from-transparent to-black z-10"></div>
+          <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-48 md:pb-44 lg:pb-[32vh] z-20">
             <p
-              className={`text-white text-sm lg:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
+              className={`text-white text-sm md:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
             >
               The Wedding of
             </p>
@@ -68,7 +68,7 @@ const Content: FC<Props> = (props) => {
               {props.brides.male.nickname} & {props.brides.female.nickname}
             </h1>
             <div
-              className={`text-white mt-2 lg:mt-4 font-light text-sm lg:text-base flex items-center gap-x-3 ${montserrat.className}`}
+              className={`text-white mt-2 lg:mt-4 font-light text-sm md:text-base flex items-center gap-x-3 ${montserrat.className}`}
             >
               {props.location}{" "}
               <span>
@@ -83,7 +83,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.days}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
                   >
                     Hari
                   </p>
@@ -93,7 +93,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.hours}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
                   >
                     Jam
                   </p>
@@ -103,7 +103,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.minutes}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
                   >
                     Menit
                   </p>
@@ -113,7 +113,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.seconds}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
                   >
                     Detik
                   </p>
@@ -125,7 +125,7 @@ const Content: FC<Props> = (props) => {
         </div>
       </section>
       <section>
-        <div className="h-[40vh] bg-white relative z-10">
+        <div className="bg-white relative z-10 h-full">
           <div className="transform -translate-y-16 lg:-translate-y-48 relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -151,11 +151,11 @@ const Content: FC<Props> = (props) => {
             </svg>
           </div>
 
-          <div className="absolute top-0 w-full p-6">
+          <div className="w-full h-full p-6 md:px-12 -mt-20 lg:-mt-56 relative z-40">
             <div>
               <Title title="Om Swastiastu" />
               <p
-                className={`${playfair.className} text-base text-center mt-2 leading-7`}
+                className={`${playfair.className} text-base md:text-lg text-center mt-2 leading-7`}
               >
                 Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
                 Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
@@ -180,34 +180,34 @@ const Content: FC<Props> = (props) => {
                 </div>
                 <div className="mt-6 flex flex-col text-center gap-y-2">
                   <h2
-                    className={`${satisfy.className} text-2xl text-theme1-gold`}
+                    className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
                   >
                     {props.brides.male.name}
                   </h2>
                   <p
-                    className={`${playfair.className} text-sm text-center italic`}
+                    className={`${playfair.className} text-sm md:text-base text-center italic`}
                   >
                     Putra {props.brides.male.child} dari pasangan
                   </p>
                   <div>
                     <h3
-                      className={`${playfair.className} text-lg font-semibold mt-2`}
+                      className={`${playfair.className} text-lg md:text-xl font-semibold mt-2`}
                     >
                       {props.brides.male.parents.male}
                     </h3>
                     <p
-                      className={`${playfair.className} text-lg font-semibold`}
+                      className={`${playfair.className} text-lg md:text-xl font-semibold`}
                     >
                       &
                     </p>
                     <h3
-                      className={`${playfair.className} text-lg font-semibold`}
+                      className={`${playfair.className} text-lg md:text-xl font-semibold`}
                     >
                       {props.brides.male.parents.female}
                     </h3>
                   </div>
                   <p
-                    className={`${playfair.className} text-base text-center italic`}
+                    className={`${playfair.className} text-base md:text-lg text-center italic`}
                   >
                     {props.brides.male.address}
                   </p>
@@ -228,34 +228,34 @@ const Content: FC<Props> = (props) => {
                 </div>
                 <div className="mt-6 flex flex-col text-center gap-y-2">
                   <h2
-                    className={`${satisfy.className} text-2xl text-theme1-gold`}
+                    className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
                   >
                     {props.brides.female.name}
                   </h2>
                   <p
-                    className={`${playfair.className} text-sm text-center italic`}
+                    className={`${playfair.className} text-sm md:text-base text-center italic`}
                   >
                     Putri {props.brides.female.child} dari pasangan
                   </p>
                   <div>
                     <h3
-                      className={`${playfair.className} text-lg font-semibold mt-2`}
+                      className={`${playfair.className} text-lg md:text-xl font-semibold mt-2`}
                     >
                       {props.brides.female.parents.male}
                     </h3>
                     <p
-                      className={`${playfair.className} text-lg font-semibold`}
+                      className={`${playfair.className} text-lg md:text-xl font-semibold`}
                     >
                       &
                     </p>
                     <h3
-                      className={`${playfair.className} text-lg font-semibold`}
+                      className={`${playfair.className} text-lg md:text-xl font-semibold`}
                     >
                       {props.brides.female.parents.female}
                     </h3>
                   </div>
                   <p
-                    className={`${playfair.className} text-base text-center italic`}
+                    className={`${playfair.className} text-base md:text-lg text-center italic`}
                   >
                     {props.brides.female.address}
                   </p>

@@ -12,8 +12,10 @@ const Layout: FC<Props> = (props) => {
       <Head>
         <title>{props.pageTitle}</title>
       </Head>
-      <div className="w-full h-full min-h-screen bg-white">
-        {props.children}
+      <div className="w-full h-full min-h-screen bg-theme1-dark-chocolate">
+        <div className="max-w-screen-lg overflow-hidden mx-auto">
+          <div>{props.children}</div>
+        </div>
       </div>
     </>
   );
