@@ -26,14 +26,14 @@ const Content: FC<Props> = (props) => {
   return (
     <>
       <section>
-        <div className="relative w-full h-[110dvh] lg:h-[120dvh]">
+        <div className="relative w-full h-[110vh] lg:h-[120vh]">
           <Swiper
             loop
             autoplay={{
               delay: 5000,
             }}
             speed={10000}
-            className="w-full h-[110dvh] lg:h-[120dvh]"
+            className="w-full h-[110vh] lg:h-[120vh]"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay]}
@@ -55,7 +55,7 @@ const Content: FC<Props> = (props) => {
             ))}
           </Swiper>
 
-          <div className="absolute inset-x-0 top-0 h-[110dvh] lg:h-[120dvh] bg-gradient-to-b from-transparent to-black z-10"></div>
+          <div className="absolute inset-x-0 top-0 h-[110vh] lg:h-[120vh] bg-gradient-to-b from-transparent to-black z-10"></div>
           <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-32 pb-36 md:pb-[32vh] z-20">
             <p
               className={`text-white text-sm lg:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
