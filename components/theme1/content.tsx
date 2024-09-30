@@ -26,14 +26,14 @@ const Content: FC<Props> = (props) => {
   return (
     <>
       <section>
-        <div className="relative w-full h-[115dvh] md:h-[105vh] lg:h-[120dvh]">
+        <div className="relative w-full h-[105dvh] lg:h-[110dvh]">
           <Swiper
             loop
             autoplay={{
               delay: 5000,
             }}
             speed={10000}
-            className="w-full h-[115dvh] md:h-[105vh] lg:h-[120dvh]"
+            className="w-full h-[105dvh] lg:h-[110dvh]"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay]}
@@ -55,8 +55,8 @@ const Content: FC<Props> = (props) => {
             ))}
           </Swiper>
 
-          <div className="absolute inset-x-0 top-0 h-[115dvh] md:h-[105vh] lg:h-[120dvh] bg-gradient-to-b from-transparent to-black z-10"></div>
-          <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-48 md:pb-44 lg:pb-[32vh] z-20">
+          <div className="absolute inset-x-0 top-0 h-[105dvh] lg:h-[110dvh] bg-gradient-to-b from-transparent to-black z-10"></div>
+          <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-28 md:pb-44 lg:pb-[24vh] z-20">
             <p
               className={`text-white text-sm md:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
             >
@@ -83,7 +83,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.days}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
                   >
                     Hari
                   </p>
@@ -93,7 +93,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.hours}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
                   >
                     Jam
                   </p>
@@ -103,7 +103,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.minutes}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
                   >
                     Menit
                   </p>
@@ -113,7 +113,7 @@ const Content: FC<Props> = (props) => {
                     {props.state.countdown.seconds}
                   </h2>
                   <p
-                    className={`${montserrat.className} text-xs md:text-sm md:text-base`}
+                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
                   >
                     Detik
                   </p>
@@ -126,32 +126,34 @@ const Content: FC<Props> = (props) => {
       </section>
       <section>
         <div className="bg-white relative z-10 h-full">
-          <div className="transform -translate-y-16 lg:-translate-y-48 relative">
+          <div className="transform relative -translate-y-6 md:-translate-y-12 lg:-translate-y-32">
             <svg
+              id="wave"
+              viewBox="0 0 1440 100"
+              version="1.1"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1440 320"
-              className="relative z-20"
             >
               <path
                 fill="#ffff"
-                fill-opacity="1"
-                d="M0,32L60,37.3C120,43,240,53,360,64C480,75,600,85,720,90.7C840,96,960,96,1080,85.3C1200,75,1320,53,1380,42.7L1440,32L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+                d="M0,60L20,56.7C40,53,80,47,120,40C160,33,200,27,240,23.3C280,20,320,20,360,28.3C400,37,440,53,480,63.3C520,73,560,77,600,66.7C640,57,680,33,720,25C760,17,800,23,840,33.3C880,43,920,57,960,63.3C1000,70,1040,70,1080,58.3C1120,47,1160,23,1200,20C1240,17,1280,33,1320,38.3C1360,43,1400,37,1440,31.7C1480,27,1520,23,1560,23.3C1600,23,1640,27,1680,38.3C1720,50,1760,70,1800,70C1840,70,1880,50,1920,48.3C1960,47,2000,63,2040,73.3C2080,83,2120,87,2160,78.3C2200,70,2240,50,2280,46.7C2320,43,2360,57,2400,58.3C2440,60,2480,50,2520,43.3C2560,37,2600,33,2640,36.7C2680,40,2720,50,2760,55C2800,60,2840,60,2860,60L2880,60L2880,100L2860,100C2840,100,2800,100,2760,100C2720,100,2680,100,2640,100C2600,100,2560,100,2520,100C2480,100,2440,100,2400,100C2360,100,2320,100,2280,100C2240,100,2200,100,2160,100C2120,100,2080,100,2040,100C2000,100,1960,100,1920,100C1880,100,1840,100,1800,100C1760,100,1720,100,1680,100C1640,100,1600,100,1560,100C1520,100,1480,100,1440,100C1400,100,1360,100,1320,100C1280,100,1240,100,1200,100C1160,100,1120,100,1080,100C1040,100,1000,100,960,100C920,100,880,100,840,100C800,100,760,100,720,100C680,100,640,100,600,100C560,100,520,100,480,100C440,100,400,100,360,100C320,100,280,100,240,100C200,100,160,100,120,100C80,100,40,100,20,100L0,100Z"
               ></path>
             </svg>
             <svg
-              className="absolute -top-6"
+              className="absolute -top-1"
+              id="wave"
+              viewBox="0 0 1440 100"
+              version="1.1"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1440 320"
             >
               <path
-                fill="#f3f4f5"
-                fill-opacity="0.8"
-                d="M0,128L60,128C120,128,240,128,360,128C480,128,600,128,720,133.3C840,139,960,149,1080,149.3C1200,149,1320,139,1380,133.3L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+                fill="#ffff"
+                fillOpacity={0.7}
+                d="M0,20L20,28.3C40,37,80,53,120,51.7C160,50,200,30,240,21.7C280,13,320,17,360,20C400,23,440,27,480,36.7C520,47,560,63,600,66.7C640,70,680,60,720,46.7C760,33,800,17,840,15C880,13,920,27,960,40C1000,53,1040,67,1080,63.3C1120,60,1160,40,1200,36.7C1240,33,1280,47,1320,55C1360,63,1400,67,1440,58.3C1480,50,1520,30,1560,26.7C1600,23,1640,37,1680,46.7C1720,57,1760,63,1800,68.3C1840,73,1880,77,1920,76.7C1960,77,2000,73,2040,66.7C2080,60,2120,50,2160,41.7C2200,33,2240,27,2280,26.7C2320,27,2360,33,2400,31.7C2440,30,2480,20,2520,26.7C2560,33,2600,57,2640,68.3C2680,80,2720,80,2760,75C2800,70,2840,60,2860,55L2880,50L2880,100L2860,100C2840,100,2800,100,2760,100C2720,100,2680,100,2640,100C2600,100,2560,100,2520,100C2480,100,2440,100,2400,100C2360,100,2320,100,2280,100C2240,100,2200,100,2160,100C2120,100,2080,100,2040,100C2000,100,1960,100,1920,100C1880,100,1840,100,1800,100C1760,100,1720,100,1680,100C1640,100,1600,100,1560,100C1520,100,1480,100,1440,100C1400,100,1360,100,1320,100C1280,100,1240,100,1200,100C1160,100,1120,100,1080,100C1040,100,1000,100,960,100C920,100,880,100,840,100C800,100,760,100,720,100C680,100,640,100,600,100C560,100,520,100,480,100C440,100,400,100,360,100C320,100,280,100,240,100C200,100,160,100,120,100C80,100,40,100,20,100L0,100Z"
               ></path>
             </svg>
           </div>
 
-          <div className="w-full h-full p-6 md:px-12 -mt-20 lg:-mt-56 relative z-40">
+          <div className="w-full h-full p-6 md:px-12 relative z-40 max-w-screen-lg mx-auto">
             <div>
               <Title title="Om Swastiastu" />
               <p
@@ -164,7 +166,7 @@ const Content: FC<Props> = (props) => {
               </p>
             </div>
 
-            <div className="flex flex-col justify-center items-center mt-12 gap-10 md:gap-16">
+            <div className="flex flex-col lg:flex-row justify-center items-center mt-12 gap-10 md:gap-16">
               <div className="flex flex-col justify-center items-center">
                 <div className="w-60 h-60 rounded-full bg-gray-200 relative">
                   <ImageShimmer
@@ -264,6 +266,9 @@ const Content: FC<Props> = (props) => {
             </div>
           </div>
         </div>
+      </section>
+      <section className="py-12 bg-white">
+        <Title title="Waktu & Tempat" />
       </section>
     </>
   );
