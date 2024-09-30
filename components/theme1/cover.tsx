@@ -1,10 +1,10 @@
-import Image from "next/image";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
 import Button from "./button";
 import { MdArrowOutward } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
+import ImageShimmer from "../image.shimmer";
 
 interface Props {
   recipient: string;
@@ -33,7 +33,7 @@ const Cover: FC<Props> = (props) => {
         modules={[EffectFade, Autoplay]}
       >
         <SwiperSlide className="relative w-full h-full">
-          <Image
+          <ImageShimmer
             fill
             alt="cover-image"
             priority
@@ -43,7 +43,7 @@ const Cover: FC<Props> = (props) => {
           />
         </SwiperSlide>
         <SwiperSlide className="relative w-full h-full">
-          <Image
+          <ImageShimmer
             fill
             alt="cover-image"
             priority

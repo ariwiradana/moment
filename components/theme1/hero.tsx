@@ -1,10 +1,10 @@
-import Image from "next/image";
 import React, { FC } from "react";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import useHero from "@/hooks/theme1/useHero";
 import moment from "moment";
+import ImageShimmer from "../image.shimmer";
 
 interface Props {
   dateEvent: string;
@@ -31,7 +31,7 @@ const Hero: FC<Props> = (props) => {
         modules={[EffectFade, Autoplay]}
       >
         <SwiperSlide className="relative w-full h-full">
-          <Image
+          <ImageShimmer
             fill
             alt="cover-image"
             priority
@@ -41,7 +41,7 @@ const Hero: FC<Props> = (props) => {
           />
         </SwiperSlide>
         <SwiperSlide className="relative w-full h-full">
-          <Image
+          <ImageShimmer
             fill
             alt="cover-image"
             priority
@@ -69,7 +69,7 @@ const Hero: FC<Props> = (props) => {
           </span>{" "}
           {moment(props.dateEvent).format("ddd, DD MMM YYYY")}
         </div>
-        <div className="flex items-center gap-x-6 mt-6">
+        <div className="flex items-center gap-x-6 mt-6 text-white">
           <div className="flex items-center gap-x-4">
             <div className="flex items-center flex-col">
               <h2 className={`${comforta.className} text-xl`}>
