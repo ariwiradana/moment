@@ -1,6 +1,6 @@
 import Layout from "@/components/layout";
+import Content from "@/components/theme1/content";
 import Cover from "@/components/theme1/cover";
-import Hero from "@/components/theme1/hero";
 import useApp from "@/hooks/theme1/useApp";
 import { GetServerSideProps } from "next";
 import React, { FC } from "react";
@@ -17,7 +17,7 @@ const MainPage: FC<Props> = (props) => {
   const { state, actions } = useApp(dateEvent, "digital-invitation/wendy");
 
   return (
-    <Layout pageTitle={props.recipient}>
+    <Layout pageTitle={brides}>
       <Cover
         state={state}
         actions={actions}
@@ -26,14 +26,13 @@ const MainPage: FC<Props> = (props) => {
       />
       {state.open && (
         <>
-          <Hero
+          <Content
             location={location}
             brides={brides}
             dateEvent={dateEvent}
             state={state}
             actions={actions}
           />
-          <div className="bg-gradient-to-b from-transparent to-theme1-primary w-full h-[40vh] -mt-32"></div>
         </>
       )}
     </Layout>
