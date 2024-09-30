@@ -11,6 +11,8 @@ interface Props {
 const MainPage: FC<Props> = (props) => {
   const brides = "Ari & Juli";
   const location = "Sukawati";
+  const dateEvent = "2024-10-04 10:00 AM";
+
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -23,7 +25,7 @@ const MainPage: FC<Props> = (props) => {
       />
       {open && (
         <>
-          <Hero location={location} brides={brides} dateEvent="2024-11-06" />
+          <Hero location={location} brides={brides} dateEvent={dateEvent} />
         </>
       )}
     </Layout>

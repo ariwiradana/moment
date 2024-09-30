@@ -16,7 +16,7 @@ interface Props {
 const Cover: FC<Props> = (props) => {
   return (
     <div
-      className={`w-full max-w-screen-md h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-100 duration-1000 ${
+      className={`w-full max-w-screen-md h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 ${
         props.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
