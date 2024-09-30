@@ -1,4 +1,4 @@
-import { Comfortaa, Tangerine, Inter, Montserrat } from "next/font/google";
+import { Comfortaa, Tangerine, Montserrat } from "next/font/google";
 
 export const tangerine = Tangerine({
   subsets: ["latin"],

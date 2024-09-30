@@ -1,7 +1,7 @@
 import { comforta } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   icon?: ReactNode;
 }
@@ -9,6 +9,7 @@ interface Props {
 const Button: FC<Props> = (props) => {
   return (
     <button
+      {...props}
       className={`${comforta.className} text-white bg-theme1-primary pl-4 pr-3 py-3 rounded-full text-sm flex items-center gap-x-3`}
     >
       <span className="text-xs">{props.title}</span>
