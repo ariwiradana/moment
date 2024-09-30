@@ -50,7 +50,7 @@ const Cover: FC<Props> = (props) => {
         ))}
       </Swiper>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#000000c5] z-10"></div>
       <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-16 md:pb-32 z-20">
         <p
           className={`text-white text-sm lg:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}

@@ -48,4 +48,8 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .font-italic {
+    font-style: italic !important;
+  }
 }

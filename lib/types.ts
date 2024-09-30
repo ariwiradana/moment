@@ -11,8 +11,8 @@ export interface Brides {
     name: string;
     nickname: string;
     address: string;
-    child: string,
-    imageURL: string,
+    child: string;
+    imageURL: string;
     parents: {
       male: string;
       female: string;
@@ -22,11 +22,20 @@ export interface Brides {
     name: string;
     nickname: string;
     address: string;
-    child: string,
-    imageURL: string,
+    child: string;
+    imageURL: string;
     parents: {
       male: string;
       female: string;
     };
   };
+}
+
+export interface Informations {
+  date: string;
+  time: string;
+  location: string;
+  locationLink: string;
+  locationFull: string;
+  prefix: string;
 }

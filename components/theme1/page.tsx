@@ -1,14 +1,15 @@
 import React, { FC } from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
-import Content from "./layouts/content";
 import { UseTheme1 } from "@/hooks/useTheme1";
-import { Brides } from "@/lib/types";
+import { Brides, Informations } from "@/lib/types";
+import HeroComponent from "./layouts/hero";
+import BridesComponent from "./layouts/brides";
+import LocationTimeComponent from "./layouts/location.time";
 
 interface Props {
   recipient: string;
-  location: string;
-  dateEvent: string;
+  informations: Informations;
   state: UseTheme1["state"];
   actions: UseTheme1["actions"];
   brides: Brides;
@@ -26,12 +27,23 @@ const Page: FC<Props> = (props) => {
       />
       {props.state.open && (
         <>
-          <Content
-            location={props.location}
+          <HeroComponent
             brides={props.brides}
-            dateEvent={props.dateEvent}
             state={props.state}
             actions={props.actions}
+            informations={props.informations}
+          />
+          <BridesComponent
+            brides={props.brides}
+            state={props.state}
+            actions={props.actions}
+            informations={props.informations}
+          />
+          <LocationTimeComponent
+            brides={props.brides}
+            state={props.state}
+            actions={props.actions}
+            informations={props.informations}
           />
         </>
       )}
