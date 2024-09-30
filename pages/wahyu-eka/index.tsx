@@ -1,5 +1,4 @@
 import Page from "@/components/theme1/page";
-import useTheme1 from "@/hooks/useTheme1";
 import { Brides, Informations } from "@/lib/types";
 import { GetServerSideProps } from "next";
 import React, { FC } from "react";
@@ -11,7 +10,7 @@ interface Props {
 const MainPage: FC<Props> = (props) => {
   const informations: Informations = {
     date: "2024-10-04",
-    time: "14:00 - Selesai",
+    time: "14:00 WITA - Selesai",
     location: "Sukawati",
     locationFull: "Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali",
     locationLink: "https://maps.app.goo.gl/mhMRZGPTmJmFyEmG8",
@@ -44,15 +43,12 @@ const MainPage: FC<Props> = (props) => {
     },
   };
 
-  const { state, actions } = useTheme1(informations.date, informations.prefix);
 
   return (
     <Page
-      actions={actions}
       brides={brides}
       informations={informations}
       recipient={props.recipient}
-      state={state}
     />
   );
 };

@@ -3,12 +3,9 @@ import { satisfy, playfair } from "@/lib/fonts";
 import ImageShimmer from "../../image.shimmer";
 import Title from "../elements/title";
 import { Brides, Informations } from "@/lib/types";
-import { UseTheme1 } from "@/hooks/useTheme1";
 
 interface Props {
   brides: Brides;
-  state: UseTheme1["state"];
-  actions: UseTheme1["actions"];
   informations: Informations;
 }
 
@@ -58,7 +55,7 @@ const BridesComponent: FC<Props> = (props) => {
           </svg>
         </div>
 
-        <div className="w-full h-full p-6 md:px-12 relative z-40 max-w-screen-sm mx-auto">
+        <div className="w-full h-full p-6 md:px-12 relative z-40 max-w-screen-md mx-auto">
           <div>
             <Title title="Om Swastiastu" />
             <p

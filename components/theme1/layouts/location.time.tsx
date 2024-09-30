@@ -1,54 +1,67 @@
 import React, { FC } from "react";
-import {
-  montserrat,
-} from "@/lib/fonts";
+import { montserrat, playfair, satisfy } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import { Brides, Informations } from "@/lib/types";
-import { UseTheme1 } from "@/hooks/useTheme1";
 import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidMap } from "react-icons/bi";
 import Link from "next/link";
+import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
   brides: Brides;
-  state: UseTheme1["state"];
-  actions: UseTheme1["actions"];
   informations: Informations;
 }
 
 const LocationTimeComponent: FC<Props> = (props) => {
-  if (props.state.blobs.length === 0) return <></>;
+  const { blobs } = useTheme1(props.informations);
+
+  if (blobs.length === 0) return <></>;
+
   return (
     <section className="mt-12">
-      <div className="relative w-full flex px-8 py-24">
-        <div className="absolute inset-0 bg-theme1-primary z-10 bg-opacity-40"></div>
+      <div className="relative w-full flex px-8 py-16">
+        <div className="absolute inset-0 z-10 bg-opacity-40 bg-black"></div>
         <Image
           fill
           alt="datetime-image"
-          src={props.state.blobs[1].url}
-          className="object-cover grayscale"
+          src={blobs[0].url}
+          className="object-cover"
         />
-        <div className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-30 backdrop-blur-md flex flex-col justify-center items-center max-w-screen-sm mx-auto">
+        <div className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl">
+          <Image
+            alt="leaf-datetime"
+            src="/images/theme1/leaf5.svg"
+            width={130}
+            height={50}
+            className="mb-8"
+          />
           <Title className="text-white" title="Waktu & Tempat" />
           <h1
-            className={`${montserrat.className} text-base md:text-xl mt-6 font-medium font-italic`}
+            className={`${satisfy.className} text-3xl mt-10 text-white font-italic`}
           >
-            {moment(props.informations.date).format("ddd, DD MMM YYYY")}
+            {moment(props.informations.date).format("dddd")}
           </h1>
           <h1
-            className={`${montserrat.className} text-base md:text-xl mt-1 font-medium font-italic`}
+            className={`${playfair.className} text-base md:text-xl text-white font-italic mt-1`}
+          >
+            {moment(props.informations.date).format("DD MMMM YYYY")}
+          </h1>
+          <div className="h-[1px] w-2/3 bg-white my-4"></div>
+          <h1
+            className={`${playfair.className} text-base md:text-xl text-white font-italic`}
           >
             {props.informations.time}
           </h1>
+          <div className="h-[1px] w-2/3 bg-white my-4"></div>
           <h1
-            className={`${montserrat.className} text-sm md:text-xl mt-6 font-italic`}
+            className={`${montserrat.className} text-sm md:text-xl mt-6 font-italic text-white`}
           >
             Bertempat di
           </h1>
           <h1
-            className={`${montserrat.className} text-base md:text-xl mt-1 text-center font-medium font-italic`}
+            className={`${montserrat.className} text-base md:text-xl mt-1 text-center font-italic text-white`}
           >
             {props.informations.locationFull}
           </h1>

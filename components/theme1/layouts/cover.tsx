@@ -5,20 +5,22 @@ import { MdArrowOutward } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import ImageShimmer from "../../image.shimmer";
-import { UseTheme1 } from "@/hooks/useTheme1";
+import { Informations } from "@/lib/types";
+import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
   recipient: string;
   brides: string;
-  state: UseTheme1["state"];
-  actions: UseTheme1["actions"];
+  informations: Informations;
 }
 
 const Cover: FC<Props> = (props) => {
+  const { open, blobs, handleOpenCover } = useTheme1(props.informations);
+
   return (
     <div
       className={`w-full h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 ${
-        props.state.open ? "-top-full invisible opacity-0" : "top-0 visible"
+        open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
       <Swiper
@@ -33,7 +35,7 @@ const Cover: FC<Props> = (props) => {
         slidesPerView={1}
         modules={[EffectFade, Autoplay]}
       >
-        {props.state.blobs.map((blob, index) => (
+        {blobs.map((blob, index) => (
           <SwiperSlide
             className="relative w-full h-full"
             key={`cover-img-${index}`}
@@ -74,7 +76,7 @@ const Cover: FC<Props> = (props) => {
         </h2>
         <div className="mt-4 lg:mt-6">
           <Button
-            onClick={props.actions.handleOpenCover}
+            onClick={handleOpenCover}
             icon={<MdArrowOutward className="lg:text-lg" />}
             title="Buka Undangan"
           />

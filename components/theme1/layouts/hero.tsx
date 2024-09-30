@@ -1,20 +1,20 @@
 import ImageShimmer from "@/components/image.shimmer";
-import { UseTheme1 } from "@/hooks/useTheme1";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
 import { Brides, Informations } from "@/lib/types";
 import moment from "moment";
 import React, { FC } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
   brides: Brides;
-  state: UseTheme1["state"];
-  actions: UseTheme1["actions"];
   informations: Informations;
 }
 
 const HeroComponent: FC<Props> = (props) => {
+  const { blobs, countdown } = useTheme1(props.informations);
+
   return (
     <section>
       <div className="relative w-full h-[107dvh] lg:h-[110dvh]">
@@ -29,7 +29,7 @@ const HeroComponent: FC<Props> = (props) => {
           slidesPerView={1}
           modules={[Autoplay]}
         >
-          {props.state.blobs.map((blob, index) => (
+          {blobs.map((blob, index) => (
             <SwiperSlide
               className="relative w-full h-full"
               key={`hero-img-${index}`}
@@ -71,7 +71,7 @@ const HeroComponent: FC<Props> = (props) => {
             <div className="flex items-center gap-x-4 md:gap-x-6 lg:gap-x-8">
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {props.state.countdown.days}
+                  {countdown.days}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
@@ -81,7 +81,7 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {props.state.countdown.hours}
+                  {countdown.hours}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
@@ -91,7 +91,7 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {props.state.countdown.minutes}
+                  {countdown.minutes}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
@@ -101,7 +101,7 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {props.state.countdown.seconds}
+                  {countdown.seconds}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
