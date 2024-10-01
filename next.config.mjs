@@ -8,7 +8,21 @@ const nextConfig = {
         hostname: "dbwuumshu7s1w5jw.public.blob.vercel-storage.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "avatar.iran.liara.run",
+        port: "",
+      },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/admin",
+        destination: "/admin/clients",
+        permanent: false,
+      },
+    ];
   },
 };
 

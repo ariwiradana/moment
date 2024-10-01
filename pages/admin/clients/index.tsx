@@ -1,12 +1,18 @@
+import ButtonPrimary from "@/components/admin/elements/button.primary";
+import ButtonSecondary from "@/components/admin/elements/button.secondary";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminClients } from "@/hooks/admin/useAdminClients";
 import { montserrat } from "@/lib/fonts";
+import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
+import { BiDetail, BiPlus, BiTrash } from "react-icons/bi";
 
 const ClientDashboard: React.FC = () => {
-  const { clients, isLoading, isError, mutate } = useAdminClients();
+  const { clients, isLoading, isError } = useAdminClients();
+
+  console.log(clients);
 
   if (isLoading) {
     return <div className="text-center">Loading...</div>;
@@ -18,69 +24,145 @@ const ClientDashboard: React.FC = () => {
     );
   }
 
-  const handleDelete = (id: number) => {
-    console.log(id)
-    mutate(); // Re-fetch clients after delete
-  };
-
   return (
     <AdminLayout>
-      <div className={`container mx-auto p-6 ${montserrat.className}`}>
+      <div className={`w-full ${montserrat.className}`}>
         <h1 className="text-2xl font-bold mb-4">Client Dashboard</h1>
 
-        <div className="mb-4">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-            Add New Client
-          </button>
+        <Link href="/admin/clients/create">
+          <div className="mb-8">
+            <ButtonPrimary
+              size="small"
+              title="Add"
+              icon={<BiPlus className="text-lg" />}
+            />
+          </div>
+        </Link>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
+          {clients.map((client) => (
+            <div key={client.id} className="border rounded-lg p-3">
+              <div className="flex justify-between items-center pb-3 border-b">
+                <h1 className="text-gray-800 font-semibold text-sm">
+                  {client.name}
+                </h1>
+                <p className="bg-gray-50 border px-2 py-1 rounded-md text-gray-800 font-medium text-[13px]">
+                  {moment(client.date).format("D MMM YYYY")}
+                </p>
+              </div>
+              <div className="py-3 flex flex-col gap-y-2">
+                <div>
+                  <p className="text-gray-500 font-medium text-xs">Address</p>
+                  <p className="text-gray-800 font-semibold text-sm">
+                    {client.address_full}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-500 font-medium text-xs">Time</p>
+                  <p className="text-gray-800 font-semibold text-sm">
+                    {client.time}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-500 font-medium text-xs">Theme</p>
+                  <p className="text-gray-800 font-semibold text-sm">
+                    {client.theme?.name}
+                  </p>
+                </div>
+              </div>
+              <div className="border-t pt-3 flex justify-end gap-x-3">
+                <Link href={`/admin/clients/${client.slug}`}>
+                  <ButtonPrimary
+                    size="extrasmall"
+                    title="Detail"
+                    icon={<BiDetail className="text-base" />}
+                  />
+                </Link>
+                <ButtonSecondary
+                  size="extrasmall"
+                  title="Delete"
+                  icon={<BiTrash className="text-base" />}
+                />
+              </div>
+            </div>
+          ))}
         </div>
 
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100 text-gray-700">
-              <th className="py-3 px-4 border-b border-gray-300">Brides</th>
-              <th className="py-3 px-4 border-b border-gray-300">Location</th>
-              <th className="py-3 px-4 border-b border-gray-300">
-                Date & Time
-              </th>
-              <th className="py-3 px-4 border-b border-gray-300">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clients.map((client) => (
-              <tr key={client.id} className="hover:bg-gray-50">
-                <td className="py-2 px-4 border-b border-gray-300">
-                  {client.male_name} - {client.female_name}
+        <div className="border border-gray-200 px-2 pt-2 rounded-xl hidden lg:block">
+          <table className="table-auto overflow-x-auto w-full table">
+            <thead>
+              <tr>
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-l-lg">
+                  Client
                 </td>
-                <td className="py-2 px-4 border-b border-gray-300">
-                  <Link
-                    href={client.location_full}
-                    target="_blank"
-                    className="text-blue-500 hover:underline"
-                  >
-                    {client.location_full}
-                  </Link>
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                  Date
                 </td>
-                <td className="py-2 px-4 border-b border-gray-300">
-                  {moment(client.date).format("dddd, D MMMM YYYY")} -{" "}
-                  {client.time}
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                  Time
                 </td>
-                <td className="py-2 px-4 border-b border-gray-300">
-                  <Link href={`/admin/clients/${client.id}`}>
-                    <button className="text-blue-500 hover:underline mr-4">
-                      Details
-                    </button>
-                  </Link>
-                  <button
-                    className="text-red-500 hover:underline"
-                    onClick={() => handleDelete(client.id)}
-                  >
-                    Delete
-                  </button>
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                  Address
+                </td>
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                  Theme
+                </td>
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-r-lg">
+                  Actions
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {clients.map((client, index) => (
+                <tr
+                  key={client.id}
+                  className={`border-b ${
+                    clients.length - 1 === index
+                      ? "border-b-transparent"
+                      : "border-b-gray-200"
+                  }`}
+                >
+                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                    <div className="flex items-center gap-x-3">
+                      <div className="h-10 w-10 rounded-full bg-gray-100 aspect-square flex justify-center items-center text-base">
+                        <span>{getInitial(client.name)}</span>
+                      </div>
+                      <span>{client.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                    {moment(client.date).format("dddd, D MMM YYYY")}
+                  </td>
+                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                    {client.time}
+                  </td>
+                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                    {client.address_full}
+                  </td>
+                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                    {client.theme?.name}
+                  </td>
+                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                    <div className="flex gap-x-2">
+                      <Link href={`/admin/clients/${client.slug}`}>
+                        <ButtonSecondary
+                          size="extrasmall"
+                          title="Detail"
+                          icon={<BiDetail className="text-base" />}
+                        />
+                      </Link>
+                      <ButtonSecondary
+                        size="extrasmall"
+                        title="Delete"
+                        icon={<BiTrash className="text-base" />}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </AdminLayout>
   );

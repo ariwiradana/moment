@@ -40,14 +40,10 @@ export interface Informations {
   prefix: string;
 }
 
-export interface Theme {
-  id: number;
-  name: string;
-}
-
 export interface Client {
   id: number;
   slug: string;
+  name: string;
   male_name: string;
   male_nickname: string;
   male_address: string;
@@ -68,4 +64,33 @@ export interface Client {
   theme_id: number;
   images: Blobs[] | [];
   bride_images: Blobs[] | [];
+}
+
+export interface Theme {
+  id: number;
+  name: string;
+}
+
+export interface Participant {
+  participant_id: number;
+  name: string;
+  nickname: string;
+  address: string;
+  child: string;
+  parents_male: string;
+  parents_female: string;
+  gender: "male" | "female";
+}
+
+export interface ClientV2 {
+  id: number;
+  name: string;
+  slug: string;
+  address: string;
+  address_url: string;
+  address_full: string;
+  participants: Participant[];
+  date: string;
+  time: string;
+  theme: Theme | null;
 }
