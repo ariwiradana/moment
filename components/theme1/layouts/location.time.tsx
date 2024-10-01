@@ -2,23 +2,17 @@ import React, { FC } from "react";
 import { montserrat, playfair, satisfy } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
-import { Brides, Informations } from "@/lib/types";
+import {  Client } from "@/lib/types";
 import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidMap } from "react-icons/bi";
 import Link from "next/link";
-import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
-  brides: Brides;
-  informations: Informations;
+  client: Client;
 }
 
 const LocationTimeComponent: FC<Props> = (props) => {
-  const { blobs } = useTheme1(props.informations);
-
-  if (blobs.length === 0) return <></>;
-
   return (
     <section className="mt-12">
       <div className="relative w-full flex px-8 py-16">
@@ -26,7 +20,7 @@ const LocationTimeComponent: FC<Props> = (props) => {
         <Image
           fill
           alt="datetime-image"
-          src={blobs[0].url}
+          src={props.client.images[0].url}
           className="object-cover"
         />
         <div className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl">
@@ -41,18 +35,18 @@ const LocationTimeComponent: FC<Props> = (props) => {
           <h1
             className={`${satisfy.className} text-3xl mt-10 text-white font-italic`}
           >
-            {moment(props.informations.date).format("dddd")}
+            {moment(props.client.date).format("dddd")}
           </h1>
           <h1
             className={`${playfair.className} text-base md:text-xl text-white font-italic mt-1`}
           >
-            {moment(props.informations.date).format("DD MMMM YYYY")}
+            {moment(props.client.date).format("DD MMMM YYYY")}
           </h1>
           <div className="h-[1px] w-2/3 bg-white my-4"></div>
           <h1
             className={`${playfair.className} text-base md:text-xl text-white font-italic`}
           >
-            {props.informations.time}
+            {props.client.time}
           </h1>
           <div className="h-[1px] w-2/3 bg-white my-4"></div>
           <h1
@@ -63,10 +57,10 @@ const LocationTimeComponent: FC<Props> = (props) => {
           <h1
             className={`${montserrat.className} text-base md:text-xl mt-1 text-center font-italic text-white`}
           >
-            {props.informations.locationFull}
+            {props.client.location_full}
           </h1>
           <div className="flex justify-center mt-6">
-            <Link href={props.informations.locationLink} target="_blank">
+            <Link href={props.client.location_link} target="_blank">
               <Button title="Map Lokasi Acara" icon={<BiSolidMap />} />
             </Link>
           </div>

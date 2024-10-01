@@ -5,17 +5,16 @@ import { MdArrowOutward } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import ImageShimmer from "../../image.shimmer";
-import { Informations } from "@/lib/types";
+import { Client } from "@/lib/types";
 import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
-  recipient: string;
-  brides: string;
-  informations: Informations;
+  to: string;
+  client: Client;
 }
 
 const Cover: FC<Props> = (props) => {
-  const { open, blobs, handleOpenCover } = useTheme1(props.informations);
+  const { open, handleOpenCover } = useTheme1(props.client);
 
   return (
     <div
@@ -35,7 +34,7 @@ const Cover: FC<Props> = (props) => {
         slidesPerView={1}
         modules={[EffectFade, Autoplay]}
       >
-        {blobs.map((blob, index) => (
+        {props.client.images.map((image, index) => (
           <SwiperSlide
             className="relative w-full h-full"
             key={`cover-img-${index}`}
@@ -46,7 +45,7 @@ const Cover: FC<Props> = (props) => {
               priority
               sizes="1080px"
               className={`object-cover`}
-              src={blob.url}
+              src={image.url}
             />
           </SwiperSlide>
         ))}
@@ -62,7 +61,7 @@ const Cover: FC<Props> = (props) => {
         <h1
           className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
         >
-          {props.brides}
+          {props.client.male_nickname} & {props.client.female_nickname}
         </h1>
         <p
           className={`text-white mt-2 lg:mt-4 font-light text-sm lg:text-base ${montserrat.className}`}
@@ -72,7 +71,7 @@ const Cover: FC<Props> = (props) => {
         <h2
           className={`text-white font-normal text-2xl lg:text-3xl mt-1 ${montserrat.className}`}
         >
-          {props.recipient}
+          {props.to}
         </h2>
         <div className="mt-4 lg:mt-6">
           <Button

@@ -1,0 +1,23 @@
+CREATE TABLE clients (
+  id SERIAL PRIMARY KEY,
+  slug VARCHAR(255) UNIQUE,
+  male_name VARCHAR(255),
+  male_nickname VARCHAR(255),
+  male_address TEXT,
+  male_child VARCHAR(255),
+  male_parents_male VARCHAR(255),
+  male_parents_female VARCHAR(255),
+  female_name VARCHAR(255),
+  female_nickname VARCHAR(255),
+  female_address TEXT,
+  female_child VARCHAR(255),
+  female_parents_male VARCHAR(255),
+  female_parents_female VARCHAR(255),
+  date VARCHAR(255),
+  time VARCHAR(255),
+  location VARCHAR(255),
+  location_link VARCHAR(255),
+  location_full TEXT,
+  theme_id INT,
+  FOREIGN KEY (theme_id) REFERENCES themes(id) ON DELETE SET NULL
+);

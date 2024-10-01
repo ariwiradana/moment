@@ -12,6 +12,8 @@ export default async function handler(
         .status(404)
         .json({ success: false, message: "Pathname required" });
     }
+
+    
     const { blobs } = await list({
       mode: "folded",
       prefix: `${pathname as string}/`,
