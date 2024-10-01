@@ -1,27 +1,23 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import { montserrat } from "@/lib/fonts";
-import { ClientV2 } from "@/lib/types";
 import AdminLayout from "@/components/admin/layouts";
 import Input from "@/components/admin/elements/input";
 import InputTextarea from "@/components/admin/elements/textarea";
 import moment from "moment";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
-import {
-  BiEdit,
-  BiLeftArrowAlt,
-  BiSolidPlusCircle,
-} from "react-icons/bi";
+import { BiEdit, BiLeftArrowAlt, BiSolidPlusCircle } from "react-icons/bi";
 import Link from "next/link";
 import Accordion from "@/components/admin/elements/accordion.button";
 import ButtonSecondary from "@/components/admin/elements/button.secondary";
+import { useAdminClient } from "@/hooks/admin/useAdminCLient";
 
 interface UpdateClientProps {
-  client: ClientV2 | null;
+  slug: string;
 }
 
-const UpdateClient: React.FC<UpdateClientProps> = ({ client }) => {
-  console.log(client);
+const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
+  const { client } = useAdminClient(slug);
 
   return (
     <AdminLayout>
@@ -127,19 +123,10 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ client }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params!;
-  let client = null;
-
-  const response = await fetch(
-    `http://localhost:3000/api/clientv2?slug=${slug}`
-  );
-  if (response.ok) {
-    const result = await response.json();
-    if (result.data) client = result.data[0];
-  }
 
   return {
     props: {
-      client,
+      slug,
     },
   };
 };

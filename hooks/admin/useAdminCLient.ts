@@ -1,14 +1,14 @@
 import useSWR from "swr";
 import { ClientV2 } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
-import toast from "react-hot-toast";
 import { useEffect, useRef } from "react";
+import toast from "react-hot-toast";
 
-export const useAdminClients = () => {
+export const useAdminClient = (slug: string) => {
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
     data: ClientV2[];
-  }>("/api/clientv2", fetcher);
+  }>(slug ? `/api/clientv2?slug=${slug}` : undefined, fetcher);
 
   const isLoadingRef = useRef(isLoading);
 
@@ -36,8 +36,8 @@ export const useAdminClients = () => {
   }, [isLoading, data]);
 
   return {
-    clients: data?.data || [],
-    isLoading,
+    client: data?.data[0] || null,
+    isLoading: !error && !data,
     isError: error,
     mutate,
   };
