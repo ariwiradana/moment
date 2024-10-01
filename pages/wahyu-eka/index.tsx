@@ -11,7 +11,7 @@ const MainPage: FC<Props> = (props) => {
   const informations: Informations = {
     date: "2024-10-04",
     time: "14:00 WITA - Selesai",
-    location: "Sukawati",
+    location: "Payangan",
     locationFull: "Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali",
     locationLink: "https://maps.app.goo.gl/mhMRZGPTmJmFyEmG8",
     prefix: "wendy",

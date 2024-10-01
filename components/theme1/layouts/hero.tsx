@@ -17,14 +17,14 @@ const HeroComponent: FC<Props> = (props) => {
 
   return (
     <section>
-      <div className="relative w-full h-[107dvh] lg:h-[110dvh]">
+      <div className="relative w-full h-[107dvh] lg:h-[112dvh]">
         <Swiper
           loop
           autoplay={{
             delay: 5000,
           }}
           speed={10000}
-          className="w-full h-[107dvh] lg:h-[110dvh]"
+          className="w-full h-[107dvh] lg:h-[112dvh]"
           spaceBetween={0}
           slidesPerView={1}
           modules={[Autoplay]}
@@ -46,8 +46,8 @@ const HeroComponent: FC<Props> = (props) => {
           ))}
         </Swiper>
 
-        <div className="absolute inset-x-0 top-0 h-[107dvh] lg:h-[110dvh] bg-gradient-to-b from-transparent to-[#000000c5] z-10"></div>
-        <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-32 md:pb-44 lg:pb-[24vh] z-20">
+        <div className="absolute inset-x-0 top-0 h-[107dvh] lg:h-[112dvh] bg-gradient-to-b from-transparent to-[#000000c5] z-10"></div>
+        <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-32 md:pb-44 lg:pb-[27vh] z-20">
           <p
             className={`text-white text-sm md:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
           >
@@ -65,7 +65,7 @@ const HeroComponent: FC<Props> = (props) => {
             <span>
               <div className="h-1 w-1 rounded-full bg-white"></div>
             </span>{" "}
-            {moment(props.informations.date).format("ddd, DD MMM YYYY")}
+            {moment(props.informations.date).format("dddd, DD MMM YYYY")}
           </div>
           <div className="flex items-center gap-x-6 md:gap-x-8 lg:gap-x-16 mt-6 text-white">
             <div className="flex items-center gap-x-4 md:gap-x-6 lg:gap-x-8">

@@ -20,11 +20,13 @@ interface Blobs {
 interface Theme1State {
   countdown: Countdown;
   open: boolean;
+  isLoading: boolean;
   blobs: Blobs[];
 }
 
 interface Theme1Actions {
   setCountdown: (countdown: Countdown) => void;
+  setIsLoading: (isLoading: boolean) => void;
   setBlobs: (blobs: Blobs[]) => void;
   handleOpenCover: () => void;
 }
@@ -33,14 +35,16 @@ const useTheme1Store = create<Theme1State & Theme1Actions>((set) => ({
   countdown: { days: 0, hours: 0, minutes: 0, seconds: 0 },
   open: false,
   blobs: [],
+  isLoading: true,
   setCountdown: (countdown) => set(() => ({ countdown })),
   setBlobs: (blobs) => set(() => ({ blobs })),
+  setIsLoading: (isLoading) => set(() => ({ isLoading: !isLoading })),
   handleOpenCover: () => set(() => ({ open: true })),
 }));
 
 const useTheme1 = (informations: Informations) => {
-  const { setCountdown, setBlobs } = useTheme1Store();
-  const { data } = useSWR(
+  const { setCountdown, setBlobs, setIsLoading } = useTheme1Store();
+  const { data, isLoading } = useSWR(
     `/api/images?pathname=digital-invitation/${informations.prefix}/gallery`,
     fetcher
   );
@@ -70,6 +74,7 @@ const useTheme1 = (informations: Informations) => {
   useEffect(() => {
     if (data?.blobs) {
       setBlobs(data.blobs);
+      setIsLoading(false);
     }
   }, [data, setBlobs]);
 
