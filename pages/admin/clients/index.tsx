@@ -7,7 +7,12 @@ import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
-import { BiDetail, BiPlus, BiTrash } from "react-icons/bi";
+import {
+  BiDetail,
+  BiMoneyWithdraw,
+  BiPlus,
+  BiTrash,
+} from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
 
 const ClientDashboard: React.FC = () => {
@@ -35,15 +40,29 @@ const ClientDashboard: React.FC = () => {
                 <h1 className="text-gray-800 font-semibold text-sm">
                   {client.name}
                 </h1>
-                <p className="bg-gray-50 border px-2 py-1 rounded-md text-gray-800 font-medium text-[13px]">
-                  {moment(client.date).format("D MMM YYYY")}
-                </p>
+                <div className="flex items-center text-sm font-semibold">
+                  {client.status === "paid" ? (
+                    <div className="bg-[#eefbf4] px-3 py-1 rounded-lg flex items-center gap-x-2">
+                      <div className="w-2 h-2 rounded-lg bg-[#2cc971]"></div>
+                      <span className="capitalize text-[#254e2e]">
+                        {client.status}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="bg-[#f7f7f9] px-3 py-1 rounded-lg flex items-center gap-x-2">
+                      <div className="w-2 h-2 rounded-lg bg-[#d2d3de]"></div>
+                      <span className="capitalize text-gray-800">
+                        {client.status}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="py-3 flex flex-col gap-y-2">
                 <div>
-                  <p className="text-gray-500 font-medium text-xs">Address</p>
+                  <p className="text-gray-500 font-medium text-xs">Date</p>
                   <p className="text-gray-800 font-semibold text-sm">
-                    {client.address_full}
+                    {moment(client.date).format("D MMM YYYY")}
                   </p>
                 </div>
                 <div>
@@ -60,8 +79,14 @@ const ClientDashboard: React.FC = () => {
                 </div>
               </div>
               <div className="border-t pt-3 flex justify-end gap-x-3">
+                <ButtonSecondary
+                  type="button"
+                  size="extrasmall"
+                  title="Paid"
+                  icon={<BiMoneyWithdraw className="text-base" />}
+                />
                 <Link href={`/admin/clients/${client.slug}`}>
-                  <ButtonPrimary
+                  <ButtonSecondary
                     size="extrasmall"
                     title="Detail"
                     icon={<BiDetail className="text-base" />}
@@ -94,7 +119,7 @@ const ClientDashboard: React.FC = () => {
                     Time
                   </td>
                   <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                    Address
+                    Status
                   </td>
                   <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                     Theme
@@ -129,15 +154,37 @@ const ClientDashboard: React.FC = () => {
                       {client.start_time} - {client.end_time}
                     </td>
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                      {client.address_full}
+                      <div className="flex items-center">
+                        {client.status === "paid" ? (
+                          <div className="bg-[#eefbf4] px-3 py-1 rounded-lg flex items-center gap-x-2">
+                            <div className="w-2 h-2 rounded-lg bg-[#2cc971]"></div>
+                            <span className="capitalize text-[#254e2e]">
+                              {client.status}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="bg-[#f7f7f9] px-3 py-1 rounded-lg flex items-center gap-x-2">
+                            <div className="w-2 h-2 rounded-lg bg-[#d2d3de]"></div>
+                            <span className="capitalize text-gray-800">
+                              {client.status}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                       {client.theme?.name ?? "-"}
                     </td>
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                       <div className="flex gap-2">
+                        <ButtonSecondary
+                          type="button"
+                          size="extrasmall"
+                          title="Mark as Paid"
+                          icon={<BiMoneyWithdraw className="text-base" />}
+                        />
                         <Link href={`/admin/clients/${client.slug}`}>
-                          <ButtonPrimary
+                          <ButtonSecondary
                             size="extrasmall"
                             title="Detail"
                             icon={<BiDetail className="text-base" />}
