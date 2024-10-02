@@ -14,11 +14,11 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
       case "extrasmall":
         return "px-2 py-1 text-sm gap-x-1";
       case "small":
-        return "px-3 py-2 text-sm";
+        return "px-3 py-2 text-sm gap-x-2";
       case "medium":
-        return "px-4 py-3 text-base";
+        return "px-4 py-3 text-base gap-x-3";
       case "large":
-        return "px-6 py-3 text-base";
+        return "px-6 py-3 text-base gap-x-3";
     }
   };
 
@@ -32,7 +32,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
       )}`}
     >
       <span className="text-sm md:text-base lg:text-lg">{props.icon}</span>
-      <span className={`${props.icon ? "ml-2" : "ml-0"}`}>{props.title}</span>
+      <span>{props.title}</span>
     </button>
   );
 };

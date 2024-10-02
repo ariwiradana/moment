@@ -79,6 +79,13 @@ const ClientDashboard: React.FC = () => {
                   </td>
                   <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                     <div className="flex gap-x-2">
+                      <Link target="_blank" href={`/themes/${theme.id}`}>
+                        <ButtonPrimary
+                          size="extrasmall"
+                          title="Preview"
+                          icon={<BiShowAlt className="text-base" />}
+                        />
+                      </Link>
                       <ButtonSecondary
                         size="extrasmall"
                         title="Delete"

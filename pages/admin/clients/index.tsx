@@ -134,7 +134,7 @@ const ClientDashboard: React.FC = () => {
                   <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                     <div className="flex gap-x-2">
                       <Link href={`/admin/clients/${client.slug}`}>
-                        <ButtonSecondary
+                        <ButtonPrimary
                           size="extrasmall"
                           title="Detail"
                           icon={<BiDetail className="text-base" />}
