@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React, { FC, ReactNode } from "react";
 
 interface Props {
@@ -9,9 +8,6 @@ interface Props {
 const Layout: FC<Props> = (props) => {
   return (
     <>
-      <Head>
-        <title>{props.pageTitle}</title>
-      </Head>
       <div className="w-full h-full">
         <div className="overflow-hidden">
           <div>{props.children}</div>

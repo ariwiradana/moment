@@ -1,6 +1,6 @@
 import ImageShimmer from "@/components/image.shimmer";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
-import {  Client } from "@/lib/types";
+import { ClientV2 } from "@/lib/types";
 import moment from "moment";
 import React, { FC } from "react";
 import { Autoplay } from "swiper/modules";
@@ -8,11 +8,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
-  client: Client;
+  client: ClientV2;
 }
 
 const HeroComponent: FC<Props> = (props) => {
-  const { countdown } = useTheme1(props.client);
+  const { countdown, groom, bride } = useTheme1(props.client);
 
   return (
     <section>
@@ -28,21 +28,26 @@ const HeroComponent: FC<Props> = (props) => {
           slidesPerView={1}
           modules={[Autoplay]}
         >
-          {props.client.images.map((image, index) => (
-            <SwiperSlide
-              className="relative w-full h-full"
-              key={`hero-img-${index}`}
-            >
-              <ImageShimmer
-                fill
-                alt={`hero-img-${index}`}
-                priority
-                sizes="720px"
-                className="object-cover"
-                src={image.url}
-              />
-            </SwiperSlide>
-          ))}
+          {Array.isArray(props.client.gallery) &&
+          props.client.gallery.length > 0 ? (
+            props.client.gallery.map((image, index) => (
+              <SwiperSlide
+                className="relative w-full h-full"
+                key={`hero-img-${index}`}
+              >
+                <ImageShimmer
+                  fill
+                  alt={`hero-img-${index}`}
+                  priority
+                  sizes="720px"
+                  className="object-cover"
+                  src={image}
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <p>No images available.</p>
+          )}
         </Swiper>
 
         <div className="absolute inset-x-0 top-0 h-[107dvh] lg:h-[112dvh] bg-gradient-to-b from-transparent to-[#000000c5] z-10"></div>
@@ -55,12 +60,12 @@ const HeroComponent: FC<Props> = (props) => {
           <h1
             className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
           >
-            {props.client.male_nickname} & {props.client.female_nickname}
+            {groom?.nickname} & {bride?.nickname}
           </h1>
           <div
             className={`text-white mt-2 lg:mt-4 font-light text-sm md:text-base flex items-center gap-x-3 ${montserrat.className}`}
           >
-            {props.client.location}{" "}
+            {props.client.address}{" "}
             <span>
               <div className="h-1 w-1 rounded-full bg-white"></div>
             </span>{" "}

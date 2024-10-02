@@ -128,6 +128,16 @@ const CreateClient: React.FC = () => {
             }
             label="Theme"
           />
+          <Input
+            accept="image/*"
+            type="file"
+            multiple
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.files as FileList, "gallery")
+            }
+            className="w-full"
+            label="Gallery"
+          />
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
           <div className="flex flex-col gap-y-4">
             {state.formData.participants.map((participant, index) => (
@@ -255,6 +265,7 @@ const CreateClient: React.FC = () => {
           </div>
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
+              loading={state.loading}
               type="submit"
               title="Add Client"
               icon={<BiUserPlus />}

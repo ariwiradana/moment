@@ -2,14 +2,14 @@ import React, { FC } from "react";
 import { montserrat, playfair, satisfy } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
-import {  Client } from "@/lib/types";
+import { ClientV2 } from "@/lib/types";
 import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidMap } from "react-icons/bi";
 import Link from "next/link";
 
 interface Props {
-  client: Client;
+  client: ClientV2;
 }
 
 const LocationTimeComponent: FC<Props> = (props) => {
@@ -20,7 +20,11 @@ const LocationTimeComponent: FC<Props> = (props) => {
         <Image
           fill
           alt="datetime-image"
-          src={props.client.images[0].url}
+          src={
+            Array.isArray(props.client.gallery) && props.client.gallery.length
+              ? props.client.gallery[0]
+              : ""
+          }
           className="object-cover"
         />
         <div className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl">
@@ -46,7 +50,7 @@ const LocationTimeComponent: FC<Props> = (props) => {
           <h1
             className={`${playfair.className} text-base md:text-xl text-white font-italic`}
           >
-            {props.client.time}
+            {props.client.start_time} - {props.client.end_time}
           </h1>
           <div className="h-[1px] w-2/3 bg-white my-4"></div>
           <h1
@@ -57,10 +61,10 @@ const LocationTimeComponent: FC<Props> = (props) => {
           <h1
             className={`${montserrat.className} text-base md:text-xl mt-1 text-center font-italic text-white`}
           >
-            {props.client.location_full}
+            {props.client.address_full}
           </h1>
           <div className="flex justify-center mt-6">
-            <Link href={props.client.location_link} target="_blank">
+            <Link href={props.client.address_url} target="_blank">
               <Button title="Map Lokasi Acara" icon={<BiSolidMap />} />
             </Link>
           </div>

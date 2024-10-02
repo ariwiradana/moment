@@ -5,16 +5,16 @@ import { MdArrowOutward } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import ImageShimmer from "../../image.shimmer";
-import { Client } from "@/lib/types";
+import { ClientV2 } from "@/lib/types";
 import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
   to: string;
-  client: Client;
+  client: ClientV2;
 }
 
 const Cover: FC<Props> = (props) => {
-  const { open, handleOpenCover } = useTheme1(props.client);
+  const { open, groom, bride, handleOpenCover } = useTheme1(props.client);
 
   return (
     <div
@@ -34,21 +34,23 @@ const Cover: FC<Props> = (props) => {
         slidesPerView={1}
         modules={[EffectFade, Autoplay]}
       >
-        {props.client.images.map((image, index) => (
-          <SwiperSlide
-            className="relative w-full h-full"
-            key={`cover-img-${index}`}
-          >
-            <ImageShimmer
-              fill
-              alt={`cover-img-${index}`}
-              priority
-              sizes="1080px"
-              className={`object-cover`}
-              src={image.url}
-            />
-          </SwiperSlide>
-        ))}
+        {Array.isArray(props.client.gallery) && props.client.gallery.length > 0
+          ? props.client.gallery.map((image: string, index: number) => (
+              <SwiperSlide
+                className="relative w-full h-full"
+                key={`cover-img-${index}`}
+              >
+                <ImageShimmer
+                  fill
+                  alt={`cover-img-${index}`}
+                  priority
+                  sizes="1080px"
+                  className="object-cover"
+                  src={image}
+                />
+              </SwiperSlide>
+            ))
+          : null}
       </Swiper>
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#000000c5] z-10"></div>
@@ -61,7 +63,7 @@ const Cover: FC<Props> = (props) => {
         <h1
           className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
         >
-          {props.client.male_nickname} & {props.client.female_nickname}
+          {groom?.nickname} & {bride?.nickname}
         </h1>
         <p
           className={`text-white mt-2 lg:mt-4 font-light text-sm lg:text-base ${montserrat.className}`}

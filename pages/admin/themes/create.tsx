@@ -34,8 +34,7 @@ const CreateTheme: React.FC = () => {
               onChange={actions.handleChange}
               name="price"
               label="Price"
-              type="number"
-              value={state.formData.price}
+              value={state.formData.price.toString()}
             />
           </div>
           <Input
@@ -43,10 +42,13 @@ const CreateTheme: React.FC = () => {
             name="thumbnail"
             type="File"
             label="Thumbnail"
-            value={state.formData.thumbnail?.name}
           />
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
-            <ButtonPrimary title="Add Theme" icon={<BiFolderPlus />} />
+            <ButtonPrimary
+              loading={state.loading}
+              title="Add Theme"
+              icon={<BiFolderPlus />}
+            />
           </div>
         </form>
       </div>

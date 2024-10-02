@@ -6,6 +6,7 @@ import { ClientV2, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { upload } from "@vercel/blob/client";
 
 const initialParticipants: Participant = {
   name: "",
@@ -16,6 +17,7 @@ const initialParticipants: Participant = {
   parents_male: "",
   parents_female: "",
   role: "participant",
+  image: null,
 };
 
 const initalFormData: ClientV2 = {
@@ -29,11 +31,13 @@ const initalFormData: ClientV2 = {
   theme_id: null,
   status: "unpaid",
   participants: [initialParticipants],
+  gallery: [],
 };
 
 export const useAdminCreateClient = () => {
   const [formData, setFormData] = useState<ClientV2>(initalFormData);
   const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
     {
       label: "",
@@ -62,6 +66,51 @@ export const useAdminCreateClient = () => {
     }
   }, [themes]);
 
+  const handleUploadGallery = async () => {
+    const imageURLs: string[] = [];
+    if (formData.gallery && formData.gallery.length > 0) {
+      const MAX_SIZE = 2 * 1024 * 1024;
+
+      let i = 0;
+
+      if (formData.gallery instanceof FileList) {
+        const images = formData.gallery;
+        for (const image of Array.from(formData.gallery)) {
+          i++;
+          const toastUpload = toast.loading(
+            `Uploading image ${i} of ${images.length}`
+          );
+          try {
+            if (image.size > MAX_SIZE) {
+              toast.error(`Image (${i}) size to large`, { id: toastUpload });
+              continue;
+            }
+            const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+              method: "POST",
+              body: image,
+            });
+            const result = await res.json();
+            if (result.success) {
+              toast.success(
+                `Image ${i} of ${images.length} uploaded successfully!`,
+                { id: toastUpload }
+              );
+              imageURLs.push(result.data.url);
+            }
+          } catch (error: any) {
+            toast.error(
+              error.message || `Error uploading image ${i} of ${images.length}`,
+              {
+                id: toastUpload,
+              }
+            );
+          }
+        }
+      }
+    }
+    return imageURLs;
+  };
+
   const handletoggleEndTime = () => {
     setToggleEndTime(!toggleEndTime);
     setFormData((state) => ({
@@ -71,8 +120,11 @@ export const useAdminCreateClient = () => {
         : "Selesai",
     }));
   };
-  const handleChangeClient = (value: string | number, name: string) => {
-    console.log(value);
+
+  const handleChangeClient = (
+    value: string | number | FileList,
+    name: string
+  ) => {
     setFormData((state) => ({
       ...state,
       [name]: value,
@@ -106,19 +158,28 @@ export const useAdminCreateClient = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+
+    const newGalleryURLs = await handleUploadGallery();
+
+    const modifiedFormdata: ClientV2 = { ...formData };
+    modifiedFormdata["gallery"] = newGalleryURLs;
 
     const createClient = useClient("/api/clientv2", {
       method: "POST",
-      body: JSON.stringify(formData),
+      body: JSON.stringify(modifiedFormdata),
     });
 
     toast.promise(createClient, {
       loading: "Creating new client...",
       success: () => {
+        setFormData(initalFormData);
+        setLoading(false);
         router.push("/admin/clients");
         return "Successfully created new client";
       },
       error: (error: any) => {
+        setLoading(false);
         return error.message || "Failed to create new client";
       },
     });
@@ -129,6 +190,7 @@ export const useAdminCreateClient = () => {
       formData,
       themeOptions,
       toggleEndTime,
+      loading,
     },
     actions: {
       handleChangeClient,

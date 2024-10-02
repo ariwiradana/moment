@@ -1,5 +1,6 @@
 import handleError from "@/lib/errorHandling";
 import { ClientV2, Participant } from "@/lib/types";
+import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -108,8 +109,8 @@ export default async function handler(
         }
 
         const queryClient = `
-          INSERT INTO clients (slug, name, address, address_url, address_full, date, start_time, end_time, theme_id, status)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+          INSERT INTO clients (slug, name, address, address_url, address_full, date, start_time, end_time, theme_id, status, gallery)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
           RETURNING *;
         `;
 
@@ -124,6 +125,7 @@ export default async function handler(
           client.end_time,
           client.theme_id,
           client.status,
+          client.gallery,
         ]);
         const clientId = resultClient.rows[0].id;
 
@@ -181,8 +183,9 @@ export default async function handler(
             start_time = $6, 
             end_time = $7, 
             theme_id = $8,
-            slug = $9
-          WHERE id = $10
+            slug = $9,
+            gallery = $10
+          WHERE id = $11
           RETURNING *;`;
 
         await sql.query(updateClientQuery, [
@@ -195,6 +198,7 @@ export default async function handler(
           client.end_time,
           client.theme_id,
           slug,
+          client.gallery,
           Number(id),
         ]);
 
@@ -271,15 +275,25 @@ export default async function handler(
       try {
         const { id } = req.query;
 
-        const checkId =
-          await sql`SELECT EXISTS (SELECT 1 FROM clients WHERE id = ${Number(
-            id
-          )});`;
-        if (!checkId.rows[0].exists) {
+        if (!id || isNaN(Number(id))) {
+          return handleError(res, new Error("Invalid ID provided."));
+        }
+
+        const { rows: currentClient } = await sql`
+          SELECT * FROM clients WHERE id = ${Number(id)}
+        `;
+
+        if (!currentClient.length) {
           return handleError(
             res,
-            new Error("Client not exists with the provided id.")
+            new Error("Client does not exist with the provided ID.")
           );
+        }
+
+        const galleryURLs: string[] = currentClient[0].gallery;
+        if (galleryURLs.length) {
+          const deletePromises = galleryURLs.map((url) => del(url));
+          await Promise.all(deletePromises);
         }
 
         await sql.query({

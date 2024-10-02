@@ -1,20 +1,20 @@
 import React, { FC } from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
-import { Client } from "@/lib/types";
+import { ClientV2 } from "@/lib/types";
 import useTheme1 from "@/hooks/useTheme1";
 import HeroComponent from "./layouts/hero";
 import BridesComponent from "./layouts/brides";
 import LocationTimeComponent from "./layouts/location.time";
 interface Props {
   to: string;
-  client: Client;
+  client: ClientV2;
 }
 
 const Theme1: FC<Props> = (props) => {
-  const bridesNickname = `${props.client.male_nickname} & ${props.client.female_nickname}`;
+  const { open, groom, bride } = useTheme1(props.client);
 
-  const { open } = useTheme1(props.client);
+  const bridesNickname = `${groom?.nickname} & ${bride?.nickname}`;
 
   return (
     <Layout pageTitle={bridesNickname}>

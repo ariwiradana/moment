@@ -7,13 +7,9 @@ import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
-import {
-  BiDetail,
-  BiMoneyWithdraw,
-  BiPlus,
-  BiTrash,
-} from "react-icons/bi";
+import { BiDetail, BiMoneyWithdraw, BiPlus, BiTrash } from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
+import { getRandomColors } from "@/utils/getRandomColor";
 
 const ClientDashboard: React.FC = () => {
   const { state, actions } = useAdminClients();
@@ -37,9 +33,24 @@ const ClientDashboard: React.FC = () => {
           {state.clients.map((client) => (
             <div key={client.id} className="border rounded-lg p-3">
               <div className="flex justify-between items-center pb-3 border-b">
-                <h1 className="text-gray-800 font-semibold text-sm">
-                  {client.name}
-                </h1>
+                <div className="flex items-center gap-x-2">
+                  <div
+                    style={{
+                      backgroundColor: getRandomColors(),
+                    }}
+                    className="w-8 h-8 rounded-full flex justify-center items-center font-medium text-white text-sm p-1"
+                  >
+                    {getInitial(client.name)}
+                  </div>
+                  <div>
+                    <h1 className="text-gray-800 font-semibold text-sm">
+                      {client.name}
+                    </h1>
+                    <p className="text-gray-500 font-medium text-xs">
+                      {client.slug}
+                    </p>
+                  </div>
+                </div>
                 <div className="flex items-center text-sm font-semibold">
                   {client.status === "paid" ? (
                     <div className="bg-[#eefbf4] px-3 py-1 rounded-lg flex items-center gap-x-2">
@@ -79,7 +90,7 @@ const ClientDashboard: React.FC = () => {
                 </div>
               </div>
               <div className="border-t pt-3 flex justify-end gap-x-3">
-                <ButtonSecondary
+                <ButtonPrimary
                   type="button"
                   size="extrasmall"
                   title="Paid"
@@ -141,8 +152,13 @@ const ClientDashboard: React.FC = () => {
                   >
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                       <div className="flex items-center gap-x-3">
-                        <div className="h-10 w-10 rounded-full bg-gray-100 aspect-square flex justify-center items-center text-base">
-                          <span>{getInitial(client.name)}</span>
+                        <div
+                          style={{
+                            backgroundColor: getRandomColors(),
+                          }}
+                          className="h-10 w-10 rounded-full aspect-square flex justify-center items-center text-base"
+                        >
+                          <span className="text-white font-medium">{getInitial(client.name)}</span>
                         </div>
                         <span>{client.name}</span>
                       </div>

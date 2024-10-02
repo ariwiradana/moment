@@ -1,4 +1,5 @@
 import handleError from "@/lib/errorHandling";
+import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -55,15 +56,6 @@ export default async function handler(
       try {
         const { name, price, thumbnail } = req.body;
 
-        const checkName =
-          await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE name = ${name});`;
-        if (checkName.rows[0].exists) {
-          return handleError(
-            res,
-            new Error("Theme exists with the provided name.")
-          );
-        }
-
         const { rows } =
           await sql`INSERT INTO themes (name, price, thumbnail) VALUES (${name}, ${price}, ${thumbnail}) RETURNING *;`;
 
@@ -103,21 +95,27 @@ export default async function handler(
       try {
         const { id } = req.query;
 
-        const checkId =
-          await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE id = ${Number(
-            id
-          )});`;
-        if (!checkId.rows[0].exists) {
+        if (!id || isNaN(Number(id))) {
+          return handleError(res, new Error("Invalid ID provided."));
+        }
+
+        const { rows: currentTheme } = await sql`
+          SELECT * FROM themes WHERE id = ${Number(id)}
+        `;
+
+        if (!currentTheme.length) {
           return handleError(
             res,
-            new Error("Theme not exists with the provided id.")
+            new Error("Theme does not exist with the provided ID.")
           );
         }
 
-        const { rows } = await sql.query({
-          text: `DELETE FROM themes WHERE id = $1`,
-          values: [id],
-        });
+        const thumbnailURL = currentTheme[0].thumbnail;
+        if (thumbnailURL) await del(thumbnailURL);
+
+        const { rows } = await sql`
+          DELETE FROM themes WHERE id = ${Number(id)} RETURNING *;
+        `;
 
         return res.status(200).json({
           success: true,

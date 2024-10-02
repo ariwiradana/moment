@@ -86,6 +86,7 @@ export interface Participant {
   child: string;
   parents_male: string;
   parents_female: string;
+  image: string | null;
   gender: "male" | "female";
   role: "bride" | "groom" | "participant";
 }
@@ -98,6 +99,7 @@ export interface ClientV2 {
   address_url: string;
   address_full: string;
   participants: Participant[];
+  gallery?: string[] | FileList | [];
   date: string;
   status?: "paid" | "unpaid";
   start_time: string;

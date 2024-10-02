@@ -17,6 +17,7 @@ const initialParticipants: Participant = {
   parents_female: "",
   role: "participant",
   client_id: null,
+  image: null,
 };
 const initalFormData: ClientV2 = {
   name: "",
@@ -28,10 +29,11 @@ const initalFormData: ClientV2 = {
   end_time: "Selesai",
   theme_id: null,
   participants: [initialParticipants],
+  gallery: [],
 };
 
 export const useAdminUpdateClient = (slug: string) => {
-  const { data: client, mutate } = useSWR<{
+  const { data: client, mutate, isLoading } = useSWR<{
     success: boolean;
     data: ClientV2[];
   }>(slug ? `/api/clientv2?slug=${slug}` : undefined, fetcher);
@@ -44,13 +46,14 @@ export const useAdminUpdateClient = (slug: string) => {
 
   const [formData, setFormData] = useState<ClientV2>(initalFormData);
   const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
     },
   ]);
-  const router = useRouter();
+  const [images, setImages] = useState<FileList | null>(null);
 
   useEffect(() => {
     if (themes && themes.data.length > 0) {
@@ -77,6 +80,7 @@ export const useAdminUpdateClient = (slug: string) => {
           gender: p.gender,
           child: p.child,
           role: p.role,
+          image: p.image,
         })
       );
 
@@ -96,12 +100,19 @@ export const useAdminUpdateClient = (slug: string) => {
         start_time: currentClient.start_time,
         end_time: currentClient.end_time,
         theme_id: currentClient.theme_id,
+        gallery: currentClient.gallery,
         participants: currentParticipants,
       }));
     }
   }, [client]);
 
-  const handleChangeClient = (value: string | number, name: string) => {
+  const handleChangeClient = (
+    value: string | number | FileList,
+    name: string
+  ) => {
+    if (name === "images") {
+      setImages(value as FileList);
+    }
     setFormData((state) => ({
       ...state,
       [name]: value,
@@ -133,8 +144,8 @@ export const useAdminUpdateClient = (slug: string) => {
     let currentParticipants: Participant[] = [...formData.participants];
 
     currentParticipants[index] = {
-      client_id: client?.data[0].id,
       ...currentParticipants[index],
+      client_id: client?.data[0].id,
       [name]: value,
     };
 
@@ -144,21 +155,76 @@ export const useAdminUpdateClient = (slug: string) => {
     });
   };
 
+  const handleUploadGallery = async () => {
+    const imageURLs: string[] = [];
+    if (images && images.length) {
+      const MAX_SIZE = 2 * 1024 * 1024;
+
+      let i = 0;
+
+      if (images instanceof FileList) {
+        for (const image of Array.from(images)) {
+          i++;
+          const toastUpload = toast.loading(
+            `Uploading image ${i} of ${images.length}`
+          );
+          try {
+            if (image.size > MAX_SIZE) {
+              toast.error(`Image ${i} size to large`, { id: toastUpload });
+              continue;
+            }
+            const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+              method: "POST",
+              body: image,
+            });
+            const result = await res.json();
+            if (result.success) {
+              toast.success(
+                `Image ${i} of ${images.length} uploaded successfully!`,
+                { id: toastUpload }
+              );
+              imageURLs.push(result.data.url);
+            }
+          } catch (error: any) {
+            toast.error(
+              error.message || `Error uploading image ${i} of ${images.length}`,
+              {
+                id: toastUpload,
+              }
+            );
+          }
+        }
+      }
+    }
+    return imageURLs;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+
+    const newGalleryURLs = await handleUploadGallery();
+
+    const modifiedFormdata: ClientV2 = { ...formData };
+    const currentGallery = Array.isArray(formData.gallery)
+      ? formData.gallery
+      : [];
+    modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
 
     const updateClient = useClient(`/api/clientv2?id=${client?.data[0].id}`, {
       method: "PUT",
-      body: JSON.stringify(formData),
+      body: JSON.stringify(modifiedFormdata),
     });
 
     toast.promise(updateClient, {
       loading: "Updating client...",
       success: () => {
-        router.push("/admin/clients");
+        mutate();
+        setLoading(false);
         return "Successfully update client";
       },
       error: (error: any) => {
+        setLoading(false);
         return error.message || "Failed to update client";
       },
     });
@@ -169,6 +235,9 @@ export const useAdminUpdateClient = (slug: string) => {
       formData,
       themeOptions,
       toggleEndTime,
+      images,
+      loading,
+      isLoading,
     },
     actions: {
       handleChangeClient,

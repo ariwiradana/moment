@@ -19,6 +19,7 @@ import InputSelect from "@/components/admin/elements/select";
 import { ChildOrderOptions } from "@/constants/childOrder";
 import { GenderOptions } from "@/constants/gender";
 import { roleOptions } from "@/constants/roles";
+import Image from "next/image";
 
 interface UpdateClientProps {
   slug: string;
@@ -134,6 +135,34 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             }
             label="Theme"
           />
+
+          <Input
+            accept="image/*"
+            type="file"
+            multiple
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.files as FileList, "images")
+            }
+            className="w-full"
+            label="Gallery"
+          />
+
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+            {Array.isArray(state.formData.gallery) &&
+            state.formData.gallery.length > 0
+              ? state.formData.gallery.map((img: string, index: number) => (
+                  <div className="relative w-full aspect-square" key={index}>
+                    <Image
+                      alt={`gallery-${index + 1}`}
+                      src={img}
+                      fill
+                      className="object-cover w-full rounded-lg"
+                    />
+                  </div>
+                ))
+              : null}
+          </div>
+
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
           <div className="flex flex-col gap-y-4">
             {state.formData.participants.map((participant, index) => (
@@ -261,6 +290,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
           </div>
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
+              loading={state.loading || state.isLoading}
               type="submit"
               title="Update Client"
               icon={<BiEdit />}

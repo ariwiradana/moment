@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from "react";
+import { BiLoaderAlt } from "react-icons/bi";
 
 interface ButtonPrimaryProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -6,6 +7,7 @@ interface ButtonPrimaryProps
   className?: string | "";
   icon?: ReactNode;
   size?: "extrasmall" | "small" | "medium" | "large";
+  loading?: boolean;
 }
 
 const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
@@ -29,9 +31,13 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
         props.className ?? ""
       } flex items-center rounded-lg text-white font-medium bg-admin-dark transition duration-200 hover:bg-admin-hover-dark justify-start ${buttonStyles(
         props.size ?? "large"
-      )}`}
+      )} ${
+        props.loading && "pointer-events-none bg-opacity-10 cursor-not-allowed"
+      }`}
     >
-      <span className="text-sm md:text-base lg:text-lg">{props.icon}</span>
+      <span className="text-sm md:text-base lg:text-lg">
+        {props.loading ? <BiLoaderAlt className="animate-spin" /> : props.icon}
+      </span>
       <span>{props.title}</span>
     </button>
   );
