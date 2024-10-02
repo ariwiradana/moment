@@ -139,7 +139,7 @@ export const useAdminCreateClient = () => {
   };
 
   const handleChangeParticipant = (
-    value: string | number,
+    value: string | number | FileList,
     name: string,
     index: number
   ) => {
@@ -184,6 +184,8 @@ export const useAdminCreateClient = () => {
       },
     });
   };
+
+  console.log(formData);
 
   return {
     state: {

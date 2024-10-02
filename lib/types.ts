@@ -86,7 +86,7 @@ export interface Participant {
   child: string;
   parents_male: string;
   parents_female: string;
-  image: string | null;
+  image: string | null | FileList;
   gender: "male" | "female";
   role: "bride" | "groom" | "participant";
 }

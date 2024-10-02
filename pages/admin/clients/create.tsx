@@ -200,6 +200,18 @@ const CreateClient: React.FC = () => {
                         }
                       />
                     </div>
+                    <Input
+                      className="w-full"
+                      type="file"
+                      label="Image"
+                      onChange={(e) =>
+                        actions.handleChangeParticipant(
+                          e.target.files as FileList,
+                          "image",
+                          index
+                        )
+                      }
+                    />
                     <InputTextarea
                       value={state.formData.participants[index].address}
                       label="Address Full"

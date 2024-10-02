@@ -76,7 +76,7 @@ const BridesComponent: FC<Props> = (props) => {
                   sizes="320px"
                   alt="male"
                   fill
-                  src={groom?.image ?? ""}
+                  src={groom?.image as string}
                   className="object-cover rounded-full"
                 />
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
@@ -124,7 +124,7 @@ const BridesComponent: FC<Props> = (props) => {
                   sizes="320px"
                   alt="female"
                   fill
-                  src={bride?.image ?? ""}
+                  src={bride?.image as string}
                   className="object-cover rounded-full"
                 />
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
