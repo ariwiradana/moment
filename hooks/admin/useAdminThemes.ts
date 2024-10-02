@@ -1,8 +1,7 @@
 import useSWR from "swr";
 import { Theme } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
-import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 
 export const useAdminThemes = () => {
   const [page, setPage] = useState<number>(1);
@@ -20,31 +19,6 @@ export const useAdminThemes = () => {
   ) => {
     setPage(value);
   };
-
-  const isLoadingRef = useRef(isLoading);
-
-  useEffect(() => {
-    let toastId: string | undefined;
-    if (isLoading && !isLoadingRef.current) {
-      toastId = toast.loading("Loading theme data...");
-    } else if (!isLoading && isLoadingRef.current) {
-      if (data) {
-        toast.success("Theme data loaded successfully!", {
-          id: toastId,
-        });
-      } else {
-        toast.error("Failed to load theme data.", {
-          id: toastId,
-        });
-      }
-    }
-    isLoadingRef.current = isLoading;
-    return () => {
-      if (toastId) {
-        toast.dismiss(toastId);
-      }
-    };
-  }, [isLoading, data]);
 
   return {
     state: {

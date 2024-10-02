@@ -17,7 +17,7 @@ interface UpdateClientProps {
 }
 
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
-  const { client } = useAdminClient(slug);
+  const { state } = useAdminClient(slug);
 
   return (
     <AdminLayout>
@@ -30,42 +30,42 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
         </Link>
         <h1 className="text-2xl font-bold mb-8 mt-2">Client Detail</h1>
         <form className="mt-8 max-w-screen-md flex flex-col gap-y-4">
-          <Input label="Client Name" defaultValue={client?.name} />
+          <Input label="Client Name" defaultValue={state.client?.name} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <Input
               className="w-full"
               label="Address"
-              defaultValue={client?.address}
+              defaultValue={state.client?.address}
             />
             <Input
               className="w-full"
               label="Address URL"
-              defaultValue={client?.address_url}
+              defaultValue={state.client?.address_url}
             />
           </div>
           <InputTextarea
             label="Address Full"
-            defaultValue={client?.address_full ?? ""}
+            defaultValue={state.client?.address_full ?? ""}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <Input
               className="w-full"
               type="date"
               label="Date"
-              defaultValue={moment(client?.date).format("YYYY-MM-DD")}
+              defaultValue={moment(state.client?.date).format("YYYY-MM-DD")}
             />
             <Input
               className="w-full"
               label="Time"
-              defaultValue={client?.time}
+              defaultValue={state.client?.time}
             />
           </div>
 
-          <Input label="Theme" defaultValue={client?.theme_name} />
+          <Input label="Theme" defaultValue={state.client?.theme_name} />
 
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
           <div className="flex flex-col gap-y-4">
-            {client?.participants.map((participant, index) => (
+            {state.client?.participants.map((participant, index) => (
               <Accordion
                 key={`participant-${participant.id}`}
                 title={`Participant ${index + 1}`}
