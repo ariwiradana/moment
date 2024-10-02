@@ -10,6 +10,8 @@ import ButtonSecondary from "@/components/admin/elements/button.secondary";
 import Accordion from "@/components/admin/elements/accordion.button";
 import { useAdminCreateClient } from "@/hooks/admin/useAdminCreateClient";
 import InputSelect from "@/components/admin/elements/select";
+import { GenderOptions } from "@/constants/gender";
+import { ChildOrderOptions } from "@/constants/childOrder";
 
 const CreateClient: React.FC = () => {
   const { state, actions } = useAdminCreateClient();
@@ -159,10 +161,9 @@ const CreateClient: React.FC = () => {
                       }
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <Input
+                      <InputSelect
                         value={state.formData.participants[index].gender}
-                        className="w-full"
-                        label="Gender"
+                        options={GenderOptions}
                         onChange={(e) =>
                           actions.handleChangeParticipant(
                             e.target.value,
@@ -170,11 +171,11 @@ const CreateClient: React.FC = () => {
                             index
                           )
                         }
+                        label="Gender"
                       />
-                      <Input
+                      <InputSelect
                         value={state.formData.participants[index].child}
-                        className="w-full"
-                        label="Child Order"
+                        options={ChildOrderOptions}
                         onChange={(e) =>
                           actions.handleChangeParticipant(
                             e.target.value,
@@ -182,6 +183,7 @@ const CreateClient: React.FC = () => {
                             index
                           )
                         }
+                        label="Child Order"
                       />
                     </div>
                   </div>

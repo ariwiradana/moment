@@ -11,8 +11,8 @@ const initialParticipants: Participant = {
   name: "",
   nickname: "",
   address: "",
-  gender: "female",
-  child: "",
+  gender: "male",
+  child: "pertama",
   parents_male: "",
   parents_female: "",
 };
