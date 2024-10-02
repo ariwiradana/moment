@@ -67,7 +67,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
           <div className="flex flex-col gap-y-4">
             {client?.participants.map((participant, index) => (
               <Accordion
-                key={`participant-${participant.participant_id}`}
+                key={`participant-${participant.id}`}
                 title={`Participant ${index + 1}`}
                 content={
                   <div className="flex flex-col gap-y-4">

@@ -72,7 +72,7 @@ export interface Theme {
 }
 
 export interface Participant {
-  participant_id: number;
+  id: number;
   name: string;
   nickname: string;
   address: string;
@@ -92,5 +92,5 @@ export interface ClientV2 {
   participants: Participant[];
   date: string;
   time: string;
-  theme: Theme | null;
+  theme: Theme;
 }

@@ -1,15 +1,15 @@
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import ButtonSecondary from "@/components/admin/elements/button.secondary";
-import ButtonSecondaryIcon from "@/components/admin/elements/button.secondary.icon";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminThemes } from "@/hooks/admin/useAdminThemes";
 import { montserrat } from "@/lib/fonts";
+import { Pagination } from "@mui/material";
 import Link from "next/link";
 import React from "react";
-import { BiPlus, BiTrash } from "react-icons/bi";
+import { BiPlus, BiShowAlt, BiTrash } from "react-icons/bi";
 
 const ClientDashboard: React.FC = () => {
-  const { themes } = useAdminThemes();
+  const { state, actions } = useAdminThemes();
 
   return (
     <AdminLayout>
@@ -27,16 +27,27 @@ const ClientDashboard: React.FC = () => {
         </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
-          {themes.map((theme) => (
-            <div key={theme.id} className="border border-admin-border rounded-lg p-3 flex justify-between items-center">
-              <h1 className="text-gray-800 font-semibold text-sm">
-                {theme.name}
-              </h1>
-              <ButtonSecondaryIcon
-                size="extrasmall"
-                title="Delete"
-                icon={<BiTrash className="text-base" />}
-              />
+          {state.themes.map((theme) => (
+            <div key={theme.id} className="border rounded-lg p-3">
+              <div className="flex justify-between items-center pb-3 border-b">
+                <h1 className="text-gray-800 font-semibold text-sm">
+                  {theme.name}
+                </h1>
+              </div>
+              <div className=" pt-3 flex justify-end gap-x-3">
+                <Link target="_blank" href={`/themes/${theme.id}`}>
+                  <ButtonPrimary
+                    size="extrasmall"
+                    title="Preview"
+                    icon={<BiShowAlt className="text-base" />}
+                  />
+                </Link>
+                <ButtonSecondary
+                  size="extrasmall"
+                  title="Delete"
+                  icon={<BiTrash className="text-base" />}
+                />
+              </div>
             </div>
           ))}
         </div>
@@ -54,11 +65,11 @@ const ClientDashboard: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {themes.map((theme, index) => (
+              {state.themes.map((theme, index) => (
                 <tr
                   key={theme.id}
                   className={`border-b ${
-                    themes.length - 1 === index
+                    state.themes.length - 1 === index
                       ? "border-b-transparent"
                       : "border-b-gray-200"
                   }`}
@@ -80,6 +91,16 @@ const ClientDashboard: React.FC = () => {
             </tbody>
           </table>
         </div>
+        {state.toalRows > state.limit && (
+          <div className="mt-6 flex justify-center">
+            <Pagination
+              page={state.page}
+              onChange={actions.handleChangePagination}
+              count={Math.ceil(state.toalRows / state.limit)}
+              shape="rounded"
+            />
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

@@ -3,6 +3,7 @@ import { FC } from "react";
 import { montserrat } from "@/lib/fonts";
 import ImageShimmer from "../image.shimmer";
 import { useAdminSidebar } from "@/hooks/admin/useAdminSidebar";
+import { getGreeting } from "@/utils/getGreeting";
 
 const Navbar: FC = () => {
   const { isSidebarOpen, toggleSidebar } = useAdminSidebar();
@@ -29,7 +30,7 @@ const Navbar: FC = () => {
         </div>
         <div>
           <h1 className="font-semibold text-admin-dark">Admin</h1>
-          <p className="text-xs text-darkgray">Session ends in 9m 5s</p>
+          <p className="text-xs text-darkgray">{getGreeting()}, have a good day!</p>
         </div>
       </div>
       <button onClick={toggleSidebar}>

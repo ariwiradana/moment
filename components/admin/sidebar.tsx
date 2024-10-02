@@ -7,6 +7,7 @@ import { montserrat } from "@/lib/fonts";
 import { capitalizeWords } from "@/utils/capitalizeWords";
 import ImageShimmer from "../image.shimmer";
 import { useAdminSidebar } from "@/hooks/admin/useAdminSidebar";
+import { getGreeting } from "@/utils/getGreeting";
 
 type MenuItem = {
   name: string;
@@ -53,7 +54,9 @@ const Sidebar: FC = () => {
             </div>
             <div className="pr-4">
               <h1 className="font-semibold text-admin-dark">Admin</h1>
-              <p className="text-xs text-darkgray">Session ends in 9m 5s</p>
+              <p className="text-xs text-darkgray">
+                {getGreeting()}, have a good day!
+              </p>
             </div>
             <button
               className="self-start ml-4 outline-none md:hidden"

@@ -3,25 +3,11 @@ import { ClientV2, Participant } from "@/lib/types";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
-interface QueryResult {
-  id: number;
-  name: string;
-  slug: string;
-  address: string;
-  address_url: string;
-  address_full: string;
-  date: string;
-  time: string;
-  participant_id: number;
-  participant_name: string;
-  nickname: string;
-  participant_address: string;
-  child: string;
-  parents_male: string;
-  parents_female: string;
-  participant_gender: "male" | "female";
-  theme_id: number;
-  theme_name: string;
+
+interface Query {
+  slug?: string;
+  page?: number;
+  limit?: number;
 }
 
 export default async function handler(
@@ -31,89 +17,124 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-        const { slug } = req.query;
+        const { slug, page = 1, limit = 5 }: Query = req.query;
 
-        const query = `
-      SELECT 
-        c.id,
-        c.name,
-        c.slug,
-        c.address,
-        c.address_url,
-        c.address_full,
-        c.date,
-        c.time,
-        p.id AS participant_id,
-        p.name AS participant_name,
-        p.nickname,
-        p.address AS participant_address,
-        p.child,
-        p.parents_male,
-        p.parents_female,
-        p.gender AS participant_gender,
-        t.id AS theme_id,
-        t.name AS theme_name
-      FROM 
-        clients c
-      LEFT JOIN 
-        participants p ON p.client_id = c.id
-      LEFT JOIN 
-        themes t ON t.id = c.theme_id
-      ${slug ? `WHERE c.slug = $1` : ""} 
-      ORDER BY 
-        c.id;
-    `;
+        let query = `SELECT * FROM clients`;
+        let countQuery = `SELECT COUNT(*) FROM clients`;
 
-        const { rows } = await sql.query(query, slug ? [slug] : []);
+        const values: (number | string)[] = [];
+        const countValues: (number | string)[] = [];
 
-        const clients: ClientV2[] = rows.reduce(
-          (acc: ClientV2[], row: QueryResult) => {
-            const { id } = row;
+        if (slug) {
+          const valueIndex = values.length + 1;
+          query += ` WHERE slug = $${valueIndex}`;
+          countQuery += ` WHERE slug = $${valueIndex}`;
+          values.push(slug);
+          countValues.push(slug);
+        }
 
-            let clientData = acc.find((c) => c.id === id);
-            if (!clientData) {
-              clientData = {
-                id,
-                slug: row.slug,
-                name: row.name,
-                address: row.address,
-                address_url: row.address_url,
-                address_full: row.address_full,
-                participants: [],
-                date: row.date,
-                time: row.time,
-                theme: row.theme_id
-                  ? { id: row.theme_id, name: row.theme_name }
-                  : null,
-              };
-              acc.push(clientData);
-            }
+        const pageNumber = Number(page);
+        const limitNumber = Number(limit);
+        const offset = (pageNumber - 1) * limitNumber;
+        const valueIndex = values.length + 1;
+        query += ` LIMIT $${valueIndex} OFFSET $${valueIndex + 1}`;
+        values.push(limitNumber, offset);
 
-            if (row.participant_id) {
-              const participant: Participant = {
-                participant_id: row.participant_id,
-                name: row.participant_name,
-                nickname: row.nickname,
-                address: row.participant_address,
-                child: row.child,
-                parents_male: row.parents_male,
-                parents_female: row.parents_female,
-                gender: row.participant_gender,
-              };
-              clientData.participants.push(participant);
-            }
+        const { rows } = await sql.query(query, values);
+        const { rows: total } = await sql.query(countQuery, countValues);
 
-            return acc;
-          },
-          []
+        const clientIds = rows.map((client) => client.id);
+
+        const { rows: participants } = await sql.query(
+          `
+            SELECT p.*
+            FROM participants p
+            JOIN clients c ON p.client_id = c.id
+            WHERE c.id = ANY($1::int[])
+        `,
+          [clientIds]
         );
 
-        return res.status(200).json({ success: true, data: clients });
+        const clients = rows.map((client) => {
+          const clientParticipants = participants.filter(
+            (p) => p.client_id === client.id
+          );
+          return {
+            ...client,
+            participants: clientParticipants,
+          };
+        });
+
+        return res.status(200).json({
+          success: true,
+          data: clients,
+          total_rows: Number(total[0].count),
+          page: pageNumber,
+          limit: limitNumber,
+        });
       } catch (error) {
         handleError(res, error);
       }
 
     case "POST":
+      try {
+        const client: ClientV2 & { theme_id: number } = req.body;
+
+        if (client.theme_id) {
+          const checkTheme =
+            await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE id = ${client.theme_id});`;
+          if (!checkTheme.rows[0].exists) {
+            return handleError(
+              res,
+              new Error("Theme not found with the provided ID.")
+            );
+          }
+        }
+
+        const slug = client.name.toLocaleLowerCase().replace(" ", "-");
+
+        if (slug) {
+          const checkSlug =
+            await sql`SELECT EXISTS (SELECT 1 FROM clients WHERE slug = ${slug});`;
+          if (checkSlug.rows[0].exists) {
+            return handleError(
+              res,
+              new Error("Client exists with the provided slug.")
+            );
+          }
+        }
+
+        const queryClient = sql`
+          INSERT INTO clients (slug, name, address, address_url, address_full, date, time, theme_id)
+          VALUES (${slug}, ${client.name}, ${client.address}, ${client.address_url},
+                  ${client.address_full}, ${client.date}, ${client.time}, ${client.theme_id})
+          RETURNING *;
+        `;
+        const resultClient = await queryClient;
+        const clientId = resultClient.rows[0].id;
+
+        const participants: Participant[] = client.participants;
+        const participantPromises = participants.map(
+          (participant: Participant) => {
+            return sql`
+            INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender)
+            VALUES (${clientId}, ${participant.name}, ${participant.nickname}, ${participant.address}, ${participant.child},
+              ${participant.parents_male}, ${participant.parents_female}, ${participant.gender});
+          `;
+          }
+        );
+        await Promise.all(participantPromises);
+
+        const newClient = resultClient.rows[0];
+        newClient["participants"] = participants.map((participant) => ({
+          ...participant,
+          id: clientId,
+        }));
+
+        return res.status(200).json({ success: true, data: newClient });
+      } catch (error) {
+        handleError(res, error);
+      }
     case "PUT":
     case "DELETE":
 

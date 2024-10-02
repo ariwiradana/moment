@@ -8,21 +8,10 @@ import moment from "moment";
 import Link from "next/link";
 import React from "react";
 import { BiDetail, BiPlus, BiTrash } from "react-icons/bi";
+import Pagination from "@mui/material/Pagination";
 
 const ClientDashboard: React.FC = () => {
-  const { clients, isLoading, isError } = useAdminClients();
-
-  console.log(clients);
-
-  if (isLoading) {
-    return <div className="text-center">Loading...</div>;
-  }
-
-  if (isError) {
-    return (
-      <div className="text-center text-red-500">Error loading clients.</div>
-    );
-  }
+  const { state, actions } = useAdminClients();
 
   return (
     <AdminLayout>
@@ -40,7 +29,7 @@ const ClientDashboard: React.FC = () => {
         </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
-          {clients.map((client) => (
+          {state.clients.map((client) => (
             <div key={client.id} className="border rounded-lg p-3">
               <div className="flex justify-between items-center pb-3 border-b">
                 <h1 className="text-gray-800 font-semibold text-sm">
@@ -113,11 +102,11 @@ const ClientDashboard: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {clients.map((client, index) => (
+              {state.clients.map((client, index) => (
                 <tr
                   key={client.id}
                   className={`border-b ${
-                    clients.length - 1 === index
+                    state.clients.length - 1 === index
                       ? "border-b-transparent"
                       : "border-b-gray-200"
                   }`}
@@ -163,6 +152,17 @@ const ClientDashboard: React.FC = () => {
             </tbody>
           </table>
         </div>
+
+        {state.toalRows > state.limit && (
+          <div className="mt-6 flex justify-center">
+            <Pagination
+              page={state.page}
+              onChange={actions.handleChangePagination}
+              count={Math.ceil(state.toalRows / state.limit)}
+              shape="rounded"
+            />
+          </div>
+        )}
       </div>
     </AdminLayout>
   );
