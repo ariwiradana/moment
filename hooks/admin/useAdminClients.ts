@@ -10,7 +10,7 @@ export const useAdminClients = () => {
 
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
-    data: ClientV2[];
+    data: (ClientV2)[];
     total_rows: number;
   }>(`/api/clientv2?page=${page}&limit=${limit}`, fetcher);
 
@@ -43,7 +43,7 @@ export const useAdminClients = () => {
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-  setPage(value);
+    setPage(value);
   };
 
   return {

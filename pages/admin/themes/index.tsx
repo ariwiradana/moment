@@ -52,14 +52,14 @@ const ClientDashboard: React.FC = () => {
           ))}
         </div>
 
-        <div className="border border-gray-200 px-2 pt-2 rounded-xl hidden lg:block">
+        <div className="border border-gray-200 rounded-xl hidden lg:block">
           <table className="table-fixed overflow-x-auto w-full table">
             <thead>
               <tr>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-l-lg">
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                   Name
                 </td>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-r-lg">
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
                   Actions
                 </td>
               </tr>

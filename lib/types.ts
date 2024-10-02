@@ -92,5 +92,6 @@ export interface ClientV2 {
   participants: Participant[];
   date: string;
   time: string;
-  theme: Theme;
+  theme_id: number;
+  theme_name: string;
 }

@@ -55,7 +55,7 @@ const ClientDashboard: React.FC = () => {
                 <div>
                   <p className="text-gray-500 font-medium text-xs">Theme</p>
                   <p className="text-gray-800 font-semibold text-sm">
-                    {client.theme?.name}
+                    {client.theme_name}
                   </p>
                 </div>
               </div>
@@ -77,11 +77,11 @@ const ClientDashboard: React.FC = () => {
           ))}
         </div>
 
-        <div className="border border-gray-200 px-2 pt-2 rounded-xl hidden lg:block">
+        <div className="border border-gray-200 rounded-xl hidden lg:block">
           <table className="table-fixed overflow-x-auto w-full table">
             <thead>
               <tr>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-l-lg">
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                   Client
                 </td>
                 <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
@@ -96,7 +96,7 @@ const ClientDashboard: React.FC = () => {
                 <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                   Theme
                 </td>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-r-lg">
+                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
                   Actions
                 </td>
               </tr>
@@ -129,7 +129,7 @@ const ClientDashboard: React.FC = () => {
                     {client.address_full}
                   </td>
                   <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    {client.theme?.name}
+                    {client.theme_name}
                   </td>
                   <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                     <div className="flex gap-x-2">

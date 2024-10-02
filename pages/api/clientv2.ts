@@ -3,7 +3,6 @@ import { ClientV2, Participant } from "@/lib/types";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
-
 interface Query {
   slug?: string;
   page?: number;
@@ -19,7 +18,11 @@ export default async function handler(
       try {
         const { slug, page = 1, limit = 5 }: Query = req.query;
 
-        let query = `SELECT * FROM clients`;
+        let query = `
+          SELECT c.*, t.name as theme_name
+          FROM clients c
+          LEFT JOIN themes t ON c.theme_id = t.id
+        `;
         let countQuery = `SELECT COUNT(*) FROM clients`;
 
         const values: (number | string)[] = [];

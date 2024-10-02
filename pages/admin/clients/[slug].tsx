@@ -61,7 +61,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             />
           </div>
 
-          <Input label="Theme" defaultValue={client?.theme?.name} />
+          <Input label="Theme" defaultValue={client?.theme_name} />
 
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
           <div className="flex flex-col gap-y-4">
