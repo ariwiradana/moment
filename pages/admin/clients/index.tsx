@@ -80,7 +80,7 @@ const ClientDashboard: React.FC = () => {
         </div>
 
         <div className="border border-gray-200 rounded-xl hidden lg:block">
-          <table className="table-fixed overflow-x-auto w-full table">
+          <table className="table-auto overflow-x-auto w-full table">
             <thead>
               <tr>
                 <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
@@ -134,7 +134,7 @@ const ClientDashboard: React.FC = () => {
                     {client.theme?.name ?? "-"}
                   </td>
                   <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex gap-2">
                       <Link href={`/admin/clients/${client.slug}`}>
                         <ButtonPrimary
                           size="extrasmall"
