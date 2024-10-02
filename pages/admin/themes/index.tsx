@@ -53,7 +53,7 @@ const ClientDashboard: React.FC = () => {
         </div>
 
         <div className="border border-gray-200 px-2 pt-2 rounded-xl hidden lg:block">
-          <table className="table-auto overflow-x-auto w-full table">
+          <table className="table-fixed overflow-x-auto w-full table">
             <thead>
               <tr>
                 <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-l-lg">
