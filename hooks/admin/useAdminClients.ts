@@ -2,6 +2,8 @@ import useSWR from "swr";
 import { ClientV2 } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
+import { useClient } from "@/lib/client";
+import toast from "react-hot-toast";
 
 export const useAdminClients = () => {
   const [page, setPage] = useState<number>(1);
@@ -20,6 +22,22 @@ export const useAdminClients = () => {
     setPage(value);
   };
 
+  const handleDelete = (id: number) => {
+    const deleteTheme = useClient(`/api/clientv2?id=${id}`, {
+      method: "DELETE",
+    });
+    toast.promise(deleteTheme, {
+      loading: "Deleting client...",
+      success: () => {
+        mutate();
+        return "Successfully deleted client";
+      },
+      error: (error: any) => {
+        return error.message || "Failed to delete client";
+      },
+    });
+  };
+
   return {
     state: {
       clients: data?.data || [],
@@ -32,6 +50,7 @@ export const useAdminClients = () => {
     actions: {
       mutate,
       handleChangePagination,
+      handleDelete,
     },
   };
 };

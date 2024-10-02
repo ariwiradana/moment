@@ -2,6 +2,8 @@ import useSWR from "swr";
 import { Theme } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useClient } from "@/lib/client";
 
 export const useAdminThemes = () => {
   const [page, setPage] = useState<number>(1);
@@ -20,6 +22,20 @@ export const useAdminThemes = () => {
     setPage(value);
   };
 
+  const handleDelete = (id: number) => {
+    const deleteTheme = useClient(`/api/themes?id=${id}`, { method: "DELETE" });
+    toast.promise(deleteTheme, {
+      loading: "Deleting theme...",
+      success: () => {
+        mutate();
+        return "Successfully deleted theme";
+      },
+      error: (error: any) => {
+        return error.message || "Failed to delete theme";
+      },
+    });
+  };
+
   return {
     state: {
       themes: data?.data || [],
@@ -32,6 +48,7 @@ export const useAdminThemes = () => {
     actions: {
       mutate,
       handleChangePagination,
+      handleDelete,
     },
   };
 };

@@ -71,8 +71,14 @@ export interface Theme {
   name: string;
 }
 
+export interface Option {
+  label: string;
+  value: number | string;
+}
+
 export interface Participant {
-  id: number;
+  id?: number;
+  client_id?: number | null;
   name: string;
   nickname: string;
   address: string;
@@ -83,15 +89,15 @@ export interface Participant {
 }
 
 export interface ClientV2 {
-  id: number;
+  id?: number;
   name: string;
-  slug: string;
+  slug?: string;
   address: string;
   address_url: string;
   address_full: string;
   participants: Participant[];
   date: string;
   time: string;
-  theme_id: number;
-  theme_name: string;
+  theme_id: number | null;
+  theme?: Theme | null;
 }

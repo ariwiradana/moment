@@ -1,3 +1,9 @@
+CREATE TABLE themes (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  thumbnail VARCHAR(255)
+);
+
 CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
@@ -5,7 +11,7 @@ CREATE TABLE clients (
   address VARCHAR(255),
   address_url VARCHAR(255),
   address_full TEXT,
-  theme_id INT REFERENCES themes(id) ON DELETE CASCADE,
+  theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
   date VARCHAR(100),
   time VARCHAR(100),
   gallery TEXT[]
@@ -13,7 +19,7 @@ CREATE TABLE clients (
 
 CREATE TABLE participants (
   id SERIAL PRIMARY KEY,
-  client_id INT REFERENCES clients(id) ON DELETE CASCADE,
+  client_id INT REFERENCES clients(id) ON DELETE SET NULL,
   name VARCHAR(255),
   nickname VARCHAR(255),
   address TEXT,
@@ -23,6 +29,7 @@ CREATE TABLE participants (
   image VARCHAR(100),
   gender VARCHAR(10) CHECK (gender IN ('male', 'female'))
 );
+
 
 INSERT INTO clients (name, slug, address, address_url, address_full, theme_id, date, time, gallery) 
 VALUES 

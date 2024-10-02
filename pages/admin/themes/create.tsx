@@ -5,9 +5,10 @@ import Input from "@/components/admin/elements/input";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import { BiFolderPlus, BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
-
+import { useAdminCreateTheme } from "@/hooks/admin/useAdminCreateTheme";
 
 const CreateTheme: React.FC = () => {
+  const { state, actions } = useAdminCreateTheme();
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -18,9 +19,23 @@ const CreateTheme: React.FC = () => {
           </div>
         </Link>
         <h1 className="text-2xl font-bold mb-8 mt-2">Add New Theme</h1>
-        <form className="mt-8 max-w-screen-md flex flex-col gap-y-4">
-          <Input label="Theme Name" />
-
+        <form
+          onSubmit={actions.handleSubmit}
+          className="mt-8 max-w-screen-md flex flex-col gap-y-4"
+        >
+          <Input
+            onChange={actions.handleChange}
+            name="name"
+            label="Theme Name"
+            value={state.formData.name}
+          />
+          <Input
+            onChange={actions.handleChange}
+            name="thumbnail"
+            type="File"
+            label="Thumbnail"
+            value={state.formData.thumbnail?.name}
+          />
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary title="Add Theme" icon={<BiFolderPlus />} />
           </div>

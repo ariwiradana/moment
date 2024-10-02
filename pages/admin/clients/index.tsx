@@ -55,7 +55,7 @@ const ClientDashboard: React.FC = () => {
                 <div>
                   <p className="text-gray-500 font-medium text-xs">Theme</p>
                   <p className="text-gray-800 font-semibold text-sm">
-                    {client.theme_name}
+                    {client.theme?.name ?? "-"}
                   </p>
                 </div>
               </div>
@@ -68,6 +68,8 @@ const ClientDashboard: React.FC = () => {
                   />
                 </Link>
                 <ButtonSecondary
+                  type="button"
+                  onClick={() => client.id && actions.handleDelete(client.id)}
                   size="extrasmall"
                   title="Delete"
                   icon={<BiTrash className="text-base" />}
@@ -129,10 +131,10 @@ const ClientDashboard: React.FC = () => {
                     {client.address_full}
                   </td>
                   <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    {client.theme_name}
+                    {client.theme?.name ?? "-"}
                   </td>
                   <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    <div className="flex gap-x-2">
+                    <div className="flex flex-wrap gap-2">
                       <Link href={`/admin/clients/${client.slug}`}>
                         <ButtonPrimary
                           size="extrasmall"
@@ -141,6 +143,10 @@ const ClientDashboard: React.FC = () => {
                         />
                       </Link>
                       <ButtonSecondary
+                        type="button"
+                        onClick={() =>
+                          client.id && actions.handleDelete(client.id)
+                        }
                         size="extrasmall"
                         title="Delete"
                         icon={<BiTrash className="text-base" />}

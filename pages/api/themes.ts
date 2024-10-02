@@ -15,7 +15,7 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-        const { id, page, limit }: Query = req.query;
+        const { id, page = 1, limit = 10 }: Query = req.query;
 
         let query = `SELECT * FROM themes`;
         let countQuery = `SELECT COUNT(*) FROM themes`;
@@ -52,8 +52,80 @@ export default async function handler(
       }
 
     case "POST":
+      try {
+        const { name, thumbnail } = req.body;
+
+        const checkName =
+          await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE name = ${name});`;
+        if (checkName.rows[0].exists) {
+          return handleError(
+            res,
+            new Error("Theme exists with the provided name.")
+          );
+        }
+
+        const { rows } =
+          await sql`INSERT INTO themes (name, thumbnail) VALUES (${name}, ${thumbnail}) RETURNING *;`;
+
+        return res.status(200).json({
+          success: true,
+          data: rows[0],
+          name,
+          thumbnail,
+        });
+      } catch (error) {
+        handleError(res, error);
+      }
     case "PUT":
+      try {
+        const { id, name } = req.body;
+
+        if (!id && !name) {
+          return handleError(res, new Error("Required fields: id, name."));
+        }
+
+        const text = `
+          UPDATE themes
+          SET name = $1
+          WHERE id = $2
+          RETURNING *;`;
+
+        const { rows } = await sql.query({ text, values: [name, id] });
+
+        return res.status(200).json({
+          success: true,
+          data: rows[0],
+        });
+      } catch (error) {
+        handleError(res, error);
+      }
     case "DELETE":
+      try {
+        const { id } = req.query;
+
+        const checkId =
+          await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE id = ${Number(
+            id
+          )});`;
+        if (!checkId.rows[0].exists) {
+          return handleError(
+            res,
+            new Error("Theme not exists with the provided id.")
+          );
+        }
+
+        const { rows } = await sql.query({
+          text: `DELETE FROM themes WHERE id = $1`,
+          values: [id],
+        });
+
+        return res.status(200).json({
+          success: true,
+          data: rows[0],
+        });
+      } catch (error) {
+        handleError(res, error);
+      }
 
     default:
       res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);

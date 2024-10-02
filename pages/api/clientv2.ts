@@ -16,13 +16,9 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-        const { slug, page = 1, limit = 5 }: Query = req.query;
+        const { slug, page = 1, limit = 10 }: Query = req.query;
 
-        let query = `
-          SELECT c.*, t.name as theme_name
-          FROM clients c
-          LEFT JOIN themes t ON c.theme_id = t.id
-        `;
+        let query = `SELECT * FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
 
         const values: (number | string)[] = [];
@@ -58,13 +54,17 @@ export default async function handler(
           [clientIds]
         );
 
-        const clients = rows.map((client) => {
+        const { rows: themes } = await sql.query(`SELECT * FROM themes`);
+
+        const clients = rows.map((client: ClientV2) => {
           const clientParticipants = participants.filter(
             (p) => p.client_id === client.id
           );
+          const clientTheme = themes.find((t) => t.id === client.theme_id);
           return {
             ...client,
             participants: clientParticipants,
+            theme: clientTheme,
           };
         });
 
@@ -140,6 +140,36 @@ export default async function handler(
       }
     case "PUT":
     case "DELETE":
+      try {
+        const { id } = req.query;
+
+        const checkId =
+          await sql`SELECT EXISTS (SELECT 1 FROM clients WHERE id = ${Number(
+            id
+          )});`;
+        if (!checkId.rows[0].exists) {
+          return handleError(
+            res,
+            new Error("Client not exists with the provided id.")
+          );
+        }
+
+        await sql.query({
+          text: `DELETE FROM clients WHERE id = $1`,
+          values: [id],
+        });
+
+        await sql.query({
+          text: `DELETE FROM participants WHERE client_id = $1`,
+          values: [id],
+        });
+
+        return res.status(200).json({
+          success: true,
+        });
+      } catch (error) {
+        handleError(res, error);
+      }
 
     default:
       res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
