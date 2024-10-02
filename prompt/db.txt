@@ -14,7 +14,8 @@ CREATE TABLE clients (
   address_full TEXT,
   theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
   date VARCHAR(100),
-  time VARCHAR(100),
+  start_time VARCHAR(100),
+  end_time VARCHAR(100),
   gallery TEXT[],
   status VARCHAR(10) CHECK (status IN ('paid', 'unpaid'))
 );

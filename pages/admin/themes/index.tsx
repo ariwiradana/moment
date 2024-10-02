@@ -3,6 +3,7 @@ import ButtonSecondary from "@/components/admin/elements/button.secondary";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminThemes } from "@/hooks/admin/useAdminThemes";
 import { montserrat } from "@/lib/fonts";
+import { formatToRupiah } from "@/utils/formatToRupiah";
 import { Pagination } from "@mui/material";
 import Link from "next/link";
 import React from "react";
@@ -62,6 +63,9 @@ const ClientDashboard: React.FC = () => {
                   <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                     Name
                   </td>
+                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                    Price
+                  </td>
                   <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
                     Actions
                   </td>
@@ -79,6 +83,9 @@ const ClientDashboard: React.FC = () => {
                   >
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                       {theme.name}
+                    </td>
+                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                      {formatToRupiah(theme.price)}
                     </td>
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                       <div className="flex gap-x-2">

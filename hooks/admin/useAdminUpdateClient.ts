@@ -16,8 +16,8 @@ const initialParticipants: Participant = {
   parents_male: "",
   parents_female: "",
   role: "participant",
+  client_id: null,
 };
-
 const initalFormData: ClientV2 = {
   name: "",
   address: "",
@@ -25,13 +25,23 @@ const initalFormData: ClientV2 = {
   address_url: "",
   date: moment().format("YYYY-MM-DD"),
   start_time: moment("06:00", "HH:mm").format("HH:mm"),
-  end_time: moment("06:00", "HH:mm").format("HH:mm"),
+  end_time: "Selesai",
   theme_id: null,
-  status: "unpaid",
   participants: [initialParticipants],
 };
 
-export const useAdminCreateClient = () => {
+export const useAdminUpdateClient = (slug: string) => {
+  const { data: client, mutate } = useSWR<{
+    success: boolean;
+    data: ClientV2[];
+  }>(slug ? `/api/clientv2?slug=${slug}` : undefined, fetcher);
+
+  const { data: themes } = useSWR<{
+    success: boolean;
+    data: Theme[];
+    total_rows: number;
+  }>(`/api/themes`, fetcher);
+
   const [formData, setFormData] = useState<ClientV2>(initalFormData);
   const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
@@ -42,12 +52,6 @@ export const useAdminCreateClient = () => {
   ]);
   const router = useRouter();
 
-  const { data: themes } = useSWR<{
-    success: boolean;
-    data: Theme[];
-    total_rows: number;
-  }>(`/api/themes`, fetcher);
-
   useEffect(() => {
     if (themes && themes.data.length > 0) {
       const options: Option[] = themes.data.map((theme) => ({
@@ -55,12 +59,54 @@ export const useAdminCreateClient = () => {
         value: theme.id,
       }));
       setThemeOptions(options);
-      setFormData((state) => ({
-        ...state,
-        theme_id: Number(options[0].value),
-      }));
     }
   }, [themes]);
+
+  useEffect(() => {
+    if (client && client.data.length > 0) {
+      const currentClient: ClientV2 = client.data[0];
+      const currentParticipants: Participant[] = currentClient.participants.map(
+        (p) => ({
+          id: p.id,
+          client_id: currentClient.id,
+          name: p.name,
+          nickname: p.nickname,
+          parents_male: p.parents_male,
+          parents_female: p.parents_female,
+          address: p.address,
+          gender: p.gender,
+          child: p.child,
+          role: p.role,
+        })
+      );
+
+      if (currentClient.end_time === "Selesai") {
+        setToggleEndTime(true);
+      } else {
+        setToggleEndTime(false);
+      }
+
+      setFormData((state) => ({
+        ...state,
+        name: currentClient.name,
+        address: currentClient.address,
+        address_url: currentClient.address_url,
+        address_full: currentClient.address_full,
+        date: currentClient.date,
+        start_time: currentClient.start_time,
+        end_time: currentClient.end_time,
+        theme_id: currentClient.theme_id,
+        participants: currentParticipants,
+      }));
+    }
+  }, [client]);
+
+  const handleChangeClient = (value: string | number, name: string) => {
+    setFormData((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
 
   const handletoggleEndTime = () => {
     setToggleEndTime(!toggleEndTime);
@@ -69,13 +115,6 @@ export const useAdminCreateClient = () => {
       end_time: toggleEndTime
         ? moment("06:00", "HH:mm").format("HH:mm")
         : "Selesai",
-    }));
-  };
-  const handleChangeClient = (value: string | number, name: string) => {
-    console.log(value);
-    setFormData((state) => ({
-      ...state,
-      [name]: value,
     }));
   };
 
@@ -94,6 +133,7 @@ export const useAdminCreateClient = () => {
     let currentParticipants: Participant[] = [...formData.participants];
 
     currentParticipants[index] = {
+      client_id: client?.data[0].id,
       ...currentParticipants[index],
       [name]: value,
     };
@@ -107,19 +147,19 @@ export const useAdminCreateClient = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const createClient = useClient("/api/clientv2", {
-      method: "POST",
+    const updateClient = useClient(`/api/clientv2?id=${client?.data[0].id}`, {
+      method: "PUT",
       body: JSON.stringify(formData),
     });
 
-    toast.promise(createClient, {
-      loading: "Creating new client...",
+    toast.promise(updateClient, {
+      loading: "Updating client...",
       success: () => {
         router.push("/admin/clients");
-        return "Successfully created new client";
+        return "Successfully update client";
       },
       error: (error: any) => {
-        return error.message || "Failed to create new client";
+        return error.message || "Failed to update client";
       },
     });
   };

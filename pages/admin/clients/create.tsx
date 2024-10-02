@@ -4,7 +4,12 @@ import AdminLayout from "@/components/admin/layouts";
 import Input from "@/components/admin/elements/input";
 import InputTextarea from "@/components/admin/elements/textarea";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
-import { BiLeftArrowAlt, BiSolidPlusCircle, BiUserPlus } from "react-icons/bi";
+import {
+  BiLeftArrowAlt,
+  BiSolidPlusCircle,
+  BiTime,
+  BiUserPlus,
+} from "react-icons/bi";
 import Link from "next/link";
 import ButtonSecondary from "@/components/admin/elements/button.secondary";
 import Accordion from "@/components/admin/elements/accordion.button";
@@ -60,24 +65,59 @@ const CreateClient: React.FC = () => {
             }
             label="Address Full"
           />
+          <Input
+            value={state.formData.date}
+            onChange={(e) => actions.handleChangeClient(e.target.value, "date")}
+            className="w-full"
+            type="date"
+            label="Date"
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <Input
-              value={state.formData.date}
+              value={state.formData.start_time}
               onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "date")
+                actions.handleChangeClient(e.target.value, "start_time")
               }
               className="w-full"
-              type="date"
-              label="Date"
+              type="time"
+              label="Start Time"
             />
-            <Input
-              value={state.formData.time}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "time")
-              }
-              className="w-full"
-              label="Time"
-            />
+            <div className="flex justify-between gap-4 items-end">
+              {state.toggleEndTime ? (
+                <Input
+                  disabled
+                  value={state.formData.end_time}
+                  onChange={(e) =>
+                    actions.handleChangeClient(e.target.value, "end_time")
+                  }
+                  className="w-full"
+                  label="End Time"
+                />
+              ) : (
+                <Input
+                  type="time"
+                  value={state.formData.end_time}
+                  onChange={(e) =>
+                    actions.handleChangeClient(e.target.value, "end_time")
+                  }
+                  className="w-full"
+                  label="End Time"
+                />
+              )}
+
+              <div className="mb-[10px]">
+                <ButtonPrimary
+                  icon={<BiTime />}
+                  size="small"
+                  title={
+                    state.toggleEndTime ? "Set End Time" : "Set Until Done"
+                  }
+                  onClick={actions.handletoggleEndTime}
+                  type="button"
+                  className="text-sm whitespace-nowrap"
+                />
+              </div>
+            </div>
           </div>
 
           <InputSelect

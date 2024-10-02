@@ -49,7 +49,7 @@ const ClientDashboard: React.FC = () => {
                 <div>
                   <p className="text-gray-500 font-medium text-xs">Time</p>
                   <p className="text-gray-800 font-semibold text-sm">
-                    {client.time}
+                    {client.start_time} - {client.end_time}
                   </p>
                 </div>
                 <div>
@@ -79,85 +79,87 @@ const ClientDashboard: React.FC = () => {
           ))}
         </div>
 
-        <div className="border border-gray-200 rounded-xl hidden lg:block">
-          <table className="table-auto overflow-x-auto w-full table">
-            <thead>
-              <tr>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
-                  Client
-                </td>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                  Date
-                </td>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                  Time
-                </td>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                  Address
-                </td>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                  Theme
-                </td>
-                <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
-                  Actions
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {state.clients.map((client, index) => (
-                <tr
-                  key={client.id}
-                  className={`border-b ${
-                    state.clients.length - 1 === index
-                      ? "border-b-transparent"
-                      : "border-b-gray-200"
-                  }`}
-                >
-                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    <div className="flex items-center gap-x-3">
-                      <div className="h-10 w-10 rounded-full bg-gray-100 aspect-square flex justify-center items-center text-base">
-                        <span>{getInitial(client.name)}</span>
-                      </div>
-                      <span>{client.name}</span>
-                    </div>
+        {state.toalRows > 0 && (
+          <div className="border border-gray-200 rounded-xl hidden lg:block">
+            <table className="table-auto overflow-x-auto w-full table">
+              <thead>
+                <tr>
+                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
+                    Client
                   </td>
-                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    {moment(client.date).format("dddd, D MMM YYYY")}
+                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                    Date
                   </td>
-                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    {client.time}
+                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                    Time
                   </td>
-                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    {client.address_full}
+                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                    Address
                   </td>
-                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    {client.theme?.name ?? "-"}
+                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                    Theme
                   </td>
-                  <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                    <div className="flex gap-2">
-                      <Link href={`/admin/clients/${client.slug}`}>
-                        <ButtonPrimary
-                          size="extrasmall"
-                          title="Detail"
-                          icon={<BiDetail className="text-base" />}
-                        />
-                      </Link>
-                      <ButtonSecondary
-                        type="button"
-                        onClick={() =>
-                          client.id && actions.handleDelete(client.id)
-                        }
-                        size="extrasmall"
-                        title="Delete"
-                        icon={<BiTrash className="text-base" />}
-                      />
-                    </div>
+                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
+                    Actions
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {state.clients.map((client, index) => (
+                  <tr
+                    key={client.id}
+                    className={`border-b ${
+                      state.clients.length - 1 === index
+                        ? "border-b-transparent"
+                        : "border-b-gray-200"
+                    }`}
+                  >
+                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                      <div className="flex items-center gap-x-3">
+                        <div className="h-10 w-10 rounded-full bg-gray-100 aspect-square flex justify-center items-center text-base">
+                          <span>{getInitial(client.name)}</span>
+                        </div>
+                        <span>{client.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                      {moment(client.date).format("dddd, D MMM YYYY")}
+                    </td>
+                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                      {client.start_time} - {client.end_time}
+                    </td>
+                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                      {client.address_full}
+                    </td>
+                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                      {client.theme?.name ?? "-"}
+                    </td>
+                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                      <div className="flex gap-2">
+                        <Link href={`/admin/clients/${client.slug}`}>
+                          <ButtonPrimary
+                            size="extrasmall"
+                            title="Detail"
+                            icon={<BiDetail className="text-base" />}
+                          />
+                        </Link>
+                        <ButtonSecondary
+                          type="button"
+                          onClick={() =>
+                            client.id && actions.handleDelete(client.id)
+                          }
+                          size="extrasmall"
+                          title="Delete"
+                          icon={<BiTrash className="text-base" />}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {state.toalRows > state.limit && (
           <div className="mt-6 flex justify-center">

@@ -99,8 +99,9 @@ export interface ClientV2 {
   address_full: string;
   participants: Participant[];
   date: string;
-  status: 'paid' | 'unpaid',
-  time: string;
+  status?: "paid" | "unpaid";
+  start_time: string;
+  end_time: string;
   theme_id: number | null;
   theme?: Theme | null;
 }

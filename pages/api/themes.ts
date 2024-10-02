@@ -53,7 +53,7 @@ export default async function handler(
 
     case "POST":
       try {
-        const { name, thumbnail } = req.body;
+        const { name, price, thumbnail } = req.body;
 
         const checkName =
           await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE name = ${name});`;
@@ -65,7 +65,7 @@ export default async function handler(
         }
 
         const { rows } =
-          await sql`INSERT INTO themes (name, thumbnail) VALUES (${name}, ${thumbnail}) RETURNING *;`;
+          await sql`INSERT INTO themes (name, price, thumbnail) VALUES (${name}, ${price}, ${thumbnail}) RETURNING *;`;
 
         return res.status(200).json({
           success: true,
@@ -78,7 +78,7 @@ export default async function handler(
       }
     case "PUT":
       try {
-        const { id, name } = req.body;
+        const { id, price, name } = req.body;
 
         if (!id && !name) {
           return handleError(res, new Error("Required fields: id, name."));
@@ -86,11 +86,11 @@ export default async function handler(
 
         const text = `
           UPDATE themes
-          SET name = $1
-          WHERE id = $2
+          SET name = $1, price = $2
+          WHERE id = $3
           RETURNING *;`;
 
-        const { rows } = await sql.query({ text, values: [name, id] });
+        const { rows } = await sql.query({ text, values: [name, price, id] });
 
         return res.status(200).json({
           success: true,
