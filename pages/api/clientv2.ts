@@ -108,9 +108,9 @@ export default async function handler(
         }
 
         const queryClient = sql`
-          INSERT INTO clients (slug, name, address, address_url, address_full, date, time, theme_id)
+          INSERT INTO clients (slug, name, address, address_url, address_full, date, time, theme_id, status)
           VALUES (${slug}, ${client.name}, ${client.address}, ${client.address_url},
-                  ${client.address_full}, ${client.date}, ${client.time}, ${client.theme_id})
+                  ${client.address_full}, ${client.date}, ${client.time}, ${client.theme_id}, ${client.status})
           RETURNING *;
         `;
         const resultClient = await queryClient;
@@ -120,9 +120,9 @@ export default async function handler(
         const participantPromises = participants.map(
           (participant: Participant) => {
             return sql`
-            INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender)
+            INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role)
             VALUES (${clientId}, ${participant.name}, ${participant.nickname}, ${participant.address}, ${participant.child},
-              ${participant.parents_male}, ${participant.parents_female}, ${participant.gender});
+              ${participant.parents_male}, ${participant.parents_female}, ${participant.gender}, ${participant.role});
           `;
           }
         );

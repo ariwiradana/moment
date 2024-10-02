@@ -69,6 +69,7 @@ export interface Client {
 export interface Theme {
   id: number;
   name: string;
+  price: number;
 }
 
 export interface Option {
@@ -86,6 +87,7 @@ export interface Participant {
   parents_male: string;
   parents_female: string;
   gender: "male" | "female";
+  role: "bride" | "groom" | "participant";
 }
 
 export interface ClientV2 {
@@ -97,6 +99,7 @@ export interface ClientV2 {
   address_full: string;
   participants: Participant[];
   date: string;
+  status: 'paid' | 'unpaid',
   time: string;
   theme_id: number | null;
   theme?: Theme | null;

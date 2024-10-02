@@ -15,6 +15,7 @@ const initialParticipants: Participant = {
   child: "pertama",
   parents_male: "",
   parents_female: "",
+  role: "participant",
 };
 const initalFormData: ClientV2 = {
   name: "",
@@ -24,6 +25,7 @@ const initalFormData: ClientV2 = {
   date: moment().format("YYYY-MM-DD"),
   time: "",
   theme_id: null,
+  status: "unpaid",
   participants: [initialParticipants],
 };
 

@@ -23,12 +23,21 @@ const CreateTheme: React.FC = () => {
           onSubmit={actions.handleSubmit}
           className="mt-8 max-w-screen-md flex flex-col gap-y-4"
         >
-          <Input
-            onChange={actions.handleChange}
-            name="name"
-            label="Theme Name"
-            value={state.formData.name}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              onChange={actions.handleChange}
+              name="name"
+              label="Theme Name"
+              value={state.formData.name}
+            />
+            <Input
+              onChange={actions.handleChange}
+              name="price"
+              label="Price"
+              type="number"
+              value={state.formData.price}
+            />
+          </div>
           <Input
             onChange={actions.handleChange}
             name="thumbnail"

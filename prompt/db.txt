@@ -1,7 +1,8 @@
 CREATE TABLE themes (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
-  thumbnail VARCHAR(255)
+  thumbnail VARCHAR(255),
+  price INTEGER
 );
 
 CREATE TABLE clients (
@@ -14,7 +15,8 @@ CREATE TABLE clients (
   theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
   date VARCHAR(100),
   time VARCHAR(100),
-  gallery TEXT[]
+  gallery TEXT[],
+  status VARCHAR(10) CHECK (status IN ('paid', 'unpaid'))
 );
 
 CREATE TABLE participants (
@@ -27,7 +29,8 @@ CREATE TABLE participants (
   parents_male VARCHAR(255),
   parents_female VARCHAR(255),
   image VARCHAR(100),
-  gender VARCHAR(10) CHECK (gender IN ('male', 'female'))
+  gender VARCHAR(10) CHECK (gender IN ('male', 'female')),
+  role VARCHAR(10) CHECK (role IN ('bride', 'groom', 'participant'))
 );
 
 

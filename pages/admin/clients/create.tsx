@@ -12,6 +12,7 @@ import { useAdminCreateClient } from "@/hooks/admin/useAdminCreateClient";
 import InputSelect from "@/components/admin/elements/select";
 import { GenderOptions } from "@/constants/gender";
 import { ChildOrderOptions } from "@/constants/childOrder";
+import { roleOptions } from "@/constants/roles";
 
 const CreateClient: React.FC = () => {
   const { state, actions } = useAdminCreateClient();
@@ -160,7 +161,7 @@ const CreateClient: React.FC = () => {
                         )
                       }
                     />
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <InputSelect
                         value={state.formData.participants[index].gender}
                         options={GenderOptions}
@@ -184,6 +185,18 @@ const CreateClient: React.FC = () => {
                           )
                         }
                         label="Child Order"
+                      />
+                      <InputSelect
+                        value={state.formData.participants[index].role}
+                        options={roleOptions}
+                        onChange={(e) =>
+                          actions.handleChangeParticipant(
+                            e.target.value,
+                            "role",
+                            index
+                          )
+                        }
+                        label="Role"
                       />
                     </div>
                   </div>

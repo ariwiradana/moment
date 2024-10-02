@@ -5,11 +5,13 @@ import { useClient } from "@/lib/client";
 
 interface FormData {
   name: string;
+  price: number;
   thumbnail: File | null;
 }
 
 const initalFormData: FormData = {
   name: "",
+  price: 0,
   thumbnail: null,
 };
 
@@ -21,7 +23,8 @@ export const useAdminCreateTheme = () => {
     const { name, value } = e.target;
     setFormData((state) => ({
       ...state,
-      [name]: name === "thumbnail" ? null : value,
+      [name]:
+        name === "thumbnail" ? null : name === "price" ? Number(value) : value,
     }));
   };
 
