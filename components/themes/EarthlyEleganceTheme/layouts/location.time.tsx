@@ -13,6 +13,11 @@ interface Props {
 }
 
 const LocationTimeComponent: FC<Props> = (props) => {
+  const image =
+    props.state.client?.gallery?.length && props.state.client.gallery.length > 1
+      ? props.state.client.gallery[props.state.client.gallery.length - 1]
+      : "";
+
   return (
     <section className="mt-12">
       <div className="relative w-full flex px-8 py-16">
@@ -20,12 +25,7 @@ const LocationTimeComponent: FC<Props> = (props) => {
         <Image
           fill
           alt="datetime-image"
-          src={
-            Array.isArray(props.state.client?.gallery) &&
-            props.state.client?.gallery.length > 1
-              ? props.state.client?.gallery[1]
-              : ""
-          }
+          src={image as string}
           className="object-cover"
         />
         <div className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl">

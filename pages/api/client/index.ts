@@ -141,8 +141,8 @@ export default async function handler(
         const participants: Participant[] = client.participants;
         const participantPromises = participants.map(async (p: Participant) => {
           const addParticipantQuery = `
-              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role)
-              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
               RETURNING *;
             `;
 
@@ -156,6 +156,7 @@ export default async function handler(
             p.parents_female,
             p.gender,
             p.role,
+            p.image,
           ]);
         });
         await Promise.all(participantPromises);

@@ -6,7 +6,7 @@ import { Client, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { upload } from "@vercel/blob/client";
+import { getFilename } from "@/utils/getFilename";
 
 const initialParticipants: Participant = {
   name: "",
@@ -87,7 +87,8 @@ export const useAdminCreateClient = () => {
               });
               continue;
             }
-            const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+            const filename = getFilename("gallery", formData.name, image.type);
+            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
               method: "POST",
               body: image,
             });
@@ -136,7 +137,12 @@ export const useAdminCreateClient = () => {
             continue;
           }
 
-          const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+          const filename = getFilename(
+            "participant",
+            currentParticipants[i].name,
+            image.type
+          );
+          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: image,
           });

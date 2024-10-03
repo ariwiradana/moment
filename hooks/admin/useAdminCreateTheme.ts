@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useClient } from "@/lib/client";
+import { getFilename } from "@/utils/getFilename";
 
 interface FormData {
   name: string;
@@ -42,7 +43,9 @@ export const useAdminCreateTheme = () => {
             toast.error(`File size is to large`, { id: toastUpload });
             return;
           }
-          const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+
+          const filename = getFilename("thumbnail", formData.name, image.type);
+          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: image,
           });

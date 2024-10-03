@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import moment from "moment";
 import { Client, Participant } from "@/lib/types";
 
@@ -35,39 +35,64 @@ const useEarthlyEleganceTheme = (
     seconds: 0,
   });
 
-  useEffect(() => {
-    if (client) {
-      const updateCountdown = () => {
-        const now = moment();
-        const eventTime = moment(client.date);
-        const duration = moment.duration(eventTime.diff(now));
+  // Memoize the countdown logic so it doesn't recalculate on every render
+  const updateCountdown = useMemo(() => {
+    if (!client) return () => {};
 
-        setCountdown({
-          days: Math.floor(duration.asDays()),
-          hours: duration.hours(),
-          minutes: duration.minutes(),
-          seconds: duration.seconds(),
-        });
+    return () => {
+      const now = moment();
+      const eventTime = moment(client.date);
+      const duration = moment.duration(eventTime.diff(now));
+
+      const newCountdown = {
+        days: Math.floor(duration.asDays()),
+        hours: duration.hours(),
+        minutes: duration.minutes(),
+        seconds: duration.seconds(),
       };
 
+      // Only update the countdown state if values have changed
+      setCountdown((prevCountdown) => {
+        if (
+          prevCountdown.days !== newCountdown.days ||
+          prevCountdown.hours !== newCountdown.hours ||
+          prevCountdown.minutes !== newCountdown.minutes ||
+          prevCountdown.seconds !== newCountdown.seconds
+        ) {
+          return newCountdown;
+        }
+        return prevCountdown;
+      });
+    };
+  }, [client]);
+
+  // Memoize the bride and groom state updates
+  const brideParticipant = useMemo(
+    () => client?.participants.find((p) => p.role === "bride") || null,
+    [client]
+  );
+
+  const groomParticipant = useMemo(
+    () => client?.participants.find((p) => p.role === "groom") || null,
+    [client]
+  );
+
+  useEffect(() => {
+    if (client) {
       updateCountdown();
       const interval = setInterval(updateCountdown, 1000);
-
-      const brideParticipant =
-        client.participants.find((p) => p.role === "bride") || null;
-      const groomParticipant =
-        client.participants.find((p) => p.role === "groom") || null;
 
       setBride(brideParticipant);
       setGroom(groomParticipant);
 
       return () => clearInterval(interval);
     }
-  }, [client]);
+  }, [client, updateCountdown, brideParticipant, groomParticipant]);
 
-  const handleOpenCover = () => {
+  // Memoize the handleOpenCover function
+  const handleOpenCover = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
-  };
+  }, []);
 
   return {
     state: {

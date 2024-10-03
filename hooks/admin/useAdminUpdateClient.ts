@@ -6,6 +6,7 @@ import { Client, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { getFilename } from "@/utils/getFilename";
 
 const initialParticipants: Participant = {
   name: "",
@@ -200,7 +201,9 @@ export const useAdminUpdateClient = (slug: string) => {
               });
               continue;
             }
-            const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+
+            const filename = getFilename("gallery", formData.name, image.type);
+            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
               method: "POST",
               body: image,
             });
@@ -373,7 +376,12 @@ export const useAdminUpdateClient = (slug: string) => {
             continue;
           }
 
-          const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+          const filename = getFilename(
+            "participant",
+            currentParticipants[i].name,
+            image.type
+          );
+          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: image,
           });
@@ -384,6 +392,17 @@ export const useAdminUpdateClient = (slug: string) => {
             toast.success(`Image participant ${i + 1} uploaded successfully!`, {
               id: toastUpload,
             });
+
+            if (currentParticipants[i].image) {
+              await useClient(`/api/client/delete-participant-image`, {
+                method: "POST",
+                body: JSON.stringify({
+                  id: currentParticipants[i].id,
+                  url: currentParticipants[i].image,
+                }),
+              });
+            }
+
             currentParticipants[i].image = result.data.url;
           }
         } catch (error: any) {
