@@ -18,9 +18,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { to } = context.query!;
   let client = null;
 
-  const response = await fetch(
-    `http://localhost:3000/api/clientv2?slug=${slug}`
-  );
+  const apiBaseURL = process.env.API_BASE_URL;
+
+  const response = await fetch(`${apiBaseURL}/api/clientv2?slug=${slug}`);
 
   if (response.ok) {
     const result = await response.json();
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       client,
-      to,
+      to: to ?? "",
     },
   };
 };
