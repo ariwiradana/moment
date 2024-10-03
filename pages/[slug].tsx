@@ -1,12 +1,12 @@
-import ThemeNotFound from "@/components/theme.notfound";
+import ThemeNotFound from "@/components/themes/theme.notfound";
 import ClientNotFound from "@/components/themes/EarthlyEleganceTheme/elements/client.notfound";
 import Loading from "@/components/themes/EarthlyEleganceTheme/elements/loading";
-import { themes } from "@/components/themes";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
 import React, { FC } from "react";
 import useSWR from "swr";
+import { themes } from "@/components/themes/themes";
 
 interface Props {
   slug: string;

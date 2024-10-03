@@ -5,6 +5,7 @@ import {
   Alex_Brush,
   Playfair_Display,
   Satisfy,
+  Poppins,
 } from "next/font/google";
 
 export const tangerine = Tangerine({
@@ -31,5 +32,10 @@ export const satisfy = Satisfy({
 });
 
 export const playfair = Playfair_Display({
+  subsets: ["latin"],
+});
+
+export const poppins = Poppins({
+  weight: ["400", "700", "100", "200", "300", "500", "600", "800", "900"],
   subsets: ["latin"],
 });

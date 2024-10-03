@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Layout from "../../layout";
+import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
 import BridesComponent from "./layouts/brides";
