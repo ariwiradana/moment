@@ -84,6 +84,15 @@ export default async function handler(
       try {
         const client: Client = req.body;
 
+        if (!client.theme_id) {
+          return handleError(
+            res,
+            new Error(
+              "The theme is required. If no theme is available, please create one."
+            )
+          );
+        }
+
         if (client.theme_id) {
           const checkTheme =
             await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE id = ${client.theme_id});`;

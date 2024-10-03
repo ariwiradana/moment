@@ -29,8 +29,6 @@ export const useAdminCreateTheme = () => {
     }));
   };
 
-  console.log(formData);
-
   const handleUploadThumbnail = async () => {
     let url = "";
     if (formData.thumbnail) {
@@ -74,12 +72,20 @@ export const useAdminCreateTheme = () => {
     const modifiedFormdata = { ...formData };
     modifiedFormdata["thumbnail"] = thumbnailURL ?? "";
 
-    const createTheme = useClient("/api/themes", {
-      method: "POST",
-      body: JSON.stringify(modifiedFormdata),
-    });
+    const createTheme = async () => {
+      const response = await useClient("/api/themes", {
+        method: "POST",
+        body: JSON.stringify(modifiedFormdata),
+      });
 
-    toast.promise(createTheme, {
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      return await response.json();
+    };
+
+    toast.promise(createTheme(), {
       loading: "Creating new theme...",
       success: () => {
         setLoading(false);

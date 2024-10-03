@@ -242,12 +242,20 @@ export const useAdminUpdateClient = (slug: string) => {
     modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
     modifiedFormdata["participants"] = updatedParticipant as Participant[];
 
-    const updateClient = useClient(`/api/client?id=${client?.data[0].id}`, {
-      method: "PUT",
-      body: JSON.stringify(modifiedFormdata),
-    });
+    const updateClient = async () => {
+      const response = await useClient(`/api/client?id=${client?.data[0].id}`, {
+        method: "PUT",
+        body: JSON.stringify(modifiedFormdata),
+      });
 
-    toast.promise(updateClient, {
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      return await response.json();
+    };
+
+    toast.promise(updateClient(), {
       loading: "Updating client...",
       success: () => {
         mutate();
@@ -270,11 +278,20 @@ export const useAdminUpdateClient = (slug: string) => {
         id,
         url,
       };
-      const deleteBlob = useClient(`/api/client/delete-gallery`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      toast.promise(deleteBlob, {
+
+      const deleteBlob = async () => {
+        const response = await useClient(`/api/client/delete-gallery`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(deleteBlob(), {
         loading: "Deleting image...",
         success: () => {
           mutate();
@@ -300,11 +317,23 @@ export const useAdminUpdateClient = (slug: string) => {
         id,
         url,
       };
-      const deleteBlob = useClient(`/api/client/delete-participant-image`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      toast.promise(deleteBlob, {
+
+      const deleteBlob = async () => {
+        const response = await useClient(
+          `/api/client/delete-participant-image`,
+          {
+            method: "POST",
+            body: JSON.stringify(payload),
+          }
+        );
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(deleteBlob(), {
         loading: "Deleting participant image...",
         success: () => {
           mutate();

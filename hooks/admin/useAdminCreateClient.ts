@@ -82,7 +82,9 @@ export const useAdminCreateClient = () => {
           );
           try {
             if (image.size > MAX_SIZE) {
-              toast.error(`Gallery image (${i}) size to large`, { id: toastUpload });
+              toast.error(`Gallery image (${i}) size to large`, {
+                id: toastUpload,
+              });
               continue;
             }
             const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
@@ -99,7 +101,8 @@ export const useAdminCreateClient = () => {
             }
           } catch (error: any) {
             toast.error(
-              error.message || `Error uploading gallery image ${i} of ${images.length}`,
+              error.message ||
+                `Error uploading gallery image ${i} of ${images.length}`,
               {
                 id: toastUpload,
               }
@@ -121,7 +124,9 @@ export const useAdminCreateClient = () => {
         const image = file[0] as File;
         const MAX_SIZE = 2 * 1024 * 1024;
 
-        const toastUpload = toast.loading(`Uploading participant ${i + 1} image`);
+        const toastUpload = toast.loading(
+          `Uploading participant ${i + 1} image`
+        );
 
         try {
           if (image.size > MAX_SIZE) {
@@ -213,12 +218,21 @@ export const useAdminCreateClient = () => {
     modifiedFormdata["gallery"] = newGalleryURLs;
     modifiedFormdata["participants"] = updatedParticipant;
 
-    const createClient = useClient("/api/client", {
-      method: "POST",
-      body: JSON.stringify(modifiedFormdata),
-    });
+    const createClient = async () => {
+      const response = await useClient("/api/client", {
+        method: "POST",
+        body: JSON.stringify(modifiedFormdata),
+      });
 
-    toast.promise(createClient, {
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message || "Failed to create new client.");
+      }
+
+      return await response.json();
+    };
+
+    toast.promise(createClient(), {
       loading: "Creating new client...",
       success: () => {
         setFormData(initalFormData);
@@ -232,8 +246,6 @@ export const useAdminCreateClient = () => {
       },
     });
   };
-
-  console.log(formData);
 
   return {
     state: {
