@@ -169,6 +169,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                       </button>
                     </div>
                     <ImageShimmer
+                      sizes="200px"
                       priority
                       alt={`gallery-${index + 1}`}
                       src={img}
@@ -189,11 +190,13 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                 content={
                   <div className="flex flex-col gap-y-4">
                     <div className="flex flex-col lg:flex-row gap-x-6 gap-y-4">
-                      {state.formData.participants[index].image && (
+                      {state.formData.participants[index].image &&
+                      typeof state.formData.participants[index].image ===
+                        "string" ? (
                         <div className="lg:w-64 w-28 aspect-square relative">
                           <ImageShimmer
                             priority
-                            alt={`gallery-${index + 1}`}
+                            alt={participant.name}
                             src={
                               state.formData.participants[index].image as string
                             }
@@ -218,7 +221,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                             </button>
                           </div>
                         </div>
-                      )}
+                      ) : null}
                       <div className="w-full flex flex-col gap-y-4">
                         <Input
                           value={state.formData.participants[index].name}

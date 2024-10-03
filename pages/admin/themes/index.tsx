@@ -35,7 +35,15 @@ const ClientDashboard: React.FC = () => {
                   {theme.name}
                 </h1>
               </div>
-              <div className=" pt-3 flex justify-end gap-x-3">
+              <div className="py-3 flex flex-col gap-y-2">
+                <div>
+                  <p className="text-gray-500 font-medium text-xs">Price</p>
+                  <p className="text-gray-800 font-semibold text-sm">
+                    {formatToRupiah(theme.price)}
+                  </p>
+                </div>
+              </div>
+              <div className="border-t pt-3 flex justify-end gap-x-3">
                 <Link target="_blank" href={`/themes/${theme.id}`}>
                   <ButtonPrimary
                     size="extrasmall"

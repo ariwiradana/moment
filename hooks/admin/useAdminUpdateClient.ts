@@ -19,6 +19,7 @@ const initialParticipants: Participant = {
   client_id: null,
   image: null,
 };
+
 const initalFormData: Client = {
   id: undefined,
   name: "",
@@ -60,7 +61,12 @@ export const useAdminUpdateClient = (slug: string) => {
       value: "",
     },
   ]);
-  const [images, setImages] = useState<FileList | null>(null);
+  const [galleryImagesForm, setGalleryImagesForm] = useState<FileList | null>(
+    null
+  );
+  const [participantImagesForm, setParticipantImagesForm] = useState<
+    (FileList | null)[] | []
+  >([]);
 
   useEffect(() => {
     if (themes && themes.data.length > 0) {
@@ -91,6 +97,10 @@ export const useAdminUpdateClient = (slug: string) => {
         })
       );
 
+      setParticipantImagesForm(
+        new Array(currentParticipants.length).fill(null)
+      );
+
       if (currentClient.end_time === "Selesai") {
         setToggleEndTime(true);
       } else {
@@ -119,7 +129,7 @@ export const useAdminUpdateClient = (slug: string) => {
     name: string
   ) => {
     if (name === "images") {
-      setImages(value as FileList);
+      setGalleryImagesForm(value as FileList);
     }
     setFormData((state) => ({
       ...state,
@@ -142,6 +152,7 @@ export const useAdminUpdateClient = (slug: string) => {
       ...state,
       participants: [...formData.participants, initialParticipants],
     }));
+    setParticipantImagesForm((state) => [...state, null]);
   };
 
   const handleChangeParticipant = (
@@ -151,34 +162,42 @@ export const useAdminUpdateClient = (slug: string) => {
   ) => {
     let currentParticipants: Participant[] = [...formData.participants];
 
-    currentParticipants[index] = {
-      ...currentParticipants[index],
-      client_id: client?.data[0].id,
-      [name]: value,
-    };
+    if (name === "image") {
+      let currentParticipantImages = [...participantImagesForm];
+      currentParticipantImages[index] = value as FileList;
+      setParticipantImagesForm(currentParticipantImages);
+    } else {
+      currentParticipants[index] = {
+        ...currentParticipants[index],
+        client_id: client?.data[0].id,
+        [name]: value,
+      };
 
-    setFormData({
-      ...formData,
-      participants: currentParticipants,
-    });
+      setFormData({
+        ...formData,
+        participants: currentParticipants,
+      });
+    }
   };
 
   const handleUploadGallery = async () => {
     const imageURLs: string[] = [];
-    if (images && images.length) {
+    if (galleryImagesForm && galleryImagesForm.length) {
       const MAX_SIZE = 2 * 1024 * 1024;
 
       let i = 0;
 
-      if (images instanceof FileList) {
-        for (const image of Array.from(images)) {
+      if (galleryImagesForm instanceof FileList) {
+        for (const image of Array.from(galleryImagesForm)) {
           i++;
           const toastUpload = toast.loading(
-            `Uploading image ${i} of ${images.length}`
+            `Uploading gallery image ${i} of ${galleryImagesForm.length}`
           );
           try {
             if (image.size > MAX_SIZE) {
-              toast.error(`Image ${i} size to large`, { id: toastUpload });
+              toast.error(`Gallery image ${i} size to large`, {
+                id: toastUpload,
+              });
               continue;
             }
             const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
@@ -188,14 +207,15 @@ export const useAdminUpdateClient = (slug: string) => {
             const result = await res.json();
             if (result.success) {
               toast.success(
-                `Image ${i} of ${images.length} uploaded successfully!`,
+                `Gallery image ${i} of ${galleryImagesForm.length} uploaded successfully!`,
                 { id: toastUpload }
               );
               imageURLs.push(result.data.url);
             }
           } catch (error: any) {
             toast.error(
-              error.message || `Error uploading image ${i} of ${images.length}`,
+              error.message ||
+                `Error uploading gallery image ${i} of ${galleryImagesForm.length}`,
               {
                 id: toastUpload,
               }
@@ -303,20 +323,22 @@ export const useAdminUpdateClient = (slug: string) => {
   };
 
   const handleUploadImageParticipant = async () => {
-    let participats: Participant[] = formData.participants;
+    let currentParticipants: Participant[] = formData.participants;
 
-    let i = 0;
-    for (const p of participats) {
-      i++;
-      if (p.image) {
-        const image = p.image[0] as File;
+    for (let i = 0; i < participantImagesForm.length; i++) {
+      const file = participantImagesForm[i];
+
+      if (file && file[0]) {
+        const image = file[0] as File;
         const MAX_SIZE = 2 * 1024 * 1024;
 
-        const toastUpload = toast.loading(`Uploading participant ${i} image`);
+        const toastUpload = toast.loading(
+          `Uploading participant ${i + 1} image`
+        );
 
         try {
           if (image.size > MAX_SIZE) {
-            toast.error(`Image size of participant ${i} is to large`, {
+            toast.error(`Image size of participant ${i + 1} is too large`, {
               id: toastUpload,
             });
             continue;
@@ -326,38 +348,38 @@ export const useAdminUpdateClient = (slug: string) => {
             method: "POST",
             body: image,
           });
+
           const result = await res.json();
 
           if (result.success) {
-            toast.success(`Image participant ${i} uploaded successfully!`, {
+            toast.success(`Image participant ${i + 1} uploaded successfully!`, {
               id: toastUpload,
             });
-            p.image = result.data.url;
+            currentParticipants[i].image = result.data.url;
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Error uploading participant image ${i}`,
+            error.message || `Error uploading participant image ${i + 1}`,
             {
               id: toastUpload,
             }
           );
         }
       }
-      return participats;
     }
+    return currentParticipants;
   };
-
-  console.log(formData);
 
   return {
     state: {
       formData,
       themeOptions,
       toggleEndTime,
-      images,
+      galleryImagesForm,
       loading,
       isLoading,
       client,
+      participantImagesForm,
     },
     actions: {
       handleChangeClient,

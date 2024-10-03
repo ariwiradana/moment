@@ -47,7 +47,7 @@ const CreateClient: React.FC = () => {
                 actions.handleChangeClient(e.target.value, "address")
               }
               className="w-full"
-              label="Address"
+              label="Address Shorten"
             />
             <Input
               value={state.formData.address_url}

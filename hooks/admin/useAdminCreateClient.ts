@@ -78,11 +78,11 @@ export const useAdminCreateClient = () => {
         for (const image of Array.from(formData.gallery)) {
           i++;
           const toastUpload = toast.loading(
-            `Uploading image ${i} of ${images.length}`
+            `Uploading gallery image ${i} of ${images.length}`
           );
           try {
             if (image.size > MAX_SIZE) {
-              toast.error(`Image (${i}) size to large`, { id: toastUpload });
+              toast.error(`Gallery image (${i}) size to large`, { id: toastUpload });
               continue;
             }
             const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
@@ -92,14 +92,14 @@ export const useAdminCreateClient = () => {
             const result = await res.json();
             if (result.success) {
               toast.success(
-                `Image ${i} of ${images.length} uploaded successfully!`,
+                `Gallery image ${i} of ${images.length} uploaded successfully!`,
                 { id: toastUpload }
               );
               imageURLs.push(result.data.url);
             }
           } catch (error: any) {
             toast.error(
-              error.message || `Error uploading image ${i} of ${images.length}`,
+              error.message || `Error uploading gallery image ${i} of ${images.length}`,
               {
                 id: toastUpload,
               }
@@ -109,6 +109,52 @@ export const useAdminCreateClient = () => {
       }
     }
     return imageURLs;
+  };
+
+  const handleUploadImageParticipant = async () => {
+    let currentParticipants: Participant[] = formData.participants;
+
+    for (let i = 0; i < currentParticipants.length; i++) {
+      const file = currentParticipants[i].image;
+
+      if (file && file[0]) {
+        const image = file[0] as File;
+        const MAX_SIZE = 2 * 1024 * 1024;
+
+        const toastUpload = toast.loading(`Uploading participant ${i + 1} image`);
+
+        try {
+          if (image.size > MAX_SIZE) {
+            toast.error(`Image size of participant ${i + 1} is too large`, {
+              id: toastUpload,
+            });
+            continue;
+          }
+
+          const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+            method: "POST",
+            body: image,
+          });
+
+          const result = await res.json();
+
+          if (result.success) {
+            toast.success(`Image participant ${i + 1} uploaded successfully!`, {
+              id: toastUpload,
+            });
+            currentParticipants[i].image = result.data.url;
+          }
+        } catch (error: any) {
+          toast.error(
+            error.message || `Error uploading participant image ${i + 1}`,
+            {
+              id: toastUpload,
+            }
+          );
+        }
+      }
+    }
+    return currentParticipants;
   };
 
   const handletoggleEndTime = () => {
@@ -161,9 +207,11 @@ export const useAdminCreateClient = () => {
     setLoading(true);
 
     const newGalleryURLs = await handleUploadGallery();
+    const updatedParticipant = await handleUploadImageParticipant();
 
     const modifiedFormdata: Client = { ...formData };
     modifiedFormdata["gallery"] = newGalleryURLs;
+    modifiedFormdata["participants"] = updatedParticipant;
 
     const createClient = useClient("/api/client", {
       method: "POST",

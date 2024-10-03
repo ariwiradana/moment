@@ -1,5 +1,4 @@
 import handleError from "@/lib/errorHandling";
-import { Participant } from "@/lib/types";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import type { NextApiResponse, NextApiRequest } from "next";
@@ -24,13 +23,8 @@ export default async function handler(
       return handleError(response, new Error("Participant not found"));
     }
 
-    let image: string = "";
-    if (participant[0] as Participant) {
-      image = participant[0].image;
-    }
-
     await sql.query(`UPDATE participants SET image = $1 WHERE id = $2`, [
-      image,
+      null,
       Number(id),
     ]);
 
