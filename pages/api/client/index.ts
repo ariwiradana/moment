@@ -207,8 +207,8 @@ export default async function handler(
           const newPrticipantPromises = newParticipants.map(
             async (p: Participant) => {
               const updateNewParticipantQuery = `
-              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role)
-              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
               RETURNING *;
             `;
 
@@ -222,6 +222,7 @@ export default async function handler(
                 p.parents_female,
                 p.gender,
                 p.role,
+                p.image,
               ]);
             }
           );
@@ -243,8 +244,9 @@ export default async function handler(
                 address = $6, 
                 gender = $7, 
                 child = $8,
-                role = $9
-              WHERE id = $10
+                role = $9,
+                image = $10
+              WHERE id = $11
               RETURNING *;
             `;
 
@@ -258,6 +260,7 @@ export default async function handler(
                 p.gender,
                 p.child,
                 p.role,
+                p.image,
                 p.id,
               ]);
             }

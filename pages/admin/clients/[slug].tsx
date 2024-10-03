@@ -10,6 +10,7 @@ import {
   BiLeftArrowAlt,
   BiSolidPlusCircle,
   BiTime,
+  BiX,
 } from "react-icons/bi";
 import Link from "next/link";
 import Accordion from "@/components/admin/elements/accordion.button";
@@ -19,7 +20,7 @@ import InputSelect from "@/components/admin/elements/select";
 import { ChildOrderOptions } from "@/constants/childOrder";
 import { GenderOptions } from "@/constants/gender";
 import { roleOptions } from "@/constants/roles";
-import Image from "next/image";
+import ImageShimmer from "@/components/image.shimmer";
 
 interface UpdateClientProps {
   slug: string;
@@ -152,7 +153,23 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             state.formData.gallery.length > 0
               ? state.formData.gallery.map((img: string, index: number) => (
                   <div className="relative w-full aspect-square" key={index}>
-                    <Image
+                    <div className="absolute top-2 right-2 z-10">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          actions.handleDeleteImageGallery(
+                            img,
+                            state.formData.id as number
+                          )
+                        }
+                        disabled={state.loading || state.isLoading}
+                        className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                      >
+                        <BiX />
+                      </button>
+                    </div>
+                    <ImageShimmer
+                      priority
                       alt={`gallery-${index + 1}`}
                       src={img}
                       fill
@@ -171,31 +188,63 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                 title={`Participant ${index + 1}`}
                 content={
                   <div className="flex flex-col gap-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <Input
-                        value={state.formData.participants[index].name}
-                        className="w-full"
-                        label="Full Name"
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.value,
-                            "name",
-                            index
-                          )
-                        }
-                      />
-                      <Input
-                        value={state.formData.participants[index].nickname}
-                        className="w-full"
-                        label="Nickname"
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.value,
-                            "nickname",
-                            index
-                          )
-                        }
-                      />
+                    <div className="flex flex-col lg:flex-row gap-x-6 gap-y-4">
+                      {state.formData.participants[index].image && (
+                        <div className="lg:w-64 w-28 aspect-square relative">
+                          <ImageShimmer
+                            priority
+                            alt={`gallery-${index + 1}`}
+                            src={
+                              state.formData.participants[index].image as string
+                            }
+                            fill
+                            className="object-cover w-full rounded-lg"
+                          />
+                          <div className="absolute top-2 right-2 z-10">
+                            <button
+                              onClick={() =>
+                                actions.handleDeleteImageParticipant(
+                                  state.formData.participants[index]
+                                    .image as string,
+                                  state.formData.participants[index]
+                                    .id as number
+                                )
+                              }
+                              type="button"
+                              disabled={state.loading || state.isLoading}
+                              className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                            >
+                              <BiX />
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      <div className="w-full flex flex-col gap-y-4">
+                        <Input
+                          value={state.formData.participants[index].name}
+                          className="w-full"
+                          label="Full Name"
+                          onChange={(e) =>
+                            actions.handleChangeParticipant(
+                              e.target.value,
+                              "name",
+                              index
+                            )
+                          }
+                        />
+                        <Input
+                          value={state.formData.participants[index].nickname}
+                          className="w-full"
+                          label="Nickname"
+                          onChange={(e) =>
+                            actions.handleChangeParticipant(
+                              e.target.value,
+                              "nickname",
+                              index
+                            )
+                          }
+                        />
+                      </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Input
@@ -274,6 +323,19 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         label="Role"
                       />
                     </div>
+                    <Input
+                      accept="image/*"
+                      type="file"
+                      onChange={(e) =>
+                        actions.handleChangeParticipant(
+                          e.target.files as FileList,
+                          "image",
+                          index
+                        )
+                      }
+                      className="w-full"
+                      label="Image"
+                    />
                   </div>
                 }
               />

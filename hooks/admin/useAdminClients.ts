@@ -38,6 +38,17 @@ export const useAdminClients = () => {
     });
   };
 
+  const handleCopySlug = (slug: string) => {
+    navigator.clipboard
+      .writeText(slug)
+      .then(() => {
+        toast.success("Slug copied successfully");
+      })
+      .catch((err) => {
+        toast.error("Failed to copy slug");
+      });
+  };
+
   return {
     state: {
       clients: data?.data || [],
@@ -51,6 +62,7 @@ export const useAdminClients = () => {
       mutate,
       handleChangePagination,
       handleDelete,
+      handleCopySlug,
     },
   };
 };

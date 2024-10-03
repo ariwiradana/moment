@@ -7,7 +7,13 @@ import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
-import { BiDetail, BiMoneyWithdraw, BiPlus, BiTrash } from "react-icons/bi";
+import {
+  BiCopy,
+  BiDetail,
+  BiMoneyWithdraw,
+  BiPlus,
+  BiTrash,
+} from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
 import { getRandomColors } from "@/utils/getRandomColor";
 
@@ -33,43 +39,45 @@ const ClientDashboard: React.FC = () => {
           {state.clients.map((client) => (
             <div key={client.id} className="border rounded-lg p-3">
               <div className="flex justify-between items-center pb-3 border-b">
-                <div className="flex items-center gap-x-2">
-                  <div
-                    style={{
-                      backgroundColor: getRandomColors(),
-                    }}
-                    className="w-8 h-8 rounded-full flex justify-center items-center font-medium text-white text-sm p-1"
-                  >
-                    {getInitial(client.name)}
-                  </div>
-                  <div>
-                    <h1 className="text-gray-800 font-semibold text-sm">
-                      {client.name}
-                    </h1>
-                    <p className="text-gray-500 font-medium text-xs">
-                      {client.slug}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center text-sm font-semibold">
-                  {client.status === "paid" ? (
-                    <div className="bg-[#eefbf4] px-3 py-1 rounded-lg flex items-center gap-x-2">
-                      <div className="w-2 h-2 rounded-lg bg-[#2cc971]"></div>
-                      <span className="capitalize text-[#254e2e]">
-                        {client.status}
-                      </span>
+                <div className="flex justify-between items-center gap-x-2 w-full">
+                  <div className="flex items-center gap-x-3">
+                    <div
+                      style={{
+                        backgroundColor: getRandomColors(),
+                      }}
+                      className="w-8 h-8 rounded-full flex justify-center items-center font-medium text-white text-sm p-1"
+                    >
+                      {getInitial(client.name)}
                     </div>
-                  ) : (
-                    <div className="bg-[#f7f7f9] px-3 py-1 rounded-lg flex items-center gap-x-2">
-                      <div className="w-2 h-2 rounded-lg bg-[#d2d3de]"></div>
-                      <span className="capitalize text-gray-800">
-                        {client.status}
-                      </span>
+                    <div>
+                      <h1 className="text-gray-800 font-semibold text-sm">
+                        {client.name}
+                      </h1>
+                      <p className="text-gray-500 font-medium text-xs">
+                        {client.slug}
+                      </p>
                     </div>
-                  )}
+                  </div>
+                  <div className="ml-2 flex items-center">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        actions.handleCopySlug(client.slug as string)
+                      }
+                      className="text-gray-500 text-lg"
+                    >
+                      <BiCopy />
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="py-3 flex flex-col gap-y-2">
+                <div>
+                  <p className="text-gray-500 font-medium text-xs">Status</p>
+                  <p className="text-gray-800 font-semibold text-sm capitalize">
+                    {client.status}
+                  </p>
+                </div>
                 <div>
                   <p className="text-gray-500 font-medium text-xs">Date</p>
                   <p className="text-gray-800 font-semibold text-sm">
@@ -90,12 +98,14 @@ const ClientDashboard: React.FC = () => {
                 </div>
               </div>
               <div className="border-t pt-3 flex justify-end gap-x-3">
-                <ButtonPrimary
-                  type="button"
-                  size="extrasmall"
-                  title="Paid"
-                  icon={<BiMoneyWithdraw className="text-base" />}
-                />
+                {client.status === "unpaid" && (
+                  <ButtonPrimary
+                    type="button"
+                    size="extrasmall"
+                    title="Paid"
+                    icon={<BiMoneyWithdraw className="text-base" />}
+                  />
+                )}
                 <Link href={`/admin/clients/${client.slug}`}>
                   <ButtonSecondary
                     size="extrasmall"
@@ -158,9 +168,27 @@ const ClientDashboard: React.FC = () => {
                           }}
                           className="h-10 w-10 rounded-full aspect-square flex justify-center items-center text-base"
                         >
-                          <span className="text-white font-medium">{getInitial(client.name)}</span>
+                          <span className="text-white font-medium">
+                            {getInitial(client.name)}
+                          </span>
                         </div>
-                        <span>{client.name}</span>
+                        <div>
+                          <span>{client.name}</span>
+                          <p className="text-gray-500 font-medium text-xs">
+                            {client.slug}
+                          </p>
+                        </div>
+                        <div className="ml-2 flex items-center">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              actions.handleCopySlug(client.slug as string)
+                            }
+                            className="text-gray-500 text-lg"
+                          >
+                            <BiCopy />
+                          </button>
+                        </div>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -193,12 +221,14 @@ const ClientDashboard: React.FC = () => {
                     </td>
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                       <div className="flex gap-2">
-                        <ButtonSecondary
-                          type="button"
-                          size="extrasmall"
-                          title="Mark as Paid"
-                          icon={<BiMoneyWithdraw className="text-base" />}
-                        />
+                        {client.status === "unpaid" && (
+                          <ButtonPrimary
+                            type="button"
+                            size="extrasmall"
+                            title="Paid"
+                            icon={<BiMoneyWithdraw className="text-base" />}
+                          />
+                        )}
                         <Link href={`/admin/clients/${client.slug}`}>
                           <ButtonSecondary
                             size="extrasmall"

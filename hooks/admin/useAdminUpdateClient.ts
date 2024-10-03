@@ -20,6 +20,7 @@ const initialParticipants: Participant = {
   image: null,
 };
 const initalFormData: Client = {
+  id: undefined,
   name: "",
   address: "",
   address_full: "",
@@ -41,6 +42,8 @@ export const useAdminUpdateClient = (slug: string) => {
     success: boolean;
     data: Client[];
   }>(slug ? `/api/client?slug=${slug}` : undefined, fetcher);
+
+  const router = useRouter();
 
   const { data: themes } = useSWR<{
     success: boolean;
@@ -96,6 +99,7 @@ export const useAdminUpdateClient = (slug: string) => {
 
       setFormData((state) => ({
         ...state,
+        id: currentClient.id,
         name: currentClient.name,
         address: currentClient.address,
         address_url: currentClient.address_url,
@@ -141,7 +145,7 @@ export const useAdminUpdateClient = (slug: string) => {
   };
 
   const handleChangeParticipant = (
-    value: string | number,
+    value: string | number | FileList,
     name: string,
     index: number
   ) => {
@@ -208,12 +212,15 @@ export const useAdminUpdateClient = (slug: string) => {
     setLoading(true);
 
     const newGalleryURLs = await handleUploadGallery();
+    const updatedParticipant = await handleUploadImageParticipant();
 
     const modifiedFormdata: Client = { ...formData };
     const currentGallery = Array.isArray(formData.gallery)
       ? formData.gallery
       : [];
+
     modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
+    modifiedFormdata["participants"] = updatedParticipant as Participant[];
 
     const updateClient = useClient(`/api/client?id=${client?.data[0].id}`, {
       method: "PUT",
@@ -225,6 +232,7 @@ export const useAdminUpdateClient = (slug: string) => {
       success: () => {
         mutate();
         setLoading(false);
+        router.push("/admin/clients");
         return "Successfully update client";
       },
       error: (error: any) => {
@@ -234,6 +242,113 @@ export const useAdminUpdateClient = (slug: string) => {
     });
   };
 
+  const handleDeleteImageGallery = (url: string, id: number) => {
+    try {
+      setLoading(true);
+
+      const payload = {
+        id,
+        url,
+      };
+      const deleteBlob = useClient(`/api/client/delete-gallery`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      toast.promise(deleteBlob, {
+        loading: "Deleting image...",
+        success: () => {
+          mutate();
+          setLoading(false);
+          return "Successfully delete image";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to delete image";
+        },
+      });
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteImageParticipant = (url: string, id: number) => {
+    try {
+      setLoading(true);
+
+      const payload = {
+        id,
+        url,
+      };
+      const deleteBlob = useClient(`/api/client/delete-participant-image`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      toast.promise(deleteBlob, {
+        loading: "Deleting participant image...",
+        success: () => {
+          mutate();
+          setLoading(false);
+          return "Successfully delete participant image";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to delete participant image";
+        },
+      });
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUploadImageParticipant = async () => {
+    let participats: Participant[] = formData.participants;
+
+    let i = 0;
+    for (const p of participats) {
+      i++;
+      if (p.image) {
+        const image = p.image[0] as File;
+        const MAX_SIZE = 2 * 1024 * 1024;
+
+        const toastUpload = toast.loading(`Uploading participant ${i} image`);
+
+        try {
+          if (image.size > MAX_SIZE) {
+            toast.error(`Image size of participant ${i} is to large`, {
+              id: toastUpload,
+            });
+            continue;
+          }
+
+          const res = await fetch(`/api/upload-blob?filename=${image.name}`, {
+            method: "POST",
+            body: image,
+          });
+          const result = await res.json();
+
+          if (result.success) {
+            toast.success(`Image participant ${i} uploaded successfully!`, {
+              id: toastUpload,
+            });
+            p.image = result.data.url;
+          }
+        } catch (error: any) {
+          toast.error(
+            error.message || `Error uploading participant image ${i}`,
+            {
+              id: toastUpload,
+            }
+          );
+        }
+      }
+      return participats;
+    }
+  };
+
+  console.log(formData);
+
   return {
     state: {
       formData,
@@ -242,6 +357,7 @@ export const useAdminUpdateClient = (slug: string) => {
       images,
       loading,
       isLoading,
+      client,
     },
     actions: {
       handleChangeClient,
@@ -249,6 +365,8 @@ export const useAdminUpdateClient = (slug: string) => {
       handleAddAnotherParticipant,
       handleChangeParticipant,
       handletoggleEndTime,
+      handleDeleteImageGallery,
+      handleDeleteImageParticipant,
     },
   };
 };
