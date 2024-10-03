@@ -277,7 +277,7 @@ const CreateClient: React.FC = () => {
           </div>
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
-              loading={state.loading}
+              isloading={state.loading}
               type="submit"
               title="Add Client"
               icon={<BiUserPlus />}

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { ClientV2 } from "@/lib/types";
+import { Client } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
 import { useClient } from "@/lib/client";
@@ -11,9 +11,9 @@ export const useAdminClients = () => {
 
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
-    data: ClientV2[];
+    data: Client[];
     total_rows: number;
-  }>(`/api/clientv2?page=${page}&limit=${limit}`, fetcher);
+  }>(`/api/client?page=${page}&limit=${limit}`, fetcher);
 
   const handleChangePagination = (
     event: React.ChangeEvent<unknown>,
@@ -23,7 +23,7 @@ export const useAdminClients = () => {
   };
 
   const handleDelete = (id: number) => {
-    const deleteTheme = useClient(`/api/clientv2?id=${id}`, {
+    const deleteTheme = useClient(`/api/client?id=${id}`, {
       method: "DELETE",
     });
     toast.promise(deleteTheme, {

@@ -1,38 +1,48 @@
-import Theme1 from "@/components/theme1/theme1";
-import { ClientV2 } from "@/lib/types";
+import ThemeNotFound from "@/components/theme.notfound";
+import ClientNotFound from "@/components/themes/EarthlyEleganceTheme/elements/client.notfound";
+import Loading from "@/components/themes/EarthlyEleganceTheme/elements/loading";
+import { themes } from "@/components/themes";
+import { fetcher } from "@/lib/fetcher";
+import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
 import React, { FC } from "react";
+import useSWR from "swr";
 
 interface Props {
-  client: ClientV2;
+  slug: string;
   to: string;
 }
 
 const MainPage: FC<Props> = (props) => {
-  if (!props.client) return <div>Not Found</div>;
-  return <Theme1 client={props.client} to={props.to} />;
+  const { data, error } = useSWR(
+    props.slug ? `/api/client?slug=${props.slug}` : null,
+    fetcher
+  );
+
+  const client: Client | null = data?.data?.length ? data.data[0] : null;
+
+  if (!data && !error) return <Loading />;
+  if (!client) return <ClientNotFound />;
+  if (client.status === "paid") return <ClientNotFound />;
+
+  const themeName = client.theme?.name || "";
+  const ThemeComponent = themes[themeName];
+
+  return ThemeComponent ? (
+    ThemeComponent(client, props.to)
+  ) : (
+    <ThemeNotFound theme={themeName} />
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { slug } = context.params!;
-  const { to } = context.query!;
-  let client = null;
-
-  const apiBaseURL = process.env.API_BASE_URL;
-
-  const response = await fetch(`${apiBaseURL}/api/clientv2?slug=${slug}`);
-
-  if (response.ok) {
-    const result = await response.json();
-    if (result.success && result.data.length > 0) {
-      client = result.data[0];
-    }
-  }
+  const { to } = context.query;
+  const { slug } = context.params as { slug: string };
 
   return {
     props: {
-      client,
       to: to ?? "",
+      slug,
     },
   };
 };

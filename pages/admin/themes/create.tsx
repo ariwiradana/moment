@@ -45,7 +45,7 @@ const CreateTheme: React.FC = () => {
           />
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
-              loading={state.loading}
+              isloading={state.loading}
               title="Add Theme"
               icon={<BiFolderPlus />}
             />

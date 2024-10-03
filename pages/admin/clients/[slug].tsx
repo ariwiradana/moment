@@ -290,7 +290,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
           </div>
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
-              loading={state.loading || state.isLoading}
+              isloading={state.loading || state.isLoading}
               type="submit"
               title="Update Client"
               icon={<BiEdit />}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useClient } from "@/lib/client";
-import { ClientV2, Option, Participant, Theme } from "@/lib/types";
+import { Client, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -20,7 +20,7 @@ const initialParticipants: Participant = {
   image: null,
 };
 
-const initalFormData: ClientV2 = {
+const initalFormData: Client = {
   name: "",
   address: "",
   address_full: "",
@@ -35,7 +35,7 @@ const initalFormData: ClientV2 = {
 };
 
 export const useAdminCreateClient = () => {
-  const [formData, setFormData] = useState<ClientV2>(initalFormData);
+  const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
@@ -162,10 +162,10 @@ export const useAdminCreateClient = () => {
 
     const newGalleryURLs = await handleUploadGallery();
 
-    const modifiedFormdata: ClientV2 = { ...formData };
+    const modifiedFormdata: Client = { ...formData };
     modifiedFormdata["gallery"] = newGalleryURLs;
 
-    const createClient = useClient("/api/clientv2", {
+    const createClient = useClient("/api/client", {
       method: "POST",
       body: JSON.stringify(modifiedFormdata),
     });

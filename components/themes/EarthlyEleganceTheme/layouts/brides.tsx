@@ -1,16 +1,14 @@
 import React, { FC } from "react";
 import { satisfy, playfair } from "@/lib/fonts";
-import ImageShimmer from "../../image.shimmer";
+import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
-import { ClientV2 } from "@/lib/types";
-import useTheme1 from "@/hooks/useTheme1";
+import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 
 interface Props {
-  client: ClientV2;
+  state: UseEarthlyEleganceTheme["state"];
 }
 
 const BridesComponent: FC<Props> = (props) => {
-  const { bride, groom } = useTheme1(props.client);
   return (
     <section>
       <div className="bg-white relative z-10 h-full">
@@ -76,7 +74,7 @@ const BridesComponent: FC<Props> = (props) => {
                   sizes="320px"
                   alt="male"
                   fill
-                  src={groom?.image as string}
+                  src={(props.state.groom?.image as string) ?? ""}
                   className="object-cover rounded-full"
                 />
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
@@ -86,18 +84,18 @@ const BridesComponent: FC<Props> = (props) => {
                 <h2
                   className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
                 >
-                  {groom?.name}
+                  {props.state.groom?.name}
                 </h2>
                 <p
                   className={`${playfair.className} text-sm md:text-base text-center italic`}
                 >
-                  Putra {groom?.child} dari pasangan
+                  Putra {props.state.groom?.child} dari pasangan
                 </p>
                 <div>
                   <h3
                     className={`${playfair.className} text-lg md:text-xl font-semibold mt-2`}
                   >
-                    {groom?.parents_male}
+                    {props.state.groom?.parents_male}
                   </h3>
                   <p
                     className={`${playfair.className} text-lg md:text-xl font-semibold`}
@@ -107,13 +105,13 @@ const BridesComponent: FC<Props> = (props) => {
                   <h3
                     className={`${playfair.className} text-lg md:text-xl font-semibold`}
                   >
-                    {groom?.parents_female}
+                    {props.state.groom?.parents_female}
                   </h3>
                 </div>
                 <p
                   className={`${playfair.className} text-base md:text-lg text-center italic`}
                 >
-                  {groom?.address}
+                  {props.state.groom?.address}
                 </p>
               </div>
             </div>
@@ -124,7 +122,7 @@ const BridesComponent: FC<Props> = (props) => {
                   sizes="320px"
                   alt="female"
                   fill
-                  src={bride?.image as string}
+                  src={(props.state.bride?.image as string) ?? ""}
                   className="object-cover rounded-full"
                 />
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
@@ -134,18 +132,18 @@ const BridesComponent: FC<Props> = (props) => {
                 <h2
                   className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
                 >
-                  {bride?.name}
+                  {props.state.bride?.name}
                 </h2>
                 <p
                   className={`${playfair.className} text-sm md:text-base text-center italic`}
                 >
-                  Putri {bride?.child} dari pasangan
+                  Putri {props.state.bride?.child} dari pasangan
                 </p>
                 <div>
                   <h3
                     className={`${playfair.className} text-lg md:text-xl font-semibold mt-2`}
                   >
-                    {bride?.parents_male}
+                    {props.state.bride?.parents_male}
                   </h3>
                   <p
                     className={`${playfair.className} text-lg md:text-xl font-semibold`}
@@ -155,13 +153,13 @@ const BridesComponent: FC<Props> = (props) => {
                   <h3
                     className={`${playfair.className} text-lg md:text-xl font-semibold`}
                   >
-                    {bride?.parents_female}
+                    {props.state.bride?.parents_female}
                   </h3>
                 </div>
                 <p
                   className={`${playfair.className} text-base md:text-lg text-center italic`}
                 >
-                  {bride?.address}
+                  {props.state.bride?.address}
                 </p>
               </div>
             </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useClient } from "@/lib/client";
-import { ClientV2, Option, Participant, Theme } from "@/lib/types";
+import { Client, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -19,7 +19,7 @@ const initialParticipants: Participant = {
   client_id: null,
   image: null,
 };
-const initalFormData: ClientV2 = {
+const initalFormData: Client = {
   name: "",
   address: "",
   address_full: "",
@@ -33,10 +33,14 @@ const initalFormData: ClientV2 = {
 };
 
 export const useAdminUpdateClient = (slug: string) => {
-  const { data: client, mutate, isLoading } = useSWR<{
+  const {
+    data: client,
+    mutate,
+    isLoading,
+  } = useSWR<{
     success: boolean;
-    data: ClientV2[];
-  }>(slug ? `/api/clientv2?slug=${slug}` : undefined, fetcher);
+    data: Client[];
+  }>(slug ? `/api/client?slug=${slug}` : undefined, fetcher);
 
   const { data: themes } = useSWR<{
     success: boolean;
@@ -44,7 +48,7 @@ export const useAdminUpdateClient = (slug: string) => {
     total_rows: number;
   }>(`/api/themes`, fetcher);
 
-  const [formData, setFormData] = useState<ClientV2>(initalFormData);
+  const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
@@ -67,7 +71,7 @@ export const useAdminUpdateClient = (slug: string) => {
 
   useEffect(() => {
     if (client && client.data.length > 0) {
-      const currentClient: ClientV2 = client.data[0];
+      const currentClient: Client = client.data[0];
       const currentParticipants: Participant[] = currentClient.participants.map(
         (p) => ({
           id: p.id,
@@ -205,13 +209,13 @@ export const useAdminUpdateClient = (slug: string) => {
 
     const newGalleryURLs = await handleUploadGallery();
 
-    const modifiedFormdata: ClientV2 = { ...formData };
+    const modifiedFormdata: Client = { ...formData };
     const currentGallery = Array.isArray(formData.gallery)
       ? formData.gallery
       : [];
     modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
 
-    const updateClient = useClient(`/api/clientv2?id=${client?.data[0].id}`, {
+    const updateClient = useClient(`/api/client?id=${client?.data[0].id}`, {
       method: "PUT",
       body: JSON.stringify(modifiedFormdata),
     });

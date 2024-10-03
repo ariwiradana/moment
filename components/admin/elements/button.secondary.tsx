@@ -7,7 +7,7 @@ interface ButtonSecondaryProps
   className?: string | "";
   icon?: ReactNode;
   size?: "extrasmall" | "small" | "medium" | "large";
-  loading?: boolean;
+  isloading?: boolean;
 }
 
 const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
@@ -32,12 +32,17 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
       } flex items-center rounded-lg text-admin-hover-dark font-semibold bg-white border transition duration-200 hover:bg-gray-100 justify-start ${buttonStyles(
         props.size ?? "large"
       )} ${
-        props.loading && "pointer-events-none bg-opacity-10 cursor-not-allowed"
+        props.isloading &&
+        "pointer-events-none bg-opacity-10 cursor-not-allowed"
       }`}
     >
       <span className="text-sm md:text-base lg:text-lg">
         {" "}
-        {props.loading ? <BiLoaderAlt className="animate-spin" /> : props.icon}
+        {props.isloading ? (
+          <BiLoaderAlt className="animate-spin" />
+        ) : (
+          props.icon
+        )}
       </span>
       <span>{props.title}</span>
     </button>

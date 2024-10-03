@@ -1,18 +1,16 @@
 import ImageShimmer from "@/components/image.shimmer";
+import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
-import { ClientV2 } from "@/lib/types";
 import moment from "moment";
 import React, { FC } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useTheme1 from "@/hooks/useTheme1";
 
 interface Props {
-  client: ClientV2;
+  state: UseEarthlyEleganceTheme["state"];
 }
 
 const HeroComponent: FC<Props> = (props) => {
-  const { countdown, groom, bride } = useTheme1(props.client);
 
   return (
     <section>
@@ -28,9 +26,9 @@ const HeroComponent: FC<Props> = (props) => {
           slidesPerView={1}
           modules={[Autoplay]}
         >
-          {Array.isArray(props.client.gallery) &&
-          props.client.gallery.length > 0 ? (
-            props.client.gallery.map((image, index) => (
+          {Array.isArray(props.state.client?.gallery) &&
+          props.state.client?.gallery.length > 0 ? (
+            props.state.client?.gallery.map((image, index) => (
               <SwiperSlide
                 className="relative w-full h-full"
                 key={`hero-img-${index}`}
@@ -60,22 +58,22 @@ const HeroComponent: FC<Props> = (props) => {
           <h1
             className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
           >
-            {groom?.nickname} & {bride?.nickname}
+            {props.state.groom?.nickname} & {props.state.bride?.nickname}
           </h1>
           <div
             className={`text-white mt-2 lg:mt-4 font-light text-sm md:text-base flex items-center gap-x-3 ${montserrat.className}`}
           >
-            {props.client.address}{" "}
+            {props.state.client?.address}{" "}
             <span>
               <div className="h-1 w-1 rounded-full bg-white"></div>
             </span>{" "}
-            {moment(props.client.date).format("dddd, DD MMM YYYY")}
+            {moment(props.state.client?.date).format("dddd, DD MMM YYYY")}
           </div>
           <div className="flex items-center gap-x-6 md:gap-x-8 lg:gap-x-16 mt-6 text-white">
             <div className="flex items-center gap-x-4 md:gap-x-6 lg:gap-x-8">
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {countdown.days}
+                  {props.state.countdown.days}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
@@ -85,7 +83,7 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {countdown.hours}
+                  {props.state.countdown.hours}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
@@ -95,7 +93,7 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {countdown.minutes}
+                  {props.state.countdown.minutes}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
@@ -105,7 +103,7 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
               <div className="flex items-center flex-col">
                 <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
-                  {countdown.seconds}
+                  {props.state.countdown.seconds}
                 </h2>
                 <p
                   className={`${montserrat.className} text-xs md:text-sm lg:text-base`}

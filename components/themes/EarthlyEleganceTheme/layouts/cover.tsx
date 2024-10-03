@@ -4,22 +4,20 @@ import Button from "../elements/button";
 import { MdArrowOutward } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
-import ImageShimmer from "../../image.shimmer";
-import { ClientV2 } from "@/lib/types";
-import useTheme1 from "@/hooks/useTheme1";
+import ImageShimmer from "../../../image.shimmer";
+import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 
 interface Props {
+  state: UseEarthlyEleganceTheme["state"];
+  actions: UseEarthlyEleganceTheme["actions"];
   to: string;
-  client: ClientV2;
 }
 
 const Cover: FC<Props> = (props) => {
-  const { open, groom, bride, handleOpenCover } = useTheme1(props.client);
-
   return (
     <div
       className={`w-full h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 ${
-        open ? "-top-full invisible opacity-0" : "top-0 visible"
+        props.state.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
       <Swiper
@@ -34,8 +32,9 @@ const Cover: FC<Props> = (props) => {
         slidesPerView={1}
         modules={[EffectFade, Autoplay]}
       >
-        {Array.isArray(props.client.gallery) && props.client.gallery.length > 0
-          ? props.client.gallery.map((image: string, index: number) => (
+        {Array.isArray(props.state.client?.gallery) &&
+        props.state.client?.gallery.length > 0
+          ? props.state.client?.gallery.map((image: string, index: number) => (
               <SwiperSlide
                 className="relative w-full h-full"
                 key={`cover-img-${index}`}
@@ -63,7 +62,7 @@ const Cover: FC<Props> = (props) => {
         <h1
           className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
         >
-          {groom?.nickname} & {bride?.nickname}
+          {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
         <p
           className={`text-white mt-2 lg:mt-4 font-light text-sm lg:text-base ${montserrat.className}`}
@@ -77,7 +76,7 @@ const Cover: FC<Props> = (props) => {
         </h2>
         <div className="mt-4 lg:mt-6">
           <Button
-            onClick={handleOpenCover}
+            onClick={props.actions.handleOpenCover}
             icon={<MdArrowOutward className="lg:text-lg" />}
             title="Buka Undangan"
           />

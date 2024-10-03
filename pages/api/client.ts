@@ -1,5 +1,5 @@
 import handleError from "@/lib/errorHandling";
-import { ClientV2, Participant } from "@/lib/types";
+import { Client, Participant } from "@/lib/types";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -57,7 +57,7 @@ export default async function handler(
 
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
 
-        const clients = rows.map((client: ClientV2) => {
+        const clients = rows.map((client: Client) => {
           const clientParticipants = participants.filter(
             (p) => p.client_id === client.id
           );
@@ -82,7 +82,7 @@ export default async function handler(
 
     case "POST":
       try {
-        const client: ClientV2 = req.body;
+        const client: Client = req.body;
 
         if (client.theme_id) {
           const checkTheme =
@@ -163,7 +163,7 @@ export default async function handler(
       }
     case "PUT":
       try {
-        const client: ClientV2 = req.body;
+        const client: Client = req.body;
         const { id } = req.query;
 
         if (!id) {

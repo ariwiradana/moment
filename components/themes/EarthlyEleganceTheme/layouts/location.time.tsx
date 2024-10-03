@@ -2,14 +2,14 @@ import React, { FC } from "react";
 import { montserrat, playfair, satisfy } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
-import { ClientV2 } from "@/lib/types";
 import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidMap } from "react-icons/bi";
 import Link from "next/link";
+import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 
 interface Props {
-  client: ClientV2;
+  state: UseEarthlyEleganceTheme["state"];
 }
 
 const LocationTimeComponent: FC<Props> = (props) => {
@@ -21,8 +21,9 @@ const LocationTimeComponent: FC<Props> = (props) => {
           fill
           alt="datetime-image"
           src={
-            Array.isArray(props.client.gallery) && props.client.gallery.length
-              ? props.client.gallery[0]
+            Array.isArray(props.state.client?.gallery) &&
+            props.state.client?.gallery.length > 1
+              ? props.state.client?.gallery[1]
               : ""
           }
           className="object-cover"
@@ -39,18 +40,18 @@ const LocationTimeComponent: FC<Props> = (props) => {
           <h1
             className={`${satisfy.className} text-3xl mt-10 text-white font-italic`}
           >
-            {moment(props.client.date).format("dddd")}
+            {moment(props.state.client?.date).format("dddd")}
           </h1>
           <h1
             className={`${playfair.className} text-base md:text-xl text-white font-italic mt-1`}
           >
-            {moment(props.client.date).format("DD MMMM YYYY")}
+            {moment(props.state.client?.date).format("DD MMMM YYYY")}
           </h1>
           <div className="h-[1px] w-2/3 bg-white my-4"></div>
           <h1
             className={`${playfair.className} text-base md:text-xl text-white font-italic`}
           >
-            {props.client.start_time} - {props.client.end_time}
+            {props.state.client?.start_time} - {props.state.client?.end_time}
           </h1>
           <div className="h-[1px] w-2/3 bg-white my-4"></div>
           <h1
@@ -61,10 +62,10 @@ const LocationTimeComponent: FC<Props> = (props) => {
           <h1
             className={`${montserrat.className} text-base md:text-xl mt-1 text-center font-italic text-white`}
           >
-            {props.client.address_full}
+            {props.state.client?.address_full}
           </h1>
           <div className="flex justify-center mt-6">
-            <Link href={props.client.address_url} target="_blank">
+            <Link href={props.state.client?.address_url ?? ""} target="_blank">
               <Button title="Map Lokasi Acara" icon={<BiSolidMap />} />
             </Link>
           </div>
