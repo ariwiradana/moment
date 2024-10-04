@@ -38,24 +38,24 @@ const LocationTimeComponent: FC<Props> = (props) => {
             {moment(props.state.client?.date).format("dddd")}
           </h1>
           <h1
-            className={`${comforta.className} text-sm md:text-2xl font-bold text-admin-dark mt-2`}
+            className={`${comforta.className} text-base md:text-xl font-bold text-admin-dark mt-2`}
           >
             {moment(props.state.client?.date).format("DD MMMM YYYY")}
           </h1>
-          <div className="h-[0.4px] w-2/3 bg-admin-dark my-3"></div>
+          <div className="h-[0.4px] w-2/3 bg-admin-dark my-2"></div>
           <h1
-            className={`${comforta.className} text-sm md:text-2xl font-bold text-admin-dark`}
+            className={`${comforta.className} text-base md:text-xl font-bold text-admin-dark`}
           >
             {props.state.client?.start_time} - {props.state.client?.end_time}
           </h1>
-          <div className="h-[0.4px] w-2/3 bg-admin-dark my-3"></div>
+          <div className="h-[0.4px] w-2/3 bg-admin-dark my-2"></div>
         </div>
         <div data-aos="fade-up" className="text-center">
           <h1 className={`${comforta.className} text-base mt-6 text-gray-500`}>
             Bertempat di
           </h1>
           <h1
-            className={`${comforta.className} font-bold text-base md:text-2xl mt-1 text-center text-admin-dark`}
+            className={`${comforta.className} font-bold text-base md:text-xl mt-1 text-center text-admin-dark leading-5`}
           >
             {props.state.client?.address_full}
           </h1>

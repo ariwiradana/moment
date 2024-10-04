@@ -64,7 +64,7 @@ const BridesComponent: FC<Props> = (props) => {
 
             <p
               data-aos="fade-up"
-              className={`${comforta.className} text-base md:text-2xl text-center mt-8 leading-6 text-admin-dark`}
+              className={`${comforta.className} text-base md:text-xl text-center mt-8 leading-5 text-admin-dark`}
             >
               Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
               Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
@@ -121,21 +121,21 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           {props.data?.name}
         </h2>
         <p
-          className={`${comforta.className} text-sm md:text-2xl text-center mb-3 mt-4 text-gray-500`}
+          className={`${comforta.className} text-sm md:text-xl text-center mb-3 mt-4 text-gray-500`}
         >
           {props.data.role === "groom" ? "Putra" : "Putri"} {props.data?.child}{" "}
           dari pasangan
         </p>
         <div>
           <h3
-            className={`${comforta.className} text-lg md:text-2xl font-bold text-gray-800 leading-6`}
+            className={`${comforta.className} text-lg md:text-xl font-bold text-gray-800 leading-6`}
           >
             Bapak {props.data?.parents_male} <br /> & <br /> Ibu{" "}
             {props.data?.parents_female}
           </h3>
         </div>
         <p
-          className={`${comforta.className} text-base md:text-2xl font-medium text-center mt-4 text-gray-500`}
+          className={`${comforta.className} text-base md:text-xl font-medium text-center mt-4 text-gray-500 leading-5`}
         >
           {props.data?.address}
         </p>

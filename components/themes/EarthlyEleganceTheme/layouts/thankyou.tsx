@@ -26,13 +26,13 @@ const ThankyouComponent: FC<Props> = (props) => {
       <div className="max-w-screen-lg mx-auto">
         <p
           data-aos="fade-up"
-          className={`${comforta.className} text-base md:text-2xl text-center mt-3 leading-6 text-admin-dark`}
+          className={`${comforta.className} text-base md:text-xl text-center mt-3 leading-5 text-admin-dark`}
         >
           Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
         </p>
         <p
           data-aos="fade-up"
-          className={`${comforta.className} text-base md:text-2xl text-center mt-3 leading-6 text-admin-dark`}
+          className={`${comforta.className} text-base md:text-xl text-center mt-3 leading-5 text-admin-dark`}
         >
           Atas kehadiran dan doa restunya kami ucapkan terimakasih.
         </p>
@@ -44,13 +44,13 @@ const ThankyouComponent: FC<Props> = (props) => {
         </div>
         <p
           data-aos="fade-up"
-          className={`${comforta.className} text-base md:text-2xl text-center leading-6 text-admin-dark`}
+          className={`${comforta.className} text-base md:text-xl text-center leading-6 text-gray-500`}
         >
           Kami yang berbahagia
         </p>
         <p
           data-aos="fade-up"
-          className={`${comforta.className} text-base md:text-2xl text-center mt-4 leading-6 text-admin-dark font-bold mb-12`}
+          className={`${comforta.className} text-base md:text-xl text-center mt-3 leading-6 text-admin-dark font-bold mb-12`}
         >
           Kel. Bapak {props.state.groom?.parents_male} <br /> & <br /> Kel.
           Bapak {props.state.bride?.parents_male}

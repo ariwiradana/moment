@@ -35,7 +35,7 @@ const Cover: FC<Props> = (props) => {
       <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-16 md:pb-32 z-20">
         <p
           data-aos="fade-up"
-          className={`text-white text-sm md:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
+          className={`text-white text-sm lg:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
         >
           The Wedding of
         </p>
