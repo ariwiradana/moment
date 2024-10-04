@@ -2,8 +2,6 @@ import React, { FC } from "react";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
 import Button from "../elements/button";
 import { MdArrowOutward } from "react-icons/md";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade } from "swiper/modules";
 import ImageShimmer from "../../../image.shimmer";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 
@@ -20,39 +18,18 @@ const Cover: FC<Props> = (props) => {
         props.state.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
-      <Swiper
-        loop
-        autoplay={{
-          delay: 4000,
-        }}
-        speed={4000}
-        effect={"fade"}
-        className="w-full h-dvh"
-        spaceBetween={0}
-        slidesPerView={1}
-        modules={[EffectFade, Autoplay]}
-      >
-        {Array.isArray(props.state.client?.gallery) &&
-        props.state.client?.gallery.length > 3
-          ? props.state.client?.gallery
-              .slice(0, 3)
-              .map((image: string, index: number) => (
-                <SwiperSlide
-                  className="relative w-full h-full"
-                  key={`cover-img-${index}`}
-                >
-                  <ImageShimmer
-                    fill
-                    alt={`cover-img-${index}`}
-                    priority
-                    sizes="100vw"
-                    className="object-cover"
-                    src={image}
-                  />
-                </SwiperSlide>
-              ))
-          : null}
-      </Swiper>
+      <div className="h-dvh w-dvw relative">
+        {props.state.client?.cover && (
+          <ImageShimmer
+            fill
+            alt={`cover-img-image`}
+            priority
+            sizes="100vw"
+            className="object-cover"
+            src={props.state.client?.cover as string}
+          />
+        )}
+      </div>
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00000045] to-[#000000ca] z-10"></div>
       <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-16 md:pb-32 z-20">

@@ -38,4 +38,5 @@ export interface Client {
   end_time: string;
   theme_id: number | null;
   theme?: Theme | null;
+  cover: null | string;
 }

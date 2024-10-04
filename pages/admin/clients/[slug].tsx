@@ -7,6 +7,8 @@ import InputTextarea from "@/components/admin/elements/textarea";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import {
   BiEdit,
+  BiImageAdd,
+  BiImageAlt,
   BiLeftArrowAlt,
   BiSolidPlusCircle,
   BiTime,
@@ -152,7 +154,10 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             {Array.isArray(state.formData.gallery) &&
             state.formData.gallery.length > 0
               ? state.formData.gallery.map((img: string, index: number) => (
-                  <div className="relative w-full aspect-square" key={index}>
+                  <div
+                    className="relative w-full aspect-square group"
+                    key={index}
+                  >
                     <div className="absolute top-2 right-2 z-10">
                       <button
                         type="button"
@@ -168,6 +173,25 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         <BiX />
                       </button>
                     </div>
+                    {state.formData.cover === img ? (
+                      <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 absolute bottom-2 left-2 z-20 backdrop-blur text-white">
+                        <BiImageAlt className="text-base font-medium" />
+                        <span>Cover</span>
+                      </div>
+                    ) : (
+                      <div className="absolute -bottom-2 invisible left-2 z-10 opacity-0 group-hover:bottom-2 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500">
+                        <button
+                          onClick={() => actions.handleSetCover(img, state.formData.id as number)}
+                          type="button"
+                          disabled={state.loading || state.isLoading}
+                          className="h-5 px-2 rounded-md font-medium bg-white flex justify-center items-center text-center text-xs gap-x-1"
+                        >
+                          <BiImageAdd className="text-base" />
+                          <span>Set as Cover</span>
+                        </button>
+                      </div>
+                    )}
+
                     <ImageShimmer
                       sizes="200px"
                       priority

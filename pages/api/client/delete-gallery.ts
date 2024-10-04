@@ -24,17 +24,19 @@ export default async function handler(
       return handleError(response, new Error("Client not found"));
     }
 
-    let gallery: string[] = [];
-    if (client[0] as Client) {
-      gallery = client[0].gallery;
-    }
+    const currentClient: Client = client[0];
 
+    const gallery: string[] = currentClient.gallery as string[];
     const filteredGallery = gallery.filter((g) => g !== url);
 
-    await sql.query(`UPDATE clients SET gallery = $1 WHERE id = $2`, [
-      filteredGallery,
-      Number(id),
-    ]);
+    await sql.query(
+      `UPDATE clients SET gallery = $1, cover = $2 WHERE id = $3`,
+      [
+        filteredGallery,
+        currentClient.cover === url ? null : currentClient.cover,
+        Number(id),
+      ]
+    );
 
     await del(url);
 

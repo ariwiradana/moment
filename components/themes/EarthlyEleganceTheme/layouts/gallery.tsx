@@ -4,6 +4,7 @@ import Title from "../elements/title";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
+import Image from "next/image";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
@@ -12,10 +13,18 @@ interface Props {
 const GalleryComponent: FC<Props> = (props) => {
   return (
     <section>
-      <div className="bg-white relative z-10 h-full py-10 max-w-screen-xl mx-auto">
+      <div className="bg-gray-100 relative z-10 h-full py-10 max-w-screen-xl mx-auto">
+        <div className="absolute inset-0 bg-[url('/images/theme1/flower-pattern.png')] bg-repeat bg-contain opacity-10"></div>
         <div className="w-full h-full p-6 md:px-12 relative z-40">
-          <div data-aos="fade-up">
-            <Title title="Cerita Kami" />
+          <div data-aos="fade-up" className="flex flex-col items-center">
+            <Image
+              alt="leaf-datetime"
+              src="/images/theme1/leaf5-gold.svg"
+              width={130}
+              height={50}
+              className="mb-1"
+            />
+            <Title title="Momen Bahagia" />
           </div>
           <Swiper
             data-aos="fade-up"

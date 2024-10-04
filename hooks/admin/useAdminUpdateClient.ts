@@ -33,6 +33,7 @@ const initalFormData: Client = {
   theme_id: null,
   participants: [initialParticipants],
   gallery: [],
+  cover: null,
 };
 
 export const useAdminUpdateClient = (slug: string) => {
@@ -120,6 +121,7 @@ export const useAdminUpdateClient = (slug: string) => {
         end_time: currentClient.end_time,
         theme_id: currentClient.theme_id,
         gallery: currentClient.gallery,
+        cover: currentClient.cover,
         participants: currentParticipants,
       }));
     }
@@ -418,6 +420,32 @@ export const useAdminUpdateClient = (slug: string) => {
     return currentParticipants;
   };
 
+  const handleSetCover = async (url: string, id: number) => {
+    const setCover = async () => {
+      const response = await useClient(`/api/client/set-cover`, {
+        method: "POST",
+        body: JSON.stringify({ url, id }),
+      });
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      return await response.json();
+    };
+    toast.promise(setCover(), {
+      loading: "Set cover image...",
+      success: () => {
+        mutate();
+        setLoading(false);
+        return "Successfully set cover image";
+      },
+      error: (error: any) => {
+        setLoading(false);
+        return error.message || "Failed to set cover image";
+      },
+    });
+  };
+
   return {
     state: {
       formData,
@@ -437,6 +465,7 @@ export const useAdminUpdateClient = (slug: string) => {
       handletoggleEndTime,
       handleDeleteImageGallery,
       handleDeleteImageParticipant,
+      handleSetCover,
     },
   };
 };

@@ -32,6 +32,7 @@ const initalFormData: Client = {
   status: "unpaid",
   participants: [initialParticipants],
   gallery: [],
+  cover: null,
 };
 
 export const useAdminCreateClient = () => {
