@@ -37,14 +37,14 @@ const GalleryComponent: FC<Props> = (props) => {
             slidesPerView={"auto"}
             spaceBetween={0}
             modules={[Autoplay, EffectCoverflow]}
-            className="w-full h-[60vh] mt-6"
+            className="w-full h-[65vh] mt-6"
           >
             {Array.isArray(props.state.client?.gallery) &&
             props.state.client?.gallery.length > 0
               ? props.state.client?.gallery.map((image, index) => (
                   <SwiperSlide
                     key={`cerita-kami-${index}`}
-                    className="relative flex justify-center items-center max-w-[80vw] h-full"
+                    className="relative flex justify-center items-center max-w-[75vw] h-full"
                   >
                     <div className="relative h-full">
                       <ImageShimmer
