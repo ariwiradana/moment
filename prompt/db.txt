@@ -11,6 +11,7 @@ CREATE TABLE clients (
   slug VARCHAR(255) UNIQUE,
   address VARCHAR(255),
   address_url VARCHAR(255),
+  cover VARCHAR(255),
   address_full TEXT,
   theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
   date VARCHAR(100),

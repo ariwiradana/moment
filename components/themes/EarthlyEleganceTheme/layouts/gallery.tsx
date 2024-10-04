@@ -1,18 +1,38 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import Image from "next/image";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
 }
 
 const GalleryComponent: FC<Props> = (props) => {
+  const [open, setOpen] = useState(false);
+  const [imageIndex, setImageIndex] = useState(0);
+  console.log(imageIndex)
+
+  // Ensure images is an array of URLs, not objects
+  const images =
+    Array.isArray(props.state.client?.gallery) &&
+    props.state.client?.gallery.length > 0
+      ? props.state.client?.gallery
+      : [];
+
+  const lightboxSources = images.map((img) => ({ src: img }));
+
   return (
     <section>
+      <Lightbox
+        open={open}
+        close={() => setOpen(false)}
+        slides={lightboxSources}
+      />
       <div className="relative z-10 h-full py-20 max-w-screen-xl mx-auto">
         <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
         <div className="w-full h-full px-6 md:px-12 relative z-40">
@@ -49,21 +69,26 @@ const GalleryComponent: FC<Props> = (props) => {
             modules={[Autoplay, EffectCoverflow]}
             className="w-full h-[65vh] mt-6"
           >
-            {Array.isArray(props.state.client?.gallery) &&
-            props.state.client?.gallery.length > 0
-              ? props.state.client?.gallery.map((image, index) => (
+            {images?.length > 0
+              ? images.map((image, index) => (
                   <SwiperSlide
                     key={`cerita-kami-${index}`}
                     className="relative flex justify-center items-center max-w-[75vw] h-full py-4"
                   >
-                    <div className="relative h-full">
+                    <div
+                      onClick={() => {
+                        setOpen((state) => !state);
+                        setImageIndex(() => index + 1);
+                      }}
+                      className="relative h-full w-full"
+                    >
                       <ImageShimmer
                         priority
                         sizes="70vw"
                         src={image}
                         alt={`cerita-kami-${index}`}
                         fill
-                        className={`h-full object-cover transform transition-all ease-in-out duration-1000 delay-300`}
+                        className="object-cover transform transition-all ease-in-out duration-1000 delay-300"
                       />
                     </div>
                   </SwiperSlide>

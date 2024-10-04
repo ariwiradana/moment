@@ -108,8 +108,8 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           src={(props.data?.image as string) ?? ""}
           className="object-cover rounded-full"
         />
-        <div className="w-52 h-80 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
-        <div className="w-52 h-80 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
+        <div className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -left-2"></div>
+        <div className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -right-2"></div>
       </div>
       <div
         className="mt-6 flex flex-col text-center md:gap-y-3"
@@ -128,7 +128,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         </p>
         <div>
           <h3
-            className={`${comforta.className} text-lg md:text-xl font-bold text-gray-800 leading-6`}
+            className={`${comforta.className} text-base md:text-xl font-bold text-gray-800 leading-6`}
           >
             Bapak {props.data?.parents_male} <br /> & <br /> Ibu{" "}
             {props.data?.parents_female}

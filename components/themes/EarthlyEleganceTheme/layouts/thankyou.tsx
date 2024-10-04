@@ -12,7 +12,7 @@ const ThankyouComponent: FC<Props> = (props) => {
   return (
     <section
       className="px-6 py-8 bg-theme1-primary bg-opacity-5 relative"
-      data-aos="fade-up"
+      data-aos="fade-in"
     >
       <div className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-repeat bg-contain opacity-5"></div>
       <div className="flex justify-center mb-12 mt-8" data-aos="zoom-in-up">
@@ -28,7 +28,8 @@ const ThankyouComponent: FC<Props> = (props) => {
           data-aos="fade-up"
           className={`${comforta.className} text-base md:text-xl text-center mt-3 leading-5 text-admin-dark`}
         >
-          Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+          Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila
+          Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
         </p>
         <p
           data-aos="fade-up"
