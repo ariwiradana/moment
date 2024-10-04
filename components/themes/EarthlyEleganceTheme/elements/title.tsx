@@ -1,4 +1,4 @@
-import { alexbrush } from "@/lib/fonts";
+import { satisfy } from "@/lib/fonts";
 import React, { FC } from "react";
 
 interface Props {
@@ -6,15 +6,15 @@ interface Props {
   className?: string;
 }
 
-const Title: FC<Props> = (props) => {
+const Title: FC<Props> = ({ className, title = false }) => {
   return (
-    <h1
-      className={`${
-        alexbrush.className
-      } text-[40px] md:text-5xl text-center text-theme1-gold ${props.className ?? ""}`}
+    <div
+      className={`${satisfy.className} text-4xl text-center text-theme1-gold ${
+        className ?? ""
+      } relative`}
     >
-      {props.title}
-    </h1>
+      <span>{title}</span>
+    </div>
   );
 };
 

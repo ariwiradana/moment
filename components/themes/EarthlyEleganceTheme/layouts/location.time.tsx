@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { montserrat, playfair, satisfy } from "@/lib/fonts";
+import { merienda, garamond } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
@@ -20,7 +20,7 @@ const LocationTimeComponent: FC<Props> = (props) => {
 
   return (
     <section className="mt-12">
-      <div className="relative w-full flex px-8 py-16" data-aos="fade-up">
+      <div className="relative w-full flex px-6 py-16" data-aos="fade-up">
         <div className="absolute inset-0 z-10 bg-opacity-40 bg-black"></div>
         <Image
           fill
@@ -30,41 +30,41 @@ const LocationTimeComponent: FC<Props> = (props) => {
         />
         <div
           className="bg-white px-6 py-14 relative z-20 w-full rounded-xl bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl"
-          data-aos="fade-up"
-          data-aos-delay="300"
+          data-aos="zoom-in-up"
+          data-aos-delay="200"
         >
           <Image
             alt="leaf-datetime"
             src="/images/theme1/leaf5.svg"
-            width={130}
+            width={110}
             height={50}
-            className="mb-8"
+            className="mb-4"
           />
           <Title className="text-white" title="Waktu & Tempat" />
           <h1
-            className={`${satisfy.className} text-3xl mt-10 text-white font-italic`}
+            className={`${merienda.className} text-3xl mt-10 text-white font-italic`}
           >
             {moment(props.state.client?.date).format("dddd")}
           </h1>
           <h1
-            className={`${playfair.className} text-base md:text-xl text-white font-italic mt-1`}
+            className={`${garamond.className} text-xl md:text-2xl font-bold text-white font-italic mt-2`}
           >
             {moment(props.state.client?.date).format("DD MMMM YYYY")}
           </h1>
-          <div className="h-[1px] w-2/3 bg-white my-4"></div>
+          <div className="h-[0.5px] w-2/3 bg-white my-3"></div>
           <h1
-            className={`${playfair.className} text-base md:text-xl text-white font-italic`}
+            className={`${garamond.className} text-xl md:text-2xl font-bold text-white font-italic`}
           >
             {props.state.client?.start_time} - {props.state.client?.end_time}
           </h1>
-          <div className="h-[1px] w-2/3 bg-white my-4"></div>
+          <div className="h-[0.5px] w-2/3 bg-white my-3"></div>
           <h1
-            className={`${montserrat.className} text-sm md:text-xl mt-6 font-italic text-white`}
+            className={`${garamond.className} text-xl mt-6 font-italic text-white`}
           >
             Bertempat di
           </h1>
           <h1
-            className={`${montserrat.className} text-base md:text-xl mt-1 text-center font-italic text-white`}
+            className={`${garamond.className} font-bold text-xl md:text-2xl mt-1 text-center text-white`}
           >
             {props.state.client?.address_full}
           </h1>

@@ -1,8 +1,9 @@
 import React, { FC } from "react";
-import { satisfy, playfair } from "@/lib/fonts";
+import { garamond, merienda } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { Participant } from "@/lib/types";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
@@ -62,7 +63,7 @@ const BridesComponent: FC<Props> = (props) => {
 
             <p
               data-aos="fade-up"
-              className={`${playfair.className} text-base md:text-lg text-center mt-2 leading-7`}
+              className={`${garamond.className} text-xl md:text-2xl text-center mt-3 leading-7 font-italic text-admin-dark mt-2`}
             >
               Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
               Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
@@ -71,118 +72,74 @@ const BridesComponent: FC<Props> = (props) => {
           </div>
 
           <div className="flex flex-col lg:flex-row justify-center items-center mt-12 gap-10 md:gap-16">
-            <div className="flex flex-col justify-center items-center">
-              <div
-                className="w-60 h-60 rounded-full bg-gray-200 relative"
-                data-aos="fade-up"
-              >
-                <ImageShimmer
-                  priority
-                  sizes="320px"
-                  alt="male"
-                  fill
-                  src={(props.state.groom?.image as string) ?? ""}
-                  className="object-cover rounded-full"
-                />
-                <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
-                <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
-              </div>
-              <div
-                className="mt-6 flex flex-col text-center gap-y-2"
-                data-aos="fade-up"
-              >
-                <h2
-                  className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
-                >
-                  {props.state.groom?.name}
-                </h2>
-                <p
-                  className={`${playfair.className} text-sm md:text-base text-center italic`}
-                >
-                  Putra {props.state.groom?.child} dari pasangan
-                </p>
-                <div>
-                  <h3
-                    className={`${playfair.className} text-lg md:text-xl font-semibold mt-2`}
-                  >
-                    {props.state.groom?.parents_male}
-                  </h3>
-                  <p
-                    className={`${playfair.className} text-lg md:text-xl font-semibold`}
-                  >
-                    &
-                  </p>
-                  <h3
-                    className={`${playfair.className} text-lg md:text-xl font-semibold`}
-                  >
-                    {props.state.groom?.parents_female}
-                  </h3>
-                </div>
-                <p
-                  className={`${playfair.className} text-base md:text-lg text-center italic`}
-                >
-                  {props.state.groom?.address}
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center items-center">
-              <div
-                className="w-60 h-60 rounded-full bg-gray-200 relative"
-                data-aos="fade-up"
-              >
-                <ImageShimmer
-                  priority
-                  sizes="100vw"
-                  alt="female"
-                  fill
-                  src={(props.state.bride?.image as string) ?? ""}
-                  className="object-cover rounded-full"
-                />
-                <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
-                <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
-              </div>
-              <div
-                className="mt-6 flex flex-col text-center gap-y-2"
-                data-aos="fade-up"
-              >
-                <h2
-                  className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
-                >
-                  {props.state.bride?.name}
-                </h2>
-                <p
-                  className={`${playfair.className} text-sm md:text-base text-center italic`}
-                >
-                  Putri {props.state.bride?.child} dari pasangan
-                </p>
-                <div>
-                  <h3
-                    className={`${playfair.className} text-lg md:text-xl font-semibold mt-2`}
-                  >
-                    {props.state.bride?.parents_male}
-                  </h3>
-                  <p
-                    className={`${playfair.className} text-lg md:text-xl font-semibold`}
-                  >
-                    &
-                  </p>
-                  <h3
-                    className={`${playfair.className} text-lg md:text-xl font-semibold`}
-                  >
-                    {props.state.bride?.parents_female}
-                  </h3>
-                </div>
-                <p
-                  className={`${playfair.className} text-base md:text-lg text-center italic`}
-                >
-                  {props.state.bride?.address}
-                </p>
-              </div>
-            </div>
+            <ParticipantComponent data={props.state.groom as Participant} />
+            <ParticipantComponent data={props.state.bride as Participant} />
           </div>
         </div>
       </div>
     </section>
+  );
+};
+
+interface ComponentProps {
+  data: Participant;
+}
+const ParticipantComponent: FC<ComponentProps> = (props) => {
+  return (
+    <div className="flex flex-col justify-center items-center">
+      <div
+        className="w-64 h-64 rounded-full bg-gray-200 relative"
+        data-aos="zoom-in-up"
+      >
+        <ImageShimmer
+          priority
+          sizes="100vw"
+          alt={`avatar-${props.data?.role}`}
+          fill
+          src={(props.data?.image as string) ?? ""}
+          className="object-cover rounded-full"
+        />
+        <div className="w-64 h-64 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
+        <div className="w-64 h-64 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
+      </div>
+      <div
+        className="mt-6 flex flex-col text-center md:gap-y-3 text-gray-900"
+        data-aos="fade-up"
+      >
+        <h2
+          className={`${merienda.className} text-2xl text-theme1-gold md:text-3xl`}
+        >
+          {props.data?.name}
+        </h2>
+        <p
+          className={`${garamond.className} text-xl md:text-2xl text-center font-italic my-2`}
+        >
+          Putri {props.data?.child} dari pasangan
+        </p>
+        <div>
+          <h3
+            className={`${garamond.className} text-xl md:text-3xl font-semibold font-italic`}
+          >
+            Bapak {props.data?.parents_male}
+          </h3>
+          <p
+            className={`${garamond.className} text-xl md:text-3xl font-semibold font-italic`}
+          >
+            &
+          </p>
+          <h3
+            className={`${garamond.className} text-xl md:text-3xl font-semibold font-italic`}
+          >
+            Ibu {props.data?.parents_female}
+          </h3>
+        </div>
+        <p
+          className={`${garamond.className} text-xl md:text-2xl font-bold text-center mt-4`}
+        >
+          {props.data?.address}
+        </p>
+      </div>
+    </div>
   );
 };
 
