@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { merienda, garamond } from "@/lib/fonts";
+import { playfair } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
@@ -42,29 +42,29 @@ const LocationTimeComponent: FC<Props> = (props) => {
           />
           <Title className="text-white" title="Waktu & Tempat" />
           <h1
-            className={`${merienda.className} text-3xl mt-10 text-white font-italic`}
+            className={`${playfair.className} text-4xl mt-10 text-white font-italic`}
           >
             {moment(props.state.client?.date).format("dddd")}
           </h1>
           <h1
-            className={`${garamond.className} text-xl md:text-2xl font-bold text-white font-italic mt-2`}
+            className={`${playfair.className} text-xl md:text-2xl font-bold text-white font-italic mt-2`}
           >
             {moment(props.state.client?.date).format("DD MMMM YYYY")}
           </h1>
           <div className="h-[0.5px] w-2/3 bg-white my-3"></div>
           <h1
-            className={`${garamond.className} text-xl md:text-2xl font-bold text-white font-italic`}
+            className={`${playfair.className} text-xl md:text-2xl font-bold text-white font-italic`}
           >
             {props.state.client?.start_time} - {props.state.client?.end_time}
           </h1>
           <div className="h-[0.5px] w-2/3 bg-white my-3"></div>
           <h1
-            className={`${garamond.className} text-xl mt-6 font-italic text-white`}
+            className={`${playfair.className} text-xl mt-6 font-italic text-white`}
           >
             Bertempat di
           </h1>
           <h1
-            className={`${garamond.className} font-bold text-xl md:text-2xl mt-1 text-center text-white`}
+            className={`${playfair.className} font-bold text-xl md:text-2xl mt-1 text-center text-white`}
           >
             {props.state.client?.address_full}
           </h1>

@@ -1,4 +1,4 @@
-import { satisfy } from "@/lib/fonts";
+import { merienda } from "@/lib/fonts";
 import React, { FC } from "react";
 
 interface Props {
@@ -9,7 +9,9 @@ interface Props {
 const Title: FC<Props> = ({ className, title = false }) => {
   return (
     <div
-      className={`${satisfy.className} text-4xl text-center text-theme1-gold ${
+      className={`${
+        merienda.className
+      } text-3xl lg:text-4xl text-center text-theme1-gold ${
         className ?? ""
       } relative`}
     >

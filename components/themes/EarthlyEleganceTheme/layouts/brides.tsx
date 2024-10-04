@@ -1,9 +1,10 @@
 import React, { FC } from "react";
-import { garamond, merienda } from "@/lib/fonts";
+import { playfair, merienda } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 import { Participant } from "@/lib/types";
+import Image from "next/image";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
@@ -55,7 +56,7 @@ const BridesComponent: FC<Props> = (props) => {
           </svg>
         </div>
 
-        <div className="w-full h-full p-6 md:px-12 relative z-40 max-w-screen-md mx-auto">
+        <div className="w-full h-full py-8 px-6 md:px-12 relative z-40 max-w-screen-lg mx-auto">
           <div>
             <div data-aos="fade-up">
               <Title title="Om Swastiastu" />
@@ -63,15 +64,26 @@ const BridesComponent: FC<Props> = (props) => {
 
             <p
               data-aos="fade-up"
-              className={`${garamond.className} text-xl md:text-2xl text-center mt-3 leading-7 font-italic text-admin-dark mt-2`}
+              className={`${playfair.className} text-xl md:text-2xl text-center mt-8 leading-7 font-italic text-admin-dark`}
             >
               Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
               Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
               Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.
             </p>
+            <div
+              className="flex justify-center mb-16 mt-8"
+              data-aos="zoom-in-up"
+            >
+              <Image
+                alt="leaf-datetime"
+                src="/images/theme1/leaf5-gold.svg"
+                width={110}
+                height={50}
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-center items-center mt-12 gap-10 md:gap-16">
+          <div className="flex flex-col lg:flex-row justify-center items-center mt-24 gap-16">
             <ParticipantComponent data={props.state.groom as Participant} />
             <ParticipantComponent data={props.state.bride as Participant} />
           </div>
@@ -91,50 +103,53 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         className="w-64 h-64 rounded-full bg-gray-200 relative"
         data-aos="zoom-in-up"
       >
-        <ImageShimmer
-          priority
-          sizes="100vw"
-          alt={`avatar-${props.data?.role}`}
-          fill
-          src={(props.data?.image as string) ?? ""}
-          className="object-cover rounded-full"
-        />
+        <div data-aos="zoom-in-up">
+          <ImageShimmer
+            priority
+            sizes="100vw"
+            alt={`avatar-${props.data?.role}`}
+            fill
+            src={(props.data?.image as string) ?? ""}
+            className="object-cover rounded-full"
+          />
+        </div>
         <div className="w-64 h-64 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
         <div className="w-64 h-64 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
       </div>
       <div
-        className="mt-6 flex flex-col text-center md:gap-y-3 text-gray-900"
+        className="mt-6 flex flex-col text-center md:gap-y-3"
         data-aos="fade-up"
       >
         <h2
-          className={`${merienda.className} text-2xl text-theme1-gold md:text-3xl`}
+          className={`${merienda.className} text-[26px] text-theme1-gold md:text-3xl`}
         >
           {props.data?.name}
         </h2>
         <p
-          className={`${garamond.className} text-xl md:text-2xl text-center font-italic my-2`}
+          className={`${playfair.className} text-lg md:text-2xl text-center font-italic mb-2 mt-4 text-gray-500`}
         >
-          Putri {props.data?.child} dari pasangan
+          {props.data.role === "groom" ? "Putra" : "Putri"} {props.data?.child}{" "}
+          dari pasangan
         </p>
         <div>
           <h3
-            className={`${garamond.className} text-xl md:text-3xl font-semibold font-italic`}
+            className={`${playfair.className} text-xl md:text-2xl font-bold text-gray-800`}
           >
             Bapak {props.data?.parents_male}
           </h3>
           <p
-            className={`${garamond.className} text-xl md:text-3xl font-semibold font-italic`}
+            className={`${playfair.className} text-xl md:text-2xl font-bold text-gray-800`}
           >
             &
           </p>
           <h3
-            className={`${garamond.className} text-xl md:text-3xl font-semibold font-italic`}
+            className={`${playfair.className} text-xl md:text-2xl font-bold text-gray-800`}
           >
             Ibu {props.data?.parents_female}
           </h3>
         </div>
         <p
-          className={`${garamond.className} text-xl md:text-2xl font-bold text-center mt-4`}
+          className={`${playfair.className} text-xl md:text-2xl font-medium text-center mt-4 text-gray-800`}
         >
           {props.data?.address}
         </p>

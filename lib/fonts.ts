@@ -5,8 +5,8 @@ import {
   Alex_Brush,
   Satisfy,
   Poppins,
-  Cormorant_Garamond,
   Merienda,
+  Playfair,
 } from "next/font/google";
 
 export const tangerine = Tangerine({
@@ -32,7 +32,7 @@ export const merienda = Merienda({
   weight: ["400"],
 });
 
-export const garamond = Cormorant_Garamond({
+export const playfair = Playfair({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
