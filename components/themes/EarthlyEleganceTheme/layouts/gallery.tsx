@@ -19,7 +19,7 @@ const GalleryComponent: FC<Props> = (props) => {
           <div data-aos="fade-up" className="flex flex-col items-center mb-8">
             <Title title="Momen Bahagia" />
           </div>
-          <div className="flex justify-center mt-8 mb-16" data-aos="zoom-in-up">
+          <div className="flex justify-center mt-6 mb-12" data-aos="zoom-in-up">
             <Image
               alt="leaf-datetime"
               src="/images/theme1/leaf5-gold.svg"

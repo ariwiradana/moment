@@ -14,7 +14,8 @@ const ThankyouComponent: FC<Props> = (props) => {
       className="px-6 py-8 bg-theme1-primary bg-opacity-5 relative"
       data-aos="fade-in"
     >
-      <div className="flex justify-center mb-16 mt-8" data-aos="zoom-in-up">
+      <div className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-repeat bg-contain opacity-5"></div>
+      <div className="flex justify-center mb-12 mt-8" data-aos="zoom-in-up">
         <Image
           alt="leaf-datetime"
           src="/images/theme1/leaf5-gold.svg"
@@ -27,8 +28,7 @@ const ThankyouComponent: FC<Props> = (props) => {
           data-aos="fade-up"
           className={`${playfair.className} text-xl md:text-2xl text-center mt-3 leading-7 font-italic text-admin-dark`}
         >
-          Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak /
-          Ibu / Saudara / i berkenan hadir dan memberikan doa restu.
+          Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
         </p>
         <p
           data-aos="fade-up"
@@ -37,7 +37,10 @@ const ThankyouComponent: FC<Props> = (props) => {
           Atas kehadiran dan doa restunya kami ucapkan terimakasih.
         </p>
         <div data-aos="fade-up">
-          <Title className="text-2xl mt-8 mb-16" title="Om Shanti Shanti Shanti Om" />
+          <Title
+            className="text-2xl mt-8 mb-16"
+            title="Om Shanti Shanti Shanti Om"
+          />
         </div>
         <p
           data-aos="fade-up"
@@ -47,7 +50,7 @@ const ThankyouComponent: FC<Props> = (props) => {
         </p>
         <p
           data-aos="fade-up"
-          className={`${playfair.className} text-xl md:text-2xl text-center mt-4 leading-7 text-admin-dark font-bold mb-8`}
+          className={`${playfair.className} text-xl md:text-2xl text-center mt-4 leading-7 text-admin-dark font-bold mb-12`}
         >
           Kel. Bapak {props.state.groom?.parents_male} <br /> & <br /> Kel.
           Bapak {props.state.bride?.parents_male}

@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         theme1: {
           primary: "#604A32",
-          gold: "#ba9e69",
+          gold: "#B99470",
           "dark-chocolate": "#1e1918",
         },
         admin: {
