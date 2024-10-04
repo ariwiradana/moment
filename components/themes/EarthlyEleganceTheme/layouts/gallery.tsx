@@ -25,7 +25,7 @@ const GalleryComponent: FC<Props> = (props) => {
             }}
             effect={"coverflow"}
             coverflowEffect={{
-              rotate: 80,
+              rotate: 50,
               stretch: 0,
               depth: 100,
               modifier: 1,
