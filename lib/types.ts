@@ -40,3 +40,11 @@ export interface Client {
   theme?: Theme | null;
   cover: null | string;
 }
+
+export interface Review {
+  id: number;
+  client_id: number;
+  name: string;
+  attendant: string;
+  wishes: string;
+}

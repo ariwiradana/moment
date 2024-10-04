@@ -1,8 +1,10 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import moment from "moment";
-import { Client, Participant } from "@/lib/types";
+import { Client, Participant, Review } from "@/lib/types";
 import toast from "react-hot-toast";
 import { useClient } from "@/lib/client";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 
 interface Countdown {
   days: number;
@@ -19,12 +21,14 @@ interface FormData {
 
 export interface UseEarthlyEleganceTheme {
   state: {
+    loading: boolean;
     open: boolean;
     countdown: Countdown;
     bride: Participant | null;
     groom: Participant | null;
     client: Client | null;
     formData: FormData;
+    reviews: Review[] | null;
   };
   actions: {
     handleOpenCover: () => void;
@@ -33,24 +37,37 @@ export interface UseEarthlyEleganceTheme {
   };
 }
 
+const initialReviewForm = {
+  name: "",
+  attendant: "Hadir",
+  wishes: "",
+};
+
 const useEarthlyEleganceTheme = (
   client: Client | null
 ): UseEarthlyEleganceTheme => {
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<Countdown>({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
+  const [formData, setFormData] = useState<FormData>(initialReviewForm);
+  const [page, setpage] = useState<number>(1);
+  const [limit] = useState<number>(10);
 
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    attendant: "Hadir",
-    wishes: "",
-  });
+  const { data, mutate } = useSWR(
+    client?.id
+      ? `/api/reviews?page=${page}&limit=${limit}&client_id=${client.id}`
+      : null,
+    fetcher
+  );
+
+  const reviews: Review[] = data?.data ?? [];
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -63,6 +80,7 @@ const useEarthlyEleganceTheme = (
 
     try {
       const createReview = async () => {
+        setLoading(true);
         const response = await useClient(`/api/reviews`, {
           method: "POST",
           body: JSON.stringify(payload),
@@ -77,6 +95,8 @@ const useEarthlyEleganceTheme = (
       toast.promise(createReview(), {
         loading: "Memberikan ucapan...",
         success: () => {
+          mutate();
+          setLoading(false);
           return "Berhasil memberikan ucapan";
         },
         error: (error: any) => {
@@ -85,6 +105,8 @@ const useEarthlyEleganceTheme = (
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -141,19 +163,20 @@ const useEarthlyEleganceTheme = (
     }
   }, [client, updateCountdown, brideParticipant, groomParticipant]);
 
-  // Memoize the handleOpenCover function
   const handleOpenCover = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
   return {
     state: {
+      loading,
       open,
       countdown,
       bride,
       groom,
       client,
       formData,
+      reviews,
     },
     actions: {
       handleOpenCover,
