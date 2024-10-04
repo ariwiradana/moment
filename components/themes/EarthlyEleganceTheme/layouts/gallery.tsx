@@ -28,7 +28,7 @@ const GalleryComponent: FC<Props> = (props) => {
               clickable: true,
             }}
             modules={[Pagination, Autoplay]}
-            className="w-full h-[60vh] mt-6"
+            className="w-full h-[70vh] mt-6"
           >
             {Array.isArray(props.state.client?.gallery) &&
             props.state.client?.gallery.length > 0
