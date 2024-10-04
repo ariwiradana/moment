@@ -36,7 +36,7 @@ const Sidebar: FC = () => {
         </title>
       </Head>
       <aside
-        className={`lg:w-72 bg-white h-screen transition-all duration-300 ease-in-out shadow-lg divide-y divide-admin-border inset-y-0 z-20 fixed ${
+        className={`lg:w-72 bg-white h-screen transition-all duration-300 ease-in-out shadow-lg divide-y divide-admin-border inset-y-0 z-30 fixed ${
           isSidebarOpen ? "left-0" : "-left-full lg:left-0"
         }`}
       >

@@ -150,7 +150,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             label="Gallery"
           />
 
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {Array.isArray(state.formData.gallery) &&
             state.formData.gallery.length > 0
               ? state.formData.gallery.map((img: string, index: number) => (
@@ -181,7 +181,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                     ) : (
                       <div className="absolute -bottom-2 invisible left-2 z-10 opacity-0 group-hover:bottom-2 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500">
                         <button
-                          onClick={() => actions.handleSetCover(img, state.formData.id as number)}
+                          onClick={() =>
+                            actions.handleSetCover(
+                              img,
+                              state.formData.id as number
+                            )
+                          }
                           type="button"
                           disabled={state.loading || state.isLoading}
                           className="h-5 px-2 rounded-md font-medium bg-white flex justify-center items-center text-center text-xs gap-x-1"
