@@ -20,7 +20,7 @@ const LocationTimeComponent: FC<Props> = (props) => {
 
   return (
     <section className="mt-12">
-      <div className="relative w-full flex px-8 py-16">
+      <div className="relative w-full flex px-8 py-16" data-aos="fade-up">
         <div className="absolute inset-0 z-10 bg-opacity-40 bg-black"></div>
         <Image
           fill
@@ -28,7 +28,11 @@ const LocationTimeComponent: FC<Props> = (props) => {
           src={image as string}
           className="object-cover"
         />
-        <div className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl">
+        <div
+          className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
           <Image
             alt="leaf-datetime"
             src="/images/theme1/leaf5.svg"

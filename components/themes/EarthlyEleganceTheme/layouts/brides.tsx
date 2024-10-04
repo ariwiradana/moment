@@ -56,8 +56,12 @@ const BridesComponent: FC<Props> = (props) => {
 
         <div className="w-full h-full p-6 md:px-12 relative z-40 max-w-screen-md mx-auto">
           <div>
-            <Title title="Om Swastiastu" />
+            <div data-aos="fade-up">
+              <Title title="Om Swastiastu" />
+            </div>
+
             <p
+              data-aos="fade-up"
               className={`${playfair.className} text-base md:text-lg text-center mt-2 leading-7`}
             >
               Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
@@ -68,7 +72,10 @@ const BridesComponent: FC<Props> = (props) => {
 
           <div className="flex flex-col lg:flex-row justify-center items-center mt-12 gap-10 md:gap-16">
             <div className="flex flex-col justify-center items-center">
-              <div className="w-60 h-60 rounded-full bg-gray-200 relative">
+              <div
+                className="w-60 h-60 rounded-full bg-gray-200 relative"
+                data-aos="fade-up"
+              >
                 <ImageShimmer
                   priority
                   sizes="320px"
@@ -80,7 +87,10 @@ const BridesComponent: FC<Props> = (props) => {
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
               </div>
-              <div className="mt-6 flex flex-col text-center gap-y-2">
+              <div
+                className="mt-6 flex flex-col text-center gap-y-2"
+                data-aos="fade-up"
+              >
                 <h2
                   className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
                 >
@@ -116,7 +126,10 @@ const BridesComponent: FC<Props> = (props) => {
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <div className="w-60 h-60 rounded-full bg-gray-200 relative">
+              <div
+                className="w-60 h-60 rounded-full bg-gray-200 relative"
+                data-aos="fade-up"
+              >
                 <ImageShimmer
                   priority
                   sizes="320px"
@@ -128,7 +141,10 @@ const BridesComponent: FC<Props> = (props) => {
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
                 <div className="w-60 h-60 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
               </div>
-              <div className="mt-6 flex flex-col text-center gap-y-2">
+              <div
+                className="mt-6 flex flex-col text-center gap-y-2"
+                data-aos="fade-up"
+              >
                 <h2
                   className={`${satisfy.className} text-2xl text-theme1-gold md:text-3xl`}
                 >

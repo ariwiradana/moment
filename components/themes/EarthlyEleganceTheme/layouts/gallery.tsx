@@ -15,8 +15,11 @@ const GalleryComponent: FC<Props> = (props) => {
     <section>
       <div className="bg-white relative z-10 h-full py-10">
         <div className="w-full h-full p-6 md:px-12 relative z-40 max-w-screen-md mx-auto">
-          <Title title="Cerita Kami" />
+          <div data-aos="fade-up">
+            <Title title="Cerita Kami" />
+          </div>
           <Swiper
+            data-aos="fade-up"
             autoplay={{
               delay: 4000,
             }}

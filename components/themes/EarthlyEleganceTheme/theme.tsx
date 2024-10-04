@@ -26,12 +26,12 @@ const ThemeComponent: FC<Props> = (props) => {
       <>
         <Cover actions={actions} state={state} to={props.to} />
         {state.open && (
-          <>
+          <div className="relative">
             <HeroComponent state={state} />
             <BridesComponent state={state} />
             <LocationTimeComponent state={state} />
             <GalleryComponent state={state} />
-          </>
+          </div>
         )}
       </>
     </Layout>
