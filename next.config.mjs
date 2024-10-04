@@ -13,6 +13,11 @@ const nextConfig = {
         hostname: "avatar.iran.liara.run",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
     ],
   },
   async redirects() {

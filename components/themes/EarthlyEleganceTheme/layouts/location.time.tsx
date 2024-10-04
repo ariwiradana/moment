@@ -29,7 +29,7 @@ const LocationTimeComponent: FC<Props> = (props) => {
           className="object-cover"
         />
         <div
-          className="bg-white px-6 py-14 relative z-20 w-full rounded-[48px] bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl"
+          className="bg-white px-6 py-14 relative z-20 w-full rounded-xl bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl"
           data-aos="fade-up"
           data-aos-delay="300"
         >

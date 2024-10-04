@@ -6,7 +6,7 @@ import BridesComponent from "./layouts/brides";
 import LocationTimeComponent from "./layouts/location.time";
 import { Client } from "@/lib/types";
 import useEarthlyEleganceTheme from "@/hooks/themes/useEarthlyEleganceTheme";
-import GalleryComponent from "./layouts/gallery";
+import GalleryGridComponent from "./layouts/gallery-grid";
 interface Props {
   to: string;
   client: Client;
@@ -30,7 +30,7 @@ const ThemeComponent: FC<Props> = (props) => {
             <HeroComponent state={state} />
             <BridesComponent state={state} />
             <LocationTimeComponent state={state} />
-            <GalleryComponent state={state} />
+            <GalleryGridComponent state={state} />
           </div>
         )}
       </>
