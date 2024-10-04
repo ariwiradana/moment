@@ -15,7 +15,7 @@ interface Props {
 const LocationTimeComponent: FC<Props> = (props) => {
   return (
     <section>
-      <div className="relative pt-8 pb-16 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
+      <div className="relative px-6 pt-8 pb-16 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
         <div data-aos="zoom-in-up">
           <Image
             alt="leaf-datetime"

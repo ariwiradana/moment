@@ -5,47 +5,39 @@ import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import Image from "next/image";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
+import FsLightbox from "fslightbox-react";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
 }
 
 const GalleryComponent: FC<Props> = (props) => {
-  const [open, setOpen] = useState(false);
+  const [toggler, setToggler] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
-  console.log(imageIndex)
 
-  // Ensure images is an array of URLs, not objects
   const images =
     Array.isArray(props.state.client?.gallery) &&
     props.state.client?.gallery.length > 0
       ? props.state.client?.gallery
       : [];
 
-  const lightboxSources = images.map((img) => ({ src: img }));
-
   return (
     <section>
-      <Lightbox
-        open={open}
-        close={() => setOpen(false)}
-        slides={lightboxSources}
-      />
-      <div className="relative z-10 h-full py-20 max-w-screen-xl mx-auto">
+      <FsLightbox slide={imageIndex} toggler={toggler} sources={images} />
+      <div className="relative z-10 h-full py-16 max-w-screen-xl mx-auto">
         <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
         <div className="w-full h-full px-6 md:px-12 relative z-40">
-          <div data-aos="fade-up" className="flex flex-col items-center mb-8">
-            <Title title="Momen Bahagia" />
-          </div>
-          <div className="flex justify-center mt-6 mb-12" data-aos="zoom-in-up">
+          <div data-aos="zoom-in-up" className="flex justify-center">
             <Image
               alt="leaf-datetime"
               src="/images/theme1/leaf5-gold.svg"
               width={110}
               height={50}
+              className="mb-8"
             />
+          </div>
+          <div data-aos="fade-up">
+            <Title className="text-theme1-gold" title="Momen Bahagia" />
           </div>
           <Swiper
             data-aos="zoom-in-up"
@@ -77,7 +69,7 @@ const GalleryComponent: FC<Props> = (props) => {
                   >
                     <div
                       onClick={() => {
-                        setOpen((state) => !state);
+                        setToggler((state) => !state);
                         setImageIndex(() => index + 1);
                       }}
                       className="relative h-full w-full"

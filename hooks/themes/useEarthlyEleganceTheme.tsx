@@ -1,12 +1,20 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import moment from "moment";
 import { Client, Participant } from "@/lib/types";
+import toast from "react-hot-toast";
+import { useClient } from "@/lib/client";
 
 interface Countdown {
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
+}
+
+interface FormData {
+  name: string;
+  wishes: string;
+  attendant: string;
 }
 
 export interface UseEarthlyEleganceTheme {
@@ -16,9 +24,12 @@ export interface UseEarthlyEleganceTheme {
     bride: Participant | null;
     groom: Participant | null;
     client: Client | null;
+    formData: FormData;
   };
   actions: {
     handleOpenCover: () => void;
+    handleChange: (name: string, value: string) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   };
 }
 
@@ -35,7 +46,48 @@ const useEarthlyEleganceTheme = (
     seconds: 0,
   });
 
-  // Memoize the countdown logic so it doesn't recalculate on every render
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    attendant: "Hadir",
+    wishes: "",
+  });
+
+  const handleChange = (name: string, value: string) => {
+    setFormData((state) => ({ ...state, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const payload = { client_id: Number(client?.id), ...formData };
+
+    try {
+      const createReview = async () => {
+        const response = await useClient(`/api/reviews`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(createReview(), {
+        loading: "Memberikan ucapan...",
+        success: () => {
+          return "Berhasil memberikan ucapan";
+        },
+        error: (error: any) => {
+          return error.message || "Gagal memberikan ucapan";
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const updateCountdown = useMemo(() => {
     if (!client) return () => {};
 
@@ -101,9 +153,12 @@ const useEarthlyEleganceTheme = (
       bride,
       groom,
       client,
+      formData,
     },
     actions: {
       handleOpenCover,
+      handleChange,
+      handleSubmit,
     },
   };
 };

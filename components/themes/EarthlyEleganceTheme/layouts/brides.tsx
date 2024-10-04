@@ -108,8 +108,16 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           src={(props.data?.image as string) ?? ""}
           className="object-cover rounded-full"
         />
-        <div className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -left-2"></div>
-        <div className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -right-2"></div>
+        <div
+          data-aos="fade-up"
+          data-aos-delay="100"
+          className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -left-2"
+        ></div>
+        <div
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -right-2"
+        ></div>
       </div>
       <div
         className="mt-6 flex flex-col text-center md:gap-y-3"

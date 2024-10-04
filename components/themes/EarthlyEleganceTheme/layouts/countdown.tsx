@@ -4,7 +4,7 @@ import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
 import Button from "../elements/button";
-import {BiSolidCalendarCheck } from "react-icons/bi";
+import { BiSolidCalendarCheck } from "react-icons/bi";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 import ImageShimmer from "@/components/image.shimmer";
 
@@ -20,7 +20,10 @@ const CountdownComponent: FC<Props> = (props) => {
       : "";
   return (
     <section>
-      <div data-aos="fade-up" className="relative w-full h-[600px] lg:h-[650px]">
+      <div
+        data-aos="fade-up"
+        className="relative w-full h-[600px] lg:h-[650px]"
+      >
         <ImageShimmer
           sizes="100vw"
           priority
@@ -101,8 +104,8 @@ const CountdownComponent: FC<Props> = (props) => {
                 </p>
               </div>
             </div>
-            <div className="flex justify-center">
-              <Button title="Save The Date" icon={ <BiSolidCalendarCheck/>} />
+            <div className="flex justify-center" data-aos="fade-up">
+              <Button title="Save The Date" icon={<BiSolidCalendarCheck />} />
             </div>
           </div>
         </div>

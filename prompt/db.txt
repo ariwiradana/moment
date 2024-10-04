@@ -35,6 +35,14 @@ CREATE TABLE participants (
   role VARCHAR(20) CHECK (role IN ('bride', 'groom', 'participant'))
 );
 
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY,
+  client_id INT REFERENCES clients(id) ON DELETE SET NULL,
+  name VARCHAR(255),
+  attendant VARCHAR(20) CHECK (attendant IN ('Hadir', 'Tidak Hadir', 'Masih Ragu')),
+  wishes TEXT
+);
+
 
 INSERT INTO clients (name, slug, address, address_url, address_full, theme_id, date, time, gallery) 
 VALUES 
