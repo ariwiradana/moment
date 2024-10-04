@@ -44,7 +44,7 @@ const GalleryComponent: FC<Props> = (props) => {
               ? props.state.client?.gallery.map((image, index) => (
                   <SwiperSlide
                     key={`cerita-kami-${index}`}
-                    className="relative flex justify-center items-center max-w-[70vw] h-full"
+                    className="relative flex justify-center items-center max-w-[80vw] h-full"
                   >
                     <div className="relative h-full">
                       <ImageShimmer
