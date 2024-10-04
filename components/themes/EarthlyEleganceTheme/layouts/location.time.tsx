@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { playfair } from "@/lib/fonts";
+import { comforta } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
@@ -13,66 +13,57 @@ interface Props {
 }
 
 const LocationTimeComponent: FC<Props> = (props) => {
-  const image =
-    props.state.client?.gallery?.length && props.state.client.gallery.length > 1
-      ? props.state.client.gallery[props.state.client.gallery.length - 1]
-      : "";
-
   return (
-    <section className="mt-12">
-      <div className="relative w-full flex px-6 py-16" data-aos="fade-up">
-        <div className="absolute inset-0 z-10 bg-opacity-40 bg-black"></div>
-        <Image
-          fill
-          alt="datetime-image"
-          src={image as string}
-          className="object-cover"
-        />
-        <div
-          className="bg-white px-6 py-14 relative z-20 w-full rounded-xl bg-opacity-10 backdrop-blur-lg flex flex-col justify-center items-center max-w-screen-sm mx-auto shadow-xl"
-          data-aos="zoom-in-up"
-          data-aos-delay="200"
-        >
+    <section>
+      <div className="relative pt-8 pb-16 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
+        <div data-aos="zoom-in-up">
           <Image
             alt="leaf-datetime"
-            src="/images/theme1/leaf5.svg"
+            src="/images/theme1/leaf5-gold.svg"
             width={110}
             height={50}
-            className="mb-4"
+            className="mb-16"
           />
-          <Title className="text-white" title="Waktu & Tempat" />
+        </div>
+        <div data-aos="fade-up">
+          <Title className="text-theme1-gold" title="Waktu & Tempat" />
+        </div>
+        <div
+          data-aos="fade-up"
+          className="text-center w-full flex flex-col items-center"
+        >
           <h1
-            className={`${playfair.className} text-4xl mt-10 text-white font-italic`}
+            className={`${comforta.className} text-2xl mt-10 font-bold text-admin-dark`}
           >
             {moment(props.state.client?.date).format("dddd")}
           </h1>
           <h1
-            className={`${playfair.className} text-xl md:text-2xl font-bold text-white font-italic mt-2`}
+            className={`${comforta.className} text-sm md:text-2xl font-bold text-admin-dark mt-2`}
           >
             {moment(props.state.client?.date).format("DD MMMM YYYY")}
           </h1>
-          <div className="h-[0.5px] w-2/3 bg-white my-3"></div>
+          <div className="h-[0.4px] w-2/3 bg-admin-dark my-3"></div>
           <h1
-            className={`${playfair.className} text-xl md:text-2xl font-bold text-white font-italic`}
+            className={`${comforta.className} text-sm md:text-2xl font-bold text-admin-dark`}
           >
             {props.state.client?.start_time} - {props.state.client?.end_time}
           </h1>
-          <div className="h-[0.5px] w-2/3 bg-white my-3"></div>
-          <h1
-            className={`${playfair.className} text-xl mt-6 font-italic text-white`}
-          >
+          <div className="h-[0.4px] w-2/3 bg-admin-dark my-3"></div>
+        </div>
+        <div data-aos="fade-up" className="text-center">
+          <h1 className={`${comforta.className} text-base mt-6 text-gray-500`}>
             Bertempat di
           </h1>
           <h1
-            className={`${playfair.className} font-bold text-xl md:text-2xl mt-1 text-center text-white`}
+            className={`${comforta.className} font-bold text-base md:text-2xl mt-1 text-center text-admin-dark`}
           >
             {props.state.client?.address_full}
           </h1>
-          <div className="flex justify-center mt-6">
-            <Link href={props.state.client?.address_url ?? ""} target="_blank">
-              <Button title="Map Lokasi Acara" icon={<BiSolidMap />} />
-            </Link>
-          </div>
+        </div>
+        <div data-aos="fade-up" className="flex justify-center mt-6">
+          <Link href={props.state.client?.address_url ?? ""} target="_blank">
+            <Button title="Map Lokasi Acara" icon={<BiSolidMap />} />
+          </Link>
         </div>
       </div>
     </section>

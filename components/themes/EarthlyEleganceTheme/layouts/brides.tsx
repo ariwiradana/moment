@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { playfair, merienda } from "@/lib/fonts";
+import { merienda, comforta } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
@@ -64,16 +64,13 @@ const BridesComponent: FC<Props> = (props) => {
 
             <p
               data-aos="fade-up"
-              className={`${playfair.className} text-xl md:text-2xl text-center mt-8 leading-7 font-italic text-admin-dark`}
+              className={`${comforta.className} text-base md:text-2xl text-center mt-8 leading-6 text-admin-dark`}
             >
               Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
               Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
               Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.
             </p>
-            <div
-              className="flex justify-center mb-16 mt-8"
-              data-aos="zoom-in-up"
-            >
+            <div className="flex justify-center my-12" data-aos="zoom-in-up">
               <Image
                 alt="leaf-datetime"
                 src="/images/theme1/leaf5-gold.svg"
@@ -83,9 +80,9 @@ const BridesComponent: FC<Props> = (props) => {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-center items-center mt-24 gap-16">
-            <ParticipantComponent data={props.state.groom as Participant} />
-            <ParticipantComponent data={props.state.bride as Participant} />
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-16 mt-16">
+            <ParticipantComponent data={props.state?.groom as Participant} />
+            <ParticipantComponent data={props.state?.bride as Participant} />
           </div>
         </div>
       </div>
@@ -100,56 +97,45 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div
-        className="w-64 h-64 rounded-full bg-gray-200 relative"
+        className="w-52 h-80 rounded-full bg-gray-200 relative"
         data-aos="zoom-in-up"
       >
-        <div data-aos="zoom-in-up">
-          <ImageShimmer
-            priority
-            sizes="100vw"
-            alt={`avatar-${props.data?.role}`}
-            fill
-            src={(props.data?.image as string) ?? ""}
-            className="object-cover rounded-full"
-          />
-        </div>
-        <div className="w-64 h-64 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
-        <div className="w-64 h-64 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
+        <ImageShimmer
+          priority
+          sizes="100vw"
+          alt={`avatar-${props.data?.role}`}
+          fill
+          src={(props.data?.image as string) ?? ""}
+          className="object-cover rounded-full"
+        />
+        <div className="w-52 h-80 rounded-full border border-theme1-gold absolute top-0 -left-2"></div>
+        <div className="w-52 h-80 rounded-full border border-theme1-gold absolute top-0 -right-2"></div>
       </div>
       <div
         className="mt-6 flex flex-col text-center md:gap-y-3"
         data-aos="fade-up"
       >
         <h2
-          className={`${merienda.className} text-[26px] text-theme1-gold md:text-3xl`}
+          className={`${merienda.className} text-2xl text-theme1-gold md:text-3xl`}
         >
           {props.data?.name}
         </h2>
         <p
-          className={`${playfair.className} text-lg md:text-2xl text-center font-italic mb-2 mt-4 text-gray-500`}
+          className={`${comforta.className} text-sm md:text-2xl text-center mb-3 mt-4 text-gray-500`}
         >
           {props.data.role === "groom" ? "Putra" : "Putri"} {props.data?.child}{" "}
           dari pasangan
         </p>
         <div>
           <h3
-            className={`${playfair.className} text-xl md:text-2xl font-bold text-gray-800`}
+            className={`${comforta.className} text-lg md:text-2xl font-bold text-gray-800 leading-6`}
           >
-            Bapak {props.data?.parents_male}
-          </h3>
-          <p
-            className={`${playfair.className} text-xl md:text-2xl font-bold text-gray-800`}
-          >
-            &
-          </p>
-          <h3
-            className={`${playfair.className} text-xl md:text-2xl font-bold text-gray-800`}
-          >
-            Ibu {props.data?.parents_female}
+            Bapak {props.data?.parents_male} <br /> & <br /> Ibu{" "}
+            {props.data?.parents_female}
           </h3>
         </div>
         <p
-          className={`${playfair.className} text-xl md:text-2xl font-medium text-center mt-4 text-gray-800`}
+          className={`${comforta.className} text-base md:text-2xl font-medium text-center mt-4 text-gray-500`}
         >
           {props.data?.address}
         </p>
