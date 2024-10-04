@@ -33,26 +33,28 @@ const Cover: FC<Props> = (props) => {
         modules={[EffectFade, Autoplay]}
       >
         {Array.isArray(props.state.client?.gallery) &&
-        props.state.client?.gallery.length > 0
-          ? props.state.client?.gallery.map((image: string, index: number) => (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`cover-img-${index}`}
-              >
-                <ImageShimmer
-                  fill
-                  alt={`cover-img-${index}`}
-                  priority
-                  sizes="1080px"
-                  className="object-cover"
-                  src={image}
-                />
-              </SwiperSlide>
-            ))
+        props.state.client?.gallery.length > 3
+          ? props.state.client?.gallery
+              .slice(0, 3)
+              .map((image: string, index: number) => (
+                <SwiperSlide
+                  className="relative w-full h-full"
+                  key={`cover-img-${index}`}
+                >
+                  <ImageShimmer
+                    fill
+                    alt={`cover-img-${index}`}
+                    priority
+                    sizes="1080px"
+                    className="object-cover"
+                    src={image}
+                  />
+                </SwiperSlide>
+              ))
           : null}
       </Swiper>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#000000c5] z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00000045] to-[#000000ca] z-10"></div>
       <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-16 md:pb-32 z-20">
         <p
           className={`text-white text-sm lg:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}

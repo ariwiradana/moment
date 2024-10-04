@@ -11,7 +11,7 @@ const Title: FC<Props> = (props) => {
     <h1
       className={`${
         alexbrush.className
-      } text-4xl md:text-5xl text-center text-theme1-gold ${props.className ?? ""}`}
+      } text-[40px] md:text-5xl text-center text-theme1-gold ${props.className ?? ""}`}
     >
       {props.title}
     </h1>
