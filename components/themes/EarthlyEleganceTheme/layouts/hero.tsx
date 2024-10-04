@@ -36,7 +36,7 @@ const HeroComponent: FC<Props> = (props) => {
                     fill
                     alt={`hero-img-${index}`}
                     priority
-                    sizes="720px"
+                    sizes="100vw"
                     className="object-cover"
                     src={image}
                   />
@@ -62,7 +62,7 @@ const HeroComponent: FC<Props> = (props) => {
           </h1>
           <div data-aos="fade-up" data-aos-delay="600">
             <div
-              className={`text-white mt-2 lg:mt-4 font-light text-sm md:text-base flex items-center gap-x-3 ${montserrat.className}`}
+              className={`text-white mt-2 lg:mt-4 text-sm md:text-base flex items-center gap-x-3 ${montserrat.className}`}
             >
               {props.state.client?.address}{" "}
               <span>

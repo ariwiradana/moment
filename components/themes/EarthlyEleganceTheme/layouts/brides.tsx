@@ -132,7 +132,7 @@ const BridesComponent: FC<Props> = (props) => {
               >
                 <ImageShimmer
                   priority
-                  sizes="320px"
+                  sizes="100vw"
                   alt="female"
                   fill
                   src={(props.state.bride?.image as string) ?? ""}

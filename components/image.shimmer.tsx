@@ -19,7 +19,7 @@ const ImageShimmer: React.FC<ImageShimmerProps> = (props) => {
   return (
     <div
       onClick={props.onClick ? props.onClick : undefined}
-      className="relative w-full h-full"
+      className="relative w-full h-full overflow-hidden"
       style={{ height: props.width, width: props.height }}
     >
       {loading && <ShimmerLoader />}

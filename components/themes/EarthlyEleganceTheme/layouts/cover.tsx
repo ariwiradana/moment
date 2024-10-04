@@ -45,7 +45,7 @@ const Cover: FC<Props> = (props) => {
                     fill
                     alt={`cover-img-${index}`}
                     priority
-                    sizes="1080px"
+                    sizes="100vw"
                     className="object-cover"
                     src={image}
                   />
@@ -71,7 +71,7 @@ const Cover: FC<Props> = (props) => {
         </h1>
         <div data-aos="fade-up" data-aos-delay="600">
           <p
-            className={`text-white mt-2 lg:mt-4 font-light text-sm lg:text-base ${montserrat.className}`}
+            className={`text-white mt-2 lg:mt-4 text-sm lg:text-base ${montserrat.className}`}
           >
             Yth. Bpk/Ibu/Saudara/i
           </p>

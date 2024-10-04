@@ -1,54 +1,59 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, EffectCoverflow } from "swiper/modules";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
 }
 
 const GalleryComponent: FC<Props> = (props) => {
-  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <section>
-      <div className="bg-white relative z-10 h-full py-10">
-        <div className="w-full h-full p-6 md:px-12 relative z-40 max-w-screen-md mx-auto">
+      <div className="bg-white relative z-10 h-full py-10 max-w-screen-xl mx-auto">
+        <div className="w-full h-full p-6 md:px-12 relative z-40">
           <div data-aos="fade-up">
             <Title title="Cerita Kami" />
           </div>
           <Swiper
             data-aos="fade-up"
+            loop
             autoplay={{
               delay: 4000,
             }}
-            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-            speed={3000}
-            slidesPerView={"auto"}
-            spaceBetween={12}
-            pagination={{
-              clickable: true,
+            effect={"coverflow"}
+            coverflowEffect={{
+              rotate: 80,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+              scale: 1.15,
             }}
-            modules={[Pagination, Autoplay]}
-            className="w-full h-[70vh] mt-6"
+            speed={2000}
+            centeredSlides
+            slidesPerView={"auto"}
+            spaceBetween={0}
+            modules={[Autoplay, EffectCoverflow]}
+            className="w-full h-[60vh] mt-6"
           >
             {Array.isArray(props.state.client?.gallery) &&
             props.state.client?.gallery.length > 0
               ? props.state.client?.gallery.map((image, index) => (
                   <SwiperSlide
                     key={`cerita-kami-${index}`}
-                    className="relative flex justify-center items-center max-w-[88%] h-full"
+                    className="relative flex justify-center items-center max-w-[70vw] h-full"
                   >
                     <div className="relative h-full">
                       <ImageShimmer
                         priority
+                        sizes="70vw"
                         src={image}
                         alt={`cerita-kami-${index}`}
                         fill
-                        className={`h-full object-cover transform transition-all ease-in-out duration-1000 delay-300 ${
-                          activeIndex === index ? "scale-110" : "scale-95"
-                        }`}
+                        className={`h-full object-cover transform transition-all ease-in-out duration-1000 delay-300`}
                       />
                     </div>
                   </SwiperSlide>
