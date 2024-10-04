@@ -20,7 +20,7 @@ const CountdownComponent: FC<Props> = (props) => {
       : "";
   return (
     <section>
-      <div data-aos="fade-up" className="relative w-full h-[600px]">
+      <div data-aos="fade-up" className="relative w-full h-[600px] lg:h-[650px]">
         <ImageShimmer
           sizes="100vw"
           priority
@@ -30,7 +30,7 @@ const CountdownComponent: FC<Props> = (props) => {
           src={bgImage}
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col z-10 py-16 items-center h-[600px] justify-center">
+        <div className="absolute inset-0 flex flex-col z-10 py-16 items-center h-[600px] lg:h-[650px] justify-center">
           <div data-aos="zoom-in-up">
             <Image
               alt="leaf-datetime"
