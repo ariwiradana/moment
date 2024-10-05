@@ -13,11 +13,14 @@ interface Props {
 }
 
 const CountdownComponent: FC<Props> = (props) => {
-  const bgImage =
-    Array.isArray(props.state.client?.gallery) &&
-    props.state.client?.gallery.length > 4
-      ? props.state.client?.gallery[3] || props.state.client?.gallery[2]
-      : "";
+  const bgImage = Array.isArray(props.state.client?.gallery)
+    ? props.state.client.gallery.length > 4
+      ? props.state.client.gallery[3]
+      : props.state.client.gallery.length > 1
+      ? props.state.client.gallery[1]
+      : props.state.client.gallery[0] || ""
+    : "";
+
   return (
     <section>
       <div
@@ -45,7 +48,9 @@ const CountdownComponent: FC<Props> = (props) => {
           </div>
           <div data-aos="fade-up" className="text-center">
             <Title title="Hitung Mundur" className="text-white" />
-            <h4 className={`text-white mt-2 text-sm md:text-base ${comforta.className}`}>
+            <h4
+              className={`text-white mt-2 text-sm md:text-base ${comforta.className}`}
+            >
               {moment(props.state.client?.date).format("DD MMMM YYYY")}
             </h4>
           </div>
