@@ -100,8 +100,7 @@ const ReviewsComponent: FC<Props> = (props) => {
 
         <div className="flex flex-col mt-8 w-full max-h-[17rem] overflow-y-auto gap-2">
           {props.state.reviews?.map((r) => (
-            <div key={r.id} className="flex mb-4">
-              {/* Avatar Circle */}
+            <div key={r.id} className="flex mb-4" data-aos="fade-up">
               <div className="flex-shrink-0">
                 <div className="w-9 h-9 bg-gray-100 rounded-full flex justify-center items-center text-xs font-bold text-admin-dark">
                   <span className={comforta.className}>
@@ -110,13 +109,10 @@ const ReviewsComponent: FC<Props> = (props) => {
                 </div>
               </div>
 
-              {/* Chat Bubble with Triangle */}
               <div className="ml-4 relative max-w-md">
                 <div className="p-3 bg-gray-100 rounded-lg relative">
-                  {/* Triangle (pseudo-element using ::before) */}
                   <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-gray-100"></div>
 
-                  {/* Chat Content */}
                   <div className="flex items-center gap-x-3">
                     <h1
                       className={`${comforta.className} text-sm text-admin-dark font-bold`}
@@ -131,7 +127,6 @@ const ReviewsComponent: FC<Props> = (props) => {
                   </p>
                 </div>
 
-                {/* Chat Metadata */}
                 <div className="flex divide-x-[0.5px] divide-theme1-gold mt-2">
                   <div className="flex items-center gap-1 text-xs text-theme1-gold pr-2">
                     <BiTime />
