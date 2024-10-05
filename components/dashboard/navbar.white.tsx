@@ -19,7 +19,7 @@ const NavbarWhite = () => {
       <nav className={`${poppins.className} max-w-screen-xl mx-auto`}>
         <ul className="px-6 md:px-12 flex justify-between lg:justify-start items-center gap-8 h-16 md:h-20">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
-            <div className="relative w-24 md:w-32 lg:w-36 aspect-video">
+            <div className="relative w-24 md:w-32 lg:w-48 aspect-video">
               <Image
                 alt="logo"
                 fill
