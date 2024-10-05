@@ -2,7 +2,9 @@ CREATE TABLE themes (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   thumbnail VARCHAR(255),
-  price INTEGER
+  price INTEGER,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE TABLE clients (
@@ -18,7 +20,9 @@ CREATE TABLE clients (
   start_time VARCHAR(100),
   end_time VARCHAR(100),
   gallery TEXT[],
-  status VARCHAR(20) CHECK (status IN ('paid', 'unpaid'))
+  status VARCHAR(20) CHECK (status IN ('paid', 'unpaid')),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE TABLE participants (
@@ -32,7 +36,9 @@ CREATE TABLE participants (
   parents_female VARCHAR(255),
   image VARCHAR(255),
   gender VARCHAR(20) CHECK (gender IN ('male', 'female')),
-  role VARCHAR(20) CHECK (role IN ('bride', 'groom', 'participant'))
+  role VARCHAR(20) CHECK (role IN ('bride', 'groom', 'participant')),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE TABLE reviews (
@@ -40,7 +46,9 @@ CREATE TABLE reviews (
   client_id INT REFERENCES clients(id) ON DELETE SET NULL,
   name VARCHAR(255),
   attendant VARCHAR(20) CHECK (attendant IN ('Hadir', 'Tidak Hadir', 'Masih Ragu')),
-  wishes TEXT
+  wishes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 

@@ -63,7 +63,7 @@ const ClientDashboard: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="ml-2 flex items-center">
+                      <div className="ml-2 flex items-center relative z-10">
                         <Link
                           target="_bank"
                           href={`/${client.slug}`}
@@ -190,7 +190,7 @@ const ClientDashboard: React.FC = () => {
                                 </p>
                               </div>
                             </div>
-                            <div className="ml-2 flex items-center">
+                            <div className="ml-2 flex items-center relative z-10">
                               <Link
                                 target="_bank"
                                 href={`/${client.slug}`}

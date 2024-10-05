@@ -2,6 +2,8 @@ export interface Theme {
   id: number;
   name: string;
   price: number;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export interface Option {
@@ -21,6 +23,8 @@ export interface Participant {
   image: string | null | FileList;
   gender: "male" | "female";
   role: "bride" | "groom" | "participant";
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export interface Client {
@@ -39,6 +43,8 @@ export interface Client {
   theme_id: number | null;
   theme?: Theme | null;
   cover: null | string;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export interface Review {
@@ -47,5 +53,6 @@ export interface Review {
   name: string;
   attendant: string;
   wishes: string;
-  created_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }
