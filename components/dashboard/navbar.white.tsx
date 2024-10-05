@@ -19,7 +19,14 @@ const NavbarWhite = () => {
       <nav className={`${poppins.className} max-w-screen-xl mx-auto`}>
         <ul className="px-6 md:px-12 flex justify-between lg:justify-start items-center gap-8 h-16 md:h-20">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
-            <Image alt="logo" height={50} width={160} src="/logo-now.png" />
+            <div className="relative w-24 md:w-32 lg:w-36 aspect-video">
+              <Image
+                alt="logo"
+                fill
+                className="object-cover"
+                src="/logo-now.png"
+              />
+            </div>
           </li>
           {navTitles.map((title) => (
             <li className="hidden lg:block" key={title}>
