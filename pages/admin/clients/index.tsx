@@ -8,10 +8,10 @@ import moment from "moment";
 import Link from "next/link";
 import React from "react";
 import {
-  BiCopy,
   BiDetail,
   BiMoneyWithdraw,
   BiPlus,
+  BiSolidShow,
   BiTrash,
 } from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
@@ -59,15 +59,13 @@ const ClientDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="ml-2 flex items-center">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        actions.handleCopySlug(client.slug as string)
-                      }
+                    <Link
+                      target="_bank"
+                      href={`/${client.slug}`}
                       className="text-gray-500 text-lg"
                     >
-                      <BiCopy />
-                    </button>
+                      <BiSolidShow />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -161,33 +159,33 @@ const ClientDashboard: React.FC = () => {
                     }`}
                   >
                     <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                      <div className="flex items-center gap-x-3">
-                        <div
-                          style={{
-                            backgroundColor: getRandomColors(),
-                          }}
-                          className="h-10 w-10 rounded-full aspect-square flex justify-center items-center text-base"
-                        >
-                          <span className="text-white font-medium">
-                            {getInitial(client.name)}
-                          </span>
-                        </div>
-                        <div>
-                          <span>{client.name}</span>
-                          <p className="text-gray-500 font-medium text-xs">
-                            {client.slug}
-                          </p>
+                      <div className="flex justify-between gap-x-3">
+                        <div className="flex gap-x-3">
+                          <div
+                            style={{
+                              backgroundColor: getRandomColors(),
+                            }}
+                            className="h-10 w-10 rounded-full aspect-square flex justify-center items-center text-base"
+                          >
+                            <span className="text-white font-medium">
+                              {getInitial(client.name)}
+                            </span>
+                          </div>
+                          <div>
+                            <span>{client.name}</span>
+                            <p className="text-gray-500 font-medium text-xs">
+                              {client.slug}
+                            </p>
+                          </div>
                         </div>
                         <div className="ml-2 flex items-center">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              actions.handleCopySlug(client.slug as string)
-                            }
+                          <Link
+                            target="_bank"
+                            href={`/${client.slug}`}
                             className="text-gray-500 text-lg"
                           >
-                            <BiCopy />
-                          </button>
+                            <BiSolidShow />
+                          </Link>
                         </div>
                       </div>
                     </td>
