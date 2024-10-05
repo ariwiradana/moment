@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { merienda, comforta } from "@/lib/fonts";
+import { comforta, playfair } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
@@ -56,7 +56,7 @@ const BridesComponent: FC<Props> = (props) => {
           </svg>
         </div>
 
-        <div className="w-full h-full py-8 px-6 md:px-12 relative z-40 max-w-screen-lg mx-auto">
+        <div className="w-full h-full py-8 px-4 md:px-12 relative z-40 max-w-screen-lg mx-auto">
           <div>
             <div data-aos="fade-up">
               <Title title="Om Swastiastu" />
@@ -124,12 +124,12 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         data-aos="fade-up"
       >
         <h2
-          className={`${merienda.className} text-2xl text-theme1-gold md:text-3xl mt-3`}
+          className={`${playfair.className} text-4xl  text-admin-dark md:text-5xl mt-3`}
         >
           {props.data?.name}
         </h2>
         <p
-          className={`${comforta.className} text-sm md:text-xl text-center mb-3 mt-4 text-gray-500`}
+          className={`${comforta.className} text-sm md:text-lg text-center mb-3 mt-2 text-gray-500`}
         >
           {props.data.role === "groom" ? "Putra" : "Putri"} {props.data?.child}{" "}
           dari pasangan
@@ -143,7 +143,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           </h3>
         </div>
         <p
-          className={`${comforta.className} text-base md:text-xl font-medium text-center mt-4 text-gray-500 leading-5`}
+          className={`${comforta.className} text-sm md:text-xl font-medium text-center mt-4 text-gray-500 leading-5`}
         >
           {props.data?.address}
         </p>

@@ -24,7 +24,7 @@ const ThemeComponent: FC<Props> = (props) => {
       pageTitle={
         props.client
           ? `${state.groom?.nickname} & ${state.bride?.nickname}`
-          : "Meundang"
+          : "Now"
       }
     >
       <>

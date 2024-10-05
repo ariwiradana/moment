@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { comforta } from "@/lib/fonts";
+import { comforta, playfair } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
@@ -45,7 +45,7 @@ const CountdownComponent: FC<Props> = (props) => {
           </div>
           <div data-aos="fade-up" className="text-center">
             <Title title="Hitung Mundur" className="text-white" />
-            <h4 className={`text-white mt-2 ${comforta.className}`}>
+            <h4 className={`text-white mt-2 text-sm md:text-base ${comforta.className}`}>
               {moment(props.state.client?.date).format("DD MMMM YYYY")}
             </h4>
           </div>
@@ -53,9 +53,9 @@ const CountdownComponent: FC<Props> = (props) => {
             <div className="grid grid-cols-2 gap-4 w-full">
               <div
                 data-aos="fade-up"
-                className={`text-white ${comforta.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
-                <h1 className="text-white text-5xl font-bold">
+                <h1 className="text-white text-6xl">
                   {props.state.countdown.days}
                 </h1>
                 <p
@@ -66,9 +66,9 @@ const CountdownComponent: FC<Props> = (props) => {
               </div>
               <div
                 data-aos="fade-up"
-                className={`text-white ${comforta.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
-                <h1 className="text-white text-5xl font-bold">
+                <h1 className="text-white text-6xl">
                   {props.state.countdown.hours}
                 </h1>
                 <p
@@ -79,9 +79,9 @@ const CountdownComponent: FC<Props> = (props) => {
               </div>
               <div
                 data-aos="fade-up"
-                className={`text-white ${comforta.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
-                <h1 className="text-white text-5xl font-bold">
+                <h1 className="text-white text-6xl">
                   {props.state.countdown.minutes}
                 </h1>
                 <p
@@ -92,9 +92,9 @@ const CountdownComponent: FC<Props> = (props) => {
               </div>
               <div
                 data-aos="fade-up"
-                className={`text-white ${comforta.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
-                <h1 className="text-white text-5xl font-bold">
+                <h1 className="text-white text-6xl">
                   {props.state.countdown.seconds}
                 </h1>
                 <p

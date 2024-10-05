@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { comforta } from "@/lib/fonts";
+import { comforta, playfair } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
@@ -33,29 +33,31 @@ const LocationTimeComponent: FC<Props> = (props) => {
           className="text-center w-full flex flex-col items-center"
         >
           <h1
-            className={`${comforta.className} text-2xl mt-10 font-bold text-admin-dark`}
+            className={`${playfair.className} text-4xl lg:text-5xl text-admin-dark md:text-3xl mt-10`}
           >
             {moment(props.state.client?.date).format("dddd")}
           </h1>
           <h1
-            className={`${comforta.className} text-base md:text-xl font-bold text-admin-dark mt-2`}
+            className={`${comforta.className} text-sm md:text-xl font-bold text-admin-dark mt-2`}
           >
             {moment(props.state.client?.date).format("DD MMMM YYYY")}
           </h1>
           <div className="h-[0.4px] w-2/3 bg-admin-dark my-2"></div>
           <h1
-            className={`${comforta.className} text-base md:text-xl font-bold text-admin-dark`}
+            className={`${comforta.className} text-sm md:text-xl font-bold text-admin-dark`}
           >
             {props.state.client?.start_time} - {props.state.client?.end_time}
           </h1>
           <div className="h-[0.4px] w-2/3 bg-admin-dark my-2"></div>
         </div>
         <div data-aos="fade-up" className="text-center">
-          <h1 className={`${comforta.className} text-base mt-6 text-gray-500`}>
+          <h1
+            className={`${comforta.className} text-sm md:text-lg mt-6 text-gray-500`}
+          >
             Bertempat di
           </h1>
           <h1
-            className={`${comforta.className} font-bold text-base md:text-xl mt-1 text-center text-admin-dark leading-5`}
+            className={`${comforta.className} font-bold text-sm md:text-xl mt-1 text-center text-admin-dark leading-5`}
           >
             {props.state.client?.address_full}
           </h1>
