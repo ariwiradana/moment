@@ -66,7 +66,7 @@ const ClientDashboard: React.FC = () => {
                       <div className="ml-2 flex items-center relative z-10">
                         <Link
                           target="_bank"
-                          href={`/${client.slug}`}
+                          href={`/${client.slug}?to=Nama Undangan`}
                           className="text-gray-500 text-lg"
                         >
                           <BiSolidShow />
@@ -193,7 +193,7 @@ const ClientDashboard: React.FC = () => {
                             <div className="ml-2 flex items-center relative z-10">
                               <Link
                                 target="_bank"
-                                href={`/${client.slug}`}
+                                href={`/${client.slug}?to=Nama Undangan`}
                                 className="text-gray-500 text-lg"
                               >
                                 <BiSolidShow />
