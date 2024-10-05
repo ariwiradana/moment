@@ -36,6 +36,7 @@ export interface UseEarthlyEleganceTheme {
     handleOpenCover: () => void;
     handleChange: (name: string, value: string) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    handleAddEvent: () => void;
   };
 }
 
@@ -170,7 +171,6 @@ const useEarthlyEleganceTheme = (
     };
   }, [client]);
 
-  // Memoize the bride and groom state updates
   const brideParticipant = useMemo(
     () => client?.participants.find((p) => p.role === "bride") || null,
     [client]
@@ -197,6 +197,45 @@ const useEarthlyEleganceTheme = (
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
+  const handleAddEvent = () => {
+    const title = `Undangan Pernikahan ${groom?.nickname} & ${bride?.nickname}`;
+    const details = `Dengan hormat, kami mengundang Anda untuk hadir dan memberikan doa restu pada acara pernikahan kami yang akan dilaksanakan pada:
+
+Hari/Tanggal: ${moment(client?.date).format("dddd, D MMMM YYYY")}
+Waktu: ${client?.start_time} - ${client?.end_time}
+Tempat: ${client?.address_full}
+
+Kami berharap kehadiran Anda untuk turut serta merayakan momen bahagia ini.`;
+    const location = client?.address_full as string;
+
+    const startDate = moment(
+      `${client?.date} ${client?.start_time}`,
+      "YYYY-MM-DD HH:mm"
+    ).format("YYYYMMDDTHHmmss");
+    let endDate;
+    if (
+      client?.end_time === "24:00" ||
+      client?.end_time?.toLowerCase() === "selesai"
+    ) {
+      endDate = moment(`${client?.date} 23:59`, "YYYY-MM-DD HH:mm")
+        .add(1, "minute")
+        .format("YYYYMMDDTHHmmss");
+    } else {
+      endDate = moment(
+        `${client?.date} ${client?.end_time}`,
+        "YYYY-MM-DD HH:mm"
+      ).format("YYYYMMDDTHHmmss");
+    }
+
+    const url = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(
+      title
+    )}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(
+      location
+    )}&dates=${startDate}/${endDate}`;
+
+    window.open(url, "_blank");
+  };
+
   return {
     state: {
       loading,
@@ -213,6 +252,7 @@ const useEarthlyEleganceTheme = (
       handleOpenCover,
       handleChange,
       handleSubmit,
+      handleAddEvent,
     },
   };
 };

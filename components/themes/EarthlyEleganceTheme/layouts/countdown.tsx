@@ -10,6 +10,7 @@ import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
+  actions: UseEarthlyEleganceTheme["actions"];
 }
 
 const CountdownComponent: FC<Props> = (props) => {
@@ -110,7 +111,12 @@ const CountdownComponent: FC<Props> = (props) => {
               </div>
             </div>
             <div className="flex justify-center" data-aos="fade-up">
-              <Button title="Save The Date" icon={<BiSolidCalendarCheck />} />
+              <Button
+                type="button"
+                onClick={props.actions.handleAddEvent}
+                title="Save The Date"
+                icon={<BiSolidCalendarCheck />}
+              />
             </div>
           </div>
         </div>

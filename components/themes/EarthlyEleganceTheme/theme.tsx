@@ -34,7 +34,7 @@ const ThemeComponent: FC<Props> = (props) => {
             <HeroComponent state={state} />
             <BridesComponent state={state} />
             <LocationTimeComponent state={state} />
-            <CountdownComponent state={state} />
+            <CountdownComponent actions={actions} state={state} />
             <ThankyouComponent state={state} />
             <GalleryComponent state={state} />
             <ReviewsComponent actions={actions} state={state} />
