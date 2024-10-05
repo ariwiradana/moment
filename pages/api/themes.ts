@@ -32,6 +32,8 @@ export default async function handler(
           countValues.push(Number(id));
         }
 
+        query += ` ORDER BY updated_at DESC`;
+
         const pageNumber = Number(page);
         const limitNumber = Number(limit);
         const offset = (pageNumber - 1) * limitNumber;

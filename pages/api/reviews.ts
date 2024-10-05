@@ -21,7 +21,7 @@ export default async function handler(
         const values: (number | string)[] = [Number(client_id)];
         const countValues: (number | string)[] = [Number(client_id)];
 
-        query += ` ORDER BY created_at DESC`;
+        query += ` ORDER BY updated_at DESC`;
 
         const pageNumber = Number(page);
         const limitNumber = Number(limit);
