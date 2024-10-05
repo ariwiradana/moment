@@ -10,6 +10,7 @@ import GalleryComponent from "./layouts/gallery";
 import ThankyouComponent from "./layouts/thankyou";
 import CountdownComponent from "./layouts/countdown";
 import ReviewsComponent from "./layouts/reviews";
+import FooterComponent from "../footer";
 interface Props {
   to: string;
   client: Client;
@@ -37,6 +38,7 @@ const ThemeComponent: FC<Props> = (props) => {
             <ThankyouComponent state={state} />
             <GalleryComponent state={state} />
             <ReviewsComponent actions={actions} state={state} />
+            <FooterComponent className="text-theme1-gold" />
           </div>
         )}
       </>

@@ -5,7 +5,7 @@ import { useAdminReviews } from "@/hooks/admin/useAdminReviews";
 import { montserrat } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import { getRandomColors } from "@/utils/getRandomColor";
-import { Pagination } from "@mui/material"
+import { Pagination } from "@mui/material";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 
@@ -17,17 +17,19 @@ const ReviewDashboard: React.FC = () => {
       <div className={`w-full ${montserrat.className}`}>
         <h1 className="text-2xl font-bold mb-4">Review Dashboard</h1>
 
-        <div className="mb-8 md:flex">
-          <InputSelect
-            onChange={(e) =>
-              actions.handleChangeClient(parseInt(e.target.value))
-            }
-            value={state.clientId ?? ""}
-            inputSize="medium"
-            label="Client"
-            options={state.clientOptions}
-          />
-        </div>
+        {state.clientOptions.length > 0 && (
+          <div className="mb-8 md:flex">
+            <InputSelect
+              onChange={(e) =>
+                actions.handleChangeClient(parseInt(e.target.value))
+              }
+              value={state.clientId ?? ""}
+              inputSize="medium"
+              label="Client"
+              options={state.clientOptions}
+            />
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
           {state.reviews.map((review) => (

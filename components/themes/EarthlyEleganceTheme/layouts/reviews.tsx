@@ -20,7 +20,7 @@ const ReviewsComponent: FC<Props> = (props) => {
   const attendantText: Record<string, string> = {
     Hadir: "Saya akan hadir",
     "Tidak Hadir": "Maaf saya tidak bisa hadir",
-    Ragu: "Maaf saya masih ragu",
+    "Masih Ragu": "Maaf saya masih ragu",
   };
   return (
     <section>
