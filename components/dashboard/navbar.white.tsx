@@ -1,4 +1,4 @@
-import { playfair, poppins } from "@/lib/fonts";
+import { playfair } from "@/lib/fonts";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BiMenu } from "react-icons/bi";
