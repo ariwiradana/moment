@@ -1,5 +1,6 @@
 import handleError from "@/lib/errorHandling";
 import { Client, Participant, Review, Theme } from "@/lib/types";
+import { createSlug } from "@/utils/createSlug";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -113,7 +114,7 @@ export default async function handler(
           }
         }
 
-        const slug = client.name.toLocaleLowerCase().replaceAll(" ", "-");
+        const slug = createSlug(client.name);
 
         if (slug) {
           const checkSlug =
@@ -189,7 +190,7 @@ export default async function handler(
           return handleError(res, new Error("id required"));
         }
 
-        const slug = client.name.toLocaleLowerCase().replaceAll(" ", "-");
+        const slug = createSlug(client.name)
 
         const updateClientQuery = `
           UPDATE clients
