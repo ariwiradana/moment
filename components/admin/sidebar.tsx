@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { BiFolder, BiLogOut, BiUser, BiX } from "react-icons/bi";
+import { BiChat, BiFolder, BiLogOut, BiUser, BiX } from "react-icons/bi";
 import ButtonPrimary from "./elements/button.primary";
 import { FC } from "react";
 import { montserrat } from "@/lib/fonts";
@@ -22,6 +22,7 @@ const Sidebar: FC = () => {
   const menuItems: MenuItem[] = [
     { name: "Clients", path: "/admin/clients", icon: <BiUser /> },
     { name: "Themes", path: "/admin/themes", icon: <BiFolder /> },
+    { name: "Reviews", path: "/admin/reviews", icon: <BiChat /> },
   ];
 
   const pageTitle = menuItems.find(

@@ -1,5 +1,5 @@
 import handleError from "@/lib/errorHandling";
-import { Client, Participant } from "@/lib/types";
+import { Client, Participant, Review, Theme } from "@/lib/types";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -56,16 +56,23 @@ export default async function handler(
         );
 
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
+        const { rows: reviews } = await sql.query(`SELECT * FROM reviews`);
 
         const clients = rows.map((client: Client) => {
           const clientParticipants = participants.filter(
             (p) => p.client_id === client.id
           );
-          const clientTheme = themes.find((t) => t.id === client.theme_id);
+          const clientTheme: Theme[] = themes.find(
+            (t) => t.id === client.theme_id
+          );
+          const clientReviews: Review[] = reviews.filter(
+            (r) => r.client_id === client.id
+          );
           return {
             ...client,
             participants: clientParticipants,
             theme: clientTheme,
+            reviews: clientReviews,
           };
         });
 

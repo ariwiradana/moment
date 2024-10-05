@@ -23,7 +23,6 @@ import { ChildOrderOptions } from "@/constants/childOrder";
 import { GenderOptions } from "@/constants/gender";
 import { roleOptions } from "@/constants/roles";
 import ImageShimmer from "@/components/image.shimmer";
-
 interface UpdateClientProps {
   slug: string;
 }
@@ -382,6 +381,8 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
               />
             </div>
           </div>
+
+          <h1 className="text-2xl font-bold mb-4 mt-8">Review(s)</h1>
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
               isloading={state.loading || state.isLoading}

@@ -3,6 +3,7 @@ import React, { FC } from "react";
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
+  error?: string;
 }
 
 const InputTextarea: FC<Props> = (props) => {
@@ -21,6 +22,9 @@ const InputTextarea: FC<Props> = (props) => {
         id={props.id}
         className={`bg-theme1-gold bg-opacity-5 px-4 py-3 w-full outline-none text-sm rounded-none font-medium text-admin-dark border-b border-b-theme1-gold ${comforta.className}`}
       />
+      {props.error && (
+        <p className="text-red-500 text-sm mt-1">{props.error}</p>
+      )}
     </div>
   );
 };

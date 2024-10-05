@@ -17,10 +17,6 @@ interface Props {
 }
 
 const ReviewsComponent: FC<Props> = (props) => {
-  const { loading, formData } = props.state;
-  const isDisabled =
-    loading || !formData.name || !formData.attendant || !formData.wishes;
-
   const attendantText: Record<string, string> = {
     Hadir: "Saya akan hadir",
     "Tidak Hadir": "Maaf saya tidak bisa hadir",
@@ -47,12 +43,14 @@ const ReviewsComponent: FC<Props> = (props) => {
           data-aos="fade-up"
         >
           <Input
+            error={props.state.errors.name}
             placeholder="Masukkan nama kamu"
             value={props.state.formData.name}
             id="name"
             onChange={(e) => props.actions.handleChange("name", e.target.value)}
           />
           <InputTextarea
+            error={props.state.errors.wishes}
             placeholder="Masukkan ucapan kamu"
             value={props.state.formData.wishes}
             id="wishes"
@@ -89,8 +87,7 @@ const ReviewsComponent: FC<Props> = (props) => {
           </div>
           <div className="mt-4">
             <Button
-              disabled={isDisabled}
-              isLoading={props.state.loading}
+              isLoading={props.state.loading ? true : false}
               type="submit"
               title="Kirim Ucapan"
               icon={<BiSolidSend />}
@@ -98,9 +95,12 @@ const ReviewsComponent: FC<Props> = (props) => {
           </div>
         </form>
 
-        <div className="flex flex-col mt-8 w-full max-h-[17rem] overflow-y-auto gap-2">
+        <div
+          className="flex flex-col mt-8 w-full max-h-[25rem] overflow-y-auto gap-2"
+          data-aos="fade-up"
+        >
           {props.state.reviews?.map((r) => (
-            <div key={r.id} className="flex mb-4" data-aos="fade-up">
+            <div key={r.id} className="flex mb-4">
               <div className="flex-shrink-0">
                 <div className="w-9 h-9 bg-gray-100 rounded-full flex justify-center items-center text-xs font-bold text-admin-dark">
                   <span className={comforta.className}>

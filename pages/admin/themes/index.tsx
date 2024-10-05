@@ -9,7 +9,7 @@ import Link from "next/link";
 import React from "react";
 import { BiPlus, BiShowAlt, BiTrash } from "react-icons/bi";
 
-const ClientDashboard: React.FC = () => {
+const ReviewDashboard: React.FC = () => {
   const { state, actions } = useAdminThemes();
 
   return (
@@ -134,4 +134,4 @@ const ClientDashboard: React.FC = () => {
   );
 };
 
-export default ClientDashboard;
+export default ReviewDashboard;

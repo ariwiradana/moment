@@ -3,6 +3,7 @@ import React, { FC } from "react";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  error?: string;
 }
 
 const Input: FC<Props> = (props) => {
@@ -21,6 +22,9 @@ const Input: FC<Props> = (props) => {
         id={props.id}
         className={`bg-theme1-gold bg-opacity-5 p-4 w-full outline-none text-sm font-medium text-admin-dark border-b border-b-theme1-gold rounded-none ${comforta.className}`}
       />
+      {props.error && (
+        <p className="text-red-500 text-sm mt-1">{props.error}</p>
+      )}
     </div>
   );
 };

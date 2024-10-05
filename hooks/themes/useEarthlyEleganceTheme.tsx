@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useClient } from "@/lib/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { z } from "zod";
 
 interface Countdown {
   days: number;
@@ -29,6 +30,7 @@ export interface UseEarthlyEleganceTheme {
     client: Client | null;
     formData: FormData;
     reviews: Review[] | null;
+    errors: Record<string, string | undefined>;
   };
   actions: {
     handleOpenCover: () => void;
@@ -57,8 +59,9 @@ const useEarthlyEleganceTheme = (
     seconds: 0,
   });
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
-  const [page, setpage] = useState<number>(1);
+  const [page] = useState<number>(1);
   const [limit] = useState<number>(10);
+  const [errors, setErrors] = useState<Record<string, string | undefined>>({});
 
   const { data, mutate } = useSWR(
     client?.id
@@ -66,6 +69,17 @@ const useEarthlyEleganceTheme = (
       : null,
     fetcher
   );
+
+  const reviewSchema = z.object({
+    name: z
+      .string()
+      .min(1, "Nama harus diisi")
+      .max(100, "Nama tidak boleh melebihi 100 karakter"),
+    wishes: z
+      .string()
+      .min(1, "Kolom ucapan tidak boleh kosong")
+      .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
+  });
 
   const reviews: Review[] = data?.data ?? [];
 
@@ -80,6 +94,7 @@ const useEarthlyEleganceTheme = (
 
     setLoading(true);
     try {
+      reviewSchema.parse(formData);
       const createReview = async () => {
         const response = await useClient(`/api/reviews`, {
           method: "POST",
@@ -105,7 +120,17 @@ const useEarthlyEleganceTheme = (
         },
       });
     } catch (error) {
-      console.log(error);
+      if (error instanceof z.ZodError) {
+        const formattedErrors: Record<string, string | undefined> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            formattedErrors[err.path[0] as string] = err.message;
+          }
+        });
+        setErrors(formattedErrors);
+      } else {
+        console.error(error);
+      }
     } finally {
       setLoading(false);
     }
@@ -178,6 +203,7 @@ const useEarthlyEleganceTheme = (
       client,
       formData,
       reviews,
+      errors,
     },
     actions: {
       handleOpenCover,
