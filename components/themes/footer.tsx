@@ -18,12 +18,7 @@ const FooterComponent: FC<Props> = ({ className = "text-gray-400" }) => {
       <ul className="flex flex-col gap-2 items-center">
         <li className="font-semibold text-admin-hover-dark text-base flex items-center gap-x-1">
           <div className="relative w-24 lg:w-28 aspect-video">
-            <Image
-              alt="logo"
-              fill
-              className="object-cover"
-              src="/logo-now.png"
-            />
+            <Image alt="logo" fill className="object-cover" src="/logo.png" />
           </div>
         </li>
         <li className={`flex items-center justify-center gap-4 text-xl`}>

@@ -1,4 +1,4 @@
-import { poppins } from "@/lib/fonts";
+import { playfair, poppins } from "@/lib/fonts";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BiMenu } from "react-icons/bi";
@@ -16,16 +16,11 @@ const NavbarWhite = () => {
   const [activeNav, setActiveNav] = useState("home");
   return (
     <section className="shadow-md">
-      <nav className={`${poppins.className} max-w-screen-xl mx-auto`}>
+      <nav className={`${playfair.className} max-w-screen-xl mx-auto`}>
         <ul className="px-6 md:px-12 flex justify-between lg:justify-start items-center gap-8 h-16 md:h-20">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
-            <div className="relative w-24 md:w-32 lg:w-48 aspect-video">
-              <Image
-                alt="logo"
-                fill
-                className="object-cover"
-                src="/logo-now.png"
-              />
+            <div className="relative w-20 md:w-24 aspect-video">
+              <Image alt="logo" fill className="object-cover" src="/logo.png" />
             </div>
           </li>
           {navTitles.map((title) => (
