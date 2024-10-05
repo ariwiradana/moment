@@ -2537,16 +2537,6 @@ fsevents@~2.3.2:
   resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
-fslightbox-react@^1.7.6:
-  version "1.7.6"
-  resolved "https://registry.npmjs.org/fslightbox-react/-/fslightbox-react-1.7.6.tgz"
-  integrity sha512-7LN2GZRLHo2vZGKdH+BZDJUoUDkCRCLlZ5hOwtLtZplmGZQ9nqzpG54cTax7XNjbYGTWLT6BHdMiL5zOEhiRlA==
-
-fslightbox@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.npmjs.org/fslightbox/-/fslightbox-3.4.2.tgz"
-  integrity sha512-vrPUNgFBioRPzc54BHnryR5yML1vlJYaEP/y1hpYFl/EKXsv76WhEB83iDr6Fr1hUvUBTnfW8ggyKIdARw9xZw==
-
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"
@@ -4964,7 +4954,7 @@ yauzl@^2.9.1:
 
 yet-another-react-lightbox@^3.21.6:
   version "3.21.6"
-  resolved "https://registry.npmjs.org/yet-another-react-lightbox/-/yet-another-react-lightbox-3.21.6.tgz"
+  resolved "https://registry.yarnpkg.com/yet-another-react-lightbox/-/yet-another-react-lightbox-3.21.6.tgz#da37cf8be3401e810810fa06f30c0a1f32067bf1"
   integrity sha512-uKcRmmezsj1Fbj38B6hFOGwbAu94fPr8d5H6I0+1FmcToX56freEGXXXtdA1oRo6036ug+UgrKZzzvsw/MIM/w==
 
 yn@3.1.1:

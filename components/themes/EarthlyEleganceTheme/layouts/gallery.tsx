@@ -5,14 +5,15 @@ import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import Image from "next/image";
-import FsLightbox from "fslightbox-react";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
 }
 
 const GalleryComponent: FC<Props> = (props) => {
-  const [toggler, setToggler] = useState(false);
+  const [open, setOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
   const images =
@@ -21,9 +22,22 @@ const GalleryComponent: FC<Props> = (props) => {
       ? props.state.client?.gallery
       : [];
 
+  const lightboxImage = images.map((img) => ({ src: img }));
+
   return (
     <section>
-      <FsLightbox slide={imageIndex} toggler={toggler} sources={images} />
+      <Lightbox
+        styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .9)" } }}
+        close={() => setOpen(false)}
+        slides={lightboxImage}
+        index={imageIndex}
+        open={open}
+        on={{
+          view(props) {
+            setImageIndex(props.index);
+          },
+        }}
+      />
       <div className="relative z-10 h-full py-16 max-w-screen-xl mx-auto">
         <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
         <div className="w-full h-full px-6 md:px-12 relative z-40">
@@ -69,8 +83,8 @@ const GalleryComponent: FC<Props> = (props) => {
                   >
                     <div
                       onClick={() => {
-                        setToggler((state) => !state);
-                        setImageIndex(() => index + 1);
+                        setOpen(() => true);
+                        setImageIndex(() => index);
                       }}
                       className="relative h-full w-full"
                     >
