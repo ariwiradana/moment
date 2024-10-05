@@ -9,6 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        dashboard: {
+          primary: "#ffbd59",
+          dark: "#212224",
+        },
         theme1: {
           primary: "#604A32",
           gold: "#B99470",
