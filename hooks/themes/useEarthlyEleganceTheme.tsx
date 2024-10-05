@@ -78,9 +78,9 @@ const useEarthlyEleganceTheme = (
 
     const payload = { client_id: Number(client?.id), ...formData };
 
+    setLoading(true);
     try {
       const createReview = async () => {
-        setLoading(true);
         const response = await useClient(`/api/reviews`, {
           method: "POST",
           body: JSON.stringify(payload),
@@ -97,6 +97,7 @@ const useEarthlyEleganceTheme = (
         success: () => {
           mutate();
           setLoading(false);
+          setFormData(initialReviewForm);
           return "Berhasil memberikan ucapan";
         },
         error: (error: any) => {

@@ -2,12 +2,14 @@ import React, { FC } from "react";
 import Title from "../elements/title";
 import Image from "next/image";
 import Button from "../elements/button";
-import { BiSolidSend } from "react-icons/bi";
+import { BiSolidSend, BiTime, BiUser } from "react-icons/bi";
 import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
 import { comforta } from "@/lib/fonts";
+import { getInitial } from "@/utils/getInitial";
+import moment from "moment";
 
 interface Props {
   state: UseEarthlyEleganceTheme["state"];
@@ -19,7 +21,11 @@ const ReviewsComponent: FC<Props> = (props) => {
   const isDisabled =
     loading || !formData.name || !formData.attendant || !formData.wishes;
 
-  console.log(loading);
+  const attendantText: Record<string, string> = {
+    Hadir: "Saya akan hadir",
+    "Tidak Hadir": "Maaf saya tidak bisa hadir",
+    Ragu: "Maaf saya masih ragu",
+  };
   return (
     <section>
       <div className="relative px-6 pb-16 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
@@ -41,14 +47,14 @@ const ReviewsComponent: FC<Props> = (props) => {
           data-aos="fade-up"
         >
           <Input
+            placeholder="Masukkan nama kamu"
             value={props.state.formData.name}
-            label="Nama"
             id="name"
             onChange={(e) => props.actions.handleChange("name", e.target.value)}
           />
           <InputTextarea
+            placeholder="Masukkan ucapan kamu"
             value={props.state.formData.wishes}
-            label="Ucapan"
             id="wishes"
             rows={6}
             onChange={(e) =>
@@ -94,20 +100,41 @@ const ReviewsComponent: FC<Props> = (props) => {
 
         <div className="flex flex-col mt-8 w-full max-h-[17rem] overflow-y-auto gap-2">
           {props.state.reviews?.map((r) => (
-            <div key={r.id} className="p-4 bg-gray-100 rounded-lg">
-              <div className="flex items-center gap-x-3">
-                <h1
-                  className={`${comforta.className} text-sm text-admin-dark font-bold`}
-                >
-                  {r.name}
-                </h1>
-                <div className="bg-theme1-gold px-2 py-1 rounded-full">
-                  <p className="text-xs text-white">{r.attendant}</p>
+            <div key={r.id} className="flex mb-4">
+              <div className="flex-shrink-0">
+                <div className="w-9 h-9 bg-gray-100 rounded-full flex justify-center items-center text-xs font-bold text-admin-dark">
+                  <span className={comforta.className}>
+                    {getInitial(r.name)}
+                  </span>
                 </div>
               </div>
-              <p className={`${comforta.className} text-sm text-gray-500 mt-2`}>
-                {r.wishes}
-              </p>
+
+              <div>
+                <div className="ml-3 p-3 bg-gray-100 rounded-lg max-w-md">
+                  <div className="flex items-center gap-x-3">
+                    <h1
+                      className={`${comforta.className} text-sm text-admin-dark font-bold`}
+                    >
+                      {r.name}
+                    </h1>
+                  </div>
+                  <p
+                    className={`${comforta.className} text-sm text-gray-500 leading-5 my-2`}
+                  >
+                    {r.wishes}
+                  </p>
+                </div>
+                <div className="flex divide-x-[0.5px] divide-theme1-gold ml-3 mt-3">
+                  <div className="flex items-center gap-1 text-xs text-theme1-gold mb-1 pr-2">
+                    <BiTime />
+                    <p>{moment(r.created_at).format("DD MMM YYYY")}</p>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs text-theme1-gold mb-1 pl-2">
+                    <BiUser />
+                    <p>{attendantText[r.attendant]}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
