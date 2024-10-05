@@ -1,5 +1,6 @@
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import ButtonSecondary from "@/components/admin/elements/button.secondary";
+import Loader from "@/components/admin/elements/loader";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminThemes } from "@/hooks/admin/useAdminThemes";
 import { montserrat } from "@/lib/fonts";
@@ -18,7 +19,7 @@ const ReviewDashboard: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4">Theme Dashboard</h1>
 
         <Link href="/admin/themes/create">
-          <div className="mb-8">
+          <div>
             <ButtonPrimary
               size="small"
               title="Add"
@@ -27,96 +28,102 @@ const ReviewDashboard: React.FC = () => {
           </div>
         </Link>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
-          {state.themes.map((theme) => (
-            <div key={theme.id} className="border rounded-lg p-3">
-              <div className="flex justify-between items-center pb-3 border-b">
-                <h1 className="text-gray-800 font-semibold text-sm">
-                  {theme.name}
-                </h1>
-              </div>
-              <div className="py-3 flex flex-col gap-y-2">
-                <div>
-                  <p className="text-gray-500 font-medium text-xs">Price</p>
-                  <p className="text-gray-800 font-semibold text-sm">
-                    {formatToRupiah(theme.price)}
-                  </p>
-                </div>
-              </div>
-              <div className="border-t pt-3 flex justify-end gap-x-3">
-                <Link target="_blank" href={`/themes/${theme.id}`}>
-                  <ButtonPrimary
-                    size="extrasmall"
-                    title="Preview"
-                    icon={<BiShowAlt className="text-base" />}
-                  />
-                </Link>
-                <ButtonSecondary
-                  type="button"
-                  onClick={() => actions.handleDelete(theme.id)}
-                  size="extrasmall"
-                  title="Delete"
-                  icon={<BiTrash className="text-base" />}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {state.toalRows > 0 && (
-          <div className="border border-gray-200 rounded-xl hidden lg:block">
-            <table className="table-auto overflow-x-auto w-full table">
-              <thead>
-                <tr>
-                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
-                    Name
-                  </td>
-                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                    Price
-                  </td>
-                  <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
-                    Actions
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                {state.themes.map((theme, index) => (
-                  <tr
-                    key={theme.id}
-                    className={`border-b ${
-                      state.themes.length - 1 === index
-                        ? "border-b-transparent"
-                        : "border-b-gray-200"
-                    }`}
-                  >
-                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+        {state.isLoading ? (
+          <Loader />
+        ) : (
+          <div className="mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
+              {state.themes.map((theme) => (
+                <div key={theme.id} className="border rounded-lg p-3">
+                  <div className="flex justify-between items-center pb-3 border-b">
+                    <h1 className="text-gray-800 font-semibold text-sm">
                       {theme.name}
-                    </td>
-                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                      {formatToRupiah(theme.price)}
-                    </td>
-                    <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                      <div className="flex gap-x-2">
-                        <Link target="_blank" href={`/themes/${theme.id}`}>
-                          <ButtonPrimary
-                            size="extrasmall"
-                            title="Preview"
-                            icon={<BiShowAlt className="text-base" />}
-                          />
-                        </Link>
-                        <ButtonSecondary
-                          type="button"
-                          onClick={() => actions.handleDelete(theme.id)}
-                          size="extrasmall"
-                          title="Delete"
-                          icon={<BiTrash className="text-base" />}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </h1>
+                  </div>
+                  <div className="py-3 flex flex-col gap-y-2">
+                    <div>
+                      <p className="text-gray-500 font-medium text-xs">Price</p>
+                      <p className="text-gray-800 font-semibold text-sm">
+                        {formatToRupiah(theme.price)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-t pt-3 flex justify-end gap-x-3">
+                    <Link target="_blank" href={`/themes/${theme.id}`}>
+                      <ButtonPrimary
+                        size="extrasmall"
+                        title="Preview"
+                        icon={<BiShowAlt className="text-base" />}
+                      />
+                    </Link>
+                    <ButtonSecondary
+                      type="button"
+                      onClick={() => actions.handleDelete(theme.id)}
+                      size="extrasmall"
+                      title="Delete"
+                      icon={<BiTrash className="text-base" />}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {state.toalRows > 0 && (
+              <div className="border border-gray-200 rounded-xl hidden lg:block">
+                <table className="table-auto overflow-x-auto w-full table">
+                  <thead>
+                    <tr>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
+                        Name
+                      </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        Price
+                      </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
+                        Actions
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {state.themes.map((theme, index) => (
+                      <tr
+                        key={theme.id}
+                        className={`border-b ${
+                          state.themes.length - 1 === index
+                            ? "border-b-transparent"
+                            : "border-b-gray-200"
+                        }`}
+                      >
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          {theme.name}
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          {formatToRupiah(theme.price)}
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          <div className="flex gap-x-2">
+                            <Link target="_blank" href={`/themes/${theme.id}`}>
+                              <ButtonPrimary
+                                size="extrasmall"
+                                title="Preview"
+                                icon={<BiShowAlt className="text-base" />}
+                              />
+                            </Link>
+                            <ButtonSecondary
+                              type="button"
+                              onClick={() => actions.handleDelete(theme.id)}
+                              size="extrasmall"
+                              title="Delete"
+                              icon={<BiTrash className="text-base" />}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
         {state.toalRows > state.limit && (
