@@ -32,7 +32,7 @@ const MainPage: FC<Props> = (props) => {
 
   if (!data && !error) return <Loading />;
   if (!client) return <ClientNotFound />;
-  if (client.status === "paid") return <ClientNotFound />;
+  if (client.status === "unpaid") return <ClientNotFound />;
 
   const themeName = client.theme?.name || "";
   const ThemeComponent = themes[themeName];

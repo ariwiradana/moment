@@ -98,6 +98,9 @@ const ClientDashboard: React.FC = () => {
               <div className="border-t pt-3 flex justify-end gap-x-3">
                 {client.status === "unpaid" && (
                   <ButtonPrimary
+                    onClick={() =>
+                      actions.handleSetPaidStatus(client.id as number)
+                    }
                     type="button"
                     size="extrasmall"
                     title="Paid"
@@ -221,6 +224,9 @@ const ClientDashboard: React.FC = () => {
                       <div className="flex gap-2">
                         {client.status === "unpaid" && (
                           <ButtonPrimary
+                            onClick={() =>
+                              actions.handleSetPaidStatus(client.id as number)
+                            }
                             type="button"
                             size="extrasmall"
                             title="Paid"

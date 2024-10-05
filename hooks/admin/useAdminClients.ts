@@ -49,6 +49,30 @@ export const useAdminClients = () => {
       });
   };
 
+  const handleSetPaidStatus = async (id: number) => {
+    const setPaid = async () => {
+      const response = await useClient(`/api/client/set-status`, {
+        method: "POST",
+        body: JSON.stringify({ status: "paid", id }),
+      });
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      return await response.json();
+    };
+    toast.promise(setPaid(), {
+      loading: "Mark as paid...",
+      success: () => {
+        mutate();
+        return "Successfully mark as paid";
+      },
+      error: (error: any) => {
+        return error.message || "Failed to mark as paid";
+      },
+    });
+  };
+
   return {
     state: {
       clients: data?.data || [],
@@ -63,6 +87,7 @@ export const useAdminClients = () => {
       handleChangePagination,
       handleDelete,
       handleCopySlug,
+      handleSetPaidStatus,
     },
   };
 };
