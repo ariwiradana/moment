@@ -4,7 +4,6 @@ import Loader from "@/components/admin/elements/loader";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminThemes } from "@/hooks/admin/useAdminThemes";
 import { montserrat } from "@/lib/fonts";
-import { formatToRupiah } from "@/utils/formatToRupiah";
 import { Pagination } from "@mui/material";
 import Link from "next/link";
 import React from "react";
@@ -35,18 +34,10 @@ const ReviewDashboard: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
               {state.themes.map((theme) => (
                 <div key={theme.id} className="border rounded-lg p-3">
-                  <div className="flex justify-between items-center pb-3 border-b">
+                  <div className="flex justify-between items-center pb-3">
                     <h1 className="text-gray-800 font-semibold text-sm">
                       {theme.name}
                     </h1>
-                  </div>
-                  <div className="py-3 flex flex-col gap-y-2">
-                    <div>
-                      <p className="text-gray-500 font-medium text-xs">Price</p>
-                      <p className="text-gray-800 font-semibold text-sm">
-                        {formatToRupiah(theme.price)}
-                      </p>
-                    </div>
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
                     <Link href={`/admin/themes/${theme.id}`}>
@@ -76,9 +67,6 @@ const ReviewDashboard: React.FC = () => {
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                         Name
                       </td>
-                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Price
-                      </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
                         Actions
                       </td>
@@ -96,9 +84,6 @@ const ReviewDashboard: React.FC = () => {
                       >
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           {theme.name}
-                        </td>
-                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {formatToRupiah(theme.price)}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex gap-x-2">

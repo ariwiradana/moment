@@ -1,7 +1,6 @@
 export interface Theme {
   id: number | null;
   name: string;
-  price: number;
   created_at?: Date | string;
   updated_at?: Date | string;
   thumbnail?: string | null;

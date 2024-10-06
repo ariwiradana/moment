@@ -39,12 +39,15 @@ const GalleryComponent: FC<Props> = (props) => {
         }}
       />
 
-      <div className="relative z-10 h-full w-full">
+      <div
+        className="relative z-10 h-full w-full bg-theme1-primary bg-opacity-5 pt-16"
+        data-aos="fade-up"
+      >
         <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
         <div className="w-full h-full relative z-40">
           <div
             data-aos="zoom-in-up"
-            className="relative h-12 lg:h-16 w-full mb-12"
+            className="relative h-12 lg:h-16 w-full mb-8"
           >
             <Image
               alt="leaf-datetime"
@@ -54,7 +57,11 @@ const GalleryComponent: FC<Props> = (props) => {
             />
           </div>
           <div data-aos="fade-up" className="mb-12">
-            <Title className="text-theme1-gold" title="Momen Bahagia" />
+            <Title
+              className="text-theme1-primary"
+              title="Momen Bahagia"
+              caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname}`}
+            />
           </div>
 
           <Swiper
@@ -86,7 +93,7 @@ const GalleryComponent: FC<Props> = (props) => {
               ? images.map((image, index) => (
                   <SwiperSlide
                     key={`cerita-kami-${index}`}
-                    className="relative flex justify-center items-center h-full py-4"
+                    className="relative flex justify-center items-center h-full"
                   >
                     <div
                       onClick={() => {

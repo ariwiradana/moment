@@ -43,11 +43,6 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
               label="Name"
             />
             <Input
-              value={state.formData.price}
-              onChange={(e) => actions.handleChange(e.target.value, "price")}
-              label="Price"
-            />
-            <Input
               accept="image/*"
               type="file"
               multiple

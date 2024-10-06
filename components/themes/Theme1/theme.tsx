@@ -16,7 +16,7 @@ interface Props {
   client: Client;
 }
 
-const ThemeComponent: FC<Props> = (props) => {
+const Theme1: FC<Props> = (props) => {
   const { state, actions } = useTheme1(props.client);
 
   return (
@@ -46,4 +46,4 @@ const ThemeComponent: FC<Props> = (props) => {
   );
 };
 
-export default ThemeComponent;
+export default Theme1;

@@ -10,7 +10,6 @@ import { getFilename } from "@/utils/getFilename";
 const initalFormData: Theme = {
   id: null,
   name: "",
-  price: 0,
   thumbnail: null,
 };
 
@@ -40,7 +39,6 @@ export const useAdminUpdateTheme = (id: number) => {
         ...state,
         id: currentTheme.id,
         name: currentTheme.name,
-        price: currentTheme.price,
         thumbnail: currentTheme.thumbnail,
       }));
     }

@@ -38,19 +38,22 @@ const ThankyouComponent: FC<Props> = (props) => {
         </p>
         <div data-aos="fade-up">
           <Title
-            className="text-2xl mt-8 mb-16"
+            className="text-2xl mt-8"
             title="Om Shanti Shanti Shanti Om"
           />
         </div>
+        <div className="flex justify-center my-4" data-aos="fade-up">
+          <div className="w-[0.5px] h-8 bg-theme1-gold"></div>
+        </div>
         <p
           data-aos="fade-up"
-          className={`${afacad.className} text-base md:text-lg mt-6 text-gray-500 text-center`}
+          className={`${afacad.className} text-base md:text-lg mt-6 text-theme1-gold text-center`}
         >
           Kami yang berbahagia
         </p>
         <p
           data-aos="fade-up"
-          className={`${afacad.className} text-2xl text-center mt-3 leading-6 text-theme1-primary font-medium mb-8`}
+          className={`${afacad.className} text-lg text-center mt-3 leading-6 text-theme1-primary font-medium mb-8`}
         >
           Kel. Bapak {props.state.groom?.parents_male} <br /> & <br /> Kel.
           Bapak {props.state.bride?.parents_male}

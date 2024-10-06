@@ -27,7 +27,7 @@ const ReviewsComponent: FC<Props> = (props) => {
       <div className="relative px-6 pb-12 w-full flex flex-col justify-center items-center max-w-screen-lg mx-auto">
         <div
           data-aos="zoom-in-up"
-          className="relative h-12 lg:h-16 w-full mb-12 mt-16"
+          className="relative h-12 lg:h-16 w-full mb-8 mt-16"
         >
           <Image
             alt="leaf-datetime"
@@ -37,7 +37,7 @@ const ReviewsComponent: FC<Props> = (props) => {
           />
         </div>
         <div data-aos="fade-up">
-          <Title className="text-theme1-gold" title="Mohon Doa Restu" />
+          <Title className="text-theme1-primary" title="Mohon Doa Restu" caption="Ucapkan selamat" />
         </div>
         <form
           onSubmit={props.actions.handleSubmit}

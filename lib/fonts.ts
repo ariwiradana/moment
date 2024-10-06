@@ -1,15 +1,10 @@
 import {
   Comfortaa,
-  Tangerine,
   Montserrat,
   Afacad,
   DM_Serif_Display,
+  Marcellus,
 } from "next/font/google";
-
-export const tangerine = Tangerine({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 export const comforta = Comfortaa({
   subsets: ["latin"],
@@ -24,6 +19,11 @@ export const afacad = Afacad({
 });
 
 export const dm = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
+});
+
+export const marcellus = Marcellus({
   subsets: ["latin"],
   weight: "400",
 });

@@ -22,7 +22,7 @@ const LoadingComponent = () => {
           L
           <span>
             <Image
-              sizes="30px"
+              sizes="20px"
               className="animate-spin-slow mt-1"
               src="/icon.png"
               alt="font-moment"

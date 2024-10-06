@@ -6,13 +6,11 @@ import { getFilename } from "@/utils/getFilename";
 
 interface FormData {
   name: string;
-  price: number;
   thumbnail: File | string;
 }
 
 const initalFormData: FormData = {
   name: "",
-  price: 0,
   thumbnail: "",
 };
 

@@ -45,19 +45,18 @@ const CountdownComponent: FC<Props> = (props) => {
             >
               <Image
                 alt="leaf-datetime"
-                src="/images/theme1/leaf-white.svg"
+                src="/images/theme1/leaf.svg"
                 fill
                 className="object-contain"
               />
             </div>
           </div>
           <div data-aos="fade-up" className="text-center">
-            <Title title="Hitung Mundur" className="text-white" />
-            <h4
-              className={`text-white mt-2 text-base lg:text-lg ${afacad.className}`}
-            >
-              {moment(props.state.client?.date).format("DD MMMM YYYY")}
-            </h4>
+            <Title
+              white
+              title="Hitung Mundur"
+              caption={moment(props.state.client?.date).format("DD MMMM YYYY")}
+            />
           </div>
           <div className="flex flex-col text-center gap-8 mt-12 h-full">
             <div className="grid grid-cols-2 gap-4 w-full">
@@ -68,9 +67,7 @@ const CountdownComponent: FC<Props> = (props) => {
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.days}
                 </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>
-                  Hari
-                </p>
+                <p className={`text-base mt-1 ${afacad.className}`}>Hari</p>
               </div>
               <div
                 data-aos="fade-up"
@@ -79,9 +76,7 @@ const CountdownComponent: FC<Props> = (props) => {
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.hours}
                 </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>
-                  Jam
-                </p>
+                <p className={`text-base mt-1 ${afacad.className}`}>Jam</p>
               </div>
               <div
                 data-aos="fade-up"
@@ -90,9 +85,7 @@ const CountdownComponent: FC<Props> = (props) => {
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.minutes}
                 </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>
-                  Menit
-                </p>
+                <p className={`text-base mt-1 ${afacad.className}`}>Menit</p>
               </div>
               <div
                 data-aos="fade-up"
@@ -101,9 +94,7 @@ const CountdownComponent: FC<Props> = (props) => {
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.seconds}
                 </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>
-                  Detik
-                </p>
+                <p className={`text-base mt-1 ${afacad.className}`}>Detik</p>
               </div>
             </div>
             <div className="flex justify-center" data-aos="fade-up">

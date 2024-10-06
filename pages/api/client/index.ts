@@ -323,8 +323,8 @@ export default async function handler(
         }
 
         const { rows: currentClient } = await sql`
-          SELECT * FROM clients WHERE id = ${Number(id)}
-        `;
+      SELECT * FROM clients WHERE id = ${Number(id)}
+    `;
 
         if (!currentClient.length) {
           return handleError(
@@ -333,9 +333,9 @@ export default async function handler(
           );
         }
 
-        const galleryURLs: string[] = currentClient[0].gallery;
+        const galleryURLs = currentClient[0].gallery || [];
         if (galleryURLs.length) {
-          const deletePromises = galleryURLs.map((url) => del(url));
+          const deletePromises = galleryURLs.map((url: string) => del(url));
           await Promise.all(deletePromises);
         }
 

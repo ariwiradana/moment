@@ -1,6 +1,6 @@
 import ImageShimmer from "@/components/image.shimmer";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
-import { afacad, montserrat, tangerine } from "@/lib/fonts";
+import { afacad, marcellus, montserrat } from "@/lib/fonts";
 import moment from "moment";
 import React, { FC } from "react";
 import { Autoplay } from "swiper/modules";
@@ -56,7 +56,7 @@ const HeroComponent: FC<Props> = (props) => {
           <h1
             data-aos="fade-up"
             data-aos-delay="300"
-            className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
+            className={`${marcellus.className} text-4xl lg:text-5xl text-white`}
           >
             {props.state.groom?.nickname} & {props.state.bride?.nickname}
           </h1>

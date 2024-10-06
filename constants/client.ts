@@ -79,7 +79,6 @@ export const exampleClient: Client = {
     name: "Earthly Elegance",
     thumbnail:
       "https://0i9ria69mw7glx7c.public.blob.vercel-storage.com/meundang/thumbnail-earthly-elegance-oLQEjD7hWGzreEDfZRlgsiDfGc3TdF.png",
-    price: 150000,
     created_at: "2024-10-05T10:28:35.582Z",
     updated_at: "2024-10-05T10:28:35.582Z",
   },

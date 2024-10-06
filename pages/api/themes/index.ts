@@ -58,10 +58,10 @@ export default async function handler(
 
     case "POST":
       try {
-        const { name, price, thumbnail } = req.body;
+        const { name, thumbnail } = req.body;
 
         const { rows } =
-          await sql`INSERT INTO themes (name, price, thumbnail) VALUES (${name}, ${price}, ${thumbnail}) RETURNING *;`;
+          await sql`INSERT INTO themes (name, thumbnail) VALUES (${name}, ${thumbnail}) RETURNING *;`;
 
         return res.status(200).json({
           success: true,

@@ -9,16 +9,16 @@ const FooterComponent: FC = () => {
     <nav
       data-aos="fade-up"
       data-aos-offset="0"
-      className={`p-6 ${afacad.className} border-t`}
+      className={`p-6 ${afacad.className}`}
     >
       <ul className="flex flex-col gap-2 items-center">
         <li className="font-semibold text-dashboard-dark text-base flex items-center gap-x-1">
-          <div className="relative w-16 md:w-20 aspect-video">
+          <div className="relative w-12 md:w-16 aspect-video">
             <Image alt="logo" fill className="object-cover" src="/logo.png" sizes="80px" />
           </div>
         </li>
         <li
-          className={`flex items-center justify-center gap-2 text-lg mt-2 text-dashboard-dark`}
+          className={`flex items-center justify-center gap-2 text-base mt-2 text-dashboard-dark`}
         >
           <Link target="_blank" href="https://www.instagram.com/meundang">
             <BiLogoInstagram />

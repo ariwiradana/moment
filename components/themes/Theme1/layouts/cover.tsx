@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { afacad,tangerine } from "@/lib/fonts";
+import { afacad, marcellus } from "@/lib/fonts";
 import Button from "../elements/button";
 import { MdArrowOutward } from "react-icons/md";
 import ImageShimmer from "../../../image.shimmer";
@@ -42,7 +42,7 @@ const Cover: FC<Props> = (props) => {
         <h1
           data-aos="fade-up"
           data-aos-delay="300"
-          className={`${tangerine.className} text-6xl lg:text-7xl text-white`}
+          className={`${marcellus.className} text-4xl lg:text-5xl text-white`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
@@ -52,8 +52,9 @@ const Cover: FC<Props> = (props) => {
           >
             Yth. Bpk/Ibu/Saudara/i
           </p>
+
           <h2
-            className={`text-white font-normal text-2xl lg:text-3xl mt-1 ${afacad.className}`}
+            className={`text-white font-light text-2xl lg:text-3xl my-2 ${afacad.className}`}
           >
             {props.to}
           </h2>

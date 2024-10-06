@@ -4,9 +4,13 @@ import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
 import { Participant } from "@/lib/types";
-import Image from "next/image";
 import Link from "next/link";
-import { BiLogoFacebook, BiLogoInstagram, BiLogoTwitter } from "react-icons/bi";
+import {
+  BiLogoFacebook,
+  BiLogoInstagram,
+  BiLogoTiktok,
+  BiLogoTwitter,
+} from "react-icons/bi";
 
 interface Props {
   state: useTheme1["state"];
@@ -63,26 +67,19 @@ const BridesComponent: FC<Props> = (props) => {
             <div data-aos="fade-up">
               <Title title="Om Swastiastu" />
             </div>
+            <div className="flex justify-center my-4" data-aos="fade-up">
+              <div className="w-[0.5px] h-8 bg-theme1-gold"></div>
+            </div>
 
             <p
               data-aos="fade-up"
-              className={`${afacad.className} text-base md:text-xl text-center mt-8 leading-5 text-theme1-primary`}
+              className={`${afacad.className} text-base md:text-xl text-center leading-5 text-theme1-primary mb-12`}
             >
               Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
               Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
               Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.
             </p>
-            <div
-              data-aos="zoom-in-up"
-              className="relative h-12 lg:h-16 w-full my-12"
-            >
-              <Image
-                alt="leaf-datetime"
-                src="/images/theme1/leaf.svg"
-                fill
-                className="object-contain"
-              />
-            </div>
+            
           </div>
 
           <div className="grid grid-cols-1 w-full" data-aos="fade-up">
@@ -125,33 +122,47 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         <h1 className="text-2xl font-semibold text-gray-700 relative">
           {props.data.name}
         </h1>
-        <p className="text-gray-500 mt-4">
+        <p className="text-theme1-gold mt-4">
           {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
           {props.data.child} dari pasangan
         </p>
         <h2 className="font-medium text-theme1-primary mt-1 leading-5">
           Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
         </h2>
-        <p className="text-gray-500 mt-8 leading-5">{props.data.address}</p>
+        <p className="text-theme1-gold mt-8 leading-5">{props.data.address}</p>
         <div className="flex mt-4 gap-x-2">
-          <Link href="/">
-            <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
-               <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
-              <BiLogoInstagram />
-            </div>
-          </Link>
-          <Link href="/">
-            <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
-               <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
-              <BiLogoTwitter />
-            </div>
-          </Link>
-          <Link href="/">
-            <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
-               <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
-              <BiLogoFacebook />
-            </div>
-          </Link>
+          {props.data.facebook && (
+            <Link target="_blank" href={props.data.facebook}>
+              <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
+                <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
+                <BiLogoFacebook />
+              </div>
+            </Link>
+          )}
+          {props.data.twitter && (
+            <Link target="_blank" href={props.data.twitter}>
+              <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
+                <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
+                <BiLogoTwitter />
+              </div>
+            </Link>
+          )}
+          {props.data.instagram && (
+            <Link target="_blank" href={props.data.instagram}>
+              <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
+                <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
+                <BiLogoInstagram />
+              </div>
+            </Link>
+          )}
+          {props.data.tiktok && (
+            <Link target="_blank" href={props.data.tiktok}>
+              <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
+                <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
+                <BiLogoTiktok />
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </div>
