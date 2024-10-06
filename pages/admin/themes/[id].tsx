@@ -58,14 +58,16 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
               label="Thumbnail"
             />
             {state.formData.thumbnail && (
-              <div className="md:w-1/2 w-full aspect-square relative">
-                <ImageShimmer
-                  priority
-                  alt="theme-thumbnail"
-                  src={state.formData.thumbnail ?? ""}
-                  fill
-                  className="object-cover rounded-lg"
-                />
+              <div className="md:w-1/2 w-full relative">
+                <div className="relative h-[30rem]">
+                  <ImageShimmer
+                    priority
+                    alt="theme-thumbnail"
+                    src={state.formData.thumbnail ?? ""}
+                    fill
+                    className="object-contain rounded-lg"
+                  />
+                </div>
                 <div className="absolute top-2 right-2 z-10">
                   <button
                     type="button"
@@ -76,7 +78,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
                       )
                     }
                     disabled={state.loading || state.isLoading}
-                    className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                    className="w-5 h-5 rounded-full bg-gray-200 text-admin-dark flex justify-center items-center"
                   >
                     <BiX />
                   </button>

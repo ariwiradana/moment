@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Theme } from "@/lib/types";
+import { Autoplay } from "swiper/modules";
 
 const Hero = () => {
   const { data } = useSWR("/api/themes", fetcher);
@@ -18,7 +19,13 @@ const Hero = () => {
         <div className="h-full flex justify-end">
           <div className="w-2/3">
             {themes && themes.length ? (
-              <Swiper spaceBetween={0} slidesPerView={1}>
+              <Swiper
+                autoplay
+                loop
+                modules={[Autoplay]}
+                spaceBetween={0}
+                slidesPerView={1}
+              >
                 {themes.map((theme) => (
                   <SwiperSlide key={`thumbnail-${theme.name}`}>
                     <Image
