@@ -39,12 +39,13 @@ const Hero = () => {
               cardsEffect={{
                 slideShadows: false,
                 perSlideOffset: 15,
+                perSlideRotate: 5,
               }}
             >
               {slicedThumbnails.map((thumb, index) => (
                 <SwiperSlide className="select-none" key={`thumbnail-${index}`}>
                   <Image
-                    sizes="(max-width: 640px) 120px, (max-width: 768px) 180px, (max-width: 1024px) 260px, 260px"
+                    sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
                     src={thumb ?? ""}
                     alt={`thumbnail-${index}`}
                     width={260}
