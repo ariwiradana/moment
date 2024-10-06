@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { comforta, montserrat, tangerine } from "@/lib/fonts";
+import { afacad,tangerine } from "@/lib/fonts";
 import Button from "../elements/button";
 import { MdArrowOutward } from "react-icons/md";
 import ImageShimmer from "../../../image.shimmer";
@@ -35,7 +35,7 @@ const Cover: FC<Props> = (props) => {
       <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-16 md:pb-32 z-20">
         <p
           data-aos="fade-up"
-          className={`text-white text-sm lg:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
+          className={`text-white text-base mb-1 md:mb-3 ${afacad.className}`}
         >
           The Wedding of
         </p>
@@ -48,12 +48,12 @@ const Cover: FC<Props> = (props) => {
         </h1>
         <div data-aos="fade-up" data-aos-delay="600">
           <p
-            className={`text-white mt-2 lg:mt-4 text-sm lg:text-base ${montserrat.className}`}
+            className={`text-white mt-2 lg:mt-4 text-base ${afacad.className}`}
           >
             Yth. Bpk/Ibu/Saudara/i
           </p>
           <h2
-            className={`text-white font-normal text-2xl lg:text-3xl mt-1 ${montserrat.className}`}
+            className={`text-white font-normal text-2xl lg:text-3xl mt-1 ${afacad.className}`}
           >
             {props.to}
           </h2>

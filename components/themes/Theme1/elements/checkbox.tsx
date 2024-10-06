@@ -1,4 +1,4 @@
-import { comforta } from "@/lib/fonts";
+import { afacad, comforta } from "@/lib/fonts";
 import React, { FC, InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -15,7 +15,7 @@ const InputCheckbox: FC<Props> = (props) => {
         className={`bg-theme1-gold bg-opacity-5 w-4 h-4 outline-none accent-theme1-gold focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${comforta.className}`}
       />
       <p
-        className={`text-sm ${comforta.className} text-gray-500 font-semibold mt-[2px]`}
+        className={`text-base ${afacad.className} text-theme1-primary mt-[2px]`}
       >
         {props.label}
       </p>

@@ -1,6 +1,5 @@
 import React from "react";
 import ButtonPrimary from "./elements/button.primary";
-import { josefin } from "@/lib/fonts";
 import Image from "next/image";
 import { BiEdit } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,6 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Theme } from "@/lib/types";
 import { Autoplay, EffectCards } from "swiper/modules";
+import { dm } from "@/lib/fonts";
 
 const Hero = () => {
   const { data } = useSWR("/api/themes", fetcher);
@@ -69,13 +69,14 @@ const Hero = () => {
             <span className="pl-3">Elegan</span>
           </div>
           <h1
-            className={`mb-8 text-dashboard-secondary text-4xl lg:text-6xl flex flex-wrap gap-x-4 ${josefin.className}`}
+            className={`mb-8 text-dashboard-secondary text-4xl lg:text-6xl flex flex-wrap gap-x-4 ${dm.className}`}
           >
             Bagikan{" "}
             <span className="flex items-center">
               m
               <span>
                 <Image
+                  sizes="40px"
                   className="animate-spin-slow lg:mt-3"
                   src="/icon.png"
                   alt="font-moment"

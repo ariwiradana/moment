@@ -1,6 +1,6 @@
 import ImageShimmer from "@/components/image.shimmer";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
-import { comforta, montserrat, tangerine } from "@/lib/fonts";
+import { afacad, montserrat, tangerine } from "@/lib/fonts";
 import moment from "moment";
 import React, { FC } from "react";
 import { Autoplay } from "swiper/modules";
@@ -49,7 +49,7 @@ const HeroComponent: FC<Props> = (props) => {
         <div className="absolute inset-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-32 md:pb-44 lg:pb-[27vh] z-20">
           <p
             data-aos="fade-up"
-            className={`text-white text-sm md:text-base tracking-widest mb-1 md:mb-3 ${comforta.className}`}
+            className={`text-white text-base mb-1 md:mb-3 ${afacad.className}`}
           >
             The Wedding of
           </p>
@@ -62,7 +62,7 @@ const HeroComponent: FC<Props> = (props) => {
           </h1>
           <div data-aos="fade-up" data-aos-delay="600">
             <div
-              className={`text-white mt-2 lg:mt-4 text-sm md:text-base flex items-center gap-x-3 ${montserrat.className}`}
+              className={`text-white mt-2 lg:mt-4 text-base flex items-center gap-x-3 ${afacad.className}`}
             >
               {props.state.client?.address}{" "}
               <span>
@@ -73,7 +73,7 @@ const HeroComponent: FC<Props> = (props) => {
             <div className="flex items-center gap-x-6 md:gap-x-8 lg:gap-x-16 mt-6 text-white">
               <div className="flex items-center gap-x-4 md:gap-x-6 lg:gap-x-8">
                 <div className="flex items-center flex-col">
-                  <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
+                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
                     {props.state.countdown.days}
                   </h2>
                   <p
@@ -83,7 +83,7 @@ const HeroComponent: FC<Props> = (props) => {
                   </p>
                 </div>
                 <div className="flex items-center flex-col">
-                  <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
+                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
                     {props.state.countdown.hours}
                   </h2>
                   <p
@@ -93,7 +93,7 @@ const HeroComponent: FC<Props> = (props) => {
                   </p>
                 </div>
                 <div className="flex items-center flex-col">
-                  <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
+                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
                     {props.state.countdown.minutes}
                   </h2>
                   <p
@@ -103,7 +103,7 @@ const HeroComponent: FC<Props> = (props) => {
                   </p>
                 </div>
                 <div className="flex items-center flex-col">
-                  <h2 className={`${comforta.className} text-xl lg:text-2xl`}>
+                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
                     {props.state.countdown.seconds}
                   </h2>
                   <p

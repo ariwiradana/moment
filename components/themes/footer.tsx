@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import Link from "next/link";
 import { BiEnvelope, BiLogoInstagram, BiLogoWhatsapp } from "react-icons/bi";
-import { poppins } from "@/lib/fonts";
+import { afacad } from "@/lib/fonts";
 import Image from "next/image";
 
 const FooterComponent: FC = () => {
@@ -9,12 +9,12 @@ const FooterComponent: FC = () => {
     <nav
       data-aos="fade-up"
       data-aos-offset="0"
-      className={`p-6 ${poppins.className} border-t`}
+      className={`p-6 ${afacad.className} border-t`}
     >
       <ul className="flex flex-col gap-2 items-center">
         <li className="font-semibold text-dashboard-dark text-base flex items-center gap-x-1">
-          <div className="relative w-20 lg:w-28 aspect-video">
-            <Image alt="logo" fill className="object-cover" src="/logo.png" />
+          <div className="relative w-16 md:w-20 aspect-video">
+            <Image alt="logo" fill className="object-cover" src="/logo.png" sizes="80px" />
           </div>
         </li>
         <li

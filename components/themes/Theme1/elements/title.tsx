@@ -1,4 +1,4 @@
-import { merienda } from "@/lib/fonts";
+import { afacad } from "@/lib/fonts";
 import React, { FC } from "react";
 
 interface Props {
@@ -10,8 +10,8 @@ const Title: FC<Props> = ({ className, title = false }) => {
   return (
     <div
       className={`${
-        merienda.className
-      } text-3xl lg:text-4xl text-center text-theme1-gold ${
+        afacad.className
+      } text-4xl lg:text-4xl text-center text-theme1-gold ${
         className ?? ""
       } relative`}
     >

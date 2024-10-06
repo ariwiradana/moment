@@ -7,7 +7,7 @@ import { useTheme1 } from "@/hooks/themes/useTheme1";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
-import { comforta } from "@/lib/fonts";
+import { afacad } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 
@@ -23,15 +23,17 @@ const ReviewsComponent: FC<Props> = (props) => {
     "Masih Ragu": "Maaf saya masih ragu",
   };
   return (
-    <section>
-      <div className="relative px-6 pb-12 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
-        <div data-aos="zoom-in-up">
+    <section className="relative">
+      <div className="relative px-6 pb-12 w-full flex flex-col justify-center items-center max-w-screen-lg mx-auto">
+        <div
+          data-aos="zoom-in-up"
+          className="relative h-12 lg:h-16 w-full mb-12 mt-16"
+        >
           <Image
             alt="leaf-datetime"
-            src="/images/theme1/leaf5-gold.svg"
-            width={110}
-            height={50}
-            className="mb-8"
+            src="/images/theme1/leaf.svg"
+            fill
+            className="object-contain"
           />
         </div>
         <div data-aos="fade-up">
@@ -39,7 +41,7 @@ const ReviewsComponent: FC<Props> = (props) => {
         </div>
         <form
           onSubmit={props.actions.handleSubmit}
-          className="mt-8 flex flex-col gap-4 w-full"
+          className="mt-12 flex flex-col gap-4 w-full"
           data-aos="fade-up"
         >
           <Input
@@ -102,10 +104,8 @@ const ReviewsComponent: FC<Props> = (props) => {
           {props.state.reviews?.map((r) => (
             <div key={r.id} className="flex mb-4">
               <div className="flex-shrink-0">
-                <div className="w-9 h-9 bg-gray-100 rounded-full flex justify-center items-center text-xs font-bold text-admin-dark">
-                  <span className={comforta.className}>
-                    {getInitial(r.name)}
-                  </span>
+                <div className="w-9 h-9 bg-theme1-primary bg-opacity-10 rounded-full flex justify-center items-center text-base font-medium text-theme1-primary">
+                  <span className={afacad.className}>{getInitial(r.name)}</span>
                 </div>
               </div>
 
@@ -115,24 +115,26 @@ const ReviewsComponent: FC<Props> = (props) => {
 
                   <div className="flex items-center gap-x-3">
                     <h1
-                      className={`${comforta.className} text-sm text-admin-dark font-bold`}
+                      className={`${afacad.className} text-base text-theme1-primary font-semibold`}
                     >
                       {r.name}
                     </h1>
                   </div>
                   <p
-                    className={`${comforta.className} text-sm text-gray-500 leading-5 my-2`}
+                    className={`${afacad.className} text-base text-gray-500 leading-5 my-2`}
                   >
                     {r.wishes}
                   </p>
                 </div>
 
-                <div className="flex divide-x-[0.5px] divide-theme1-gold mt-2">
-                  <div className="flex items-center gap-1 text-xs text-theme1-gold pr-2">
+                <div
+                  className={`flex divide-x-[0.5px] divide-theme1-gold mt-2 ${afacad.className}`}
+                >
+                  <div className="flex items-center gap-1 text-sm text-theme1-gold pr-2">
                     <BiTime />
                     <p>{moment(r.created_at).format("DD MMM YYYY")}</p>
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-theme1-gold pl-2">
+                  <div className="flex items-center gap-1 text-sm text-theme1-gold pl-2">
                     <BiUser />
                     <p>{attendantText[r.attendant]}</p>
                   </div>

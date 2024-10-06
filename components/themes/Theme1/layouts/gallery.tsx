@@ -3,7 +3,7 @@ import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import Image from "next/image";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -25,7 +25,7 @@ const GalleryComponent: FC<Props> = (props) => {
   const lightboxImage = images.map((img) => ({ src: img }));
 
   return (
-    <section>
+    <section className="relative">
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .9)" } }}
         close={() => setOpen(false)}
@@ -33,53 +33,60 @@ const GalleryComponent: FC<Props> = (props) => {
         index={imageIndex}
         open={open}
         on={{
-          view(props) {
+          view(props: { index: number }) {
             setImageIndex(props.index);
           },
         }}
       />
-      <div className="relative z-10 h-full py-16 max-w-screen-xl mx-auto">
+
+      <div className="relative z-10 h-full w-full">
         <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
-        <div className="w-full h-full px-6 md:px-12 relative z-40">
-          <div data-aos="zoom-in-up" className="flex justify-center">
+        <div className="w-full h-full relative z-40">
+          <div
+            data-aos="zoom-in-up"
+            className="relative h-12 lg:h-16 w-full mb-12"
+          >
             <Image
               alt="leaf-datetime"
-              src="/images/theme1/leaf5-gold.svg"
-              width={110}
-              height={50}
-              className="mb-8"
+              src="/images/theme1/leaf.svg"
+              fill
+              className="object-contain"
             />
           </div>
-          <div data-aos="fade-up">
+          <div data-aos="fade-up" className="mb-12">
             <Title className="text-theme1-gold" title="Momen Bahagia" />
           </div>
+
           <Swiper
-            data-aos="zoom-in-up"
+            data-aos="fade-up"
             loop
             autoplay={{
               delay: 4000,
             }}
-            effect={"coverflow"}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: false,
-              scale: 1.15,
-            }}
             speed={2000}
-            centeredSlides
-            slidesPerView={"auto"}
-            spaceBetween={0}
-            modules={[Autoplay, EffectCoverflow]}
-            className="w-full h-[65vh] mt-6"
+            breakpoints={{
+              0: {
+                slidesPerView: 2,
+              },
+              640: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+            spaceBetween={2}
+            modules={[Autoplay]}
+            className="w-full h-[60vh] lg:h-screen mt-6"
           >
             {images?.length > 0
               ? images.map((image, index) => (
                   <SwiperSlide
                     key={`cerita-kami-${index}`}
-                    className="relative flex justify-center items-center max-w-[75vw] h-full py-4"
+                    className="relative flex justify-center items-center h-full py-4"
                   >
                     <div
                       onClick={() => {
@@ -90,7 +97,7 @@ const GalleryComponent: FC<Props> = (props) => {
                     >
                       <ImageShimmer
                         priority
-                        sizes="70vw"
+                        sizes="100vw"
                         src={image}
                         alt={`cerita-kami-${index}`}
                         fill

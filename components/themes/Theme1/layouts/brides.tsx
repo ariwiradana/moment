@@ -1,10 +1,12 @@
 import React, { FC } from "react";
-import { comforta, playfair } from "@/lib/fonts";
+import { afacad } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
 import { Participant } from "@/lib/types";
 import Image from "next/image";
+import Link from "next/link";
+import { BiLogoFacebook, BiLogoInstagram, BiLogoTwitter } from "react-icons/bi";
 
 interface Props {
   state: useTheme1["state"];
@@ -12,7 +14,7 @@ interface Props {
 
 const BridesComponent: FC<Props> = (props) => {
   return (
-    <section>
+    <section className="relative">
       <div className="bg-white relative z-10 h-full">
         <div className="transform relative -translate-y-6 md:-translate-y-6 lg:-translate-y-24">
           <svg
@@ -56,7 +58,7 @@ const BridesComponent: FC<Props> = (props) => {
           </svg>
         </div>
 
-        <div className="w-full h-full py-8 px-4 md:px-12 relative z-40 max-w-screen-lg mx-auto">
+        <div className="w-full h-full py-8 px-4 md:px-12 relative z-40 max-w-screen-md mx-auto">
           <div>
             <div data-aos="fade-up">
               <Title title="Om Swastiastu" />
@@ -64,25 +66,34 @@ const BridesComponent: FC<Props> = (props) => {
 
             <p
               data-aos="fade-up"
-              className={`${comforta.className} text-base md:text-xl text-center mt-8 leading-5 text-admin-dark`}
+              className={`${afacad.className} text-base md:text-xl text-center mt-8 leading-5 text-theme1-primary`}
             >
               Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan
               Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
               Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.
             </p>
-            <div className="flex justify-center my-12" data-aos="zoom-in-up">
+            <div
+              data-aos="zoom-in-up"
+              className="relative h-12 lg:h-16 w-full my-12"
+            >
               <Image
                 alt="leaf-datetime"
-                src="/images/theme1/leaf5-gold.svg"
-                width={110}
-                height={50}
+                src="/images/theme1/leaf.svg"
+                fill
+                className="object-contain"
               />
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-center items-center gap-16 mt-16">
-            <ParticipantComponent data={props.state?.groom as Participant} />
-            <ParticipantComponent data={props.state?.bride as Participant} />
+          <div className="grid grid-cols-1 w-full" data-aos="fade-up">
+            <ParticipantComponent
+              mode="odd"
+              data={props.state?.groom as Participant}
+            />
+            <ParticipantComponent
+              mode="even"
+              data={props.state?.bride as Participant}
+            />
           </div>
         </div>
       </div>
@@ -92,61 +103,56 @@ const BridesComponent: FC<Props> = (props) => {
 
 interface ComponentProps {
   data: Participant;
+  mode: "odd" | "even";
 }
 const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div
-        className="w-52 h-80 rounded-full bg-gray-200 relative"
-        data-aos="zoom-in-up"
-      >
+    <div
+      className={`${afacad.className} flex flex-col md:flex-row ${
+        props.mode === "even" && "md:flex-row-reverse"
+      }`}
+    >
+      <div className="relative h-[400px] w-full md:w-1/2 flex-grow">
         <ImageShimmer
           priority
-          sizes="100vw"
-          alt={`avatar-${props.data?.role}`}
+          src={props.data.image as string}
+          alt={props.data.name}
           fill
-          src={(props.data?.image as string) ?? ""}
-          className="object-cover rounded-full"
+          className="object-cover w-full h-full"
         />
-        <div
-          data-aos="fade-up"
-          data-aos-delay="100"
-          className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -left-2"
-        ></div>
-        <div
-          data-aos="fade-up"
-          data-aos-delay="200"
-          className="w-52 h-80 rounded-full border-2 border-theme1-gold absolute top-0 -right-2"
-        ></div>
       </div>
-      <div
-        className="mt-6 flex flex-col text-center md:gap-y-3"
-        data-aos="fade-up"
-      >
-        <h2
-          className={`${playfair.className} text-4xl  text-admin-dark md:text-5xl mt-3`}
-        >
-          {props.data?.name}
+      <div className="relative h-full w-full md:w-1/2 bg-theme1-primary bg-opacity-5 flex flex-col items-center justify-center text-center px-6 py-12 flex-grow">
+        <h1 className="text-2xl font-semibold text-gray-700 relative">
+          {props.data.name}
+        </h1>
+        <p className="text-gray-500 mt-4">
+          {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
+          {props.data.child} dari pasangan
+        </p>
+        <h2 className="font-medium text-theme1-primary mt-1 leading-5">
+          Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
         </h2>
-        <p
-          className={`${comforta.className} text-sm md:text-lg text-center mb-3 mt-2 text-gray-500`}
-        >
-          {props.data.role === "groom" ? "Putra" : "Putri"} {props.data?.child}{" "}
-          dari pasangan
-        </p>
-        <div>
-          <h3
-            className={`${comforta.className} text-base md:text-xl font-bold text-gray-800 leading-6`}
-          >
-            Bapak {props.data?.parents_male} <br /> & <br /> Ibu{" "}
-            {props.data?.parents_female}
-          </h3>
+        <p className="text-gray-500 mt-8 leading-5">{props.data.address}</p>
+        <div className="flex mt-4 gap-x-2">
+          <Link href="/">
+            <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
+               <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
+              <BiLogoInstagram />
+            </div>
+          </Link>
+          <Link href="/">
+            <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
+               <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
+              <BiLogoTwitter />
+            </div>
+          </Link>
+          <Link href="/">
+            <div className="w-9 h-9 bg-theme1-primary flex justify-center items-center text-white text-xl relative">
+               <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
+              <BiLogoFacebook />
+            </div>
+          </Link>
         </div>
-        <p
-          className={`${comforta.className} text-sm md:text-xl font-medium text-center mt-4 text-gray-500 leading-5`}
-        >
-          {props.data?.address}
-        </p>
       </div>
     </div>
   );

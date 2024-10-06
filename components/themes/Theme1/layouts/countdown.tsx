@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { comforta, playfair } from "@/lib/fonts";
+import { afacad } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
@@ -26,7 +26,7 @@ const CountdownComponent: FC<Props> = (props) => {
     <section>
       <div
         data-aos="fade-up"
-        className="relative w-full h-[600px] lg:h-[650px]"
+        className="relative w-full h-[650px] lg:h-[750px] 2xl:h-[800px]"
       >
         <ImageShimmer
           sizes="100vw"
@@ -37,20 +37,24 @@ const CountdownComponent: FC<Props> = (props) => {
           src={bgImage}
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col z-10 py-16 items-center h-[600px] lg:h-[650px] justify-center">
-          <div data-aos="zoom-in-up">
-            <Image
-              alt="leaf-datetime"
-              src="/images/theme1/leaf5.svg"
-              width={110}
-              height={50}
-              className="mb-4"
-            />
+        <div className="absolute inset-0 flex flex-col z-10 py-16 lg:py-24 2xl:py-28 items-center h-[650px] lg:h-[750px] 2xl:h-[800px] justify-center">
+          <div className="w-full">
+            <div
+              data-aos="zoom-in-up"
+              className="relative h-12 lg:h-16 w-full mb-8"
+            >
+              <Image
+                alt="leaf-datetime"
+                src="/images/theme1/leaf-white.svg"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
           <div data-aos="fade-up" className="text-center">
             <Title title="Hitung Mundur" className="text-white" />
             <h4
-              className={`text-white mt-2 text-sm md:text-base ${comforta.className}`}
+              className={`text-white mt-2 text-base lg:text-lg ${afacad.className}`}
             >
               {moment(props.state.client?.date).format("DD MMMM YYYY")}
             </h4>
@@ -59,53 +63,45 @@ const CountdownComponent: FC<Props> = (props) => {
             <div className="grid grid-cols-2 gap-4 w-full">
               <div
                 data-aos="fade-up"
-                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.days}
                 </h1>
-                <p
-                  className={`text-sm font-semibold mt-1 ${comforta.className}`}
-                >
+                <p className={`text-base mt-1 ${afacad.className}`}>
                   Hari
                 </p>
               </div>
               <div
                 data-aos="fade-up"
-                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.hours}
                 </h1>
-                <p
-                  className={`text-sm font-semibold mt-1 ${comforta.className}`}
-                >
+                <p className={`text-base mt-1 ${afacad.className}`}>
                   Jam
                 </p>
               </div>
               <div
                 data-aos="fade-up"
-                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.minutes}
                 </h1>
-                <p
-                  className={`text-sm font-semibold mt-1 ${comforta.className}`}
-                >
+                <p className={`text-base mt-1 ${afacad.className}`}>
                   Menit
                 </p>
               </div>
               <div
                 data-aos="fade-up"
-                className={`text-white ${playfair.className} border border-white p-2 rounded-xl aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
               >
                 <h1 className="text-white text-6xl">
                   {props.state.countdown.seconds}
                 </h1>
-                <p
-                  className={`text-sm font-semibold mt-1 ${comforta.className}`}
-                >
+                <p className={`text-base mt-1 ${afacad.className}`}>
                   Detik
                 </p>
               </div>
