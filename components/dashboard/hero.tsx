@@ -22,7 +22,7 @@ const Hero = () => {
     <div
       className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-gray-50 overflow-x-hidden`}
     >
-      <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-8 pt-16 pb-32 relative px-6 md:px-12 lg:px-24">
+      <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 pt-16 pb-32 relative px-6 md:px-12 lg:px-24">
         <div className="h-full flex justify-center">
           <div className="w-[180px] lg:w-[260px]">
             <Swiper
