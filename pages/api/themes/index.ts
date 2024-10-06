@@ -8,6 +8,7 @@ interface Query {
   id?: number;
   page?: number;
   limit?: number;
+  order?: string;
 }
 
 export default async function handler(
@@ -17,7 +18,7 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-        const { id, page = 1, limit = 10 }: Query = req.query;
+        const { id, page = 1, limit = 10, order = "ASC" }: Query = req.query;
 
         let query = `SELECT * FROM themes`;
         let countQuery = `SELECT COUNT(*) FROM themes`;
@@ -33,7 +34,7 @@ export default async function handler(
           countValues.push(Number(id));
         }
 
-        query += ` ORDER BY updated_at DESC`;
+        query += ` ORDER BY updated_at ${order}`;
 
         const pageNumber = Number(page);
         const limitNumber = Number(limit);

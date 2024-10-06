@@ -12,7 +12,7 @@ const CreateTheme: React.FC = () => {
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
-        <Link href="/admin/clients">
+        <Link href="/admin/themes">
           <div className="flex items-center gap-x-1 text-gray-400">
             <BiLeftArrowAlt className="text-base" />
             <span className="text-sm font-medium">back</span>

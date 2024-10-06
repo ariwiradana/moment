@@ -15,7 +15,7 @@ const navTitles: string[] = [
 const Navbar = () => {
   const [activeNav, setActiveNav] = useState("home");
   return (
-    <section className="bg-white fixed top-0 inset-x-0">
+    <section className="bg-white fixed top-0 inset-x-0 z-30">
       <nav className={`${afacad.className} max-w-screen-xl mx-auto`}>
         <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 h-16 md:h-20 lg:h-24">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
