@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { comforta } from "@/lib/fonts";
 import Image from "next/image";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 import Title from "../elements/title";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
+  state: useTheme1["state"];
 }
 
 const ThankyouComponent: FC<Props> = (props) => {

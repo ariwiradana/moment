@@ -5,12 +5,12 @@ import Title from "../elements/title";
 import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidCalendarCheck } from "react-icons/bi";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
-  actions: UseEarthlyEleganceTheme["actions"];
+  state: useTheme1["state"];
+  actions: useTheme1["actions"];
 }
 
 const CountdownComponent: FC<Props> = (props) => {

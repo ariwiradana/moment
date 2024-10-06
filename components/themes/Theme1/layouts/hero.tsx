@@ -1,5 +1,5 @@
 import ImageShimmer from "@/components/image.shimmer";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 import { comforta, montserrat, tangerine } from "@/lib/fonts";
 import moment from "moment";
 import React, { FC } from "react";
@@ -7,7 +7,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
+  state: useTheme1["state"];
 }
 
 const HeroComponent: FC<Props> = (props) => {

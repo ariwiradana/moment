@@ -4,24 +4,22 @@ import { BiEnvelope, BiLogoInstagram, BiLogoWhatsapp } from "react-icons/bi";
 import { poppins } from "@/lib/fonts";
 import Image from "next/image";
 
-interface Props {
-  className: string;
-}
-
-const FooterComponent: FC<Props> = ({ className = "text-gray-400" }) => {
+const FooterComponent: FC = () => {
   return (
     <nav
       data-aos="fade-up"
       data-aos-offset="0"
-      className={`p-6 ${poppins.className} ${className}`}
+      className={`p-6 ${poppins.className} border-t`}
     >
       <ul className="flex flex-col gap-2 items-center">
-        <li className="font-semibold text-admin-hover-dark text-base flex items-center gap-x-1">
-          <div className="relative w-24 lg:w-28 aspect-video">
+        <li className="font-semibold text-dashboard-dark text-base flex items-center gap-x-1">
+          <div className="relative w-20 lg:w-28 aspect-video">
             <Image alt="logo" fill className="object-cover" src="/logo.png" />
           </div>
         </li>
-        <li className={`flex items-center justify-center gap-4 text-xl`}>
+        <li
+          className={`flex items-center justify-center gap-2 text-lg mt-2 text-dashboard-dark`}
+        >
           <Link target="_blank" href="https://www.instagram.com/meundang">
             <BiLogoInstagram />
           </Link>

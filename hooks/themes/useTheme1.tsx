@@ -20,7 +20,7 @@ interface FormData {
   attendant: string;
 }
 
-export interface UseEarthlyEleganceTheme {
+export interface useTheme1 {
   state: {
     loading: boolean;
     open: boolean;
@@ -46,9 +46,7 @@ const initialReviewForm = {
   wishes: "",
 };
 
-const useEarthlyEleganceTheme = (
-  client: Client | null
-): UseEarthlyEleganceTheme => {
+const useTheme1 = (client: Client | null): useTheme1 => {
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -257,4 +255,4 @@ Kami berharap kehadiran Anda untuk turut serta merayakan momen bahagia ini.`;
   };
 };
 
-export default useEarthlyEleganceTheme;
+export default useTheme1;

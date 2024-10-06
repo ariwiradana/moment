@@ -1,10 +1,10 @@
-import NavbarWhite from "@/components/dashboard/navbar.white";
+import Navbar from "@/components/dashboard/navbar";
 import React from "react";
 
 const Homepage = () => {
   return (
     <div>
-      <NavbarWhite />
+      <Navbar />
     </div>
   );
 };

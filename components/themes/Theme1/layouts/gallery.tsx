@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
+  state: useTheme1["state"];
 }
 
 const GalleryComponent: FC<Props> = (props) => {

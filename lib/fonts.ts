@@ -7,6 +7,7 @@ import {
   Poppins,
   Merienda,
   Playfair,
+  Afacad,
 } from "next/font/google";
 
 export const tangerine = Tangerine({
@@ -44,5 +45,9 @@ export const poppins = Poppins({
 
 export const satisfy = Satisfy({
   weight: ["400"],
+  subsets: ["latin"],
+});
+
+export const afacad = Afacad({
   subsets: ["latin"],
 });

@@ -3,7 +3,7 @@ import Title from "../elements/title";
 import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidSend, BiTime, BiUser } from "react-icons/bi";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
@@ -12,8 +12,8 @@ import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
-  actions: UseEarthlyEleganceTheme["actions"];
+  state: useTheme1["state"];
+  actions: useTheme1["actions"];
 }
 
 const ReviewsComponent: FC<Props> = (props) => {
@@ -24,7 +24,7 @@ const ReviewsComponent: FC<Props> = (props) => {
   };
   return (
     <section>
-      <div className="relative px-6 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
+      <div className="relative px-6 pb-12 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
         <div data-aos="zoom-in-up">
           <Image
             alt="leaf-datetime"

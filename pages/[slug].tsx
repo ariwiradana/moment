@@ -1,5 +1,5 @@
 import ThemeNotFound from "@/components/themes/theme.notfound";
-import Loading from "@/components/themes/EarthlyEleganceTheme/elements/loading";
+import Loading from "@/components/themes/Theme1/elements/loading";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
@@ -19,7 +19,7 @@ const MainPage: FC<Props> = (props) => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      offset: 100,
+      offset: 50,
     });
   }, []);
 

@@ -6,10 +6,10 @@ import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidMap } from "react-icons/bi";
 import Link from "next/link";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
+  state: useTheme1["state"];
 }
 
 const LocationTimeComponent: FC<Props> = (props) => {

@@ -1,6 +1,6 @@
 import { Client } from "@/lib/types";
 import React from "react";
-import EarthlyEleganceTheme from "./EarthlyEleganceTheme/theme";
+import EarthlyEleganceTheme from "./Theme1/theme";
 
 export const themes: Record<
   string,

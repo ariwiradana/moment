@@ -2,12 +2,12 @@ import React, { FC } from "react";
 import { comforta, playfair } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 import { Participant } from "@/lib/types";
 import Image from "next/image";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
+  state: useTheme1["state"];
 }
 
 const BridesComponent: FC<Props> = (props) => {

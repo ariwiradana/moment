@@ -3,11 +3,11 @@ import { comforta, montserrat, tangerine } from "@/lib/fonts";
 import Button from "../elements/button";
 import { MdArrowOutward } from "react-icons/md";
 import ImageShimmer from "../../../image.shimmer";
-import { UseEarthlyEleganceTheme } from "@/hooks/themes/useEarthlyEleganceTheme";
+import { useTheme1 } from "@/hooks/themes/useTheme1";
 
 interface Props {
-  state: UseEarthlyEleganceTheme["state"];
-  actions: UseEarthlyEleganceTheme["actions"];
+  state: useTheme1["state"];
+  actions: useTheme1["actions"];
   to: string;
 }
 
