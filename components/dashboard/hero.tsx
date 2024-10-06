@@ -19,10 +19,12 @@ const Hero = () => {
     thumbnails.length > 3 ? thumbnails.slice(0, 3) : thumbnails;
 
   return (
-    <div className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-gray-50`}>
+    <div
+      className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-gray-50 overflow-x-hidden`}
+    >
       <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-8 pt-16 pb-32 relative px-6 md:px-12 lg:px-24">
         <div className="h-full flex justify-center">
-          <div className="w-[240px]">
+          <div className="w-[180px] lg:w-[260px]">
             <Swiper
               speed={2000}
               autoplay
@@ -42,36 +44,16 @@ const Hero = () => {
               {slicedThumbnails.map((thumb, index) => (
                 <SwiperSlide className="select-none" key={`thumbnail-${index}`}>
                   <Image
-                    sizes="240px"
+                    sizes="(max-width: 640px) 120px, (max-width: 768px) 180px, (max-width: 1024px) 260px, 260px"
                     src={thumb ?? ""}
                     alt={`thumbnail-${index}`}
-                    width={240}
+                    width={260}
                     height={80}
                   />
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
-          {/* <div className="w-[240px] lg:hidden">
-            <Swiper
-              speed={2000}
-              autoplay
-              effect="fade"
-              modules={[Autoplay, EffectFade]}
-            >
-              {slicedThumbnails.map((thumb, index) => (
-                <SwiperSlide className="select-none" key={`thumbnail-${index}`}>
-                  <Image
-                    sizes="200px"
-                    src={thumb ?? ""}
-                    alt={`thumbnail-${index}`}
-                    width={200}
-                    height={80}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div> */}
         </div>
         <div className="h-full flex flex-col justify-center">
           <div className="mb-4 text-dashboard-secondary uppercase text-sm flex items-center gap-x-2">
