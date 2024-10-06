@@ -148,11 +148,15 @@ export default async function handler(
         ]);
         const clientId = resultClient.rows[0].id;
 
+        if (!clientId) {
+          return handleError(res, new Error("Client failed to add."));
+        }
+
         const participants: Participant[] = client.participants;
         const participantPromises = participants.map(async (p: Participant) => {
           const addParticipantQuery = `
-              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image)
-              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image, facebook, twitter, instagram, tiktok)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
               RETURNING *;
             `;
 
@@ -167,6 +171,10 @@ export default async function handler(
             p.gender,
             p.role,
             p.image,
+            p.facebook,
+            p.twitter,
+            p.instagram,
+            p.tiktok,
           ]);
         });
         await Promise.all(participantPromises);
@@ -227,8 +235,8 @@ export default async function handler(
           const newPrticipantPromises = newParticipants.map(
             async (p: Participant) => {
               const updateNewParticipantQuery = `
-              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image)
-              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image, facebook, twitter, instagram, tiktok)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
               RETURNING *;
             `;
 
@@ -243,6 +251,10 @@ export default async function handler(
                 p.gender,
                 p.role,
                 p.image,
+                p.facebook,
+                p.twitter,
+                p.instagram,
+                p.tiktok,
               ]);
             }
           );
@@ -265,8 +277,12 @@ export default async function handler(
                 gender = $7, 
                 child = $8,
                 role = $9,
-                image = $10
-              WHERE id = $11
+                image = $10,
+                facebook = $11,
+                twitter = $12,
+                instagram = $13,
+                tiktok = $14
+              WHERE id = $15
               RETURNING *;
             `;
 
@@ -281,6 +297,10 @@ export default async function handler(
                 p.child,
                 p.role,
                 p.image,
+                p.facebook,
+                p.twitter,
+                p.instagram,
+                p.tiktok,
                 p.id,
               ]);
             }

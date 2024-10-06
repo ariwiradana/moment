@@ -4,7 +4,7 @@ export interface Theme {
   price: number;
   created_at?: Date | string;
   updated_at?: Date | string;
-  thumbnail?: string | null
+  thumbnail?: string | null;
 }
 
 export interface Option {
@@ -26,6 +26,10 @@ export interface Participant {
   role: "bride" | "groom" | "participant";
   created_at?: Date | string;
   updated_at?: Date | string;
+  facebook?: string | null;
+  twitter?: string | null;
+  instagram?: string | null;
+  tiktok?: string | null;
 }
 
 export interface Client {

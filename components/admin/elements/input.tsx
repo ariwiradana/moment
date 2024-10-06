@@ -9,6 +9,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   id?: string;
   inputSize?: "small" | "medium" | "large";
+  optional?: boolean;
 }
 
 const Input: FC<InputProps> = (props) => {
@@ -28,7 +29,10 @@ const Input: FC<InputProps> = (props) => {
         htmlFor={props.id ?? props.name}
         className="block text-gray-700 mb-1"
       >
-        {props.label}
+        {props.label}{" "}
+        <span className="text-xs text-gray-400">
+          {props.optional && "(optional)"}
+        </span>
       </label>
       <input
         {...props}

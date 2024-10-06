@@ -288,6 +288,19 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                           />
                         </div>
                       </div>
+                      <Input
+                        accept="image/*"
+                        type="file"
+                        onChange={(e) =>
+                          actions.handleChangeParticipant(
+                            e.target.files as FileList,
+                            "image",
+                            index
+                          )
+                        }
+                        className="w-full"
+                        label="Image"
+                      />
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input
                           value={
@@ -318,6 +331,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                           }
                         />
                       </div>
+
                       <InputTextarea
                         value={state.formData.participants[index].address}
                         label="Address Full"
@@ -329,6 +343,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                           )
                         }
                       />
+
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <InputSelect
                           value={state.formData.participants[index].gender}
@@ -367,19 +382,67 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                           label="Role"
                         />
                       </div>
-                      <Input
-                        accept="image/*"
-                        type="file"
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.files as FileList,
-                            "image",
-                            index
-                          )
-                        }
-                        className="w-full"
-                        label="Image"
-                      />
+                      <h1 className="text-base font-bold mt-6">Social Media</h1>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <Input
+                          optional
+                          value={
+                            state.formData.participants[index]
+                              .facebook as string
+                          }
+                          onChange={(e) =>
+                            actions.handleChangeParticipant(
+                              e.target.value,
+                              "facebook",
+                              index
+                            )
+                          }
+                          label="Facebook"
+                        />
+                        <Input
+                          optional
+                          value={
+                            state.formData.participants[index].twitter as string
+                          }
+                          onChange={(e) =>
+                            actions.handleChangeParticipant(
+                              e.target.value,
+                              "twitter",
+                              index
+                            )
+                          }
+                          label="Twitter/X"
+                        />
+                        <Input
+                          optional
+                          value={
+                            state.formData.participants[index]
+                              .instagram as string
+                          }
+                          onChange={(e) =>
+                            actions.handleChangeParticipant(
+                              e.target.value,
+                              "instagram",
+                              index
+                            )
+                          }
+                          label="Instagram"
+                        />
+                        <Input
+                          optional
+                          value={
+                            state.formData.participants[index].tiktok as string
+                          }
+                          onChange={(e) =>
+                            actions.handleChangeParticipant(
+                              e.target.value,
+                              "tiktok",
+                              index
+                            )
+                          }
+                          label="TikTok"
+                        />
+                      </div>
                     </div>
                   }
                 />

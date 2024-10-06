@@ -19,6 +19,10 @@ const initialParticipants: Participant = {
   role: "participant",
   client_id: null,
   image: null,
+  facebook: null,
+  instagram: null,
+  twitter: null,
+  tiktok: null,
 };
 
 const initalFormData: Client = {
@@ -96,6 +100,10 @@ export const useAdminUpdateClient = (slug: string) => {
           child: p.child,
           role: p.role,
           image: p.image,
+          facebook: p.facebook,
+          twitter: p.twitter,
+          instagram: p.instagram,
+          tiktok: p.tiktok,
         })
       );
 

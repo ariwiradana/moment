@@ -18,6 +18,10 @@ const initialParticipants: Participant = {
   parents_female: "",
   role: "participant",
   image: null,
+  facebook: null,
+  instagram: null,
+  twitter: null,
+  tiktok: null,
 };
 
 const initalFormData: Client = {

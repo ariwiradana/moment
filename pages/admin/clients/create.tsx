@@ -172,6 +172,18 @@ const CreateClient: React.FC = () => {
                         }
                       />
                     </div>
+                    <Input
+                      className="w-full"
+                      type="file"
+                      label="Image"
+                      onChange={(e) =>
+                        actions.handleChangeParticipant(
+                          e.target.files as FileList,
+                          "image",
+                          index
+                        )
+                      }
+                    />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Input
                         value={state.formData.participants[index].parents_male}
@@ -200,18 +212,7 @@ const CreateClient: React.FC = () => {
                         }
                       />
                     </div>
-                    <Input
-                      className="w-full"
-                      type="file"
-                      label="Image"
-                      onChange={(e) =>
-                        actions.handleChangeParticipant(
-                          e.target.files as FileList,
-                          "image",
-                          index
-                        )
-                      }
-                    />
+
                     <InputTextarea
                       value={state.formData.participants[index].address}
                       label="Address Full"
@@ -259,6 +260,65 @@ const CreateClient: React.FC = () => {
                           )
                         }
                         label="Role"
+                      />
+                    </div>
+                    <h1 className="text-base font-bold mt-6">Social Media</h1>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <Input
+                        optional
+                        value={
+                          state.formData.participants[index].facebook as string
+                        }
+                        onChange={(e) =>
+                          actions.handleChangeParticipant(
+                            e.target.value,
+                            "facebook",
+                            index
+                          )
+                        }
+                        label="Facebook"
+                      />
+                      <Input
+                        optional
+                        value={
+                          state.formData.participants[index].twitter as string
+                        }
+                        onChange={(e) =>
+                          actions.handleChangeParticipant(
+                            e.target.value,
+                            "twitter",
+                            index
+                          )
+                        }
+                        label="Twitter/X"
+                      />
+                      <Input
+                        optional
+                        value={
+                          state.formData.participants[index].instagram as string
+                        }
+                        onChange={(e) =>
+                          actions.handleChangeParticipant(
+                            e.target.value,
+                            "instagram",
+                            index
+                          )
+                        }
+                        label="Instagram"
+                      />
+                      <Input
+                        optional
+                        value={
+                          state.formData.participants[index].tiktok as string
+                        }
+                        onChange={(e) =>
+                          actions.handleChangeParticipant(
+                            e.target.value,
+                            "tiktok",
+                            index
+                          )
+                        }
+                        label="TikTok"
                       />
                     </div>
                   </div>

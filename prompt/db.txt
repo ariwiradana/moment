@@ -38,7 +38,11 @@ CREATE TABLE participants (
   gender VARCHAR(20) CHECK (gender IN ('male', 'female')),
   role VARCHAR(20) CHECK (role IN ('bride', 'groom', 'participant')),
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  facebook VARCHAR(255) DEFAULT NULL,
+  twitter VARCHAR(255) DEFAULT NULL,
+  instagram VARCHAR(255) DEFAULT NULL,
+  tiktok VARCHAR(255) DEFAULT NULL,
 );
 
 CREATE TABLE reviews (
