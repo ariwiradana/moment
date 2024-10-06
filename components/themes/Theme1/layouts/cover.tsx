@@ -24,7 +24,7 @@ const Cover: FC<Props> = (props) => {
             fill
             alt={`cover-img-image`}
             priority
-            sizes="100vw"
+            sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
             className="object-cover"
             src={props.state.client?.cover as string}
           />

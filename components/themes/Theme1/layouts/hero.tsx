@@ -36,7 +36,7 @@ const HeroComponent: FC<Props> = (props) => {
                     fill
                     alt={`hero-img-${index}`}
                     priority
-                    sizes="100vw"
+                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
                     className="object-cover"
                     src={image}
                   />
