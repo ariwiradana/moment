@@ -95,7 +95,7 @@ export const useAdminUpdateTheme = (id: number) => {
   const handleUploadThumbnail = async () => {
     let imageURL: string = "";
     if (thumbnailImageForm && thumbnailImageForm.length) {
-      const MAX_SIZE = 2 * 1024 * 1024;
+      const MAX_SIZE = 3 * 1024 * 1024;
 
       let i = 0;
 
