@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/router";
 import { useClient } from "@/lib/client";
 import { Client, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
@@ -49,8 +48,6 @@ export const useAdminUpdateClient = (slug: string) => {
     success: boolean;
     data: Client[];
   }>(slug ? `/api/client?slug=${slug}` : undefined, fetcher);
-
-  const router = useRouter();
 
   const { data: themes } = useSWR<{
     success: boolean;
@@ -273,7 +270,6 @@ export const useAdminUpdateClient = (slug: string) => {
       success: () => {
         mutate();
         setLoading(false);
-        router.push("/admin/clients");
         return "Successfully update client";
       },
       error: (error: any) => {
