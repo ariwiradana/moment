@@ -79,7 +79,6 @@ const BridesComponent: FC<Props> = (props) => {
               Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada
               Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.
             </p>
-            
           </div>
 
           <div className="grid grid-cols-1 w-full" data-aos="fade-up">
@@ -109,7 +108,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         props.mode === "even" && "md:flex-row-reverse"
       }`}
     >
-      <div className="relative h-[400px] w-full md:w-1/2 flex-grow">
+      <div className="relative h-[55vh] 2xl:h-[35vh] w-full md:w-1/2 flex-grow">
         <ImageShimmer
           priority
           src={props.data.image as string}
