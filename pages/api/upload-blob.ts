@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   const { filename } = request.query;
 
-  const data = await put(`meundang/${filename}`, request, {
+  const data = await put(filename as string, request, {
     access: "public",
   });
 

@@ -8,6 +8,7 @@ import {
   Merienda,
   Playfair,
   Afacad,
+  DM_Serif_Display,
 } from "next/font/google";
 
 export const tangerine = Tangerine({
@@ -50,4 +51,9 @@ export const satisfy = Satisfy({
 
 export const afacad = Afacad({
   subsets: ["latin"],
+});
+
+export const josefin = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
 });

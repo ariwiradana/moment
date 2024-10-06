@@ -57,7 +57,7 @@ export const useAdminCreateClient = () => {
     if (themes && themes.data.length > 0) {
       const options: Option[] = themes.data.map((theme) => ({
         label: theme.name,
-        value: theme.id,
+        value: theme.id as number,
       }));
       setThemeOptions(options);
       setFormData((state) => ({

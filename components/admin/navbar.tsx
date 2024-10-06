@@ -9,7 +9,7 @@ const Navbar: FC = () => {
   const { isSidebarOpen, toggleSidebar } = useAdminSidebar();
   return (
     <nav
-      className={`${montserrat.className} px-6 md:px-8 h-16 lg:hidden border-b fixed inset-x-0 top-0 z-20 bg-white flex justify-between`}
+      className={`${montserrat.className} px-6 md:px-8 h-16 lg:hidden border-b fixed inset-x-0 top-0 z-20 bg-white flex justify-between shadow-md`}
     >
       <div
         onClick={toggleSidebar}

@@ -8,9 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        "spin-slow": "spin 5s linear infinite", // Adjust the duration (3s) for a slower spin
+      },
+      keyframes: {
+        spin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
       colors: {
         dashboard: {
           primary: "#ffbd59",
+          secondary: "#0b282c",
           dark: "#212224",
         },
         theme1: {

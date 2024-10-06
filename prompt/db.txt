@@ -50,16 +50,3 @@ CREATE TABLE reviews (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
-
-INSERT INTO clients (name, slug, address, address_url, address_full, theme_id, date, time, gallery) 
-VALUES 
-('John Doe', 'wedding-john-jane', 'Bali', 'https://maps.example.com/location-bali', 'Bali, Indonesia', 1, '2024-12-15', '15:00:00', ARRAY['https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/meundang/ari-juli/gallery/LINE_ALBUM_Prewed_230913_74-Sz7PoZUsKCt9i2vKkLq9IHLQs0uJIJ-MK1lPW184GOP0vIRHhzSM4VbtkeNxN.jpg', 'https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/meundang/ari-juli/gallery/LINE_ALBUM_Prewed_230913_127-jPW00pohhCXRtJ39RpZ8sqtu9j4sYc-aCjJwHJ4XZEIGz9ZI98DJ5HNamtZn4.jpg']),
-('Ari Wiradana', 'mepandes-ari', 'Denpasar', 'https://maps.example.com/location-denpasar', 'Denpasar, Bali, Indonesia', 1, '2024-10-20', '10:00:00', ARRAY['https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/meundang/ari-juli/gallery/LINE_ALBUM_Prewed_230913_127-jPW00pohhCXRtJ39RpZ8sqtu9j4sYc-aCjJwHJ4XZEIGz9ZI98DJ5HNamtZn4.jpg', 'https://dbwuumshu7s1w5jw.public.blob.vercel-storage.com/meundang/ari-juli/gallery/LINE_ALBUM_Prewed_230913_74-Sz7PoZUsKCt9i2vKkLq9IHLQs0uJIJ-MK1lPW184GOP0vIRHhzSM4VbtkeNxN.jpg']);
-
-INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, image, gender) 
-VALUES 
-(1, 'John Doe', 'Johnny', '123 Main St, Bali', 'second', 'Robert Doe', 'Linda Doe', 'https://example.com/john.jpg', 'male'),
-(1, 'Jane Smith', 'Janie', '456 Elm St, Bali', 'first', 'James Smith', 'Emily Smith', 'https://example.com/jane.jpg', 'female'),
-(2, 'Ari Wibowo', 'Ari', '789 Oak St, Denpasar', 'first', 'Budi Wibowo', 'Rina Wibowo', 'https://example.com/ari.jpg', 'male'),
-(2, 'Siti Fatimah', 'Siti', '321 Pine St, Denpasar', 'second', 'Hassan Fatimah', 'Nina Fatimah', 'https://example.com/siti.jpg', 'female');

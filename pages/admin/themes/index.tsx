@@ -8,7 +8,7 @@ import { formatToRupiah } from "@/utils/formatToRupiah";
 import { Pagination } from "@mui/material";
 import Link from "next/link";
 import React from "react";
-import { BiPlus, BiShowAlt, BiTrash } from "react-icons/bi";
+import { BiDetail, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
 
 const ReviewDashboard: React.FC = () => {
   const { state, actions } = useAdminThemes();
@@ -49,16 +49,16 @@ const ReviewDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
-                    <Link target="_blank" href={`/themes/${theme.id}`}>
+                    <Link href={`/admin/themes/${theme.id}`}>
                       <ButtonPrimary
                         size="extrasmall"
-                        title="Preview"
-                        icon={<BiShowAlt className="text-base" />}
+                        title="Detail"
+                        icon={<BiEdit className="text-base" />}
                       />
                     </Link>
                     <ButtonSecondary
                       type="button"
-                      onClick={() => actions.handleDelete(theme.id)}
+                      onClick={() => actions.handleDelete(theme.id as number)}
                       size="extrasmall"
                       title="Delete"
                       icon={<BiTrash className="text-base" />}
@@ -102,16 +102,18 @@ const ReviewDashboard: React.FC = () => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex gap-x-2">
-                            <Link target="_blank" href={`/themes/${theme.id}`}>
+                            <Link href={`/admin/themes/${theme.id}`}>
                               <ButtonPrimary
                                 size="extrasmall"
-                                title="Preview"
-                                icon={<BiShowAlt className="text-base" />}
+                                title="Detail"
+                                icon={<BiDetail className="text-base" />}
                               />
                             </Link>
                             <ButtonSecondary
                               type="button"
-                              onClick={() => actions.handleDelete(theme.id)}
+                              onClick={() =>
+                                actions.handleDelete(theme.id as number)
+                              }
                               size="extrasmall"
                               title="Delete"
                               icon={<BiTrash className="text-base" />}

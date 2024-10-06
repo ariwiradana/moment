@@ -190,7 +190,7 @@ export default async function handler(
           return handleError(res, new Error("id required"));
         }
 
-        const slug = createSlug(client.name)
+        const slug = createSlug(client.name);
 
         const updateClientQuery = `
           UPDATE clients

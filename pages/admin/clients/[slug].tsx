@@ -395,7 +395,6 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
               </div>
             </div>
 
-            <h1 className="text-2xl font-bold mb-4 mt-8">Review(s)</h1>
             <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
               <ButtonPrimary
                 isloading={state.loading || state.isLoading}
