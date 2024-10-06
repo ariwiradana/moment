@@ -6,7 +6,7 @@ export const themes: Record<
   string,
   (client: Client, to: string) => JSX.Element
 > = {
-  "Chocolate Bliss": (client: Client, to: string) => (
+  Aakarshana: (client: Client, to: string) => (
     <Theme1 client={client} to={to} />
   ),
 };
