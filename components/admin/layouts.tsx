@@ -8,7 +8,7 @@ interface Props {
 
 const AdminLayout: FC<Props> = ({ children }) => {
   return (
-    <div className="flex">
+    <div className="flex select-none">
       <Sidebar />
       <div className="w-full lg:ml-72 p-6 md:p-8 min-h-screen">
         <Navbar />

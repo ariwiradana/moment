@@ -9,6 +9,7 @@ import Link from "next/link";
 import React from "react";
 import {
   BiDetail,
+  BiLink,
   BiMoneyWithdraw,
   BiPlus,
   BiSolidShow,
@@ -117,7 +118,7 @@ const ClientDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
-                    {client.status === "unpaid" && (
+                    {client.status === "unpaid" ? (
                       <ButtonPrimary
                         onClick={() =>
                           actions.handleSetPaidStatus(client.id as number)
@@ -126,6 +127,22 @@ const ClientDashboard: React.FC = () => {
                         size="extrasmall"
                         title="Paid"
                         icon={<BiMoneyWithdraw className="text-base" />}
+                      />
+                    ) : (
+                      <ButtonPrimary
+                        onClick={() =>
+                          actions.handleCopySlug(
+                            `${window.location.hostname}${
+                              window.location.port
+                                ? `:${window.location.port}`
+                                : ""
+                            }/${client?.slug}?to=Nama Undangan`
+                          )
+                        }
+                        type="button"
+                        size="extrasmall"
+                        title="Copy Link"
+                        icon={<BiLink className="text-base" />}
                       />
                     )}
                     <Link href={`/admin/clients/${client.slug}`}>
@@ -258,7 +275,7 @@ const ClientDashboard: React.FC = () => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex gap-2">
-                            {client.status === "unpaid" && (
+                            {client.status === "unpaid" ? (
                               <ButtonPrimary
                                 onClick={() =>
                                   actions.handleSetPaidStatus(
@@ -269,6 +286,22 @@ const ClientDashboard: React.FC = () => {
                                 size="extrasmall"
                                 title="Paid"
                                 icon={<BiMoneyWithdraw className="text-base" />}
+                              />
+                            ) : (
+                              <ButtonPrimary
+                                onClick={() =>
+                                  actions.handleCopySlug(
+                                    `${window.location.hostname}${
+                                      window.location.port
+                                        ? `:${window.location.port}`
+                                        : ""
+                                    }/${client?.slug}?to=Nama Undangan`
+                                  )
+                                }
+                                type="button"
+                                size="extrasmall"
+                                title="Copy Link"
+                                icon={<BiLink className="text-base" />}
                               />
                             )}
                             <Link href={`/admin/clients/${client.slug}`}>

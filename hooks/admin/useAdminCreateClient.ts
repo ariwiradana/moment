@@ -227,7 +227,8 @@ export const useAdminCreateClient = () => {
 
     const modifiedFormdata: Client = { ...formData };
     modifiedFormdata["gallery"] = newGalleryURLs;
-    modifiedFormdata["cover"] = newGalleryURLs[0];
+    modifiedFormdata["cover"] =
+      newGalleryURLs.length > 0 ? newGalleryURLs[0] : null;
     modifiedFormdata["participants"] = updatedParticipant;
 
     const createClient = async () => {

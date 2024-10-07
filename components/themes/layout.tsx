@@ -12,7 +12,7 @@ const Layout: FC<Props> = (props) => {
       <Head>
         <title>{props.pageTitle}</title>
       </Head>
-      <div className="w-full h-full">
+      <div className="w-full h-full select-none">
         <div className="overflow-hidden">
           <div>{props.children}</div>
         </div>
