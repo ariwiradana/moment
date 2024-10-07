@@ -74,7 +74,7 @@ export default async function handler(
       }
     case "PUT":
       try {
-        const { id, price, name, thumbnail } = req.body;
+        const { id, name, thumbnail } = req.body;
 
         if (!id && !name && !thumbnail) {
           return handleError(
@@ -100,13 +100,13 @@ export default async function handler(
 
         const text = `
           UPDATE themes
-          SET name = $1, price = $2, thumbnail = $3
-          WHERE id = $4
+          SET name = $1, thumbnail = $2
+          WHERE id = $3
           RETURNING *;`;
 
         const { rows } = await sql.query({
           text,
-          values: [name, price, thumbnail, id],
+          values: [name, thumbnail, id],
         });
 
         return res.status(200).json({

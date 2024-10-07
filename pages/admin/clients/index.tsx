@@ -17,6 +17,7 @@ import {
 import Pagination from "@mui/material/Pagination";
 import { getRandomColors } from "@/utils/getRandomColor";
 import Loader from "@/components/admin/elements/loader";
+import ImageShimmer from "@/components/image.shimmer";
 
 const ClientDashboard: React.FC = () => {
   const { state, actions } = useAdminClients();
@@ -46,14 +47,27 @@ const ClientDashboard: React.FC = () => {
                   <div className="flex justify-between items-center pb-3 border-b">
                     <div className="flex justify-between items-center gap-x-2 w-full">
                       <div className="flex items-center gap-x-3">
-                        <div
-                          style={{
-                            backgroundColor: getRandomColors(),
-                          }}
-                          className="w-8 h-8 rounded-full flex justify-center items-center font-medium text-white text-sm p-1"
-                        >
-                          {getInitial(client.name)}
-                        </div>
+                        {client.cover ? (
+                          <div className="w-8 h-8 rounded-full flex justify-center items-center relative">
+                            <ImageShimmer
+                              priority
+                              alt={client.name}
+                              src={client.cover}
+                              fill
+                              className="object-cover rounded-full"
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            style={{
+                              backgroundColor: getRandomColors(),
+                            }}
+                            className="w-8 h-8 rounded-full flex justify-center items-center font-medium text-white text-sm p-1"
+                          >
+                            {getInitial(client.name)}
+                          </div>
+                        )}
+
                         <div>
                           <h1 className="text-gray-800 font-semibold text-sm">
                             {client.name}
@@ -173,16 +187,29 @@ const ClientDashboard: React.FC = () => {
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex justify-between gap-x-3">
                             <div className="flex gap-x-3">
-                              <div
-                                style={{
-                                  backgroundColor: getRandomColors(),
-                                }}
-                                className="h-10 w-10 rounded-full aspect-square flex justify-center items-center text-base"
-                              >
-                                <span className="text-white font-medium">
-                                  {getInitial(client.name)}
-                                </span>
-                              </div>
+                              {client.cover ? (
+                                <div className="w-10 h-10 rounded-full flex justify-center items-center relative">
+                                  <ImageShimmer
+                                    priority
+                                    alt={client.name}
+                                    src={client.cover}
+                                    fill
+                                    className="object-cover rounded-full"
+                                  />
+                                </div>
+                              ) : (
+                                <div
+                                  style={{
+                                    backgroundColor: getRandomColors(),
+                                  }}
+                                  className="h-10 w-10 rounded-full aspect-square flex justify-center items-center text-base"
+                                >
+                                  <span className="text-white font-medium">
+                                    {getInitial(client.name)}
+                                  </span>
+                                </div>
+                              )}
+
                               <div>
                                 <span>{client.name}</span>
                                 <p className="text-gray-500 font-medium text-xs">

@@ -117,7 +117,10 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           className="object-cover w-full h-full"
         />
       </div>
-      <div className="relative h-full w-full md:w-1/2 bg-theme1-primary bg-opacity-5 flex flex-col items-center justify-center text-center px-6 py-12 flex-grow">
+      <div
+        data-aos="fade-up"
+        className="relative h-full w-full md:w-1/2 bg-theme1-primary bg-opacity-5 flex flex-col items-center justify-center text-center px-6 py-12 flex-grow"
+      >
         <h1 className="text-2xl font-semibold text-gray-700 relative">
           {props.data.name}
         </h1>

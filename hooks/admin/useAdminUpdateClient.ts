@@ -124,13 +124,15 @@ export const useAdminUpdateClient = (slug: string) => {
         date: currentClient.date,
         start_time: currentClient.start_time,
         end_time: currentClient.end_time,
-        theme_id: currentClient.theme_id,
+        theme_id: !currentClient.theme_id
+          ? (themeOptions[0].value as number)
+          : currentClient.theme_id,
         gallery: currentClient.gallery,
         cover: currentClient.cover,
         participants: currentParticipants,
       }));
     }
-  }, [client]);
+  }, [client, themeOptions]);
 
   const handleChangeClient = (
     value: string | number | FileList,
