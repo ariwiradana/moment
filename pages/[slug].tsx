@@ -1,5 +1,4 @@
 import ThemeNotFound from "@/components/themes/theme.notfound";
-import Loading from "@/components/themes/Theme1/elements/loading";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
@@ -9,6 +8,7 @@ import { themes } from "@/components/themes/themes";
 import ClientNotFound from "@/components/themes/client.notfound";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import LoadingComponent from "@/components/themes/loading";
 
 interface Props {
   slug: string;
@@ -30,7 +30,7 @@ const MainPage: FC<Props> = (props) => {
 
   const client: Client | null = data?.data?.length ? data.data[0] : null;
 
-  if (!data && !error) return <Loading />;
+  if (!data && !error) return <LoadingComponent />;
   if (!client) return <ClientNotFound />;
   if (client.status === "unpaid") return <ClientNotFound />;
 

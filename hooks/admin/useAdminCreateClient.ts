@@ -7,6 +7,10 @@ import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { getFilename } from "@/utils/getFilename";
+import * as z from "zod";
+
+type ErrorState = Record<string, string>;
+const initialErrorState: ErrorState = {};
 
 const initialParticipants: Participant = {
   name: "",
@@ -36,10 +40,12 @@ const initalFormData: Client = {
   status: "unpaid",
   participants: [initialParticipants],
   gallery: [],
+  videos: [],
   cover: null,
 };
 
 export const useAdminCreateClient = () => {
+  const [errors, setErrors] = useState<ErrorState>(initialErrorState);
   const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -56,6 +62,10 @@ export const useAdminCreateClient = () => {
     data: Theme[];
     total_rows: number;
   }>(`/api/themes`, fetcher);
+
+  const clientSchema = z.object({
+    name: z.string().min(1, { message: "Client name is required." }),
+  });
 
   useEffect(() => {
     if (themes && themes.data.length > 0) {
@@ -92,7 +102,12 @@ export const useAdminCreateClient = () => {
               });
               continue;
             }
-            const filename = getFilename("gallery", formData.name, image.type);
+            const filename = getFilename(
+              "Clients",
+              formData.name,
+              "Gallery",
+              image.type
+            );
             const res = await fetch(`/api/upload-blob?filename=${filename}`, {
               method: "POST",
               body: image,
@@ -120,6 +135,59 @@ export const useAdminCreateClient = () => {
     return imageURLs;
   };
 
+  const handleUploadVideos = async () => {
+    const videoURLs: string[] = [];
+    if (formData.videos && formData.videos.length > 0) {
+      const MAX_SIZE = 10 * 1024 * 1024;
+
+      let i = 0;
+
+      if (formData.videos instanceof FileList) {
+        const videos = formData.videos;
+        for (const video of Array.from(formData.videos)) {
+          i++;
+          const toastUpload = toast.loading(
+            `Uploading video ${i} of ${videos.length}`
+          );
+          try {
+            if (video.size > MAX_SIZE) {
+              toast.error(`Video (${i}) size to large`, {
+                id: toastUpload,
+              });
+              continue;
+            }
+            const filename = getFilename(
+              "Clients",
+              formData.name,
+              "Videos",
+              video.type
+            );
+            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+              method: "POST",
+              body: video,
+            });
+            const result = await res.json();
+            if (result.success) {
+              toast.success(
+                `Video ${i} of ${videos.length} uploaded successfully!`,
+                { id: toastUpload }
+              );
+              videoURLs.push(result.data.url);
+            }
+          } catch (error: any) {
+            toast.error(
+              error.message || `Error uploading video ${i} of ${videos.length}`,
+              {
+                id: toastUpload,
+              }
+            );
+          }
+        }
+      }
+    }
+    return videoURLs;
+  };
+
   const handleUploadImageParticipant = async () => {
     let currentParticipants: Participant[] = formData.participants;
 
@@ -143,8 +211,9 @@ export const useAdminCreateClient = () => {
           }
 
           const filename = getFilename(
-            "participant",
-            currentParticipants[i].name,
+            "Clients",
+            formData.name,
+            "Participants",
             image.type
           );
           const res = await fetch(`/api/upload-blob?filename=${filename}`, {
@@ -187,6 +256,11 @@ export const useAdminCreateClient = () => {
     value: string | number | FileList,
     name: string
   ) => {
+    setErrors((state) => ({
+      ...state,
+      [name]: "",
+    }));
+
     setFormData((state) => ({
       ...state,
       [name]: value,
@@ -220,44 +294,59 @@ export const useAdminCreateClient = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+    try {
+      clientSchema.parse(formData);
+      setLoading(true);
 
-    const newGalleryURLs = await handleUploadGallery();
-    const updatedParticipant = await handleUploadImageParticipant();
+      const newGalleryURLs = await handleUploadGallery();
+      const newVideoURLs = await handleUploadVideos();
+      const updatedParticipant = await handleUploadImageParticipant();
 
-    const modifiedFormdata: Client = { ...formData };
-    modifiedFormdata["gallery"] = newGalleryURLs;
-    modifiedFormdata["cover"] =
-      newGalleryURLs.length > 0 ? newGalleryURLs[0] : null;
-    modifiedFormdata["participants"] = updatedParticipant;
+      const modifiedFormdata: Client = { ...formData };
+      modifiedFormdata["gallery"] = newGalleryURLs;
+      modifiedFormdata["videos"] = newVideoURLs;
+      modifiedFormdata["cover"] =
+        !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : null;
+      modifiedFormdata["participants"] = updatedParticipant;
 
-    const createClient = async () => {
-      const response = await useClient("/api/client", {
-        method: "POST",
-        body: JSON.stringify(modifiedFormdata),
+      const createClient = async () => {
+        const response = await useClient("/api/client", {
+          method: "POST",
+          body: JSON.stringify(modifiedFormdata),
+        });
+
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(
+            errorResult.message || "Failed to create new client."
+          );
+        }
+
+        return await response.json();
+      };
+
+      toast.promise(createClient(), {
+        loading: "Creating new client...",
+        success: () => {
+          setFormData(initalFormData);
+          setLoading(false);
+          router.push("/admin/clients");
+          return "Successfully created new client";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to create new client";
+        },
       });
-
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message || "Failed to create new client.");
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const validationErrors: ErrorState = {};
+        error.errors.forEach((err) => {
+          validationErrors[err.path.join(".")] = err.message;
+        });
+        setErrors(validationErrors);
       }
-
-      return await response.json();
-    };
-
-    toast.promise(createClient(), {
-      loading: "Creating new client...",
-      success: () => {
-        setFormData(initalFormData);
-        setLoading(false);
-        router.push("/admin/clients");
-        return "Successfully created new client";
-      },
-      error: (error: any) => {
-        setLoading(false);
-        return error.message || "Failed to create new client";
-      },
-    });
+    }
   };
 
   return {
@@ -266,6 +355,7 @@ export const useAdminCreateClient = () => {
       themeOptions,
       toggleEndTime,
       loading,
+      errors,
     },
     actions: {
       handleChangeClient,

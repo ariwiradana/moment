@@ -40,6 +40,7 @@ export interface Client {
   address_full: string;
   participants: Participant[];
   gallery?: string[] | FileList | [];
+  videos?: string[] | FileList | [];
   date: string;
   status?: "paid" | "unpaid";
   start_time: string;

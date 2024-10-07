@@ -36,6 +36,7 @@ const CreateClient: React.FC = () => {
           onSubmit={actions.handleSubmit}
         >
           <Input
+            error={state.errors.name}
             value={state.formData.name}
             onChange={(e) => actions.handleChangeClient(e.target.value, "name")}
             label="Client Name"
@@ -137,6 +138,16 @@ const CreateClient: React.FC = () => {
             }
             className="w-full"
             label="Gallery"
+          />
+          <Input
+            accept="video/mp4, video/quicktime"
+            type="file"
+            multiple
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.files as FileList, "videos")
+            }
+            className="w-full"
+            label="Videos"
           />
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
           <div className="flex flex-col gap-y-4">

@@ -22,7 +22,7 @@ const Sidebar: FC = () => {
   const menuItems: MenuItem[] = [
     { name: "Clients", path: "/admin/clients", icon: <BiUser /> },
     { name: "Themes", path: "/admin/themes", icon: <BiFolder /> },
-    { name: "Reviews", path: "/admin/reviews", icon: <BiChat /> },
+    { name: "RSVP & Wishes", path: "/admin/wishes", icon: <BiChat /> },
   ];
 
   const pageTitle = menuItems.find(

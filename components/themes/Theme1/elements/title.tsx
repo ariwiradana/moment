@@ -24,7 +24,7 @@ const Title: FC<Props> = ({
       {caption && (
         <div className="flex items-center gap-x-2 justify-center">
           <div
-            className={`h-[0.5px] w-32 ${
+            className={`h-[0.5px] w-20 ${
               white ? "bg-white" : "bg-theme1-gold"
             }`}
           ></div>

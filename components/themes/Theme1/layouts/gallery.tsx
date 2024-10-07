@@ -25,7 +25,7 @@ const GalleryComponent: FC<Props> = (props) => {
   const lightboxImage = images.map((img) => ({ src: img }));
 
   return (
-    <section className="relative">
+    <section className="relative bg-white">
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .9)" } }}
         close={() => setOpen(false)}
@@ -59,62 +59,64 @@ const GalleryComponent: FC<Props> = (props) => {
           <div data-aos="fade-up" className="mb-12">
             <Title
               className="text-theme1-primary"
-              title="Momen Bahagia"
+              title="Galeri Foto"
               caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname}`}
             />
           </div>
 
-          <Swiper
-            data-aos="fade-up"
-            loop
-            autoplay={{
-              delay: 4000,
-            }}
-            speed={2000}
-            breakpoints={{
-              0: {
-                slidesPerView: 2,
-              },
-              640: {
-                slidesPerView: 2,
-              },
-              768: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-            }}
-            spaceBetween={2}
-            modules={[Autoplay]}
-            className="w-full h-[60vh] lg:h-screen mt-6"
-          >
-            {images?.length > 0
-              ? images.map((image, index) => (
-                  <SwiperSlide
-                    key={`cerita-kami-${index}`}
-                    className="relative flex justify-center items-center h-full"
-                  >
-                    <div
-                      onClick={() => {
-                        setOpen(() => true);
-                        setImageIndex(() => index);
-                      }}
-                      className="relative h-full w-full"
+          <div>
+            <Swiper
+              data-aos="fade-up"
+              loop
+              autoplay={{
+                delay: 4000,
+              }}
+              speed={2000}
+              breakpoints={{
+                0: {
+                  slidesPerView: 2,
+                },
+                640: {
+                  slidesPerView: 2,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+              spaceBetween={2}
+              modules={[Autoplay]}
+              className="w-full h-[60vh] lg:h-screen mt-6"
+            >
+              {images?.length > 0
+                ? images.map((image, index) => (
+                    <SwiperSlide
+                      key={`cerita-kami-${index}`}
+                      className="relative flex justify-center items-center h-full"
                     >
-                      <ImageShimmer
-                        priority
-                        sizes="100vw"
-                        src={image}
-                        alt={`cerita-kami-${index}`}
-                        fill
-                        className="object-cover transform transition-all ease-in-out duration-1000 delay-300"
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))
-              : null}
-          </Swiper>
+                      <div
+                        onClick={() => {
+                          setOpen(() => true);
+                          setImageIndex(() => index);
+                        }}
+                        className="relative h-full w-full"
+                      >
+                        <ImageShimmer
+                          priority
+                          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+                          src={image}
+                          alt={`cerita-kami-${index}`}
+                          fill
+                          className="object-cover transform transition-all ease-in-out duration-1000 delay-300"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))
+                : null}
+            </Swiper>
+          </div>
         </div>
       </div>
     </section>

@@ -54,6 +54,7 @@ export default async function handler(
             FROM participants p
             JOIN clients c ON p.client_id = c.id
             WHERE c.id = ANY($1::int[])
+            ORDER BY created_at ASC
         `,
           [clientIds]
         );
@@ -128,8 +129,8 @@ export default async function handler(
         }
 
         const queryClient = `
-          INSERT INTO clients (slug, name, address, address_url, address_full, date, start_time, end_time, theme_id, status, gallery)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+          INSERT INTO clients (slug, name, address, address_url, address_full, date, start_time, end_time, theme_id, status, gallery, videos, cover)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
           RETURNING *;
         `;
 
@@ -145,6 +146,8 @@ export default async function handler(
           client.theme_id,
           client.status,
           client.gallery,
+          client.videos,
+          client.cover,
         ]);
         const clientId = resultClient.rows[0].id;
 
@@ -212,8 +215,10 @@ export default async function handler(
             end_time = $7, 
             theme_id = $8,
             slug = $9,
-            gallery = $10
-          WHERE id = $11
+            gallery = $10,
+            videos = $11,
+            cover = $12
+          WHERE id = $13
           RETURNING *;`;
 
         await sql.query(updateClientQuery, [
@@ -227,6 +232,8 @@ export default async function handler(
           client.theme_id,
           slug,
           client.gallery,
+          client.videos,
+          client.cover,
           Number(id),
         ]);
 
@@ -322,9 +329,16 @@ export default async function handler(
           return handleError(res, new Error("Invalid ID provided."));
         }
 
-        const { rows: currentClient } = await sql`
-      SELECT * FROM clients WHERE id = ${Number(id)}
-    `;
+        const { rows: currentClient } = await sql.query(
+          `
+            SELECT c.*, p.image as participant_image
+            FROM clients c
+            LEFT JOIN participants p
+            ON c.id = p.client_id
+            WHERE c.id = $1
+        `,
+          [Number(id)]
+        );
 
         if (!currentClient.length) {
           return handleError(
@@ -333,10 +347,19 @@ export default async function handler(
           );
         }
 
-        const galleryURLs = currentClient[0].gallery || [];
+        const galleryURLs: string[] = currentClient[0]?.gallery || [];
         if (galleryURLs.length) {
-          const deletePromises = galleryURLs.map((url: string) => del(url));
+          const deletePromises = galleryURLs.map((url) => del(url));
           await Promise.all(deletePromises);
+        }
+
+        const participantImages: string[] =
+          currentClient.map((p) => p.participant_image).filter(Boolean) || [];
+        if (participantImages.length) {
+          const deleteParticipantImagesPromises = participantImages.map((url) =>
+            del(url)
+          );
+          await Promise.all(deleteParticipantImagesPromises);
         }
 
         await sql.query({
@@ -351,6 +374,7 @@ export default async function handler(
 
         return res.status(200).json({
           success: true,
+          currentClient,
         });
       } catch (error) {
         handleError(res, error);

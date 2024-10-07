@@ -40,7 +40,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             <span className="text-sm font-medium">back</span>
           </div>
         </Link>
-        <h1 className="text-2xl font-bold mb-8 mt-2">Update Client</h1>
+        <h1 className="text-2xl font-bold mb-8 mt-2">Client Information(s)</h1>
         {state.isLoading ? (
           <div className="max-w-screen-md">
             <Loader />
@@ -148,6 +148,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
               label="Theme"
             />
 
+            <h1 className="text-2xl font-bold mb-4 mt-8">Gallery & Video</h1>
             <Input
               accept="image/*"
               type="file"
@@ -214,6 +215,49 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         fill
                         className="object-cover w-full rounded-lg"
                       />
+                    </div>
+                  ))
+                : null}
+            </div>
+            <Input
+              accept="video/mp4, video/quicktime"
+              type="file"
+              multiple
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.files as FileList, "videos")
+              }
+              className="w-full"
+              label="Video"
+            />
+
+            <div className="grid md:grid-cols-2 gap-2 relative">
+              {state.formData.videos &&
+              Array.isArray(state.formData.videos) &&
+              state.formData.videos.length > 0
+                ? state.formData.videos.map((video) => (
+                    <div className="relative" key={video}>
+                      <div className="absolute top-2 right-2 z-10">
+                        <button
+                          onClick={() =>
+                            actions.handleDeleteVideo(
+                              video,
+                              state.formData.id as number
+                            )
+                          }
+                          type="button"
+                          disabled={state.loading || state.isLoading}
+                          className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                        >
+                          <BiX />
+                        </button>
+                      </div>
+                      <video
+                        width="100%"
+                        controls
+                        className="rounded-lg bg-gray-100 aspect-video object-cover"
+                      >
+                        <source src={video} />
+                      </video>
                     </div>
                   ))
                 : null}

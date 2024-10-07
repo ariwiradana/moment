@@ -10,7 +10,7 @@ interface Props {
 
 const ThankyouComponent: FC<Props> = (props) => {
   return (
-    <section className="px-6 py-8 relative">
+    <section className="px-6 py-8 relative bg-white">
       <div
         data-aos="zoom-in-up"
         className="relative h-12 lg:h-16 w-full mb-12 mt-8"

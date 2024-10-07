@@ -78,15 +78,17 @@ const ClientDashboard: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="ml-2 flex items-center relative z-10">
-                        <Link
-                          target="_bank"
-                          href={`/${client.slug}?to=Nama Undangan`}
-                          className="text-gray-500 text-lg"
-                        >
-                          <BiSolidShow />
-                        </Link>
-                      </div>
+                      {client.status === "paid" && (
+                        <div className="ml-2 flex items-center relative z-10">
+                          <Link
+                            target="_bank"
+                            href={`/${client.slug}?to=Nama Undangan`}
+                            className="text-gray-500 text-lg"
+                          >
+                            <BiSolidShow />
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="py-3 flex flex-col gap-y-2">
@@ -234,15 +236,17 @@ const ClientDashboard: React.FC = () => {
                                 </p>
                               </div>
                             </div>
-                            <div className="ml-2 flex items-center relative z-10">
-                              <Link
-                                target="_bank"
-                                href={`/${client.slug}?to=Nama Undangan`}
-                                className="text-gray-500 text-lg"
-                              >
-                                <BiSolidShow />
-                              </Link>
-                            </div>
+                            {client.status === "paid" && (
+                              <div className="ml-2 flex items-center relative z-10">
+                                <Link
+                                  target="_bank"
+                                  href={`/${client.slug}?to=Nama Undangan`}
+                                  className="text-gray-500 text-lg"
+                                >
+                                  <BiSolidShow />
+                                </Link>
+                              </div>
+                            )}
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">

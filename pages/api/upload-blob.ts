@@ -9,6 +9,7 @@ export default async function handler(
 
   const data = await put(filename as string, request, {
     access: "public",
+    multipart: true,
   });
 
   return response.status(200).json({ success: true, data });

@@ -13,7 +13,7 @@ interface Props {
 
 const LocationTimeComponent: FC<Props> = (props) => {
   return (
-    <section className="relative">
+    <section className="relative bg-white z-10">
       <div className="relative px-6 pt-8 pb-16 w-full flex flex-col justify-center items-center max-w-screen-sm mx-auto">
         <div data-aos="fade-up">
           <Title className="text-theme1-gold" title="Waktu & Tempat" />

@@ -5,7 +5,6 @@ import { useClient } from "@/lib/client";
 import { Theme } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { getFilename } from "@/utils/getFilename";
 
 const initalFormData: Theme = {
   id: null,
@@ -106,15 +105,15 @@ export const useAdminUpdateTheme = (id: number) => {
           });
         }
 
-        const filename = getFilename(
-          "theme-thumbnail",
-          formData.name,
-          image.type
+        const res = await fetch(
+          `/api/upload-blob?filename=Themes/${formData.name}.${
+            image.type.split("/")[1]
+          }`,
+          {
+            method: "POST",
+            body: image,
+          }
         );
-        const res = await fetch(`/api/upload-blob?filename=${filename}`, {
-          method: "POST",
-          body: image,
-        });
         const result = await res.json();
         if (result.success) {
           toast.success(`Thumbnail image uploaded successfully!`, {

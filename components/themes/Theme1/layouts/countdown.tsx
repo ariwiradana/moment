@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { afacad } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
@@ -13,98 +13,81 @@ interface Props {
   actions: useTheme1["actions"];
 }
 
-const CountdownComponent: FC<Props> = (props) => {
-  const bgImage = Array.isArray(props.state.client?.gallery)
-    ? props.state.client.gallery.length > 4
-      ? props.state.client.gallery[3]
-      : props.state.client.gallery.length > 1
-      ? props.state.client.gallery[1]
-      : props.state.client.gallery[0] || ""
-    : "";
+const CountdownComponent: FC<Props> = ({ state, actions }) => {
+  const [randomGalleryImage, setRandomGalleryImage] = useState("");
+
+  useEffect(() => {
+    const gallery = state.client?.gallery;
+
+    if (Array.isArray(gallery) && gallery.length > 0) {
+      const randomIndex = Math.floor(Math.random() * gallery.length);
+      setRandomGalleryImage(gallery[randomIndex]);
+    } else {
+      setRandomGalleryImage("");
+    }
+  }, [state.client?.gallery]);
 
   return (
-    <section>
-      <div
-        data-aos="fade-up"
-        className="relative w-full h-[650px] lg:h-[750px] 2xl:h-[800px]"
-      >
-        <ImageShimmer
-          sizes="100vw"
-          priority
-          alt="bg-countdown"
-          fill
-          className="object-cover grayscale-[30%]"
-          src={bgImage}
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col z-10 py-16 lg:py-24 2xl:py-28 items-center h-[650px] lg:h-[750px] 2xl:h-[800px] justify-center">
-          <div className="w-full">
-            <div
-              data-aos="zoom-in-up"
-              className="relative h-12 lg:h-16 w-full mb-8"
-            >
-              <Image
-                alt="leaf-datetime"
-                src="/images/theme1/leaf.svg"
-                fill
-                className="object-contain"
-              />
-            </div>
-          </div>
-          <div data-aos="fade-up" className="text-center">
-            <Title
-              white
-              title="Hitung Mundur"
-              caption={moment(props.state.client?.date).format("DD MMMM YYYY")}
+    <section className="relative h-screen overflow-hidden z-0">
+      <div className="fixed inset-0 z-0">
+        <div className="relative h-full w-full">
+          {randomGalleryImage && (
+            <ImageShimmer
+              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+              priority
+              alt="bg-countdown"
+              fill
+              className="object-cover scale-110 grayscale-[50%]"
+              src={randomGalleryImage}
+              style={{ transform: "translateZ(0)" }}
+            />
+          )}
+        </div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0000008f] via-[#0000005a] to-white"></div>
+      <div className="flex flex-col z-10 items-center justify-center h-screen">
+        <div className="w-full mb-8">
+          <div data-aos="zoom-in-up" className="relative h-12 lg:h-16 w-full">
+            <Image
+              alt="leaf-datetime"
+              src="/images/theme1/leaf.svg"
+              fill
+              className="object-contain"
             />
           </div>
-          <div className="flex flex-col text-center gap-8 mt-12 h-full">
-            <div className="grid grid-cols-2 gap-4 w-full">
+        </div>
+        <div data-aos="fade-up" className="text-center">
+          <Title
+            white
+            title="Hitung Mundur"
+            caption={moment(state.client?.date).format("DD MMMM YYYY")}
+          />
+        </div>
+        <div className="mt-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+            {[
+              { label: "Hari", value: state.countdown.days },
+              { label: "Jam", value: state.countdown.hours },
+              { label: "Menit", value: state.countdown.minutes },
+              { label: "Detik", value: state.countdown.seconds },
+            ].map(({ label, value }) => (
               <div
+                key={label}
                 data-aos="fade-up"
-                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
+                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 lg:h-32 lg:w-32 flex flex-col justify-center items-center`}
               >
-                <h1 className="text-white text-6xl">
-                  {props.state.countdown.days}
-                </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>Hari</p>
+                <h1 className="text-white text-6xl">{value}</h1>
+                <p className={`text-base mt-1 ${afacad.className}`}>{label}</p>
               </div>
-              <div
-                data-aos="fade-up"
-                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
-              >
-                <h1 className="text-white text-6xl">
-                  {props.state.countdown.hours}
-                </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>Jam</p>
-              </div>
-              <div
-                data-aos="fade-up"
-                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
-              >
-                <h1 className="text-white text-6xl">
-                  {props.state.countdown.minutes}
-                </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>Menit</p>
-              </div>
-              <div
-                data-aos="fade-up"
-                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 flex flex-col justify-center items-center`}
-              >
-                <h1 className="text-white text-6xl">
-                  {props.state.countdown.seconds}
-                </h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>Detik</p>
-              </div>
-            </div>
-            <div className="flex justify-center" data-aos="fade-up">
-              <Button
-                type="button"
-                onClick={props.actions.handleAddEvent}
-                title="Save The Date"
-                icon={<BiSolidCalendarCheck />}
-              />
-            </div>
+            ))}
+          </div>
+          <div className="flex justify-center mt-16" data-aos="fade-up">
+            <Button
+              type="button"
+              onClick={actions.handleAddEvent}
+              title="Save The Date"
+              icon={<BiSolidCalendarCheck />}
+            />
           </div>
         </div>
       </div>

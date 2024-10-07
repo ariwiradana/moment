@@ -45,6 +45,7 @@ const Hero = () => {
               {slicedThumbnails.map((thumb, index) => (
                 <SwiperSlide className="select-none" key={`thumbnail-${index}`}>
                   <Image
+                    priority
                     sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
                     src={thumb ?? ""}
                     alt={`thumbnail-${index}`}

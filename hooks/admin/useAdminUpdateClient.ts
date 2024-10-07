@@ -6,6 +6,7 @@ import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { getFilename } from "@/utils/getFilename";
+import { useRouter } from "next/router";
 
 const initialParticipants: Participant = {
   name: "",
@@ -37,6 +38,7 @@ const initalFormData: Client = {
   participants: [initialParticipants],
   gallery: [],
   cover: null,
+  videos: [],
 };
 
 export const useAdminUpdateClient = (slug: string) => {
@@ -55,6 +57,8 @@ export const useAdminUpdateClient = (slug: string) => {
     total_rows: number;
   }>(`/api/themes`, fetcher);
 
+  const router = useRouter();
+
   const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -67,6 +71,7 @@ export const useAdminUpdateClient = (slug: string) => {
   const [galleryImagesForm, setGalleryImagesForm] = useState<FileList | null>(
     null
   );
+  const [videosForm, setVideosForm] = useState<FileList | null>(null);
   const [participantImagesForm, setParticipantImagesForm] = useState<
     (FileList | null)[] | []
   >([]);
@@ -128,6 +133,7 @@ export const useAdminUpdateClient = (slug: string) => {
           ? (themeOptions[0].value as number)
           : currentClient.theme_id,
         gallery: currentClient.gallery,
+        videos: currentClient.videos,
         cover: currentClient.cover,
         participants: currentParticipants,
       }));
@@ -140,11 +146,14 @@ export const useAdminUpdateClient = (slug: string) => {
   ) => {
     if (name === "images") {
       setGalleryImagesForm(value as FileList);
+    } else if (name === "videos") {
+      setVideosForm(value as FileList);
+    } else {
+      setFormData((state) => ({
+        ...state,
+        [name]: value,
+      }));
     }
-    setFormData((state) => ({
-      ...state,
-      [name]: value,
-    }));
   };
 
   const handletoggleEndTime = () => {
@@ -211,7 +220,12 @@ export const useAdminUpdateClient = (slug: string) => {
               continue;
             }
 
-            const filename = getFilename("gallery", formData.name, image.type);
+            const filename = getFilename(
+              "Clients",
+              formData.name,
+              "Gallery",
+              image.type
+            );
             const res = await fetch(`/api/upload-blob?filename=${filename}`, {
               method: "POST",
               body: image,
@@ -239,20 +253,79 @@ export const useAdminUpdateClient = (slug: string) => {
     return imageURLs;
   };
 
+  const handleUploadVideos = async () => {
+    const videoURLs: string[] = [];
+    if (videosForm && videosForm.length) {
+      const MAX_SIZE = 10 * 1024 * 1024;
+
+      let i = 0;
+
+      if (videosForm instanceof FileList) {
+        for (const video of Array.from(videosForm)) {
+          i++;
+          const toastUpload = toast.loading(
+            `Uploading video ${i} of ${videosForm.length}`
+          );
+          try {
+            if (video.size > MAX_SIZE) {
+              toast.error(`Video ${i} size to large`, {
+                id: toastUpload,
+              });
+              continue;
+            }
+
+            const filename = getFilename(
+              "Clients",
+              formData.name,
+              "Videos",
+              video.type
+            );
+            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+              method: "POST",
+              body: video,
+            });
+            const result = await res.json();
+            if (result.success) {
+              toast.success(
+                `Video ${i} of ${videosForm.length} uploaded successfully!`,
+                { id: toastUpload }
+              );
+              videoURLs.push(result.data.url);
+            }
+          } catch (error: any) {
+            toast.error(
+              error.message ||
+                `Error uploading video ${i} of ${videosForm.length}`,
+              {
+                id: toastUpload,
+              }
+            );
+          }
+        }
+      }
+    }
+    return videoURLs;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     const newGalleryURLs = await handleUploadGallery();
+    const newVideoUrls = await handleUploadVideos();
     const updatedParticipant = await handleUploadImageParticipant();
 
     const modifiedFormdata: Client = { ...formData };
     const currentGallery = Array.isArray(formData.gallery)
       ? formData.gallery
       : [];
+    const currentVideos = Array.isArray(formData.videos) ? formData.videos : [];
 
     modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
+    modifiedFormdata["videos"] = [...currentVideos, ...newVideoUrls];
     modifiedFormdata["participants"] = updatedParticipant as Participant[];
+    modifiedFormdata["cover"] =
+      !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : formData.cover;
 
     const updateClient = async () => {
       const response = await useClient(`/api/client?id=${client?.data[0].id}`, {
@@ -272,6 +345,7 @@ export const useAdminUpdateClient = (slug: string) => {
       success: () => {
         mutate();
         setLoading(false);
+        router.push("/admin/clients");
         return "Successfully update client";
       },
       error: (error: any) => {
@@ -385,8 +459,9 @@ export const useAdminUpdateClient = (slug: string) => {
           }
 
           const filename = getFilename(
-            "participant",
-            currentParticipants[i].name,
+            "Clients",
+            formData.name,
+            "Participants",
             image.type
           );
           const res = await fetch(`/api/upload-blob?filename=${filename}`, {
@@ -452,6 +527,45 @@ export const useAdminUpdateClient = (slug: string) => {
     });
   };
 
+    const handleDeleteVideo = (url: string, id: number) => {
+      try {
+        setLoading(true);
+
+        const payload = {
+          id,
+          url,
+        };
+
+        const deleteVideo = async () => {
+          const response = await useClient(`/api/client/delete-video`, {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
+          if (!response.ok) {
+            const errorResult = await response.json();
+            throw new Error(errorResult.message);
+          }
+          return await response.json();
+        };
+
+        toast.promise(deleteVideo(), {
+          loading: "Deleting video...",
+          success: () => {
+            mutate();
+            setLoading(false);
+            return "Successfully delete video";
+          },
+          error: (error: any) => {
+            setLoading(false);
+            return error.message || "Failed to delete video";
+          },
+        });
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
   return {
     state: {
       formData,
@@ -472,6 +586,7 @@ export const useAdminUpdateClient = (slug: string) => {
       handleDeleteImageGallery,
       handleDeleteImageParticipant,
       handleSetCover,
+      handleDeleteVideo,
     },
   };
 };

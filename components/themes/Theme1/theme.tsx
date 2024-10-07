@@ -9,8 +9,9 @@ import useTheme1 from "@/hooks/themes/useTheme1";
 import GalleryComponent from "./layouts/gallery";
 import ThankyouComponent from "./layouts/thankyou";
 import CountdownComponent from "./layouts/countdown";
-import ReviewsComponent from "./layouts/reviews";
+import RSVPWishes from "./layouts/rsvp.wishes";
 import FooterComponent from "../footer";
+import VideoComponent from "./layouts/video";
 interface Props {
   to: string;
   client: Client;
@@ -37,7 +38,8 @@ const Theme1: FC<Props> = (props) => {
             <CountdownComponent actions={actions} state={state} />
             <ThankyouComponent state={state} />
             <GalleryComponent state={state} />
-            <ReviewsComponent actions={actions} state={state} />
+            <VideoComponent state={state} />
+            <RSVPWishes actions={actions} state={state} />
             <FooterComponent />
           </div>
         )}
