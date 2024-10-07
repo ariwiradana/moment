@@ -49,13 +49,13 @@ const ClientDashboard: React.FC = () => {
                     <div className="flex justify-between items-center gap-x-2 w-full">
                       <div className="flex items-center gap-x-3">
                         {client.cover ? (
-                          <div className="w-8 h-8 rounded-full flex justify-center items-center relative">
+                          <div className="w-8 h-8 rounded-full flex justify-center items-center relative overflow-hidden">
                             <ImageShimmer
                               priority
                               alt={client.name}
                               src={client.cover}
                               fill
-                              className="object-cover rounded-full"
+                              className="object-cover rounded-full overflow-hidden"
                             />
                           </div>
                         ) : (
@@ -205,13 +205,13 @@ const ClientDashboard: React.FC = () => {
                           <div className="flex justify-between gap-x-3">
                             <div className="flex gap-x-3">
                               {client.cover ? (
-                                <div className="w-10 h-10 rounded-full flex justify-center items-center relative">
+                                <div className="w-10 h-10 rounded-full flex justify-center items-center relative overflow-hidden">
                                   <ImageShimmer
                                     priority
                                     alt={client.name}
                                     src={client.cover}
                                     fill
-                                    className="object-cover rounded-full"
+                                    className="object-cover rounded-full overflow-hidden"
                                   />
                                 </div>
                               ) : (
