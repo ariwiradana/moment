@@ -234,7 +234,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
               {state.formData.videos &&
               Array.isArray(state.formData.videos) &&
               state.formData.videos.length > 0
-                ? state.formData.videos.map((video) => (
+                ? state.formData.videos.map((video, index) => (
                     <div className="relative" key={video}>
                       <div className="absolute top-2 right-2 z-10">
                         <button
@@ -255,6 +255,11 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         width="100%"
                         controls
                         className="rounded-lg bg-gray-100 aspect-video object-cover"
+                        poster={
+                          (state.formData.gallery
+                            ? state.formData.gallery[index]
+                            : state.formData.cover) as string
+                        }
                       >
                         <source src={video} />
                       </video>

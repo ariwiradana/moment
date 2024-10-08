@@ -59,7 +59,7 @@ const GalleryComponent: FC<Props> = (props) => {
           <div data-aos="fade-up" className="mb-12">
             <Title
               className="text-theme1-primary"
-              title="Galeri Foto"
+              title="Potret Momen"
               caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname}`}
             />
           </div>

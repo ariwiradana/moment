@@ -57,15 +57,19 @@ const VideoComponent: FC<Props> = (props) => {
           <div data-aos="fade-up" className="mb-12">
             <Title
               className="text-theme1-primary"
-              title="Momen Dalam Lensa"
+              title="Rekaman Momen"
               caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname}`}
             />
           </div>
 
           <div
-            className={`grid grid-cols-1 md:grid-cols-${
-              videos.length > 2 ? "2" : "1"
-            } gap-[2px]`}
+            className={`grid gap-[2px] ${
+              videos.length > 3
+                ? "lg:grid-cols-3 md:grid-cols-2"
+                : videos.length > 2
+                ? "md:grid-cols-2"
+                : "grid-cols-1"
+            }`}
           >
             {videos.map((video, index) => (
               <video
