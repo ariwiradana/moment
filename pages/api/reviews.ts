@@ -1,11 +1,9 @@
 import handleError from "@/lib/errorHandling";
+import { withHostCheck } from "@/lib/middleware";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
@@ -122,4 +120,6 @@ export default async function handler(
       res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-}
+};
+
+export default withHostCheck(handler);

@@ -1,10 +1,8 @@
+import { withHostCheck } from "@/lib/middleware";
 import { list } from "@vercel/blob";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { pathname } = req.query;
   try {
     if (!pathname) {
@@ -13,7 +11,6 @@ export default async function handler(
         .json({ success: false, message: "Pathname required" });
     }
 
-    
     const { blobs } = await list({
       mode: "folded",
       prefix: `${pathname as string}/`,
@@ -28,4 +25,6 @@ export default async function handler(
   } catch (error) {
     return res.status(404).json(error);
   }
-}
+};
+
+export default withHostCheck(handler);

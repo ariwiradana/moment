@@ -1,4 +1,5 @@
 import handleError from "@/lib/errorHandling";
+import { withHostCheck } from "@/lib/middleware";
 import { Theme } from "@/lib/types";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
@@ -11,10 +12,7 @@ interface Query {
   order?: string;
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
@@ -154,4 +152,6 @@ export default async function handler(
       res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-}
+};
+
+export default withHostCheck(handler);

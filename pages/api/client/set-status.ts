@@ -1,11 +1,9 @@
 import handleError from "@/lib/errorHandling";
+import { withHostCheck } from "@/lib/middleware";
 import { sql } from "@vercel/postgres";
 import type { NextApiResponse, NextApiRequest } from "next";
 
-export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   const { status, id } = request.body;
 
   try {
@@ -28,4 +26,6 @@ export default async function handler(
   } catch (error) {
     handleError(response, error);
   }
-}
+};
+
+export default withHostCheck(handler);
