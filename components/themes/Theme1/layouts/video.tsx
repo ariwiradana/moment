@@ -64,11 +64,7 @@ const VideoComponent: FC<Props> = (props) => {
 
           <div
             className={`grid gap-[2px] ${
-              videos.length > 3
-                ? "lg:grid-cols-3 md:grid-cols-2"
-                : videos.length > 2
-                ? "md:grid-cols-2"
-                : "grid-cols-1"
+              videos.length >= 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
             }`}
           >
             {videos.map((video, index) => (

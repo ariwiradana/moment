@@ -149,6 +149,19 @@ const CreateClient: React.FC = () => {
             className="w-full"
             label="Videos"
           />
+          <Input
+            accept="audio/mp3"
+            type="file"
+            multiple
+            onChange={(e) =>
+              actions.handleChangeClient(
+                e.target.files?.length ? (e.target.files[0] as File) : "",
+                "music"
+              )
+            }
+            className="w-full"
+            label="Music"
+          />
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
           <div className="flex flex-col gap-y-4">
             {state.formData.participants.map((participant, index) => (

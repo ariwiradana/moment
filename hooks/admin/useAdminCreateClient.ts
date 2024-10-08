@@ -42,6 +42,7 @@ const initalFormData: Client = {
   gallery: [],
   videos: [],
   cover: null,
+  music: null,
 };
 
 export const useAdminCreateClient = () => {
@@ -188,6 +189,49 @@ export const useAdminCreateClient = () => {
     return videoURLs;
   };
 
+  const handleUploadMusic = async () => {
+    let musicURL: string = "";
+    if (formData.music) {
+      const MAX_SIZE = 5 * 1024 * 1024;
+
+      let i = 0;
+
+      if (formData.music instanceof File) {
+        const music = formData.music;
+        i++;
+        const toastUpload = toast.loading(`Uploading music`);
+        try {
+          if (music.size > MAX_SIZE) {
+            toast.error(`Music file size to large`, {
+              id: toastUpload,
+            });
+            return;
+          }
+          const filename = getFilename(
+            "Clients",
+            formData.name,
+            "Music",
+            music.type
+          );
+          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+            method: "POST",
+            body: music,
+          });
+          const result = await res.json();
+          if (result.success) {
+            toast.success(`Music uploaded successfully!`, { id: toastUpload });
+            musicURL = result.data.url;
+          }
+        } catch (error: any) {
+          toast.error(error.message || `Error uploading music`, {
+            id: toastUpload,
+          });
+        }
+      }
+    }
+    return musicURL;
+  };
+
   const handleUploadImageParticipant = async () => {
     let currentParticipants: Participant[] = formData.participants;
 
@@ -253,7 +297,7 @@ export const useAdminCreateClient = () => {
   };
 
   const handleChangeClient = (
-    value: string | number | FileList,
+    value: string | number | FileList | File,
     name: string
   ) => {
     setErrors((state) => ({
@@ -301,10 +345,12 @@ export const useAdminCreateClient = () => {
       const newGalleryURLs = await handleUploadGallery();
       const newVideoURLs = await handleUploadVideos();
       const updatedParticipant = await handleUploadImageParticipant();
+      const newMusicURL = await handleUploadMusic();
 
       const modifiedFormdata: Client = { ...formData };
       modifiedFormdata["gallery"] = newGalleryURLs;
       modifiedFormdata["videos"] = newVideoURLs;
+      modifiedFormdata["music"] = newMusicURL;
       modifiedFormdata["cover"] =
         !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : null;
       modifiedFormdata["participants"] = updatedParticipant;

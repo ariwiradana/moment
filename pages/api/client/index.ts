@@ -129,8 +129,8 @@ export default async function handler(
         }
 
         const queryClient = `
-          INSERT INTO clients (slug, name, address, address_url, address_full, date, start_time, end_time, theme_id, status, gallery, videos, cover)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+          INSERT INTO clients (slug, name, address, address_url, address_full, date, start_time, end_time, theme_id, status, gallery, videos, cover, music)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
           RETURNING *;
         `;
 
@@ -148,6 +148,7 @@ export default async function handler(
           client.gallery,
           client.videos,
           client.cover,
+          client.music,
         ]);
         const clientId = resultClient.rows[0].id;
 
@@ -217,8 +218,9 @@ export default async function handler(
             slug = $9,
             gallery = $10,
             videos = $11,
-            cover = $12
-          WHERE id = $13
+            cover = $12,
+            music = $13
+          WHERE id = $14
           RETURNING *;`;
 
         await sql.query(updateClientQuery, [
@@ -234,6 +236,7 @@ export default async function handler(
           client.gallery,
           client.videos,
           client.cover,
+          client.music,
           Number(id),
         ]);
 
@@ -336,7 +339,7 @@ export default async function handler(
             LEFT JOIN participants p
             ON c.id = p.client_id
             WHERE c.id = $1
-        `,
+          `,
           [Number(id)]
         );
 
@@ -351,6 +354,11 @@ export default async function handler(
         if (galleryURLs.length) {
           const deletePromises = galleryURLs.map((url) => del(url));
           await Promise.all(deletePromises);
+        }
+
+        const musicURL: string = currentClient[0]?.music || "";
+        if (musicURL) {
+          await del(musicURL);
         }
 
         const participantImages: string[] =

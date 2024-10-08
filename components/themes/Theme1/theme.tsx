@@ -12,13 +12,14 @@ import CountdownComponent from "./layouts/countdown";
 import RSVPWishes from "./layouts/rsvp.wishes";
 import FooterComponent from "../footer";
 import VideoComponent from "./layouts/video";
+import MusicComponent from "./layouts/music";
 interface Props {
   to: string;
   client: Client;
 }
 
 const Theme1: FC<Props> = (props) => {
-  const { state, actions } = useTheme1(props.client);
+  const { state, actions, refs } = useTheme1(props.client);
 
   return (
     <Layout
@@ -32,6 +33,7 @@ const Theme1: FC<Props> = (props) => {
         <Cover actions={actions} state={state} to={props.to} />
         {state.open && (
           <div className="relative">
+            <MusicComponent actions={actions} refs={refs} state={state} />
             <HeroComponent state={state} />
             <BridesComponent state={state} />
             <LocationTimeComponent state={state} />

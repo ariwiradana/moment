@@ -14,7 +14,7 @@ const LoadingComponent = () => {
   }, []);
 
   return (
-    <div className="h-dvh w-screen flex p-8 items-center bg-white">
+    <div className="h-dvh flex px-4 md:px-12 items-center bg-white max-w-screen-md mx-auto">
       <div>
         <h1
           className={`text-dashboard-dark text-2xl md:text-3xl flex flex-wrap gap-x-4 transition-all ease-in-out duration-500 ${dm.className}`}

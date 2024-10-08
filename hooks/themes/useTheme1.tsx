@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import moment from "moment";
 import { Client, Participant, Review } from "@/lib/types";
 import toast from "react-hot-toast";
@@ -21,9 +21,13 @@ interface FormData {
 }
 
 export interface useTheme1 {
+  refs: {
+    audioRef: React.RefObject<HTMLAudioElement> | null;
+  };
   state: {
     loading: boolean;
     open: boolean;
+    isPlaying: boolean;
     countdown: Countdown;
     bride: Participant | null;
     groom: Participant | null;
@@ -37,6 +41,7 @@ export interface useTheme1 {
     handleChange: (name: string, value: string) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleAddEvent: () => void;
+    handlePlayPause: () => void;
   };
 }
 
@@ -61,6 +66,8 @@ const useTheme1 = (client: Client | null): useTheme1 => {
   const [page] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { data, mutate } = useSWR(
     client?.id
@@ -234,7 +241,21 @@ Kami berharap kehadiran Anda untuk turut serta merayakan momen bahagia ini.`;
     window.open(url, "_blank");
   };
 
+  const handlePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return {
+    refs: {
+      audioRef,
+    },
     state: {
       loading,
       open,
@@ -245,12 +266,14 @@ Kami berharap kehadiran Anda untuk turut serta merayakan momen bahagia ini.`;
       formData,
       reviews,
       errors,
+      isPlaying,
     },
     actions: {
       handleOpenCover,
       handleChange,
       handleSubmit,
       handleAddEvent,
+      handlePlayPause,
     },
   };
 };

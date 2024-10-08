@@ -39,14 +39,18 @@ const BridesComponent: FC<Props> = (props) => {
         </div>
 
         <div className="grid grid-cols-1 w-full" data-aos="fade-up">
-          <ParticipantComponent
-            mode="odd"
-            data={props.state?.groom as Participant}
-          />
-          <ParticipantComponent
-            mode="even"
-            data={props.state?.bride as Participant}
-          />
+          {props.state.groom && (
+            <ParticipantComponent
+              mode="odd"
+              data={props.state?.groom as Participant}
+            />
+          )}
+          {props.state.bride && (
+            <ParticipantComponent
+              mode="even"
+              data={props.state?.bride as Participant}
+            />
+          )}
         </div>
       </div>
     </section>
@@ -64,15 +68,17 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         props.mode === "even" && "md:flex-row-reverse"
       }`}
     >
-      <div className="relative h-[55vh] 2xl:h-[35vh] w-full md:w-1/2 flex-grow">
-        <ImageShimmer
-          sizes="(max-width: 600px) 360px, (max-width: 1024px) 480px, (max-width: 1440px) 720px, 1080px"
-          priority
-          src={props.data.image as string}
-          alt={props.data.name}
-          fill
-          className="object-cover w-full h-full"
-        />
+      <div className="relative h-[55vh] 2xl:h-[35vh] w-full md:w-1/2 flex-grow bg-theme1-primary bg-opacity-5">
+        {props.data.image && (
+          <ImageShimmer
+            sizes="(max-width: 600px) 360px, (max-width: 1024px) 480px, (max-width: 1440px) 720px, 1080px"
+            priority
+            src={props.data.image as string}
+            alt={props.data.name}
+            fill
+            className="object-cover w-full h-full"
+          />
+        )}
       </div>
       <div
         data-aos="fade-up"

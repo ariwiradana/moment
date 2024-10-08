@@ -39,6 +39,7 @@ const initalFormData: Client = {
   gallery: [],
   cover: null,
   videos: [],
+  music: null,
 };
 
 export const useAdminUpdateClient = (slug: string) => {
@@ -72,6 +73,7 @@ export const useAdminUpdateClient = (slug: string) => {
     null
   );
   const [videosForm, setVideosForm] = useState<FileList | null>(null);
+  const [musicForm, setMusicForm] = useState<File | null>(null);
   const [participantImagesForm, setParticipantImagesForm] = useState<
     (FileList | null)[] | []
   >([]);
@@ -136,18 +138,21 @@ export const useAdminUpdateClient = (slug: string) => {
         videos: currentClient.videos,
         cover: currentClient.cover,
         participants: currentParticipants,
+        music: currentClient.music,
       }));
     }
   }, [client, themeOptions]);
 
   const handleChangeClient = (
-    value: string | number | FileList,
+    value: string | number | FileList | File,
     name: string
   ) => {
     if (name === "images") {
       setGalleryImagesForm(value as FileList);
     } else if (name === "videos") {
       setVideosForm(value as FileList);
+    } else if (name === "music") {
+      setMusicForm(value as File);
     } else {
       setFormData((state) => ({
         ...state,
@@ -307,12 +312,57 @@ export const useAdminUpdateClient = (slug: string) => {
     return videoURLs;
   };
 
+  const handleUploadMusic = async () => {
+    let musicURL: string = "";
+    if (musicForm) {
+      const MAX_SIZE = 10 * 1024 * 1024;
+      let i = 0;
+
+      if (musicForm instanceof File) {
+        i++;
+        const toastUpload = toast.loading(`Uploading music`);
+        try {
+          if (musicForm.size > MAX_SIZE) {
+            toast.error(`Music file size to large`, {
+              id: toastUpload,
+            });
+            return;
+          }
+
+          const filename = getFilename(
+            "Clients",
+            formData.name,
+            "Music",
+            musicForm.type
+          );
+          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+            method: "POST",
+            body: musicForm,
+          });
+          const result = await res.json();
+          if (result.success) {
+            toast.success(`Music uploaded successfully!`, {
+              id: toastUpload,
+            });
+            musicURL = result.data.url;
+          }
+        } catch (error: any) {
+          toast.error(error.message || `Error uploading music`, {
+            id: toastUpload,
+          });
+        }
+      }
+    }
+    return musicURL;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     const newGalleryURLs = await handleUploadGallery();
     const newVideoUrls = await handleUploadVideos();
+    const newMusicURL = await handleUploadMusic();
     const updatedParticipant = await handleUploadImageParticipant();
 
     const modifiedFormdata: Client = { ...formData };
@@ -323,9 +373,13 @@ export const useAdminUpdateClient = (slug: string) => {
 
     modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
     modifiedFormdata["videos"] = [...currentVideos, ...newVideoUrls];
+    modifiedFormdata["music"] =
+      !formData.music && newMusicURL ? newMusicURL : formData.music;
     modifiedFormdata["participants"] = updatedParticipant as Participant[];
     modifiedFormdata["cover"] =
-      !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : formData.cover;
+      !formData.cover && newGalleryURLs.length
+        ? newGalleryURLs[0]
+        : formData.cover;
 
     const updateClient = async () => {
       const response = await useClient(`/api/client?id=${client?.data[0].id}`, {
@@ -527,44 +581,83 @@ export const useAdminUpdateClient = (slug: string) => {
     });
   };
 
-    const handleDeleteVideo = (url: string, id: number) => {
-      try {
-        setLoading(true);
+  const handleDeleteVideo = (url: string, id: number) => {
+    try {
+      setLoading(true);
 
-        const payload = {
-          id,
-          url,
-        };
+      const payload = {
+        id,
+        url,
+      };
 
-        const deleteVideo = async () => {
-          const response = await useClient(`/api/client/delete-video`, {
-            method: "POST",
-            body: JSON.stringify(payload),
-          });
-          if (!response.ok) {
-            const errorResult = await response.json();
-            throw new Error(errorResult.message);
-          }
-          return await response.json();
-        };
-
-        toast.promise(deleteVideo(), {
-          loading: "Deleting video...",
-          success: () => {
-            mutate();
-            setLoading(false);
-            return "Successfully delete video";
-          },
-          error: (error: any) => {
-            setLoading(false);
-            return error.message || "Failed to delete video";
-          },
+      const deleteVideo = async () => {
+        const response = await useClient(`/api/client/delete-video`, {
+          method: "POST",
+          body: JSON.stringify(payload),
         });
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    };
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(deleteVideo(), {
+        loading: "Deleting video...",
+        success: () => {
+          mutate();
+          setLoading(false);
+          return "Successfully delete video";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to delete video";
+        },
+      });
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteMusic = (url: string, id: number) => {
+    try {
+      setLoading(true);
+
+      const payload = {
+        id,
+        url,
+      };
+
+      const deleteMusic = async () => {
+        const response = await useClient(`/api/client/delete-music`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(deleteMusic(), {
+        loading: "Deleting music...",
+        success: () => {
+          mutate();
+          setLoading(false);
+          return "Successfully delete music";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to delete music";
+        },
+      });
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     state: {
@@ -587,6 +680,7 @@ export const useAdminUpdateClient = (slug: string) => {
       handleDeleteImageParticipant,
       handleSetCover,
       handleDeleteVideo,
+      handleDeleteMusic,
     },
   };
 };

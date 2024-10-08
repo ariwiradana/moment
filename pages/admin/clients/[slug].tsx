@@ -10,6 +10,7 @@ import {
   BiImageAdd,
   BiImageAlt,
   BiLeftArrowAlt,
+  BiMusic,
   BiSolidPlusCircle,
   BiTime,
   BiX,
@@ -267,6 +268,43 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                   ))
                 : null}
             </div>
+
+            <Input
+              accept="audio/mp3"
+              type="file"
+              multiple
+              onChange={(e) =>
+                actions.handleChangeClient(
+                  e.target.files?.length ? (e.target.files[0] as File) : "",
+                  "music"
+                )
+              }
+              className="w-full"
+              label="Music"
+            />
+
+            {state.formData.music && (
+              <div className="relative flex items-center gap-x-4">
+                <audio
+                  controls
+                  className="rounded-lg bg-gray-100 aspect-video object-cover"
+                >
+                  <source src={state.formData.music as string} />
+                </audio>
+                <ButtonPrimary
+                  type="button"
+                  onClick={() =>
+                    actions.handleDeleteMusic(
+                      state.formData.music as string,
+                      state.formData.id as number
+                    )
+                  }
+                  icon={<BiMusic />}
+                  title="Remove"
+                  size="small"
+                />
+              </div>
+            )}
 
             <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
             <div className="flex flex-col gap-y-4">

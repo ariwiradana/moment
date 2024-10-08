@@ -41,6 +41,7 @@ export interface Client {
   participants: Participant[];
   gallery?: string[] | FileList | [];
   videos?: string[] | FileList | [];
+  music?: string | File | null;
   date: string;
   status?: "paid" | "unpaid";
   start_time: string;
