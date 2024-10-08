@@ -92,38 +92,33 @@ const ClientDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="py-3 flex flex-col gap-y-2">
-                    <div>
-                      <p className="text-gray-500 font-medium text-xs">
-                        Status
-                      </p>
-                      <p className="text-gray-800 font-semibold text-sm capitalize">
-                        {client.status}
-                      </p>
-                    </div>
-
                     <div className="grid grid-cols-2 gap-2">
-                      {client.events.map((event, index) => (
+                      {client.events.map((event) => (
                         <div key={`event-${event.id}`}>
                           <p className="text-gray-500 font-medium text-xs">
-                            Event {client.events.length > 1 ? index + 1 : ""}
+                            {moment(event.date).format("dddd, D MMM YYYY")}
                           </p>
                           <h1 className="text-gray-800 font-semibold text-sm capitalize">
                             {event.name}
                           </h1>
-                          <p className="text-gray-500 font-medium text-xs">
-                            {moment(event.date).format("dddd, D MMM YYYY")}
-                          </p>
-                          <p className="text-gray-500 font-medium text-xs">
-                            {event.start_time} - {event.end_time}
-                          </p>
                         </div>
                       ))}
-                    </div>
-                    <div>
-                      <p className="text-gray-500 font-medium text-xs">Theme</p>
-                      <p className="text-gray-800 font-semibold text-sm">
-                        {client.theme?.name ?? "-"}
-                      </p>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Status
+                        </p>
+                        <p className="text-gray-800 font-semibold text-sm capitalize">
+                          {client.status}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Theme
+                        </p>
+                        <p className="text-gray-800 font-semibold text-sm">
+                          {client.theme?.name ?? "-"}
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
@@ -262,9 +257,6 @@ const ClientDashboard: React.FC = () => {
                                   {moment(event.date).format(
                                     "dddd, D MMM YYYY"
                                   )}
-                                </p>
-                                <p className="text-gray-500 font-medium text-xs">
-                                  {event.start_time} - {event.end_time}
                                 </p>
                               </div>
                             ))}
