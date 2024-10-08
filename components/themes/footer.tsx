@@ -1,10 +1,9 @@
 import React, { FC } from "react";
 import Link from "next/link";
 import {
-  AiOutlineFacebook,
+  AiOutlineInstagram,
   AiOutlineMail,
   AiOutlineWhatsApp,
-  AiOutlineYoutube,
 } from "react-icons/ai";
 import { afacad } from "@/lib/fonts";
 import Image from "next/image";
@@ -27,20 +26,14 @@ const FooterComponent: FC = () => {
         <li
           className={`flex items-center justify-center gap-2 text-base mt-2 text-dashboard-dark`}
         >
-          <Link target="_blank" href="https://www.instagram.com/moment">
-            <AiOutlineFacebook />
-          </Link>
           <Link target="_blank" href="https://wa.me/+6281246768627">
             <AiOutlineWhatsApp />
           </Link>
+          <Link target="_blank" href="https://instagram.com/moment">
+            <AiOutlineInstagram />
+          </Link>
           <Link target="_blank" href="mailto:moment.invitations@gmail.com">
             <AiOutlineMail />
-          </Link>
-          <Link
-            target="_blank"
-            href="http://www.youtube.com/@moment.invitations"
-          >
-            <AiOutlineYoutube />
           </Link>
         </li>
       </ul>

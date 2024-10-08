@@ -60,7 +60,7 @@ const GalleryComponent: FC<Props> = (props) => {
             <Title
               className="text-theme1-primary"
               title="Potret Momen"
-              caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname}`}
+              caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname} Galeri`}
             />
           </div>
 
