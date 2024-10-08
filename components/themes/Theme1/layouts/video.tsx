@@ -37,10 +37,7 @@ const VideoComponent: FC<Props> = (props) => {
 
   return (
     <section className="relative bg-white">
-      <div
-        className="relative z-10 h-full w-full bg-theme1-primary bg-opacity-5 pt-16"
-        data-aos="fade-up"
-      >
+      <div className="relative z-10 h-full w-full pt-16" data-aos="fade-up">
         <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
         <div className="w-full h-full relative z-40">
           <div

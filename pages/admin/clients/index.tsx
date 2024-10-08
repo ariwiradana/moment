@@ -100,17 +100,24 @@ const ClientDashboard: React.FC = () => {
                         {client.status}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-gray-500 font-medium text-xs">Date</p>
-                      <p className="text-gray-800 font-semibold text-sm">
-                        {moment(client.date).format("D MMM YYYY")}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 font-medium text-xs">Time</p>
-                      <p className="text-gray-800 font-semibold text-sm">
-                        {client.start_time} - {client.end_time}
-                      </p>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      {client.events.map((event, index) => (
+                        <div key={`event-${event.id}`}>
+                          <p className="text-gray-500 font-medium text-xs">
+                            Event {client.events.length > 1 ? index + 1 : ""}
+                          </p>
+                          <h1 className="text-gray-800 font-semibold text-sm capitalize">
+                            {event.name}
+                          </h1>
+                          <p className="text-gray-500 font-medium text-xs">
+                            {moment(event.date).format("dddd, D MMM YYYY")}
+                          </p>
+                          <p className="text-gray-500 font-medium text-xs">
+                            {event.start_time} - {event.end_time}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                     <div>
                       <p className="text-gray-500 font-medium text-xs">Theme</p>
@@ -177,10 +184,7 @@ const ClientDashboard: React.FC = () => {
                         Client
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Date
-                      </td>
-                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Time
+                        Event(s)
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Status
@@ -250,10 +254,21 @@ const ClientDashboard: React.FC = () => {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {moment(client.date).format("dddd, D MMM YYYY")}
-                        </td>
-                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {client.start_time} - {client.end_time}
+                          <div className="grid grid-cols-2 gap-2">
+                            {client.events.map((event) => (
+                              <div key={`event-desktop-${event.id}`}>
+                                <h1>{event.name}</h1>
+                                <p className="text-gray-500 font-medium text-xs">
+                                  {moment(event.date).format(
+                                    "dddd, D MMM YYYY"
+                                  )}
+                                </p>
+                                <p className="text-gray-500 font-medium text-xs">
+                                  {event.start_time} - {event.end_time}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex items-center">

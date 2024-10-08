@@ -3,16 +3,15 @@ import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
 import BridesComponent from "./layouts/brides";
-import LocationTimeComponent from "./layouts/location.time";
 import { Client } from "@/lib/types";
 import useTheme1 from "@/hooks/themes/useTheme1";
 import GalleryComponent from "./layouts/gallery";
 import ThankyouComponent from "./layouts/thankyou";
-import CountdownComponent from "./layouts/countdown";
 import RSVPWishes from "./layouts/rsvp.wishes";
 import FooterComponent from "../footer";
 import VideoComponent from "./layouts/video";
 import MusicComponent from "./layouts/music";
+import EventsComponent from "./layouts/events";
 interface Props {
   to: string;
   client: Client;
@@ -36,12 +35,11 @@ const Theme1: FC<Props> = (props) => {
             <MusicComponent actions={actions} refs={refs} state={state} />
             <HeroComponent state={state} />
             <BridesComponent state={state} />
-            <LocationTimeComponent state={state} />
-            <CountdownComponent actions={actions} state={state} />
-            <ThankyouComponent state={state} />
+            <EventsComponent actions={actions} state={state} />
             <GalleryComponent state={state} />
             <VideoComponent state={state} />
             <RSVPWishes actions={actions} state={state} />
+            <ThankyouComponent state={state} />
             <FooterComponent />
           </div>
         )}

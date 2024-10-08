@@ -21,6 +21,8 @@ import { roleOptions } from "@/constants/roles";
 
 const CreateClient: React.FC = () => {
   const { state, actions } = useAdminCreateClient();
+
+  console.log({ state });
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -41,86 +43,6 @@ const CreateClient: React.FC = () => {
             onChange={(e) => actions.handleChangeClient(e.target.value, "name")}
             label="Client Name"
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <Input
-              value={state.formData.address}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "address")
-              }
-              className="w-full"
-              label="Address Shorten"
-            />
-            <Input
-              value={state.formData.address_url}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "address_url")
-              }
-              className="w-full"
-              label="Address URL"
-            />
-          </div>
-          <InputTextarea
-            value={state.formData.address_full}
-            onChange={(e) =>
-              actions.handleChangeClient(e.target.value, "address_full")
-            }
-            label="Address Full"
-          />
-          <Input
-            value={state.formData.date}
-            onChange={(e) => actions.handleChangeClient(e.target.value, "date")}
-            className="w-full"
-            type="date"
-            label="Date"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-            <Input
-              value={state.formData.start_time}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "start_time")
-              }
-              className="w-full"
-              type="time"
-              label="Start Time"
-            />
-            <div className="flex justify-between gap-4 items-end">
-              {state.toggleEndTime ? (
-                <Input
-                  disabled
-                  value={state.formData.end_time}
-                  onChange={(e) =>
-                    actions.handleChangeClient(e.target.value, "end_time")
-                  }
-                  className="w-full"
-                  label="End Time"
-                />
-              ) : (
-                <Input
-                  type="time"
-                  value={state.formData.end_time}
-                  onChange={(e) =>
-                    actions.handleChangeClient(e.target.value, "end_time")
-                  }
-                  className="w-full"
-                  label="End Time"
-                />
-              )}
-
-              <div className="mb-[10px]">
-                <ButtonPrimary
-                  icon={<BiTime />}
-                  size="small"
-                  title={
-                    state.toggleEndTime ? "Set End Time" : "Set Until Done"
-                  }
-                  onClick={actions.handletoggleEndTime}
-                  type="button"
-                  className="text-sm whitespace-nowrap"
-                />
-              </div>
-            </div>
-          </div>
-
           <InputSelect
             options={state.themeOptions}
             value={state.formData.theme_id ?? ""}
@@ -129,6 +51,7 @@ const CreateClient: React.FC = () => {
             }
             label="Theme"
           />
+          <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
           <Input
             accept="image/*"
             type="file"
@@ -162,6 +85,130 @@ const CreateClient: React.FC = () => {
             className="w-full"
             label="Music"
           />
+          <h1 className="text-2xl font-bold mb-4 mt-8">Event(s)</h1>
+          <div className="flex flex-col gap-y-4">
+            {state.formData.events.map((event, index) => (
+              <Accordion
+                key={`event-${index}`}
+                title={`Event ${index + 1}`}
+                content={
+                  <div className="flex flex-col gap-y-4">
+                    <Input
+                      value={state.formData.events[index].name}
+                      onChange={(e) =>
+                        actions.handleChangeEvent(e.target.value, "name", index)
+                      }
+                      className="w-full"
+                      label="Name"
+                    />
+                    <InputTextarea
+                      value={state.formData.events[index].address}
+                      onChange={(e) =>
+                        actions.handleChangeEvent(
+                          e.target.value,
+                          "address",
+                          index
+                        )
+                      }
+                      label="Address"
+                    />
+                    <Input
+                      value={state.formData.events[index].address_url}
+                      onChange={(e) =>
+                        actions.handleChangeEvent(
+                          e.target.value,
+                          "address_url",
+                          index
+                        )
+                      }
+                      className="w-full"
+                      label="Address URL"
+                    />
+                    <Input
+                      value={state.formData.events[index].date}
+                      onChange={(e) =>
+                        actions.handleChangeEvent(e.target.value, "date", index)
+                      }
+                      className="w-full"
+                      type="date"
+                      label="Date"
+                    />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                      <Input
+                        value={state.formData.events[index].start_time}
+                        onChange={(e) =>
+                          actions.handleChangeEvent(
+                            e.target.value,
+                            "start_time",
+                            index
+                          )
+                        }
+                        className="w-full"
+                        type="time"
+                        label="Start Time"
+                      />
+                      <div className="flex justify-between gap-4 items-end">
+                        {state.toggleEndTimes[index] ? (
+                          <Input
+                            disabled
+                            value={state.formData.events[index].end_time}
+                            onChange={(e) =>
+                              actions.handleChangeEvent(
+                                e.target.value,
+                                "end_time",
+                                index
+                              )
+                            }
+                            className="w-full"
+                            label="End Time"
+                          />
+                        ) : (
+                          <Input
+                            type="time"
+                            value={state.formData.events[index].end_time}
+                            onChange={(e) =>
+                              actions.handleChangeEvent(
+                                e.target.value,
+                                "end_time",
+                                index
+                              )
+                            }
+                            className="w-full"
+                            label="End Time"
+                          />
+                        )}
+
+                        <div className="mb-[10px]">
+                          <ButtonPrimary
+                            icon={<BiTime />}
+                            size="small"
+                            title={
+                              state.toggleEndTimes[index]
+                                ? "Set End Time"
+                                : "Set Until Done"
+                            }
+                            onClick={() => actions.handletoggleEndTime(index)}
+                            type="button"
+                            className="text-sm whitespace-nowrap"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              />
+            ))}
+            <div className="">
+              <ButtonSecondary
+                onClick={actions.handleAddAnotherEvent}
+                type="button"
+                title="Add Another"
+                size="small"
+                icon={<BiSolidPlusCircle />}
+              />
+            </div>
+          </div>
+
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
           <div className="flex flex-col gap-y-4">
             {state.formData.participants.map((participant, index) => (

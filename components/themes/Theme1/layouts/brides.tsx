@@ -18,7 +18,7 @@ interface Props {
 
 const BridesComponent: FC<Props> = (props) => {
   return (
-    <section className="relative bg-white z-10 py-16">
+    <section className="relative bg-white z-10 pt-16 pb-4 md:py-16">
       <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-md mx-auto">
         <div>
           <div data-aos="fade-up">

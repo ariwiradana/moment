@@ -31,21 +31,29 @@ export interface Participant {
   tiktok?: string | null;
 }
 
+export interface Event {
+  id?: number;
+  client_id?: number | null;
+  name: string;
+  address: string;
+  address_url: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  created_at?: Date | string;
+  updated_at?: Date | string;
+}
+
 export interface Client {
   id?: number;
   name: string;
   slug?: string;
-  address: string;
-  address_url: string;
-  address_full: string;
+  events: Event[];
   participants: Participant[];
   gallery?: string[] | FileList | [];
   videos?: string[] | FileList | [];
   music?: string | File | null;
-  date: string;
   status?: "paid" | "unpaid";
-  start_time: string;
-  end_time: string;
   theme_id: number | null;
   theme?: Theme | null;
   cover: null | string;

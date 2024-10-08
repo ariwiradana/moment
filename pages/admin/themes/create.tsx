@@ -10,7 +10,7 @@ import { useAdminCreateTheme } from "@/hooks/admin/useAdminCreateTheme";
 const CreateTheme: React.FC = () => {
   const { state, actions } = useAdminCreateTheme();
   return (
-    <AdminLayout>
+  <AdminLayout>
       <div className={`${montserrat.className}`}>
         <Link href="/admin/themes">
           <div className="flex items-center gap-x-1 text-gray-400">

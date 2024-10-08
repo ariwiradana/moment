@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useClient } from "@/lib/client";
-import { Client, Option, Participant, Theme } from "@/lib/types";
+import { Client, Event, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -25,16 +25,20 @@ const initialParticipants: Participant = {
   tiktok: null,
 };
 
-const initalFormData: Client = {
-  id: undefined,
+const initialEvent: Event = {
   name: "",
   address: "",
-  address_full: "",
   address_url: "",
   date: moment().format("YYYY-MM-DD"),
   start_time: moment("06:00", "HH:mm").format("HH:mm"),
-  end_time: "Selesai",
+  end_time: moment("06:00", "HH:mm").format("HH:mm"),
+};
+
+const initalFormData: Client = {
+  id: undefined,
+  name: "",
   theme_id: null,
+  events: [initialEvent],
   participants: [initialParticipants],
   gallery: [],
   cover: null,
@@ -61,7 +65,7 @@ export const useAdminUpdateClient = (slug: string) => {
   const router = useRouter();
 
   const [formData, setFormData] = useState<Client>(initalFormData);
-  const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
+  const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
     {
@@ -111,26 +115,30 @@ export const useAdminUpdateClient = (slug: string) => {
         })
       );
 
+      const currentEvents: Event[] = currentClient.events.map((e) => ({
+        id: e.id,
+        client_id: currentClient.id,
+        name: e.name,
+        address: e.address,
+        address_url: e.address_url,
+        date: e.date,
+        start_time: e.start_time,
+        end_time: e.end_time,
+      }));
+
       setParticipantImagesForm(
         new Array(currentParticipants.length).fill(null)
       );
 
-      if (currentClient.end_time === "Selesai") {
-        setToggleEndTime(true);
-      } else {
-        setToggleEndTime(false);
-      }
+      const currentToggleEndtimes: boolean[] = currentClient.events.map((e) =>
+        e.end_time === "Selesai" ? true : false
+      );
+      setToggleEndTimes(currentToggleEndtimes);
 
       setFormData((state) => ({
         ...state,
         id: currentClient.id,
         name: currentClient.name,
-        address: currentClient.address,
-        address_url: currentClient.address_url,
-        address_full: currentClient.address_full,
-        date: currentClient.date,
-        start_time: currentClient.start_time,
-        end_time: currentClient.end_time,
         theme_id: !currentClient.theme_id
           ? (themeOptions[0].value as number)
           : currentClient.theme_id,
@@ -138,16 +146,20 @@ export const useAdminUpdateClient = (slug: string) => {
         videos: currentClient.videos,
         cover: currentClient.cover,
         participants: currentParticipants,
+        events: currentEvents,
         music: currentClient.music,
       }));
     }
   }, [client, themeOptions]);
+
+  console.log({ galleryImagesForm });
 
   const handleChangeClient = (
     value: string | number | FileList | File,
     name: string
   ) => {
     if (name === "images") {
+      console.log(value);
       setGalleryImagesForm(value as FileList);
     } else if (name === "videos") {
       setVideosForm(value as FileList);
@@ -161,14 +173,20 @@ export const useAdminUpdateClient = (slug: string) => {
     }
   };
 
-  const handletoggleEndTime = () => {
-    setToggleEndTime(!toggleEndTime);
-    setFormData((state) => ({
-      ...state,
-      end_time: toggleEndTime
+  const handletoggleEndTime = (index: number) => {
+    let currentEvents: Event[] = [...formData.events];
+    let currentToggleEndTimes: boolean[] = [...toggleEndTimes];
+
+    currentEvents[index] = {
+      ...currentEvents[index],
+      end_time: toggleEndTimes[index]
         ? moment("06:00", "HH:mm").format("HH:mm")
         : "Selesai",
-    }));
+    };
+
+    currentToggleEndTimes[index] = !toggleEndTimes[index];
+    setFormData((state) => ({ ...state, events: currentEvents }));
+    setToggleEndTimes(currentToggleEndTimes);
   };
 
   const handleAddAnotherParticipant = () => {
@@ -177,6 +195,13 @@ export const useAdminUpdateClient = (slug: string) => {
       participants: [...formData.participants, initialParticipants],
     }));
     setParticipantImagesForm((state) => [...state, null]);
+  };
+
+  const handleAddAnotherEvent = () => {
+    setFormData((state) => ({
+      ...state,
+      events: [...formData.events, initialEvent],
+    }));
   };
 
   const handleChangeParticipant = (
@@ -202,6 +227,24 @@ export const useAdminUpdateClient = (slug: string) => {
         participants: currentParticipants,
       });
     }
+  };
+
+  const handleChangeEvent = (
+    value: string | number | FileList,
+    name: string,
+    index: number
+  ) => {
+    let currentEvents: Event[] = [...formData.events];
+
+    currentEvents[index] = {
+      ...currentEvents[index],
+      [name]: value,
+    };
+
+    setFormData({
+      ...formData,
+      events: currentEvents,
+    });
   };
 
   const handleUploadGallery = async () => {
@@ -663,7 +706,7 @@ export const useAdminUpdateClient = (slug: string) => {
     state: {
       formData,
       themeOptions,
-      toggleEndTime,
+      toggleEndTimes,
       galleryImagesForm,
       loading,
       isLoading,
@@ -681,6 +724,8 @@ export const useAdminUpdateClient = (slug: string) => {
       handleSetCover,
       handleDeleteVideo,
       handleDeleteMusic,
+      handleAddAnotherEvent,
+      handleChangeEvent,
     },
   };
 };

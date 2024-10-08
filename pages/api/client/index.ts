@@ -1,5 +1,5 @@
 import handleError from "@/lib/errorHandling";
-import { Client, Participant, Review, Theme } from "@/lib/types";
+import { Client, Event, Participant, Review, Theme } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
@@ -54,7 +54,18 @@ export default async function handler(
             FROM participants p
             JOIN clients c ON p.client_id = c.id
             WHERE c.id = ANY($1::int[])
-            ORDER BY created_at ASC
+            ORDER BY c.created_at ASC
+        `,
+          [clientIds]
+        );
+
+        const { rows: events } = await sql.query(
+          `
+            SELECT e.*
+            FROM events e
+            JOIN clients c ON e.client_id = c.id
+            WHERE c.id = ANY($1::int[])
+            ORDER BY e.start_time::time ASC
         `,
           [clientIds]
         );
@@ -66,6 +77,7 @@ export default async function handler(
           const clientParticipants = participants.filter(
             (p) => p.client_id === client.id
           );
+          const clientEvents = events.filter((e) => e.client_id === client.id);
           const clientTheme: Theme[] = themes.find(
             (t) => t.id === client.theme_id
           );
@@ -75,6 +87,7 @@ export default async function handler(
           return {
             ...client,
             participants: clientParticipants,
+            events: clientEvents,
             theme: clientTheme,
             reviews: clientReviews,
           };
@@ -129,20 +142,14 @@ export default async function handler(
         }
 
         const queryClient = `
-          INSERT INTO clients (slug, name, address, address_url, address_full, date, start_time, end_time, theme_id, status, gallery, videos, cover, music)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+          INSERT INTO clients (slug, name, theme_id, status, gallery, videos, cover, music)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
           RETURNING *;
         `;
 
         const resultClient = await sql.query(queryClient, [
           slug,
           client.name,
-          client.address,
-          client.address_url,
-          client.address_full,
-          client.date,
-          client.start_time,
-          client.end_time,
           client.theme_id,
           client.status,
           client.gallery,
@@ -154,42 +161,70 @@ export default async function handler(
 
         if (!clientId) {
           return handleError(res, new Error("Client failed to add."));
+        } else {
+          const participants: Participant[] = client.participants;
+          const participantPromises = participants.map(
+            async (p: Participant) => {
+              const addParticipantQuery = `
+                INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image, facebook, twitter, instagram, tiktok)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+                RETURNING *;
+              `;
+
+              await sql.query(addParticipantQuery, [
+                clientId,
+                p.name,
+                p.nickname,
+                p.address,
+                p.child,
+                p.parents_male,
+                p.parents_female,
+                p.gender,
+                p.role,
+                p.image,
+                p.facebook,
+                p.twitter,
+                p.instagram,
+                p.tiktok,
+              ]);
+            }
+          );
+          await Promise.all(participantPromises);
+
+          const events: Event[] = client.events;
+          const eventPromises = events.map(async (e: Event) => {
+            const addEventQuery = `
+                INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                RETURNING *;
+              `;
+
+            await sql.query(addEventQuery, [
+              clientId,
+              e.name,
+              e.date,
+              e.start_time,
+              e.end_time,
+              e.address,
+              e.address_url,
+            ]);
+          });
+          await Promise.all(eventPromises);
+
+          const newClient = resultClient.rows[0];
+
+          newClient["participants"] = participants.map((participant) => ({
+            ...participant,
+            client_id: clientId,
+          }));
+
+          newClient["events"] = events.map((event) => ({
+            ...event,
+            client_id: clientId,
+          }));
+
+          return res.status(200).json({ success: true, data: newClient });
         }
-
-        const participants: Participant[] = client.participants;
-        const participantPromises = participants.map(async (p: Participant) => {
-          const addParticipantQuery = `
-              INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image, facebook, twitter, instagram, tiktok)
-              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-              RETURNING *;
-            `;
-
-          await sql.query(addParticipantQuery, [
-            clientId,
-            p.name,
-            p.nickname,
-            p.address,
-            p.child,
-            p.parents_male,
-            p.parents_female,
-            p.gender,
-            p.role,
-            p.image,
-            p.facebook,
-            p.twitter,
-            p.instagram,
-            p.tiktok,
-          ]);
-        });
-        await Promise.all(participantPromises);
-
-        const newClient = resultClient.rows[0];
-        newClient["participants"] = participants.map((participant) => ({
-          ...participant,
-          client_id: clientId,
-        }));
-
-        return res.status(200).json({ success: true, data: newClient });
       } catch (error) {
         handleError(res, error);
       }
@@ -208,29 +243,17 @@ export default async function handler(
           UPDATE clients
           SET
             name = $1, 
-            address = $2, 
-            address_url = $3,
-            address_full = $4, 
-            date = $5, 
-            start_time = $6, 
-            end_time = $7, 
-            theme_id = $8,
-            slug = $9,
-            gallery = $10,
-            videos = $11,
-            cover = $12,
-            music = $13
-          WHERE id = $14
+            theme_id = $2,
+            slug = $3,
+            gallery = $4,
+            videos = $5,
+            cover = $6,
+            music = $7
+          WHERE id = $8
           RETURNING *;`;
 
         await sql.query(updateClientQuery, [
           client.name,
-          client.address,
-          client.address_url,
-          client.address_full,
-          client.date,
-          client.start_time,
-          client.end_time,
           client.theme_id,
           slug,
           client.gallery,
@@ -269,6 +292,28 @@ export default async function handler(
             }
           );
           await Promise.all(newPrticipantPromises);
+        }
+
+        const newEvents = client.events.filter((e) => !e.id);
+        if (newEvents.length > 0) {
+          const newEventPromises = newEvents.map(async (e: Event) => {
+            const updateNewEventQuery = `
+              INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url)
+              VALUES ($1, $2, $3, $4, $5, $6, $7)
+              RETURNING *;
+            `;
+
+            await sql.query(updateNewEventQuery, [
+              e.client_id,
+              e.name,
+              e.date,
+              e.start_time,
+              e.end_time,
+              e.address,
+              e.address_url,
+            ]);
+          });
+          await Promise.all(newEventPromises);
         }
 
         const currentParticipants = client.participants.filter((p) => p.id);
@@ -316,6 +361,37 @@ export default async function handler(
             }
           );
           await Promise.all(participantPromises);
+        }
+
+        const currentEvents = client.events.filter((e) => e.id);
+        if (currentEvents.length > 0) {
+          const eventPromises = currentEvents.map(async (e: Event) => {
+            const updateEventQuery = `
+              UPDATE events
+              SET
+                client_id = $1,
+                name = $2, 
+                date = $3,
+                start_time = $4, 
+                end_time = $5, 
+                address = $6, 
+                address_url = $7
+              WHERE id = $8
+              RETURNING *;
+            `;
+
+            await sql.query(updateEventQuery, [
+              e.client_id,
+              e.name,
+              e.date,
+              e.start_time,
+              e.end_time,
+              e.address,
+              e.address_url,
+              e.id,
+            ]);
+          });
+          await Promise.all(eventPromises);
         }
 
         return res.status(200).json({
@@ -370,15 +446,20 @@ export default async function handler(
           await Promise.all(deleteParticipantImagesPromises);
         }
 
-        await sql.query({
-          text: `DELETE FROM clients WHERE id = $1`,
-          values: [id],
-        });
-
-        await sql.query({
-          text: `DELETE FROM participants WHERE client_id = $1`,
-          values: [id],
-        });
+        await Promise.all([
+          sql.query({
+            text: `DELETE FROM clients WHERE id = $1`,
+            values: [id],
+          }),
+          sql.query({
+            text: `DELETE FROM participants WHERE client_id = $1`,
+            values: [id],
+          }),
+          sql.query({
+            text: `DELETE FROM events WHERE client_id = $1`,
+            values: [id],
+          }),
+        ]);
 
         return res.status(200).json({
           success: true,

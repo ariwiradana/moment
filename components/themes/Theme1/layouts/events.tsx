@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { afacad } from "@/lib/fonts";
+import { afacad, marcellus } from "@/lib/fonts";
 import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
 import Button from "../elements/button";
-import { BiSolidCalendarCheck } from "react-icons/bi";
+import { BiCalendarAlt, BiSolidCalendarCheck, BiTime } from "react-icons/bi";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
 import ImageShimmer from "@/components/image.shimmer";
 
@@ -13,7 +13,7 @@ interface Props {
   actions: useTheme1["actions"];
 }
 
-const CountdownComponent: FC<Props> = ({ state, actions }) => {
+const EventsComponent: FC<Props> = ({ state, actions }) => {
   const [randomGalleryImage, setRandomGalleryImage] = useState("");
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const CountdownComponent: FC<Props> = ({ state, actions }) => {
   }, [state.client?.gallery]);
 
   return (
-    <section className="relative h-screen overflow-hidden z-0">
+    <section className="relative overflow-hidden z-0">
       <div className="fixed inset-0 z-0">
         <div className="relative h-full w-full">
           {randomGalleryImage && (
@@ -44,8 +44,8 @@ const CountdownComponent: FC<Props> = ({ state, actions }) => {
           )}
         </div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0000008f] via-[#0000005a] to-white"></div>
-      <div className="flex flex-col z-10 items-center justify-center h-screen">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0000008f] from-[70%] to-white"></div>
+      <div className="flex flex-col z-10 items-center justify-center min-h-screen py-16">
         <div className="w-full mb-8">
           <div data-aos="zoom-in-up" className="relative h-12 lg:h-16 w-full">
             <Image
@@ -59,32 +59,57 @@ const CountdownComponent: FC<Props> = ({ state, actions }) => {
         <div data-aos="fade-up" className="text-center">
           <Title
             white
-            title="Hitung Mundur"
-            caption={moment(state.client?.date).format("DD MMMM YYYY")}
+            title="Tempat & Waktu"
+            caption={
+              state.client?.events && state.client?.events.length > 2
+                ? state.client.events
+                    .slice(0, 2)
+                    .map((e) => e.name)
+                    .join(", ") + ` & ${state.client.events[2].name}`
+                : state.client?.events.map((e) => e.name).join(" & ")
+            }
           />
         </div>
-        <div className="mt-16">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-            {[
-              { label: "Hari", value: state.countdown.days },
-              { label: "Jam", value: state.countdown.hours },
-              { label: "Menit", value: state.countdown.minutes },
-              { label: "Detik", value: state.countdown.seconds },
-            ].map(({ label, value }) => (
+        <div className="mt-16 p-4">
+          <div className="grid gap-16 w-full">
+            {state.client?.events.map((event) => (
               <div
-                key={label}
+                key={event.id}
                 data-aos="fade-up"
-                className={`text-white ${afacad.className} border border-white p-2 aspect-square h-24 w-24 lg:h-32 lg:w-32 flex flex-col justify-center items-center`}
+                className="border border-white p-8 lg:p-16 text-white"
               >
-                <h1 className="text-white text-6xl">{value}</h1>
-                <p className={`text-base mt-1 ${afacad.className}`}>{label}</p>
+                <h1 className={`${marcellus.className} text-2xl text-center`}>
+                  {event.name}
+                </h1>
+
+                <div
+                  className={`border-y border-y-white py-4 lg:px-12 mt-8 ${afacad.className} text-center text-lg flex flex-col gap-y-2`}
+                >
+                  <div className="flex items-center gap-x-2">
+                    <BiCalendarAlt />
+                    <p>{moment(event.date).format("dddd, DD MMMM YYYY")}</p>
+                  </div>
+                  <div className="flex items-center gap-x-2">
+                    <BiTime />
+                    <p>
+                      {event.start_time} - {event.end_time}
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className={`mt-6 flex flex-col justify-center items-center text-lg ${afacad.className}`}
+                >
+                  <p>Bertempat di</p>
+                  <p>{event.address}</p>
+                </div>
               </div>
             ))}
           </div>
           <div className="flex justify-center mt-16" data-aos="fade-up">
             <Button
               type="button"
-              onClick={actions.handleAddEvent}
+              onClick={actions.handleAddEvents}
               title="Save The Date"
               icon={<BiSolidCalendarCheck />}
             />
@@ -95,4 +120,4 @@ const CountdownComponent: FC<Props> = ({ state, actions }) => {
   );
 };
 
-export default CountdownComponent;
+export default EventsComponent;

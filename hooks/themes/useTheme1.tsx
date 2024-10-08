@@ -40,7 +40,7 @@ export interface useTheme1 {
     handleOpenCover: () => void;
     handleChange: (name: string, value: string) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    handleAddEvent: () => void;
+    handleAddEvents: () => void;
     handlePlayPause: () => void;
   };
 }
@@ -150,29 +150,43 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     if (!client) return () => {};
 
     return () => {
-      const now = moment();
-      const eventTime = moment(client.date);
-      const duration = moment.duration(eventTime.diff(now));
+      if (client) {
+        const events = client?.events || [];
+        const allSameDate =
+          events.length > 0
+            ? events.every(
+                (event) =>
+                  new Date(event.date).toDateString() ===
+                  new Date(events[0].date).toDateString()
+              )
+            : false;
 
-      const newCountdown = {
-        days: Math.floor(duration.asDays()),
-        hours: duration.hours(),
-        minutes: duration.minutes(),
-        seconds: duration.seconds(),
-      };
+        if (allSameDate) {
+          const now = moment();
+          const eventTime = moment(events[0].date);
+          const duration = moment.duration(eventTime.diff(now));
 
-      // Only update the countdown state if values have changed
-      setCountdown((prevCountdown) => {
-        if (
-          prevCountdown.days !== newCountdown.days ||
-          prevCountdown.hours !== newCountdown.hours ||
-          prevCountdown.minutes !== newCountdown.minutes ||
-          prevCountdown.seconds !== newCountdown.seconds
-        ) {
-          return newCountdown;
+          const newCountdown = {
+            days: Math.floor(duration.asDays()),
+            hours: duration.hours(),
+            minutes: duration.minutes(),
+            seconds: duration.seconds(),
+          };
+
+          // Only update the countdown state if values have changed
+          setCountdown((prevCountdown) => {
+            if (
+              prevCountdown.days !== newCountdown.days ||
+              prevCountdown.hours !== newCountdown.hours ||
+              prevCountdown.minutes !== newCountdown.minutes ||
+              prevCountdown.seconds !== newCountdown.seconds
+            ) {
+              return newCountdown;
+            }
+            return prevCountdown;
+          });
         }
-        return prevCountdown;
-      });
+      }
     };
   }, [client]);
 
@@ -202,35 +216,58 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
-  const handleAddEvent = () => {
+  const handleAddEvents = () => {
+    const events = client?.events || [];
+
     const title = `Undangan Pernikahan ${groom?.nickname} & ${bride?.nickname}`;
-    const details = `Dengan hormat, kami mengundang Anda untuk hadir dan memberikan doa restu pada acara pernikahan kami yang akan dilaksanakan pada:
 
-Hari/Tanggal: ${moment(client?.date).format("dddd, D MMMM YYYY")}
-Waktu: ${client?.start_time} - ${client?.end_time}
-Tempat: ${client?.address_full}
+    let details =
+      "Dengan hormat,\n\nKami dengan segala kerendahan hati mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami yang akan dilaksanakan pada:\n\n";
 
-Kami berharap kehadiran Anda untuk turut serta merayakan momen bahagia ini.`;
-    const location = client?.address_full as string;
+    let startDate: string | undefined;
+    let endDate: string | undefined;
 
-    const startDate = moment(
-      `${client?.date} ${client?.start_time}`,
-      "YYYY-MM-DD HH:mm"
-    ).format("YYYYMMDDTHHmmss");
-    let endDate;
-    if (
-      client?.end_time === "24:00" ||
-      client?.end_time?.toLowerCase() === "selesai"
-    ) {
-      endDate = moment(`${client?.date} 23:59`, "YYYY-MM-DD HH:mm")
-        .add(1, "minute")
-        .format("YYYYMMDDTHHmmss");
-    } else {
-      endDate = moment(
-        `${client?.date} ${client?.end_time}`,
+    const uniqueLocations = new Set<string>();
+
+    events.forEach((event) => {
+      details += `Acara: ${event.name}\n`;
+      details += `Hari/Tanggal: ${moment(event.date).format(
+        "dddd, D MMMM YYYY"
+      )}\n`;
+      details += `Waktu: ${event.start_time} - ${event.end_time}\n`;
+      details += `Tempat: ${event.address}\n\n`;
+
+      uniqueLocations.add(event.address);
+
+      const eventStartDate = moment(
+        `${event.date} ${event.start_time}`,
         "YYYY-MM-DD HH:mm"
       ).format("YYYYMMDDTHHmmss");
-    }
+
+      let eventEndDate: string;
+      if (
+        event.end_time === "24:00" ||
+        event.end_time?.toLowerCase() === "selesai"
+      ) {
+        eventEndDate = moment(`${event.date} 23:59`, "YYYY-MM-DD HH:mm")
+          .add(1, "minute")
+          .format("YYYYMMDDTHHmmss");
+      } else {
+        eventEndDate = moment(
+          `${event.date} ${event.end_time}`,
+          "YYYY-MM-DD HH:mm"
+        ).format("YYYYMMDDTHHmmss");
+      }
+
+      if (!startDate || !endDate) {
+        startDate = eventStartDate;
+        endDate = eventEndDate;
+      }
+    });
+
+    details += `Kehadiran Bapak/Ibu/Saudara/i akan menjadi kehormatan bagi kami dan sangat berarti dalam merayakan momen bahagia ini.\n\nAtas perhatian dan kehadirannya, kami ucapkan terima kasih.`;
+
+    const location = Array.from(uniqueLocations).join(", ");
 
     const url = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(
       title
@@ -272,7 +309,7 @@ Kami berharap kehadiran Anda untuk turut serta merayakan momen bahagia ini.`;
       handleOpenCover,
       handleChange,
       handleSubmit,
-      handleAddEvent,
+      handleAddEvents,
       handlePlayPause,
     },
   };

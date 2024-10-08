@@ -24,7 +24,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   };
   return (
     <section className="relative bg-white">
-      <div className="relative px-6 pb-12 w-full flex flex-col justify-center items-center max-w-screen-lg mx-auto">
+      <div className="relative px-6 md:pb-8 w-full flex flex-col justify-center items-center max-w-screen-lg mx-auto">
         <div
           data-aos="zoom-in-up"
           className="relative h-12 lg:h-16 w-full mb-8 mt-16"

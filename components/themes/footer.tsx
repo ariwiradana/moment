@@ -11,9 +11,9 @@ import Image from "next/image";
 const FooterComponent: FC = () => {
   return (
     <nav className={`p-6 ${afacad.className} bg-white relative z-20`}>
-      <ul className="flex flex-col gap-2 items-center bg-white">
+      <ul className="flex justify-center gap-2 items-center bg-white">
         <li className="font-semibold text-dashboard-dark text-base flex items-center gap-x-1">
-          <div className="relative w-12 md:w-16 aspect-video">
+          <div className="relative w-10 md:w-12 aspect-video">
             <Image
               alt="logo"
               fill

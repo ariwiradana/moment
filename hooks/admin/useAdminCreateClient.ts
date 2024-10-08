@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useClient } from "@/lib/client";
-import { Client, Option, Participant, Theme } from "@/lib/types";
+import { Client, Event, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -12,7 +12,7 @@ import * as z from "zod";
 type ErrorState = Record<string, string>;
 const initialErrorState: ErrorState = {};
 
-const initialParticipants: Participant = {
+const initialParticipant: Participant = {
   name: "",
   nickname: "",
   address: "",
@@ -28,17 +28,21 @@ const initialParticipants: Participant = {
   tiktok: null,
 };
 
-const initalFormData: Client = {
+const initialEvent: Event = {
   name: "",
   address: "",
-  address_full: "",
   address_url: "",
   date: moment().format("YYYY-MM-DD"),
   start_time: moment("06:00", "HH:mm").format("HH:mm"),
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
+};
+
+const initalFormData: Client = {
+  name: "",
   theme_id: null,
   status: "unpaid",
-  participants: [initialParticipants],
+  participants: [initialParticipant],
+  events: [initialEvent],
   gallery: [],
   videos: [],
   cover: null,
@@ -48,7 +52,7 @@ const initalFormData: Client = {
 export const useAdminCreateClient = () => {
   const [errors, setErrors] = useState<ErrorState>(initialErrorState);
   const [formData, setFormData] = useState<Client>(initalFormData);
-  const [toggleEndTime, setToggleEndTime] = useState<boolean>(false);
+  const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
     {
@@ -286,14 +290,20 @@ export const useAdminCreateClient = () => {
     return currentParticipants;
   };
 
-  const handletoggleEndTime = () => {
-    setToggleEndTime(!toggleEndTime);
-    setFormData((state) => ({
-      ...state,
-      end_time: toggleEndTime
+  const handletoggleEndTime = (index: number) => {
+    let currentEvents: Event[] = [...formData.events];
+    let currentToggleEndTimes: boolean[] = [...toggleEndTimes];
+
+    currentEvents[index] = {
+      ...currentEvents[index],
+      end_time: toggleEndTimes[index]
         ? moment("06:00", "HH:mm").format("HH:mm")
         : "Selesai",
-    }));
+    };
+
+    currentToggleEndTimes[index] = !toggleEndTimes[index];
+    setFormData((state) => ({ ...state, events: currentEvents }));
+    setToggleEndTimes(currentToggleEndTimes);
   };
 
   const handleChangeClient = (
@@ -314,7 +324,14 @@ export const useAdminCreateClient = () => {
   const handleAddAnotherParticipant = () => {
     setFormData((state) => ({
       ...state,
-      participants: [...formData.participants, initialParticipants],
+      participants: [...formData.participants, initialParticipant],
+    }));
+  };
+
+  const handleAddAnotherEvent = () => {
+    setFormData((state) => ({
+      ...state,
+      events: [...formData.events, initialEvent],
     }));
   };
 
@@ -336,6 +353,24 @@ export const useAdminCreateClient = () => {
     });
   };
 
+  const handleChangeEvent = (
+    value: string | number | FileList,
+    name: string,
+    index: number
+  ) => {
+    let currentEvents: Event[] = [...formData.events];
+
+    currentEvents[index] = {
+      ...currentEvents[index],
+      [name]: value,
+    };
+
+    setFormData({
+      ...formData,
+      events: currentEvents,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -348,6 +383,7 @@ export const useAdminCreateClient = () => {
       const newMusicURL = await handleUploadMusic();
 
       const modifiedFormdata: Client = { ...formData };
+
       modifiedFormdata["gallery"] = newGalleryURLs;
       modifiedFormdata["videos"] = newVideoURLs;
       modifiedFormdata["music"] = newMusicURL;
@@ -399,7 +435,7 @@ export const useAdminCreateClient = () => {
     state: {
       formData,
       themeOptions,
-      toggleEndTime,
+      toggleEndTimes,
       loading,
       errors,
     },
@@ -409,6 +445,8 @@ export const useAdminCreateClient = () => {
       handleAddAnotherParticipant,
       handleChangeParticipant,
       handletoggleEndTime,
+      handleAddAnotherEvent,
+      handleChangeEvent,
     },
   };
 };

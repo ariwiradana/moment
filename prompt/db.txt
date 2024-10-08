@@ -7,18 +7,25 @@ CREATE TABLE themes (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  client_id INT REFERENCES clients(id) ON DELETE SET NULL,
+  name VARCHAR(255),
+  date VARCHAR(100),
+  start_time VARCHAR(100),
+  end_time VARCHAR(100),
+  address TEXT,
+  address_url VARCHAR(255),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+)
+
 CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   slug VARCHAR(255) UNIQUE,
-  address VARCHAR(255),
-  address_url VARCHAR(255),
   cover VARCHAR(255),
-  address_full TEXT,
   theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
-  date VARCHAR(100),
-  start_time VARCHAR(100),
-  end_time VARCHAR(100),
   gallery TEXT[],
   videos TEXT[],
   music VARCHAR(255),
@@ -44,7 +51,7 @@ CREATE TABLE participants (
   facebook VARCHAR(255) DEFAULT NULL,
   twitter VARCHAR(255) DEFAULT NULL,
   instagram VARCHAR(255) DEFAULT NULL,
-  tiktok VARCHAR(255) DEFAULT NULL,
+  tiktok VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE reviews (

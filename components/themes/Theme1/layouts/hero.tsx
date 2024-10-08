@@ -11,6 +11,17 @@ interface Props {
 }
 
 const HeroComponent: FC<Props> = (props) => {
+  const events = props.state.client?.events || [];
+
+  const allSameDate =
+    events.length > 0
+      ? events.every(
+          (event) =>
+            new Date(event.date).toDateString() ===
+            new Date(events[0].date).toDateString()
+        )
+      : false;
+
   return (
     <section>
       <div className="relative w-full h-[107dvh] lg:h-[112dvh] overflow-hidden z-20">
@@ -69,59 +80,78 @@ const HeroComponent: FC<Props> = (props) => {
           </h1>
           <div data-aos="fade-up" data-aos-delay="600">
             <div
-              className={`text-white mt-2 lg:mt-4 text-base flex items-center gap-x-3 ${afacad.className}`}
+              className={`text-white mt-2 lg:mt-4 text-base flex items-center whitespace-nowrap gap-x-3 ${afacad.className}`}
             >
-              {props.state.client?.address}{" "}
-              <span>
-                <div className="h-1 w-1 rounded-full bg-white"></div>
-              </span>{" "}
-              {moment(props.state.client?.date).format("dddd, DD MMM YYYY")}
+              {events.map((event, index) => (
+                <>
+                  <span>{event.name}</span>
+                  {!allSameDate && events.length - 1 !== index ? (
+                    <span>
+                      <div className="h-1 w-1 rounded-full bg-white"></div>
+                    </span>
+                  ) : (
+                    <span>
+                      <div className="h-1 w-1 rounded-full bg-white"></div>
+                    </span>
+                  )}
+                </>
+              ))}
+              {allSameDate && (
+                <span>
+                  {moment(events[0].date).format("dddd, DD MMM YYYY")}
+                </span>
+              )}
+              {!allSameDate && (
+                <div className="w-full h-[1px] bg-white ml-6 mt-[3px]"></div>
+              )}
             </div>
-            <div className="flex items-center gap-x-6 md:gap-x-8 lg:gap-x-16 mt-6 text-white">
-              <div className="flex items-center gap-x-4 md:gap-x-6 lg:gap-x-8">
-                <div className="flex items-center flex-col">
-                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
-                    {props.state.countdown.days}
-                  </h2>
-                  <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
-                  >
-                    Hari
-                  </p>
+            {allSameDate && (
+              <div className="flex items-center gap-x-6 md:gap-x-8 lg:gap-x-16 mt-6 text-white">
+                <div className="flex items-center gap-x-4 md:gap-x-6 lg:gap-x-8">
+                  <div className="flex items-center flex-col">
+                    <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
+                      {props.state.countdown.days}
+                    </h2>
+                    <p
+                      className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    >
+                      Hari
+                    </p>
+                  </div>
+                  <div className="flex items-center flex-col">
+                    <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
+                      {props.state.countdown.hours}
+                    </h2>
+                    <p
+                      className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    >
+                      Jam
+                    </p>
+                  </div>
+                  <div className="flex items-center flex-col">
+                    <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
+                      {props.state.countdown.minutes}
+                    </h2>
+                    <p
+                      className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    >
+                      Menit
+                    </p>
+                  </div>
+                  <div className="flex items-center flex-col">
+                    <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
+                      {props.state.countdown.seconds}
+                    </h2>
+                    <p
+                      className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
+                    >
+                      Detik
+                    </p>
+                  </div>
                 </div>
-                <div className="flex items-center flex-col">
-                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
-                    {props.state.countdown.hours}
-                  </h2>
-                  <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
-                  >
-                    Jam
-                  </p>
-                </div>
-                <div className="flex items-center flex-col">
-                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
-                    {props.state.countdown.minutes}
-                  </h2>
-                  <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
-                  >
-                    Menit
-                  </p>
-                </div>
-                <div className="flex items-center flex-col">
-                  <h2 className={`${afacad.className} text-xl lg:text-2xl`}>
-                    {props.state.countdown.seconds}
-                  </h2>
-                  <p
-                    className={`${montserrat.className} text-xs md:text-sm lg:text-base`}
-                  >
-                    Detik
-                  </p>
-                </div>
+                <div className="w-full h-[1px] bg-white"></div>
               </div>
-              <div className="w-full h-[1px] bg-white"></div>
-            </div>
+            )}
           </div>
         </div>
       </div>
