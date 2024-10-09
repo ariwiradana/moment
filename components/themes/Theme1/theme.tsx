@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
-import BridesComponent from "./layouts/brides";
 import { Client } from "@/lib/types";
 import useTheme1 from "@/hooks/themes/useTheme1";
 import GalleryComponent from "./layouts/gallery";
@@ -12,6 +11,7 @@ import FooterComponent from "../footer";
 import VideoComponent from "./layouts/video";
 import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
+import ParticipantsComponent from "./layouts/participants";
 interface Props {
   to: string;
   client: Client;
@@ -34,7 +34,7 @@ const Theme1: FC<Props> = (props) => {
           <div className="relative">
             <MusicComponent actions={actions} refs={refs} state={state} />
             <HeroComponent state={state} />
-            <BridesComponent state={state} />
+            <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
             <GalleryComponent state={state} />
             <VideoComponent state={state} />

@@ -4,9 +4,15 @@ import moment from "moment";
 import Title from "../elements/title";
 import Image from "next/image";
 import Button from "../elements/button";
-import { BiCalendarAlt, BiSolidCalendarCheck, BiTime } from "react-icons/bi";
+import {
+  BiCalendarAlt,
+  BiMap,
+  BiSolidCalendarCheck,
+  BiTime,
+} from "react-icons/bi";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
 import ImageShimmer from "@/components/image.shimmer";
+import Link from "next/link";
 
 interface Props {
   state: useTheme1["state"];
@@ -102,6 +108,13 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 >
                   <p>Bertempat di</p>
                   <p>{event.address}</p>
+                </div>
+                <div className={`flex justify-center mt-8 ${afacad.className}`}>
+                  <Link href={event.address_url} target="_blank">
+                    <button className="outline-none border border-white px-4 py-2 flex justify-center gap-x-2 items-center">
+                      <span>Peta Lokasi</span> <BiMap />
+                    </button>
+                  </Link>
                 </div>
               </div>
             ))}

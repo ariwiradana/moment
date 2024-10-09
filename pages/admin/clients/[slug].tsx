@@ -437,10 +437,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         className="w-full"
                         label="Image"
                       />
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input
                           value={
-                            state.formData.participants[index].parents_male
+                            state.formData.participants[index].parents_male ??
+                            undefined
                           }
                           className="w-full"
                           label="Parent Male Name"
@@ -454,7 +456,8 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         />
                         <Input
                           value={
-                            state.formData.participants[index].parents_female
+                            state.formData.participants[index].parents_female ??
+                            undefined
                           }
                           className="w-full"
                           label="Parent Female Name"
@@ -467,19 +470,6 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                           }
                         />
                       </div>
-
-                      <InputTextarea
-                        value={state.formData.participants[index].address}
-                        label="Address Full"
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.value,
-                            "address",
-                            index
-                          )
-                        }
-                      />
-
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <InputSelect
                           value={state.formData.participants[index].gender}
@@ -494,18 +484,6 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                           label="Gender"
                         />
                         <InputSelect
-                          value={state.formData.participants[index].child}
-                          options={ChildOrderOptions}
-                          onChange={(e) =>
-                            actions.handleChangeParticipant(
-                              e.target.value,
-                              "child",
-                              index
-                            )
-                          }
-                          label="Child Order"
-                        />
-                        <InputSelect
                           value={state.formData.participants[index].role}
                           options={roleOptions}
                           onChange={(e) =>
@@ -517,7 +495,34 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                           }
                           label="Role"
                         />
+                        <InputSelect
+                          value={
+                            state.formData.participants[index].child ??
+                            undefined
+                          }
+                          options={ChildOrderOptions}
+                          onChange={(e) =>
+                            actions.handleChangeParticipant(
+                              e.target.value,
+                              "child",
+                              index
+                            )
+                          }
+                          label="Child Order"
+                        />
                       </div>
+                      <InputTextarea
+                        value={state.formData.participants[index].address}
+                        label="Address Full"
+                        onChange={(e) =>
+                          actions.handleChangeParticipant(
+                            e.target.value,
+                            "address",
+                            index
+                          )
+                        }
+                      />
+
                       <h1 className="text-base font-bold mt-6">Social Media</h1>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input

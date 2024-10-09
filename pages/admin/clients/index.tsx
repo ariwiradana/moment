@@ -249,7 +249,7 @@ const ClientDashboard: React.FC = () => {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-2 gap-4">
                             {client.events.map((event) => (
                               <div key={`event-desktop-${event.id}`}>
                                 <h1>{event.name}</h1>

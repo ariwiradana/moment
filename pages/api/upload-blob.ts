@@ -1,11 +1,9 @@
 import { checkApiKey } from "@/lib/apiKey";
-import { runCors } from "@/lib/cors";
+
 import { put } from "@vercel/blob";
 import type { NextApiResponse, NextApiRequest, PageConfig } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await runCors(req, res);
-
   if (!checkApiKey(req, res)) return;
 
   if (req.method === "POST") {

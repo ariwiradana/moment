@@ -105,7 +105,7 @@ export const useAdminUpdateTheme = (id: number) => {
           });
         }
 
-        const res = await fetch(
+        const res = await useClient(
           `/api/upload-blob?filename=Themes/${formData.name}.${
             image.type.split("/")[1]
           }`,

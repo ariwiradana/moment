@@ -1,12 +1,10 @@
 import { checkApiKey } from "@/lib/apiKey";
-import { runCors } from "@/lib/cors";
+
 import handleError from "@/lib/errorHandling";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await runCors(req, res);
-
   if (!checkApiKey(req, res)) return;
 
   try {

@@ -3,8 +3,10 @@ CREATE TABLE themes (
   name VARCHAR(255),
   thumbnail VARCHAR(255),
   price INTEGER,
+  package_id INT REFERENCES packages(id) ON DELETE SET NULL,
+  is_preview BOOLEAN DEFAULT TRUE;
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
 );
 
 CREATE TABLE events (
@@ -62,4 +64,19 @@ CREATE TABLE reviews (
   wishes TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE packages (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    gallery SMALLINT DEFAULT 10,
+    gmap BOOLEAN DEFAULT TRUE,
+    social_media BOOLEAN DEFAULT TRUE,
+    music BOOLEAN DEFAULT FALSE,
+    video SMALLINT DEFAULT 1,
+    wishes BOOLEAN DEFAULT TRUE,
+    rsvp BOOLEAN DEFAULT TRUE,
+    price NUMBER NOT NULL,
+    created TIMESTAMP DEFAULT NOW(),
+    updated TIMESTAMP DEFAULT NOW()
 );

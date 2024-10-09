@@ -8,6 +8,8 @@ import { fetcher } from "@/lib/fetcher";
 import { getFilename } from "@/utils/getFilename";
 import { useRouter } from "next/router";
 
+const apiKey = process.env.NEXT_PUBLIC_API_KEY || "";
+
 const initialParticipants: Participant = {
   name: "",
   nickname: "",
@@ -274,10 +276,14 @@ export const useAdminUpdateClient = (slug: string) => {
               "Gallery",
               image.type
             );
-            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
-              method: "POST",
-              body: image,
-            });
+
+            const res = await useClient(
+              `/api/upload-blob?filename=${filename}`,
+              {
+                method: "POST",
+                body: image,
+              }
+            );
             const result = await res.json();
             if (result.success) {
               toast.success(
@@ -328,10 +334,13 @@ export const useAdminUpdateClient = (slug: string) => {
               "Videos",
               video.type
             );
-            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
-              method: "POST",
-              body: video,
-            });
+            const res = await useClient(
+              `/api/upload-blob?filename=${filename}`,
+              {
+                method: "POST",
+                body: video,
+              }
+            );
             const result = await res.json();
             if (result.success) {
               toast.success(
@@ -378,7 +387,7 @@ export const useAdminUpdateClient = (slug: string) => {
             "Music",
             musicForm.type
           );
-          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: musicForm,
           });
@@ -561,7 +570,8 @@ export const useAdminUpdateClient = (slug: string) => {
             "Participants",
             image.type
           );
-          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+
+          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: image,
           });

@@ -1,5 +1,5 @@
 import { checkApiKey } from "@/lib/apiKey";
-import { runCors } from "@/lib/cors";
+
 import handleError from "@/lib/errorHandling";
 
 import { Client, Event, Participant, Review, Theme } from "@/lib/types";
@@ -15,8 +15,6 @@ interface Query {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await runCors(req, res);
-
   if (!checkApiKey(req, res)) return;
   switch (req.method) {
     case "GET":
@@ -447,6 +445,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             del(url)
           );
           await Promise.all(deleteParticipantImagesPromises);
+        }
+
+        const videoURLs: string[] = currentClient[0]?.videos || [];
+        if (videoURLs.length) {
+          const deleteVideoPromises = videoURLs.map((url) => del(url));
+          await Promise.all(deleteVideoPromises);
         }
 
         await Promise.all([

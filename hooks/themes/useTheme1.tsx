@@ -35,6 +35,7 @@ export interface useTheme1 {
     formData: FormData;
     reviews: Review[] | null;
     errors: Record<string, string | undefined>;
+    otherParticipants: Participant[] | null;
   };
   actions: {
     handleOpenCover: () => void;
@@ -54,6 +55,9 @@ const initialReviewForm = {
 const useTheme1 = (client: Client | null): useTheme1 => {
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
+  const [otherParticipants, setOtherParticipants] = useState<
+    Participant[] | null
+  >(null);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<Countdown>({
@@ -200,6 +204,11 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     [client]
   );
 
+  const otherParticipantData = useMemo(
+    () => client?.participants.filter((p) => p.role === "participant") || null,
+    [client]
+  );
+
   useEffect(() => {
     if (client) {
       updateCountdown();
@@ -207,6 +216,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
 
       setBride(brideParticipant);
       setGroom(groomParticipant);
+      setOtherParticipants(otherParticipantData);
 
       return () => clearInterval(interval);
     }
@@ -304,6 +314,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
       reviews,
       errors,
       isPlaying,
+      otherParticipants,
     },
     actions: {
       handleOpenCover,

@@ -29,7 +29,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
       {...props}
       className={`${
         props.className ?? ""
-      } flex items-center rounded-lg text-white font-medium bg-admin-dark transition duration-200 hover:bg-admin-hover-dark justify-start ${buttonStyles(
+      } flex items-center rounded-lg text-white font-medium bg-admin-dark transition duration-200 whitespace-nowrap hover:bg-admin-hover-dark justify-start ${buttonStyles(
         props.size ?? "large"
       )} ${
         props.isloading &&

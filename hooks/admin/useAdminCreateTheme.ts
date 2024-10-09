@@ -40,7 +40,7 @@ export const useAdminCreateTheme = () => {
             toast.error(`File size is to large`, { id: toastUpload });
             return;
           }
-          const res = await fetch(
+          const res = await useClient(
             `/api/upload-blob?filename=Themes/${formData.name}.${
               image.type.split("/")[1]
             }`,

@@ -113,10 +113,13 @@ export const useAdminCreateClient = () => {
               "Gallery",
               image.type
             );
-            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
-              method: "POST",
-              body: image,
-            });
+            const res = await useClient(
+              `/api/upload-blob?filename=${filename}`,
+              {
+                method: "POST",
+                body: image,
+              }
+            );
             const result = await res.json();
             if (result.success) {
               toast.success(
@@ -167,10 +170,13 @@ export const useAdminCreateClient = () => {
               "Videos",
               video.type
             );
-            const res = await fetch(`/api/upload-blob?filename=${filename}`, {
-              method: "POST",
-              body: video,
-            });
+            const res = await useClient(
+              `/api/upload-blob?filename=${filename}`,
+              {
+                method: "POST",
+                body: video,
+              }
+            );
             const result = await res.json();
             if (result.success) {
               toast.success(
@@ -217,7 +223,7 @@ export const useAdminCreateClient = () => {
             "Music",
             music.type
           );
-          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: music,
           });
@@ -264,7 +270,7 @@ export const useAdminCreateClient = () => {
             "Participants",
             image.type
           );
-          const res = await fetch(`/api/upload-blob?filename=${filename}`, {
+          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: image,
           });
