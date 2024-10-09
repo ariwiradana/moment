@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 
 const initalFormData: Theme = {
+  slug: "",
   id: null,
   name: "",
   thumbnail: null,

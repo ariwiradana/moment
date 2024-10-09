@@ -9,7 +9,7 @@ import { Theme } from "@/lib/types";
 import { Autoplay, EffectCards } from "swiper/modules";
 import { dm } from "@/lib/fonts";
 
-const Hero = () => {
+const HeroComponent = () => {
   const { data } = useSWR("/api/themes", fetcher);
   const themes: Theme[] = data?.data || [];
   const thumbnails: string[] = themes
@@ -19,7 +19,8 @@ const Hero = () => {
     thumbnails.length > 3 ? thumbnails.slice(0, 3) : thumbnails;
 
   return (
-    <div
+    <section
+      id="section1"
       className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-gray-50 overflow-x-hidden`}
     >
       <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 pt-16 pb-32 relative px-6 md:px-12 lg:px-24">
@@ -95,8 +96,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Hero;
+export default HeroComponent;

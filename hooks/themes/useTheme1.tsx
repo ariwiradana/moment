@@ -41,8 +41,8 @@ export interface useTheme1 {
     handleOpenCover: () => void;
     handleChange: (name: string, value: string) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    handleAddEvents: () => void;
     handlePlayPause: () => void;
+    handleCopyRekening: (rekening: string) => void;
   };
 }
 
@@ -226,68 +226,6 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
-  const handleAddEvents = () => {
-    const events = client?.events || [];
-
-    const title = `Undangan Pernikahan ${groom?.nickname} & ${bride?.nickname}`;
-
-    let details =
-      "Dengan hormat,\n\nKami dengan segala kerendahan hati mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami yang akan dilaksanakan pada:\n\n";
-
-    let startDate: string | undefined;
-    let endDate: string | undefined;
-
-    const uniqueLocations = new Set<string>();
-
-    events.forEach((event) => {
-      details += `Acara: ${event.name}\n`;
-      details += `Hari/Tanggal: ${moment(event.date).format(
-        "dddd, D MMMM YYYY"
-      )}\n`;
-      details += `Waktu: ${event.start_time} - ${event.end_time}\n`;
-      details += `Tempat: ${event.address}\n\n`;
-
-      uniqueLocations.add(event.address);
-
-      const eventStartDate = moment(
-        `${event.date} ${event.start_time}`,
-        "YYYY-MM-DD HH:mm"
-      ).format("YYYYMMDDTHHmmss");
-
-      let eventEndDate: string;
-      if (
-        event.end_time === "24:00" ||
-        event.end_time?.toLowerCase() === "selesai"
-      ) {
-        eventEndDate = moment(`${event.date} 23:59`, "YYYY-MM-DD HH:mm")
-          .add(1, "minute")
-          .format("YYYYMMDDTHHmmss");
-      } else {
-        eventEndDate = moment(
-          `${event.date} ${event.end_time}`,
-          "YYYY-MM-DD HH:mm"
-        ).format("YYYYMMDDTHHmmss");
-      }
-
-      if (!startDate || !endDate) {
-        startDate = eventStartDate;
-        endDate = eventEndDate;
-      }
-    });
-
-    details += `Kehadiran Bapak/Ibu/Saudara/i akan menjadi kehormatan bagi kami dan sangat berarti dalam merayakan momen bahagia ini.\n\nAtas perhatian dan kehadirannya, kami ucapkan terima kasih.`;
-
-    const location = Array.from(uniqueLocations).join(", ");
-
-    const url = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(
-      title
-    )}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(
-      location
-    )}&dates=${startDate}/${endDate}`;
-
-    window.open(url, "_blank");
-  };
-
   const handlePlayPause = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -297,6 +235,17 @@ const useTheme1 = (client: Client | null): useTheme1 => {
       }
       setIsPlaying(!isPlaying);
     }
+  };
+
+  const handleCopyRekening = (rekening: string) => {
+    navigator.clipboard
+      .writeText(rekening)
+      .then(() => {
+        toast.success("No rekening berhasil disalin");
+      })
+      .catch((err) => {
+        toast.error("No rekening gagal disalin");
+      });
   };
 
   return {
@@ -320,8 +269,8 @@ const useTheme1 = (client: Client | null): useTheme1 => {
       handleOpenCover,
       handleChange,
       handleSubmit,
-      handleAddEvents,
       handlePlayPause,
+      handleCopyRekening,
     },
   };
 };

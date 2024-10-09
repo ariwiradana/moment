@@ -2,7 +2,7 @@ import { afacad } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
-interface ButtonPrimaryProps
+interface ButtonSecondaryProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   className?: string | "";
@@ -11,7 +11,7 @@ interface ButtonPrimaryProps
   isloading?: boolean;
 }
 
-const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
+const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
   const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
@@ -30,7 +30,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
       {...props}
       className={`${afacad.className} ${
         props.className ?? ""
-      } flex items-center text-dashboard-dark rounded font-medium bg-dashboard-primary bg-opacity-95 transition duration-500 hover:bg-opacity-100 justify-start ${buttonStyles(
+      } flex items-center text-dashboard-dark rounded font-medium bg-gray-300 bg-opacity-95 transition duration-500 hover:bg-gray-400 justify-start ${buttonStyles(
         props.size ?? "large"
       )} ${
         props.isloading &&
@@ -49,4 +49,4 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
   );
 };
 
-export default ButtonPrimary;
+export default ButtonSecondary;

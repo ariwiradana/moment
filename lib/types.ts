@@ -1,5 +1,6 @@
 export interface Theme {
   id: number | null;
+  slug: string;
   name: string;
   created_at?: Date | string;
   updated_at?: Date | string;
@@ -69,4 +70,24 @@ export interface Review {
   wishes: string;
   created_at?: Date | string;
   updated_at?: Date | string;
+}
+
+export interface Package {
+  id: number;
+  name: string;
+  unlimited_revisions: boolean;
+  unlimited_guest_names: boolean;
+  max_events: string;
+  max_gallery_photos: string;
+  contact_social_media: boolean;
+  background_sound: boolean;
+  max_videos: string;
+  rsvp_and_greetings: boolean;
+  custom_cover_photo: boolean;
+  digital_envelope: boolean;
+  google_maps_integration: boolean;
+  add_to_calendar: boolean;
+  price: number;
+  created_at: string;
+  updated_at: string;
 }

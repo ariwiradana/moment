@@ -4,6 +4,7 @@ import {
   Afacad,
   DM_Serif_Display,
   Marcellus,
+  The_Nautigal,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -26,4 +27,9 @@ export const dm = DM_Serif_Display({
 export const marcellus = Marcellus({
   subsets: ["latin"],
   weight: "400",
+});
+
+export const nautigal = The_Nautigal({
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });

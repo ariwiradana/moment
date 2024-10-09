@@ -7,11 +7,12 @@ import useTheme1 from "@/hooks/themes/useTheme1";
 import GalleryComponent from "./layouts/gallery";
 import ThankyouComponent from "./layouts/thankyou";
 import RSVPWishes from "./layouts/rsvp.wishes";
-import FooterComponent from "../footer";
+import FooterComponent from "./layouts/footer";
 import VideoComponent from "./layouts/video";
 import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
+import GiftComponent from "./layouts/gift";
 interface Props {
   to: string;
   client: Client;
@@ -37,8 +38,9 @@ const Theme1: FC<Props> = (props) => {
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
             <GalleryComponent state={state} />
-            <VideoComponent state={state} />
+            <VideoComponent actions={actions} state={state} />
             <RSVPWishes actions={actions} state={state} />
+            <GiftComponent actions={actions} state={state} />
             <ThankyouComponent state={state} />
             <FooterComponent />
           </div>

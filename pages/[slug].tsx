@@ -23,10 +23,16 @@ const MainPage: FC<Props> = (props) => {
     });
   }, []);
 
+  const { data: theme } = useSWR(
+    props.slug ? `/api/themes?slug=${props.slug}` : null,
+    fetcher
+  );
   const { data, error } = useSWR(
     props.slug ? `/api/client?slug=${props.slug}` : null,
     fetcher
   );
+
+  console.log(theme);
 
   const client: Client | null = data?.data?.length ? data.data[0] : null;
 

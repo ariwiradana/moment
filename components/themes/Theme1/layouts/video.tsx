@@ -6,6 +6,7 @@ import "yet-another-react-lightbox/styles.css";
 
 interface Props {
   state: useTheme1["state"];
+  actions: useTheme1["actions"];
 }
 
 const VideoComponent: FC<Props> = (props) => {
@@ -36,8 +37,11 @@ const VideoComponent: FC<Props> = (props) => {
   }, [props.state.client?.gallery, videos.length]);
 
   return (
-    <section className="relative bg-white">
-      <div className="relative z-10 h-full w-full pt-16" data-aos="fade-up">
+    <section className="relative bg-white pt-8">
+      <div
+        className="relative z-10 h-full w-full p-6 lg:p-16"
+        data-aos="zoom-out-up"
+      >
         <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
         <div className="w-full h-full relative z-40">
           <div
@@ -70,7 +74,7 @@ const VideoComponent: FC<Props> = (props) => {
                 data-aos="fade-up"
                 width="100%"
                 controls
-                className="bg-gray-100 aspect-video object-cover"
+                className="bg-gray-100 aspect-video object-cover rounded-2xl"
                 poster={randomGalleryImages[index]}
               >
                 <source src={video} />

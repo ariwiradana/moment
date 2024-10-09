@@ -1,5 +1,6 @@
 CREATE TABLE themes (
   id SERIAL PRIMARY KEY,
+  slug VARCHAR(255) UNIQUE,
   name VARCHAR(255),
   thumbnail VARCHAR(255),
   price INTEGER,
@@ -68,15 +69,47 @@ CREATE TABLE reviews (
 
 CREATE TABLE packages (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    gallery SMALLINT DEFAULT 10,
-    gmap BOOLEAN DEFAULT TRUE,
-    social_media BOOLEAN DEFAULT TRUE,
-    music BOOLEAN DEFAULT FALSE,
-    video SMALLINT DEFAULT 1,
-    wishes BOOLEAN DEFAULT TRUE,
-    rsvp BOOLEAN DEFAULT TRUE,
-    price NUMBER NOT NULL,
-    created TIMESTAMP DEFAULT NOW(),
-    updated TIMESTAMP DEFAULT NOW()
+    name VARCHAR(50) NOT NULL,           
+    unlimited_revisions BOOLEAN NOT NULL,
+    unlimited_guest_names BOOLEAN NOT NULL,
+    max_events VARCHAR(10),              
+    max_gallery_photos VARCHAR(10) NOT NULL,
+    contact_social_media BOOLEAN NOT NULL,
+    background_sound BOOLEAN NOT NULL, 
+    max_videos VARCHAR(10) NOT NULL,    
+    rsvp_and_greetings BOOLEAN NOT NULL, 
+    custom_cover_photo BOOLEAN NOT NULL, 
+    digital_envelope BOOLEAN NOT NULL,   
+    google_maps_integration BOOLEAN NOT NULL,
+    add_to_calendar BOOLEAN NOT NULL,
+    price INTEGER NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Insert data for Basic package
+INSERT INTO packages (
+    name, unlimited_revisions, unlimited_guest_names, max_events, max_gallery_photos, contact_social_media,
+    background_sound, max_videos, rsvp_and_greetings, custom_cover_photo, digital_envelope, 
+    google_maps_integration, add_to_calendar, price
+) VALUES (
+    'Basic', TRUE, TRUE, '1', '5', FALSE, FALSE, '0', FALSE, FALSE, FALSE, FALSE, FALSE, 150000
+);
+
+-- Insert data for Premium package
+INSERT INTO packages (
+    name, unlimited_revisions, unlimited_guest_names, max_events, max_gallery_photos, contact_social_media,
+    background_sound, max_videos, rsvp_and_greetings, custom_cover_photo, digital_envelope, 
+    google_maps_integration, add_to_calendar, price
+) VALUES (
+    'Premium', TRUE, TRUE, '2', '10', TRUE, TRUE, '1', TRUE, FALSE, FALSE, TRUE, FALSE, 200000
+);
+
+-- Insert data for Exclusive package
+INSERT INTO packages (
+    name, unlimited_revisions, unlimited_guest_names, max_events, max_gallery_photos, contact_social_media,
+    background_sound, max_videos, rsvp_and_greetings, custom_cover_photo, digital_envelope, 
+    google_maps_integration, add_to_calendar, price
+) VALUES (
+    'Exclusive', TRUE, TRUE, 'unlimited', '20', TRUE, TRUE, '2', TRUE, TRUE, TRUE, TRUE, TRUE, 250000
 );
