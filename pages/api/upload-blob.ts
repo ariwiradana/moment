@@ -1,16 +1,26 @@
-import { withHostCheck } from "@/lib/middleware";
+import { checkApiKey } from "@/lib/apiKey";
+import { runCors } from "@/lib/cors";
 import { put } from "@vercel/blob";
 import type { NextApiResponse, NextApiRequest, PageConfig } from "next";
 
-const handler = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { filename } = request.query;
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await runCors(req, res);
 
-  const data = await put(filename as string, request, {
-    access: "public",
-    multipart: true,
-  });
+  if (!checkApiKey(req, res)) return;
 
-  return response.status(200).json({ success: true, data });
+  if (req.method === "POST") {
+    const { filename } = req.query;
+
+    const data = await put(filename as string, req, {
+      access: "public",
+      multipart: true,
+    });
+
+    return res.status(200).json({ success: true, data });
+  } else {
+    res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 };
 
 export const config: PageConfig = {
@@ -19,4 +29,4 @@ export const config: PageConfig = {
   },
 };
 
-export default withHostCheck(handler);
+export default handler;

@@ -1,5 +1,5 @@
 import handleError from "@/lib/errorHandling";
-import { withHostCheck } from "@/lib/middleware";
+
 import { Client } from "@/lib/types";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
@@ -48,4 +48,4 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   }
 };
 
-export default withHostCheck(handler);
+export default handler;
