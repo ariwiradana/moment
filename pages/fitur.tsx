@@ -74,8 +74,12 @@ const DashboardFeatures = () => {
               }}
               className="flex gap-x-2 items-center"
             >
-              <HiArrowLongLeft className="mt-1 text-lg" />
-              <p className={`${afacad.className} text-lg`}>Kembali</p>
+              <HiArrowLongLeft className="mt-1 text-xl" />
+              <p
+                className={`${afacad.className} text-lg whitespace-nowrap font-medium`}
+              >
+                Kembali
+              </p>
             </button>
           </div>
 

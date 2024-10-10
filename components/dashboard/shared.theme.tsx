@@ -26,22 +26,18 @@ const SharedThemeComponent = () => {
           <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.events)}
           </h1>
-          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
-            Acara
-          </h2>
+          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>Acara</h2>
         </div>
         <div
           data-aos="fade-up"
-          data-aos-delay="400"
+          data-aos-delay="100"
           className="text-white flex flex-col items-center gap-y-2"
         >
           <BiUser className="text-5xl lg:text-6xl" />
           <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.clients)}
           </h1>
-          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
-            Klien
-          </h2>
+          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>Klien</h2>
         </div>
         <div
           data-aos="fade-up"
@@ -58,7 +54,7 @@ const SharedThemeComponent = () => {
         </div>
         <div
           data-aos="fade-up"
-          data-aos-delay="400"
+          data-aos-delay="300"
           className="text-white flex flex-col items-center gap-y-2"
         >
           <BiBookContent className="text-5xl lg:text-6xl" />

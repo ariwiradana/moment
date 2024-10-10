@@ -12,6 +12,7 @@ interface Query {
   slug?: string;
   page?: number;
   limit?: number;
+  status?: string;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -19,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
-        const { slug, page = 1, limit = 10 }: Query = req.query;
+        const { slug, page = 1, limit = 10, status }: Query = req.query;
 
         let query = `SELECT * FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
@@ -33,6 +34,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           countQuery += ` WHERE slug = $${valueIndex}`;
           values.push(slug);
           countValues.push(slug);
+        }
+
+        if (status) {
+          const valueIndex = values.length + 1;
+          query += ` WHERE status = $${valueIndex}`;
+          countQuery += ` WHERE status = $${valueIndex}`;
+          values.push(status);
+          countValues.push(status);
         }
 
         query += ` ORDER BY updated_at DESC`;

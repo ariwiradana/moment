@@ -26,20 +26,30 @@ const ThemeComponent: FC = () => {
       >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24">
           <div
-            className="flex flex-col md:flex-row md:justify-between lg:items-center"
+            className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
             data-aos="fade-up"
           >
-            <h1
-              className={`${dm.className} text-3xl md:text-4xl lg:text-5xl text-dashboard-dark`}
-            >
-              Koleksi Tema
-            </h1>
-            <Link href="/tema">
+            <div>
+              <h1
+                className={`${dm.className} text-3xl md:text-4xl lg:text-5xl text-dashboard-dark font-semibold`}
+              >
+                Koleksi Tema Undangan
+              </h1>
+              <p
+                className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
+              >
+                Jelajahi berbagai tema undangan yang dirancang khusus untuk
+                menyesuaikan dengan konsep acara Anda.
+              </p>
+            </div>
+            <Link href="/fitur">
               <div className="flex gap-x-2 items-center">
-                <p className={`${afacad.className} text-lg`}>
+                <p
+                  className={`${afacad.className} text-lg whitespace-nowrap font-medium`}
+                >
                   Lihat Semua Tema
                 </p>
-                <HiArrowLongRight className="mt-1 text-lg" />
+                <HiArrowLongRight className="mt-1 text-xl" />
               </div>
             </Link>
           </div>

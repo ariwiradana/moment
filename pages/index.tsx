@@ -1,3 +1,4 @@
+import ClientComponent from "@/components/dashboard/client";
 import FeaturesComponent from "@/components/dashboard/features";
 import HeroComponent from "@/components/dashboard/hero";
 import Layout from "@/components/dashboard/layout";
@@ -63,6 +64,7 @@ const Dashboard = () => {
       <ThemeComponent />
       <PackageComponent />
       <SharedThemeComponent />
+      <ClientComponent />
       <TestimonialsComponent />
     </Layout>
   );
