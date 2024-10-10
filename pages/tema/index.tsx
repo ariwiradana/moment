@@ -11,8 +11,17 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import useSWR from "swr";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const DashboardThemes = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
+
   const { setActiveSection } = useDashboardStore();
 
   const [displayedText, setDisplayedText] = useState<string>("");
@@ -86,8 +95,13 @@ const DashboardThemes = () => {
               </Link>
             </div>
 
-            <div className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-8">
-              <p className={`${afacad.className} lg:text-xl`}>Koleksi Tema Undangan</p>
+            <div
+              data-aos="zoom-out-up"
+              className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-8"
+            >
+              <p className={`${afacad.className} lg:text-xl`}>
+                Koleksi Tema Undangan
+              </p>
               <h1 className={`${marcellus.className} text-3xl lg:text-4xl`}>
                 <span className="text-dashboard-primary">{displayedText}</span>
                 <span className="animate-typing-effect text-dashboard-primary">
@@ -96,7 +110,11 @@ const DashboardThemes = () => {
               </h1>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-4">
+            <div
+              className="grid md:grid-cols-2 lg:grid-cols-2 gap-4"
+              data-aos="fade-up"
+              data-aos-delay="500"
+            >
               {themes.map((t) => {
                 const slug = createSlug(t.name);
                 return (

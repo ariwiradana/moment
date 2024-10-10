@@ -3,6 +3,8 @@ import Layout from "@/components/dashboard/layout";
 import PackageComponent from "@/components/dashboard/packages";
 import ThemeComponent from "@/components/dashboard/themes";
 import useDashboardStore from "@/lib/dashboardStore";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -14,6 +16,13 @@ const Dashboard = () => {
   useEffect(() => {
     if (router && router.pathname === "/") setActiveSection("section1");
   }, [router]);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   const scrollTo = (section: string) => {
     setActiveSection(section);
