@@ -25,16 +25,21 @@ const ThemeComponent: FC = () => {
         id="section3"
       >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24">
-          <div data-aos="fade-up" className="flex justify-between items-center">
+          <div
+            className="flex flex-col md:flex-row md:justify-between lg:items-center"
+            data-aos="fade-up"
+          >
             <h1
-              className={`${dm.className} text-2xl lg:text-4xl text-dashboard-dark`}
+              className={`${dm.className} text-3xl md:text-4xl lg:text-5xl text-dashboard-dark`}
             >
               Koleksi Tema
             </h1>
             <Link href="/tema">
               <div className="flex gap-x-2 items-center">
-                <p className={`${afacad.className}`}>Semua Tema</p>
-                <HiArrowLongRight />
+                <p className={`${afacad.className} text-lg`}>
+                  Lihat Semua Tema
+                </p>
+                <HiArrowLongRight className="mt-1 text-lg" />
               </div>
             </Link>
           </div>
@@ -66,7 +71,7 @@ const ThemeComponent: FC = () => {
               {slideThemes.map((t) => {
                 const slug = createSlug(t.name);
                 return (
-                  <SwiperSlide key={slug} className="w-full mb-12 md:mb-6">
+                  <SwiperSlide key={slug} className="w-full mb-12">
                     <ThemeCard
                       category={t.category as string}
                       name={t.name}

@@ -17,7 +17,7 @@ const SharedThemeComponent = () => {
     <section className="py-16 lg:py-24 bg-zinc-50 relative">
       <span className="absolute inset-0 bg-[url('/dashboard/shared.jpg')] bg-repeat bg-cover bg-center"></span>
       <span className="absolute inset-0 bg-black bg-opacity-20"></span>
-      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 relative z-20">
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-8 relative z-20">
         <div
           data-aos="fade-up"
           className="text-white flex flex-col items-center gap-y-2"
@@ -26,7 +26,7 @@ const SharedThemeComponent = () => {
           <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.events)}
           </h1>
-          <h2 className={`${marcellus.className} text-base lg:text-lg`}>
+          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
             Acara
           </h2>
         </div>
@@ -39,8 +39,8 @@ const SharedThemeComponent = () => {
           <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.clients)}
           </h1>
-          <h2 className={`${marcellus.className} text-base lg:text-lg`}>
-            Kien
+          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
+            Klien
           </h2>
         </div>
         <div
@@ -52,7 +52,7 @@ const SharedThemeComponent = () => {
           <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.wishes)}
           </h1>
-          <h2 className={`${marcellus.className} text-base lg:text-lg`}>
+          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
             Ucapan & Doa
           </h2>
         </div>
@@ -65,7 +65,7 @@ const SharedThemeComponent = () => {
           <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.guest)}
           </h1>
-          <h2 className={`${marcellus.className} text-base lg:text-lg`}>
+          <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
             Tamu Undangan
           </h2>
         </div>

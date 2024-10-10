@@ -20,11 +20,11 @@ const TestimonialsComponent = () => {
         id="section5"
       >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative ">
-          <div className="lg:max-w-[40%]" data-aos="fade-up">
-            <h1 className={`${dm.className} text-3xl lg:text-5xl font-bold`}>
-              Bagaimana Pengalaman Klien?
+          <div data-aos="fade-up">
+            <h1 className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}>
+              Bagaimana <br /> Pengalaman Klien?
             </h1>
-            <p className={`${afacad.className} mt-3`}>
+            <p className={`${afacad.className} text-lg md:text-xl mt-3`}>
               Kami berterima kasih kepada klien kami yang telah berbagi
               pengalaman mereka.
             </p>
@@ -62,23 +62,23 @@ const TestimonialsComponent = () => {
                   className="bg-dashboard-dark p-8 rounded text-white mb-12"
                 >
                   <div className="flex items-center gap-x-4 ">
-                    <div className="w-12 h-12 min-w-12 min-h-12 text-lg rounded-full bg-zinc-100 flex justify-center items-center text-dashboard-dark">
+                    <div className="w-14 h-14 min-w-14 min-h-14 text-xl rounded-full bg-zinc-100 flex justify-center items-center text-dashboard-dark">
                       <span className={marcellus.className}>
                         {getInitial(t.name)}
                       </span>
                     </div>
                     <div>
                       <h1
-                        className={`${marcellus.className} text-xl capitalize`}
+                        className={`${marcellus.className} text-xl lg:text-2xl capitalize line-clamp-1`}
                       >
                         {t.name}
                       </h1>
-                      <p className={`${afacad.className}`}>
+                      <p className={`${afacad.className} text-lg line-clamp-1`}>
                         Summer Daylight - Undangan Pernikahan
                       </p>
                     </div>
                   </div>
-                  <p className={`${afacad.className} mt-4 font-light`}>
+                  <p className={`${afacad.className} mt-4 font-light text-lg`}>
                     {t.wishes}
                   </p>
                 </SwiperSlide>

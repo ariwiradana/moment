@@ -74,8 +74,8 @@ const DashboardFeatures = () => {
               }}
               className="flex gap-x-2 items-center"
             >
-              <HiArrowLongLeft />
-              <p className={`${afacad.className}`}>Kembali</p>
+              <HiArrowLongLeft className="mt-1 text-lg" />
+              <p className={`${afacad.className} text-lg`}>Kembali</p>
             </button>
           </div>
 
@@ -83,9 +83,11 @@ const DashboardFeatures = () => {
             data-aos="zoom-out-up"
             className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-8"
           >
-            <p className={`${afacad.className} lg:text-xl`}>Fitur Undangan</p>
+            <p className={`${afacad.className} text-lg md:text-xl`}>
+              Fitur Undangan
+            </p>
             <h1
-              className={`${marcellus.className} text-3xl lg:text-4xl text-center`}
+              className={`${marcellus.className} text-2xl md:text-4xl lg:text-5xl text-center`}
             >
               <span className="text-dashboard-primary">{displayedText}</span>
               <span className="animate-typing-effect text-dashboard-primary">
@@ -97,13 +99,14 @@ const DashboardFeatures = () => {
           <div
             data-aos="fade-up"
             data-aos-delay="500"
-            className="grid md:grid-cols-3 lg:grid-cols-4 mt-6 gap-4"
+            className="grid md:grid-cols-2 lg:grid-cols-4 mt-6 gap-4"
           >
             {featured.map((f: Feature) => (
               <div
-                key={`fitur-${f.title}`}
+                key={`feature-${f.title}`}
                 data-aos="fade-up"
-                className="p-8 bg-zinc-100 rounded flex flex-col justify-center items-center"
+                data-aos-delay="200"
+                className="p-8 bg-zinc-50 rounded flex flex-col justify-center items-center"
               >
                 <div className="h-12 w-12 flex justify-center items-center bg-dashboard-primary text-3xl rounded">
                   {f.icon}

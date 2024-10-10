@@ -30,13 +30,15 @@ const WhyUsComponent = () => {
   return (
     <section className="py-16 lg:py-24 relative bg-zinc-50">
       <span className="absolute inset-0 bg-[url('/dashboard/card.jpg')] bg-repeat bg-cover bg-center opacity-5 lg:opacity-10 grayscale"></span>
-      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[400px] z-20 flex flex-col gap-8 md:grid md:grid-cols-3 lg:gap-32">
-        <div className="md:col-span-2 flex flex-col justify-center">
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[400px] z-20 flex flex-col gap-8 md:gap-12 lg:grid lg:grid-cols-3 lg:gap-32">
+        <div className="lg:col-span-2 flex flex-col justify-center">
           <div data-aos="fade-up">
-            <p className={`${marcellus.className} lg:text-lg mb-1`}>
+            <p className={`${marcellus.className} text-lg md:text-xl mb-1`}>
               Kenapa Memilih Kami?
             </p>
-            <h1 className={`${dm.className} text-3xl lg:text-5xl font-bold`}>
+            <h1
+              className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
+            >
               Mudah dan Praktis untuk Undangan Acara Anda
             </h1>
           </div>
@@ -53,11 +55,13 @@ const WhyUsComponent = () => {
                 </div>
                 <div>
                   <h2
-                    className={`${afacad.className} text-dashboard-dark lg:text-xl font-semibold`}
+                    className={`${afacad.className} text-dashboard-dark text-xl md:text-2xl font-semibold`}
                   >
                     {f.title}
                   </h2>
-                  <p className={`${afacad.className} text-dashboard-dark mt-1`}>
+                  <p
+                    className={`${afacad.className} text-dashboard-dark text-lg mt-1`}
+                  >
                     {f.description}
                   </p>
                 </div>
@@ -66,7 +70,7 @@ const WhyUsComponent = () => {
           </div>
         </div>
         <div
-          className="w-full h-80 lg:h-full relative md:col-span-1"
+          className="w-full h-80 lg:h-full relative md:col-span-1 hidden lg:block"
           data-aos="fade-up"
           data-aos-delay="400"
         >

@@ -69,12 +69,12 @@ const Sidebar: FC<Props> = ({ open, toggle, navData }) => {
                   : "text-dashboard-dark"
               }`}
             >
-              <span className="capitalize">{title}</span>
+              <span className="capitalize text-lg">{title}</span>
             </div>
           </li>
         ))}
         <li
-          className={`flex items-center gap-4 text-lg px-10 mt-16 text-dashboard-dark`}
+          className={`flex items-center gap-4 text-xl px-10 mt-16 text-dashboard-dark`}
         >
           <Link target="_blank" href="https://wa.me/+6281246768627">
             <AiOutlineWhatsApp />

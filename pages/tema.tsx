@@ -94,8 +94,8 @@ const DashboardThemes = () => {
                 }}
                 className="flex gap-x-2 items-center"
               >
-                <HiArrowLongLeft />
-                <p className={`${afacad.className}`}>Kembali</p>
+                <HiArrowLongLeft className="mt-1 text-lg" />
+                <p className={`${afacad.className} text-lg`}>Kembali</p>
               </button>
             </div>
 
@@ -103,10 +103,12 @@ const DashboardThemes = () => {
               data-aos="zoom-out-up"
               className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-8"
             >
-              <p className={`${afacad.className} lg:text-xl`}>
+              <p className={`${afacad.className} text-lg md:text-xl`}>
                 Koleksi Tema Undangan
               </p>
-              <h1 className={`${marcellus.className} text-3xl lg:text-4xl`}>
+              <h1
+                className={`${marcellus.className} text-2xl md:text-4xl lg:text-5xl text-center`}
+              >
                 <span className="text-dashboard-primary">{displayedText}</span>
                 <span className="animate-typing-effect text-dashboard-primary">
                   |

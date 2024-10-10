@@ -12,7 +12,7 @@ export function formatNumber(num: number): string {
 
   // If the number falls within the range for "++"
   if (num >= base && num < base + 10) {
-    return `${base}++`;
+    return `${base}+`;
   }
 
   // For numbers that are exactly multiples of 10, return lowerBound with "0+"

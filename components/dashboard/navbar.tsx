@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 export type NavData = Record<string, string>;
 
 const navData: NavData[] = [
-  { title: "home", path: "/" },
+  { title: "beranda", path: "/" },
   { title: "fitur", path: "/tema" },
   { title: "tema", path: "/" },
   { title: "paket", path: "/" },
@@ -60,7 +60,7 @@ const NavbarComponent = () => {
                       router.push(path);
                     }
                   }}
-                  className={`text-base cursor-pointer outline-none relative text-dashboard-secondary duration-500 font-medium ease-in-out capitalize`}
+                  className={`text-lg cursor-pointer outline-none relative text-dashboard-secondary duration-500 font-medium ease-in-out capitalize`}
                 >
                   {title}
                   <div

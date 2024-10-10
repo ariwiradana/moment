@@ -6,6 +6,7 @@ import {
   BiEdit,
   BiEnvelope,
   BiGlobe,
+  BiGridHorizontal,
   BiGroup,
   BiImage,
   BiImageAdd,
@@ -97,20 +98,23 @@ const FeaturesComponent = () => {
       id="section2"
     >
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative">
-        <div className="flex justify-between items-center" data-aos="fade-up">
+        <div
+          className="flex flex-col md:flex-row md:justify-between lg:items-center"
+          data-aos="fade-up"
+        >
           <h1
-            className={`${dm.className} text-2xl lg:text-4xl text-dashboard-dark`}
+            className={`${dm.className} text-3xl md:text-4xl lg:text-5xl text-dashboard-dark`}
           >
             Fitur Undangan
           </h1>
           <Link href="/fitur">
             <div className="flex gap-x-2 items-center">
-              <p className={`${afacad.className}`}>Semua Fitur</p>
-              <HiArrowLongRight />
+              <p className={`${afacad.className} text-lg`}>Lihat Semua Fitur</p>
+              <HiArrowLongRight className="mt-1 text-lg" />
             </div>
           </Link>
         </div>
-        <div className="grid md:grid-cols-3 lg:grid-cols-4 mt-6 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 mt-6 gap-4">
           {featured.slice(0, 4).map((f: Feature) => (
             <div
               key={`feature-${f.title}`}
@@ -136,7 +140,11 @@ const FeaturesComponent = () => {
         </div>
         <div className="mt-6 flex justify-center md:hidden" data-aos="fade-up">
           <Link href="/fitur">
-            <ButtonPrimary title="Lihat Semua Fitur" size="medium" />
+            <ButtonPrimary
+              icon={<BiGridHorizontal />}
+              title="Lihat Semua Fitur"
+              size="medium"
+            />
           </Link>
         </div>
       </div>

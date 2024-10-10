@@ -27,13 +27,13 @@ const PackageComponent = () => {
                 } border p-12 rounded`}
                 key={p.id}
               >
-                <h1 className={`${dm.className} text-3xl font-bold`}>
+                <h1 className={`${dm.className} text-3xl lg:text-4xl font-bold`}>
                   Paket {p.name}
                 </h1>
-                <h2 className={`${afacad.className} `}>
+                <h2 className={`${afacad.className} text-xl`}>
                   {formatToRupiah(p.price)}
                 </h2>
-                <ul className={`${afacad.className} mt-6 ml-4`}>
+                <ul className={`${afacad.className} mt-6 ml-4 text-lg`}>
                   <li className="list-disc">
                     {p.unlimited_revisions && "Revisi tidak terbatas"}
                   </li>

@@ -29,14 +29,14 @@ const ThemeCard: FC<Props> = ({
   };
 
   return (
-    <div className="select-none lg:p-8 rounded group transition-all ease-in-out duration-1000 relative overflow-hidden">
+    <div className="select-none py-8 lg:p-10 rounded group transition-all ease-in-out duration-1000 relative overflow-hidden border">
       {hasPreview && (
-        <p className={`${afacad.className} text-center text-gray-500`}>
+        <p className={`${afacad.className} text-xl text-center text-gray-500`}>
           {category && hasPreview ? `Undangan ${category}` : "Tema Undangan"}
         </p>
       )}
       <h1
-        className={`${marcellus.className} text-2xl lg:text-3xl text-center text-dashboard-dark leading-8`}
+        className={`${marcellus.className} text-2xl lg:text-4xl text-center text-dashboard-dark leading-8`}
       >
         {name}
       </h1>

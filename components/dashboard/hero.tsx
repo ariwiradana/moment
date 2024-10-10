@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Blob } from "@/lib/types";
 import { Autoplay, EffectCards } from "swiper/modules";
-import { dm } from "@/lib/fonts";
+import { dm, marcellus } from "@/lib/fonts";
 
 const HeroComponent = () => {
   const { data } = useSWR("/api/images?pathname=Themes/Dashboard", fetcher);
@@ -22,8 +22,8 @@ const HeroComponent = () => {
       id="section1"
       className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-zinc-50 overflow-x-hidden`}
     >
-      <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 pt-16  pb-24 lg:pb-32 relative px-6 md:px-12 lg:px-24">
-        <div className="h-full flex justify-center">
+      <div className="max-w-screen-xl mx-auto flex flex-col md:grid md:grid-cols-5 gap-16 lg:gap-36 pt-16 pb-24 lg:pb-32 relative px-6 md:px-12 lg:px-24">
+        <div className="h-full flex justify-center md:col-span-2">
           {images.length > 0 && (
             <div className="w-[180px] lg:w-[260px]" data-aos="zoom-out-up">
               <Swiper
@@ -41,7 +41,7 @@ const HeroComponent = () => {
                 cardsEffect={{
                   slideShadows: false,
                   perSlideOffset: 15,
-                  perSlideRotate: 5,
+                  perSlideRotate: 4,
                 }}
               >
                 {slicedThumbnails.map((thumb, index) => (
@@ -63,38 +63,37 @@ const HeroComponent = () => {
             </div>
           )}
         </div>
-        <div className="h-full flex flex-col justify-center">
+        <div className="h-full flex flex-col justify-center col-span-3">
           <div
             data-aos="fade-right"
             data-aos-delay="200"
-            className="mb-4 text-dashboard-secondary uppercase text-sm flex items-center gap-x-2"
+            className={`mb-4 text-dashboard-dark uppercase flex items-center gap-x-2 ${marcellus.className}`}
           >
-            <span className="pr-3">Simple</span>
+            <span className="pr-2">Simple</span>
             <span>
-              <div className="w-1 h-1 bg-dashboard-secondary rounded"></div>
+              <div className="w-1 h-1 bg-dashboard-dark rounded"></div>
             </span>
-            <span className="px-3">Minimalis</span>
+            <span className="px-2">Minimalis</span>
             <span>
-              <div className="w-1 h-1 bg-dashboard-secondary rounded"></div>
+              <div className="w-1 h-1 bg-dashboard-dark rounded"></div>
             </span>
-            <span className="pl-3">Elegan</span>
+            <span className="pl-2">Elegan</span>
           </div>
           <h1
             data-aos="fade-right"
             data-aos-delay="400"
-            className={`mb-8 text-dashboard-secondary text-4xl lg:text-6xl flex flex-wrap gap-x-2 ${dm.className}`}
+            className={`mb-8 text-dashboard-dark text-4xl md:text-5xl lg:text-7xl flex flex-wrap gap-x-2 ${dm.className}`}
           >
             Bagikan{" "}
             <span className="flex items-center">
               m
-              <span>
+              <span className="relative w-10 md:w-12 lg:w-16 aspect-square">
                 <Image
-                  sizes="40px"
-                  className="animate-spin-slow lg:mt-3"
+                  fill
+                  sizes="52px"
+                  className="animate-spin-slow md:mt-1 lg:mt-2 object-contain"
                   src="/icon.png"
                   alt="font-moment"
-                  width={40}
-                  height={40}
                 />
               </span>
               men
