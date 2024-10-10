@@ -19,6 +19,7 @@ const DashboardThemes = () => {
     AOS.init({
       duration: 1000,
       once: true,
+      offset: 0,
     });
   }, []);
 
@@ -110,29 +111,31 @@ const DashboardThemes = () => {
               </h1>
             </div>
 
-            <div
-              className="grid md:grid-cols-2 lg:grid-cols-2 gap-4"
-              data-aos="fade-up"
-              data-aos-delay="500"
-            >
-              {themes.map((t) => {
-                const slug = createSlug(t.name);
-                return (
-                  <ThemeCard
-                    category={t.category as string}
-                    key={slug}
-                    name={t.name}
-                    thumbnail={t.thumbnail as string}
-                    slug={slug}
-                  />
-                );
-              })}
-              <ThemeCard
-                hasPreview={false}
-                name="Coming Soon"
-                thumbnail="https://placehold.co/720x480/png"
-              />
-            </div>
+            {themes.length > 0 && (
+              <div
+                className="grid md:grid-cols-2 lg:grid-cols-2 gap-4"
+                data-aos="fade-up"
+                data-aos-delay="500"
+              >
+                {themes.map((t) => {
+                  const slug = createSlug(t.name);
+                  return (
+                    <ThemeCard
+                      category={t.category as string}
+                      key={slug}
+                      name={t.name}
+                      thumbnail={t.thumbnail as string}
+                      slug={slug}
+                    />
+                  );
+                })}
+                <ThemeCard
+                  hasPreview={false}
+                  name="Coming Soon"
+                  thumbnail="https://placehold.co/720x480/png"
+                />
+              </div>
+            )}
             {totalRows > limit && (
               <div className="mt-12 flex justify-center">
                 <Pagination
