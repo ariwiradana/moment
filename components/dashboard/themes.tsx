@@ -3,7 +3,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { afacad, dm } from "@/lib/fonts";
 import Link from "next/link";
 import { createSlug } from "@/utils/createSlug";
@@ -19,11 +19,15 @@ const ThemeComponent: FC = () => {
 
   if (slideThemes.length > 0)
     return (
-      <section data-aos="fade-up" className="py-16 lg:py-24" id="section3">
+      <section
+        data-aos="fade-up"
+        className="py-16 lg:py-24 bg-zinc-50"
+        id="section3"
+      >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="flex justify-between items-center">
+          <div data-aos="fade-up" className="flex justify-between items-center">
             <h1
-              className={`${dm.className} text-2xl lg:text-3xl text-dashboard-dark`}
+              className={`${dm.className} text-2xl lg:text-4xl text-dashboard-dark`}
             >
               Koleksi Tema
             </h1>
@@ -34,10 +38,14 @@ const ThemeComponent: FC = () => {
               </div>
             </Link>
           </div>
-          <div className="mt-6">
+          <div className="mt-6" data-aos="fade-up" data-aos-delay="200">
             <Swiper
               autoplay
-              modules={[Autoplay]}
+              pagination={{
+                dynamicBullets: true,
+                clickable: true,
+              }}
+              modules={[Autoplay, Pagination]}
               spaceBetween={16}
               speed={1000}
               breakpoints={{
@@ -58,7 +66,7 @@ const ThemeComponent: FC = () => {
               {slideThemes.map((t) => {
                 const slug = createSlug(t.name);
                 return (
-                  <SwiperSlide key={slug} className="w-full">
+                  <SwiperSlide key={slug} className="w-full mb-12 md:mb-6">
                     <ThemeCard
                       category={t.category as string}
                       name={t.name}

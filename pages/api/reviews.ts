@@ -15,27 +15,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       case "GET":
         const { client_id, page = 1, limit = 10 } = req.query;
 
-        if (!client_id) {
-          throw new Error("Client ID is required");
+        let query = `SELECT * FROM reviews`;
+        let countQuery = `SELECT COUNT(*) FROM reviews`;
+
+        const values: (string | number)[] = [];
+        const countValues: (string | number)[] = [];
+
+        if (client_id) {
+          const valueIndex = values.length + 1;
+          query += ` WHERE client_id = $${valueIndex}`;
+          countQuery += ` WHERE client_id = $${valueIndex}`;
+          values.push(Number(client_id));
+          countValues.push(Number(client_id));
         }
 
+        const valueIndex = values.length + 1;
+        query += ` ORDER BY updated_at DESC LIMIT $${valueIndex} OFFSET $${
+          valueIndex + 1
+        }`;
         const pageNumber = Number(page);
         const limitNumber = Number(limit);
         const offset = (pageNumber - 1) * limitNumber;
-
-        const query = `
-          SELECT * FROM reviews 
-          WHERE client_id = $1 
-          ORDER BY updated_at DESC 
-          LIMIT $2 OFFSET $3
-        `;
-        const countQuery = `
-          SELECT COUNT(*) FROM reviews 
-          WHERE client_id = $1
-        `;
-
-        const values = [Number(client_id), limitNumber, offset];
-        const countValues = [Number(client_id)];
+        values.push(limitNumber, offset);
 
         const { rows } = await sql.query(query, values);
         const { rows: total } = await sql.query(countQuery, countValues);

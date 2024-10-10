@@ -1,33 +1,74 @@
 import React from "react";
-import { dm, marcellus } from "@/lib/fonts";
+import { afacad, dm, marcellus } from "@/lib/fonts";
 import Image from "next/image";
+import { BiCheck } from "react-icons/bi";
 
 const WhyUsComponent = () => {
+  const featured: Record<string, string>[] = [
+    {
+      title: "Harga Terjangkau",
+      description:
+        "Harga bersaing dan beragam fitur menarik membuat undangan Anda spesial.",
+    },
+    {
+      title: "Proses Pembuatan Cepat",
+      description:
+        "Dapatkan undangan online dalam 1-2 jam. Tidak perlu menunggu lama!",
+    },
+    {
+      title: "Responsif dan User-Friendly",
+      description:
+        "Desain responsif di semua perangkat, mudah diakses di ponsel dan komputer.",
+    },
+    {
+      title: "Mudah Dishare",
+      description:
+        "Cukup satu link untuk berbagi undangan ke teman dan keluarga.",
+    },
+  ];
+
   return (
-    <section className="py-16 lg:py-24 relative bg-zinc-50" id="section2">
-      <span className="absolute inset-0 bg-[url('/dashboard/card.jpg')] bg-repeat bg-cover bg-center opacity-10 grayscale"></span>
-      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[60vh] z-20 flex flex-col gap-8 md:grid md:grid-cols-5 lg:gap-32">
-        <div
-          className="md:col-span-3 flex flex-col justify-center"
-          data-aos="fade-up"
-        >
-          <p className={`${marcellus.className} lg:text-lg mb-1`}>
-            Kenapa Memilih Kami?
-          </p>
-          <h1 className={`${dm.className} text-4xl lg:text-5xl font-bold`}>
-            Mudah dan Praktis untuk Undangan Acara Anda
-          </h1>
-          <p
-            className={`${marcellus.className} text-gray-600 text-sm lg:text-lg mt-2`}
+    <section className="py-16 lg:py-24 relative bg-zinc-50">
+      <span className="absolute inset-0 bg-[url('/dashboard/card.jpg')] bg-repeat bg-cover bg-center opacity-5 lg:opacity-10 grayscale"></span>
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[400px] z-20 flex flex-col gap-8 md:grid md:grid-cols-3 lg:gap-32">
+        <div className="md:col-span-2 flex flex-col justify-center">
+          <div data-aos="fade-up">
+            <p className={`${marcellus.className} lg:text-lg mb-1`}>
+              Kenapa Memilih Kami?
+            </p>
+            <h1 className={`${dm.className} text-3xl lg:text-5xl font-bold`}>
+              Mudah dan Praktis untuk Undangan Acara Anda
+            </h1>
+          </div>
+
+          <div
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="grid md:grid-cols-2 gap-x-8 gap-y-4 mt-6 md:mt-12"
           >
-            Kami menawarkan solusi undangan digital yang efisien dan dapat
-            disesuaikan untuk membuat undangan acara Anda menjadi lebih mudah
-            dan cepat.
-          </p>
+            {featured.map((f: Record<string, string>) => (
+              <div key={f.title} className="flex gap-4">
+                <div className="w-5 h-5 bg-dashboard-primary text-dashboard-dark rounded flex justify-center items-center mt-[3px] lg:mt-1">
+                  <BiCheck className="text-xl" />
+                </div>
+                <div>
+                  <h2
+                    className={`${afacad.className} text-dashboard-dark lg:text-xl font-semibold`}
+                  >
+                    {f.title}
+                  </h2>
+                  <p className={`${afacad.className} text-dashboard-dark mt-1`}>
+                    {f.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <div
-          className="w-full h-80 lg:h-full relative md:col-span-2"
+          className="w-full h-80 lg:h-full relative md:col-span-1"
           data-aos="fade-up"
+          data-aos-delay="400"
         >
           <Image
             sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"

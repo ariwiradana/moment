@@ -1,7 +1,9 @@
+import FeaturesComponent from "@/components/dashboard/features";
 import HeroComponent from "@/components/dashboard/hero";
 import Layout from "@/components/dashboard/layout";
 import PackageComponent from "@/components/dashboard/packages";
 import SharedThemeComponent from "@/components/dashboard/shared.theme";
+import TestimonialsComponent from "@/components/dashboard/testimonials";
 import ThemeComponent from "@/components/dashboard/themes";
 import WhyUsComponent from "@/components/dashboard/why.us";
 import useDashboardStore from "@/lib/dashboardStore";
@@ -57,9 +59,11 @@ const Dashboard = () => {
       </Head>
       <HeroComponent />
       <WhyUsComponent />
+      <FeaturesComponent />
       <ThemeComponent />
-      <SharedThemeComponent />
       <PackageComponent />
+      <SharedThemeComponent />
+      <TestimonialsComponent />
     </Layout>
   );
 };

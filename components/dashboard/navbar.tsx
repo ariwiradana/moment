@@ -13,8 +13,8 @@ const navData: NavData[] = [
   { title: "home", path: "/" },
   { title: "fitur", path: "/tema" },
   { title: "tema", path: "/" },
-  { title: "testimoni", path: "/" },
   { title: "paket", path: "/" },
+  { title: "testimoni", path: "/" },
   { title: "tentang kami", path: "/" },
 ];
 

@@ -29,14 +29,14 @@ const ThemeCard: FC<Props> = ({
   };
 
   return (
-    <div className="bg-zinc-50 select-none p-8 lg:p-10 rounded group hover:bg-zinc-100 transition-all ease-in-out duration-1000 relative overflow-hidden">
+    <div className="select-none lg:p-8 rounded group transition-all ease-in-out duration-1000 relative overflow-hidden">
       {hasPreview && (
-        <p className={`${afacad.className} text-center text-gray-400`}>
+        <p className={`${afacad.className} text-center text-gray-500`}>
           {category && hasPreview ? `Undangan ${category}` : "Tema Undangan"}
         </p>
       )}
       <h1
-        className={`${marcellus.className} text-2xl text-center text-dashboard-dark leading-8`}
+        className={`${marcellus.className} text-2xl lg:text-3xl text-center text-dashboard-dark leading-8`}
       >
         {name}
       </h1>
@@ -49,14 +49,14 @@ const ThemeCard: FC<Props> = ({
           alt={`theme-${name}`}
         />
       </div>
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-center gap-3 mt-8">
         {hasPreview && (
           <>
             <div className="flex justify-center">
               <Link href={`/${slug}`} target="_blank">
                 <ButtonPrimary
                   title="Preview"
-                  size="extrasmall"
+                  size="small"
                   icon={<BiShowAlt />}
                 />
               </Link>
@@ -65,7 +65,7 @@ const ThemeCard: FC<Props> = ({
               <ButtonPrimary
                 onClick={() => handleChooseTheme(name, category as string)}
                 title="Pilih Design"
-                size="extrasmall"
+                size="small"
                 icon={<BiEditAlt />}
               />
             </div>

@@ -20,7 +20,7 @@ const HeroComponent = () => {
   return (
     <section
       id="section1"
-      className={`w-full min-h-screen md:min-h-max lg:min-h-screen select-none pt-16 md:pt-20 lg:pt-24 bg-zinc-50 overflow-x-hidden`}
+      className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-zinc-50 overflow-x-hidden`}
     >
       <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 pt-16  pb-24 lg:pb-32 relative px-6 md:px-12 lg:px-24">
         <div className="h-full flex justify-center">
@@ -63,7 +63,7 @@ const HeroComponent = () => {
             </div>
           )}
         </div>
-        <div className="h-full flex flex-col lg:justify-center">
+        <div className="h-full flex flex-col justify-center">
           <div
             data-aos="fade-right"
             data-aos-delay="200"
@@ -82,7 +82,7 @@ const HeroComponent = () => {
           <h1
             data-aos="fade-right"
             data-aos-delay="400"
-            className={`mb-8 text-dashboard-secondary text-4xl lg:text-6xl flex flex-wrap gap-x-4 ${dm.className}`}
+            className={`mb-8 text-dashboard-secondary text-4xl lg:text-6xl flex flex-wrap gap-x-2 ${dm.className}`}
           >
             Bagikan{" "}
             <span className="flex items-center">

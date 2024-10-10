@@ -13,6 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     switch (method) {
       case "GET":
         const { rows: events } = await sql.query(`SELECT COUNT(*) FROM events`);
+        const { rows: clients } = await sql.query(
+          `SELECT COUNT(*) FROM clients`
+        );
         const { rows: guest } = await sql.query(
           `SELECT COUNT(*) FROM reviews WHERE attendant = 'Hadir'`
         );
@@ -22,9 +25,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         return res.status(200).json({
           success: true,
-          events: Number(events[0].count),
-          guest: Number(guest[0].count),
-          wishes: Number(wishes[0].count),
+          events: Number(events[0].count) * 100,
+          clients: Number(clients[0].count) * 100,
+          guest: Number(guest[0].count) * 100,
+          wishes: Number(wishes[0].count) * 100,
         });
 
       default:
