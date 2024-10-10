@@ -24,8 +24,9 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   };
   return (
     <section className="relative bg-white w-full">
+      <span className="absolute inset-0 bg-[url('/dashboard/shared.jpg')] bg-repeat bg-cover bg-center grayscale opacity-10"></span>
       <div
-        className="relative px-6 md:pb-8 w-full flex flex-col justify-center items-center bg-theme1-primary bg-opacity-5"
+        className="relative px-6 md:pb-8 w-full flex flex-col justify-center items-center z-20"
         data-aos="fade-up"
       >
         <div className="w-full max-w-screen-md mx-auto">

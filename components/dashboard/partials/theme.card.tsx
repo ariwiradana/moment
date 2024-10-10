@@ -36,7 +36,7 @@ const ThemeCard: FC<Props> = ({
         </p>
       )}
       <h1
-        className={`${marcellus.className} text-2xl text-center text-dashboard-dark leading-7`}
+        className={`${marcellus.className} text-2xl lg:text-3xl text-center text-dashboard-dark leading-8`}
       >
         {name}
       </h1>

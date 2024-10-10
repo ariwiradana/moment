@@ -1,6 +1,7 @@
 import HeroComponent from "@/components/dashboard/hero";
 import Layout from "@/components/dashboard/layout";
 import PackageComponent from "@/components/dashboard/packages";
+import SharedThemeComponent from "@/components/dashboard/shared.theme";
 import ThemeComponent from "@/components/dashboard/themes";
 import useDashboardStore from "@/lib/dashboardStore";
 import AOS from "aos";
@@ -55,6 +56,7 @@ const Dashboard = () => {
       </Head>
       <HeroComponent />
       <ThemeComponent />
+      <SharedThemeComponent />
       <PackageComponent />
     </Layout>
   );

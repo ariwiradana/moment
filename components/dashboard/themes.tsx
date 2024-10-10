@@ -39,7 +39,7 @@ const ThemeComponent: FC = () => {
               autoplay
               modules={[Autoplay]}
               spaceBetween={16}
-              speed={2000}
+              speed={1000}
               breakpoints={{
                 0: {
                   slidesPerView: 1,

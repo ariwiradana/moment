@@ -6,7 +6,6 @@ import { afacad, marcellus } from "@/lib/fonts";
 import { Theme } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
 import { Pagination } from "@mui/material";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -88,12 +87,16 @@ const DashboardThemes = () => {
         <section className="md:pt-20 lg:pt-24">
           <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 py-24">
             <div className="flex">
-              <Link href="/">
-                <div className="flex gap-x-2 items-center">
-                  <HiArrowLongLeft />
-                  <p className={`${afacad.className}`}>Kembali</p>
-                </div>
-              </Link>
+              <button
+                onClick={() => {
+                  router.push("/");
+                  setActiveSection("section1");
+                }}
+                className="flex gap-x-2 items-center"
+              >
+                <HiArrowLongLeft />
+                <p className={`${afacad.className}`}>Kembali</p>
+              </button>
             </div>
 
             <div

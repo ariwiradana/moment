@@ -23,7 +23,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const limitNumber = Number(limit);
         const offset = (pageNumber - 1) * limitNumber;
 
-        // Main query and count query
         const query = `
           SELECT * FROM reviews 
           WHERE client_id = $1 
