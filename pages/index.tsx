@@ -2,10 +2,42 @@ import HeroComponent from "@/components/dashboard/hero";
 import Layout from "@/components/dashboard/layout";
 import PackageComponent from "@/components/dashboard/packages";
 import ThemeComponent from "@/components/dashboard/themes";
+import useDashboardStore from "@/lib/dashboardStore";
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 const Dashboard = () => {
+  const { activeSection, setActiveSection } = useDashboardStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router && router.pathname === "/") setActiveSection("section1");
+  }, [router]);
+
+  const scrollTo = (section: string) => {
+    setActiveSection(section);
+    const element = document.getElementById(section);
+    if (element) {
+      const isMobile = window.innerWidth < 768;
+
+      const offset = isMobile ? 50 : 100;
+
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (activeSection) scrollTo(activeSection as string);
+  }, [activeSection]);
+
   return (
     <Layout>
       <Head>

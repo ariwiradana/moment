@@ -9,12 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        "spin-slow": "spin 5s linear infinite", // Adjust the duration (3s) for a slower spin
+        "spin-slow": "spin 5s linear infinite",
+        "typing-effect": "pulse 1s linear infinite",
       },
       keyframes: {
         spin: {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
+        },
+        typing: {
+          "0%": { visibility: "hidden" },
+          "100%": { visibility: "visible" },
         },
       },
       colors: {

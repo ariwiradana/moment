@@ -6,7 +6,7 @@ interface StoreState {
 }
 
 const useDashboardStore = create<StoreState>((set) => ({
-  activeSection: "section1",
+  activeSection: "",
   setActiveSection: (section) => set({ activeSection: section }),
 }));
 

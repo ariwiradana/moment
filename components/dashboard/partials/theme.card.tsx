@@ -7,11 +7,12 @@ import Image from "next/image";
 
 interface Props {
   name: string;
-  slug: string;
+  slug?: string;
   thumbnail: string;
+  hasPreview?: boolean;
 }
 
-const ThemeCard: FC<Props> = ({ name, slug, thumbnail }) => {
+const ThemeCard: FC<Props> = ({ name, slug, thumbnail, hasPreview = true }) => {
   return (
     <div className="bg-gray-50 p-10 lg:p-12 rounded group hover:bg-gray-100 transition-all ease-in-out duration-1000">
       <p className={`${afacad.className} text-center text-gray-400`}>
@@ -22,16 +23,18 @@ const ThemeCard: FC<Props> = ({ name, slug, thumbnail }) => {
       >
         {name}
       </h1>
-      <div className="mb-6 flex justify-center mt-4">
-        <Link href={`/${slug}`} target="_blank">
-          <ButtonPrimary
-            title="Preview"
-            size="extrasmall"
-            icon={<BiShowAlt />}
-          />
-        </Link>
-      </div>
-      <div className="w-full h-96 lg:h-[400px] relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500">
+      {hasPreview && (
+        <div className="flex justify-center mt-4">
+          <Link href={`/${slug}`} target="_blank">
+            <ButtonPrimary
+              title="Preview"
+              size="extrasmall"
+              icon={<BiShowAlt />}
+            />
+          </Link>
+        </div>
+      )}
+      <div className="w-full h-96 lg:h-[400px] relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 mt-6">
         <Image
           fill
           src={thumbnail as string}

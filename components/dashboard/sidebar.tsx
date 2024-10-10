@@ -8,10 +8,12 @@ import {
   AiOutlineMail,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
+import { NavData } from "./navbar";
+import { useRouter } from "next/router";
 
 interface Props {
   open: boolean;
-  navData: string[];
+  navData: NavData[];
   toggle: () => void;
 }
 
@@ -19,20 +21,7 @@ const Sidebar: FC<Props> = ({ open, toggle, navData }) => {
   const setActiveSection = useDashboardStore((state) => state.setActiveSection);
   const { activeSection } = useDashboardStore();
 
-  const handleClick = (section: string) => {
-    setActiveSection(section);
-    const element = document.getElementById(section);
-    if (element) {
-      const elementPosition =
-        element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - 50;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+  const router = useRouter();
 
   return (
     <nav
@@ -62,11 +51,16 @@ const Sidebar: FC<Props> = ({ open, toggle, navData }) => {
             </div>
           </Link>
         </li>
-        {navData.map((title, index) => (
+        {navData.map(({ title, path }, index) => (
           <li className="w-full" key={`sidebar-${title}`}>
             <div
               onClick={() => {
-                handleClick(`section${index + 1}`);
+                if (router.pathname === "/") {
+                  setActiveSection(`section${index + 1}`);
+                } else {
+                  setActiveSection(`section${index + 1}`);
+                  router.push(path);
+                }
                 toggle();
               }}
               className={`mx-6 py-3 px-4 my-2 rounded ${afacad.className} ${

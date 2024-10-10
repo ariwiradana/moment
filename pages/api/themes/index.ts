@@ -3,6 +3,7 @@ import { checkApiKey } from "@/lib/apiKey";
 import handleError from "@/lib/errorHandling";
 
 import { Theme } from "@/lib/types";
+import { createSlug } from "@/utils/createSlug";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -77,8 +78,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const { name, thumbnail } = req.body;
 
-        const { rows } =
-          await sql`INSERT INTO themes (name, thumbnail) VALUES (${name}, ${thumbnail}) RETURNING *;`;
+        const slug = createSlug(name);
+
+        const { rows } = await sql.query(
+          `INSERT INTO themes (name, slug, thumbnail) VALUES ($1, $2, $3) RETURNING *;`,
+          [name, slug, thumbnail]
+        );
 
         return res.status(200).json({
           success: true,
@@ -117,13 +122,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const text = `
           UPDATE themes
-          SET name = $1, thumbnail = $2
-          WHERE id = $3
+          SET name = $1, slug = $2, thumbnail = $3
+          WHERE id = $4
           RETURNING *;`;
+
+        const slug = createSlug(name);
 
         const { rows } = await sql.query({
           text,
-          values: [name, thumbnail, id],
+          values: [name, slug, thumbnail, id],
         });
 
         return res.status(200).json({

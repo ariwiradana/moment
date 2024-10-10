@@ -1,18 +1,21 @@
 import { afacad } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import Sidebar from "./sidebar";
 import useDashboardStore from "@/lib/dashboardStore";
+import { useRouter } from "next/router";
 
-const navData: string[] = [
-  "home",
-  "fitur",
-  "tema",
-  "paket",
-  "testimoni",
-  "tentang kami",
+export type NavData = Record<string, string>;
+
+const navData: NavData[] = [
+  { title: "home", path: "/" },
+  { title: "fitur", path: "/tema" },
+  { title: "tema", path: "/" },
+  { title: "paket", path: "/" },
+  { title: "testimoni", path: "/" },
+  { title: "tentang kami", path: "/" },
 ];
 
 const NavbarComponent = () => {
@@ -21,20 +24,7 @@ const NavbarComponent = () => {
 
   const setActiveSection = useDashboardStore((state) => state.setActiveSection);
 
-  const handleClick = (section: string) => {
-    setActiveSection(section);
-    const element = document.getElementById(section);
-    if (element) {
-      const elementPosition =
-        element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - 100;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+  const router = useRouter();
 
   return (
     <section className="bg-white fixed top-0 inset-x-0 z-30 shadow shadow-slate-100">
@@ -59,11 +49,18 @@ const NavbarComponent = () => {
             </Link>
           </li>
           <li className="flex justify-center items-center gap-x-8">
-            {navData.map((title: string, index: number) => (
+            {navData.map(({ title, path }: NavData, index: number) => (
               <div className="hidden lg:flex group" key={title}>
                 <button
-                  onClick={() => handleClick(`section${index + 1}`)}
-                  className={`text-base cursor-pointer relative text-dashboard-secondary duration-500 font-medium ease-in-out capitalize`}
+                  onClick={() => {
+                    if (router.pathname === "/") {
+                      setActiveSection(`section${index + 1}`);
+                    } else {
+                      setActiveSection(`section${index + 1}`);
+                      router.push(path);
+                    }
+                  }}
+                  className={`text-base cursor-pointer outline-none relative text-dashboard-secondary duration-500 font-medium ease-in-out capitalize`}
                 >
                   {title}
                   <div
