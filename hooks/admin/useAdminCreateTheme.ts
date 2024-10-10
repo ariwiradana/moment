@@ -2,29 +2,47 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useClient } from "@/lib/client";
+import { Option } from "@/lib/types";
 
 interface FormData {
   name: string;
   thumbnail: File | string;
+  category: string;
 }
 
 const initalFormData: FormData = {
   name: "",
   thumbnail: "",
+  category: "Pernikahan",
 };
 
+const themeCategoryOptions: Option[] = [
+  { label: "Pernikahan", value: "Pernikahan" },
+  { label: "Mepandes", value: "Mepandes" },
+  { label: "Tanpa Foto", value: "Tanpa Foto" },
+];
 export const useAdminCreateTheme = () => {
   const [formData, setFormData] = useState<FormData>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files } = e.target;
-    setFormData((state) => ({
-      ...state,
-      [name]:
-        name === "price" ? Number(value) : name === "thumbnail" ? files : value,
-    }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (e.target instanceof HTMLInputElement && e.target.type === "file") {
+      const files = e.target.files;
+      setFormData((state) => ({
+        ...state,
+        [name]: files,
+      }));
+    } else {
+      setFormData((state) => ({
+        ...state,
+        [name]: name === "price" ? Number(value) : value,
+      }));
+    }
   };
 
   const handleUploadThumbnail = async () => {
@@ -106,6 +124,7 @@ export const useAdminCreateTheme = () => {
     state: {
       formData,
       loading,
+      themeCategoryOptions,
     },
     actions: {
       handleChange,

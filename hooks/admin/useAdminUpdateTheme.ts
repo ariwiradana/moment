@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useClient } from "@/lib/client";
-import { Theme } from "@/lib/types";
+import { Option, Theme } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 
@@ -11,7 +11,14 @@ const initalFormData: Theme = {
   id: null,
   name: "",
   thumbnail: null,
+  category: "Pernikahan",
 };
+
+const themeCategoryOptions: Option[] = [
+  { label: "Pernikahan", value: "Pernikahan" },
+  { label: "Mepandes", value: "Mepandes" },
+  { label: "Tanpa Foto", value: "Tanpa Foto" },
+];
 
 export const useAdminUpdateTheme = (id: number) => {
   const {
@@ -40,6 +47,7 @@ export const useAdminUpdateTheme = (id: number) => {
         id: currentTheme.id,
         name: currentTheme.name,
         thumbnail: currentTheme.thumbnail,
+        category: currentTheme.category ?? "Pernikahan",
       }));
     }
   }, [themes]);
@@ -91,7 +99,7 @@ export const useAdminUpdateTheme = (id: number) => {
   };
 
   const handleUploadThumbnail = async () => {
-    let imageURL: string = "";
+    let imageURL = formData.thumbnail;
     if (thumbnailImageForm && thumbnailImageForm.length) {
       const MAX_SIZE = 3 * 1024 * 1024;
 
@@ -176,6 +184,7 @@ export const useAdminUpdateTheme = (id: number) => {
       isLoading,
       loading,
       thumbnailImageForm,
+      themeCategoryOptions,
     },
     actions: {
       handleChange,

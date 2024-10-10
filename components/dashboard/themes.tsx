@@ -15,7 +15,9 @@ const ThemeComponent: FC = () => {
 
   const themes: Theme[] = data?.data || [];
 
-  if (themes.length)
+  const slideThemes = themes && themes.length > 5 ? themes.slice(5) : themes;
+
+  if (slideThemes.length > 0)
     return (
       <section className="py-24" id="section3">
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24">
@@ -40,24 +42,25 @@ const ThemeComponent: FC = () => {
               speed={2000}
               breakpoints={{
                 0: {
-                  slidesPerView: "auto",
+                  slidesPerView: 1,
                 },
                 640: {
-                  slidesPerView: "auto",
+                  slidesPerView: 1,
                 },
                 768: {
                   slidesPerView: 2,
                 },
                 1024: {
-                  slidesPerView: 3,
+                  slidesPerView: 2,
                 },
               }}
             >
-              {themes.map((t) => {
+              {slideThemes.map((t) => {
                 const slug = createSlug(t.name);
                 return (
-                  <SwiperSlide key={slug} className="max-w-[90%] md:max-w-full">
+                  <SwiperSlide key={slug} className="w-full">
                     <ThemeCard
+                      category={t.category as string}
                       name={t.name}
                       slug={slug}
                       thumbnail={t.thumbnail as string}

@@ -9,6 +9,7 @@ import Link from "next/link";
 import Loader from "@/components/admin/elements/loader";
 import { useAdminUpdateTheme } from "@/hooks/admin/useAdminUpdateTheme";
 import ImageShimmer from "@/components/image.shimmer";
+import InputSelect from "@/components/admin/elements/select";
 
 interface DetailThemeProps {
   id: number;
@@ -37,10 +38,16 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
             onSubmit={actions.handleSubmit}
           >
             <Input
-              disabled
               value={state.formData.name}
               onChange={(e) => actions.handleChange(e.target.value, "name")}
               label="Name"
+            />
+            <InputSelect
+              onChange={(e) => actions.handleChange(e.target.value, "category")}
+              name="category"
+              label="Theme Category"
+              value={state.formData.category}
+              options={state.themeCategoryOptions}
             />
             <Input
               accept="image/*"
@@ -54,7 +61,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
             />
             {state.formData.thumbnail && (
               <div className="md:w-1/2 w-full relative">
-                <div className="relative h-[30rem]">
+                <div className="relative h-[24rem]">
                   <ImageShimmer
                     priority
                     alt="theme-thumbnail"

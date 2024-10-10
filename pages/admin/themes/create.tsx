@@ -6,11 +6,12 @@ import ButtonPrimary from "@/components/admin/elements/button.primary";
 import { BiFolderPlus, BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
 import { useAdminCreateTheme } from "@/hooks/admin/useAdminCreateTheme";
+import InputSelect from "@/components/admin/elements/select";
 
 const CreateTheme: React.FC = () => {
   const { state, actions } = useAdminCreateTheme();
   return (
-  <AdminLayout>
+    <AdminLayout>
       <div className={`${montserrat.className}`}>
         <Link href="/admin/themes">
           <div className="flex items-center gap-x-1 text-gray-400">
@@ -28,6 +29,13 @@ const CreateTheme: React.FC = () => {
             name="name"
             label="Theme Name"
             value={state.formData.name}
+          />
+          <InputSelect
+            onChange={actions.handleChange}
+            name="category"
+            label="Theme Category"
+            value={state.formData.category}
+            options={state.themeCategoryOptions}
           />
           <Input
             onChange={actions.handleChange}

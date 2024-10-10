@@ -76,13 +76,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "POST":
       try {
-        const { name, thumbnail } = req.body;
+        const { name, thumbnail, category } = req.body;
 
         const slug = createSlug(name);
 
         const { rows } = await sql.query(
-          `INSERT INTO themes (name, slug, thumbnail) VALUES ($1, $2, $3) RETURNING *;`,
-          [name, slug, thumbnail]
+          `INSERT INTO themes (name, slug, thumbnail, category) VALUES ($1, $2, $3, $4) RETURNING *;`,
+          [name, slug, thumbnail, category]
         );
 
         return res.status(200).json({
@@ -90,18 +90,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           data: rows[0],
           name,
           thumbnail,
+          category,
         });
       } catch (error) {
         handleError(res, error);
       }
     case "PUT":
       try {
-        const { id, name, thumbnail } = req.body;
+        const { id, name, thumbnail, category } = req.body;
 
-        if (!id && !name && !thumbnail) {
+        if (!id && !name && !thumbnail && !category) {
           return handleError(
             res,
-            new Error("Required fields: id, name, thumbnail.")
+            new Error("Required fields: id, name, thumbnail, category.")
           );
         }
 
@@ -122,15 +123,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const text = `
           UPDATE themes
-          SET name = $1, slug = $2, thumbnail = $3
-          WHERE id = $4
+          SET name = $1, slug = $2, thumbnail = $3, category = $4
+          WHERE id = $5
           RETURNING *;`;
 
         const slug = createSlug(name);
 
         const { rows } = await sql.query({
           text,
-          values: [name, slug, thumbnail, id],
+          values: [name, slug, thumbnail, category, id],
         });
 
         return res.status(200).json({

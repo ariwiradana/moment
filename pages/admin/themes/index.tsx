@@ -34,10 +34,20 @@ const ReviewDashboard: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
               {state.themes.map((theme) => (
                 <div key={theme.id} className="border rounded-lg p-3">
-                  <div className="flex justify-between items-center pb-3">
+                  <div className="flex justify-between items-center pb-3 border-b">
                     <h1 className="text-gray-800 font-semibold text-sm">
                       {theme.name}
                     </h1>
+                  </div>
+                  <div className="py-3 flex flex-col gap-y-2">
+                    <div>
+                      <p className="text-gray-500 font-medium text-xs">
+                        Category
+                      </p>
+                      <p className="text-gray-800 font-semibold text-sm">
+                        {theme.category}
+                      </p>
+                    </div>
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
                     <Link href={`/admin/themes/${theme.id}`}>
@@ -67,6 +77,9 @@ const ReviewDashboard: React.FC = () => {
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                         Name
                       </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        Category
+                      </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
                         Actions
                       </td>
@@ -84,6 +97,9 @@ const ReviewDashboard: React.FC = () => {
                       >
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           {theme.name}
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          {theme.category}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex gap-x-2">

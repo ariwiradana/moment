@@ -1,17 +1,14 @@
-import { afacad, dm } from "@/lib/fonts";
+import { afacad, marcellus } from "@/lib/fonts";
 import Image from "next/image";
 import React, { FC } from "react";
-import { BiSolidFolderOpen } from "react-icons/bi";
+import { HiFolderOpen } from "react-icons/hi2";
 
-interface Props {
-  theme: string;
-}
-const ThemeNotFound: FC<Props> = () => {
+const ThemeNotFound: FC = () => {
   return (
     <div className="text-center min-h-screen flex items-center justify-center flex-col bg-opacity-[97%] p-6">
-      <BiSolidFolderOpen className="text-7xl mb-4 text-dashboard-dark" />
+      <HiFolderOpen className="text-7xl mb-4 text-dashboard-dark" />
       <h1
-        className={`mb-8 text-dashboard-secondary text-4xl flex flex-wrap gap-x-4 ${dm.className}`}
+        className={`mb-4 text-dashboard-dark text-4xl flex flex-wrap gap-x-4 ${marcellus.className}`}
       >
         Theme{" "}
         <span className="flex items-center">

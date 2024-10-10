@@ -23,16 +23,10 @@ const MainPage: FC<Props> = (props) => {
     });
   }, []);
 
-  const { data: theme } = useSWR(
-    props.slug ? `/api/themes?slug=${props.slug}` : null,
-    fetcher
-  );
   const { data, error } = useSWR(
     props.slug ? `/api/client?slug=${props.slug}` : null,
     fetcher
   );
-
-  console.log(theme);
 
   const client: Client | null = data?.data?.length ? data.data[0] : null;
 
@@ -43,11 +37,7 @@ const MainPage: FC<Props> = (props) => {
   const themeName = client.theme?.name || "";
   const ThemeComponent = themes[themeName];
 
-  return ThemeComponent ? (
-    ThemeComponent(client, props.to)
-  ) : (
-    <ThemeNotFound theme={themeName} />
-  );
+  return ThemeComponent ? ThemeComponent(client, props.to) : <ThemeNotFound />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

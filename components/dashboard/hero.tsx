@@ -5,16 +5,15 @@ import { BiEdit } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Theme } from "@/lib/types";
+import { Blob } from "@/lib/types";
 import { Autoplay, EffectCards } from "swiper/modules";
 import { dm } from "@/lib/fonts";
 
 const HeroComponent = () => {
-  const { data } = useSWR("/api/themes", fetcher);
-  const themes: Theme[] = data?.data || [];
-  const thumbnails: string[] = themes
-    .filter((theme) => theme.thumbnail)
-    .map((theme) => theme.thumbnail!);
+  const { data } = useSWR("/api/images?pathname=Themes/Dashboard", fetcher);
+  const images: Blob[] = data?.blobs || [];
+  const thumbnails: string[] = images.map((theme) => theme.url);
+
   const slicedThumbnails =
     thumbnails.length > 3 ? thumbnails.slice(0, 3) : thumbnails;
 
@@ -27,6 +26,7 @@ const HeroComponent = () => {
         <div className="h-full flex justify-center">
           <div className="w-[180px] lg:w-[260px]">
             <Swiper
+              initialSlide={1}
               speed={2000}
               autoplay
               effect="cards"

@@ -2,6 +2,8 @@ export interface Theme {
   id: number | null;
   slug: string;
   name: string;
+  category?: string;
+  is_preview?: boolean;
   created_at?: Date | string;
   updated_at?: Date | string;
   thumbnail?: string | null;
@@ -90,4 +92,12 @@ export interface Package {
   price: number;
   created_at: string;
   updated_at: string;
+}
+
+export interface Blob {
+  size: number;
+  uploadedAt: Date;
+  pathname: string;
+  url: string;
+  downloadUrl: string;
 }

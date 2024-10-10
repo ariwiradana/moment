@@ -1,14 +1,14 @@
-import { afacad, dm, } from "@/lib/fonts";
+import { afacad, marcellus } from "@/lib/fonts";
 import Image from "next/image";
 import React from "react";
-import { BiSolidUserBadge } from "react-icons/bi";
+import { HiUserGroup } from "react-icons/hi2";
 
 const ClientNotFound = () => {
   return (
     <div className="text-center min-h-screen flex items-center justify-center flex-col bg-opacity-[97%] p-6">
-      <BiSolidUserBadge className="text-7xl mb-4 text-dashboard-dark" />
+      <HiUserGroup className="text-7xl mb-4 text-dashboard-dark" />
       <h1
-        className={`mb-8 text-dashboard-secondary text-4xl flex flex-wrap gap-x-4 ${dm.className}`}
+        className={`mb-4 text-dashboard-dark text-4xl flex flex-wrap gap-x-4 ${marcellus.className}`}
       >
         Client{" "}
         <span className="flex items-center">
