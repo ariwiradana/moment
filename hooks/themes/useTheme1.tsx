@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import moment from "moment";
 import { Client, Participant, Review } from "@/lib/types";
 import toast from "react-hot-toast";
-import { useClient } from "@/lib/client";
+import { getClient } from "@/lib/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
@@ -75,7 +75,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
 
   const { data, mutate } = useSWR(
     client?.id
-      ? `/api/reviews?page=${page}&limit=${limit}&client_id=${client.id}`
+      ? `/api/wishes?page=${page}&limit=${limit}&client_id=${client.id}`
       : null,
     fetcher
   );
@@ -110,7 +110,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     try {
       reviewSchema.parse(formData);
       const createReview = async () => {
-        const response = await useClient(`/api/reviews`, {
+        const response = await getClient(`/api/wishes`, {
           method: "POST",
           body: JSON.stringify(payload),
         });

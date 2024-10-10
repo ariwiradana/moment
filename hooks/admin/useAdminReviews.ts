@@ -3,7 +3,7 @@ import { Client, Option, Review } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useClient } from "@/lib/client";
+import { getClient } from "@/lib/client";
 
 export const useAdminReviews = () => {
   const [page, setPage] = useState<number>(1);
@@ -23,14 +23,14 @@ export const useAdminReviews = () => {
     total_rows: number;
   }>(
     clientId
-      ? `/api/reviews?page=${page}&limit=${limit}&client_id=${clientId}`
+      ? `/api/wishes?page=${page}&limit=${limit}&client_id=${clientId}`
       : undefined,
     fetcher
   );
 
   const handleChangeClient = (value: number) => {
-    setClientId(value)
-  }
+    setClientId(value);
+  };
 
   useEffect(() => {
     if (client?.data && client.data.length) {
@@ -53,7 +53,7 @@ export const useAdminReviews = () => {
   };
 
   const handleDelete = (id: number) => {
-    const deleteReview = useClient(`/api/reviews?id=${id}`, {
+    const deleteReview = getClient(`/api/wishes?id=${id}`, {
       method: "DELETE",
     });
     toast.promise(deleteReview, {

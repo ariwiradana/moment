@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { useClient } from "@/lib/client";
+import { getClient } from "@/lib/client";
 import { Client, Event, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
@@ -113,7 +113,7 @@ export const useAdminCreateClient = () => {
               "Gallery",
               image.type
             );
-            const res = await useClient(
+            const res = await getClient(
               `/api/upload-blob?filename=${filename}`,
               {
                 method: "POST",
@@ -170,7 +170,7 @@ export const useAdminCreateClient = () => {
               "Videos",
               video.type
             );
-            const res = await useClient(
+            const res = await getClient(
               `/api/upload-blob?filename=${filename}`,
               {
                 method: "POST",
@@ -223,7 +223,7 @@ export const useAdminCreateClient = () => {
             "Music",
             music.type
           );
-          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: music,
           });
@@ -270,7 +270,7 @@ export const useAdminCreateClient = () => {
             "Participants",
             image.type
           );
-          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: image,
           });
@@ -398,7 +398,7 @@ export const useAdminCreateClient = () => {
       modifiedFormdata["participants"] = updatedParticipant;
 
       const createClient = async () => {
-        const response = await useClient("/api/client", {
+        const response = await getClient("/api/client", {
           method: "POST",
           body: JSON.stringify(modifiedFormdata),
         });

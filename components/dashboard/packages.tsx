@@ -14,7 +14,11 @@ const PackageComponent = () => {
 
   if (pacakages.length > 0)
     return (
-      <section data-aos="fade-up" className="py-16 lg:py-24" id="section4">
+      <section
+        data-aos="fade-up"
+        className="py-16 lg:py-24 select-none"
+        id="section4"
+      >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pacakages.map((p, index) => {
             const isLast = index === pacakages.length - 1;
@@ -27,7 +31,9 @@ const PackageComponent = () => {
                 } border p-12 rounded`}
                 key={p.id}
               >
-                <h1 className={`${dm.className} text-3xl lg:text-4xl font-bold`}>
+                <h1
+                  className={`${dm.className} text-3xl lg:text-4xl font-bold`}
+                >
                   Paket {p.name}
                 </h1>
                 <h2 className={`${afacad.className} text-xl`}>

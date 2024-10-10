@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useClient } from "@/lib/client";
+import { getClient } from "@/lib/client";
 import { Client, Event, Option, Participant, Theme } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
@@ -277,7 +277,7 @@ export const useAdminUpdateClient = (slug: string) => {
               image.type
             );
 
-            const res = await useClient(
+            const res = await getClient(
               `/api/upload-blob?filename=${filename}`,
               {
                 method: "POST",
@@ -334,7 +334,7 @@ export const useAdminUpdateClient = (slug: string) => {
               "Videos",
               video.type
             );
-            const res = await useClient(
+            const res = await getClient(
               `/api/upload-blob?filename=${filename}`,
               {
                 method: "POST",
@@ -387,7 +387,7 @@ export const useAdminUpdateClient = (slug: string) => {
             "Music",
             musicForm.type
           );
-          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: musicForm,
           });
@@ -434,7 +434,7 @@ export const useAdminUpdateClient = (slug: string) => {
         : formData.cover;
 
     const updateClient = async () => {
-      const response = await useClient(`/api/client?id=${client?.data[0].id}`, {
+      const response = await getClient(`/api/client?id=${client?.data[0].id}`, {
         method: "PUT",
         body: JSON.stringify(modifiedFormdata),
       });
@@ -471,7 +471,7 @@ export const useAdminUpdateClient = (slug: string) => {
       };
 
       const deleteBlob = async () => {
-        const response = await useClient(`/api/client/delete-gallery`, {
+        const response = await getClient(`/api/client/delete-gallery`, {
           method: "POST",
           body: JSON.stringify(payload),
         });
@@ -510,7 +510,7 @@ export const useAdminUpdateClient = (slug: string) => {
       };
 
       const deleteBlob = async () => {
-        const response = await useClient(
+        const response = await getClient(
           `/api/client/delete-participant-image`,
           {
             method: "POST",
@@ -571,7 +571,7 @@ export const useAdminUpdateClient = (slug: string) => {
             image.type
           );
 
-          const res = await useClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
             method: "POST",
             body: image,
           });
@@ -584,7 +584,7 @@ export const useAdminUpdateClient = (slug: string) => {
             });
 
             if (currentParticipants[i].image) {
-              await useClient(`/api/client/delete-participant-image`, {
+              await getClient(`/api/client/delete-participant-image`, {
                 method: "POST",
                 body: JSON.stringify({
                   id: currentParticipants[i].id,
@@ -610,7 +610,7 @@ export const useAdminUpdateClient = (slug: string) => {
 
   const handleSetCover = async (url: string, id: number) => {
     const setCover = async () => {
-      const response = await useClient(`/api/client/set-cover`, {
+      const response = await getClient(`/api/client/set-cover`, {
         method: "POST",
         body: JSON.stringify({ url, id }),
       });
@@ -644,7 +644,7 @@ export const useAdminUpdateClient = (slug: string) => {
       };
 
       const deleteVideo = async () => {
-        const response = await useClient(`/api/client/delete-video`, {
+        const response = await getClient(`/api/client/delete-video`, {
           method: "POST",
           body: JSON.stringify(payload),
         });
@@ -683,7 +683,7 @@ export const useAdminUpdateClient = (slug: string) => {
       };
 
       const deleteMusic = async () => {
-        const response = await useClient(`/api/client/delete-music`, {
+        const response = await getClient(`/api/client/delete-music`, {
           method: "POST",
           body: JSON.stringify(payload),
         });

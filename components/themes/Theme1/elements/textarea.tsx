@@ -20,7 +20,7 @@ const InputTextarea: FC<Props> = (props) => {
       <textarea
         {...props}
         id={props.id}
-        className={`placeholder:text-theme1-gold p-4 w-full outline-none text-base md:text-lg text-theme1-primary rounded-lg ${afacad.className}`}
+        className={`placeholder:text-theme1-gold p-4 w-full outline-none text-base md:text-lg bg-theme1-primary bg-opacity-5 text-theme1-primary rounded-lg ${afacad.className}`}
       />
       {props.error && (
         <p className={`text-admin-danger text-sm mt-1 ${afacad.className}`}>

@@ -9,7 +9,7 @@ import Image from "next/image";
 import moment from "moment";
 
 const ClientComponent = () => {
-  const { data } = useSWR("/api/client?status=paid", fetcher);
+  const { data } = useSWR("/api/client?is_testimoni=true", fetcher);
 
   const clients: Client[] = data?.data || [];
 
@@ -19,7 +19,7 @@ const ClientComponent = () => {
     return (
       <section
         data-aos="fade-up"
-        className="py-16 lg:py-24 relative"
+        className="py-16 lg:py-24 relative select-none"
         id="section5"
       >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative">

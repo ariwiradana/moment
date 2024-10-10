@@ -14,7 +14,7 @@ const SharedThemeComponent = () => {
   const { data } = useSWR("/api/total-shared", fetcher);
 
   return (
-    <section className="py-16 lg:py-24 bg-zinc-50 relative">
+    <section className="py-16 lg:py-24 bg-zinc-50 relative select-none">
       <span className="absolute inset-0 bg-[url('/dashboard/shared.jpg')] bg-repeat bg-cover bg-center"></span>
       <span className="absolute inset-0 bg-black bg-opacity-20"></span>
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-8 relative z-20">

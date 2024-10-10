@@ -28,7 +28,7 @@ const WhyUsComponent = () => {
   ];
 
   return (
-    <section className="py-16 lg:py-24 relative bg-zinc-50">
+    <section className="py-16 lg:py-24 relative bg-zinc-50 select-none">
       <span className="absolute inset-0 bg-[url('/dashboard/card.jpg')] bg-repeat bg-cover bg-center opacity-5 lg:opacity-10 grayscale"></span>
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[400px] z-20 flex flex-col gap-8 md:gap-12 lg:grid lg:grid-cols-3 lg:gap-32">
         <div className="lg:col-span-2 flex flex-col justify-center">

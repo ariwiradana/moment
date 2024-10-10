@@ -1,5 +1,4 @@
 import ButtonPrimary from "@/components/admin/elements/button.primary";
-import ButtonSecondary from "@/components/admin/elements/button.secondary";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminClients } from "@/hooks/admin/useAdminClients";
 import { montserrat } from "@/lib/fonts";
@@ -8,7 +7,7 @@ import moment from "moment";
 import Link from "next/link";
 import React from "react";
 import {
-  BiDetail,
+  BiEditAlt,
   BiLink,
   BiMoneyWithdraw,
   BiPlus,
@@ -19,6 +18,7 @@ import Pagination from "@mui/material/Pagination";
 import { getRandomColors } from "@/utils/getRandomColor";
 import Loader from "@/components/admin/elements/loader";
 import ImageShimmer from "@/components/image.shimmer";
+import ButtonSecondaryIcon from "@/components/admin/elements/button.secondary.icon";
 
 const ClientDashboard: React.FC = () => {
   const { state, actions } = useAdminClients();
@@ -123,7 +123,7 @@ const ClientDashboard: React.FC = () => {
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
                     {client.status === "unpaid" ? (
-                      <ButtonPrimary
+                      <ButtonSecondaryIcon
                         onClick={() =>
                           actions.handleSetPaidStatus(client.id as number)
                         }
@@ -133,9 +133,9 @@ const ClientDashboard: React.FC = () => {
                         icon={<BiMoneyWithdraw className="text-base" />}
                       />
                     ) : (
-                      <ButtonPrimary
+                      <ButtonSecondaryIcon
                         onClick={() =>
-                          actions.handleCopySlug(
+                          actions.handleCopyPreviewLink(
                             `${window.location.hostname}${
                               window.location.port
                                 ? `:${window.location.port}`
@@ -150,13 +150,13 @@ const ClientDashboard: React.FC = () => {
                       />
                     )}
                     <Link href={`/admin/clients/${client.slug}`}>
-                      <ButtonSecondary
+                      <ButtonSecondaryIcon
                         size="extrasmall"
                         title="Detail"
-                        icon={<BiDetail className="text-base" />}
+                        icon={<BiEditAlt className="text-base" />}
                       />
                     </Link>
-                    <ButtonSecondary
+                    <ButtonSecondaryIcon
                       type="button"
                       onClick={() =>
                         client.id && actions.handleDelete(client.id)
@@ -287,7 +287,7 @@ const ClientDashboard: React.FC = () => {
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex gap-2">
                             {client.status === "unpaid" ? (
-                              <ButtonPrimary
+                              <ButtonSecondaryIcon
                                 onClick={() =>
                                   actions.handleSetPaidStatus(
                                     client.id as number
@@ -299,9 +299,9 @@ const ClientDashboard: React.FC = () => {
                                 icon={<BiMoneyWithdraw className="text-base" />}
                               />
                             ) : (
-                              <ButtonPrimary
+                              <ButtonSecondaryIcon
                                 onClick={() =>
-                                  actions.handleCopySlug(
+                                  actions.handleCopyPreviewLink(
                                     `${window.location.hostname}${
                                       window.location.port
                                         ? `:${window.location.port}`
@@ -316,13 +316,13 @@ const ClientDashboard: React.FC = () => {
                               />
                             )}
                             <Link href={`/admin/clients/${client.slug}`}>
-                              <ButtonSecondary
+                              <ButtonSecondaryIcon
                                 size="extrasmall"
                                 title="Detail"
-                                icon={<BiDetail className="text-base" />}
+                                icon={<BiEditAlt className="text-base" />}
                               />
                             </Link>
-                            <ButtonSecondary
+                            <ButtonSecondaryIcon
                               type="button"
                               onClick={() =>
                                 client.id && actions.handleDelete(client.id)

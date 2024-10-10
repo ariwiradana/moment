@@ -1,4 +1,4 @@
-export const useClient = async (
+export const getClient = async (
   url: string,
   options: RequestInit = {}
 ): Promise<Response> => {

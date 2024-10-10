@@ -94,7 +94,7 @@ const FeaturesComponent = () => {
   return (
     <section
       data-aos="fade-up"
-      className="py-16 lg:py-24 relative"
+      className="py-16 lg:py-24 relative select-none"
       id="section2"
     >
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative">

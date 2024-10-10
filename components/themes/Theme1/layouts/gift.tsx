@@ -35,7 +35,7 @@ const GiftComponent: FC<Props> = (props) => {
             <Title
               className="text-theme1-primary"
               title="Kado Digital"
-              caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname} Video`}
+              caption={`Kirim kado digital`}
             />
           </div>
         </div>

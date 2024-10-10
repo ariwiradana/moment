@@ -3,7 +3,7 @@ import { Theme } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useClient } from "@/lib/client";
+import { getClient } from "@/lib/client";
 
 export const useAdminThemes = () => {
   const [page, setPage] = useState<number>(1);
@@ -23,7 +23,7 @@ export const useAdminThemes = () => {
   };
 
   const handleDelete = (id: number) => {
-    const deleteTheme = useClient(`/api/themes?id=${id}`, { method: "DELETE" });
+    const deleteTheme = getClient(`/api/themes?id=${id}`, { method: "DELETE" });
     toast.promise(deleteTheme, {
       loading: "Deleting theme...",
       success: () => {

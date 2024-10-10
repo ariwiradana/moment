@@ -28,6 +28,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
   return (
     <button
       {...props}
+      disabled={props.isloading ? true : false}
       className={`${afacad.className} ${
         props.className ?? ""
       } flex items-center text-dashboard-dark rounded font-medium bg-dashboard-primary bg-opacity-95 transition duration-500 hover:bg-opacity-100 justify-start ${buttonStyles(

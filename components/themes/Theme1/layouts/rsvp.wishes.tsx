@@ -24,7 +24,6 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   };
   return (
     <section className="relative bg-white w-full">
-      <span className="absolute inset-0 bg-[url('/dashboard/shared.jpg')] bg-repeat bg-cover bg-center grayscale opacity-10"></span>
       <div
         className="relative px-6 md:pb-8 w-full flex flex-col justify-center items-center z-20"
         data-aos="fade-up"
@@ -115,7 +114,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             {props.state.reviews?.map((r) => (
               <div key={r.id} className="flex mb-4">
                 <div className="flex-shrink-0">
-                  <div className="w-9 h-9 bg-theme1-primary bg-opacity-10 rounded-full flex justify-center items-center text-base font-medium text-theme1-primary">
+                  <div className="w-9 h-9 bg-zinc-100 rounded-full flex justify-center items-center text-base font-medium text-theme1-primary">
                     <span className={afacad.className}>
                       {getInitial(r.name)}
                     </span>
@@ -123,8 +122,8 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                 </div>
 
                 <div className="ml-4 relative">
-                  <div className="p-3 bg-gray-100 rounded-lg relative">
-                    <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-gray-100"></div>
+                  <div className="p-3 bg-zinc-100 rounded-lg relative">
+                    <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-zinc-100"></div>
 
                     <div className="flex items-center gap-x-3">
                       <h1
@@ -143,12 +142,12 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                   <div
                     className={`flex divide-x-[0.5px] divide-theme1-gold mt-2 ${afacad.className}`}
                   >
-                    <div className="flex items-center gap-1 text-sm text-theme1-gold pr-2">
-                      <BiTime />
-                      <p>{moment(r.created_at).format("DD MMM YYYY")}</p>
+                    <div className="flex gap-1 text-sm text-theme1-gold pr-2">
+                      <BiTime className="mt-[3px]"/>
+                      <p>{moment(r.created_at).fromNow()}</p>
                     </div>
-                    <div className="flex items-center gap-1 text-sm text-theme1-gold pl-2">
-                      <BiUser />
+                    <div className="flex gap-1 text-sm text-theme1-gold pl-2">
+                      <BiUser className="mt-[3px]"/>
                       <p>{attendantText[r.attendant]}</p>
                     </div>
                   </div>

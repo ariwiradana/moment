@@ -4,18 +4,20 @@ interface ButtonPrimaryIconProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string | "";
   icon: ReactNode;
-  size?: "small" | "medium" | "large";
+  size?: "extrasmall" | "small" | "medium" | "large";
 }
 
 const ButtonPrimaryIcon: FC<ButtonPrimaryIconProps> = (props) => {
-  const buttonStyles = (size: "small" | "medium" | "large") => {
+  const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
+      case "extrasmall":
+        return "p-1 h-8 w-8";
       case "small":
-        return "p-2";
+        return "p-2 h-10 w-10";
       case "medium":
-        return "p-3";
+        return "p-3 h-12 w-12";
       case "large":
-        return "py-3";
+        return "py-3 h-12 w-12";
     }
   };
   return (

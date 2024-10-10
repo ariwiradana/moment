@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { Client } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
-import { useClient } from "@/lib/client";
+import { getClient } from "@/lib/client";
 import toast from "react-hot-toast";
 
 export const useAdminClients = () => {
@@ -23,7 +23,7 @@ export const useAdminClients = () => {
   };
 
   const handleDelete = (id: number) => {
-    const deleteTheme = useClient(`/api/client?id=${id}`, {
+    const deleteTheme = getClient(`/api/client?id=${id}`, {
       method: "DELETE",
     });
     toast.promise(deleteTheme, {
@@ -38,20 +38,20 @@ export const useAdminClients = () => {
     });
   };
 
-  const handleCopySlug = (slug: string) => {
+  const handleCopyPreviewLink = (slug: string) => {
     navigator.clipboard
       .writeText(slug)
       .then(() => {
-        toast.success("Slug copied successfully");
+        toast.success("Preview url copied successfully");
       })
       .catch((err) => {
-        toast.error("Failed to copy slug");
+        toast.error("Failed to copy preview url");
       });
   };
 
   const handleSetPaidStatus = async (id: number) => {
     const setPaid = async () => {
-      const response = await useClient(`/api/client/set-status`, {
+      const response = await getClient(`/api/client/set-status`, {
         method: "POST",
         body: JSON.stringify({ status: "paid", id }),
       });
@@ -86,7 +86,7 @@ export const useAdminClients = () => {
       mutate,
       handleChangePagination,
       handleDelete,
-      handleCopySlug,
+      handleCopyPreviewLink,
       handleSetPaidStatus,
     },
   };

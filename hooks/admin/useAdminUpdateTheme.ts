@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { useClient } from "@/lib/client";
+import { getClient } from "@/lib/client";
 import { Option, Theme } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -72,7 +72,7 @@ export const useAdminUpdateTheme = (id: number) => {
     modifiedFormdata["thumbnail"] = newImageUrl;
 
     const updateTheme = async () => {
-      const response = await useClient(`/api/themes?id=${id}`, {
+      const response = await getClient(`/api/themes?id=${id}`, {
         method: "PUT",
         body: JSON.stringify(modifiedFormdata),
       });
@@ -114,7 +114,7 @@ export const useAdminUpdateTheme = (id: number) => {
           });
         }
 
-        const res = await useClient(
+        const res = await getClient(
           `/api/upload-blob?filename=Themes/${formData.name}.${
             image.type.split("/")[1]
           }`,
@@ -149,7 +149,7 @@ export const useAdminUpdateTheme = (id: number) => {
       };
 
       const deleteBlob = async () => {
-        const response = await useClient(`/api/themes/delete-thumbnail`, {
+        const response = await getClient(`/api/themes/delete-thumbnail`, {
           method: "POST",
           body: JSON.stringify(payload),
         });

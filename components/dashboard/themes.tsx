@@ -21,7 +21,7 @@ const ThemeComponent: FC = () => {
     return (
       <section
         data-aos="fade-up"
-        className="py-16 lg:py-24 bg-zinc-50"
+        className="py-16 lg:py-24 bg-zinc-50 select-none"
         id="section3"
       >
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24">
@@ -42,7 +42,7 @@ const ThemeComponent: FC = () => {
                 menyesuaikan dengan konsep acara Anda.
               </p>
             </div>
-            <Link href="/fitur">
+            <Link href="/tema">
               <div className="flex gap-x-2 items-center">
                 <p
                   className={`${afacad.className} text-lg whitespace-nowrap font-medium`}

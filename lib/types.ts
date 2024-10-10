@@ -60,6 +60,7 @@ export interface Client {
   theme_id: number | null;
   theme?: Theme | null;
   cover: null | string;
+  is_testimoni?: boolean;
   created_at?: Date | string;
   updated_at?: Date | string;
 }
@@ -100,4 +101,17 @@ export interface Blob {
   pathname: string;
   url: string;
   downloadUrl: string;
+}
+
+export interface Testimonials {
+  id: number;
+  client_id: number;
+  name: string;
+  comments: string;
+  client_name: string;
+  client_cover: string;
+  theme_name: string;
+  theme_category: string;
+  created_at: string;
+  updated_at: string;
 }

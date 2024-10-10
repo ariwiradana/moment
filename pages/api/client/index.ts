@@ -12,7 +12,8 @@ interface Query {
   slug?: string;
   page?: number;
   limit?: number;
-  status?: string;
+  id?: number;
+  is_testimoni?: boolean | string;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -20,13 +21,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
-        const { slug, page = 1, limit = 10, status }: Query = req.query;
+        const {
+          slug,
+          page = 1,
+          id,
+          limit = 10,
+          is_testimoni,
+        }: Query = req.query;
 
         let query = `SELECT * FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
 
-        const values: (number | string)[] = [];
-        const countValues: (number | string)[] = [];
+        const values: (number | string | boolean)[] = [];
+        const countValues: (number | string | boolean)[] = [];
+
+        if (id) {
+          const valueIndex = values.length + 1;
+          query += ` WHERE id = $${valueIndex}`;
+          countQuery += ` WHERE id = $${valueIndex}`;
+          values.push(id);
+          countValues.push(id);
+        }
 
         if (slug) {
           const valueIndex = values.length + 1;
@@ -36,12 +51,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           countValues.push(slug);
         }
 
-        if (status) {
+        if (is_testimoni) {
           const valueIndex = values.length + 1;
-          query += ` WHERE status = $${valueIndex}`;
-          countQuery += ` WHERE status = $${valueIndex}`;
-          values.push(status);
-          countValues.push(status);
+          const isTestimoniBoolean = is_testimoni === "true";
+
+          query += ` WHERE is_testimoni = $${valueIndex}`;
+          countQuery += ` WHERE is_testimoni = $${valueIndex}`;
+          values.push(isTestimoniBoolean);
+          countValues.push(isTestimoniBoolean);
         }
 
         query += ` ORDER BY updated_at DESC`;
@@ -473,6 +490,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }),
           sql.query({
             text: `DELETE FROM events WHERE client_id = $1`,
+            values: [id],
+          }),
+          sql.query({
+            text: `DELETE FROM testimonials WHERE client_id = $1`,
             values: [id],
           }),
         ]);
