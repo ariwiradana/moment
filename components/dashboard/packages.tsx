@@ -12,7 +12,7 @@ const PackageComponent = () => {
 
   const pacakages: Package[] = data?.data || [];
 
-  if (pacakages)
+  if (pacakages.length > 0)
     return (
       <section className="py-24 bg-gray-50" id="section4">
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
