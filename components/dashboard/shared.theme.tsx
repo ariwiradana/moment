@@ -8,11 +8,9 @@ import { formatNumber } from "@/utils/formatNumberK";
 const SharedThemeComponent = () => {
   const { data } = useSWR("/api/total-shared", fetcher);
 
-  console.log(data?.wishes);
-
   return (
     <section className="py-24 bg-gray-50 relative" id="section4">
-      <span className="absolute inset-0 bg-[url('/dashboard/shared.jpg')] bg-repeat bg-cover bg-center grayscale opacity-40"></span>
+      <span className="absolute inset-0 bg-[url('/dashboard/shared.jpg')] bg-repeat bg-cover bg-center opacity-20 grayscale"></span>
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-3 gap-16 relative z-20">
         <div
           data-aos="fade-up"
@@ -32,7 +30,7 @@ const SharedThemeComponent = () => {
           className="text-dashboard-dark flex flex-col items-center gap-y-2"
         >
           <TiMessages className="text-5xl" />
-          <h1 className={`${dm.className} text-5xl`}>
+          <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.wishes)}
           </h1>
           <h2 className={`${marcellus.className} text-base lg:text-xl`}>
@@ -45,7 +43,7 @@ const SharedThemeComponent = () => {
           className="text-dashboard-dark flex flex-col items-center gap-y-2"
         >
           <TiContacts className="text-5xl" />
-          <h1 className={`${dm.className} text-5xl`}>
+          <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
             {formatNumber(data?.guest)}
           </h1>
           <h2 className={`${marcellus.className} text-base lg:text-xl`}>

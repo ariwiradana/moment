@@ -29,7 +29,7 @@ const ThemeCard: FC<Props> = ({
   };
 
   return (
-    <div className="bg-gray-50 select-none p-8 lg:p-10 rounded group hover:bg-gray-100 transition-all ease-in-out duration-1000">
+    <div className="bg-gray-50 select-none p-8 lg:p-10 rounded group hover:bg-gray-100 transition-all ease-in-out duration-1000 relative overflow-hidden">
       {hasPreview && (
         <p className={`${afacad.className} text-center text-gray-400`}>
           {category && hasPreview ? `Undangan ${category}` : "Tema Undangan"}
