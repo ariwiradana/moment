@@ -3,6 +3,7 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/effect-coverflow";
 import "swiper/css/effect-cards";
+import "swiper/css/grid";
 import "moment/locale/id";
 import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";

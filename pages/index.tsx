@@ -3,6 +3,7 @@ import Layout from "@/components/dashboard/layout";
 import PackageComponent from "@/components/dashboard/packages";
 import SharedThemeComponent from "@/components/dashboard/shared.theme";
 import ThemeComponent from "@/components/dashboard/themes";
+import WhyUsComponent from "@/components/dashboard/why.us";
 import useDashboardStore from "@/lib/dashboardStore";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -55,6 +56,7 @@ const Dashboard = () => {
         <title>Buat Undangan Digital Disini! | Moment Invitation</title>
       </Head>
       <HeroComponent />
+      <WhyUsComponent />
       <ThemeComponent />
       <SharedThemeComponent />
       <PackageComponent />

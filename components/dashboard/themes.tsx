@@ -19,7 +19,7 @@ const ThemeComponent: FC = () => {
 
   if (slideThemes.length > 0)
     return (
-      <section data-aos="fade-up" className="py-24" id="section3">
+      <section data-aos="fade-up" className="py-16 lg:py-24" id="section3">
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex justify-between items-center">
             <h1
