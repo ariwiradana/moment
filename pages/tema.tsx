@@ -165,7 +165,9 @@ const DashboardThemes = () => {
                         : "bg-white text-dashboard-dark"
                     } `}
                   >
-                    {f.category}{" "}
+                    {f.category !== "Semua Undangan"
+                      ? `Undangan ${f.category}`
+                      : f.category}{" "}
                     <span className="text-gray-400">{f.amount}</span>
                   </button>
                 );
