@@ -152,7 +152,7 @@ const DashboardThemes = () => {
 
             <div
               data-aos="fade-up"
-              className={`flex overflow-x-auto gap-1 mb-8 sticky py-4 bg-white z-20 md:top-20 lg:top-24 scrollbar-hide ${afacad.className}`}
+              className={`flex overflow-x-auto gap-1 mb-8 sticky py-4 bg-white z-20 top-16 md:top-20 lg:top-24 hide-scrollbar ${afacad.className}`}
             >
               {filterData.map((f) => {
                 return (
