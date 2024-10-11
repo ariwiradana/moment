@@ -13,8 +13,6 @@ const ClientComponent = () => {
 
   const clients: Client[] = data?.data || [];
 
-  console.log(clients);
-
   if (clients.length > 0)
     return (
       <section
@@ -64,55 +62,59 @@ const ClientComponent = () => {
               }}
               spaceBetween={16}
             >
-              {clients.map((c) => (
-                <SwiperSlide
-                  key={`client-${c.id}`}
-                  className="bg-dashboard-dark p-8 rounded aspect-square text-white mb-12 relative"
-                >
-                  <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-[#000000be]"></div>
-                  <Image
-                    src={c.cover as string}
-                    alt={`client-${c.id}`}
-                    fill
-                    className="object-cover w-full h-full rounded"
-                  />
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
-                    <h1
-                      className={`w-full flex gap-2 ${marcellus.className} text-2xl`}
-                    >
-                      <span>
-                        {(() => {
-                          const participantNames = c.participants.map(
-                            (p) => p.nickname
-                          );
+              {clients.length > 0 &&
+                clients.map((c) => (
+                  <SwiperSlide
+                    key={`client-${c.id}`}
+                    className="bg-dashboard-dark p-8 rounded aspect-square text-white mb-12 relative"
+                  >
+                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-[#000000be]"></div>
+                    <Image
+                      src={
+                        c.cover ||
+                        `https://placehold.co/400/png?font=playfair-display`
+                      }
+                      alt={`client-${c.id}`}
+                      fill
+                      className="object-cover w-full h-full rounded"
+                    />
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
+                      <h1
+                        className={`w-full flex gap-2 ${marcellus.className} text-2xl`}
+                      >
+                        <span>
+                          {(() => {
+                            const participantNames = c.participants.map(
+                              (p) => p.nickname
+                            );
 
-                          let formattedNames;
-                          if (participantNames.length === 2) {
-                            formattedNames = participantNames.join(" & ");
-                          } else if (participantNames.length > 2) {
-                            const lastName = participantNames.pop();
-                            formattedNames =
-                              participantNames.join(", ") + " & " + lastName;
-                          } else {
-                            formattedNames = participantNames[0] || "";
-                          }
+                            let formattedNames;
+                            if (participantNames.length === 2) {
+                              formattedNames = participantNames.join(" & ");
+                            } else if (participantNames.length > 2) {
+                              const lastName = participantNames.pop();
+                              formattedNames =
+                                participantNames.join(", ") + " & " + lastName;
+                            } else {
+                              formattedNames = participantNames[0] || "";
+                            }
 
-                          return formattedNames;
-                        })()}
-                      </span>
-                    </h1>
-                    <p
-                      className={`w-full flex gap-2 items-center ${afacad.className}`}
-                    >
-                      <span>{c.theme?.category}</span>
-                      <div className="w-1 h-1 bg-white rounded-full"></div>
-                      <span>
-                        {moment(c.events[0].date).format("DD MMM YYYY")}
-                      </span>
-                    </p>
-                  </div>
-                </SwiperSlide>
-              ))}
+                            return formattedNames;
+                          })()}
+                        </span>
+                      </h1>
+                      <p
+                        className={`w-full flex gap-2 items-center ${afacad.className}`}
+                      >
+                        <span>{c.theme?.category}</span>
+                        <div className="w-1 h-1 bg-white rounded-full"></div>
+                        <span>
+                          {moment(c.events[0].date).format("DD MMM YYYY")}
+                        </span>
+                      </p>
+                    </div>
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
         </div>
