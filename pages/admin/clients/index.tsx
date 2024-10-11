@@ -9,6 +9,7 @@ import React from "react";
 import {
   BiEditAlt,
   BiLink,
+  BiMessageAdd,
   BiMoneyWithdraw,
   BiPlus,
   BiSolidShow,
@@ -123,6 +124,22 @@ const ClientDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
+                    {client.status === "paid" && (
+                      <ButtonSecondaryIcon
+                        onClick={() =>
+                          actions.handleCopyURL(
+                            `${window.location.hostname}${
+                              window.location.port
+                                ? `:${window.location.port}`
+                                : ""
+                            }/testimoni/${client?.slug}`
+                          )
+                        }
+                        size="extrasmall"
+                        title="Copy Link Testimonial"
+                        icon={<BiMessageAdd className="text-base" />}
+                      />
+                    )}
                     {!client.is_testimoni && client.status === "paid" ? (
                       <ButtonSecondaryIcon
                         onClick={() =>
@@ -146,7 +163,7 @@ const ClientDashboard: React.FC = () => {
                     ) : (
                       <ButtonSecondaryIcon
                         onClick={() =>
-                          actions.handleCopyPreviewLink(
+                          actions.handleCopyURL(
                             `${window.location.hostname}${
                               window.location.port
                                 ? `:${window.location.port}`
@@ -297,6 +314,22 @@ const ClientDashboard: React.FC = () => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex gap-2">
+                            {client.status === "paid" && (
+                              <ButtonSecondaryIcon
+                                onClick={() =>
+                                  actions.handleCopyURL(
+                                    `${window.location.hostname}${
+                                      window.location.port
+                                        ? `:${window.location.port}`
+                                        : ""
+                                    }/testimoni/${client?.slug}`
+                                  )
+                                }
+                                size="extrasmall"
+                                title="Copy Link Testimonial"
+                                icon={<BiMessageAdd className="text-base" />}
+                              />
+                            )}
                             {!client.is_testimoni &&
                             client.status === "paid" ? (
                               <ButtonSecondaryIcon
@@ -306,7 +339,7 @@ const ClientDashboard: React.FC = () => {
                                   )
                                 }
                                 size="extrasmall"
-                                title="Set Testimonial"
+                                title="Set Dashboard Client"
                                 icon={<BiStar className="text-base" />}
                               />
                             ) : null}
@@ -319,13 +352,13 @@ const ClientDashboard: React.FC = () => {
                                 }
                                 type="button"
                                 size="extrasmall"
-                                title="Paid"
+                                title="Mark as Paid"
                                 icon={<BiMoneyWithdraw className="text-base" />}
                               />
                             ) : (
                               <ButtonSecondaryIcon
                                 onClick={() =>
-                                  actions.handleCopyPreviewLink(
+                                  actions.handleCopyURL(
                                     `${window.location.hostname}${
                                       window.location.port
                                         ? `:${window.location.port}`
@@ -335,7 +368,7 @@ const ClientDashboard: React.FC = () => {
                                 }
                                 type="button"
                                 size="extrasmall"
-                                title="Copy Link"
+                                title="Copy Invitation Link"
                                 icon={<BiLink className="text-base" />}
                               />
                             )}

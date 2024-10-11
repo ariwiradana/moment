@@ -38,14 +38,14 @@ export const useAdminClients = () => {
     });
   };
 
-  const handleCopyPreviewLink = (slug: string) => {
+  const handleCopyURL = (slug: string) => {
     navigator.clipboard
       .writeText(slug)
       .then(() => {
-        toast.success("Preview url copied successfully");
+        toast.success("URL copied successfully");
       })
       .catch((err) => {
-        toast.error("Failed to copy preview url");
+        toast.error("Failed to copy URL");
       });
   };
 
@@ -110,7 +110,7 @@ export const useAdminClients = () => {
       mutate,
       handleChangePagination,
       handleDelete,
-      handleCopyPreviewLink,
+      handleCopyURL,
       handleSetPaidStatus,
       handleSetTestimonial,
     },
