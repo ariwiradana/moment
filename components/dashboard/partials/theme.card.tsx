@@ -48,7 +48,7 @@ const ThemeCard: FC<Props> = ({
           {availablePackages?.map((pk: Package) => (
             <p
               key={`package-${pk.id}`}
-              className={`text-dashboard-dark bg-zinc-100 rounded-full font-semibold px-3 py-1 text-sm`}
+              className={`text-dashboard-dark bg-gray-200 rounded-full font-medium px-3 py-1 md:text-lg ${afacad.className}`}
             >
               {pk.name}
             </p>

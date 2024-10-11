@@ -7,6 +7,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
   isLoading?: boolean;
   className?: string;
+  fullWidth?: boolean;
 }
 
 const Button: FC<Props> = ({
@@ -14,6 +15,7 @@ const Button: FC<Props> = ({
   icon,
   isLoading,
   className = "",
+  fullWidth = false,
   ...props
 }) => {
   return (
@@ -21,7 +23,9 @@ const Button: FC<Props> = ({
       {...props}
       className={`${afacad.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} text-white rounded-full min-w-32 bg-theme1-primary pl-4 pr-3 py-3 lg:pl-4 lg:pr-3 text-base flex justify-center items-center gap-x-3 lg:gap-x-4 relative overflow-hidden shadow-sm`}
+      } ${className} text-white rounded-full min-w-24 bg-theme1-primary pl-4 pr-3 py-3 lg:pl-4 lg:pr-3 text-base flex ${
+        fullWidth ? "w-full justify-center" : "justify-between"
+      } items-center gap-x-3 lg:gap-x-4 relative overflow-hidden shadow-sm`}
     >
       <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-5"></span>
       <span className="text-sm lg:text-base">{title}</span>

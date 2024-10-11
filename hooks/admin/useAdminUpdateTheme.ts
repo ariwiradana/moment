@@ -76,6 +76,12 @@ export const useAdminUpdateTheme = (id: number) => {
     }
   };
 
+  const clearFileInput = () => {
+    const thumbInput = document.getElementById("thumbnail") as HTMLInputElement;
+
+    if (thumbInput) thumbInput.value = "";
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -102,6 +108,7 @@ export const useAdminUpdateTheme = (id: number) => {
       success: () => {
         mutate();
         setLoading(false);
+        clearFileInput();
         return "Successfully update theme";
       },
       error: (error: any) => {

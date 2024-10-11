@@ -104,14 +104,14 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     className={`flex flex-col md:flex-row items-center w-full justify-center gap-x-3 gap-y-4 mt-8 ${afacad.className}`}
                   >
                     <Button
-                      className="w-full md:w-auto"
+                      fullWidth
                       title="Simpan Tanggal"
                       onClick={() => actions.handleAddToCalendar(event)}
                       icon={<BiSolidCalendar />}
                     />
                     <Button
                       onClick={() => window.open(event.address_url)}
-                      className="w-full md:w-auto"
+                      fullWidth
                       title="Petunjuk Lokasi"
                       icon={<BiSolidMap />}
                     />

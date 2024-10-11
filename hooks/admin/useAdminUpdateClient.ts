@@ -13,9 +13,6 @@ import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { getFilename } from "@/utils/getFilename";
-import { useRouter } from "next/router";
-
-const apiKey = process.env.NEXT_PUBLIC_API_KEY || "";
 
 const initialParticipants: Participant = {
   name: "",
@@ -84,8 +81,6 @@ export const useAdminUpdateClient = (slug: string) => {
     data: Package[];
   }>(`/api/packages`, fetcher);
 
-  const router = useRouter();
-
   const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -109,6 +104,16 @@ export const useAdminUpdateClient = (slug: string) => {
   const [participantImagesForm, setParticipantImagesForm] = useState<
     (FileList | null)[] | []
   >([]);
+
+  const clearFileInput = () => {
+    const galleryInput = document.getElementById("gallery") as HTMLInputElement;
+    const videoInput = document.getElementById("video") as HTMLInputElement;
+    const musicInput = document.getElementById("music") as HTMLInputElement;
+
+    if (galleryInput) galleryInput.value = "";
+    if (videoInput) videoInput.value = "";
+    if (musicInput) musicInput.value = "";
+  };
 
   useEffect(() => {
     if (packages && packages.data.length > 0) {
@@ -352,7 +357,7 @@ export const useAdminUpdateClient = (slug: string) => {
   const handleUploadVideos = async () => {
     const videoURLs: string[] = [];
     if (videosForm && videosForm.length) {
-      const MAX_SIZE = 10 * 1024 * 1024;
+      const MAX_SIZE = 200 * 1024 * 1024;
 
       let i = 0;
 
@@ -364,7 +369,7 @@ export const useAdminUpdateClient = (slug: string) => {
           );
           try {
             if (video.size > MAX_SIZE) {
-              toast.error(`Video ${i} size to large`, {
+              toast.error(`Video ${i} size must lower than 200mb`, {
                 id: toastUpload,
               });
               continue;
@@ -493,7 +498,7 @@ export const useAdminUpdateClient = (slug: string) => {
       success: () => {
         mutate();
         setLoading(false);
-        router.push("/admin/clients");
+        clearFileInput();
         return "Successfully update client";
       },
       error: (error: any) => {

@@ -63,6 +63,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       className={`${afacad.className} flex flex-col md:flex-row even:md:flex-row-reverse rounded-[36px] lg:rounded-[100px] overflow-hidden relative`}
     >
       <div className="relative h-[55vh] md:h-[35vh] 2xl:h-[35vh] w-full md:w-1/2 flex-grow bg-theme1-primary bg-opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#604a3219] to-[#604a327b] z-20"></div>
         {props.data.image && (
           <ImageShimmer
             sizes="(max-width: 600px) 360px, (max-width: 1024px) 480px, (max-width: 1440px) 720px, 1080px"
@@ -70,7 +71,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             src={props.data.image as string}
             alt={props.data.name}
             fill
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full grayscale-[10%]"
           />
         )}
       </div>

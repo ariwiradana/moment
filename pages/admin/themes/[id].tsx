@@ -74,6 +74,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
               </div>
             </div>
             <Input
+              id="thumbnail"
               accept="image/*"
               type="file"
               multiple

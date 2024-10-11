@@ -186,7 +186,7 @@ export const useAdminCreateClient = () => {
   const handleUploadVideos = async () => {
     const videoURLs: string[] = [];
     if (formData.videos && formData.videos.length > 0) {
-      const MAX_SIZE = 10 * 1024 * 1024;
+      const MAX_SIZE = 200 * 1024 * 1024;
 
       let i = 0;
 
@@ -199,7 +199,7 @@ export const useAdminCreateClient = () => {
           );
           try {
             if (video.size > MAX_SIZE) {
-              toast.error(`Video (${i}) size to large`, {
+              toast.error(`Video ${i} size must lower than 200mb`, {
                 id: toastUpload,
               });
               continue;

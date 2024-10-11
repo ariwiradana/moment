@@ -232,10 +232,10 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     navigator.clipboard
       .writeText(rekening)
       .then(() => {
-        toast.success("No rekening berhasil disalin");
+        toast.success("Berhasil disalin");
       })
       .catch((err) => {
-        toast.error("No rekening gagal disalin");
+        toast.error("Gagal disalin");
       });
   };
 

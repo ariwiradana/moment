@@ -110,6 +110,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             />
             <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
             <Input
+              id="gallery"
               accept="image/*"
               type="file"
               multiple
@@ -180,7 +181,8 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                 : null}
             </div>
             <Input
-              accept="video/mp4, video/quicktime"
+              id="video"
+              accept="video/mp4"
               type="file"
               multiple
               onChange={(e) =>
@@ -229,6 +231,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
             </div>
 
             <Input
+              id="music"
               accept="audio/mp3"
               type="file"
               multiple
