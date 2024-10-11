@@ -2,7 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getClient } from "@/lib/client";
-import { Option } from "@/lib/types";
+import { themeCategoryOptions } from "@/constants/themeCategories";
 
 interface FormData {
   name: string;
@@ -16,11 +16,7 @@ const initalFormData: FormData = {
   category: "Pernikahan",
 };
 
-const themeCategoryOptions: Option[] = [
-  { label: "Pernikahan", value: "Pernikahan" },
-  { label: "Mepandes", value: "Mepandes" },
-  { label: "Tanpa Foto", value: "Tanpa Foto" },
-];
+
 export const useAdminCreateTheme = () => {
   const [formData, setFormData] = useState<FormData>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);

@@ -53,6 +53,7 @@ const ThemeComponent: FC = () => {
               </div>
             </Link>
           </div>
+
           <div className="mt-6" data-aos="fade-up" data-aos-delay="200">
             <Swiper
               autoplay

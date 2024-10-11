@@ -14,6 +14,7 @@ interface Query {
   limit?: number;
   order?: string;
   slug?: string;
+  category?: string;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -28,6 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           limit = 10,
           order = "ASC",
           slug,
+          category,
         }: Query = req.query;
 
         let query = `SELECT * FROM themes`;
@@ -48,8 +50,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           const valueIndex = values.length + 1;
           query += ` WHERE slug = $${valueIndex}`;
           countQuery += ` WHERE slug = $${valueIndex}`;
-          values.push(Number(slug));
-          countValues.push(Number(slug));
+          values.push(slug);
+          countValues.push(slug);
+        }
+
+        if (category) {
+          const valueIndex = values.length + 1;
+          query += ` WHERE category = $${valueIndex}`;
+          countQuery += ` WHERE category = $${valueIndex}`;
+          values.push(category);
+          countValues.push(category);
         }
 
         query += ` ORDER BY updated_at ${order}`;

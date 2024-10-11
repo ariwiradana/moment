@@ -24,12 +24,21 @@ const DashboardThemes = () => {
 
   const { setActiveSection } = useDashboardStore();
 
+  type Filter = {
+    category: string;
+    amount: number | string;
+  };
+
+  const initialFilterData: Filter[] = [];
+
   const [displayedText, setDisplayedText] = useState<string>("");
   const [wordIndex, setWordIndex] = useState<number>(0);
   const [charIndex, setCharIndex] = useState<number>(0);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(5);
+  const [filter, setFilter] = useState<string>("Semua Undangan");
+  const [filterData, setFilterData] = useState<Filter[]>(initialFilterData);
 
   const router = useRouter();
 
@@ -37,7 +46,28 @@ const DashboardThemes = () => {
     if (router && router.pathname === "/tema") setActiveSection("section3");
   }, [router]);
 
-  const { data } = useSWR(`/api/themes?page=${page}&limit=${limit}`, fetcher);
+  const { data: categories } = useSWR(`/api/themes/categories`, fetcher);
+  const { data } = useSWR(
+    filter === "Semua Undangan"
+      ? `/api/themes?page=${page}&limit=${limit}`
+      : `/api/themes?page=${page}&limit=${limit}&category=${filter}`,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (categories && categories.data.length > 0) {
+      const totalAmount = categories.data?.reduce(
+        (sum: number, category: Filter) =>
+          Number(sum) + Number(category.amount),
+        0
+      );
+      const allCategory: Filter = {
+        category: "Semua Undangan",
+        amount: totalAmount,
+      };
+      setFilterData([allCategory, ...categories.data]);
+    }
+  }, [categories]);
 
   const themes: Theme[] = data?.data || [];
   const totalRows = data?.total_rows || 0;
@@ -120,11 +150,32 @@ const DashboardThemes = () => {
               </h1>
             </div>
 
+            <div
+              data-aos="fade-up"
+              className={`flex overflow-x-auto gap-1 mb-8 sticky py-4 bg-white z-20 md:top-20 lg:top-24 scrollbar-hide ${afacad.className}`}
+            >
+              {filterData.map((f) => {
+                return (
+                  <button
+                    key={`category-filter-${f.category}`}
+                    onClick={() => setFilter(f.category)}
+                    className={`flex items-center gap-x-2 text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
+                      filter === f.category
+                        ? "bg-dashboard-dark  text-white"
+                        : "bg-white text-dashboard-dark"
+                    } `}
+                  >
+                    {f.category}{" "}
+                    <span className="text-gray-400">{f.amount}</span>
+                  </button>
+                );
+              })}
+            </div>
+
             {themes.length > 0 && (
               <div
                 className="grid md:grid-cols-2 lg:grid-cols-2 gap-4"
                 data-aos="fade-up"
-                data-aos-delay="500"
               >
                 {themes.map((t) => {
                   const slug = createSlug(t.name);
@@ -138,11 +189,6 @@ const DashboardThemes = () => {
                     />
                   );
                 })}
-                <ThemeCard
-                  hasPreview={false}
-                  name="Coming Soon"
-                  thumbnail="https://placehold.co/720x480/png"
-                />
               </div>
             )}
             {totalRows > limit && (

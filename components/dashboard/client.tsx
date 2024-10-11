@@ -9,7 +9,7 @@ import Image from "next/image";
 import moment from "moment";
 
 const ClientComponent = () => {
-  const { data } = useSWR("/api/client?is_testimoni=true", fetcher);
+  const { data } = useSWR("/api/client?is_testimoni=false", fetcher);
 
   const clients: Client[] = data?.data || [];
 
