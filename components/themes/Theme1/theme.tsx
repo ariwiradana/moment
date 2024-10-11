@@ -30,7 +30,7 @@ const Theme1: FC<Props> = (props) => {
       }
     >
       <>
-        <Cover actions={actions} state={state} to={props.untuk} />
+        <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (
           <div className="relative">
             <MusicComponent actions={actions} refs={refs} state={state} />

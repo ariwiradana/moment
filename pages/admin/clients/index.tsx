@@ -83,7 +83,7 @@ const ClientDashboard: React.FC = () => {
                         <div className="ml-2 flex items-center relative z-10">
                           <Link
                             target="_bank"
-                            href={`/${client.slug}?to=Nama Undangan`}
+                            href={`/${client.slug}?untuk=Nama Undangan`}
                             className="text-gray-500 text-lg"
                           >
                             <BiSolidShow />
@@ -151,7 +151,7 @@ const ClientDashboard: React.FC = () => {
                               window.location.port
                                 ? `:${window.location.port}`
                                 : ""
-                            }/${client?.slug}?to=Nama Undangan`
+                            }/${client?.slug}?untuk=Nama Undangan`
                           )
                         }
                         type="button"
@@ -250,7 +250,7 @@ const ClientDashboard: React.FC = () => {
                               <div className="ml-2 flex items-center relative z-10">
                                 <Link
                                   target="_bank"
-                                  href={`/${client.slug}?to=Nama Undangan`}
+                                  href={`/${client.slug}?untuk=Nama Undangan`}
                                   className="text-gray-500 text-lg"
                                 >
                                   <BiSolidShow />
@@ -330,7 +330,7 @@ const ClientDashboard: React.FC = () => {
                                       window.location.port
                                         ? `:${window.location.port}`
                                         : ""
-                                    }/${client?.slug}?to=Nama Undangan`
+                                    }/${client?.slug}?untuk=Nama Undangan`
                                   )
                                 }
                                 type="button"

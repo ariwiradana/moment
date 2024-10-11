@@ -10,7 +10,6 @@ import {
   BiImageAdd,
   BiImageAlt,
   BiLeftArrowAlt,
-  BiMusic,
   BiSolidPlusCircle,
   BiTime,
   BiX,
@@ -259,7 +258,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                       state.formData.id as number
                     )
                   }
-                  icon={<BiMusic />}
+                  icon={<BiX />}
                   title="Remove"
                   size="small"
                 />
@@ -382,6 +381,17 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                             />
                           </div>
                         </div>
+                      </div>
+                      <div className="flex">
+                        <ButtonPrimary
+                          type="button"
+                          onClick={() =>
+                            actions.handleDeleteEvent(event.id as number)
+                          }
+                          size="small"
+                          title="Remove"
+                          icon={<BiX />}
+                        />
                       </div>
                     </div>
                   }
@@ -625,6 +635,20 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                             )
                           }
                           label="TikTok"
+                        />
+                      </div>
+                      <div className="flex">
+                        <ButtonPrimary
+                          type="button"
+                          onClick={() =>
+                            actions.handleDeleteParticipant(
+                              participant.id as number,
+                              participant.image as string
+                            )
+                          }
+                          size="small"
+                          title="Remove"
+                          icon={<BiX />}
                         />
                       </div>
                     </div>

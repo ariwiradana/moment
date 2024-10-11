@@ -754,6 +754,84 @@ export const useAdminUpdateClient = (slug: string) => {
     }
   };
 
+  const handleDeleteEvent = (id: number) => {
+    try {
+      setLoading(true);
+
+      const deleteEvent = async () => {
+        const response = await getClient(
+          `/api/events?id=${encodeURIComponent(id)}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(deleteEvent(), {
+        loading: "Deleting event...",
+        success: () => {
+          mutate();
+          setLoading(false);
+          return "Successfully delete event";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to delete event";
+        },
+      });
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleDeleteParticipant = (
+    id: number,
+    imageURL?: string | undefined
+  ) => {
+    try {
+      setLoading(true);
+
+      const deleteParticipant = async () => {
+        let url = `/api/participants?id=${encodeURIComponent(id)}`;
+
+        if (imageURL)
+          url = `/api/participants?id=${encodeURIComponent(
+            id
+          )}&image_url=${encodeURIComponent(imageURL)}`;
+
+        const response = await getClient(url, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(deleteParticipant(), {
+        loading: "Deleting participant...",
+        success: () => {
+          mutate();
+          setLoading(false);
+          return "Successfully delete participant";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to delete participant";
+        },
+      });
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     state: {
       formData,
@@ -779,6 +857,8 @@ export const useAdminUpdateClient = (slug: string) => {
       handleDeleteMusic,
       handleAddAnotherEvent,
       handleChangeEvent,
+      handleDeleteEvent,
+      handleDeleteParticipant,
     },
   };
 };

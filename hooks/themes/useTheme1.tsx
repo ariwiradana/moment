@@ -164,7 +164,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
 
         if (allSameDate) {
           const now = moment();
-          const eventTime = moment(events[0].date);
+          const eventTime = moment(`${events[0].date} ${events[0].start_time}`);
           const duration = moment.duration(eventTime.diff(now));
 
           const newCountdown = {

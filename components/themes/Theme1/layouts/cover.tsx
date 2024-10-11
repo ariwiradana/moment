@@ -8,7 +8,7 @@ import { useTheme1 } from "@/hooks/themes/useTheme1";
 interface Props {
   state: useTheme1["state"];
   actions: useTheme1["actions"];
-  to: string;
+  untuk: string;
 }
 
 const Cover: FC<Props> = (props) => {
@@ -56,7 +56,7 @@ const Cover: FC<Props> = (props) => {
           <h2
             className={`text-white font-light text-2xl lg:text-3xl my-2 ${afacad.className}`}
           >
-            {props.to}
+            {props.untuk}
           </h2>
         </div>
         <div data-aos="fade-up" data-aos-delay="900" className="mt-4 lg:mt-6">
