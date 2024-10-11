@@ -51,6 +51,14 @@ const CreateClient: React.FC = () => {
             }
             label="Theme"
           />
+          <InputSelect
+            options={state.packageOptions}
+            value={state.formData.package_id ?? ""}
+            onChange={(e) =>
+              actions.handleChangeClient(Number(e.target.value), "package_id")
+            }
+            label="Package"
+          />
           <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
           <Input
             accept="image/*"

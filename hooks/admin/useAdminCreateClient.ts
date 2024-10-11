@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getClient } from "@/lib/client";
-import { Client, Event, Option, Participant, Theme } from "@/lib/types";
+import {
+  Client,
+  Event,
+  Option,
+  Package,
+  Participant,
+  Theme,
+} from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -40,6 +47,7 @@ const initialEvent: Event = {
 const initalFormData: Client = {
   name: "",
   theme_id: null,
+  package_id: null,
   status: "unpaid",
   participants: [initialParticipant],
   events: [initialEvent],
@@ -60,6 +68,12 @@ export const useAdminCreateClient = () => {
       value: "",
     },
   ]);
+  const [packageOptions, setPackageOptions] = useState<Option[]>([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
   const router = useRouter();
 
   const { data: themes } = useSWR<{
@@ -68,9 +82,28 @@ export const useAdminCreateClient = () => {
     total_rows: number;
   }>(`/api/themes`, fetcher);
 
+  const { data: packages } = useSWR<{
+    success: boolean;
+    data: Package[];
+  }>(`/api/packages`, fetcher);
+
   const clientSchema = z.object({
     name: z.string().min(1, { message: "Client name is required." }),
   });
+
+  useEffect(() => {
+    if (packages && packages.data.length > 0) {
+      const options: Option[] = packages.data.map((theme) => ({
+        label: theme.name,
+        value: theme.id as number,
+      }));
+      setPackageOptions(options);
+      setFormData((state) => ({
+        ...state,
+        package_id: Number(options[0].value),
+      }));
+    }
+  }, [packages]);
 
   useEffect(() => {
     if (themes && themes.data.length > 0) {
@@ -441,6 +474,7 @@ export const useAdminCreateClient = () => {
     state: {
       formData,
       themeOptions,
+      packageOptions,
       toggleEndTimes,
       loading,
       errors,

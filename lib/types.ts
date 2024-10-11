@@ -58,6 +58,7 @@ export interface Client {
   music?: string | File | null;
   status?: "paid" | "unpaid";
   theme_id: number | null;
+  package_id: number | null;
   theme?: Theme | null;
   cover: null | string;
   is_testimoni?: boolean;

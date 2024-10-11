@@ -30,6 +30,7 @@ CREATE TABLE clients (
   slug VARCHAR(255) UNIQUE,
   cover VARCHAR(255),
   theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
+  package_id INT REFERENCES packages(id) ON DELETE SET NULL,
   gallery TEXT[],
   videos TEXT[],
   music VARCHAR(255),

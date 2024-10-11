@@ -155,6 +155,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         }
 
+        if (client.package_id) {
+          const checkPackage =
+            await sql`SELECT EXISTS (SELECT 1 FROM packages WHERE id = ${client.package_id});`;
+          if (!checkPackage.rows[0].exists) {
+            return handleError(
+              res,
+              new Error("Package not found with the provided ID.")
+            );
+          }
+        }
+
         const slug = createSlug(client.name);
 
         if (slug) {
@@ -169,8 +180,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const queryClient = `
-          INSERT INTO clients (slug, name, theme_id, status, gallery, videos, cover, music)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+          INSERT INTO clients (slug, name, theme_id, status, gallery, videos, cover, music, package_id)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
           RETURNING *;
         `;
 
@@ -183,6 +194,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           client.videos,
           client.cover,
           client.music,
+          client.package_id
         ]);
         const clientId = resultClient.rows[0].id;
 
@@ -275,8 +287,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             gallery = $4,
             videos = $5,
             cover = $6,
-            music = $7
-          WHERE id = $8
+            music = $7,
+            package_id = $8
+          WHERE id = $9
           RETURNING *;`;
 
         await sql.query(updateClientQuery, [
@@ -287,6 +300,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           client.videos,
           client.cover,
           client.music,
+          client.package_id,
           Number(id),
         ]);
 
@@ -479,25 +493,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           await Promise.all(deleteVideoPromises);
         }
 
-        await Promise.all([
-          sql.query({
-            text: `DELETE FROM clients WHERE id = $1`,
-            values: [id],
-          }),
-          sql.query({
-            text: `DELETE FROM participants WHERE client_id = $1`,
-            values: [id],
-          }),
-          sql.query({
-            text: `DELETE FROM events WHERE client_id = $1`,
-            values: [id],
-          }),
-          sql.query({
-            text: `DELETE FROM testimonials WHERE client_id = $1`,
-            values: [id],
-          }),
-        ]);
+        await sql.query("BEGIN");
 
+        await sql.query({
+          text: `DELETE FROM participants WHERE client_id = $1`,
+          values: [Number(id)],
+        });
+
+        await sql.query({
+          text: `DELETE FROM events WHERE client_id = $1`,
+          values: [Number(id)],
+        });
+
+        await sql.query({
+          text: `DELETE FROM testimonials WHERE client_id = $1`,
+          values: [Number(id)],
+        });
+
+        await sql.query({
+          text: `DELETE FROM clients WHERE id = $1`,
+          values: [Number(id)],
+        });
+
+        await sql.query("COMMIT");
         return res.status(200).json({
           success: true,
           currentClient,

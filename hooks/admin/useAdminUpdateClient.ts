@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
-import { Client, Event, Option, Participant, Theme } from "@/lib/types";
+import {
+  Client,
+  Event,
+  Option,
+  Package,
+  Participant,
+  Theme,
+} from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -40,6 +47,7 @@ const initalFormData: Client = {
   id: undefined,
   name: "",
   theme_id: null,
+  package_id: null,
   events: [initialEvent],
   participants: [initialParticipants],
   gallery: [],
@@ -64,12 +72,23 @@ export const useAdminUpdateClient = (slug: string) => {
     total_rows: number;
   }>(`/api/themes`, fetcher);
 
+  const { data: packages } = useSWR<{
+    success: boolean;
+    data: Package[];
+  }>(`/api/packages`, fetcher);
+
   const router = useRouter();
 
   const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
+  const [packageOptions, setPackageOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
@@ -83,6 +102,16 @@ export const useAdminUpdateClient = (slug: string) => {
   const [participantImagesForm, setParticipantImagesForm] = useState<
     (FileList | null)[] | []
   >([]);
+
+  useEffect(() => {
+    if (packages && packages.data.length > 0) {
+      const options: Option[] = packages.data.map((pk) => ({
+        label: pk.name,
+        value: pk.id as number,
+      }));
+      setPackageOptions(options);
+    }
+  }, [packages]);
 
   useEffect(() => {
     if (themes && themes.data.length > 0) {
@@ -150,11 +179,10 @@ export const useAdminUpdateClient = (slug: string) => {
         participants: currentParticipants,
         events: currentEvents,
         music: currentClient.music,
+        package_id: currentClient.package_id,
       }));
     }
-  }, [client, themeOptions]);
-
-  console.log({ galleryImagesForm });
+  }, [client, themeOptions, packageOptions]);
 
   const handleChangeClient = (
     value: string | number | FileList | File,
@@ -716,6 +744,7 @@ export const useAdminUpdateClient = (slug: string) => {
     state: {
       formData,
       themeOptions,
+      packageOptions,
       toggleEndTimes,
       galleryImagesForm,
       loading,
