@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET":
       try {
         const query = `
-          SELECT category, COUNT(*) as amount
+          SELECT category, COUNT(*)::int AS amount
           FROM themes
           GROUP BY category;`;
 

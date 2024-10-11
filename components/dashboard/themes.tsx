@@ -88,6 +88,7 @@ const ThemeComponent: FC = () => {
                       name={t.name}
                       slug={slug}
                       thumbnail={t.thumbnail as string}
+                      availablePackages={t.packages}
                     />
                   </SwiperSlide>
                 );

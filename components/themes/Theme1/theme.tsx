@@ -14,7 +14,7 @@ import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
 import GiftComponent from "./layouts/gift";
 interface Props {
-  to: string;
+  untuk: string;
   client: Client;
 }
 
@@ -30,7 +30,7 @@ const Theme1: FC<Props> = (props) => {
       }
     >
       <>
-        <Cover actions={actions} state={state} to={props.to} />
+        <Cover actions={actions} state={state} to={props.untuk} />
         {state.open && (
           <div className="relative">
             <MusicComponent actions={actions} refs={refs} state={state} />

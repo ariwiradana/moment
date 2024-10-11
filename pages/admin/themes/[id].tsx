@@ -10,6 +10,7 @@ import Loader from "@/components/admin/elements/loader";
 import { useAdminUpdateTheme } from "@/hooks/admin/useAdminUpdateTheme";
 import ImageShimmer from "@/components/image.shimmer";
 import InputSelect from "@/components/admin/elements/select";
+import InputCheckbox from "@/components/admin/elements/input.checkbox";
 
 interface DetailThemeProps {
   id: number;
@@ -17,6 +18,8 @@ interface DetailThemeProps {
 
 const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
   const { state, actions } = useAdminUpdateTheme(id);
+
+  console.log(state);
 
   return (
     <AdminLayout>
@@ -49,6 +52,27 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
               value={state.formData.category}
               options={state.themeCategoryOptions}
             />
+            <div>
+              <p className="text-sm text-gray-700 mb-2">Packages</p>
+              <div className="flex gap-x-6">
+                {state.packages.length > 0 &&
+                  state.packages.map((pk) => (
+                    <InputCheckbox
+                      key={`package-${pk.id}`}
+                      checked={state.formData.package_ids.includes(pk.id)}
+                      onChange={(e) =>
+                        actions.handleChange(
+                          Number(e.target.value),
+                          "package_ids"
+                        )
+                      }
+                      name="package_ids"
+                      label={pk.name}
+                      value={pk.id}
+                    />
+                  ))}
+              </div>
+            </div>
             <Input
               accept="image/*"
               type="file"

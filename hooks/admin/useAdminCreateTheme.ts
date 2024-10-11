@@ -1,26 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getClient } from "@/lib/client";
 import { themeCategoryOptions } from "@/constants/themeCategories";
+import { Option, Package } from "@/lib/types";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 
 interface FormData {
   name: string;
   thumbnail: File | string;
   category: string;
+  package_ids: number[] | [];
 }
 
 const initalFormData: FormData = {
   name: "",
   thumbnail: "",
-  category: "Pernikahan",
+  category: themeCategoryOptions[0].value as string,
+  package_ids: [],
 };
-
 
 export const useAdminCreateTheme = () => {
   const [formData, setFormData] = useState<FormData>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+
+  const { data: packageResult } = useSWR<{
+    success: boolean;
+    data: Package[];
+  }>(`/api/packages`, fetcher);
+
+  const packages = packageResult?.data || [];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -33,6 +44,17 @@ export const useAdminCreateTheme = () => {
         ...state,
         [name]: files,
       }));
+    } else if (name === "package_ids") {
+      let currentPackages = [...formData.package_ids];
+      if (currentPackages.includes(Number(value))) {
+        currentPackages = currentPackages.filter((p) => p !== Number(value));
+      } else {
+        currentPackages.push(Number(value));
+      }
+      setFormData((state) => ({
+        ...state,
+        package_ids: currentPackages,
+      }));
     } else {
       setFormData((state) => ({
         ...state,
@@ -40,6 +62,8 @@ export const useAdminCreateTheme = () => {
       }));
     }
   };
+
+  console.log(formData);
 
   const handleUploadThumbnail = async () => {
     let url = "";
@@ -121,6 +145,7 @@ export const useAdminCreateTheme = () => {
       formData,
       loading,
       themeCategoryOptions,
+      packages,
     },
     actions: {
       handleChange,

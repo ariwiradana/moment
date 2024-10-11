@@ -50,7 +50,9 @@ const DashboardThemes = () => {
   const { data } = useSWR(
     filter === "Semua Undangan"
       ? `/api/themes?page=${page}&limit=${limit}`
-      : `/api/themes?page=${page}&limit=${limit}&category=${filter}`,
+      : `/api/themes?page=${page}&limit=${limit}&category=${encodeURIComponent(
+          filter
+        )}`,
     fetcher
   );
 
@@ -68,6 +70,8 @@ const DashboardThemes = () => {
       setFilterData([allCategory, ...categories.data]);
     }
   }, [categories]);
+
+  console.log(filterData);
 
   const themes: Theme[] = data?.data || [];
   const totalRows = data?.total_rows || 0;
@@ -150,29 +154,31 @@ const DashboardThemes = () => {
               </h1>
             </div>
 
-            <div
-              data-aos="fade-up"
-              className={`flex overflow-x-auto gap-1 mb-8 sticky py-4 bg-white z-20 top-16 md:top-20 lg:top-24 hide-scrollbar ${afacad.className}`}
-            >
-              {filterData.map((f) => {
-                return (
-                  <button
-                    key={`category-filter-${f.category}`}
-                    onClick={() => setFilter(f.category)}
-                    className={`flex items-center gap-x-2 text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
-                      filter === f.category
-                        ? "bg-dashboard-dark  text-white"
-                        : "bg-white text-dashboard-dark"
-                    } `}
-                  >
-                    {f.category !== "Semua Undangan"
-                      ? `Undangan ${f.category}`
-                      : f.category}{" "}
-                    <span className="text-gray-400">{f.amount}</span>
-                  </button>
-                );
-              })}
-            </div>
+            {filterData.length > 0 && (
+              <div
+                data-aos="fade-up"
+                className={`flex overflow-x-auto gap-1 mb-8 sticky py-4 bg-white z-20 top-16 md:top-20 lg:top-24 hide-scrollbar ${afacad.className}`}
+              >
+                {filterData.map((f) => {
+                  return (
+                    <button
+                      key={`category-filter-${f.category}`}
+                      onClick={() => setFilter(f.category)}
+                      className={`flex items-center gap-x-2 text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
+                        filter === f.category
+                          ? "bg-dashboard-dark  text-white"
+                          : "bg-white text-dashboard-dark"
+                      } `}
+                    >
+                      {f.category !== "Semua Undangan"
+                        ? `Undangan ${f.category}`
+                        : f.category}{" "}
+                      <span className="text-gray-400">{f.amount}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {themes.length > 0 && (
               <div
@@ -188,6 +194,7 @@ const DashboardThemes = () => {
                       name={t.name}
                       thumbnail={t.thumbnail as string}
                       slug={slug}
+                      availablePackages={t.packages}
                     />
                   );
                 })}

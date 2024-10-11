@@ -28,7 +28,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
         className="relative px-6 md:pb-8 w-full flex flex-col justify-center items-center z-20"
         data-aos="fade-up"
       >
-        <div className="w-full max-w-screen-md mx-auto">
+        <div className="w-full max-w-screen-sm mx-auto">
           <div
             data-aos="zoom-in-up"
             className="relative h-12 lg:h-16 w-full mb-8 mt-16"

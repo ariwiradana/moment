@@ -73,6 +73,30 @@ export const useAdminClients = () => {
     });
   };
 
+  const handleSetTestimonial = async (id: number) => {
+    const setTestimonial = async () => {
+      const response = await getClient(`/api/client/set-testimonial`, {
+        method: "POST",
+        body: JSON.stringify({ is_testimoni: true, id }),
+      });
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      return await response.json();
+    };
+    toast.promise(setTestimonial(), {
+      loading: "Set testimonial...",
+      success: () => {
+        mutate();
+        return "Successfully set testimonial";
+      },
+      error: (error: any) => {
+        return error.message || "Failed to set testimonial";
+      },
+    });
+  };
+
   return {
     state: {
       clients: data?.data || [],
@@ -88,6 +112,7 @@ export const useAdminClients = () => {
       handleDelete,
       handleCopyPreviewLink,
       handleSetPaidStatus,
+      handleSetTestimonial,
     },
   };
 };

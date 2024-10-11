@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import ButtonPrimary from "../elements/button.primary";
 import { BiEditAlt, BiShowAlt } from "react-icons/bi";
 import ImageShimmer from "@/components/image.shimmer";
+import { Package } from "@/lib/types";
 
 interface Props {
   name: string;
@@ -11,6 +12,7 @@ interface Props {
   thumbnail: string;
   hasPreview?: boolean;
   category?: string;
+  availablePackages?: Package[];
 }
 
 const ThemeCard: FC<Props> = ({
@@ -19,6 +21,7 @@ const ThemeCard: FC<Props> = ({
   thumbnail,
   category,
   hasPreview = true,
+  availablePackages,
 }) => {
   const handleChooseTheme = (name: string, category: string) => {
     const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Kategori: ${category}\n- Tema: ${name}`;
@@ -40,6 +43,18 @@ const ThemeCard: FC<Props> = ({
       >
         {name}
       </h1>
+      <div className="flex justify-center mt-3">
+        <div className="flex gap-2">
+          {availablePackages?.map((pk: Package) => (
+            <p
+              key={`package-${pk.id}`}
+              className={`text-dashboard-dark bg-zinc-100 rounded-full font-semibold px-3 py-1 text-sm`}
+            >
+              {pk.name}
+            </p>
+          ))}
+        </div>
+      </div>
       <div className="w-full aspect-[3/3] relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 mt-6">
         <ImageShimmer
           priority

@@ -54,6 +54,13 @@ const initalFormData: Client = {
   cover: null,
   videos: [],
   music: null,
+  opening_title: "",
+  opening_description: "",
+  closing_title: "",
+  closing_description: "",
+  gift_bank_name: "",
+  gift_account_name: "",
+  gift_account_number: "",
 };
 
 export const useAdminUpdateClient = (slug: string) => {
@@ -180,6 +187,13 @@ export const useAdminUpdateClient = (slug: string) => {
         events: currentEvents,
         music: currentClient.music,
         package_id: currentClient.package_id,
+        opening_title: currentClient.opening_title,
+        opening_description: currentClient.opening_description,
+        closing_title: currentClient.closing_title,
+        closing_description: currentClient.closing_description,
+        gift_bank_name: currentClient.gift_bank_name,
+        gift_account_number: currentClient.gift_account_number,
+        gift_account_name: currentClient.gift_account_name,
       }));
     }
   }, [client, themeOptions, packageOptions]);

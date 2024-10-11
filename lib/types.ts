@@ -7,6 +7,8 @@ export interface Theme {
   created_at?: Date | string;
   updated_at?: Date | string;
   thumbnail?: string | null;
+  package_ids: number[];
+  packages?: Package[];
 }
 
 export interface Option {
@@ -50,6 +52,13 @@ export interface Event {
 export interface Client {
   id?: number;
   name: string;
+  opening_title: string;
+  opening_description: string;
+  closing_title: string;
+  closing_description: string;
+  gift_bank_name: string;
+  gift_account_name: string;
+  gift_account_number: string;
   slug?: string;
   events: Event[];
   participants: Participant[];

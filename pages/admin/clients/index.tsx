@@ -12,6 +12,7 @@ import {
   BiMoneyWithdraw,
   BiPlus,
   BiSolidShow,
+  BiStar,
   BiTrash,
 } from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
@@ -122,6 +123,16 @@ const ClientDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="border-t pt-3 flex justify-end gap-x-3">
+                    {!client.is_testimoni && client.status === "paid" ? (
+                      <ButtonSecondaryIcon
+                        onClick={() =>
+                          actions.handleSetTestimonial(client.id as number)
+                        }
+                        size="extrasmall"
+                        title="Set Testimonial"
+                        icon={<BiStar className="text-base" />}
+                      />
+                    ) : null}
                     {client.status === "unpaid" ? (
                       <ButtonSecondaryIcon
                         onClick={() =>
@@ -286,6 +297,19 @@ const ClientDashboard: React.FC = () => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex gap-2">
+                            {!client.is_testimoni &&
+                            client.status === "paid" ? (
+                              <ButtonSecondaryIcon
+                                onClick={() =>
+                                  actions.handleSetTestimonial(
+                                    client.id as number
+                                  )
+                                }
+                                size="extrasmall"
+                                title="Set Testimonial"
+                                icon={<BiStar className="text-base" />}
+                              />
+                            ) : null}
                             {client.status === "unpaid" ? (
                               <ButtonSecondaryIcon
                                 onClick={() =>

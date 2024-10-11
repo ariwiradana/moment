@@ -72,10 +72,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         values.push(limitNumber, offset);
 
         const { rows } = await sql.query(query, values);
+        const { rows: packages } = await sql.query(`SELECT * FROM packages`);
+
+        const themes = rows.map((theme: Theme) => {
+          const filteredPackage = packages.filter((pkg) =>
+            theme.package_ids.includes(pkg.id)
+          );
+          return {
+            ...theme,
+            packages: filteredPackage,
+          };
+        });
+
         const { rows: total } = await sql.query(countQuery, countValues);
         return res.status(200).json({
           success: true,
-          data: rows,
+          data: themes,
           total_rows: Number(total[0].count),
           page: pageNumber,
           limit: limitNumber,
@@ -86,13 +98,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "POST":
       try {
-        const { name, thumbnail, category } = req.body;
+        const { name, thumbnail, category, package_ids } = req.body;
 
         const slug = createSlug(name);
 
         const { rows } = await sql.query(
-          `INSERT INTO themes (name, slug, thumbnail, category) VALUES ($1, $2, $3, $4) RETURNING *;`,
-          [name, slug, thumbnail, category]
+          `
+            INSERT INTO themes (name, slug, thumbnail, category, package_ids) 
+            VALUES ($1, $2, $3, $4, $5) 
+            RETURNING *;`,
+          [name, slug, thumbnail, category, package_ids]
         );
 
         return res.status(200).json({
@@ -107,12 +122,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     case "PUT":
       try {
-        const { id, name, thumbnail, category } = req.body;
+        const { id, name, thumbnail, category, package_ids } = req.body;
 
         if (!id && !name && !thumbnail && !category) {
           return handleError(
             res,
-            new Error("Required fields: id, name, thumbnail, category.")
+            new Error("Please fill up the required field.")
           );
         }
 
@@ -133,15 +148,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const text = `
           UPDATE themes
-          SET name = $1, slug = $2, thumbnail = $3, category = $4
-          WHERE id = $5
+          SET name = $1, slug = $2, thumbnail = $3, category = $4, package_ids = $5
+          WHERE id = $6
           RETURNING *;`;
 
         const slug = createSlug(name);
 
         const { rows } = await sql.query({
           text,
-          values: [name, slug, thumbnail, category, id],
+          values: [name, slug, thumbnail, category, package_ids, id],
         });
 
         return res.status(200).json({

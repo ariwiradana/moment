@@ -4,9 +4,9 @@ import Theme1 from "./Theme1/theme";
 
 export const themes: Record<
   string,
-  (client: Client, to: string) => JSX.Element
+  (client: Client, untuk: string) => JSX.Element
 > = {
-  Aakarshana: (client: Client, to: string) => (
-    <Theme1 client={client} to={to} />
+  Aakarshana: (client: Client, untuk: string) => (
+    <Theme1 client={client} untuk={untuk} />
   ),
 };

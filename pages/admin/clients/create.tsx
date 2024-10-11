@@ -59,6 +59,35 @@ const CreateClient: React.FC = () => {
             }
             label="Package"
           />
+          <h1 className="text-2xl font-bold mb-4 mt-8">Greeting(s)</h1>
+          <Input
+            value={state.formData.opening_title}
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.value, "opening_title")
+            }
+            label="Opening Title"
+          />
+          <InputTextarea
+            value={state.formData.opening_description}
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.value, "opening_description")
+            }
+            label="Opening Description"
+          />
+          <Input
+            value={state.formData.closing_title}
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.value, "closing_title")
+            }
+            label="Closing Title"
+          />
+          <InputTextarea
+            value={state.formData.closing_description}
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.value, "closing_description")
+            }
+            label="Closing Description"
+          />
           <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
           <Input
             accept="image/*"
@@ -423,6 +452,30 @@ const CreateClient: React.FC = () => {
                 icon={<BiSolidPlusCircle />}
               />
             </div>
+          </div>
+          <h1 className="text-2xl font-bold mb-4 mt-8">Digital Gift</h1>
+          <div className="grid md:grid-cols-3 gap-4">
+            <Input
+              value={state.formData.gift_bank_name}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "gift_bank_name")
+              }
+              label="Bank / Platform Name"
+            />
+            <Input
+              value={state.formData.gift_account_name}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "gift_account_name")
+              }
+              label="Account Name"
+            />
+            <Input
+              value={state.formData.gift_account_number}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "gift_account_number")
+              }
+              label="Account Number"
+            />
           </div>
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary

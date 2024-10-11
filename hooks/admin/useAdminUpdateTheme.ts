@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getClient } from "@/lib/client";
-import { Option, Theme } from "@/lib/types";
+import { Option, Package, Theme } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { themeCategoryOptions } from "@/constants/themeCategories";
 
 const initalFormData: Theme = {
   slug: "",
@@ -12,13 +13,8 @@ const initalFormData: Theme = {
   name: "",
   thumbnail: null,
   category: "Pernikahan",
+  package_ids: [],
 };
-
-const themeCategoryOptions: Option[] = [
-  { label: "Pernikahan", value: "Pernikahan" },
-  { label: "Mepandes", value: "Mepandes" },
-  { label: "Tanpa Foto", value: "Tanpa Foto" },
-];
 
 export const useAdminUpdateTheme = (id: number) => {
   const {
@@ -30,7 +26,12 @@ export const useAdminUpdateTheme = (id: number) => {
     data: Theme[];
   }>(id ? `/api/themes?id=${id}` : undefined, fetcher);
 
-  const router = useRouter();
+  const { data: packageResult } = useSWR<{
+    success: boolean;
+    data: Package[];
+  }>(`/api/packages`, fetcher);
+
+  const packages = packageResult?.data || [];
 
   const [formData, setFormData] = useState<Theme>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,6 +49,7 @@ export const useAdminUpdateTheme = (id: number) => {
         name: currentTheme.name,
         thumbnail: currentTheme.thumbnail,
         category: currentTheme.category ?? "Pernikahan",
+        package_ids: currentTheme.package_ids,
       }));
     }
   }, [themes]);
@@ -55,6 +57,17 @@ export const useAdminUpdateTheme = (id: number) => {
   const handleChange = (value: string | number | FileList, name: string) => {
     if (name === "thumbnail") {
       setThumbnailImageForm(value as FileList);
+    } else if (name === "package_ids") {
+      let currentPackages = [...formData.package_ids];
+      if (currentPackages.includes(Number(value))) {
+        currentPackages = currentPackages.filter((p) => p !== Number(value));
+      } else {
+        currentPackages.push(Number(value));
+      }
+      setFormData((state) => ({
+        ...state,
+        package_ids: currentPackages,
+      }));
     } else {
       setFormData((state) => ({
         ...state,
@@ -185,6 +198,7 @@ export const useAdminUpdateTheme = (id: number) => {
       loading,
       thumbnailImageForm,
       themeCategoryOptions,
+      packages,
     },
     actions: {
       handleChange,

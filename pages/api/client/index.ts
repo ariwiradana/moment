@@ -2,7 +2,14 @@ import { checkApiKey } from "@/lib/apiKey";
 
 import handleError from "@/lib/errorHandling";
 
-import { Client, Event, Participant, Review, Theme } from "@/lib/types";
+import {
+  Client,
+  Event,
+  Package,
+  Participant,
+  Review,
+  Theme,
+} from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
@@ -99,6 +106,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
         const { rows: reviews } = await sql.query(`SELECT * FROM reviews`);
+        const { rows: packages } = await sql.query(`SELECT * FROM packages`);
 
         const clients = rows.map((client: Client) => {
           const clientParticipants = participants.filter(
@@ -107,6 +115,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           const clientEvents = events.filter((e) => e.client_id === client.id);
           const clientTheme: Theme[] = themes.find(
             (t) => t.id === client.theme_id
+          );
+          const clientPackages: Package[] = packages.find(
+            (t) => t.id === client.package_id
           );
           const clientReviews: Review[] = reviews.filter(
             (r) => r.client_id === client.id
@@ -117,6 +128,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             events: clientEvents,
             theme: clientTheme,
             reviews: clientReviews,
+            packages: clientPackages,
           };
         });
 
@@ -180,8 +192,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const queryClient = `
-          INSERT INTO clients (slug, name, theme_id, status, gallery, videos, cover, music, package_id)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+          INSERT INTO clients (
+            slug,
+            name,
+            theme_id,
+            status,
+            gallery,
+            videos,
+            cover,
+            music,
+            package_id,
+            opening_title,
+            opening_description,
+            closing_title,
+            closing_description,
+            gift_bank_name,
+            gift_account_name,
+            gift_account_number
+          )
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
           RETURNING *;
         `;
 
@@ -194,7 +223,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           client.videos,
           client.cover,
           client.music,
-          client.package_id
+          client.package_id,
+          client.opening_title,
+          client.opening_description,
+          client.closing_title,
+          client.closing_description,
+          client.gift_bank_name,
+          client.gift_account_name,
+          client.gift_account_number,
         ]);
         const clientId = resultClient.rows[0].id;
 
@@ -205,7 +241,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           const participantPromises = participants.map(
             async (p: Participant) => {
               const addParticipantQuery = `
-                INSERT INTO participants (client_id, name, nickname, address, child, parents_male, parents_female, gender, role, image, facebook, twitter, instagram, tiktok)
+                  INSERT INTO participants (
+                  client_id,
+                  name,
+                  nickname,
+                  address,
+                  child,
+                  parents_male,
+                  parents_female,
+                  gender,
+                  role,
+                  image,
+                  facebook,
+                  twitter,
+                  instagram,
+                  tiktok
+                )
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
                 RETURNING *;
               `;
@@ -288,8 +339,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             videos = $5,
             cover = $6,
             music = $7,
-            package_id = $8
-          WHERE id = $9
+            package_id = $8,
+            opening_title = $9, 
+            opening_description = $10, 
+            closing_title = $11, 
+            closing_description = $12,
+            gift_bank_name = $13,
+            gift_account_name = $14,
+            gift_account_number = $15
+          WHERE id = $16
           RETURNING *;`;
 
         await sql.query(updateClientQuery, [
@@ -301,6 +359,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           client.cover,
           client.music,
           client.package_id,
+          client.opening_title,
+          client.opening_description,
+          client.closing_title,
+          client.closing_description,
+          client.gift_bank_name,
+          client.gift_account_name,
+          client.gift_account_number,
           Number(id),
         ]);
 

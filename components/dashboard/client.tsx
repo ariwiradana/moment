@@ -9,7 +9,7 @@ import Image from "next/image";
 import moment from "moment";
 
 const ClientComponent = () => {
-  const { data } = useSWR("/api/client?is_testimoni=false", fetcher);
+  const { data } = useSWR("/api/client?is_testimoni=true", fetcher);
 
   const clients: Client[] = data?.data || [];
 
@@ -104,9 +104,9 @@ const ClientComponent = () => {
                         </span>
                       </h1>
                       <p
-                        className={`w-full flex gap-2 items-center ${afacad.className}`}
+                        className={`w-full flex gap-2 items-center font-light ${afacad.className}`}
                       >
-                        <span>{c.theme?.category}</span>
+                        <span>{c.theme?.name}</span>
                         <div className="w-1 h-1 bg-white rounded-full"></div>
                         <span>
                           {moment(c.events[0].date).format("DD MMM YYYY")}

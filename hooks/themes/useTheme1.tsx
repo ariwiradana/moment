@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import moment from "moment";
-import { Client, Participant, Review } from "@/lib/types";
+import { Client, Event, Participant, Review } from "@/lib/types";
 import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
 import useSWR from "swr";
@@ -35,7 +35,6 @@ export interface useTheme1 {
     formData: FormData;
     reviews: Review[] | null;
     errors: Record<string, string | undefined>;
-    otherParticipants: Participant[] | null;
   };
   actions: {
     handleOpenCover: () => void;
@@ -43,6 +42,7 @@ export interface useTheme1 {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handlePlayPause: () => void;
     handleCopyRekening: (rekening: string) => void;
+    handleAddToCalendar: (event: Event) => void;
   };
 }
 
@@ -55,9 +55,6 @@ const initialReviewForm = {
 const useTheme1 = (client: Client | null): useTheme1 => {
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
-  const [otherParticipants, setOtherParticipants] = useState<
-    Participant[] | null
-  >(null);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<Countdown>({
@@ -204,11 +201,6 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     [client]
   );
 
-  const otherParticipantData = useMemo(
-    () => client?.participants.filter((p) => p.role === "participant") || null,
-    [client]
-  );
-
   useEffect(() => {
     if (client) {
       updateCountdown();
@@ -216,7 +208,6 @@ const useTheme1 = (client: Client | null): useTheme1 => {
 
       setBride(brideParticipant);
       setGroom(groomParticipant);
-      setOtherParticipants(otherParticipantData);
 
       return () => clearInterval(interval);
     }
@@ -248,6 +239,36 @@ const useTheme1 = (client: Client | null): useTheme1 => {
       });
   };
 
+  const formatDateTime = (date: string, time: string) => {
+    return moment(`${date} ${time}`, "YYYY-MM-DD HH:mm")
+      .utc()
+      .format("YYYYMMDDTHHmmss[Z]");
+  };
+
+  const handleAddToCalendar = (event: Event) => {
+    const startDate = formatDateTime(event.date, event.start_time);
+    const endDate = formatDateTime(
+      event.date,
+      event.end_time === "Selesai" ? "23:59" : event.end_time
+    );
+    const participants = `${groom?.nickname} & ${bride?.nickname}`;
+    const description = `${client?.opening_title},\n\n${
+      client?.opening_description
+    }\n\nAcara: ${event.name}\nTanggal: ${moment(event.date).format(
+      "dddd, DD MMMM YYYY"
+    )}\nWaktu: ${event.start_time} - ${event.end_time}\nTempat: ${
+      event.address
+    }\n\n${client?.closing_description}\n\nSalam hangat,\n${participants}`;
+
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+      `Undangan ${event.name} - ${participants}`
+    )}&dates=${startDate}/${endDate}&details=${encodeURIComponent(
+      description
+    )}&location=${encodeURIComponent(event.address)}&sf=true&output=xml`;
+
+    window.open(googleCalendarUrl, "_blank");
+  };
+
   return {
     refs: {
       audioRef,
@@ -263,7 +284,6 @@ const useTheme1 = (client: Client | null): useTheme1 => {
       reviews,
       errors,
       isPlaying,
-      otherParticipants,
     },
     actions: {
       handleOpenCover,
@@ -271,6 +291,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
       handleSubmit,
       handlePlayPause,
       handleCopyRekening,
+      handleAddToCalendar,
     },
   };
 };

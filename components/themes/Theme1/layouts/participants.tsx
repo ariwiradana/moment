@@ -17,63 +17,40 @@ interface Props {
 }
 
 const ParticipantsComponent: FC<Props> = (props) => {
-  const events = props.state.client?.events.map((e) => e.name) || [];
-  let formattedEvents;
+  if (
+    props.state.client?.participants &&
+    props.state.client?.participants.length > 0
+  )
+    return (
+      <section className="relative bg-white z-10 pt-16 pb-4 md:py-16">
+        <div className="w-full h-full px-6 md:px-12 relative z-40 max-w-screen-xl mx-auto">
+          <div>
+            <div data-aos="fade-up">
+              <Title title={props.state.client?.opening_title as string} />
+            </div>
+            <div className="flex justify-center my-4" data-aos="fade-up">
+              <div className="w-[0.5px] h-8 bg-theme1-gold"></div>
+            </div>
 
-  if (events.length === 0) {
-    formattedEvents = "Tidak ada acara.";
-  } else if (events.length === 1) {
-    formattedEvents = events[0];
-  } else if (events.length === 2) {
-    formattedEvents = `${events[0]} & ${events[1]}`;
-  } else {
-    formattedEvents =
-      events.slice(0, events.length - 1).join(", ") +
-      " & " +
-      events[events.length - 1];
-  }
-
-  return (
-    <section className="relative bg-white z-10 pt-16 pb-4 md:py-16">
-      <div className="w-full h-full px-6 md:px-12 relative z-40 max-w-screen-xl mx-auto">
-        <div>
-          <div data-aos="fade-up">
-            <Title title="Om Swastiastu" />
-          </div>
-          <div className="flex justify-center my-4" data-aos="fade-up">
-            <div className="w-[0.5px] h-8 bg-theme1-gold"></div>
+            <p
+              data-aos="fade-up"
+              className={`${afacad.className} text-base md:text-xl text-center leading-5 text-theme1-primary mb-12 max-w-screen-md mx-auto`}
+            >
+              {props.state.client?.opening_description}
+            </p>
           </div>
 
-          <p
-            data-aos="fade-up"
-            className={`${afacad.className} text-base md:text-xl text-center leading-5 text-theme1-primary mb-12 max-w-screen-md mx-auto`}
-          >
-            Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang
-            Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada acara{" "}
-            {formattedEvents} Putra dan Putri kami.
-          </p>
+          <div className="grid lg:grid-cols-2 w-full gap-8 py-8">
+            {props.state.groom && (
+              <ParticipantComponent data={props.state?.groom as Participant} />
+            )}
+            {props.state.bride && (
+              <ParticipantComponent data={props.state?.bride as Participant} />
+            )}
+          </div>
         </div>
-
-        <div className="grid md:grid-cols-2 w-full gap-8 py-8">
-          {props.state.groom && (
-            <ParticipantComponent data={props.state?.groom as Participant} />
-          )}
-          {props.state.bride && (
-            <ParticipantComponent data={props.state?.bride as Participant} />
-          )}
-          {props.state.otherParticipants &&
-          props.state.otherParticipants.length > 0
-            ? props.state.otherParticipants.map((participant) => (
-                <ParticipantComponent
-                  key={`participant-${participant.id}`}
-                  data={participant as Participant}
-                />
-              ))
-            : null}
-        </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
 };
 
 interface ComponentProps {
@@ -85,7 +62,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       data-aos="zoom-in-up"
       className={`${afacad.className} flex flex-col md:flex-row even:md:flex-row-reverse rounded-[36px] lg:rounded-[100px] overflow-hidden relative`}
     >
-      <div className="relative h-[55vh] 2xl:h-[35vh] w-full md:w-1/2 flex-grow bg-theme1-primary bg-opacity-5">
+      <div className="relative h-[55vh] md:h-[35vh] 2xl:h-[35vh] w-full md:w-1/2 flex-grow bg-theme1-primary bg-opacity-5">
         {props.data.image && (
           <ImageShimmer
             sizes="(max-width: 600px) 360px, (max-width: 1024px) 480px, (max-width: 1440px) 720px, 1080px"
@@ -99,7 +76,9 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       </div>
       <div className="relative w-full md:w-1/2 bg-theme1-primary bg-opacity-5 flex flex-col items-center justify-center text-center px-6 py-16 flex-grow">
         <div data-aos="fade-up" className="flex flex-col items-center">
-          <h1 className={`text-2xl font-semibold text-gray-700 relative ${marcellus.className}`}>
+          <h1
+            className={`text-2xl font-semibold text-gray-700 relative ${marcellus.className}`}
+          >
             {props.data.name}
           </h1>
           {props.data.role !== "participant" && (

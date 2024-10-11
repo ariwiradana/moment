@@ -7,6 +7,7 @@ import { BiFolderPlus, BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
 import { useAdminCreateTheme } from "@/hooks/admin/useAdminCreateTheme";
 import InputSelect from "@/components/admin/elements/select";
+import InputCheckbox from "@/components/admin/elements/input.checkbox";
 
 const CreateTheme: React.FC = () => {
   const { state, actions } = useAdminCreateTheme();
@@ -43,6 +44,21 @@ const CreateTheme: React.FC = () => {
             type="File"
             label="Thumbnail"
           />
+          <div>
+            <p className="text-sm text-gray-700 mb-2">Packages</p>
+            <div className="flex gap-x-6">
+              {state.packages.length > 0 &&
+                state.packages.map((pk) => (
+                  <InputCheckbox
+                    key={`package-${pk.id}`}
+                    onChange={actions.handleChange}
+                    name="package_ids"
+                    label={pk.name}
+                    value={pk.id}
+                  />
+                ))}
+            </div>
+          </div>
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
               isloading={state.loading}

@@ -12,7 +12,7 @@ import LoadingComponent from "@/components/themes/loading";
 
 interface Props {
   slug: string;
-  to: string;
+  untuk: string;
 }
 
 const MainPage: FC<Props> = (props) => {
@@ -37,16 +37,16 @@ const MainPage: FC<Props> = (props) => {
   const themeName = client.theme?.name || "";
   const ThemeComponent = themes[themeName];
 
-  return ThemeComponent ? ThemeComponent(client, props.to) : <ThemeNotFound />;
+  return ThemeComponent ? ThemeComponent(client, props.untuk) : <ThemeNotFound />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { to } = context.query;
+  const { untuk } = context.query;
   const { slug } = context.params as { slug: string };
 
   return {
     props: {
-      to: to ?? "",
+      untuk: untuk ?? "",
       slug,
     },
   };

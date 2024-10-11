@@ -46,6 +46,13 @@ const initialEvent: Event = {
 
 const initalFormData: Client = {
   name: "",
+  opening_title: "",
+  opening_description: "",
+  closing_title: "",
+  closing_description: "",
+  gift_bank_name: "",
+  gift_account_name: "",
+  gift_account_number: "",
   theme_id: null,
   package_id: null,
   status: "unpaid",
@@ -58,24 +65,24 @@ const initalFormData: Client = {
 };
 
 export const useAdminCreateClient = () => {
+  const router = useRouter();
   const [errors, setErrors] = useState<ErrorState>(initialErrorState);
   const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [themeOptions, setThemeOptions] = useState<Option[]>([
-    {
-      label: "",
-      value: "",
-    },
-  ]);
   const [packageOptions, setPackageOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
     },
   ]);
-  const router = useRouter();
 
+  const [themeOptions, setThemeOptions] = useState<Option[]>([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
   const { data: themes } = useSWR<{
     success: boolean;
     data: Theme[];

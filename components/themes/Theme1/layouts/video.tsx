@@ -36,55 +36,58 @@ const VideoComponent: FC<Props> = (props) => {
     }
   }, [props.state.client?.gallery, videos.length]);
 
-  return (
-    <section className="relative bg-white pt-8">
-      <div
-        className="relative z-10 h-full w-full p-6 lg:p-16"
-        data-aos="zoom-out-up"
-      >
-        <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
-        <div className="w-full h-full relative z-40">
-          <div
-            data-aos="zoom-in-up"
-            className="relative h-12 lg:h-16 w-full mb-8"
-          >
-            <Image
-              alt="leaf-datetime"
-              src="/images/theme1/leaf.svg"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <div data-aos="fade-up" className="mb-12">
-            <Title
-              className="text-theme1-primary"
-              title="Rekaman Momen"
-              caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname} Video`}
-            />
-          </div>
+  if (videos.length > 0)
+    return (
+      <section className="relative bg-white pt-8">
+        <div
+          className="relative z-10 h-full w-full p-6 lg:p-16"
+          data-aos="zoom-out-up"
+        >
+          <div className="absolute inset-0 bg-repeat bg-contain opacity-10"></div>
+          <div className="w-full h-full relative z-40">
+            <div
+              data-aos="zoom-in-up"
+              className="relative h-12 lg:h-16 w-full mb-8"
+            >
+              <Image
+                alt="leaf-datetime"
+                src="/images/theme1/leaf.svg"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div data-aos="fade-up" className="mb-12">
+              <Title
+                className="text-theme1-primary"
+                title="Rekaman Momen"
+                caption={`${props.state.groom?.nickname} & ${props.state.bride?.nickname} Video`}
+              />
+            </div>
 
-          <div
-            className={`grid gap-[2px] ${
-              videos.length >= 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
-            }`}
-          >
-            {videos.map((video, index) => (
-              <video
-                key={video}
-                data-aos="fade-up"
-                width="100%"
-                controls
-                className="bg-gray-100 aspect-video object-cover rounded-2xl"
-                poster={randomGalleryImages[index]}
-              >
-                <source src={video} />
-              </video>
-            ))}
+            <div
+              className={`grid gap-[2px] ${
+                videos.length >= 2
+                  ? "grid-cols-1 md:grid-cols-2"
+                  : "grid-cols-1"
+              }`}
+            >
+              {videos.map((video, index) => (
+                <video
+                  key={video}
+                  data-aos="fade-up"
+                  width="100%"
+                  controls
+                  className="bg-gray-100 aspect-video object-cover rounded-2xl"
+                  poster={randomGalleryImages[index]}
+                >
+                  <source src={video} />
+                </video>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
 };
 
 export default VideoComponent;

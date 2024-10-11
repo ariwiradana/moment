@@ -4,7 +4,7 @@ CREATE TABLE themes (
   name VARCHAR(255),
   thumbnail VARCHAR(255),
   price INTEGER,
-  package_id INT REFERENCES packages(id) ON DELETE SET NULL,
+  package_ids INTEGER[],
   is_preview BOOLEAN DEFAULT TRUE;
   category VARCHAR(100) DEFAULT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -36,6 +36,13 @@ CREATE TABLE clients (
   music VARCHAR(255),
   status VARCHAR(20) CHECK (status IN ('paid', 'unpaid')),
   is_testimoni BOOLEAN DEFAULT FALSE,
+  opening_title VARCHAR(255),
+  opening_description TEXT,
+  closing_title VARCHAR(255),
+  closing_description TEXT,
+  gift_bank_name VARCHAR(100),
+  gift_account_name VARCHAR(100),
+  gift_account_number VARCHAR(100),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
