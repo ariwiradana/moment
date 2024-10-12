@@ -199,7 +199,7 @@ const DashboardThemes = () => {
                       <button
                         key={`category-filter-${fp.category}`}
                         onClick={() => setPackageFilter(fp.id)}
-                        className={`flex items-center gap-x-2 text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
+                        className={`flex items-center gap-x-2 md:text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
                           packageFilter === fp.id
                             ? "bg-dashboard-dark  text-white"
                             : "bg-white text-dashboard-dark"
@@ -219,7 +219,7 @@ const DashboardThemes = () => {
                   className={`flex gap-x-4 justify-between items-center border px-4 py-3 rounded ${
                     afacad.className
                   } font-medium text-lg outline-none transition-colors ease-in-out duration-500 text-dashboard-dark w-full md:min-w-64 ${
-                    isOpenFilter && "border-dashboard-dark"
+                    isOpenFilter ? "border-dashboard-dark" : ""
                   }`}
                 >
                   <span>{themeFilter}</span>
@@ -229,30 +229,30 @@ const DashboardThemes = () => {
                     } transition-transform ease-in-out duration-500`}
                   />
                 </button>
-                {isOpenFilter && (
-                  <div
-                    className={`flex flex-col bg-white absolute top-16 w-full shadow-md rounded font-medium text-lg divide-y text-dashboard-dark ${afacad.className}`}
-                  >
-                    {filterThemeData.map((tc: Filter) => (
-                      <button
-                        key={`theme-category-${tc.category}`}
-                        type="button"
-                        onClick={() => {
-                          setThemeFilter(tc.category);
-                          setIsOpenFilter(false);
-                        }}
-                        className="px-4 py-3 flex justify-between border items-center outline-none whitespace-nowrap"
-                      >
-                        {tc.category}{" "}
-                        {tc.category === themeFilter && (
-                          <span>
-                            <BiCheck />
-                          </span>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
+
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out bg-white absolute top-16 w-full delay-100 rounded font-medium text-lg text-dashboard-dark divide-y border shadow-md ${
+                    afacad.className
+                  } ${
+                    isOpenFilter
+                      ? "max-h-[200px] opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  {filterThemeData.map((tc) => (
+                    <button
+                      key={`theme-category-${tc.category}`}
+                      type="button"
+                      onClick={() => {
+                        setThemeFilter(tc.category);
+                        setIsOpenFilter(false);
+                      }}
+                      className="px-4 py-3 flex justify-between items-center outline-none whitespace-nowrap w-full hover:bg-zinc-50"
+                    >
+                      {tc.category} {tc.category === themeFilter && <BiCheck />}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
