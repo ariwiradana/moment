@@ -1,18 +1,20 @@
+import ButtonActionDialog from "@/components/admin/elements/button.action.dialog";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
-import ButtonSecondary from "@/components/admin/elements/button.secondary";
+import ButtonText from "@/components/admin/elements/button.text";
 import Loader from "@/components/admin/elements/loader";
 import AdminLayout from "@/components/admin/layouts";
-import { packageColors } from "@/constants/packageColors";
 import { useAdminThemes } from "@/hooks/admin/useAdminThemes";
 import { montserrat } from "@/lib/fonts";
 import { Package } from "@/lib/types";
 import { Pagination } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { BiDetail, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
 
 const ReviewDashboard: React.FC = () => {
   const { state, actions } = useAdminThemes();
+  const router = useRouter();
 
   return (
     <AdminLayout>
@@ -38,8 +40,23 @@ const ReviewDashboard: React.FC = () => {
                     <h1 className="text-gray-800 font-semibold text-sm">
                       {theme.name}
                     </h1>
+                    <ButtonActionDialog>
+                      <ButtonText
+                        onClick={() => router.push(`/admin/themes/${theme.id}`)}
+                        size="small"
+                        title="Detail"
+                        icon={<BiEdit className="text-base" />}
+                      />
+                      <ButtonText
+                        type="button"
+                        onClick={() => actions.handleDelete(theme.id as number)}
+                        size="small"
+                        title="Delete"
+                        icon={<BiTrash className="text-base" />}
+                      />
+                    </ButtonActionDialog>
                   </div>
-                  <div className="py-3 flex flex-col gap-y-2">
+                  <div className="pt-3 flex flex-col gap-y-2">
                     <div>
                       <p className="text-gray-500 font-medium text-xs">
                         Category
@@ -49,37 +66,20 @@ const ReviewDashboard: React.FC = () => {
                       </p>
                     </div>
                     <div>
+                      <p className="text-gray-500 font-medium text-xs">
+                        Available Packages
+                      </p>
                       <div className="flex gap-2 mt-1">
                         {theme.packages?.map((pk: Package) => (
                           <p
                             key={`package-${pk.id}`}
-                            style={{
-                              backgroundColor: `${packageColors[pk.name]}1A`,
-                              color: packageColors[pk.name],
-                            }}
-                            className={`rounded-full font-semibold px-3 py-2 text-xs`}
+                            className={`text-admin-dark  bg-gray-200 rounded-md font-semibold px-3 py-1 text-xs`}
                           >
                             {pk.name}
                           </p>
                         ))}
                       </div>
                     </div>
-                  </div>
-                  <div className="border-t pt-3 flex justify-end gap-x-3">
-                    <Link href={`/admin/themes/${theme.id}`}>
-                      <ButtonPrimary
-                        size="extrasmall"
-                        title="Detail"
-                        icon={<BiEdit className="text-base" />}
-                      />
-                    </Link>
-                    <ButtonSecondary
-                      type="button"
-                      onClick={() => actions.handleDelete(theme.id as number)}
-                      size="extrasmall"
-                      title="Delete"
-                      icon={<BiTrash className="text-base" />}
-                    />
                   </div>
                 </div>
               ))}
@@ -125,13 +125,7 @@ const ReviewDashboard: React.FC = () => {
                             {theme.packages?.map((pk: Package) => (
                               <p
                                 key={`package-${pk.id}`}
-                                style={{
-                                  backgroundColor: `${
-                                    packageColors[pk.name]
-                                  }1A`,
-                                  color: packageColors[pk.name],
-                                }}
-                                className={`text-white rounded-full font-semibold px-3 py-2 text-xs`}
+                                className={`text-admin-dark  bg-gray-200 rounded-lg font-semibold px-3 py-1 text-sm`}
                               >
                                 {pk.name}
                               </p>
@@ -139,24 +133,25 @@ const ReviewDashboard: React.FC = () => {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <div className="flex gap-x-2">
-                            <Link href={`/admin/themes/${theme.id}`}>
-                              <ButtonPrimary
-                                size="extrasmall"
-                                title="Detail"
-                                icon={<BiDetail className="text-base" />}
-                              />
-                            </Link>
-                            <ButtonSecondary
+                          <ButtonActionDialog>
+                            <ButtonText
+                              onClick={() =>
+                                router.push(`/admin/themes/${theme.id}`)
+                              }
+                              size="medium"
+                              title="Detail"
+                              icon={<BiDetail className="text-base" />}
+                            />
+                            <ButtonText
                               type="button"
                               onClick={() =>
                                 actions.handleDelete(theme.id as number)
                               }
-                              size="extrasmall"
+                              size="medium"
                               title="Delete"
                               icon={<BiTrash className="text-base" />}
                             />
-                          </div>
+                          </ButtonActionDialog>
                         </td>
                       </tr>
                     ))}

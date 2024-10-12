@@ -2,7 +2,7 @@ import Layout from "@/components/dashboard/layout";
 import useDashboardStore from "@/lib/dashboardStore";
 import { afacad, marcellus } from "@/lib/fonts";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,13 +28,16 @@ const DashboardFeatures = () => {
 
   useEffect(() => {
     if (router && router.pathname === "/tema") setActiveSection("section3");
-  }, [router]);
+  }, [router, setActiveSection]);
 
-  const words: string[] = featured.map((t) => t.title) || [];
+  const words: string[] = useMemo(() => {
+    return featured.map((f) => f.title) || [];
+  }, []);
+
   const typingSpeed: number = 150;
   const delayBetweenWords: number = 1000;
 
-  const handleTyping = () => {
+  const handleTyping = useCallback(() => {
     const currentWord = words[wordIndex];
     const updatedText = currentWord?.substring(
       0,
@@ -52,7 +55,7 @@ const DashboardFeatures = () => {
     } else {
       setCharIndex((prevIndex) => prevIndex + (isDeleting ? -1 : 1));
     }
-  };
+  }, [words, wordIndex, charIndex, isDeleting, delayBetweenWords]);
 
   useEffect(() => {
     const typingTimer = setTimeout(
@@ -60,7 +63,7 @@ const DashboardFeatures = () => {
       isDeleting ? typingSpeed / 2 : typingSpeed
     );
     return () => clearTimeout(typingTimer);
-  }, [charIndex, isDeleting, wordIndex, words]);
+  }, [charIndex, isDeleting, wordIndex, words, handleTyping]);
 
   return (
     <Layout>
@@ -85,7 +88,7 @@ const DashboardFeatures = () => {
 
           <div
             data-aos="zoom-out-up"
-            className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-8"
+            className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-4 md:my-8"
           >
             <p className={`${afacad.className} text-lg md:text-xl`}>
               Fitur Undangan

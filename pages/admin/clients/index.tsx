@@ -20,10 +20,13 @@ import Pagination from "@mui/material/Pagination";
 import { getRandomColors } from "@/utils/getRandomColor";
 import Loader from "@/components/admin/elements/loader";
 import ImageShimmer from "@/components/image.shimmer";
-import ButtonSecondaryIcon from "@/components/admin/elements/button.secondary.icon";
+import ButtonActionDialog from "@/components/admin/elements/button.action.dialog";
+import { useRouter } from "next/router";
+import ButtonText from "@/components/admin/elements/button.text";
 
 const ClientDashboard: React.FC = () => {
   const { state, actions } = useAdminClients();
+  const router = useRouter();
 
   return (
     <AdminLayout>
@@ -80,20 +83,86 @@ const ClientDashboard: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      {client.status === "paid" && (
-                        <div className="ml-2 flex items-center relative z-10">
-                          <Link
-                            target="_bank"
-                            href={`/${client.slug}?untuk=Nama Undangan`}
-                            className="text-gray-500 text-lg"
-                          >
-                            <BiSolidShow />
-                          </Link>
-                        </div>
-                      )}
+
+                      <div className="ml-2 flex items-center relative z-10">
+                        <ButtonActionDialog>
+                          {client.status === "paid" && (
+                            <ButtonText
+                              onClick={() =>
+                                actions.handleCopyURL(
+                                  `${window.location.hostname}${
+                                    window.location.port
+                                      ? `:${window.location.port}`
+                                      : ""
+                                  }/testimoni/${client?.slug}`
+                                )
+                              }
+                              size="small"
+                              title="Copy Link Testimonial"
+                              icon={<BiMessageAdd className="text-base" />}
+                            />
+                          )}
+                          {!client.is_testimoni && client.status === "paid" ? (
+                            <ButtonText
+                              onClick={() =>
+                                actions.handleSetTestimonial(
+                                  client.id as number
+                                )
+                              }
+                              size="small"
+                              title="Set Dashboard Client"
+                              icon={<BiStar className="text-base" />}
+                            />
+                          ) : null}
+                          {client.status === "unpaid" ? (
+                            <ButtonText
+                              onClick={() =>
+                                actions.handleSetPaidStatus(client.id as number)
+                              }
+                              type="button"
+                              size="small"
+                              title="Mark as Paid"
+                              icon={<BiMoneyWithdraw className="text-base" />}
+                            />
+                          ) : (
+                            <ButtonText
+                              onClick={() =>
+                                actions.handleCopyURL(
+                                  `${window.location.hostname}${
+                                    window.location.port
+                                      ? `:${window.location.port}`
+                                      : ""
+                                  }/${client?.slug}?untuk=Nama Undangan`
+                                )
+                              }
+                              type="button"
+                              size="small"
+                              title="Copy Invitation Link"
+                              icon={<BiLink className="text-base" />}
+                            />
+                          )}
+                          <ButtonText
+                            onClick={() =>
+                              router.push(`/admin/clients/${client.slug}`)
+                            }
+                            size="small"
+                            title="Detail"
+                            icon={<BiEditAlt className="text-base" />}
+                          />
+                          <ButtonText
+                            type="button"
+                            onClick={() =>
+                              client.id && actions.handleDelete(client.id)
+                            }
+                            size="small"
+                            title="Delete"
+                            icon={<BiTrash className="text-base" />}
+                          />
+                        </ButtonActionDialog>
+                      </div>
                     </div>
                   </div>
-                  <div className="py-3 flex flex-col gap-y-2">
+                  <div className="pt-3 flex flex-col gap-y-2">
                     <div className="grid grid-cols-2 gap-2">
                       {client.events.map((event) => (
                         <div key={`event-${event.id}`}>
@@ -122,77 +191,6 @@ const ClientDashboard: React.FC = () => {
                         </p>
                       </div>
                     </div>
-                  </div>
-                  <div className="border-t pt-3 flex justify-end gap-x-3">
-                    {client.status === "paid" && (
-                      <ButtonSecondaryIcon
-                        onClick={() =>
-                          actions.handleCopyURL(
-                            `${window.location.hostname}${
-                              window.location.port
-                                ? `:${window.location.port}`
-                                : ""
-                            }/testimoni/${client?.slug}`
-                          )
-                        }
-                        size="extrasmall"
-                        title="Copy Link Testimonial"
-                        icon={<BiMessageAdd className="text-base" />}
-                      />
-                    )}
-                    {!client.is_testimoni && client.status === "paid" ? (
-                      <ButtonSecondaryIcon
-                        onClick={() =>
-                          actions.handleSetTestimonial(client.id as number)
-                        }
-                        size="extrasmall"
-                        title="Set Testimonial"
-                        icon={<BiStar className="text-base" />}
-                      />
-                    ) : null}
-                    {client.status === "unpaid" ? (
-                      <ButtonSecondaryIcon
-                        onClick={() =>
-                          actions.handleSetPaidStatus(client.id as number)
-                        }
-                        type="button"
-                        size="extrasmall"
-                        title="Paid"
-                        icon={<BiMoneyWithdraw className="text-base" />}
-                      />
-                    ) : (
-                      <ButtonSecondaryIcon
-                        onClick={() =>
-                          actions.handleCopyURL(
-                            `${window.location.hostname}${
-                              window.location.port
-                                ? `:${window.location.port}`
-                                : ""
-                            }/${client?.slug}?untuk=Nama Undangan`
-                          )
-                        }
-                        type="button"
-                        size="extrasmall"
-                        title="Copy Link"
-                        icon={<BiLink className="text-base" />}
-                      />
-                    )}
-                    <Link href={`/admin/clients/${client.slug}`}>
-                      <ButtonSecondaryIcon
-                        size="extrasmall"
-                        title="Detail"
-                        icon={<BiEditAlt className="text-base" />}
-                      />
-                    </Link>
-                    <ButtonSecondaryIcon
-                      type="button"
-                      onClick={() =>
-                        client.id && actions.handleDelete(client.id)
-                      }
-                      size="extrasmall"
-                      title="Delete"
-                      icon={<BiTrash className="text-base" />}
-                    />
                   </div>
                 </div>
               ))}
@@ -313,9 +311,9 @@ const ClientDashboard: React.FC = () => {
                           {client.theme?.name ?? "-"}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <div className="flex gap-2">
+                          <ButtonActionDialog>
                             {client.status === "paid" && (
-                              <ButtonSecondaryIcon
+                              <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
                                     `${window.location.hostname}${
@@ -325,38 +323,38 @@ const ClientDashboard: React.FC = () => {
                                     }/testimoni/${client?.slug}`
                                   )
                                 }
-                                size="extrasmall"
+                                size="medium"
                                 title="Copy Link Testimonial"
                                 icon={<BiMessageAdd className="text-base" />}
                               />
                             )}
                             {!client.is_testimoni &&
                             client.status === "paid" ? (
-                              <ButtonSecondaryIcon
+                              <ButtonText
                                 onClick={() =>
                                   actions.handleSetTestimonial(
                                     client.id as number
                                   )
                                 }
-                                size="extrasmall"
+                                size="medium"
                                 title="Set Dashboard Client"
                                 icon={<BiStar className="text-base" />}
                               />
                             ) : null}
                             {client.status === "unpaid" ? (
-                              <ButtonSecondaryIcon
+                              <ButtonText
                                 onClick={() =>
                                   actions.handleSetPaidStatus(
                                     client.id as number
                                   )
                                 }
                                 type="button"
-                                size="extrasmall"
+                                size="medium"
                                 title="Mark as Paid"
                                 icon={<BiMoneyWithdraw className="text-base" />}
                               />
                             ) : (
-                              <ButtonSecondaryIcon
+                              <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
                                     `${window.location.hostname}${
@@ -367,28 +365,29 @@ const ClientDashboard: React.FC = () => {
                                   )
                                 }
                                 type="button"
-                                size="extrasmall"
+                                size="medium"
                                 title="Copy Invitation Link"
                                 icon={<BiLink className="text-base" />}
                               />
                             )}
-                            <Link href={`/admin/clients/${client.slug}`}>
-                              <ButtonSecondaryIcon
-                                size="extrasmall"
-                                title="Detail"
-                                icon={<BiEditAlt className="text-base" />}
-                              />
-                            </Link>
-                            <ButtonSecondaryIcon
+                            <ButtonText
+                              onClick={() =>
+                                router.push(`/admin/clients/${client.slug}`)
+                              }
+                              size="medium"
+                              title="Detail"
+                              icon={<BiEditAlt className="text-base" />}
+                            />
+                            <ButtonText
                               type="button"
                               onClick={() =>
                                 client.id && actions.handleDelete(client.id)
                               }
-                              size="extrasmall"
+                              size="medium"
                               title="Delete"
                               icon={<BiTrash className="text-base" />}
                             />
-                          </div>
+                          </ButtonActionDialog>
                         </td>
                       </tr>
                     ))}

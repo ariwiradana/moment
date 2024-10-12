@@ -56,7 +56,7 @@ const DashboardTestimonial: FC<Props> = (props) => {
   useEffect(() => {
     if (router && router.pathname === "/testimoni/[slug]")
       setActiveSection("section5");
-  }, [router]);
+  }, [router, setActiveSection]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

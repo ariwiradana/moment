@@ -7,11 +7,23 @@ import { Theme } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
 import { Pagination } from "@mui/material";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import useSWR from "swr";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { BiCheck, BiFilter } from "react-icons/bi";
+
+interface Filter {
+  category: string;
+  amount: number;
+}
+
+interface PackageFilter {
+  category: string;
+  amount: number | string;
+  id: number | null;
+}
 
 const DashboardThemes = () => {
   useEffect(() => {
@@ -24,12 +36,7 @@ const DashboardThemes = () => {
 
   const { setActiveSection } = useDashboardStore();
 
-  type Filter = {
-    category: string;
-    amount: number | string;
-  };
-
-  const initialFilterData: Filter[] = [];
+  const initialFilterData: PackageFilter[] = [];
 
   const [displayedText, setDisplayedText] = useState<string>("");
   const [wordIndex, setWordIndex] = useState<number>(0);
@@ -37,50 +44,75 @@ const DashboardThemes = () => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(5);
-  const [filter, setFilter] = useState<string>("Semua Undangan");
-  const [filterData, setFilterData] = useState<Filter[]>(initialFilterData);
+  const [packageFilter, setPackageFilter] = useState<number | null>(null);
+  const [themeFilter, setThemeFilter] = useState<string | null>(null);
+  const [filterPackageData, setFilterPackageData] =
+    useState<PackageFilter[]>(initialFilterData);
+  const [filterThemeData, setFilterThemeData] = useState<Filter[]>([]);
+  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(false);
 
   const router = useRouter();
 
   useEffect(() => {
     if (router && router.pathname === "/tema") setActiveSection("section3");
-  }, [router]);
+  }, [router, setActiveSection]);
 
   const { data: categories } = useSWR(`/api/themes/categories`, fetcher);
-  const { data } = useSWR(
-    filter === "Semua Undangan"
-      ? `/api/themes?page=${page}&limit=${limit}`
-      : `/api/themes?page=${page}&limit=${limit}&category=${encodeURIComponent(
-          filter
-        )}`,
+  const { data: packageCategories } = useSWR(
+    `/api/packages/categories`,
     fetcher
   );
 
-  useEffect(() => {
-    if (categories && categories.data.length > 0) {
-      const totalAmount = categories.data?.reduce(
-        (sum: number, category: Filter) =>
-          Number(sum) + Number(category.amount),
-        0
-      );
-      const allCategory: Filter = {
-        category: "Semua Undangan",
-        amount: totalAmount,
-      };
-      setFilterData([allCategory, ...categories.data]);
-    }
+  const themeCategories: Filter[] = useMemo(() => {
+    return categories?.data || [];
   }, [categories]);
 
-  console.log(filterData);
+  let url = `/api/themes?page=${page}&limit=${limit}`;
+
+  if (packageFilter) {
+    url += `&package_id=${packageFilter}`;
+  }
+
+  if (themeFilter !== "Semua Undangan") {
+    url += `&category=${encodeURIComponent(themeFilter as string)}`;
+  }
+
+  const { data } = useSWR(packageFilter ? url : undefined, fetcher);
+  const { data: allThemes } = useSWR(`/api/themes`, fetcher);
+
+  useEffect(() => {
+    if (packageCategories && packageCategories.data.length > 0) {
+      setPackageFilter(packageCategories.data[0].id);
+      setFilterPackageData(packageCategories.data);
+    }
+  }, [packageCategories]);
+
+  useEffect(() => {
+    if (themeCategories && themeCategories.length > 0) {
+      const allFilter: Filter = {
+        category: "Semua Undangan",
+        amount: 10,
+      };
+      setThemeFilter("Semua Undangan");
+      setFilterThemeData([allFilter, ...themeCategories]);
+    }
+  }, [themeCategories]);
 
   const themes: Theme[] = data?.data || [];
   const totalRows = data?.total_rows || 0;
 
-  const words: string[] = themes.map((t) => t.name) || [];
+  const typingThemes: Theme[] = useMemo(() => {
+    return allThemes?.data || [];
+  }, [allThemes]);
+
+  const words: string[] = useMemo(() => {
+    return typingThemes.map((t) => t.name) || [];
+  }, [typingThemes]);
+
   const typingSpeed: number = 150;
   const delayBetweenWords: number = 1000;
 
-  const handleTyping = () => {
+  const handleTyping = useCallback(() => {
     const currentWord = words[wordIndex];
     const updatedText = currentWord?.substring(
       0,
@@ -98,7 +130,7 @@ const DashboardThemes = () => {
     } else {
       setCharIndex((prevIndex) => prevIndex + (isDeleting ? -1 : 1));
     }
-  };
+  }, [words, wordIndex, charIndex, isDeleting, delayBetweenWords]);
 
   useEffect(() => {
     const typingTimer = setTimeout(
@@ -106,7 +138,7 @@ const DashboardThemes = () => {
       isDeleting ? typingSpeed / 2 : typingSpeed
     );
     return () => clearTimeout(typingTimer);
-  }, [charIndex, isDeleting, wordIndex, words]);
+  }, [charIndex, isDeleting, wordIndex, words, handleTyping]);
 
   const handleChangePagination = (
     event: React.ChangeEvent<unknown>,
@@ -139,7 +171,7 @@ const DashboardThemes = () => {
 
             <div
               data-aos="zoom-out-up"
-              className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-8"
+              className="bg-dashboard-dark w-full p-8 lg:p-16 rounded text-white flex flex-col items-center my-4 md:my-8"
             >
               <p className={`${afacad.className} text-lg md:text-xl`}>
                 Koleksi Tema Undangan
@@ -154,31 +186,75 @@ const DashboardThemes = () => {
               </h1>
             </div>
 
-            {filterData.length > 0 && (
-              <div
-                data-aos="fade-up"
-                className={`flex overflow-x-auto gap-1 mb-8 sticky py-4 bg-white z-20 top-16 md:top-20 lg:top-24 hide-scrollbar ${afacad.className}`}
-              >
-                {filterData.map((f) => {
-                  return (
-                    <button
-                      key={`category-filter-${f.category}`}
-                      onClick={() => setFilter(f.category)}
-                      className={`flex items-center gap-x-2 text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
-                        filter === f.category
-                          ? "bg-dashboard-dark  text-white"
-                          : "bg-white text-dashboard-dark"
-                      } `}
-                    >
-                      {f.category !== "Semua Undangan"
-                        ? `Undangan ${f.category}`
-                        : f.category}{" "}
-                      <span className="text-gray-400">{f.amount}</span>
-                    </button>
-                  );
-                })}
+            <div
+              data-aos="fade-up"
+              className="flex flex-col md:flex-row justify-between gap-4 md:items-center mb-4 md:mb-8 sticky py-4 top-16 md:top-20 lg:top-24 bg-white z-20"
+            >
+              {filterPackageData.length > 0 && (
+                <div
+                  className={`flex overflow-x-auto gap-1 hide-scrollbar ${afacad.className}`}
+                >
+                  {filterPackageData.map((fp) => {
+                    return (
+                      <button
+                        key={`category-filter-${fp.category}`}
+                        onClick={() => setPackageFilter(fp.id)}
+                        className={`flex items-center gap-x-2 text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
+                          packageFilter === fp.id
+                            ? "bg-dashboard-dark  text-white"
+                            : "bg-white text-dashboard-dark"
+                        } `}
+                      >
+                        {fp.category}
+                        <span className="text-gray-400">{fp.amount}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsOpenFilter((prevState) => !prevState)}
+                  className={`flex gap-x-4 justify-between items-center border px-4 py-3 rounded ${
+                    afacad.className
+                  } font-medium text-xl outline-none transition-colors ease-in-out duration-500 text-dashboard-dark w-full md:min-w-64 ${
+                    isOpenFilter && "border-dashboard-dark"
+                  }`}
+                >
+                  <span>{themeFilter}</span>
+                  <BiFilter
+                    className={`${
+                      isOpenFilter ? "rotate-180" : "rotate-0"
+                    } transition-transform ease-in-out duration-500`}
+                  />
+                </button>
+                {isOpenFilter && (
+                  <div
+                    className={`flex flex-col bg-white absolute top-16 w-full shadow-md rounded font-medium text-xl divide-y text-dashboard-dark ${afacad.className}`}
+                  >
+                    {filterThemeData.map((tc: Filter) => (
+                      <button
+                        key={`theme-category-${tc.category}`}
+                        type="button"
+                        onClick={() => {
+                          setThemeFilter(tc.category);
+                          setIsOpenFilter(false);
+                        }}
+                        className="px-4 py-3 flex justify-between border items-center outline-none whitespace-nowrap"
+                      >
+                        {tc.category}{" "}
+                        {tc.category === themeFilter && (
+                          <span>
+                            <BiCheck />
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
+            </div>
 
             {themes.length > 0 && (
               <div
@@ -187,16 +263,18 @@ const DashboardThemes = () => {
               >
                 {themes.map((t) => {
                   const slug = createSlug(t.name);
-                  return (
-                    <ThemeCard
-                      category={t.category as string}
-                      key={slug}
-                      name={t.name}
-                      thumbnail={t.thumbnail as string}
-                      slug={slug}
-                      availablePackages={t.packages}
-                    />
-                  );
+                  if (slug) {
+                    return (
+                      <ThemeCard
+                        category={t.category as string}
+                        key={slug}
+                        name={t.name}
+                        thumbnail={t.thumbnail as string}
+                        slug={slug}
+                        availablePackages={t.packages}
+                      />
+                    );
+                  }
                 })}
               </div>
             )}

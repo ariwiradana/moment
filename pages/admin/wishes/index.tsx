@@ -1,4 +1,5 @@
-import ButtonPrimary from "@/components/admin/elements/button.primary";
+import ButtonActionDialog from "@/components/admin/elements/button.action.dialog";
+import ButtonText from "@/components/admin/elements/button.text";
 import Loader from "@/components/admin/elements/loader";
 import InputSelect from "@/components/admin/elements/select";
 import AdminLayout from "@/components/admin/layouts";
@@ -35,7 +36,7 @@ const WishesDashboard: React.FC = () => {
                 />
               </div>
             )}
-            <div className="mt-8">
+            <div className="mt-4 lg:mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
                 {state.reviews.map((review) => (
                   <div key={review.id} className="border rounded-lg p-3">
@@ -59,9 +60,18 @@ const WishesDashboard: React.FC = () => {
                             </p>
                           </div>
                         </div>
+                        <ButtonActionDialog>
+                          <ButtonText
+                            type="button"
+                            onClick={() => actions.handleDelete(review.id)}
+                            size="small"
+                            title="Delete"
+                            icon={<BiTrash className="text-base" />}
+                          />
+                        </ButtonActionDialog>
                       </div>
                     </div>
-                    <div className="py-3 flex flex-col gap-y-2">
+                    <div className="pt-3 flex flex-col gap-y-2">
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
                           Wishes
@@ -70,15 +80,6 @@ const WishesDashboard: React.FC = () => {
                           {review.wishes}
                         </p>
                       </div>
-                    </div>
-                    <div className="border-t pt-3 flex justify-end gap-x-3">
-                      <ButtonPrimary
-                        type="button"
-                        onClick={() => actions.handleDelete(review.id)}
-                        size="extrasmall"
-                        title="Delete"
-                        icon={<BiTrash className="text-base" />}
-                      />
                     </div>
                   </div>
                 ))}
@@ -135,15 +136,15 @@ const WishesDashboard: React.FC = () => {
                             {review.wishes}
                           </td>
                           <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                            <div className="flex gap-x-2">
-                              <ButtonPrimary
+                            <ButtonActionDialog>
+                              <ButtonText
                                 type="button"
                                 onClick={() => actions.handleDelete(review.id)}
-                                size="extrasmall"
+                                size="medium"
                                 title="Delete"
                                 icon={<BiTrash className="text-base" />}
                               />
-                            </div>
+                            </ButtonActionDialog>
                           </td>
                         </tr>
                       ))}
