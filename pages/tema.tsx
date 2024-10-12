@@ -59,7 +59,11 @@ const DashboardThemes = () => {
 
   const { data: categories } = useSWR(`/api/themes/categories`, fetcher);
   const { data: packageCategories } = useSWR(
-    `/api/packages/categories`,
+    themeFilter !== "Semua Undangan"
+      ? `/api/packages/categories?theme_category=${encodeURIComponent(
+          themeFilter as string
+        )}`
+      : `/api/packages/categories`,
     fetcher
   );
 
