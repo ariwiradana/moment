@@ -235,7 +235,7 @@ const DashboardThemes = () => {
                     afacad.className
                   } ${
                     isOpenFilter
-                      ? "max-h-[200px] opacity-100"
+                      ? "max-h-screen opacity-100"
                       : "max-h-0 opacity-0"
                   }`}
                 >
