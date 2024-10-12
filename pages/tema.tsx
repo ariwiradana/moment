@@ -190,13 +190,12 @@ const DashboardThemes = () => {
               </h1>
             </div>
 
-            <div
-              data-aos="fade-up"
-              className="flex flex-col md:flex-row justify-between gap-4 md:items-center mb-4 md:mb-8 sticky py-4 top-16 md:top-20 lg:top-24 bg-white z-20"
-            >
-              {filterPackageData.length > 0 && (
+            {filterPackageData.length > 0 && filterThemeData.length > 0 ? (
+              <div
+                data-aos="fade-up"
+                className="flex flex-col md:flex-row justify-between gap-4 md:items-center mb-4 md:mb-8 sticky py-4 top-16 md:top-20 lg:top-24 bg-white z-20"
+              >
                 <div
-                  data-aos="fade-up"
                   className={`flex overflow-x-auto gap-1 hide-scrollbar ${afacad.className}`}
                 >
                   {filterPackageData.map((fp) => {
@@ -216,8 +215,6 @@ const DashboardThemes = () => {
                     );
                   })}
                 </div>
-              )}
-              {filterThemeData.length > 0 && (
                 <div className="relative" data-aos="fade-up">
                   <button
                     type="button"
@@ -261,8 +258,8 @@ const DashboardThemes = () => {
                     ))}
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            ) : null}
 
             {themes.length > 0 && (
               <div
