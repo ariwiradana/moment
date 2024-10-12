@@ -10,7 +10,7 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="min-h-screen lg:min-h-full">{children}</main>
       <FooterComponent />
     </div>
   );
