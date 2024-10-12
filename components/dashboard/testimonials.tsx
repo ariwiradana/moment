@@ -8,6 +8,7 @@ import { getInitial } from "@/utils/getInitial";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 import moment from "moment";
+import { BiTime } from "react-icons/bi";
 
 const TestimonialsComponent = () => {
   const { data } = useSWR("/api/testimonials", fetcher);
@@ -82,27 +83,29 @@ const TestimonialsComponent = () => {
                         </span>
                       )}
                     </div>
-                    <div className="w-full">
-                      <div className="flex justify-between items-center w-full">
-                        <h1
-                          className={`${marcellus.className} text-xl lg:text-2xl capitalize`}
-                        >
-                          {t.name}
-                        </h1>
-                        <div>
-                          <p className={`${afacad.className}`}>
-                            {moment(t.created_at).fromNow()}
-                          </p>
-                        </div>
-                      </div>
-                      <p className={`${afacad.className} text-lg`}>
-                        {t.theme_name} - Undangan {t.theme_category}
+                    <div>
+                      <h1
+                        className={`${marcellus.className} text-xl lg:text-2xl capitalize`}
+                      >
+                        {t.name}
+                      </h1>
+                      <p
+                        className={`${afacad.className} text-dashboard-primary flex items-center gap-x-2`}
+                      >
+                        Undangan {t.theme_category}
                       </p>
                     </div>
                   </div>
-                  <p className={`${afacad.className} mt-4 font-light text-lg`}>
+
+                  <p className={`${afacad.className} font-light text-lg my-3`}>
                     {t.comments}
                   </p>
+                  <div className="flex items-center gap-x-2 text-zinc-300">
+                    <BiTime className="text-sm" />
+                    <p className={`${afacad.className} `}>
+                      {moment(t.created_at).fromNow()}
+                    </p>
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
