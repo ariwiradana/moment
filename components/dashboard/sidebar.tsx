@@ -8,8 +8,8 @@ import {
   AiOutlineMail,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
-import { NavData } from "./navbar";
 import { useRouter } from "next/router";
+import { NavData } from "@/constants/dashboardNavbar";
 
 interface Props {
   open: boolean;

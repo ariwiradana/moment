@@ -6,17 +6,7 @@ import { BiMenu } from "react-icons/bi";
 import Sidebar from "./sidebar";
 import useDashboardStore from "@/lib/dashboardStore";
 import { useRouter } from "next/router";
-
-export type NavData = Record<string, string>;
-
-const navData: NavData[] = [
-  { title: "beranda", path: "/" },
-  { title: "fitur", path: "/tema" },
-  { title: "tema", path: "/" },
-  { title: "paket", path: "/" },
-  { title: "testimoni", path: "/" },
-  { title: "tentang kami", path: "/" },
-];
+import { NavData, navData } from "@/constants/dashboardNavbar";
 
 const NavbarComponent = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false);

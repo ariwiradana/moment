@@ -1,4 +1,5 @@
 import ClientComponent from "@/components/dashboard/client";
+import ButtonFloating from "@/components/dashboard/elements/button.floating";
 import FeaturesComponent from "@/components/dashboard/features";
 import HeroComponent from "@/components/dashboard/hero";
 import Layout from "@/components/dashboard/layout";
@@ -13,6 +14,7 @@ import "aos/dist/aos.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
+import { BiLogoWhatsapp } from "react-icons/bi";
 
 const Dashboard = () => {
   const { activeSection, setActiveSection } = useDashboardStore();
@@ -61,6 +63,11 @@ const Dashboard = () => {
       <Head>
         <title>Buat Undangan Digital Disini! | Moment Invitation</title>
       </Head>
+      <ButtonFloating
+        onClick={() => window.open("https://wa.me/+6281246768627")}
+        className="bg-green-500 text-white"
+        icon={<BiLogoWhatsapp />}
+      />
       <HeroComponent />
       <WhyUsComponent />
       <FeaturesComponent />
