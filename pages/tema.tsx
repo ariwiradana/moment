@@ -218,7 +218,7 @@ const DashboardThemes = () => {
                   onClick={() => setIsOpenFilter((prevState) => !prevState)}
                   className={`flex gap-x-4 justify-between items-center border px-4 py-3 rounded ${
                     afacad.className
-                  } font-medium text-xl outline-none transition-colors ease-in-out duration-500 text-dashboard-dark w-full md:min-w-64 ${
+                  } font-medium text-lg outline-none transition-colors ease-in-out duration-500 text-dashboard-dark w-full md:min-w-64 ${
                     isOpenFilter && "border-dashboard-dark"
                   }`}
                 >
@@ -231,7 +231,7 @@ const DashboardThemes = () => {
                 </button>
                 {isOpenFilter && (
                   <div
-                    className={`flex flex-col bg-white absolute top-16 w-full shadow-md rounded font-medium text-xl divide-y text-dashboard-dark ${afacad.className}`}
+                    className={`flex flex-col bg-white absolute top-16 w-full shadow-md rounded font-medium text-lg divide-y text-dashboard-dark ${afacad.className}`}
                   >
                     {filterThemeData.map((tc: Filter) => (
                       <button
