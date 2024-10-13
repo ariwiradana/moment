@@ -9,4 +9,5 @@ export const navData: NavData[] = [
   { title: "tema", path: "/" },
   { title: "paket", path: "/" },
   { title: "testimoni", path: "/" },
+  { title: "FAQ", path: "/" },
 ];

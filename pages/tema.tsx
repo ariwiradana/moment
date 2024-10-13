@@ -34,7 +34,12 @@ const DashboardThemes = () => {
     });
   }, []);
 
-  const { setActiveSection } = useDashboardStore();
+  const {
+    setActiveSection,
+    setSelectedPackageId,
+    selectedPackageId,
+    setManualScroll,
+  } = useDashboardStore();
 
   const initialFilterData: PackageFilter[] = [];
 
@@ -44,7 +49,6 @@ const DashboardThemes = () => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(5);
-  const [packageFilter, setPackageFilter] = useState<number | null>(null);
   const [themeFilter, setThemeFilter] = useState<string | null>(null);
   const [filterPackageData, setFilterPackageData] =
     useState<PackageFilter[]>(initialFilterData);
@@ -73,20 +77,19 @@ const DashboardThemes = () => {
 
   let url = `/api/themes?page=${page}&limit=${limit}`;
 
-  if (packageFilter) {
-    url += `&package_id=${packageFilter}`;
+  if (selectedPackageId) {
+    url += `&package_id=${selectedPackageId}`;
   }
 
   if (themeFilter !== "Semua Undangan") {
     url += `&category=${encodeURIComponent(themeFilter as string)}`;
   }
 
-  const { data } = useSWR(packageFilter ? url : undefined, fetcher);
+  const { data } = useSWR(selectedPackageId ? url : undefined, fetcher);
   const { data: allThemes } = useSWR(`/api/themes`, fetcher);
 
   useEffect(() => {
     if (packageCategories && packageCategories.data.length > 0) {
-      setPackageFilter(packageCategories.data[0].id);
       setFilterPackageData(packageCategories.data);
     }
   }, [packageCategories]);
@@ -159,8 +162,9 @@ const DashboardThemes = () => {
             <div className="flex">
               <button
                 onClick={() => {
+                  setActiveSection("section3");
+                  setManualScroll(false);
                   router.push("/");
-                  setActiveSection("section1");
                 }}
                 className="flex gap-x-2 items-center"
               >
@@ -202,9 +206,9 @@ const DashboardThemes = () => {
                     return (
                       <button
                         key={`category-filter-${fp.category}`}
-                        onClick={() => setPackageFilter(fp.id)}
+                        onClick={() => setSelectedPackageId(fp.id as number)}
                         className={`flex items-center gap-x-2 md:text-lg rounded-full px-5 py-3 outline-none whitespace-nowrap font-medium ${
-                          packageFilter === fp.id
+                          selectedPackageId === fp.id
                             ? "bg-dashboard-dark  text-white"
                             : "bg-white text-dashboard-dark"
                         } `}

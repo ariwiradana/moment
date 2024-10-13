@@ -1,5 +1,6 @@
 import ClientComponent from "@/components/dashboard/client";
 import ButtonFloating from "@/components/dashboard/elements/button.floating";
+import FaqComponent from "@/components/dashboard/faq";
 import FeaturesComponent from "@/components/dashboard/features";
 import HeroComponent from "@/components/dashboard/hero";
 import Layout from "@/components/dashboard/layout";
@@ -12,17 +13,12 @@ import useDashboardStore from "@/lib/dashboardStore";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import React, { useCallback, useEffect } from "react";
 import { BiLogoWhatsapp } from "react-icons/bi";
 
 const Dashboard = () => {
-  const { activeSection, setActiveSection } = useDashboardStore();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (router && router.pathname === "/") setActiveSection("section1");
-  }, [router, setActiveSection]);
+  const { activeSection, setActiveSection, manualScroll, setManualScroll } =
+    useDashboardStore();
 
   useEffect(() => {
     AOS.init({
@@ -32,31 +28,68 @@ const Dashboard = () => {
     });
   }, []);
 
-  const scrollTo = useCallback(
-    (section: string) => {
-      setActiveSection(section);
-      const element = document.getElementById(section);
-      if (element) {
-        const isMobile = window.innerWidth < 768;
+  console.log({ activeSection, manualScroll });
 
-        const offset = isMobile ? 50 : 100;
+  const handleScroll = useCallback(() => {
+    if (manualScroll) {
+      const sections = [
+        "section1",
+        "section2",
+        "section3",
+        "section4",
+        "section5",
+        "section6",
+      ];
 
-        const elementPosition =
-          element.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - offset;
+      for (const section of sections) {
+        const element = document.getElementById(section);
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
+        if (element) {
+          const rect = element.getBoundingClientRect();
+
+          if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+            if (activeSection !== section) {
+              setActiveSection(section);
+            }
+            break;
+          }
+        }
       }
-    },
-    [setActiveSection]
-  );
+    }
+  }, [activeSection]);
+
+  const scrollTo = useCallback((section: string) => {
+    setManualScroll(false);
+    const element = document.getElementById(section);
+    if (element) {
+      const isMobile = window.innerWidth < 768;
+      const offset = isMobile ? 50 : 100;
+
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }, []);
 
   useEffect(() => {
-    if (activeSection) scrollTo(activeSection as string);
-  }, [activeSection, scrollTo]);
+    setManualScroll(true);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (activeSection && !manualScroll) {
+      scrollTo(activeSection);
+    }
+  }, [activeSection, manualScroll]);
 
   return (
     <Layout>
@@ -76,6 +109,7 @@ const Dashboard = () => {
       <SharedThemeComponent />
       <ClientComponent />
       <TestimonialsComponent />
+      <FaqComponent />
     </Layout>
   );
 };

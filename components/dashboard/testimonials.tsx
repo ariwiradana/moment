@@ -36,7 +36,7 @@ const TestimonialsComponent = () => {
               pengalaman mereka.
             </p>
           </div>
-          <div className="my-6 w-full" data-aos="fade-up">
+          <div className="w-full my-6" data-aos="fade-up">
             <Swiper
               modules={[Autoplay, Pagination]}
               autoplay={{
@@ -66,7 +66,7 @@ const TestimonialsComponent = () => {
               {testimonials.map((t) => (
                 <SwiperSlide
                   key={`testimoni-${t.id}`}
-                  className="bg-dashboard-dark p-8 rounded text-white mb-12"
+                  className="bg-dashboard-dark p-8 rounded text-white mb-6"
                 >
                   <div className="flex items-center gap-x-4 ">
                     <div className="w-14 h-14 min-w-14 min-h-14 text-xl rounded-full bg-zinc-100 flex justify-center items-center text-dashboard-dark relative">
@@ -90,7 +90,7 @@ const TestimonialsComponent = () => {
                         {t.name}
                       </h1>
                       <p
-                        className={`${afacad.className} text-dashboard-primary flex items-center gap-x-2`}
+                        className={`${afacad.className} text-zinc-300 flex items-center gap-x-2 md:text-lg`}
                       >
                         Undangan {t.theme_category}
                       </p>
@@ -100,7 +100,7 @@ const TestimonialsComponent = () => {
                   <p className={`${afacad.className} font-light text-lg my-3`}>
                     {t.comments}
                   </p>
-                  <div className="flex items-center gap-x-2 text-zinc-300">
+                  <div className="flex items-center gap-x-2 text-zinc-300 md:text-lg">
                     <BiTime className="text-sm" />
                     <p className={`${afacad.className} `}>
                       {moment(t.created_at).fromNow()}

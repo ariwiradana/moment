@@ -2,7 +2,7 @@ import { afacad, marcellus } from "@/lib/fonts";
 import Link from "next/link";
 import React, { FC } from "react";
 import ButtonPrimary from "../elements/button.primary";
-import { BiEditAlt, BiShowAlt } from "react-icons/bi";
+import { BiCalendarEvent, BiShowAlt } from "react-icons/bi";
 import ImageShimmer from "@/components/image.shimmer";
 import { Package } from "@/lib/types";
 
@@ -79,9 +79,9 @@ const ThemeCard: FC<Props> = ({
             <div className="flex justify-center">
               <ButtonPrimary
                 onClick={() => handleChooseTheme(name, category as string)}
-                title="Pilih Design"
+                title="Pilih Tema"
                 size="small"
-                icon={<BiEditAlt />}
+                icon={<BiCalendarEvent />}
               />
             </div>
           </>

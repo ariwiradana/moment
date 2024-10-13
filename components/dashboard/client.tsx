@@ -56,7 +56,7 @@ const ClientComponent = () => {
                   slidesPerView: 3,
                 },
                 1024: {
-                  slidesPerView: 4,
+                  slidesPerView: 3,
                 },
               }}
               spaceBetween={16}
@@ -65,9 +65,9 @@ const ClientComponent = () => {
                 clients.map((c) => (
                   <SwiperSlide
                     key={`client-${c.id}`}
-                    className="bg-dashboard-dark p-8 rounded aspect-square text-white mb-12 relative"
+                    className="bg-dashboard-dark p-8 rounded aspect-square text-white relative mb-6"
                   >
-                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-[#000000be]"></div>
+                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#000000ca]"></div>
                     <Image
                       src={
                         c.cover ||
@@ -105,7 +105,7 @@ const ClientComponent = () => {
                       <p
                         className={`w-full flex gap-2 items-center font-light text-zinc-200 ${afacad.className}`}
                       >
-                        <span>{c.theme?.category}</span>
+                        <span>Undangan {c.theme?.category}</span>
                       </p>
                     </div>
                   </SwiperSlide>

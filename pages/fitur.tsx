@@ -17,7 +17,7 @@ const DashboardFeatures = () => {
     });
   }, []);
 
-  const { setActiveSection } = useDashboardStore();
+  const { setActiveSection, setManualScroll } = useDashboardStore();
 
   const [displayedText, setDisplayedText] = useState<string>("");
   const [wordIndex, setWordIndex] = useState<number>(0);
@@ -72,8 +72,9 @@ const DashboardFeatures = () => {
           <div className="flex">
             <button
               onClick={() => {
+                setActiveSection("section2");
+                setManualScroll(false);
                 router.push("/");
-                setActiveSection("section1");
               }}
               className="flex gap-x-2 items-center"
             >

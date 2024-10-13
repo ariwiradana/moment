@@ -13,7 +13,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiEdit } from "react-icons/bi";
+import { BiCheck, BiEdit } from "react-icons/bi";
 import useSWR from "swr";
 import { z } from "zod";
 
@@ -54,13 +54,12 @@ const DashboardTestimonial: FC<Props> = (props) => {
   });
 
   useEffect(() => {
-    if (router && router.pathname === "/testimoni/[slug]")
-      setActiveSection("section5");
-  }, [router, setActiveSection]);
+    setActiveSection("section5");
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const toastSubmit = toast.loading("Membuat testimoni...");
     try {
       schema.parse(formData);
 
@@ -72,35 +71,36 @@ const DashboardTestimonial: FC<Props> = (props) => {
         comments: formData.comments,
       };
 
-      const createTestimonial = async () => {
-        const response = await getClient("/api/testimonials", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          const errorResult = await response.json();
-          throw new Error(errorResult.message);
-        }
-        return await response.json();
-      };
-
-      toast.promise(createTestimonial(), {
-        loading: "Membuat testimoni...",
-        success: () => {
-          setFormData(initialFormData);
-          setLoading(false);
-          setTimeout(() => {
-            router.push("/");
-            setActiveSection("section1");
-          }, 500);
-          return "Berhasil membuat testimoni";
-        },
-        error: (error) => {
-          setLoading(false);
-          return error.message || "Gagal membuat testimoni";
-        },
+      const response = await getClient("/api/testimonials", {
+        method: "POST",
+        body: JSON.stringify(payload),
       });
+
+      if (!response.ok) {
+        toast.error("Gagal membuat testimoni", { id: toastSubmit });
+        throw new Error("Gagal membuat testimoni");
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormData(initialFormData);
+        setLoading(false);
+
+        toast.success(
+          "Berhasil membuat testimoni. Terima kasih atas dukungan dan kepercayaan Anda!",
+          {
+            id: toastSubmit,
+            icon: (
+              <div className="p-1 rounded bg-dashboard-primary">
+                <BiCheck />
+              </div>
+            ),
+          }
+        );
+        setActiveSection("section1");
+        router.push("/");
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         const validationErrors: ErrorState = {};
@@ -109,6 +109,7 @@ const DashboardTestimonial: FC<Props> = (props) => {
         });
         setErrors(validationErrors);
       }
+      toast.error("Gagal membuat testimoni", { id: toastSubmit });
     }
   };
 

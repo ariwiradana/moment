@@ -1,21 +1,27 @@
 import React from "react";
 import ButtonPrimary from "./elements/button.primary";
 import Image from "next/image";
-import { BiEdit } from "react-icons/bi";
+import { BiCalendarEvent, BiEdit } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Blob } from "@/lib/types";
 import { Autoplay, EffectCards } from "swiper/modules";
 import { dm, marcellus } from "@/lib/fonts";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
+import useDashboardStore from "@/lib/dashboardStore";
 
 const HeroComponent = () => {
   const { data } = useSWR("/api/images?pathname=Themes/Dashboard", fetcher);
   const images: Blob[] = data?.blobs || [];
   const thumbnails: string[] = images.map((theme) => theme.url);
+  const router = useRouter();
 
   const slicedThumbnails =
     thumbnails.length > 3 ? thumbnails.slice(0, 3) : thumbnails;
+
+  const { setSelectedPackageId } = useDashboardStore();
 
   return (
     <section
@@ -102,7 +108,21 @@ const HeroComponent = () => {
           </h1>
 
           <div data-aos="fade-right" data-aos-delay="600">
-            <ButtonPrimary icon={<BiEdit />} title="Buat Sekarang" />
+            <ButtonPrimary
+              onClick={() => {
+                toast.success("Silahkan pilih tema terlebih dahulu", {
+                  icon: (
+                    <div className="p-1 rounded bg-dashboard-primary">
+                      <BiCalendarEvent />
+                    </div>
+                  ),
+                });
+                setSelectedPackageId(1);
+                router.push("/tema");
+              }}
+              icon={<BiEdit />}
+              title="Buat Undangan"
+            />
           </div>
         </div>
       </div>

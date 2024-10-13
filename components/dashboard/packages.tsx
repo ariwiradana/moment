@@ -1,14 +1,19 @@
 import React from "react";
 import ButtonPrimary from "./elements/button.primary";
-import { BiCheck } from "react-icons/bi";
+import { BiCalendarEvent, BiCheck } from "react-icons/bi";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Package } from "@/lib/types";
 import { afacad, dm } from "@/lib/fonts";
 import { formatToRupiah } from "@/utils/formatToRupiah";
+import useDashboardStore from "@/lib/dashboardStore";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const PackageComponent = () => {
   const { data } = useSWR("/api/packages", fetcher);
+  const { setSelectedPackageId } = useDashboardStore();
+  const router = useRouter();
 
   const pacakages: Package[] = data?.data || [];
 
@@ -114,7 +119,24 @@ const PackageComponent = () => {
                   </li>
                 </ul>
                 <div className="mt-8">
-                  <ButtonPrimary title="Pilih Paket" icon={<BiCheck />} />
+                  <ButtonPrimary
+                    onClick={() => {
+                      setSelectedPackageId(p.id);
+                      toast.success(
+                        `Silahkan pilih tema dengan Paket ${p.name} yang tersedia.`,
+                        {
+                          icon: (
+                            <div className="p-1 rounded bg-dashboard-primary">
+                              <BiCalendarEvent />
+                            </div>
+                          ),
+                        }
+                      );
+                      router.push("/tema");
+                    }}
+                    title="Pilih Kategori Paket"
+                    icon={<BiCheck />}
+                  />
                 </div>
               </div>
             );

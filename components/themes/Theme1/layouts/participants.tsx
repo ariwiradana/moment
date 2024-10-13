@@ -62,7 +62,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       data-aos="zoom-in-up"
       className={`${afacad.className} flex flex-col md:flex-row even:md:flex-row-reverse rounded-[36px] lg:rounded-[100px] overflow-hidden relative`}
     >
-      <div className="relative h-[55vh] md:h-[35vh] 2xl:h-[35vh] w-full md:w-1/2 flex-grow bg-theme1-primary bg-opacity-5">
+      <div className="relative h-[300px] md:h-full 2xl:h-full w-full md:w-1/2 flex-grow bg-theme1-primary bg-opacity-5">
         <div className="absolute inset-0 bg-gradient-to-b from-[#604a3209] to-[#604a3248] z-20"></div>
         {props.data.image && (
           <ImageShimmer
