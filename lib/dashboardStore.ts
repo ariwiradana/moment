@@ -5,6 +5,8 @@ interface StoreState {
   setActiveSection: (section: string) => void;
   manualScroll: boolean;
   setManualScroll: (manualScroll: boolean) => void;
+  disableScroll: boolean;
+  setDisableScroll: (disableScroll: boolean) => void;
   selectedPackageId: number | null;
   setSelectedPackageId: (pk: number) => void;
 }
@@ -14,6 +16,8 @@ const useDashboardStore = create<StoreState>((set) => ({
   setActiveSection: (activeSection) => set({ activeSection }),
   manualScroll: true,
   setManualScroll: (manualScroll) => set({ manualScroll }),
+  disableScroll: false,
+  setDisableScroll: (disableScroll) => set({ disableScroll }),
   selectedPackageId: 1,
   setSelectedPackageId: (selectedPackageId) => set({ selectedPackageId }),
 }));

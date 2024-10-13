@@ -46,7 +46,7 @@ const Sidebar: FC<Props> = ({ open, toggle, navData }) => {
   return (
     <nav
       onClick={toggle}
-      className={`fixed z-50 inset-y-0 w-full bg-black bg-opacity-50 transition-all ease-in-out ${
+      className={`fixed z-[999] inset-y-0 w-full bg-black bg-opacity-50 transition-all ease-in-out ${
         open
           ? "visible opacity-100 duration-300"
           : "invisible opacity-0 duration-300 delay-400"

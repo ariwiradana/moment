@@ -12,8 +12,13 @@ import toast from "react-hot-toast";
 
 const NavbarComponent = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false);
-  const { activeSection, setActiveSection, setManualScroll } =
-    useDashboardStore();
+  const {
+    activeSection,
+    setActiveSection,
+    setManualScroll,
+    setDisableScroll,
+    disableScroll,
+  } = useDashboardStore();
 
   const router = useRouter();
 
@@ -103,7 +108,10 @@ const NavbarComponent = () => {
             <div className="flex items-center">
               <button
                 type="button"
-                onClick={() => setIsOpenSidebar((state) => !state)}
+                onClick={() => {
+                  setIsOpenSidebar((state) => !state);
+                  setDisableScroll(!disableScroll);
+                }}
                 className="text-dashboard-primary border-dashboard-primary"
               >
                 <BiMenu className="text-2xl" />
