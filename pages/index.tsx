@@ -28,8 +28,6 @@ const Dashboard = () => {
     });
   }, []);
 
-  console.log({ activeSection, manualScroll });
-
   const handleScroll = useCallback(() => {
     if (manualScroll) {
       const sections = [

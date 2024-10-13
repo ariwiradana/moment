@@ -2,11 +2,7 @@ import { afacad } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useState } from "react";
-import {
-  BiCalendarEvent,
-  BiEdit,
-  BiMenu,
-} from "react-icons/bi";
+import { BiCalendarEvent, BiEdit, BiMenu } from "react-icons/bi";
 import Sidebar from "./sidebar";
 import useDashboardStore from "@/lib/dashboardStore";
 import { useRouter } from "next/router";
@@ -104,21 +100,6 @@ const NavbarComponent = () => {
             />
           </li>
           <li className="flex items-center gap-x-4 lg:hidden">
-            <ButtonPrimary
-              onClick={() => {
-                router.push("/tema");
-                toast.success("Silahkan pilih tema terlebih dahulu", {
-                  icon: (
-                    <div className="p-1 rounded bg-dashboard-primary">
-                      <BiCalendarEvent />
-                    </div>
-                  ),
-                });
-              }}
-              title="Buat Undangan"
-              size="small"
-              icon={<BiEdit />}
-            />
             <div className="flex items-center">
               <button
                 type="button"
