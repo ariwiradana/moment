@@ -69,7 +69,10 @@ const ThemeCard: FC<Props> = ({
         {hasPreview && (
           <>
             <div className="flex justify-center">
-              <Link href={`/${slug}`} target="_blank">
+              <Link
+                href={`/${slug}?untuk=${encodeURIComponent("Nama Undangan")}`}
+                target="_blank"
+              >
                 <ButtonPrimary
                   title="Preview"
                   size="small"
