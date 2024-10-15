@@ -216,10 +216,10 @@ const ClientDashboard: React.FC = () => {
                         Event(s)
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Status
+                        Package
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Package
+                        Status
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Theme
