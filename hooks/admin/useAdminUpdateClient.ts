@@ -99,7 +99,7 @@ export const useAdminUpdateClient = (slug: string) => {
   const [galleryImagesForm, setGalleryImagesForm] = useState<FileList | null>(
     null
   );
-  const [videosForm, setVideosForm] = useState<FileList | null>(null);
+  const [videosForm, setVideosForm] = useState<string[]>([]);
   const [musicForm, setMusicForm] = useState<File | null>(null);
   const [participantImagesForm, setParticipantImagesForm] = useState<
     (FileList | null)[] | []
@@ -107,12 +107,11 @@ export const useAdminUpdateClient = (slug: string) => {
 
   const clearFileInput = () => {
     const galleryInput = document.getElementById("gallery") as HTMLInputElement;
-    const videoInput = document.getElementById("video") as HTMLInputElement;
     const musicInput = document.getElementById("music") as HTMLInputElement;
 
     if (galleryInput) galleryInput.value = "";
-    if (videoInput) videoInput.value = "";
     if (musicInput) musicInput.value = "";
+    setVideosForm([]);
   };
 
   useEffect(() => {
@@ -204,14 +203,14 @@ export const useAdminUpdateClient = (slug: string) => {
   }, [client, themeOptions, packageOptions]);
 
   const handleChangeClient = (
-    value: string | number | FileList | File,
+    value: string | number | FileList | File | string[],
     name: string
   ) => {
     if (name === "images") {
       console.log(value);
       setGalleryImagesForm(value as FileList);
     } else if (name === "videos") {
-      setVideosForm(value as FileList);
+      setVideosForm(value as string[]);
     } else if (name === "music") {
       setMusicForm(value as File);
     } else {
@@ -299,7 +298,7 @@ export const useAdminUpdateClient = (slug: string) => {
   const handleUploadGallery = async () => {
     const imageURLs: string[] = [];
     if (galleryImagesForm && galleryImagesForm.length) {
-      const MAX_SIZE = 3 * 1024 * 1024;
+      const MAX_SIZE = 5 * 1024 * 1024;
 
       let i = 0;
 
@@ -354,63 +353,6 @@ export const useAdminUpdateClient = (slug: string) => {
     return imageURLs;
   };
 
-  const handleUploadVideos = async () => {
-    const videoURLs: string[] = [];
-    if (videosForm && videosForm.length) {
-      const MAX_SIZE = 200 * 1024 * 1024;
-
-      let i = 0;
-
-      if (videosForm instanceof FileList) {
-        for (const video of Array.from(videosForm)) {
-          i++;
-          const toastUpload = toast.loading(
-            `Uploading video ${i} of ${videosForm.length}`
-          );
-          try {
-            if (video.size > MAX_SIZE) {
-              toast.error(`Video ${i} size must lower than 200mb`, {
-                id: toastUpload,
-              });
-              continue;
-            }
-
-            const filename = getFilename(
-              "Clients",
-              formData.name,
-              "Videos",
-              video.type
-            );
-            const res = await getClient(
-              `/api/upload-blob?filename=${filename}`,
-              {
-                method: "POST",
-                body: video,
-              }
-            );
-            const result = await res.json();
-            if (result.success) {
-              toast.success(
-                `Video ${i} of ${videosForm.length} uploaded successfully!`,
-                { id: toastUpload }
-              );
-              videoURLs.push(result.data.url);
-            }
-          } catch (error: any) {
-            toast.error(
-              error.message ||
-                `Error uploading video ${i} of ${videosForm.length}`,
-              {
-                id: toastUpload,
-              }
-            );
-          }
-        }
-      }
-    }
-    return videoURLs;
-  };
-
   const handleUploadMusic = async () => {
     let musicURL: string = "";
     if (musicForm) {
@@ -460,7 +402,6 @@ export const useAdminUpdateClient = (slug: string) => {
     setLoading(true);
 
     const newGalleryURLs = await handleUploadGallery();
-    const newVideoUrls = await handleUploadVideos();
     const newMusicURL = await handleUploadMusic();
     const updatedParticipant = await handleUploadImageParticipant();
 
@@ -471,7 +412,7 @@ export const useAdminUpdateClient = (slug: string) => {
     const currentVideos = Array.isArray(formData.videos) ? formData.videos : [];
 
     modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
-    modifiedFormdata["videos"] = [...currentVideos, ...newVideoUrls];
+    modifiedFormdata["videos"] = [...currentVideos, ...videosForm];
     modifiedFormdata["music"] =
       !formData.music && newMusicURL ? newMusicURL : formData.music;
     modifiedFormdata["participants"] = updatedParticipant as Participant[];
@@ -597,7 +538,7 @@ export const useAdminUpdateClient = (slug: string) => {
 
       if (file && file[0]) {
         const image = file[0] as File;
-        const MAX_SIZE = 3 * 1024 * 1024;
+        const MAX_SIZE = 5 * 1024 * 1024;
 
         const toastUpload = toast.loading(
           `Uploading participant ${i + 1} image`
@@ -848,6 +789,7 @@ export const useAdminUpdateClient = (slug: string) => {
       isLoading,
       client,
       participantImagesForm,
+      videosForm,
     },
     actions: {
       handleChangeClient,

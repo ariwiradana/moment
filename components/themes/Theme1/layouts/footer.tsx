@@ -4,9 +4,11 @@ import {
   AiOutlineInstagram,
   AiOutlineMail,
   AiOutlineWhatsApp,
+  AiOutlineYoutube,
 } from "react-icons/ai";
 import { afacad } from "@/lib/fonts";
 import Image from "next/image";
+import { sosmedURLs } from "@/constants/sosmed";
 
 const FooterComponent: FC = () => {
   return (
@@ -19,14 +21,17 @@ const FooterComponent: FC = () => {
         <li
           className={`flex items-center justify-center gap-2 text-base mt-2 text-white`}
         >
-          <Link target="_blank" href="https://wa.me/+6281246768627">
+          <Link target="_blank" href={sosmedURLs.whatsapp}>
             <AiOutlineWhatsApp />
           </Link>
-          <Link target="_blank" href="https://instagram.com/moment">
+          <Link target="_blank" href={sosmedURLs.instagram}>
             <AiOutlineInstagram />
           </Link>
-          <Link target="_blank" href="mailto:moment.invitations@gmail.com">
+          <Link target="_blank" href={sosmedURLs.email}>
             <AiOutlineMail />
+          </Link>
+          <Link target="_blank" href={sosmedURLs.youtube}>
+            <AiOutlineYoutube />
           </Link>
         </li>
         <li className="font-semibold text-white text-base flex items-center gap-x-1 z-30 relative">

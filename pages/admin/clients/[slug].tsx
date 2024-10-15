@@ -24,6 +24,9 @@ import { GenderOptions } from "@/constants/gender";
 import { roleOptions } from "@/constants/roles";
 import ImageShimmer from "@/components/image.shimmer";
 import Loader from "@/components/admin/elements/loader";
+import InputChip from "@/components/admin/elements/input.chip";
+import { getYouTubeVideoId } from "@/utils/getYoutubeId";
+import YouTubePlayer from "@/components/admin/elements/youtube.player";
 interface UpdateClientProps {
   slug: string;
 }
@@ -82,6 +85,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
               label="Opening Title"
             />
             <InputTextarea
+              rows={6}
               value={state.formData.opening_description}
               onChange={(e) =>
                 actions.handleChangeClient(
@@ -99,6 +103,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
               label="Closing Title"
             />
             <InputTextarea
+              rows={6}
               value={state.formData.closing_description}
               onChange={(e) =>
                 actions.handleChangeClient(
@@ -180,55 +185,42 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                   ))
                 : null}
             </div>
-            <Input
-              id="video"
-              accept="video/mp4"
-              type="file"
-              multiple
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.files as FileList, "videos")
-              }
-              className="w-full"
-              label="Video"
+            <InputChip
+              chips={state.videosForm}
+              onChange={(value) => actions.handleChangeClient(value, "videos")}
+              label="Youtube URL Video"
             />
 
-            <div className="grid md:grid-cols-2 gap-2 relative">
-              {state.formData.videos &&
-              Array.isArray(state.formData.videos) &&
-              state.formData.videos.length > 0
-                ? state.formData.videos.map((video, index) => (
-                    <div className="relative" key={video}>
-                      <div className="absolute top-2 right-2 z-10">
-                        <button
-                          onClick={() =>
-                            actions.handleDeleteVideo(
-                              video,
-                              state.formData.id as number
-                            )
-                          }
-                          type="button"
-                          disabled={state.loading || state.isLoading}
-                          className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
-                        >
-                          <BiX />
-                        </button>
-                      </div>
-                      <video
-                        width="100%"
-                        controls
-                        className="rounded-lg bg-gray-100 aspect-video object-cover"
-                        poster={
-                          (state.formData.gallery
-                            ? state.formData.gallery[index]
-                            : state.formData.cover) as string
-                        }
-                      >
-                        <source src={video} />
-                      </video>
-                    </div>
-                  ))
-                : null}
-            </div>
+            {state.formData.videos && (
+              <div className="grid gap-2 relative">
+                {Array.isArray(state.formData.videos) &&
+                state.formData.videos.length > 0
+                  ? state.formData.videos.map((video) => {
+                      const youtubeId = getYouTubeVideoId(video);
+                      return (
+                        <div className="relative" key={youtubeId}>
+                          <div className="absolute top-2 right-2 z-20">
+                            <button
+                              onClick={() =>
+                                actions.handleDeleteVideo(
+                                  video,
+                                  state.formData.id as number
+                                )
+                              }
+                              type="button"
+                              disabled={state.loading || state.isLoading}
+                              className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                            >
+                              <BiX />
+                            </button>
+                          </div>
+                          <YouTubePlayer youtubeId={youtubeId as string} />
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+            )}
 
             <Input
               id="music"
@@ -289,6 +281,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         label="Name"
                       />
                       <InputTextarea
+                        rows={6}
                         value={state.formData.events[index].address}
                         onChange={(e) =>
                           actions.handleChangeEvent(
@@ -568,6 +561,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
                         />
                       </div>
                       <InputTextarea
+                        rows={6}
                         value={state.formData.participants[index].address}
                         label="Address Full"
                         onChange={(e) =>

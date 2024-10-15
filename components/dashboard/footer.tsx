@@ -9,8 +9,10 @@ import {
   AiOutlineInstagram,
   AiOutlineMail,
   AiOutlineWhatsApp,
+  AiOutlineYoutube,
 } from "react-icons/ai";
 import { HiArrowLongUp } from "react-icons/hi2";
+import { sosmedURLs } from "@/constants/sosmed";
 
 const FooterComponent = () => {
   const setActiveSection = useDashboardStore((state) => state.setActiveSection);
@@ -42,7 +44,7 @@ const FooterComponent = () => {
               </p>
             </div>
             <div className="flex flex-col md:items-end">
-              <div className="flex gap-x-6">
+              <div className="flex flex-wrap gap-y-2 gap-x-6 mb-4">
                 {navData.map(({ path, title }, index) => (
                   <button
                     key={`footer-${title}`}
@@ -66,23 +68,30 @@ const FooterComponent = () => {
                 <Link
                   className="bg-dashboard-dark p-2 rounded"
                   target="_blank"
-                  href="https://wa.me/+6281246768627"
+                  href={sosmedURLs.whatsapp}
                 >
                   <AiOutlineWhatsApp />
                 </Link>
                 <Link
                   className="bg-dashboard-dark p-2 rounded"
                   target="_blank"
-                  href="https://instagram.com/moment"
+                  href={sosmedURLs.instagram}
                 >
                   <AiOutlineInstagram />
                 </Link>
                 <Link
                   className="bg-dashboard-dark p-2 rounded"
                   target="_blank"
-                  href="mailto:moment.invitations@gmail.com"
+                  href={sosmedURLs.email}
                 >
                   <AiOutlineMail />
+                </Link>
+                <Link
+                  className="bg-dashboard-dark p-2 rounded"
+                  target="_blank"
+                  href={sosmedURLs.youtube}
+                >
+                  <AiOutlineYoutube />
                 </Link>
               </div>
               <div className="mt-10 md:mt-12">

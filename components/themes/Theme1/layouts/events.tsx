@@ -73,7 +73,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 <div
                   key={event.id}
                   data-aos="zoom-in-up"
-                  className="border border-white p-8 lg:p-20 text-white rounded-[36px] lg:rounded-[100px] min-w-[70vw] lg:min-w-[30vw]"
+                  className="border border-white p-8 lg:p-20 text-white rounded-3xl min-w-[70vw] lg:min-w-[30vw]"
                 >
                   <h1 className={`${marcellus.className} text-3xl text-center`}>
                     {event.name}

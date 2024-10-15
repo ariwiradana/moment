@@ -1,8 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import Title from "../elements/title";
 import { useTheme1 } from "@/hooks/themes/useTheme1";
 import Image from "next/image";
 import "yet-another-react-lightbox/styles.css";
+import YouTubePlayer from "@/components/admin/elements/youtube.player";
+import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 
 interface Props {
   state: useTheme1["state"];
@@ -15,26 +17,6 @@ const VideoComponent: FC<Props> = (props) => {
     props.state.client.videos.length > 0
       ? props.state.client.videos
       : [];
-
-  const [randomGalleryImages, setRandomGalleryImages] = useState<string[]>([]);
-
-  useEffect(() => {
-    const gallery = props.state.client?.gallery;
-    if (Array.isArray(gallery) && gallery.length > 0) {
-      const videoCount = videos.length;
-      const selectedImages = new Set<string>();
-      while (
-        selectedImages.size < videoCount &&
-        selectedImages.size < gallery.length
-      ) {
-        const randomIndex = Math.floor(Math.random() * gallery.length);
-        selectedImages.add(gallery[randomIndex]);
-      }
-      setRandomGalleryImages(Array.from(selectedImages));
-    } else {
-      setRandomGalleryImages([]);
-    }
-  }, [props.state.client?.gallery, videos.length]);
 
   if (videos.length > 0)
     return (
@@ -71,18 +53,15 @@ const VideoComponent: FC<Props> = (props) => {
                   : "grid-cols-1"
               }`}
             >
-              {videos.map((video, index) => (
-                <video
-                  key={video}
-                  data-aos="fade-up"
-                  width="100%"
-                  controls
-                  className="bg-gray-100 aspect-video object-cover rounded-2xl"
-                  poster={randomGalleryImages[index]}
-                >
-                  <source src={video} />
-                </video>
-              ))}
+              {videos.map((video, index) => {
+                const youtubeId = getYouTubeVideoId(video);
+                return (
+                  <YouTubePlayer
+                    key={`video-${index}`}
+                    youtubeId={youtubeId as string}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

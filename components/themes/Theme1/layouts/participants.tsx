@@ -60,7 +60,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div
       data-aos="zoom-in-up"
-      className={`${afacad.className} flex flex-col md:flex-row even:md:flex-row-reverse rounded-[36px] lg:rounded-[100px] overflow-hidden relative`}
+      className={`${afacad.className} flex flex-col md:flex-row even:md:flex-row-reverse rounded-3xl overflow-hidden relative`}
     >
       <div className="relative h-[300px] md:h-full 2xl:h-full w-full md:w-1/2 flex-grow bg-theme1-primary bg-opacity-5">
         <div className="absolute inset-0 bg-gradient-to-b from-[#604a3209] to-[#604a3248] z-20"></div>
@@ -71,7 +71,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             src={props.data.image as string}
             alt={props.data.name}
             fill
-            className="object-cover w-full h-full grayscale-[5%]"
+            className="object-cover w-full h-full"
           />
         )}
       </div>

@@ -18,6 +18,7 @@ import InputSelect from "@/components/admin/elements/select";
 import { GenderOptions } from "@/constants/gender";
 import { ChildOrderOptions } from "@/constants/childOrder";
 import { roleOptions } from "@/constants/roles";
+import InputChip from "@/components/admin/elements/input.chip";
 
 const CreateClient: React.FC = () => {
   const { state, actions } = useAdminCreateClient();
@@ -68,6 +69,7 @@ const CreateClient: React.FC = () => {
             label="Opening Title"
           />
           <InputTextarea
+            rows={6}
             value={state.formData.opening_description}
             onChange={(e) =>
               actions.handleChangeClient(e.target.value, "opening_description")
@@ -82,6 +84,7 @@ const CreateClient: React.FC = () => {
             label="Closing Title"
           />
           <InputTextarea
+            rows={6}
             value={state.formData.closing_description}
             onChange={(e) =>
               actions.handleChangeClient(e.target.value, "closing_description")
@@ -99,15 +102,10 @@ const CreateClient: React.FC = () => {
             className="w-full"
             label="Gallery"
           />
-          <Input
-            accept="video/mp4, video/quicktime"
-            type="file"
-            multiple
-            onChange={(e) =>
-              actions.handleChangeClient(e.target.files as FileList, "videos")
-            }
-            className="w-full"
-            label="Videos"
+          <InputChip
+            chips={state.formData.videos as string[]}
+            onChange={(value) => actions.handleChangeClient(value, "videos")}
+            label="Youtube URL Video"
           />
           <Input
             accept="audio/mp3"
@@ -139,6 +137,7 @@ const CreateClient: React.FC = () => {
                       label="Name"
                     />
                     <InputTextarea
+                      rows={6}
                       value={state.formData.events[index].address}
                       onChange={(e) =>
                         actions.handleChangeEvent(
@@ -369,6 +368,7 @@ const CreateClient: React.FC = () => {
                     </div>
 
                     <InputTextarea
+                      rows={6}
                       value={state.formData.participants[index].address}
                       label="Address Full"
                       onChange={(e) =>
@@ -472,7 +472,10 @@ const CreateClient: React.FC = () => {
             <Input
               value={state.formData.gift_account_number}
               onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "gift_account_number")
+                actions.handleChangeClient(
+                  e.target.value,
+                  "gift_account_number"
+                )
               }
               label="Account Number"
             />

@@ -5,6 +5,7 @@ import ButtonPrimary from "../elements/button.primary";
 import { BiCalendarEvent, BiShowAlt } from "react-icons/bi";
 import ImageShimmer from "@/components/image.shimmer";
 import { Package } from "@/lib/types";
+import { sosmedURLs } from "@/constants/sosmed";
 
 interface Props {
   name: string;
@@ -25,7 +26,7 @@ const ThemeCard: FC<Props> = ({
 }) => {
   const handleChooseTheme = (name: string, category: string) => {
     const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Kategori: ${category}\n- Tema: ${name}`;
-    const whatsappLink = `https://wa.me/+6281246768627?text=${encodeURIComponent(
+    const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
       message
     )}`;
     window.open(whatsappLink);
