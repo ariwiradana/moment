@@ -10,6 +10,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "vuhhds0zfcjkp4fq.public.blob.vercel-storage.com",
+        port: "",
+      },
+      {
+        protocol: "https",
         hostname: "avatar.iran.liara.run",
         port: "",
       },
