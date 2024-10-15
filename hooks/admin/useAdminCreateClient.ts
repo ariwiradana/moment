@@ -171,10 +171,7 @@ export const useAdminCreateClient = () => {
           } catch (error: any) {
             toast.error(
               error.message ||
-                `Error uploading gallery image ${i} of ${images.length}`,
-              {
-                id: toastUpload,
-              }
+                `Error uploading gallery image ${i} of ${images.length}`
             );
           }
         }
@@ -227,10 +224,7 @@ export const useAdminCreateClient = () => {
             }
           } catch (error: any) {
             toast.error(
-              error.message || `Error uploading video ${i} of ${videos.length}`,
-              {
-                id: toastUpload,
-              }
+              error.message || `Error uploading video ${i} of ${videos.length}`
             );
           }
         }
@@ -273,9 +267,7 @@ export const useAdminCreateClient = () => {
             musicURL = result.data.url;
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading music`, {
-            id: toastUpload,
-          });
+          toast.error(error.message || `Error uploading music`);
         }
       }
     }
@@ -325,10 +317,7 @@ export const useAdminCreateClient = () => {
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Error uploading participant image ${i + 1}`,
-            {
-              id: toastUpload,
-            }
+            error.message || `Error uploading participant image ${i + 1}`
           );
         }
       }

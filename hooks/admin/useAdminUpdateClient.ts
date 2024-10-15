@@ -341,10 +341,7 @@ export const useAdminUpdateClient = (slug: string) => {
           } catch (error: any) {
             toast.error(
               error.message ||
-                `Error uploading gallery image ${i} of ${galleryImagesForm.length}`,
-              {
-                id: toastUpload,
-              }
+                `Error uploading gallery image ${i} of ${galleryImagesForm.length}`
             );
           }
         }
@@ -388,9 +385,7 @@ export const useAdminUpdateClient = (slug: string) => {
             musicURL = result.data.url;
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading music`, {
-            id: toastUpload,
-          });
+          toast.error(error.message || `Error uploading music`);
         }
       }
     }
@@ -585,10 +580,7 @@ export const useAdminUpdateClient = (slug: string) => {
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Error uploading participant image ${i + 1}`,
-            {
-              id: toastUpload,
-            }
+            error.message || `Error uploading participant image ${i + 1}`
           );
         }
       }
