@@ -62,7 +62,7 @@ const HeroComponent: FC<Props> = (props) => {
           </Swiper>
         </div>
 
-        <div className="absolute inset-x-0 top-0 h-[107dvh] lg:h-[112dvh] bg-gradient-to-b from-[#0000003b] via-[#0000004d] via-[70%] to-white z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00000045] to-[#000000ca] z-10"></div>
 
         <div className="absolute top-0 inset-x-0 w-full h-full flex flex-col justify-end px-8 md:px-24 lg:px-32 pb-32 md:pb-52 lg:pb-[27vh] z-20">
           <p
