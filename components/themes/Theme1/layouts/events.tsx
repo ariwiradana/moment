@@ -19,26 +19,32 @@ interface Props {
 }
 
 const EventsComponent: FC<Props> = ({ state, actions }) => {
-  if (state.client?.events && state.client.events.length > 0)
+  const { events = [], gallery = [] } = state.client || {}; // Default to empty arrays
+
+  if (events.length > 0) {
+    const titleCaption =
+      events.length > 2
+        ? `${events
+            .slice(0, 2)
+            .map((e) => e.name)
+            .join(", ")} & ${events[2].name}`
+        : events.map((e) => e.name).join(" & ");
+
     return (
       <section className="relative overflow-hidden z-0">
         <div className="fixed inset-0 z-0">
           <div className="relative h-full w-full">
-            {state.client?.gallery && state.client.gallery.length > 0 ? (
+            {gallery.length > 0 && (
               <ImageShimmer
                 sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
                 priority
                 alt="bg-countdown"
                 fill
                 className="object-cover scale-110 grayscale"
-                src={
-                  state.client.gallery[
-                    state.client.gallery.length - 1
-                  ] as string
-                }
+                src={gallery[gallery.length - 1] as string}
                 style={{ transform: "translateZ(0)" }}
               />
-            ) : null}
+            )}
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0000008f] from-[70%] to-white"></div>
@@ -54,22 +60,15 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
             </div>
           </div>
           <div data-aos="fade-up" className="text-center">
-            <Title
-              white
-              title="Tempat & Waktu"
-              caption={
-                state.client?.events && state.client?.events.length > 2
-                  ? state.client.events
-                      .slice(0, 2)
-                      .map((e) => e.name)
-                      .join(", ") + ` & ${state.client.events[2].name}`
-                  : state.client?.events.map((e) => e.name).join(" & ")
-              }
-            />
+            <Title white title="Tempat & Waktu" caption={titleCaption} />
           </div>
           <div className="mt-16 px-6">
-            <div className="grid lg:grid-cols-2 gap-16 w-full">
-              {state.client?.events.map((event) => (
+            <div
+              className={`grid lg:${
+                events.length > 1 ? "grid-cols-2" : "grid-cols-1"
+              } gap-16 w-full`}
+            >
+              {events.map((event) => (
                 <div
                   key={event.id}
                   data-aos="zoom-in-up"
@@ -123,6 +122,9 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
         </div>
       </section>
     );
+  }
+
+  return null;
 };
 
 export default EventsComponent;
