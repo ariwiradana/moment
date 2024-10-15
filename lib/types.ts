@@ -68,6 +68,7 @@ export interface Client {
   status?: "paid" | "unpaid";
   theme_id: number | null;
   package_id: number | null;
+  packages?: Package;
   theme?: Theme | null;
   cover: null | string;
   is_testimoni?: boolean;

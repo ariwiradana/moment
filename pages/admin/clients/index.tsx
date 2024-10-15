@@ -184,6 +184,14 @@ const ClientDashboard: React.FC = () => {
                       </div>
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
+                          Package
+                        </p>
+                        <p className="text-gray-800 font-semibold text-sm capitalize">
+                          {client.packages?.name}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
                           Theme
                         </p>
                         <p className="text-gray-800 font-semibold text-sm">
@@ -209,6 +217,9 @@ const ClientDashboard: React.FC = () => {
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Status
+                      </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        Package
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Theme
@@ -286,6 +297,15 @@ const ClientDashboard: React.FC = () => {
                                 </p>
                               </div>
                             ))}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          <div className="flex">
+                            <p
+                              className={`text-admin-dark  bg-gray-200 rounded-lg font-semibold px-3 py-1 text-sm`}
+                            >
+                              {client.packages?.name}
+                            </p>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
