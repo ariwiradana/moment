@@ -13,6 +13,7 @@ import useSWR from "swr";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { BiCheck, BiFilter } from "react-icons/bi";
+import Loader from "@/components/admin/elements/loader";
 
 interface Filter {
   category: string;
@@ -85,7 +86,10 @@ const DashboardThemes = () => {
     url += `&category=${encodeURIComponent(themeFilter as string)}`;
   }
 
-  const { data } = useSWR(selectedPackageId ? url : undefined, fetcher);
+  const { data, isLoading } = useSWR(
+    selectedPackageId ? url : undefined,
+    fetcher
+  );
   const { data: allThemes } = useSWR(`/api/themes`, fetcher);
 
   useEffect(() => {
@@ -265,28 +269,34 @@ const DashboardThemes = () => {
               </div>
             ) : null}
 
-            {themes.length > 0 && (
-              <div
-                className="grid md:grid-cols-2 lg:grid-cols-2 gap-4"
-                data-aos="fade-up"
-              >
-                {themes.map((t) => {
-                  const slug = createSlug(t.name);
-                  if (slug) {
-                    return (
-                      <ThemeCard
-                        category={t.category as string}
-                        key={slug}
-                        name={t.name}
-                        thumbnail={t.thumbnail as string}
-                        slug={slug}
-                        availablePackages={t.packages}
-                      />
-                    );
-                  }
-                })}
-              </div>
-            )}
+            <div data-aos="fade-up">
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <>
+                  {themes.length > 0 && (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-4">
+                      {themes.map((t) => {
+                        const slug = createSlug(t.name);
+                        if (slug) {
+                          return (
+                            <ThemeCard
+                              category={t.category as string}
+                              key={slug}
+                              name={t.name}
+                              thumbnail={t.thumbnail as string}
+                              slug={slug}
+                              availablePackages={t.packages}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
             {totalRows > limit && (
               <div className="mt-12 flex justify-center">
                 <Pagination
