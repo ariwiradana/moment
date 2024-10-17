@@ -8,6 +8,7 @@ import { capitalizeWords } from "@/utils/capitalizeWords";
 import ImageShimmer from "../image.shimmer";
 import { useAdminSidebar } from "@/hooks/admin/useAdminSidebar";
 import { getGreeting } from "@/utils/getGreeting";
+import Cookies from "js-cookie";
 
 type MenuItem = {
   name: string;
@@ -29,11 +30,20 @@ const Sidebar: FC = () => {
     (menu) => menu.path === router.pathname
   )?.name;
 
+  const handleLogout = () => {
+    Cookies.remove("token");
+    router.push("/admin/login");
+  };
+
   return (
     <div className={montserrat.className}>
       <Head>
         <title>
-          {pageTitle ?? capitalizeWords(router.pathname.split("/")[2] ?? "")}
+          {pageTitle
+            ? `${pageTitle} | Moment`
+            : `${capitalizeWords(
+                router.pathname.split("/")[2] ?? ""
+              )} | Moment`}
         </title>
       </Head>
       <aside
@@ -96,12 +106,14 @@ const Sidebar: FC = () => {
         <nav className="p-4">
           <div>
             <ButtonPrimary
+              onClick={() => handleLogout()}
               className="hidden md:flex"
               size="medium"
               title="Logout"
               icon={<BiLogOut />}
             />
             <ButtonPrimary
+              onClick={() => handleLogout()}
               className="md:hidden"
               size="small"
               title="Logout"

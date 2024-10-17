@@ -1,5 +1,5 @@
-import { checkApiKey } from "@/lib/apiKey";
 import handleError from "@/lib/errorHandling";
+import { authenticateUser } from "@/lib/middleware";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -8,8 +8,6 @@ interface Query {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!checkApiKey(req, res)) return;
-
   switch (req.method) {
     case "GET":
       try {
@@ -40,4 +38,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handler;
+export default authenticateUser(handler);

@@ -23,6 +23,9 @@ import ImageShimmer from "@/components/image.shimmer";
 import ButtonActionDialog from "@/components/admin/elements/button.action.dialog";
 import { useRouter } from "next/router";
 import ButtonText from "@/components/admin/elements/button.text";
+import Cookies from "cookies";
+import { GetServerSideProps } from "next";
+import { isTokenExpired } from "@/lib/auth";
 
 const ClientDashboard: React.FC = () => {
   const { state, actions } = useAdminClients();
@@ -431,6 +434,34 @@ const ClientDashboard: React.FC = () => {
       </div>
     </AdminLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token");
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default ClientDashboard;

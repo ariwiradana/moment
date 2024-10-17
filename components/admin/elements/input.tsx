@@ -12,7 +12,17 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   optional?: boolean;
 }
 
-const Input: FC<InputProps> = (props) => {
+const Input: FC<InputProps> = ({
+  label,
+  error,
+  info,
+  full = false,
+  className = "",
+  id,
+  inputSize = "large",
+  optional = false,
+  ...props
+}) => {
   const paddingStyles = (size: "small" | "medium" | "large") => {
     switch (size) {
       case "small":
@@ -24,28 +34,25 @@ const Input: FC<InputProps> = (props) => {
     }
   };
   return (
-    <div className={`${props.className ?? ""} ${montserrat.className} text-sm`}>
-      <label
-        htmlFor={props.id ?? props.name}
-        className="block text-gray-700 mb-1"
-      >
-        {props.label}{" "}
+    <div className={`${className ?? ""} ${montserrat.className} text-sm`}>
+      <label htmlFor={id} className="block text-gray-700 mb-1">
+        {label}{" "}
         <span className="text-xs text-gray-400">
-          {props.optional && "(optional)"}
+          {optional && "(optional)"}
         </span>
       </label>
       <input
         {...props}
-        id={props.id}
+        id={id}
         className={`w-full border rounded-lg focus:ring-1 focus:outline-none ${
-          props.error
+          error
             ? "border-admin-danger focus:ring-transparent"
             : "focus:ring-admin-dark"
-        } ${paddingStyles(props.inputSize ?? "large")}`}
+        } ${paddingStyles(inputSize ?? "large")}`}
       />
-      {props.error && (
+      {error && (
         <p className="text-admin-danger border-admin-danger text-sm mt-1">
-          {props.error}
+          {error}
         </p>
       )}
     </div>

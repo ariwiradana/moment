@@ -1,12 +1,15 @@
 export const getClient = async (
   url: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  token?: string | null // Accept an optional token parameter
 ): Promise<Response> => {
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY || "";
   const defaultHeaders: HeadersInit = {
     "Content-Type": "application/json",
-    "x-request-identifier": apiKey,
   };
+
+  if (token) {
+    defaultHeaders.Authorization = `Bearer ${token}`;
+  }
 
   const response = await fetch(url, {
     ...options,

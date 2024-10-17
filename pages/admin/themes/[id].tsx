@@ -11,6 +11,8 @@ import { useAdminUpdateTheme } from "@/hooks/admin/useAdminUpdateTheme";
 import ImageShimmer from "@/components/image.shimmer";
 import InputSelect from "@/components/admin/elements/select";
 import InputCheckbox from "@/components/admin/elements/input.checkbox";
+import { isTokenExpired } from "@/lib/auth";
+import Cookies from "cookies";
 
 interface DetailThemeProps {
   id: number;
@@ -129,6 +131,27 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token");
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {

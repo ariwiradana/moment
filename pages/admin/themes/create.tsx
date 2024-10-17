@@ -8,6 +8,9 @@ import Link from "next/link";
 import { useAdminCreateTheme } from "@/hooks/admin/useAdminCreateTheme";
 import InputSelect from "@/components/admin/elements/select";
 import InputCheckbox from "@/components/admin/elements/input.checkbox";
+import { isTokenExpired } from "@/lib/auth";
+import { GetServerSideProps } from "next";
+import Cookies from "cookies";
 
 const CreateTheme: React.FC = () => {
   const { state, actions } = useAdminCreateTheme();
@@ -71,5 +74,34 @@ const CreateTheme: React.FC = () => {
     </AdminLayout>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token");
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
 
 export default CreateTheme;

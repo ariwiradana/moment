@@ -6,6 +6,7 @@ import { themeCategoryOptions } from "@/constants/themeCategories";
 import { Option, Package } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import useToken from "./useToken";
 
 interface FormData {
   name: string;
@@ -25,11 +26,12 @@ export const useAdminCreateTheme = () => {
   const [formData, setFormData] = useState<FormData>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const token = useToken();
 
   const { data: packageResult } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(`/api/packages`, fetcher);
+  }>(token ? `/api/packages` : null, (url: string) => fetcher(url, token));
 
   const packages = packageResult?.data || [];
 
@@ -63,8 +65,6 @@ export const useAdminCreateTheme = () => {
     }
   };
 
-  console.log(formData);
-
   const handleUploadThumbnail = async () => {
     let url = "";
     if (formData.thumbnail) {
@@ -85,7 +85,8 @@ export const useAdminCreateTheme = () => {
             {
               method: "POST",
               body: image,
-            }
+            },
+            token
           );
           const result = await res.json();
           if (result.success) {
@@ -114,10 +115,14 @@ export const useAdminCreateTheme = () => {
     modifiedFormdata["thumbnail"] = thumbnailURL ?? "";
 
     const createTheme = async () => {
-      const response = await getClient("/api/themes", {
-        method: "POST",
-        body: JSON.stringify(modifiedFormdata),
-      });
+      const response = await getClient(
+        "/api/themes",
+        {
+          method: "POST",
+          body: JSON.stringify(modifiedFormdata),
+        },
+        token
+      );
 
       if (!response.ok) {
         const errorResult = await response.json();

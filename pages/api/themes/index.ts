@@ -1,6 +1,5 @@
-import { checkApiKey } from "@/lib/apiKey";
-
 import handleError from "@/lib/errorHandling";
+import { authenticateUser } from "@/lib/middleware";
 
 import { Theme } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
@@ -19,7 +18,6 @@ interface Query {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!checkApiKey(req, res)) return;
 
   switch (req.method) {
     case "GET":
@@ -237,4 +235,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handler;
+export default authenticateUser(handler);

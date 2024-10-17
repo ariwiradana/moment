@@ -4,12 +4,15 @@ import Loader from "@/components/admin/elements/loader";
 import InputSelect from "@/components/admin/elements/select";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminReviews } from "@/hooks/admin/useAdminReviews";
+import { isTokenExpired } from "@/lib/auth";
 import { montserrat } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import { getRandomColors } from "@/utils/getRandomColor";
 import { Pagination } from "@mui/material";
+import { GetServerSideProps } from "next";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
+import Cookies from "cookies";
 
 const WishesDashboard: React.FC = () => {
   const { state, actions } = useAdminReviews();
@@ -169,6 +172,34 @@ const WishesDashboard: React.FC = () => {
       </div>
     </AdminLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token");
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default WishesDashboard;

@@ -4,13 +4,16 @@ import ButtonText from "@/components/admin/elements/button.text";
 import Loader from "@/components/admin/elements/loader";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminThemes } from "@/hooks/admin/useAdminThemes";
+import { isTokenExpired } from "@/lib/auth";
 import { montserrat } from "@/lib/fonts";
 import { Package } from "@/lib/types";
 import { Pagination } from "@mui/material";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { BiDetail, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
+import Cookies from "cookies";
 
 const ReviewDashboard: React.FC = () => {
   const { state, actions } = useAdminThemes();
@@ -175,5 +178,34 @@ const ReviewDashboard: React.FC = () => {
     </AdminLayout>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token");
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
 
 export default ReviewDashboard;

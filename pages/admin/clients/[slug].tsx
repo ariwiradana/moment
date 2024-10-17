@@ -27,6 +27,8 @@ import Loader from "@/components/admin/elements/loader";
 import InputChip from "@/components/admin/elements/input.chip";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import YouTubePlayer from "@/components/admin/elements/youtube.player";
+import Cookies from "cookies";
+import { isTokenExpired } from "@/lib/auth";
 interface UpdateClientProps {
   slug: string;
 }
@@ -711,6 +713,28 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params!;
+
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token");
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {

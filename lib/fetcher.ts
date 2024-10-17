@@ -1,12 +1,10 @@
-export const fetcher = async (url: string) => {
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY || "";
-
+export const fetcher = async (url: string, token?: string | null) => {
   try {
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-request-identifier": apiKey,
+        Authorization: token ? `Bearer ${token}` : "",
       },
     });
     const result = await res.json();

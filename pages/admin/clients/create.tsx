@@ -19,6 +19,9 @@ import { GenderOptions } from "@/constants/gender";
 import { ChildOrderOptions } from "@/constants/childOrder";
 import { roleOptions } from "@/constants/roles";
 import InputChip from "@/components/admin/elements/input.chip";
+import { isTokenExpired } from "@/lib/auth";
+import { GetServerSideProps } from "next";
+import Cookies from "cookies";
 
 const CreateClient: React.FC = () => {
   const { state, actions } = useAdminCreateClient();
@@ -492,6 +495,34 @@ const CreateClient: React.FC = () => {
       </div>
     </AdminLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token");
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default CreateClient;
