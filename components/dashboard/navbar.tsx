@@ -107,6 +107,7 @@ const NavbarComponent = () => {
           <li className="flex items-center gap-x-4 lg:hidden">
             <div className="flex items-center">
               <button
+                aria-label="btn-nav-menu"
                 type="button"
                 onClick={() => {
                   setIsOpenSidebar((state) => !state);

@@ -115,7 +115,7 @@ const FeaturesComponent = () => {
               menarik
             </p>
           </div>
-          <Link href="/fitur">
+          <Link href="/fitur" aria-label="all-feature-link">
             <div className="flex gap-x-2 items-center">
               <p
                 className={`${afacad.className} text-lg whitespace-nowrap font-medium`}
@@ -151,7 +151,7 @@ const FeaturesComponent = () => {
           ))}
         </div>
         <div className="mt-6 flex justify-center md:hidden" data-aos="fade-up">
-          <Link href="/fitur">
+          <Link href="/fitur" aria-label="all-feature-link">
             <ButtonPrimary
               icon={<BiGridHorizontal />}
               title="Lihat Semua Fitur"

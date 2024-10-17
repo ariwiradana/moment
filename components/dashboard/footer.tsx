@@ -66,6 +66,7 @@ const FooterComponent = () => {
                 className={`flex items-center gap-3 text-2xl mt-4 text-dashboard-primary`}
               >
                 <Link
+                  aria-label="footer-whatsapp-link"
                   className="bg-dashboard-dark p-2 rounded"
                   target="_blank"
                   href={sosmedURLs.whatsapp}
@@ -73,6 +74,7 @@ const FooterComponent = () => {
                   <AiOutlineWhatsApp />
                 </Link>
                 <Link
+                  aria-label="footer-instagram-link"
                   className="bg-dashboard-dark p-2 rounded"
                   target="_blank"
                   href={sosmedURLs.instagram}
@@ -80,6 +82,7 @@ const FooterComponent = () => {
                   <AiOutlineInstagram />
                 </Link>
                 <Link
+                  aria-label="footer-email-link"
                   className="bg-dashboard-dark p-2 rounded"
                   target="_blank"
                   href={sosmedURLs.email}
@@ -87,6 +90,7 @@ const FooterComponent = () => {
                   <AiOutlineMail />
                 </Link>
                 <Link
+                  aria-label="footer-youtube-link"
                   className="bg-dashboard-dark p-2 rounded"
                   target="_blank"
                   href={sosmedURLs.youtube}
@@ -96,6 +100,7 @@ const FooterComponent = () => {
               </div>
               <div className="mt-10 md:mt-12">
                 <button
+                  aria-label="button-go-top"
                   onClick={() =>
                     window.scrollTo({
                       top: 0,

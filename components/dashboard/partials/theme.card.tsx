@@ -58,6 +58,7 @@ const ThemeCard: FC<Props> = ({
       </div>
       <div className="w-full aspect-[3/3] relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 mt-6">
         <ImageShimmer
+          sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
           priority
           fill
           src={thumbnail as string}
@@ -70,6 +71,7 @@ const ThemeCard: FC<Props> = ({
           <>
             <div className="flex justify-center">
               <Link
+                aria-label={`${name.toLowerCase()}-preview-link`}
                 href={`/${slug}?untuk=${encodeURIComponent("Nama Undangan")}`}
                 target="_blank"
               >

@@ -42,7 +42,7 @@ const ThemeComponent: FC = () => {
                 menyesuaikan dengan konsep acara Anda.
               </p>
             </div>
-            <Link href="/tema">
+            <Link href="/tema" aria-label="all-theme-link">
               <div className="flex gap-x-2 items-center">
                 <p
                   className={`${afacad.className} text-lg whitespace-nowrap font-medium`}

@@ -29,7 +29,13 @@ const WhyUsComponent = () => {
 
   return (
     <section className="py-16 lg:py-24 relative bg-zinc-50 select-none">
-      <span className="absolute inset-0 bg-[url('/dashboard/card.jpg')] bg-repeat bg-cover bg-center opacity-5 lg:opacity-10 grayscale"></span>
+      <Image
+        sizes="100vw"
+        src="/dashboard/card.jpg"
+        alt="image-why-us"
+        fill
+        className="object-cover w-full h-full opacity-5 lg:opacity-10 grayscale"
+      />
       <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[400px] z-20 flex flex-col gap-8 md:gap-12 lg:grid lg:grid-cols-3 lg:gap-32">
         <div className="lg:col-span-2 flex flex-col justify-center">
           <div data-aos="fade-up">
@@ -75,7 +81,7 @@ const WhyUsComponent = () => {
           data-aos-delay="400"
         >
           <Image
-            sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+            sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1080px, 1400px"
             src="/dashboard/why-us.jpg"
             fill
             alt="image-why-us"
