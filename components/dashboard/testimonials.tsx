@@ -72,6 +72,7 @@ const TestimonialsComponent = () => {
                     <div className="w-14 h-14 min-w-14 min-h-14 text-xl rounded-full bg-zinc-100 flex justify-center items-center text-dashboard-dark relative">
                       {t.client_cover ? (
                         <Image
+                          sizes="100px"
                           src={t.client_cover}
                           alt={`testimonial-${t.id}`}
                           fill
