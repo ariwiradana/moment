@@ -25,15 +25,15 @@ const HeroComponent: FC<Props> = (props) => {
 
   return (
     <section>
-      <div className="relative h-screen w-full overflow-hidden z-20 bg-samaya-dark">
-        <div className="h-[95vh] relative">
+      <div className="relative h-dvh w-full overflow-hidden z-20 bg-samaya-dark">
+        <div className="h-[95dvh] relative">
           <Swiper
             loop
             autoplay={{
               delay: 5000,
             }}
             speed={10000}
-            className="w-full transition-transform h-[95vh]"
+            className="w-full transition-transform h-[95dvh]"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay]}
@@ -61,7 +61,7 @@ const HeroComponent: FC<Props> = (props) => {
               : null}
           </Swiper>
           <div
-            className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark h-[400px] flex flex-col justify-end items-center"
+            className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark h-[400px] md:h-[800px] flex flex-col justify-end items-center"
             data-aos="fade-up"
           >
             <h1
@@ -79,7 +79,7 @@ const HeroComponent: FC<Props> = (props) => {
               {events.map((event, index) => (
                 <>
                   <span
-                    className={`${marcellus.className} text-white text-base lg:text-xl`}
+                    className={`${marcellus.className} text-white text-base md:text-lg lg:text-xl`}
                   >
                     {event.name}
                   </span>

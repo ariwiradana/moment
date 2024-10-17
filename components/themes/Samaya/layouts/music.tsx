@@ -11,11 +11,15 @@ interface Props {
 const MusicComponent: FC<Props> = (props) => {
   if (props.state.client?.music)
     return (
-      <div className="fixed bottom-4 right-4 z-50" data-aos="zoom-in-up">
+      <div
+        className="fixed bottom-4 right-4 z-50"
+        data-aos="zoom-in-up"
+        data-aos-offset="50"
+      >
         <button
           aria-label="music-button"
           onClick={props.actions.handlePlayPause}
-          className="w-8 h-8 md:h-12 md:w-12 lg:h-16 lg:w-16 bg-samaya-dark rounded-full overflow-hidden flex justify-center items-center text-samaya-primary text-xl relative shadow-sm md:text-2xl lg:text-3xl"
+          className="w-8 h-8 md:h-12 md:w-12 lg:h-16 lg:w-16 bg-samaya-dark border border-samaya-primary rounded-full overflow-hidden flex justify-center items-center text-samaya-primary text-xl relative shadow-sm md:text-2xl lg:text-3xl"
         >
           {props.state.isPlaying ? <BiPause /> : <BiPlay />}
         </button>

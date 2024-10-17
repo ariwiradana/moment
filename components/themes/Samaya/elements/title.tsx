@@ -1,4 +1,4 @@
-import { afacad, marcellus } from "@/lib/fonts";
+import { afacad, windsong } from "@/lib/fonts";
 import React, { FC } from "react";
 
 interface Props {
@@ -16,8 +16,8 @@ const Title: FC<Props> = ({
 }) => {
   return (
     <div
-      className={`${marcellus.className} text-3xl lg:text-4xl text-center ${
-        white ? "text-white" : "text-aakarshana-gold"
+      className={`${windsong.className} text-4xl lg:text-5xl text-center ${
+        white ? "text-white" : "text-samaya-primary"
       } ${className ?? ""} relative`}
     >
       <span>{title}</span>
@@ -25,11 +25,11 @@ const Title: FC<Props> = ({
         <div className="flex items-center gap-x-2 justify-center">
           <div
             className={`h-[0.5px] w-20 ${
-              white ? "bg-white" : "bg-aakarshana-gold"
+              white ? "bg-white" : "bg-samatext-samaya-primary"
             }`}
           ></div>
           <p
-            className={`${white ? "text-white" : "text-aakarshana-gold"} ${
+            className={`${white ? "text-white" : "text-samaya-primary"} ${
               afacad.className
             } text-sm`}
           >
