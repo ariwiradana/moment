@@ -53,7 +53,7 @@ const Cover: FC<Props> = (props) => {
               alt={`cover-img-image`}
               priority
               sizes="200px"
-              className="object-cover rounded-full aspect-square"
+              className="object-cover rounded-full aspect-square overflow-hidden"
               src={props.state.client?.cover as string}
             />
             <Image
