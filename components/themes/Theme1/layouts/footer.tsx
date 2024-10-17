@@ -21,16 +21,32 @@ const FooterComponent: FC = () => {
         <li
           className={`flex items-center justify-center gap-2 text-base mt-2 text-white`}
         >
-          <Link target="_blank" href={sosmedURLs.whatsapp}>
+          <Link
+            aria-label="footer-whatsapp-link"
+            target="_blank"
+            href={sosmedURLs.whatsapp}
+          >
             <AiOutlineWhatsApp />
           </Link>
-          <Link target="_blank" href={sosmedURLs.instagram}>
+          <Link
+            aria-label="footer-instagram-link"
+            target="_blank"
+            href={sosmedURLs.instagram}
+          >
             <AiOutlineInstagram />
           </Link>
-          <Link target="_blank" href={sosmedURLs.email}>
+          <Link
+            aria-label="footer-email-link"
+            target="_blank"
+            href={sosmedURLs.email}
+          >
             <AiOutlineMail />
           </Link>
-          <Link target="_blank" href={sosmedURLs.youtube}>
+          <Link
+            aria-label="footer-youtube-link"
+            target="_blank"
+            href={sosmedURLs.youtube}
+          >
             <AiOutlineYoutube />
           </Link>
         </li>

@@ -6,7 +6,7 @@ interface SEOProps {
   description: string;
   keywords?: string;
   ogImage: string;
-  ogUrl: string;
+  ogUrl?: string;
   author?: string;
   structuredData?: object;
 }
@@ -29,7 +29,7 @@ const Seo: FC<SEOProps> = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:url" content={ogUrl} />
+      {ogUrl && <meta property="og:url" content={ogUrl} />}
       <meta property="og:type" content="website" />
       {author && <meta name="author" content={author} />}
       {structuredData && (

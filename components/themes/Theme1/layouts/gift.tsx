@@ -19,7 +19,6 @@ const GiftComponent: FC<Props> = (props) => {
   )
     return (
       <section className="relative bg-white">
-        <div className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-[0.02]"></div>
         <div
           className="relative z-10 h-full w-full px-6 py-16 bg-theme1-primary bg-opacity-5"
           data-aos="fade-up"
@@ -48,7 +47,13 @@ const GiftComponent: FC<Props> = (props) => {
             <div
               className={`h-52 lg:h-56 md:w-96 w-full bg-theme1-primary bg-opacity-15 p-8 rounded-2xl flex flex-col justify-between shadow-lg relative ${afacad.className}`}
             >
-              <span className="absolute inset-0 bg-[url('/images/theme1/pattern-line.svg')] bg-cover bg-no-repeat"></span>
+              <Image
+                sizes="100px"
+                alt={`img-card`}
+                src="/images/theme1/pattern-line.svg"
+                fill
+                className="w-full h-full object-cover"
+              />
               <div className="flex justify-end relative z-10">
                 <h1
                   className={`text-3xl uppercase font-bold text-theme1-primary`}

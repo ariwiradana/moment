@@ -99,7 +99,11 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           </p>
           <div className="flex mt-4 gap-x-2">
             {props.data.facebook && (
-              <Link target="_blank" href={props.data.facebook}>
+              <Link
+                aria-label="sosmed-facebook-link"
+                target="_blank"
+                href={props.data.facebook}
+              >
                 <div className="w-9 h-9 rounded-full bg-theme1-primary flex justify-center items-center text-white text-xl relative">
                   <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
                   <BiLogoFacebook />
@@ -107,7 +111,11 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
               </Link>
             )}
             {props.data.twitter && (
-              <Link target="_blank" href={props.data.twitter}>
+              <Link
+                aria-label="sosmed-twitter-link"
+                target="_blank"
+                href={props.data.twitter}
+              >
                 <div className="w-9 h-9 rounded-full bg-theme1-primary flex justify-center items-center text-white text-xl relative">
                   <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
                   <BiLogoTwitter />
@@ -115,7 +123,11 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
               </Link>
             )}
             {props.data.instagram && (
-              <Link target="_blank" href={props.data.instagram}>
+              <Link
+                aria-label="sosmed-instagram-link"
+                target="_blank"
+                href={props.data.instagram}
+              >
                 <div className="w-9 h-9 rounded-full bg-theme1-primary flex justify-center items-center text-white text-xl relative">
                   <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
                   <BiLogoInstagram />
@@ -123,7 +135,11 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
               </Link>
             )}
             {props.data.tiktok && (
-              <Link target="_blank" href={props.data.tiktok}>
+              <Link
+                aria-label="sosmed-tiktok-link"
+                target="_blank"
+                href={props.data.tiktok}
+              >
                 <div className="w-9 h-9 rounded-full bg-theme1-primary flex justify-center items-center text-white text-xl relative">
                   <span className="absolute inset-0 bg-[url('/images/theme1/pattern2.png')] bg-cover bg-no-repeat opacity-20"></span>
                   <BiLogoTiktok />
