@@ -109,6 +109,13 @@ CREATE TABLE testimonials (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE users(
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(100) UNIQUE,
+  password VARCHAR(255),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Insert data for Basic package
 INSERT INTO packages (
     name, custom_opening, custom_closing, unlimited_revisions, unlimited_guest_names, max_events, max_gallery_photos, contact_social_media,
