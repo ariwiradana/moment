@@ -20,7 +20,7 @@ const Cover: FC<Props> = (props) => {
       }`}
     >
       <div
-        className="absolute bottom-0 right-0 w-[200px] lg:w-[260px] aspect-square"
+        className="absolute bottom-0 right-0 w-[180px] lg:w-[260px] aspect-square"
         data-aos="fade-up-left"
       >
         <Image
@@ -30,7 +30,7 @@ const Cover: FC<Props> = (props) => {
           fill
         />
       </div>
-      <div className="absolute top-0 left-0 w-[200px] lg:w-[260px] aspect-square">
+      <div className="absolute top-0 left-0 w-[180px] lg:w-[260px] aspect-square">
         <Image
           data-aos="fade-down-right"
           className="object-contain"
