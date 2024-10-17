@@ -72,7 +72,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
 
   const { data, mutate } = useSWR(
     client?.id
-      ? `/api/wishes?page=${page}&limit=${limit}&client_id=${client.id}`
+      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
       : null,
     fetcher
   );
@@ -107,7 +107,7 @@ const useTheme1 = (client: Client | null): useTheme1 => {
     try {
       reviewSchema.parse(formData);
       const createReview = async () => {
-        const response = await getClient(`/api/wishes`, {
+        const response = await getClient(`/api/_pb/_w`, {
           method: "POST",
           body: JSON.stringify(payload),
         });

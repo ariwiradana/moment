@@ -12,8 +12,12 @@ import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
 
-const CreateTheme: React.FC = () => {
-  const { state, actions } = useAdminCreateTheme();
+interface CreateThemeProps {
+  token: string | null;
+}
+
+const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
+  const { state, actions } = useAdminCreateTheme(token);
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -77,7 +81,7 @@ const CreateTheme: React.FC = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -99,9 +103,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      token,
+    },
   };
 };
-
 
 export default CreateTheme;

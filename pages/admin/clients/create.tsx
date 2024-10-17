@@ -23,10 +23,13 @@ import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
 
-const CreateClient: React.FC = () => {
-  const { state, actions } = useAdminCreateClient();
+interface CreateClientProps {
+  token: string | null;
+}
 
-  console.log({ state });
+const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
+  const { state, actions } = useAdminCreateClient(token);
+
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -499,7 +502,7 @@ const CreateClient: React.FC = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -521,7 +524,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      token,
+    },
   };
 };
 

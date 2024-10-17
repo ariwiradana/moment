@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 const PackageComponent = () => {
-  const { data } = useSWR("/api/packages", fetcher);
+  const { data } = useSWR("/api/_pb/_p", fetcher);
   const { setSelectedPackageId } = useDashboardStore();
   const router = useRouter();
 

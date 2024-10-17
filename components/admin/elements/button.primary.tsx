@@ -10,7 +10,14 @@ interface ButtonPrimaryProps
   isloading?: boolean;
 }
 
-const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
+const ButtonPrimary: FC<ButtonPrimaryProps> = ({
+  title,
+  className = "",
+  icon,
+  size = "large",
+  isloading = false,
+  ...props
+}) => {
   const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
@@ -28,22 +35,17 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = (props) => {
     <button
       {...props}
       className={`${
-        props.className ?? ""
+        className ?? ""
       } flex items-center rounded-lg text-white font-medium bg-admin-dark transition duration-200 whitespace-nowrap hover:bg-admin-hover-dark justify-start ${buttonStyles(
-        props.size ?? "large"
+        size
       )} ${
-        props.isloading &&
-        "pointer-events-none bg-opacity-10 cursor-not-allowed"
+        isloading && "pointer-events-none bg-opacity-10 cursor-not-allowed"
       }`}
     >
       <span className="text-sm md:text-base lg:text-lg">
-        {props.isloading ? (
-          <BiLoaderAlt className="animate-spin" />
-        ) : (
-          props.icon
-        )}
+        {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
       </span>
-      <span>{props.title}</span>
+      <span>{title}</span>
     </button>
   );
 };

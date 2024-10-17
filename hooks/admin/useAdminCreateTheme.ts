@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getClient } from "@/lib/client";
 import { themeCategoryOptions } from "@/constants/themeCategories";
-import { Option, Package } from "@/lib/types";
+import { Package } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import useToken from "./useToken";
 
 interface FormData {
   name: string;
@@ -22,16 +21,15 @@ const initalFormData: FormData = {
   package_ids: [],
 };
 
-export const useAdminCreateTheme = () => {
+export const useAdminCreateTheme = (token: string | null) => {
   const [formData, setFormData] = useState<FormData>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const token = useToken();
 
   const { data: packageResult } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(token ? `/api/packages` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
 
   const packages = packageResult?.data || [];
 
@@ -79,14 +77,13 @@ export const useAdminCreateTheme = () => {
             return;
           }
           const res = await getClient(
-            `/api/upload-blob?filename=Themes/${formData.name}.${
+            `/api/_ub?filename=Themes/${formData.name}.${
               image.type.split("/")[1]
             }`,
             {
               method: "POST",
               body: image,
-            },
-            token
+            }
           );
           const result = await res.json();
           if (result.success) {
@@ -116,7 +113,7 @@ export const useAdminCreateTheme = () => {
 
     const createTheme = async () => {
       const response = await getClient(
-        "/api/themes",
+        "/api/_th",
         {
           method: "POST",
           body: JSON.stringify(modifiedFormdata),

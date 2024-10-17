@@ -24,7 +24,7 @@ const MainPage: FC<Props> = (props) => {
   }, []);
 
   const { data, error } = useSWR(
-    props.slug ? `/api/client?slug=${props.slug}` : null,
+    props.slug ? `/api/_pb/_c?slug=${props.slug}` : null,
     fetcher
   );
 
@@ -37,7 +37,11 @@ const MainPage: FC<Props> = (props) => {
   const themeName = client.theme?.name || "";
   const ThemeComponent = themes[themeName];
 
-  return ThemeComponent ? ThemeComponent(client, props.untuk) : <ThemeNotFound />;
+  return ThemeComponent ? (
+    ThemeComponent(client, props.untuk)
+  ) : (
+    <ThemeNotFound />
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

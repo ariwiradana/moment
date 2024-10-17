@@ -27,8 +27,12 @@ import Cookies from "cookies";
 import { GetServerSideProps } from "next";
 import { isTokenExpired } from "@/lib/auth";
 
-const ClientDashboard: React.FC = () => {
-  const { state, actions } = useAdminClients();
+interface ClientDashboardProps {
+  token: string | null;
+}
+
+const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
+  const { state, actions } = useAdminClients(token);
   const router = useRouter();
 
   return (
@@ -438,7 +442,7 @@ const ClientDashboard: React.FC = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -460,7 +464,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      token,
+    },
   };
 };
 

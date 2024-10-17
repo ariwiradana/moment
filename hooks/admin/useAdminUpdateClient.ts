@@ -60,7 +60,7 @@ const initalFormData: Client = {
   gift_account_number: "",
 };
 
-export const useAdminUpdateClient = (slug: string) => {
+export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const {
     data: client,
     mutate,
@@ -68,18 +68,20 @@ export const useAdminUpdateClient = (slug: string) => {
   } = useSWR<{
     success: boolean;
     data: Client[];
-  }>(slug ? `/api/client?slug=${slug}` : undefined, fetcher);
+  }>(slug && token ? `/api/_c?slug=${slug}` : null, (url: string) =>
+    fetcher(url, token)
+  );
 
   const { data: themes } = useSWR<{
     success: boolean;
     data: Theme[];
     total_rows: number;
-  }>(`/api/themes`, fetcher);
+  }>(token ? `/api/_th` : null, (url: string) => fetcher(url, token));
 
   const { data: packages } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(`/api/packages`, fetcher);
+  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
 
   const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
@@ -207,7 +209,6 @@ export const useAdminUpdateClient = (slug: string) => {
     name: string
   ) => {
     if (name === "images") {
-      console.log(value);
       setGalleryImagesForm(value as FileList);
     } else if (name === "videos") {
       setVideosForm(value as string[]);
@@ -323,13 +324,10 @@ export const useAdminUpdateClient = (slug: string) => {
               image.type
             );
 
-            const res = await getClient(
-              `/api/upload-blob?filename=${filename}`,
-              {
-                method: "POST",
-                body: image,
-              }
-            );
+            const res = await getClient(`/api/_ub?filename=${filename}`, {
+              method: "POST",
+              body: image,
+            });
             const result = await res.json();
             if (result.success) {
               toast.success(
@@ -353,7 +351,7 @@ export const useAdminUpdateClient = (slug: string) => {
   const handleUploadMusic = async () => {
     let musicURL: string = "";
     if (musicForm) {
-      const MAX_SIZE = 3 * 1024 * 1024;
+      const MAX_SIZE = 5 * 1024 * 1024;
       let i = 0;
 
       if (musicForm instanceof File) {
@@ -373,7 +371,7 @@ export const useAdminUpdateClient = (slug: string) => {
             "Music",
             musicForm.type
           );
-          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/_ub?filename=${filename}`, {
             method: "POST",
             body: musicForm,
           });
@@ -417,10 +415,14 @@ export const useAdminUpdateClient = (slug: string) => {
         : formData.cover;
 
     const updateClient = async () => {
-      const response = await getClient(`/api/client?id=${client?.data[0].id}`, {
-        method: "PUT",
-        body: JSON.stringify(modifiedFormdata),
-      });
+      const response = await getClient(
+        `/api/_c?id=${client?.data[0].id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(modifiedFormdata),
+        },
+        token
+      );
 
       if (!response.ok) {
         const errorResult = await response.json();
@@ -454,10 +456,14 @@ export const useAdminUpdateClient = (slug: string) => {
       };
 
       const deleteBlob = async () => {
-        const response = await getClient(`/api/client/delete-gallery`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+        const response = await getClient(
+          `/api/_c/_dg`,
+          {
+            method: "POST",
+            body: JSON.stringify(payload),
+          },
+          token
+        );
         if (!response.ok) {
           const errorResult = await response.json();
           throw new Error(errorResult.message);
@@ -494,11 +500,12 @@ export const useAdminUpdateClient = (slug: string) => {
 
       const deleteBlob = async () => {
         const response = await getClient(
-          `/api/client/delete-participant-image`,
+          `/api/_c/_dpi`,
           {
             method: "POST",
             body: JSON.stringify(payload),
-          }
+          },
+          token
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -554,7 +561,7 @@ export const useAdminUpdateClient = (slug: string) => {
             image.type
           );
 
-          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/_ub?filename=${filename}`, {
             method: "POST",
             body: image,
           });
@@ -567,13 +574,17 @@ export const useAdminUpdateClient = (slug: string) => {
             });
 
             if (currentParticipants[i].image) {
-              await getClient(`/api/client/delete-participant-image`, {
-                method: "POST",
-                body: JSON.stringify({
-                  id: currentParticipants[i].id,
-                  url: currentParticipants[i].image,
-                }),
-              });
+              await getClient(
+                `/api/_c/delete-participant-image`,
+                {
+                  method: "POST",
+                  body: JSON.stringify({
+                    id: currentParticipants[i].id,
+                    url: currentParticipants[i].image,
+                  }),
+                },
+                token
+              );
             }
 
             currentParticipants[i].image = result.data.url;
@@ -590,10 +601,14 @@ export const useAdminUpdateClient = (slug: string) => {
 
   const handleSetCover = async (url: string, id: number) => {
     const setCover = async () => {
-      const response = await getClient(`/api/client/set-cover`, {
-        method: "POST",
-        body: JSON.stringify({ url, id }),
-      });
+      const response = await getClient(
+        `/api/_c/_sc`,
+        {
+          method: "POST",
+          body: JSON.stringify({ url, id }),
+        },
+        token
+      );
       if (!response.ok) {
         const errorResult = await response.json();
         throw new Error(errorResult.message);
@@ -624,10 +639,14 @@ export const useAdminUpdateClient = (slug: string) => {
       };
 
       const deleteVideo = async () => {
-        const response = await getClient(`/api/client/delete-video`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+        const response = await getClient(
+          `/api/_c/_dv`,
+          {
+            method: "POST",
+            body: JSON.stringify(payload),
+          },
+          token
+        );
         if (!response.ok) {
           const errorResult = await response.json();
           throw new Error(errorResult.message);
@@ -663,10 +682,14 @@ export const useAdminUpdateClient = (slug: string) => {
       };
 
       const deleteMusic = async () => {
-        const response = await getClient(`/api/client/delete-music`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+        const response = await getClient(
+          `/api/_c/_dm`,
+          {
+            method: "POST",
+            body: JSON.stringify(payload),
+          },
+          token
+        );
         if (!response.ok) {
           const errorResult = await response.json();
           throw new Error(errorResult.message);
@@ -698,10 +721,11 @@ export const useAdminUpdateClient = (slug: string) => {
 
       const deleteEvent = async () => {
         const response = await getClient(
-          `/api/events?id=${encodeURIComponent(id)}`,
+          `/api/_e?id=${encodeURIComponent(id)}`,
           {
             method: "DELETE",
-          }
+          },
+          token
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -735,16 +759,20 @@ export const useAdminUpdateClient = (slug: string) => {
       setLoading(true);
 
       const deleteParticipant = async () => {
-        let url = `/api/participants?id=${encodeURIComponent(id)}`;
+        let url = `/api/_pr?id=${encodeURIComponent(id)}`;
 
         if (imageURL)
-          url = `/api/participants?id=${encodeURIComponent(
+          url = `/api/_pr?id=${encodeURIComponent(
             id
           )}&image_url=${encodeURIComponent(imageURL)}`;
 
-        const response = await getClient(url, {
-          method: "DELETE",
-        });
+        const response = await getClient(
+          url,
+          {
+            method: "DELETE",
+          },
+          token
+        );
         if (!response.ok) {
           const errorResult = await response.json();
           throw new Error(errorResult.message);

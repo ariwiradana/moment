@@ -16,12 +16,11 @@ import Cookies from "cookies";
 
 interface DetailThemeProps {
   id: number;
+  token: string | null;
 }
 
-const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
-  const { state, actions } = useAdminUpdateTheme(id);
-
-  console.log(state);
+const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
+  const { state, actions } = useAdminUpdateTheme(id, token);
 
   return (
     <AdminLayout>
@@ -132,7 +131,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -156,6 +155,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       id,
+      token,
     },
   };
 };

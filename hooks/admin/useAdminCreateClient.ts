@@ -64,7 +64,7 @@ const initalFormData: Client = {
   music: null,
 };
 
-export const useAdminCreateClient = () => {
+export const useAdminCreateClient = (token: string | null) => {
   const router = useRouter();
   const [errors, setErrors] = useState<ErrorState>(initialErrorState);
   const [formData, setFormData] = useState<Client>(initalFormData);
@@ -87,12 +87,12 @@ export const useAdminCreateClient = () => {
     success: boolean;
     data: Theme[];
     total_rows: number;
-  }>(`/api/themes`, fetcher);
+  }>(token ? `/api/_th` : null, (url: string) => fetcher(url, token));
 
   const { data: packages } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(`/api/packages`, fetcher);
+  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
 
   const clientSchema = z.object({
     name: z.string().min(1, { message: "Client name is required." }),
@@ -153,13 +153,10 @@ export const useAdminCreateClient = () => {
               "Gallery",
               image.type
             );
-            const res = await getClient(
-              `/api/upload-blob?filename=${filename}`,
-              {
-                method: "POST",
-                body: image,
-              }
-            );
+            const res = await getClient(`/api/_ub?filename=${filename}`, {
+              method: "POST",
+              body: image,
+            });
             const result = await res.json();
             if (result.success) {
               toast.success(
@@ -207,13 +204,10 @@ export const useAdminCreateClient = () => {
               "Videos",
               video.type
             );
-            const res = await getClient(
-              `/api/upload-blob?filename=${filename}`,
-              {
-                method: "POST",
-                body: video,
-              }
-            );
+            const res = await getClient(`/api/_ub?filename=${filename}`, {
+              method: "POST",
+              body: video,
+            });
             const result = await res.json();
             if (result.success) {
               toast.success(
@@ -236,7 +230,7 @@ export const useAdminCreateClient = () => {
   const handleUploadMusic = async () => {
     let musicURL: string = "";
     if (formData.music) {
-      const MAX_SIZE = 3 * 1024 * 1024;
+      const MAX_SIZE = 5 * 1024 * 1024;
 
       let i = 0;
 
@@ -257,7 +251,7 @@ export const useAdminCreateClient = () => {
             "Music",
             music.type
           );
-          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/_ub?filename=${filename}`, {
             method: "POST",
             body: music,
           });
@@ -302,7 +296,7 @@ export const useAdminCreateClient = () => {
             "Participants",
             image.type
           );
-          const res = await getClient(`/api/upload-blob?filename=${filename}`, {
+          const res = await getClient(`/api/_ub?filename=${filename}`, {
             method: "POST",
             body: image,
           });
@@ -427,10 +421,14 @@ export const useAdminCreateClient = () => {
       modifiedFormdata["participants"] = updatedParticipant;
 
       const createClient = async () => {
-        const response = await getClient("/api/client", {
-          method: "POST",
-          body: JSON.stringify(modifiedFormdata),
-        });
+        const response = await getClient(
+          "/api/_c",
+          {
+            method: "POST",
+            body: JSON.stringify(modifiedFormdata),
+          },
+          token
+        );
 
         if (!response.ok) {
           const errorResult = await response.json();

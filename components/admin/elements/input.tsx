@@ -4,8 +4,6 @@ import React, { FC } from "react";
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
-  info?: string;
-  full?: boolean;
   className?: string;
   id?: string;
   inputSize?: "small" | "medium" | "large";
@@ -15,8 +13,6 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Input: FC<InputProps> = ({
   label,
   error,
-  info,
-  full = false,
   className = "",
   id,
   inputSize = "large",

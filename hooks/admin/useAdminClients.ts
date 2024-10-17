@@ -5,7 +5,7 @@ import { useState } from "react";
 import { getClient } from "@/lib/client";
 import toast from "react-hot-toast";
 
-export const useAdminClients = () => {
+export const useAdminClients = (token: string | null) => {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
 
@@ -13,7 +13,9 @@ export const useAdminClients = () => {
     success: boolean;
     data: Client[];
     total_rows: number;
-  }>(`/api/client?page=${page}&limit=${limit}`, fetcher);
+  }>(token ? `/api/_c?page=${page}&limit=${limit}` : null, (url: string) =>
+    fetcher(url, token)
+  );
 
   const handleChangePagination = (
     event: React.ChangeEvent<unknown>,
@@ -23,9 +25,13 @@ export const useAdminClients = () => {
   };
 
   const handleDelete = (id: number) => {
-    const deleteTheme = getClient(`/api/client?id=${id}`, {
-      method: "DELETE",
-    });
+    const deleteTheme = getClient(
+      `/api/_c?id=${id}`,
+      {
+        method: "DELETE",
+      },
+      token
+    );
     toast.promise(deleteTheme, {
       loading: "Deleting client...",
       success: () => {
@@ -51,10 +57,14 @@ export const useAdminClients = () => {
 
   const handleSetPaidStatus = async (id: number) => {
     const setPaid = async () => {
-      const response = await getClient(`/api/client/set-status`, {
-        method: "POST",
-        body: JSON.stringify({ status: "paid", id }),
-      });
+      const response = await getClient(
+        `/api/_c/_ss`,
+        {
+          method: "POST",
+          body: JSON.stringify({ status: "paid", id }),
+        },
+        token
+      );
       if (!response.ok) {
         const errorResult = await response.json();
         throw new Error(errorResult.message);
@@ -75,10 +85,14 @@ export const useAdminClients = () => {
 
   const handleSetTestimonial = async (id: number) => {
     const setTestimonial = async () => {
-      const response = await getClient(`/api/client/set-testimonial`, {
-        method: "POST",
-        body: JSON.stringify({ is_testimoni: true, id }),
-      });
+      const response = await getClient(
+        `/api/_c/_st`,
+        {
+          method: "POST",
+          body: JSON.stringify({ is_testimoni: true, id }),
+        },
+        token
+      );
       if (!response.ok) {
         const errorResult = await response.json();
         throw new Error(errorResult.message);

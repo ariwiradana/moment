@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
 
-export const useAdminReviews = () => {
+export const useAdminReviews = (token: string | null) => {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [clientId, setClientId] = useState<number | null>(null);
@@ -15,17 +15,17 @@ export const useAdminReviews = () => {
     success: boolean;
     data: Client[];
     total_rows: number;
-  }>(`/api/client`, fetcher);
+  }>(token ? `/api/_c` : null, (url: string) => fetcher(url, token));
 
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
     data: Review[];
     total_rows: number;
   }>(
-    clientId
-      ? `/api/wishes?page=${page}&limit=${limit}&client_id=${clientId}`
-      : undefined,
-    fetcher
+    clientId && token
+      ? `/api/_w?page=${page}&limit=${limit}&client_id=${clientId}`
+      : null,
+    (url: string) => fetcher(url, token)
   );
 
   const handleChangeClient = (value: number) => {
@@ -53,9 +53,13 @@ export const useAdminReviews = () => {
   };
 
   const handleDelete = (id: number) => {
-    const deleteReview = getClient(`/api/wishes?id=${id}`, {
-      method: "DELETE",
-    });
+    const deleteReview = getClient(
+      `/api/_w?id=${id}`,
+      {
+        method: "DELETE",
+      },
+      token
+    );
     toast.promise(deleteReview, {
       loading: "Deleting review...",
       success: () => {

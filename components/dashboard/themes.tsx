@@ -11,7 +11,7 @@ import ThemeCard from "./partials/theme.card";
 import { Theme } from "@/lib/types";
 
 const ThemeComponent: FC = () => {
-  const { data } = useSWR("/api/themes", fetcher);
+  const { data } = useSWR("/api/_pb/_th", fetcher);
 
   const themes: Theme[] = data?.data || [];
 

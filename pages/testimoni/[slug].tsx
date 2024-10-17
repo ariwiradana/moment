@@ -35,7 +35,7 @@ type ErrorState = Record<string, string>;
 const initialErrorState: ErrorState = {};
 
 const DashboardTestimonial: FC<Props> = (props) => {
-  const { data, isLoading } = useSWR(`/api/client?slug=${props.slug}`, fetcher);
+  const { data, isLoading } = useSWR(`/api/_pb/_c?slug=${props.slug}`, fetcher);
   const client: Client | null =
     data?.data && data?.data.length > 0 ? data?.data[0] : null;
 
@@ -71,7 +71,7 @@ const DashboardTestimonial: FC<Props> = (props) => {
         comments: formData.comments,
       };
 
-      const response = await getClient("/api/testimonials", {
+      const response = await getClient("/api/_pb/_ts", {
         method: "POST",
         body: JSON.stringify(payload),
       });

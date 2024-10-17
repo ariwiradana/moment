@@ -31,10 +31,11 @@ import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 interface UpdateClientProps {
   slug: string;
+  token: string | null;
 }
 
-const UpdateClient: React.FC<UpdateClientProps> = ({ slug }) => {
-  const { state, actions } = useAdminUpdateClient(slug);
+const UpdateClient: React.FC<UpdateClientProps> = ({ slug , token}) => {
+  const { state, actions } = useAdminUpdateClient(slug, token);
 
   return (
     <AdminLayout>
@@ -715,7 +716,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params!;
 
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -739,6 +740,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       slug,
+      token,
     },
   };
 };

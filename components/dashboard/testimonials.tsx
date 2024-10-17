@@ -11,7 +11,7 @@ import moment from "moment";
 import { BiTime } from "react-icons/bi";
 
 const TestimonialsComponent = () => {
-  const { data } = useSWR("/api/testimonials", fetcher);
+  const { data } = useSWR("/api/_pb/_ts", fetcher);
 
   const testimonials: Testimonials[] = data?.data || [];
 

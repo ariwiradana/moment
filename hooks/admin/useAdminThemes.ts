@@ -5,7 +5,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
 
-export const useAdminThemes = () => {
+export const useAdminThemes = (token: string | null) => {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
 
@@ -13,7 +13,9 @@ export const useAdminThemes = () => {
     success: boolean;
     data: Theme[];
     total_rows: number;
-  }>(`/api/themes?page=${page}&limit=${limit}`, fetcher);
+  }>(token ? `/api/_th?page=${page}&limit=${limit}` : null, (url: string) =>
+    fetcher(url, token)
+  );
 
   const handleChangePagination = (
     event: React.ChangeEvent<unknown>,
@@ -22,18 +24,23 @@ export const useAdminThemes = () => {
     setPage(value);
   };
 
-  const handleDelete = (id: number) => {
-    const deleteTheme = getClient(`/api/themes?id=${id}`, { method: "DELETE" });
-    toast.promise(deleteTheme, {
-      loading: "Deleting theme...",
-      success: () => {
-        mutate();
-        return "Successfully deleted theme";
+  const handleDelete = async (id: number) => {
+    const deleteToast = toast.loading("Deleting theme...");
+    const res = await getClient(
+      `/api/_th?id=${id}`,
+      {
+        method: "DELETE",
       },
-      error: (error: any) => {
-        return error.message || "Failed to delete theme";
-      },
-    });
+      token
+    );
+    const result = await res.json();
+
+    if (!result.success) {
+      toast.error(result.message, { id: deleteToast });
+    } else {
+      mutate();
+      toast.success(result.message, { id: deleteToast });
+    }
   };
 
   return {

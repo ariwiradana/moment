@@ -15,8 +15,12 @@ import React from "react";
 import { BiDetail, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
 import Cookies from "cookies";
 
-const ReviewDashboard: React.FC = () => {
-  const { state, actions } = useAdminThemes();
+interface PageProps {
+  token: string | null
+}
+
+const ReviewDashboard: React.FC<PageProps> = ({token}) => {
+  const { state, actions } = useAdminThemes(token);
   const router = useRouter();
 
   return (
@@ -181,7 +185,7 @@ const ReviewDashboard: React.FC = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -203,7 +207,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      token
+    },
   };
 };
 

@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import useDashboardStore from "@/lib/dashboardStore";
 
 const HeroComponent = () => {
-  const { data } = useSWR("/api/images?pathname=Themes/Dashboard", fetcher);
+  const { data } = useSWR("/api/_im?pathname=Themes/Dashboard", fetcher);
   const images: Blob[] = data?.blobs || [];
   const thumbnails: string[] = images.map((theme) => theme.url);
   const router = useRouter();

@@ -1,3 +1,5 @@
+import { NextApiRequest, NextApiResponse } from "next";
+
 export interface Theme {
   id: number | null;
   slug: string;
@@ -132,3 +134,8 @@ export interface User {
   username: string;
   password?: string;
 }
+
+export type ApiHandler = (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => Promise<void>;

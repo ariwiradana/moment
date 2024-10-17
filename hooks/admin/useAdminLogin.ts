@@ -1,7 +1,6 @@
 import { getClient } from "@/lib/client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 interface FormData {
@@ -22,7 +21,7 @@ export const useAdminLogin = () => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      const res = await getClient("/api/auth/login", {
+      const res = await getClient("/api/_a/_li", {
         method: "POST",
         body: JSON.stringify(formData),
       });
@@ -30,13 +29,6 @@ export const useAdminLogin = () => {
       if (!result.success) {
         toast.error(result.message);
       }
-
-      Cookies.set("token", result.token, {
-        expires: 1,
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "Strict",
-      });
       router.push("/admin/clients");
       setIsLoading(false);
     } catch (error: any) {

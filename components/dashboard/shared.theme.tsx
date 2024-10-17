@@ -11,7 +11,7 @@ import {
 } from "react-icons/bi";
 
 const SharedThemeComponent = () => {
-  const { data } = useSWR("/api/total-shared", fetcher);
+  const { data } = useSWR("/api/_sh", fetcher);
 
   if (data)
     return (

@@ -8,7 +8,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 
 const ClientComponent = () => {
-  const { data } = useSWR("/api/client?is_testimoni=true", fetcher);
+  const { data } = useSWR("/api/_pb/_c?is_testimoni=true", fetcher);
 
   const clients: Client[] = data?.data || [];
 

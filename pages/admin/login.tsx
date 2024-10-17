@@ -1,7 +1,7 @@
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import Input from "@/components/admin/elements/input";
 import { useAdminLogin } from "@/hooks/admin/useAdminLogin";
-import { afacad, montserrat } from "@/lib/fonts";
+import { afacad } from "@/lib/fonts";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -52,7 +52,6 @@ const AdminLogin: FC = () => {
               name="password"
               value={state.formData.password}
               label="Password"
-              type="password"
               inputSize="medium"
             />
             <div className="mt-2 w-full">
@@ -73,7 +72,7 @@ const AdminLogin: FC = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token as string);

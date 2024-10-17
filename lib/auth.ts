@@ -1,15 +1,20 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+const JWT_SECRET =
+  process.env.JWT_SECRET ||
+  "622p6HVzUZ9CvqvwoaJ2on2kP6qGjMzwJgwAtpBy9J3HhFgdIT9ZgYwTBBfww0emU0wTvT4ABm2D6L1jbrckJyJLxmuQ9S2Zgwmf";
 
-// Hash the password before storing it
+interface DecodedToken {
+  userId: string;
+  iat: number;
+  exp: number;
+}
+
 export const hashPassword = async (password: string): Promise<string> => {
   const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
 };
-
-// Compare entered password with hashed password
 export const verifyPassword = async (
   password: string,
   hashedPassword: string
@@ -17,25 +22,23 @@ export const verifyPassword = async (
   return bcrypt.compare(password, hashedPassword);
 };
 
-// Generate JWT token
 export const generateToken = (userId: string) => {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1d" });
 };
 
-// Verify JWT token
 export const verifyToken = (token: string) => {
   return jwt.verify(token, JWT_SECRET);
 };
 
 export const isTokenExpired = (token: string) => {
-  if (!token) return true; // If no token, treat as expired
+  if (!token) return true;
 
-  const decoded: any = jwt.decode(token);
+  const decoded = jwt.decode(token) as DecodedToken | null;
 
   if (decoded && decoded.exp) {
-    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-    return decoded.exp < currentTime; // Check if expiration time is in the past
+    const currentTime = Math.floor(Date.now() / 1000);
+    return decoded.exp < currentTime;
   }
 
-  return true; // If decoding fails, consider it expired
+  return true;
 };

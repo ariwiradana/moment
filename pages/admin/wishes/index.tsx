@@ -14,8 +14,12 @@ import React from "react";
 import { BiTrash } from "react-icons/bi";
 import Cookies from "cookies";
 
-const WishesDashboard: React.FC = () => {
-  const { state, actions } = useAdminReviews();
+interface WishesDashboardProps {
+  token: string | null;
+}
+
+const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
+  const { state, actions } = useAdminReviews(token);
 
   return (
     <AdminLayout>
@@ -176,7 +180,7 @@ const WishesDashboard: React.FC = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
-  const token = cookies.get("token");
+  const token = cookies.get("token") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -198,7 +202,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      token,
+    },
   };
 };
 

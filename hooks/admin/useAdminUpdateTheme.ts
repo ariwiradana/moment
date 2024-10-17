@@ -16,7 +16,7 @@ const initalFormData: Theme = {
   package_ids: [],
 };
 
-export const useAdminUpdateTheme = (id: number) => {
+export const useAdminUpdateTheme = (id: number, token: string | null) => {
   const {
     data: themes,
     mutate,
@@ -24,12 +24,14 @@ export const useAdminUpdateTheme = (id: number) => {
   } = useSWR<{
     success: boolean;
     data: Theme[];
-  }>(id ? `/api/themes?id=${id}` : undefined, fetcher);
+  }>(id ? `/api/_th?id=${id}` : undefined, (url: string) =>
+    fetcher(url, token)
+  );
 
   const { data: packageResult } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(`/api/packages`, fetcher);
+  }>(`/api/_p`, (url: string) => fetcher(url, token));
 
   const packages = packageResult?.data || [];
 
@@ -91,10 +93,14 @@ export const useAdminUpdateTheme = (id: number) => {
     modifiedFormdata["thumbnail"] = newImageUrl;
 
     const updateTheme = async () => {
-      const response = await getClient(`/api/themes?id=${id}`, {
-        method: "PUT",
-        body: JSON.stringify(modifiedFormdata),
-      });
+      const response = await getClient(
+        `/api/_th?id=${id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(modifiedFormdata),
+        },
+        token
+      );
 
       if (!response.ok) {
         const errorResult = await response.json();
@@ -135,7 +141,7 @@ export const useAdminUpdateTheme = (id: number) => {
         }
 
         const res = await getClient(
-          `/api/upload-blob?filename=Themes/${formData.name}.${
+          `/api/_ub?filename=Themes/${formData.name}.${
             image.type.split("/")[1]
           }`,
           {
@@ -169,10 +175,14 @@ export const useAdminUpdateTheme = (id: number) => {
       };
 
       const deleteBlob = async () => {
-        const response = await getClient(`/api/themes/delete-thumbnail`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+        const response = await getClient(
+          `/api/_th/_dt`,
+          {
+            method: "POST",
+            body: JSON.stringify(payload),
+          },
+          token
+        );
         if (!response.ok) {
           const errorResult = await response.json();
           throw new Error(errorResult.message);

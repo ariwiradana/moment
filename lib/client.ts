@@ -1,7 +1,9 @@
 export const getClient = async (
   url: string,
-  options: RequestInit = {},
-  token?: string | null // Accept an optional token parameter
+  options: RequestInit = {
+    credentials: "omit",
+  },
+  token?: string | null
 ): Promise<Response> => {
   const defaultHeaders: HeadersInit = {
     "Content-Type": "application/json",

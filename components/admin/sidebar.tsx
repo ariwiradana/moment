@@ -8,7 +8,9 @@ import { capitalizeWords } from "@/utils/capitalizeWords";
 import ImageShimmer from "../image.shimmer";
 import { useAdminSidebar } from "@/hooks/admin/useAdminSidebar";
 import { getGreeting } from "@/utils/getGreeting";
-import Cookies from "js-cookie";
+import { getClient } from "@/lib/client";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 
 type MenuItem = {
   name: string;
@@ -19,6 +21,7 @@ type MenuItem = {
 const Sidebar: FC = () => {
   const router = useRouter();
   const { isSidebarOpen, toggleSidebar } = useAdminSidebar();
+  const { data: user } = useSWR("/api/_a/_u", fetcher);
 
   const menuItems: MenuItem[] = [
     { name: "Clients", path: "/admin/clients", icon: <BiUser /> },
@@ -30,10 +33,21 @@ const Sidebar: FC = () => {
     (menu) => menu.path === router.pathname
   )?.name;
 
-  const handleLogout = () => {
-    Cookies.remove("token");
-    router.push("/admin/login");
+  const handleLogout = async () => {
+    try {
+      const res = await getClient("/api/_a/_lo", {
+        method: "POST",
+      });
+      const result = await res.json();
+      if (result.success) {
+        router.push("/admin/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const sanitizedUser = ((user as string) ?? "").replaceAll(/[^a-zA-Z]+/g, " ");
 
   return (
     <div className={montserrat.className}>
@@ -64,7 +78,9 @@ const Sidebar: FC = () => {
               />
             </div>
             <div className="pr-4">
-              <h1 className="font-semibold text-admin-dark">Admin</h1>
+              <h1 className="font-semibold text-admin-dark capitalize">
+                {sanitizedUser}
+              </h1>
               <p className="text-xs text-darkgray">
                 {getGreeting()}, have a good day!
               </p>

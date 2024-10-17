@@ -62,13 +62,13 @@ const DashboardThemes = () => {
     if (router && router.pathname === "/tema") setActiveSection("section3");
   }, [router, setActiveSection]);
 
-  const { data: categories } = useSWR(`/api/themes/categories`, fetcher);
+  const { data: categories } = useSWR(`/api/_pb/_th/_c`, fetcher);
   const { data: packageCategories } = useSWR(
     themeFilter !== "Semua Undangan"
-      ? `/api/packages/categories?theme_category=${encodeURIComponent(
+      ? `/api/_pb/_p/_c?theme_category=${encodeURIComponent(
           themeFilter as string
         )}`
-      : `/api/packages/categories`,
+      : `/api/_pb/_p/_c`,
     fetcher
   );
 
@@ -76,7 +76,7 @@ const DashboardThemes = () => {
     return categories?.data || [];
   }, [categories]);
 
-  let url = `/api/themes?page=${page}&limit=${limit}`;
+  let url = `/api/_pb/_th?page=${page}&limit=${limit}`;
 
   if (selectedPackageId) {
     url += `&package_id=${selectedPackageId}`;
@@ -90,7 +90,7 @@ const DashboardThemes = () => {
     selectedPackageId ? url : undefined,
     fetcher
   );
-  const { data: allThemes } = useSWR(`/api/themes`, fetcher);
+  const { data: allThemes } = useSWR(`/api/_pb/_th`, fetcher);
 
   useEffect(() => {
     if (packageCategories && packageCategories.data.length > 0) {
