@@ -369,6 +369,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         ]);
 
         const newParticipants = client.participants.filter((p) => !p.id);
+
         if (newParticipants.length > 0) {
           const newPrticipantPromises = newParticipants.map(
             async (p: Participant) => {
@@ -379,7 +380,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             `;
 
               await sql.query(updateNewParticipantQuery, [
-                p.client_id,
+                Number(id),
                 p.name,
                 p.nickname,
                 p.address,
@@ -400,6 +401,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         const newEvents = client.events.filter((e) => !e.id);
+
         if (newEvents.length > 0) {
           const newEventPromises = newEvents.map(async (e: Event) => {
             const updateNewEventQuery = `
@@ -409,7 +411,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             `;
 
             await sql.query(updateNewEventQuery, [
-              e.client_id,
+              Number(id),
               e.name,
               e.date,
               e.start_time,

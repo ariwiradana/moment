@@ -4,7 +4,7 @@ import { marcellus, windsong } from "@/lib/fonts";
 import moment from "moment";
 import Image from "next/image";
 import React, { FC } from "react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 interface Props {
@@ -14,15 +14,6 @@ interface Props {
 const HeroComponent: FC<Props> = (props) => {
   const events = props.state.client?.events || [];
 
-  const allSameDate =
-    events.length > 0
-      ? events.every(
-          (event) =>
-            new Date(event.date).toDateString() ===
-            new Date(events[0].date).toDateString()
-        )
-      : false;
-
   return (
     <section>
       <div className="relative h-dvh w-full overflow-hidden z-20 bg-samaya-dark">
@@ -31,6 +22,7 @@ const HeroComponent: FC<Props> = (props) => {
             loop
             autoplay={{
               delay: 5000,
+              disableOnInteraction: false,
             }}
             speed={10000}
             className="w-full transition-transform h-[95dvh]"
@@ -72,37 +64,36 @@ const HeroComponent: FC<Props> = (props) => {
               {props.state.groom?.nickname} & {props.state.bride?.nickname}
             </h1>
             <div
-              className="flex items-center justify-center gap-x-3 mt-1"
+              className="w-full flex justify-center"
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              {events.map((event, index) => (
-                <>
-                  <span
-                    className={`${marcellus.className} text-white text-base md:text-lg lg:text-xl`}
-                  >
-                    {event.name}
-                  </span>
-                  {!allSameDate && events.length - 1 !== index ? (
-                    <span>
-                      <div className="h-1 w-1 rounded-full bg-white"></div>
-                    </span>
-                  ) : (
-                    <span>
-                      {allSameDate && (
-                        <div className="h-1 w-1 rounded-full bg-white"></div>
-                      )}
-                    </span>
-                  )}
-                  {allSameDate && (
-                    <span
-                      className={`${marcellus.className} text-white text-base lg:text-xl`}
-                    >
-                      {moment(events[0].date).format("dddd, DD MMM YYYY")}
-                    </span>
-                  )}
-                </>
-              ))}
+              <Swiper
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                loop
+                speed={1000}
+                effect={"fade"}
+                modules={[EffectFade, Autoplay]}
+                className="w-full"
+              >
+                {events.map((event) => (
+                  <SwiperSlide key={event.id}>
+                    <div className="w-full justify-center flex items-center gap-x-4">
+                      <p
+                        className={`${marcellus.className} text-white text-base md:text-lg lg:text-xl`}
+                      >
+                        {event.name}
+                      </p>
+                      <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
+                      <p
+                        className={`${marcellus.className} text-white text-base lg:text-xl`}
+                      >
+                        {moment(event.date).format("DD / MMMM / YYYY")}
+                      </p>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
             <div
               className="h-12 lg:h-16 aspect-video relative m-4"

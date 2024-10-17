@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { engagement, marcellus, windsong } from "@/lib/fonts";
+import { engagement, marcellus } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { useSamaya } from "@/hooks/themes/useSamaya";
@@ -36,30 +36,12 @@ const ParticipantsComponent: FC<Props> = (props) => {
             {props.state.client?.opening_description}
           </p>
 
-          <div className="grid lg:grid-cols-7 w-full gap-20 md:gap-4 py-8">
+          <div className="grid md:grid-cols-2 w-full gap-20 py-8">
             {props.state.groom && (
-              <div className="lg:col-span-3">
-                <ParticipantComponent
-                  data={props.state?.groom as Participant}
-                />
-              </div>
+              <ParticipantComponent data={props.state?.groom as Participant} />
             )}
-            <div
-              data-aos="zoom-in"
-              className="h-full w-full flex justify-center items-center"
-            >
-              <h1
-                className={`${windsong.className} text-white text-center text-7xl`}
-              >
-                &
-              </h1>
-            </div>
             {props.state.bride && (
-              <div className="lg:col-span-3">
-                <ParticipantComponent
-                  data={props.state?.bride as Participant}
-                />
-              </div>
+              <ParticipantComponent data={props.state?.bride as Participant} />
             )}
           </div>
         </div>
@@ -74,26 +56,22 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col justify-center items-center">
       {props.data.image && (
-        <div
-          data-aos="zoom-in"
-          className="relative w-[260px] aspect-square rounded-full"
-        >
+        <div data-aos="zoom-in" className="relative w-[277px] h-[368px]">
           <ImageShimmer
-            height={260}
-            width={260}
+            fill
             priority
-            sizes="260px"
-            className="object-cover rounded-full aspect-square overflow-hidden"
+            sizes="277px"
+            className="object-cover w-full h-full overflow-hidden p-[10px]"
             src={props.data.image as string}
             alt={props.data.name}
           />
+          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <Image
-            data-aos="zoom-in-up"
-            className="absolute inset-x-0 -top-5 z-20"
+            className="absolute inset-0 z-30"
             alt="floral-top-corner"
-            src="/images/samaya/circle-frame-image.svg"
-            height={260}
-            width={260}
+            src="/images/samaya/frame-primary.svg"
+            height={277}
+            width={368}
           />
         </div>
       )}

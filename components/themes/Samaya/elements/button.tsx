@@ -23,12 +23,14 @@ const Button: FC<Props> = ({
       {...props}
       className={`${afacad.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} text-samaya-dark rounded-full min-w-24 bg-samaya-primary pl-5 pr-3 py-3 lg:pl-5 lg:pr-3 text-base flex ${
+      } ${className} text-samaya-dark rounded-full min-w-24 bg-samaya-primary px-5 py-3 text-base flex ${
         fullWidth ? "w-full justify-center" : "justify-between"
-      } items-center gap-x-3 lg:gap-x-4 relative overflow-hidden shadow-sm`}
+      } items-center gap-x-2 lg:gap-x-4 relative overflow-hidden shadow-sm`}
     >
-      <span className="text-sm lg:text-base whitespace-nowrap font-semibold">{title}</span>
-      <div className="w-5 lg:w-8 h-5 lg:h-8 rounded-full bg-samaya-dark text-samaya-primary flex justify-center items-center">
+      <span className="text-sm lg:text-base whitespace-nowrap font-semibold">
+        {title}
+      </span>
+      <div className="text-samaya-dark flex justify-center items-center">
         <span>
           {isLoading ? <BiLoaderAlt className="animate-spin" /> : icon}
         </span>

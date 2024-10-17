@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { marcellus, windsong } from "@/lib/fonts";
 import Button from "../elements/button";
-import { MdArrowOutward } from "react-icons/md";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Image from "next/image";
+import { BiSolidEnvelopeOpen } from "react-icons/bi";
 
 interface Props {
   state: useSamaya["state"];
@@ -104,7 +104,7 @@ const Cover: FC<Props> = (props) => {
         <div className="mt-8" data-aos="fade-up" data-aos-delay="600">
           <Button
             onClick={props.actions.handleOpenCover}
-            icon={<MdArrowOutward className="lg:text-lg" />}
+            icon={<BiSolidEnvelopeOpen className="lg:text-lg" />}
             title="Buka Undangan"
           />
         </div>
