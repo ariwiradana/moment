@@ -3,8 +3,8 @@ import { useSamaya } from "@/hooks/themes/useSamaya";
 import { marcellus, windsong } from "@/lib/fonts";
 import moment from "moment";
 import Image from "next/image";
-import React, { FC } from "react";
-import { Autoplay, EffectFade } from "swiper/modules";
+import React, { FC, useEffect, useState } from "react";
+import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 interface Props {
@@ -13,6 +13,23 @@ interface Props {
 
 const HeroComponent: FC<Props> = (props) => {
   const events = props.state.client?.events || [];
+
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [fade, setFade] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (events.length > 1) {
+      const interval = setInterval(() => {
+        setFade(false);
+        setTimeout(() => {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
+          setFade(true);
+        }, 500);
+      }, 5000);
+
+      return () => clearInterval(interval);
+    }
+  }, [events.length]);
 
   return (
     <section>
@@ -68,32 +85,25 @@ const HeroComponent: FC<Props> = (props) => {
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              <Swiper
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
-                loop
-                speed={1000}
-                effect={"fade"}
-                modules={[EffectFade, Autoplay]}
-                className="w-full"
+              <div
+                className={`w-full justify-center flex items-center gap-x-3 transform transition-all duration-500 ease-in-out ${
+                  fade
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-10 translate-y-1"
+                }`}
               >
-                {events.map((event) => (
-                  <SwiperSlide key={event.id}>
-                    <div className="w-full justify-center flex items-center gap-x-4">
-                      <p
-                        className={`${marcellus.className} text-white text-base md:text-lg lg:text-xl`}
-                      >
-                        {event.name}
-                      </p>
-                      <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
-                      <p
-                        className={`${marcellus.className} text-white text-base lg:text-xl`}
-                      >
-                        {moment(event.date).format("DD / MMMM / YYYY")}
-                      </p>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                <p
+                  className={`${marcellus.className} text-white text-base md:text-lg lg:text-xl`}
+                >
+                  {events[currentIndex].name}
+                </p>
+                <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
+                <p
+                  className={`${marcellus.className} text-white text-base lg:text-xl`}
+                >
+                  {moment(events[currentIndex].date).format("DD / MMMM / YYYY")}
+                </p>
+              </div>
             </div>
             <div
               className="h-12 lg:h-16 aspect-video relative m-4"

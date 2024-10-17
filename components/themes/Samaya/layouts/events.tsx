@@ -26,7 +26,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 priority
                 alt="bg-countdown"
                 fill
-                className="object-cover scale-110 grayscale"
+                className="object-cover"
                 src={gallery[gallery.length - 1] as string}
                 style={{ transform: "translateZ(0)" }}
               />
@@ -34,36 +34,37 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
           </div>
         </div>
         <div className="absolute inset-0 bg-samaya-dark bg-opacity-60"></div>
-        <div className="flex flex-col z-10 items-center justify-center py-16 md:py-28 lg:py-16">
-          <div className="px-6 grid md:grid-cols-2 gap-6 md:gap-20 relative z-20">
+        <div className="flex flex-col z-10 items-center justify-center py-16 md:py-28 lg:py-40">
+          <div className="px-6 grid lg:grid-cols-2 gap-6 md:gap-20 relative z-20">
             {events.map((event) => (
               <div
                 key={event.id}
-                className="flex even:flex-row-reverse even:text-right bg-samaya-dark bg-opacity-80 items-center justify-center rounded-2xl overflow-hidden backdrop-blur-sm"
+                className="flex even:flex-row-reverse bg-samaya-dark bg-opacity-80 items-center justify-center rounded-xl overflow-hidden backdrop-blur-sm"
                 data-aos="zoom-in-up"
               >
-                <div className="flex items-center justify-center w-20 bg-samaya-dark h-full">
+                <div className="flex items-center justify-center w-20 md:w-32 bg-samaya-dark h-full">
                   <h1
-                    className={`${marcellus.className} text-2xl text-samaya-primary transform uppercase -rotate-90 even:rotate-90`}
+                    className={`${marcellus.className} text-2xl md:text-3xl text-samaya-primary transform uppercase -rotate-90`}
                   >
                     {event.name}
                   </h1>
                 </div>
                 <div
-                  className={`min-h-60 text-white p-10 ${marcellus.className}`}
+                  className={`min-h-60 text-white p-8 md:p-16 ${marcellus.className}`}
                 >
-                  <h1 className="text-4xl">
+                  <h1 className={`text-3xl lg:text-5xl md:mb-2`}>
                     {moment(event.date).format("dddd")}
                   </h1>
-                  <p className="text-lg mt-1">
+                  <p className="text-base md:text-xl mt-1">
                     {moment(event.date).format("DD / MMMM / YYYY")}
                   </p>
-                  <div className="w-full h-[1px] bg-samaya-primary my-3"></div>
-                  <p className="text-lg">
+                  <div className="w-full h-[1px] bg-samaya-primary my-3 lg:my-5"></div>
+                  <p className="text-base md:text-xl">
                     {event.start_time} - {event.end_time}
                   </p>
-                  <p className="text-lg">{event.address}</p>
-                  <div className="mt-6 inline-flex flex-col gap-4">
+                  <p className="text-base md:text-xl">{event.address}</p>
+                  <div className="w-full h-[1px] bg-samaya-primary my-3 lg:my-5"></div>
+                  <div className="mt-2 inline-flex flex-col gap-4">
                     <Link target="_blank" href={event.address_url}>
                       <Button
                         icon={<BiSolidMap className="lg:text-lg" />}
