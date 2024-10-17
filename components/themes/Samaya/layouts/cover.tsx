@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { marcellus, windsong } from "@/lib/fonts";
 import Button from "../elements/button";
 import { MdArrowOutward } from "react-icons/md";
-import ImageShimmer from "../../../image.shimmer";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Image from "next/image";
 
@@ -47,7 +46,7 @@ const Cover: FC<Props> = (props) => {
             className="relative w-[240px] aspect-square rounded-full"
             data-aos="fade-up"
           >
-            <ImageShimmer
+            <Image
               height={240}
               width={240}
               alt={`cover-img-image`}

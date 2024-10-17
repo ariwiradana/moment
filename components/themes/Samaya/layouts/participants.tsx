@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { engagement, marcellus } from "@/lib/fonts";
+import { engagement, marcellus, windsong } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { useSamaya } from "@/hooks/themes/useSamaya";
@@ -36,12 +36,30 @@ const ParticipantsComponent: FC<Props> = (props) => {
             {props.state.client?.opening_description}
           </p>
 
-          <div className="grid lg:grid-cols-2 w-full gap-20 py-8">
+          <div className="grid lg:grid-cols-7 w-full gap-20 md:gap-4 py-8">
             {props.state.groom && (
-              <ParticipantComponent data={props.state?.groom as Participant} />
+              <div className="lg:col-span-3">
+                <ParticipantComponent
+                  data={props.state?.groom as Participant}
+                />
+              </div>
             )}
+            <div
+              data-aos="zoom-in"
+              className="h-full w-full flex justify-center items-center"
+            >
+              <h1
+                className={`${windsong.className} text-white text-center text-7xl`}
+              >
+                &
+              </h1>
+            </div>
             {props.state.bride && (
-              <ParticipantComponent data={props.state?.bride as Participant} />
+              <div className="lg:col-span-3">
+                <ParticipantComponent
+                  data={props.state?.bride as Participant}
+                />
+              </div>
             )}
           </div>
         </div>
@@ -81,7 +99,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       )}
       <h1
         data-aos="fade-up"
-        className={`text-4xl lg:text-5xl font-semibold text-samaya-primary relative mt-10 ${engagement.className}`}
+        className={`text-4xl font-semibold text-samaya-primary relative mt-10 ${engagement.className}`}
       >
         {props.data.name}
       </h1>
@@ -92,7 +110,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
               {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
               {props.data.child} dari pasangan
             </p>
-            <h2 className="text-base md:text-xl text-white mt-2">
+            <h2 className="text-base md:text-lg text-white mt-2">
               Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
             </h2>
           </>
@@ -103,7 +121,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         data-aos="fade-up"
       ></div>
       <p
-        className={`text-samaya-primary text-base md:text-xl ${marcellus.className}`}
+        className={`text-samaya-primary text-base md:text-lg ${marcellus.className}`}
         data-aos="fade-up"
       >
         {props.data.address}
