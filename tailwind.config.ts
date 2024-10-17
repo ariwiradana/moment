@@ -28,10 +28,14 @@ const config: Config = {
           secondary: "#0b282c",
           dark: "#212224",
         },
-        theme1: {
+        aakarshana: {
           primary: "#604A32",
           gold: "#B99470",
           "dark-chocolate": "#1e1918",
+        },
+        samaya: {
+          dark: "#1E201E",
+          primary: "#D1CAA1",
         },
         admin: {
           primary: "#3366FF",

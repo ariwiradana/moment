@@ -35,6 +35,8 @@ const MainPage: FC<Props> = (props) => {
   if (client.status === "unpaid") return <ClientNotFound />;
 
   const themeName = client.theme?.name || "";
+
+  console.log({ themeName });
   const ThemeComponent = themes[themeName];
 
   return ThemeComponent ? (

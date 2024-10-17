@@ -5,6 +5,7 @@ import {
   DM_Serif_Display,
   Marcellus,
   The_Nautigal,
+  WindSong,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -32,4 +33,9 @@ export const marcellus = Marcellus({
 export const nautigal = The_Nautigal({
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+export const windsong = WindSong({
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });

@@ -12,17 +12,39 @@ interface Query {
   is_testimoni?: boolean | string;
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  switch (req.method) {
+const handler = async (request: NextApiRequest, response: NextApiResponse) => {
+  switch (request.method) {
     case "GET":
       try {
-        const { page = 1, limit = 10, is_testimoni }: Query = req.query;
+        const {
+          slug,
+          page = 1,
+          id,
+          limit = 10,
+          is_testimoni,
+        }: Query = request.query;
 
         let query = `SELECT * FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
 
         const values: (number | string | boolean)[] = [];
         const countValues: (number | string | boolean)[] = [];
+
+        if (id) {
+          const valueIndex = values.length + 1;
+          query += ` WHERE id = $${valueIndex}`;
+          countQuery += ` WHERE id = $${valueIndex}`;
+          values.push(id);
+          countValues.push(id);
+        }
+
+        if (slug) {
+          const valueIndex = values.length + 1;
+          query += ` WHERE slug = $${valueIndex}`;
+          countQuery += ` WHERE slug = $${valueIndex}`;
+          values.push(slug);
+          countValues.push(slug);
+        }
 
         if (is_testimoni) {
           const valueIndex = values.length + 1;
@@ -98,7 +120,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           };
         });
 
-        return res.status(200).json({
+        return response.status(200).json({
           success: true,
           data: clients,
           total_rows: Number(total[0].count),
@@ -106,12 +128,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           limit: limitNumber,
         });
       } catch (error) {
-        handleError(res, error);
+        handleError(response, error);
       }
 
     default:
-      res.setHeader("Allow", ["GET"]);
-      return res.status(405).end(`Method ${req.method} Not Allowed`);
+      response.setHeader("Allow", ["GET"]);
+      return response.status(405).end(`Method ${request.method} Not Allowed`);
   }
 };
 
