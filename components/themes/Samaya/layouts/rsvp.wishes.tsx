@@ -1,13 +1,11 @@
 import React, { FC } from "react";
-import Title from "../elements/title";
-import Image from "next/image";
 import Button from "../elements/button";
 import { BiSolidSend, BiTime, BiUser } from "react-icons/bi";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
-import { afacad } from "@/lib/fonts";
+import { afacad, marcellus, windsong } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 
@@ -23,33 +21,27 @@ const RSVPWishesComponent: FC<Props> = (props) => {
     "Masih Ragu": "Maaf saya masih ragu",
   };
   return (
-    <section className="relative bg-white w-full">
+    <section className="relative bg-samaya-dark w-full">
       <div
-        className="relative px-6 md:pb-8 w-full flex flex-col justify-center items-center z-20"
+        className="relative w-full flex flex-col justify-center items-center z-20"
         data-aos="fade-up"
       >
-        <div className="w-full max-w-screen-sm mx-auto">
-          <div
-            data-aos="zoom-in-up"
-            className="relative h-12 lg:h-16 w-full mb-8 mt-16"
-          >
-            <Image
-              alt="leaf-datetime"
-              src="/images/theme1/leaf.svg"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <div data-aos="fade-up">
-            <Title
-              className="text-aakarshana-primary"
-              title="RSVP & Ucapan"
-              caption="Mohon doa restu"
-            />
+        <div className="w-full">
+          <div className="text-center" data-aos="fade-up">
+            <h1
+              className={`${marcellus.className} text-white text-4xl lg:text-5xl mr-8`}
+            >
+              RSVP &
+            </h1>
+            <h1
+              className={`${windsong.className} text-samaya-primary text-5xl lg:text-6xl transform -translate-y-3`}
+            >
+              Ucapan
+            </h1>
           </div>
           <form
             onSubmit={props.actions.handleSubmit}
-            className="mt-12 flex flex-col gap-4 w-full"
+            className="flex flex-col gap-4 w-full px-6 py-12 max-w-screen-xl mx-auto"
             data-aos="fade-up"
           >
             <Input
@@ -108,52 +100,54 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           </form>
 
           <div
-            className="flex flex-col mt-8 w-full max-h-[25rem] overflow-y-auto gap-2"
+            className="flex flex-col w-full max-h-[25rem] gap-4 overflow-y-auto bg-samaya-primary bg-opacity-10 px-6 py-12"
             data-aos="fade-up"
           >
-            {props.state.reviews?.map((r) => (
-              <div key={r.id} className="flex mb-4">
-                <div className="flex-shrink-0">
-                  <div className="w-9 h-9 bg-zinc-100 rounded-full flex justify-center items-center text-base font-medium text-aakarshana-primary">
-                    <span className={afacad.className}>
-                      {getInitial(r.name)}
-                    </span>
+            <div className="max-w-screen-xl mx-auto w-full">
+              {props.state.reviews?.map((r) => (
+                <div key={r.id} className="flex">
+                  <div className="flex-shrink-0">
+                    <div className="w-9 h-9 bg-samaya-dark rounded-full flex justify-center items-center text-sm font-medium text-samaya-primary">
+                      <span className={marcellus.className}>
+                        {getInitial(r.name)}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="ml-4 relative">
-                  <div className="p-3 bg-zinc-100 rounded-lg relative">
-                    <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-zinc-100"></div>
+                  <div className="ml-4 relative">
+                    <div className="p-3 bg-samaya-dark rounded-lg relative">
+                      <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark"></div>
 
-                    <div className="flex items-center gap-x-3">
-                      <h1
-                        className={`${afacad.className} text-base text-aakarshana-primary font-semibold`}
+                      <div className="flex items-center gap-x-3">
+                        <h1
+                          className={`${marcellus.className} text-base text-samaya-primary font-semibold`}
+                        >
+                          {r.name}
+                        </h1>
+                      </div>
+                      <p
+                        className={`${afacad.className} text-base text-white leading-5 my-2`}
                       >
-                        {r.name}
-                      </h1>
+                        {r.wishes}
+                      </p>
                     </div>
-                    <p
-                      className={`${afacad.className} text-base text-gray-500 leading-5 my-2`}
-                    >
-                      {r.wishes}
-                    </p>
-                  </div>
 
-                  <div
-                    className={`flex divide-x-[0.5px] divide-aakarshana-gold mt-2 ${afacad.className}`}
-                  >
-                    <div className="flex gap-1 text-sm text-aakarshana-gold pr-2">
-                      <BiTime className="mt-[3px]" />
-                      <p>{moment(r.created_at).fromNow()}</p>
-                    </div>
-                    <div className="flex gap-1 text-sm text-aakarshana-gold pl-2">
-                      <BiUser className="mt-[3px]" />
-                      <p>{attendantText[r.attendant]}</p>
+                    <div
+                      className={`flex divide-x-[0.5px] divide-samaya-primary mt-2 ${afacad.className}`}
+                    >
+                      <div className="flex gap-1 text-sm text-samaya-primary pr-2">
+                        <BiTime className="mt-[3px]" />
+                        <p>{moment(r.created_at).fromNow()}</p>
+                      </div>
+                      <div className="flex gap-1 text-sm text-samaya-primary pl-2">
+                        <BiUser className="mt-[3px]" />
+                        <p>{attendantText[r.attendant]}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

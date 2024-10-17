@@ -1,4 +1,4 @@
-import { afacad, comforta } from "@/lib/fonts";
+import {  marcellus } from "@/lib/fonts";
 import React, { FC, InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -12,10 +12,10 @@ const InputCheckbox: FC<Props> = (props) => {
         {...props}
         type="checkbox"
         id={props.id}
-        className={`bg-aakarshana-gold bg-opacity-5 w-4 h-4 outline-none accent-aakarshana-gold focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${comforta.className}`}
+        className={`bg-samaya-primary bg-opacity-5 w-4 h-4 outline-none accent-samaya-primary focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${marcellus.className}`}
       />
       <p
-        className={`text-base ${afacad.className} text-aakarshana-primary mt-[2px]`}
+        className={`text-base ${marcellus.className} text-samaya-primary mt-[2px]`}
       >
         {props.label}
       </p>

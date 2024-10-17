@@ -1,4 +1,4 @@
-import { afacad } from "@/lib/fonts";
+import { afacad, marcellus } from "@/lib/fonts";
 import React, { FC } from "react";
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -20,7 +20,7 @@ const InputTextarea: FC<Props> = (props) => {
       <textarea
         {...props}
         id={props.id}
-        className={`placeholder:text-aakarshana-gold p-4 w-full outline-none text-base md:text-lg bg-aakarshana-primary bg-opacity-5 text-aakarshana-primary rounded-lg ${afacad.className}`}
+        className={`p-4 w-full outline-none text-base md:text-lg rounded-lg text-samaya-dark ${marcellus.className}`}
       />
       {props.error && (
         <p className={`text-admin-danger text-sm mt-1 ${afacad.className}`}>
