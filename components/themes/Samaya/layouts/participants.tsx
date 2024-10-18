@@ -99,13 +99,13 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         data-aos="fade-up"
       ></div>
       <p
-        className={`text-samaya-primary text-base md:text-lg ${marcellus.className}`}
+        className={`text-samaya-primary text-base md:text-lg text-center ${marcellus.className}`}
         data-aos="fade-up"
       >
         {props.data.address}
       </p>
       <div
-        className="flex mt-4 gap-x-2 text-samaya-primary text-2xl md:text-3xl"
+        className="flex mt-4 gap-x-2 text-samaya-primary text-2xl md:text-3xl text-center"
         data-aos="fade-up"
       >
         {props.data.facebook && (
