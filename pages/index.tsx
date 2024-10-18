@@ -6,7 +6,6 @@ import FeaturesComponent from "@/components/dashboard/features";
 import HeroComponent from "@/components/dashboard/hero";
 import Layout from "@/components/dashboard/layout";
 import PackageComponent from "@/components/dashboard/packages";
-import SharedThemeComponent from "@/components/dashboard/shared.theme";
 import TestimonialsComponent from "@/components/dashboard/testimonials";
 import ThemeComponent from "@/components/dashboard/themes";
 import WhyUsComponent from "@/components/dashboard/why.us";
@@ -133,7 +132,7 @@ const Dashboard = () => {
       <FeaturesComponent />
       <ThemeComponent />
       <PackageComponent />
-      <SharedThemeComponent />
+      {/* <SharedThemeComponent /> */}
       <ClientComponent />
       <TestimonialsComponent />
       <FaqComponent />
