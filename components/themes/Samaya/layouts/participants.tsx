@@ -24,7 +24,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
   )
     return (
       <section className="relative bg-samaya-dark z-10 pb-4 pt-16 md:py-16">
-        <div className="w-full h-full px-6 md:px-12 relative z-40 max-w-screen-xl mx-auto">
+        <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-xl mx-auto">
           <div className="mb-8" data-aos="fade-up">
             <Title title={props.state.client?.opening_title as string} />
           </div>

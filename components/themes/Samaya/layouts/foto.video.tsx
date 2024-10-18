@@ -46,7 +46,7 @@ const GalleryComponent: FC<Props> = (props) => {
 
       <div
         data-aos="fade-up"
-        className="w-full h-full relative py-16 lg:py-24 px-6 z-20"
+        className="w-full h-full relative py-16 lg:py-24 px-4 z-20"
       >
         <div className="text-center" data-aos="fade-up">
           <h1
@@ -61,7 +61,7 @@ const GalleryComponent: FC<Props> = (props) => {
           </h1>
         </div>
         <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto">
-          <div className="grid grid-cols-3 gap-2 md:gap-4 mb-2 md:mb-4">
+          <div className="grid md:grid-cols-3 gap-2 md:gap-4 mb-2 md:mb-4">
             {images.map((img, index) => {
               const isSpanTwo =
                 index % 3 === 0 || (index % 3 === 1 && index > 2);
@@ -74,7 +74,7 @@ const GalleryComponent: FC<Props> = (props) => {
                     setImageIndex(() => index);
                   }}
                   key={`gallery-img-${index + 1}`}
-                  className={`lg:min-h-96 md:min-h-72 min-h-44 w-full relative rounded-lg overflow-hidden ${
+                  className={`lg:min-h-96 md:min-h-72 min-h-80 w-full relative rounded-lg overflow-hidden ${
                     isSpanTwo ? "col-span-2" : ""
                   }`}
                 >

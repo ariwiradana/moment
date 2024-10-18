@@ -41,7 +41,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           </div>
           <form
             onSubmit={props.actions.handleSubmit}
-            className="flex flex-col gap-4 w-full px-6 py-12 md:max-w-screen-sm lg:max-w-screen-lg mx-auto"
+            className="flex flex-col gap-4 w-full px-4 py-12 md:max-w-screen-sm mx-auto"
             data-aos="fade-up"
           >
             <Input
@@ -100,10 +100,10 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           </form>
 
           <div
-            className="flex flex-col w-full max-h-[25rem] gap-4 overflow-y-auto bg-samaya-primary bg-opacity-10 px-6 py-12"
+            className="flex flex-col w-full gap-4 bg-samaya-primary bg-opacity-10 px-4 py-12"
             data-aos="fade-up"
           >
-            <div className="md:max-w-screen-sm lg:max-w-screen-lg mx-auto w-full flex flex-col gap-5">
+            <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">
               {props.state.reviews?.map((r) => (
                 <div key={r.id} className="flex">
                   <div className="flex-shrink-0">

@@ -18,7 +18,7 @@ const GiftComponent: FC<Props> = (props) => {
   )
     return (
       <section className="relative bg-samaya-dark">
-        <div className="relative h-full w-full px-6 pt-12 pb-16 z-30">
+        <div className="relative h-full w-full px-4 pt-12 pb-16 z-30">
           <div className="text-center" data-aos="fade-up">
             <h1
               className={`${marcellus.className} text-white text-4xl lg:text-5xl mr-8`}
@@ -31,11 +31,9 @@ const GiftComponent: FC<Props> = (props) => {
               Digital
             </h1>
           </div>
-          <div
-            className="flex justify-center pt-12 relative z-20"
-            data-aos="zoom-out-up"
-          >
+          <div className="flex justify-center pt-12 relative z-20">
             <div
+              data-aos="zoom-out-up"
               className={`h-52 lg:h-56 md:w-96 w-full p-8 rounded-2xl flex flex-col justify-between shadow-lg relative border-[0.5px] border-samaya-primary ${afacad.className}`}
             >
               <Image

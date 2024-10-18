@@ -26,7 +26,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 priority
                 alt="bg-countdown"
                 fill
-                className="object-cover"
+                className="object-cover grayscale"
                 src={gallery[gallery.length - 1] as string}
                 style={{ transform: "translateZ(0)" }}
               />
@@ -34,8 +34,8 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
           </div>
         </div>
         <div className="absolute inset-0 bg-samaya-dark bg-opacity-60"></div>
-        <div className="flex flex-col z-10 items-center justify-center py-16 md:py-28 lg:py-40">
-          <div className="px-6 grid lg:grid-cols-2 gap-6 md:gap-20 relative z-20">
+        <div className="flex flex-col z-10 items-center justify-center py-4 md:py-28 lg:py-40">
+          <div className="px-4 grid lg:grid-cols-2 gap-4 md:gap-20 relative z-20">
             {events.map((event) => (
               <div
                 key={event.id}
