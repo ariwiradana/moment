@@ -61,34 +61,26 @@ const GalleryComponent: FC<Props> = (props) => {
           </h1>
         </div>
         <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto">
-          <div className="grid md:grid-cols-3 gap-2 md:gap-4 mb-2 md:mb-4">
-            {images.map((img, index) => {
-              const isSpanTwo =
-                index % 3 === 0 || (index % 3 === 1 && index > 2);
-
-              return (
-                <div
-                  data-aos="zoom-in-up"
-                  onClick={() => {
-                    setOpen(() => true);
-                    setImageIndex(() => index);
-                  }}
-                  key={`gallery-img-${index + 1}`}
-                  className={`lg:min-h-96 md:min-h-72 min-h-80 w-full relative rounded-lg overflow-hidden ${
-                    isSpanTwo ? "col-span-2" : ""
-                  }`}
-                >
-                  <ImageShimmer
-                    sizes="300px"
-                    priority
-                    src={img}
-                    alt={`gallery-img-${index + 1}`}
-                    fill
-                    className="object-cover rounded-lg hover:scale-[1.01] ease-in-out duration-500"
-                  />
-                </div>
-              );
-            })}
+          <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
+            {images.map((img, index) => (
+              <div
+                key={img}
+                className={`${
+                  index % 3 === 0 || index === images.length - 1
+                    ? "col-span-2"
+                    : "col-span-1"
+                } lg:min-h-96 md:min-h-72 min-h-80 w-full relative rounded-lg overflow-hidden`}
+              >
+                <ImageShimmer
+                  sizes="300px"
+                  priority
+                  src={img}
+                  alt={`gallery-img-${index + 1}`}
+                  fill
+                  className="object-cover rounded-lg hover:scale-[1.01] ease-in-out duration-500 w-full h-full"
+                />
+              </div>
+            ))}
           </div>
           {videos.length > 0 && (
             <div className="grid gap-4">

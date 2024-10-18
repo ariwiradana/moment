@@ -12,11 +12,12 @@ import { sosmedURLs } from "@/constants/sosmed";
 
 const FooterComponent: FC = () => {
   return (
-    <nav className={`p-6 ${afacad.className} relative`}>
-      <div className="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+    <nav className={`p-4 ${afacad.className} relative`}>
+      <div className="absolute inset-0 bg-samaya-dark bg-opacity-80 backdrop-blur-md z-10"></div>
       <ul
         className="flex flex-col justify-center gap-2 items-center relative z-30"
         data-aos="zoom-in-up"
+        data-aos-offset="20"
       >
         <li
           className={`flex items-center justify-center gap-2 text-base mt-2 text-white`}

@@ -35,7 +35,11 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
         </div>
         <div className="absolute inset-0 bg-samaya-dark bg-opacity-60"></div>
         <div className="flex flex-col z-10 items-center justify-center py-4 md:py-28 lg:py-40">
-          <div className="px-4 grid lg:grid-cols-2 gap-4 md:gap-20 relative z-20">
+          <div
+            className={`px-4 grid lg:${
+              events.length > 1 ? "grid-cols-2" : "grid-cols-1"
+            } gap-4 md:gap-20 relative z-20`}
+          >
             {events.map((event) => (
               <div
                 key={event.id}
@@ -44,7 +48,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
               >
                 <div className="flex items-center justify-center w-20 md:w-32 bg-samaya-dark h-full">
                   <h1
-                    className={`${marcellus.className} text-2xl md:text-3xl text-samaya-primary transform uppercase -rotate-90`}
+                    className={`${marcellus.className} text-2xl md:text-3xl text-samaya-primary text-center transform uppercase -rotate-90`}
                   >
                     {event.name}
                   </h1>

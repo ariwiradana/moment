@@ -99,56 +99,58 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             </div>
           </form>
 
-          <div
-            className="flex flex-col w-full gap-4 bg-samaya-primary bg-opacity-10 px-4 py-12"
-            data-aos="fade-up"
-          >
-            <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">
-              {props.state.reviews?.map((r) => (
-                <div key={r.id} className="flex">
-                  <div className="flex-shrink-0">
-                    <div className="w-9 h-9 bg-samaya-dark rounded-full flex justify-center items-center text-sm font-medium text-samaya-primary">
-                      <span className={marcellus.className}>
-                        {getInitial(r.name)}
-                      </span>
+          {props.state.reviews && props.state.reviews?.length > 0 ? (
+            <div
+              className="flex flex-col w-full gap-4 bg-samaya-primary bg-opacity-10 px-4 py-12 max-h-[440px] overflow-y-auto"
+              data-aos="fade-up"
+            >
+              <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">
+                {props.state.reviews?.map((r) => (
+                  <div key={r.id} className="flex">
+                    <div className="flex-shrink-0">
+                      <div className="w-9 h-9 bg-samaya-dark rounded-full flex justify-center items-center text-sm font-medium text-samaya-primary">
+                        <span className={marcellus.className}>
+                          {getInitial(r.name)}
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="ml-4 relative">
-                    <div className="p-3 bg-samaya-dark rounded-lg relative">
-                      <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark"></div>
+                    <div className="ml-4 relative">
+                      <div className="p-3 bg-samaya-dark rounded-lg relative">
+                        <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark"></div>
 
-                      <div className="flex items-center gap-x-3">
-                        <h1
-                          className={`${marcellus.className} text-base text-samaya-primary font-semibold`}
+                        <div className="flex items-center gap-x-3">
+                          <h1
+                            className={`${marcellus.className} text-base text-samaya-primary font-semibold`}
+                          >
+                            {r.name}
+                          </h1>
+                        </div>
+                        <p
+                          className={`${afacad.className} text-base text-white leading-5 my-2`}
                         >
-                          {r.name}
-                        </h1>
+                          {r.wishes}
+                        </p>
                       </div>
-                      <p
-                        className={`${afacad.className} text-base text-white leading-5 my-2`}
-                      >
-                        {r.wishes}
-                      </p>
-                    </div>
 
-                    <div
-                      className={`flex divide-x-[0.5px] divide-samaya-primary mt-2 ${afacad.className}`}
-                    >
-                      <div className="flex gap-1 text-sm text-samaya-primary pr-2">
-                        <BiTime className="mt-[3px]" />
-                        <p>{moment(r.created_at).fromNow()}</p>
-                      </div>
-                      <div className="flex gap-1 text-sm text-samaya-primary pl-2">
-                        <BiUser className="mt-[3px]" />
-                        <p>{attendantText[r.attendant]}</p>
+                      <div
+                        className={`flex divide-x-[0.5px] divide-samaya-primary mt-2 ${afacad.className}`}
+                      >
+                        <div className="flex gap-1 text-sm text-samaya-primary pr-2">
+                          <BiTime className="mt-[3px]" />
+                          <p>{moment(r.created_at).fromNow()}</p>
+                        </div>
+                        <div className="flex gap-1 text-sm text-samaya-primary pl-2">
+                          <BiUser className="mt-[3px]" />
+                          <p>{attendantText[r.attendant]}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </section>
