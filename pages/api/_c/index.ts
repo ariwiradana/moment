@@ -537,11 +537,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (galleryURLs.length > 0) {
           const deletePromises = galleryURLs.map((url) => del(url));
           await Promise.all(deletePromises);
-        }
-
-        const musicURL: string = currentClient[0]?.music || null;
-        if (musicURL) {
-          await del(musicURL);
+          console.log("gallery deleted");
+        } else {
+          console.log("No gallery URL found");
         }
 
         const participantImages: string[] =
@@ -551,12 +549,26 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             del(url)
           );
           await Promise.all(deleteParticipantImagesPromises);
+          console.log("participant deleted");
+        } else {
+          console.log("No participant URL found");
         }
 
         const videoURLs: string[] = currentClient[0]?.videos || [];
         if (videoURLs.length > 0) {
           const deleteVideoPromises = videoURLs.map((url) => del(url));
           await Promise.all(deleteVideoPromises);
+          console.log("video deleted");
+        } else {
+          console.log("No video URL found");
+        }
+
+        const musicURL: string | null = currentClient[0]?.music || null;
+        if (musicURL) {
+          await del(musicURL);
+          console.log("Music deleted");
+        } else {
+          console.log("No music URL found");
         }
 
         await sql.query("BEGIN");
