@@ -7,7 +7,6 @@ import useSamaya from "@/hooks/themes/useSamaya";
 import GalleryComponent from "./layouts/foto.video";
 import ThankyouComponent from "./layouts/thankyou";
 import RSVPWishes from "./layouts/rsvp.wishes";
-import FooterComponent from "./layouts/footer";
 import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
@@ -40,7 +39,6 @@ const Samaya: FC<Props> = (props) => {
             <RSVPWishes actions={actions} state={state} />
             <GiftComponent actions={actions} state={state} />
             <ThankyouComponent state={state} />
-            <FooterComponent />
           </div>
         )}
       </>
