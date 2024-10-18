@@ -533,41 +533,67 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           );
         }
 
+        const participantImages: string[] = currentClient
+          .map((p) => p.participant_image)
+          .filter(Boolean);
+
+        if (participantImages.length > 0) {
+          try {
+            await Promise.all(
+              participantImages.map(async (url) => {
+                await del(url);
+              })
+            );
+            console.log("Participants deleted");
+          } catch (error) {
+            console.error("Error deleting participants:", error);
+          }
+        } else {
+          console.log("No participant URL found");
+        }
+        // Deleting gallery URLs
         const galleryURLs: string[] = currentClient[0]?.gallery || [];
         if (galleryURLs.length > 0) {
-          galleryURLs.forEach(async (url) => {
-            await del(url);
-          });
-          console.log("gallery deleted");
+          try {
+            await Promise.all(
+              galleryURLs.map(async (url) => {
+                await del(url);
+              })
+            );
+            console.log("Gallery deleted");
+          } catch (error) {
+            console.error("Error deleting gallery URLs:", error);
+          }
         } else {
           console.log("No gallery URL found");
         }
 
-        const participantImages: string[] =
-          currentClient.map((p) => p.participant_image).filter(Boolean) || [];
-        if (participantImages.length > 0) {
-          participantImages.forEach(async (url) => {
-            await del(url);
-          });
-          console.log("participant deleted");
-        } else {
-          console.log("No participant URL found");
-        }
-
+        // Deleting video URLs
         const videoURLs: string[] = currentClient[0]?.videos || [];
         if (videoURLs.length > 0) {
-          videoURLs.forEach(async (url) => {
-            await del(url);
-          });
-          console.log("video deleted");
+          try {
+            await Promise.all(
+              videoURLs.map(async (url) => {
+                await del(url);
+              })
+            );
+            console.log("Video deleted");
+          } catch (error) {
+            console.error("Error deleting video URLs:", error);
+          }
         } else {
           console.log("No video URL found");
         }
 
+        // Deleting music URL
         const musicURL: string | null = currentClient[0]?.music || null;
         if (musicURL && musicURL !== "") {
-          await del(musicURL);
-          console.log("Music deleted");
+          try {
+            await del(musicURL);
+            console.log("Music deleted");
+          } catch (error) {
+            console.error("Error deleting music URL:", error);
+          }
         } else {
           console.log("No music URL found");
         }
