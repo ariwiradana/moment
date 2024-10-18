@@ -534,19 +534,19 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         const galleryURLs: string[] = currentClient[0]?.gallery || [];
-        if (galleryURLs.length) {
+        if (galleryURLs.length > 0) {
           const deletePromises = galleryURLs.map((url) => del(url));
           await Promise.all(deletePromises);
         }
 
-        const musicURL: string = currentClient[0]?.music || "";
+        const musicURL: string = currentClient[0]?.music || null;
         if (musicURL) {
           await del(musicURL);
         }
 
         const participantImages: string[] =
           currentClient.map((p) => p.participant_image).filter(Boolean) || [];
-        if (participantImages.length) {
+        if (participantImages.length > 0) {
           const deleteParticipantImagesPromises = participantImages.map((url) =>
             del(url)
           );
@@ -554,7 +554,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         const videoURLs: string[] = currentClient[0]?.videos || [];
-        if (videoURLs.length) {
+        if (videoURLs.length > 0) {
           const deleteVideoPromises = videoURLs.map((url) => del(url));
           await Promise.all(deleteVideoPromises);
         }
