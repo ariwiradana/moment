@@ -564,7 +564,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         const musicURL: string | null = currentClient[0]?.music || null;
-        if (musicURL) {
+        if (musicURL && musicURL !== "") {
           await del(musicURL);
           console.log("Music deleted");
         } else {
