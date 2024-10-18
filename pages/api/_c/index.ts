@@ -533,36 +533,60 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           );
         }
 
+        const isValidURL = (url: string): boolean => {
+          const pattern = /^(ftp|http|https):\/\/[^ "]+$/; // Basic URL pattern
+          return pattern.test(url);
+        };
+
+        // Process gallery URLs
         const galleryURLs: string[] = currentClient[0]?.gallery || [];
         if (galleryURLs.length > 0) {
-          const deletePromises = galleryURLs.map((url) => del(url));
-          await Promise.all(deletePromises);
-          console.log("gallery deleted");
+          const validGalleryURLs = galleryURLs.filter(isValidURL);
+          if (validGalleryURLs.length > 0) {
+            const deletePromises = validGalleryURLs.map((url) => del(url));
+            await Promise.all(deletePromises);
+            console.log("Gallery deleted");
+          } else {
+            console.log("No valid gallery URLs found");
+          }
         } else {
           console.log("No gallery URL found");
         }
 
+        // Process participant images
         const participantImages: string[] =
           currentClient.map((p) => p.participant_image).filter(Boolean) || [];
         if (participantImages.length > 0) {
-          const deleteParticipantImagesPromises = participantImages.map((url) =>
-            del(url)
-          );
-          await Promise.all(deleteParticipantImagesPromises);
-          console.log("participant deleted");
+          const validParticipantImages = participantImages.filter(isValidURL);
+          if (validParticipantImages.length > 0) {
+            const deleteParticipantImagesPromises = validParticipantImages.map(
+              (url) => del(url)
+            );
+            await Promise.all(deleteParticipantImagesPromises);
+            console.log("Participant images deleted");
+          } else {
+            console.log("No valid participant image URLs found");
+          }
         } else {
-          console.log("No participant URL found");
+          console.log("No participant image URLs found");
         }
 
+        // Process video URLs
         const videoURLs: string[] = currentClient[0]?.videos || [];
         if (videoURLs.length > 0) {
-          const deleteVideoPromises = videoURLs.map((url) => del(url));
-          await Promise.all(deleteVideoPromises);
-          console.log("video deleted");
+          const validVideoURLs = videoURLs.filter(isValidURL);
+          if (validVideoURLs.length > 0) {
+            const deleteVideoPromises = validVideoURLs.map((url) => del(url));
+            await Promise.all(deleteVideoPromises);
+            console.log("Videos deleted");
+          } else {
+            console.log("No valid video URLs found");
+          }
         } else {
           console.log("No video URL found");
         }
 
+        // Process music URL
         const musicURL: string | null = currentClient[0]?.music || null;
         if (musicURL && musicURL !== "") {
           await del(musicURL);
