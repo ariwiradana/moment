@@ -52,15 +52,15 @@ const GalleryComponent: FC<Props> = (props) => {
           <h1
             className={`${marcellus.className} text-white text-4xl lg:text-5xl mr-8`}
           >
-            Potret
+            Jejak
           </h1>
           <h1
             className={`${windsong.className} text-samaya-primary text-5xl lg:text-6xl transform -translate-y-3`}
           >
-            Momen
+            Kisah
           </h1>
         </div>
-        <div className="mt-4 md:mt-8 lg:mt-12 md:max-w-screen-sm lg:max-w-screen-lg mx-auto">
+        <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto">
           <div className="grid grid-cols-3 gap-2 md:gap-4 mb-2 md:mb-4">
             {images.map((img, index) => {
               const isSpanTwo =

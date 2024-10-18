@@ -6,6 +6,7 @@ import { getClient } from "@/lib/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
+import { BiCheck, BiSolidCheckCircle } from "react-icons/bi";
 
 interface Countdown {
   days: number;
@@ -104,32 +105,36 @@ const useSamaya = (client: Client | null): useSamaya => {
     const payload = { client_id: Number(client?.id), ...formData };
 
     setLoading(true);
+    const toastSubmit = toast.loading("Memberikan ucapan");
     try {
       reviewSchema.parse(formData);
-      const createReview = async () => {
-        const response = await getClient(`/api/_pb/_w`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
-        if (!response.ok) {
-          const errorResult = await response.json();
-          throw new Error(errorResult.message);
-        }
-        return await response.json();
-      };
-
-      toast.promise(createReview(), {
-        loading: "Memberikan ucapan...",
-        success: () => {
-          mutate();
-          setLoading(false);
-          setFormData(initialReviewForm);
-          return "Berhasil memberikan ucapan";
-        },
-        error: (error: any) => {
-          return error.message || "Gagal memberikan ucapan";
-        },
+      const response = await getClient(`/api/_pb/_w`, {
+        method: "POST",
+        body: JSON.stringify(payload),
       });
+
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        mutate();
+        setLoading(false);
+        setFormData(initialReviewForm);
+        toast.success("Berhasil. Terima kasih atas ucapannya!", {
+          id: toastSubmit,
+          icon: (
+            <div className="text-samaya-primary text-2xl">
+              <BiSolidCheckCircle />
+            </div>
+          ),
+        });
+      } else {
+        toast.error("Gagal membuat ucapan", { id: toastSubmit });
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         const formattedErrors: Record<string, string | undefined> = {};
@@ -232,7 +237,13 @@ const useSamaya = (client: Client | null): useSamaya => {
     navigator.clipboard
       .writeText(rekening)
       .then(() => {
-        toast.success("Berhasil disalin");
+        toast.success("Berhasil disalin", {
+          icon: (
+            <div className="text-samaya-primary text-2xl">
+              <BiSolidCheckCircle />
+            </div>
+          ),
+        });
       })
       .catch((err) => {
         toast.error("Gagal disalin");
