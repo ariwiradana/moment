@@ -4,9 +4,14 @@ import { montserrat } from "@/lib/fonts";
 import ImageShimmer from "../image.shimmer";
 import { useAdminSidebar } from "@/hooks/admin/useAdminSidebar";
 import { getGreeting } from "@/utils/getGreeting";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 
 const Navbar: FC = () => {
   const { isSidebarOpen, toggleSidebar } = useAdminSidebar();
+  const { data: user } = useSWR("/api/_a/_u", fetcher);
+
+  const sanitizedUser = ((user as string) ?? "").replaceAll(/[^a-zA-Z]+/g, " ");
   return (
     <nav
       className={`${montserrat.className} px-6 md:px-8 h-16 lg:hidden border-b fixed inset-x-0 top-0 z-20 bg-white flex justify-between shadow-md`}
@@ -29,8 +34,10 @@ const Navbar: FC = () => {
           />
         </div>
         <div>
-          <h1 className="font-semibold text-admin-dark">Admin</h1>
-          <p className="text-xs text-darkgray">{getGreeting()}, have a good day!</p>
+          <h1 className="font-semibold text-admin-dark">{sanitizedUser}</h1>
+          <p className="text-xs text-darkgray">
+            {getGreeting()}, have a good day!
+          </p>
         </div>
       </div>
       <button onClick={toggleSidebar}>
