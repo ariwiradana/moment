@@ -11,6 +11,7 @@ import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
 import GiftComponent from "./layouts/gift";
+import PreviewNav from "../preview.nav";
 interface Props {
   untuk: string;
   client: Client;
@@ -22,12 +23,15 @@ const Samaya: FC<Props> = (props) => {
   return (
     <Layout
       pageTitle={
-        props.client
-          ? `${state.groom?.nickname} & ${state.bride?.nickname}`
+        state.client
+          ? state.client.is_preview
+            ? `Preview Tema ${state.client.theme?.name} | Moment`
+            : `${state.groom?.nickname} & ${state.bride?.nickname}`
           : "Moment"
       }
     >
       <>
+        {state.client?.is_preview && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (
           <div className="relative">

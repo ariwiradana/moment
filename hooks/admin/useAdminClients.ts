@@ -83,13 +83,13 @@ export const useAdminClients = (token: string | null) => {
     });
   };
 
-  const handleSetTestimonial = async (id: number) => {
-    const setTestimonial = async () => {
+  const handleSetUsingService = async (id: number) => {
+    const setUsingService = async () => {
       const response = await getClient(
-        `/api/_c/_st`,
+        `/api/_c/_sus`,
         {
           method: "POST",
-          body: JSON.stringify({ is_testimoni: true, id }),
+          body: JSON.stringify({ is_using_service: true, id }),
         },
         token
       );
@@ -99,14 +99,42 @@ export const useAdminClients = (token: string | null) => {
       }
       return await response.json();
     };
-    toast.promise(setTestimonial(), {
-      loading: "Set testimonial...",
+    toast.promise(setUsingService(), {
+      loading: "Set using service...",
       success: () => {
         mutate();
-        return "Successfully set testimonial";
+        return "Successfully set using service";
       },
       error: (error: any) => {
-        return error.message || "Failed to set testimonial";
+        return error.message || "Failed to set using service";
+      },
+    });
+  };
+
+  const handleSetAsPreview = async (id: number) => {
+    const setAsPreview = async () => {
+      const response = await getClient(
+        `/api/_c/_sp`,
+        {
+          method: "POST",
+          body: JSON.stringify({ is_preview: true, id }),
+        },
+        token
+      );
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      return await response.json();
+    };
+    toast.promise(setAsPreview(), {
+      loading: "Set as preview...",
+      success: () => {
+        mutate();
+        return "Successfully set as preview";
+      },
+      error: (error: any) => {
+        return error.message || "Failed to set as preview";
       },
     });
   };
@@ -126,7 +154,8 @@ export const useAdminClients = (token: string | null) => {
       handleDelete,
       handleCopyURL,
       handleSetPaidStatus,
-      handleSetTestimonial,
+      handleSetUsingService,
+      handleSetAsPreview,
     },
   };
 };

@@ -5,24 +5,24 @@ import { sql } from "@vercel/postgres";
 import type { NextApiResponse, NextApiRequest } from "next";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { is_testimoni, id } = request.body;
+  const { is_preview, id } = request.body;
 
   try {
-    if (!is_testimoni && !id) {
+    if (!is_preview && !id) {
       return handleError(response, new Error("ID and status required"));
     }
 
     const query = `
       UPDATE clients
-      SET is_testimoni = $1
+      SET is_preview = $1
       WHERE id = $2;
     `;
 
-    await sql.query(query, [is_testimoni, id]);
+    await sql.query(query, [is_preview, id]);
 
     return response.status(200).json({
       success: true,
-      message: "Testimonial setted successfully",
+      message: "Preview setted successfully",
     });
   } catch (error) {
     handleError(response, error);

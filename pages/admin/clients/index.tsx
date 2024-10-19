@@ -12,6 +12,7 @@ import {
   BiMessageAdd,
   BiMoneyWithdraw,
   BiPlus,
+  BiSlideshow,
   BiSolidShow,
   BiStar,
   BiTrash,
@@ -89,38 +90,18 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             {client.slug}
                           </p>
                         </div>
+
+                        {client.is_preview && (
+                          <div>
+                            <p className="bg-dashboard-primary text-dashboard-dark text-xs font-semibold px-2 py-[2px] rounded-lg">
+                              Preview
+                            </p>
+                          </div>
+                        )}
                       </div>
 
                       <div className="ml-2 flex items-center relative z-10">
                         <ButtonActionDialog>
-                          {client.status === "paid" && (
-                            <ButtonText
-                              onClick={() =>
-                                actions.handleCopyURL(
-                                  `${window.location.hostname}${
-                                    window.location.port
-                                      ? `:${window.location.port}`
-                                      : ""
-                                  }/testimoni/${client?.slug}`
-                                )
-                              }
-                              size="small"
-                              title="Copy Link Testimonial"
-                              icon={<BiMessageAdd className="text-base" />}
-                            />
-                          )}
-                          {!client.is_testimoni && client.status === "paid" ? (
-                            <ButtonText
-                              onClick={() =>
-                                actions.handleSetTestimonial(
-                                  client.id as number
-                                )
-                              }
-                              size="small"
-                              title="Set Dashboard Client"
-                              icon={<BiStar className="text-base" />}
-                            />
-                          ) : null}
                           {client.status === "unpaid" ? (
                             <ButtonText
                               onClick={() =>
@@ -132,22 +113,61 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               icon={<BiMoneyWithdraw className="text-base" />}
                             />
                           ) : (
+                            <>
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleCopyURL(
+                                    `${window.location.hostname}${
+                                      window.location.port
+                                        ? `:${window.location.port}`
+                                        : ""
+                                    }/${client?.slug}?untuk=Nama Undangan`
+                                  )
+                                }
+                                type="button"
+                                size="small"
+                                title="Copy Invitation Link"
+                                icon={<BiLink className="text-base" />}
+                              />
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleCopyURL(
+                                    `${window.location.hostname}${
+                                      window.location.port
+                                        ? `:${window.location.port}`
+                                        : ""
+                                    }/testimoni/${client?.slug}`
+                                  )
+                                }
+                                size="small"
+                                title="Copy Link Testimonial"
+                                icon={<BiMessageAdd className="text-base" />}
+                              />
+                            </>
+                          )}
+                          {!client.is_preview && (
                             <ButtonText
                               onClick={() =>
-                                actions.handleCopyURL(
-                                  `${window.location.hostname}${
-                                    window.location.port
-                                      ? `:${window.location.port}`
-                                      : ""
-                                  }/${client?.slug}?untuk=Nama Undangan`
-                                )
+                                actions.handleSetAsPreview(client.id as number)
                               }
-                              type="button"
                               size="small"
-                              title="Copy Invitation Link"
-                              icon={<BiLink className="text-base" />}
+                              title="Set as Preview"
+                              icon={<BiSlideshow className="text-base" />}
                             />
                           )}
+                          {!client.is_using_service &&
+                          client.status === "paid" ? (
+                            <ButtonText
+                              onClick={() =>
+                                actions.handleSetUsingService(
+                                  client.id as number
+                                )
+                              }
+                              size="small"
+                              title="Set as Using Services"
+                              icon={<BiStar className="text-base" />}
+                            />
+                          ) : null}
                           <ButtonText
                             onClick={() =>
                               router.push(`/admin/clients/${client.slug}`)
@@ -248,7 +268,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       >
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex justify-between gap-x-3">
-                            <div className="flex gap-x-3">
+                            <div className="flex items-center gap-x-3">
                               {client.cover ? (
                                 <div className="w-10 h-10 rounded-full flex justify-center items-center relative overflow-hidden">
                                   <ImageShimmer
@@ -278,6 +298,13 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                   {client.slug}
                                 </p>
                               </div>
+                              {client.is_preview && (
+                                <div>
+                                  <p className="bg-dashboard-primary text-dashboard-dark text-xs font-semibold px-2 py-[2px] rounded-lg">
+                                    Preview
+                                  </p>
+                                </div>
+                              )}
                             </div>
                             {client.status === "paid" && (
                               <div className="ml-2 flex items-center relative z-10">
@@ -339,35 +366,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>
-                            {client.status === "paid" && (
-                              <ButtonText
-                                onClick={() =>
-                                  actions.handleCopyURL(
-                                    `${window.location.hostname}${
-                                      window.location.port
-                                        ? `:${window.location.port}`
-                                        : ""
-                                    }/testimoni/${client?.slug}`
-                                  )
-                                }
-                                size="medium"
-                                title="Copy Link Testimonial"
-                                icon={<BiMessageAdd className="text-base" />}
-                              />
-                            )}
-                            {!client.is_testimoni &&
-                            client.status === "paid" ? (
-                              <ButtonText
-                                onClick={() =>
-                                  actions.handleSetTestimonial(
-                                    client.id as number
-                                  )
-                                }
-                                size="medium"
-                                title="Set Dashboard Client"
-                                icon={<BiStar className="text-base" />}
-                              />
-                            ) : null}
                             {client.status === "unpaid" ? (
                               <ButtonText
                                 onClick={() =>
@@ -381,22 +379,63 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 icon={<BiMoneyWithdraw className="text-base" />}
                               />
                             ) : (
+                              <>
+                                <ButtonText
+                                  onClick={() =>
+                                    actions.handleCopyURL(
+                                      `${window.location.hostname}${
+                                        window.location.port
+                                          ? `:${window.location.port}`
+                                          : ""
+                                      }/${client?.slug}?untuk=Nama Undangan`
+                                    )
+                                  }
+                                  type="button"
+                                  size="medium"
+                                  title="Copy Invitation Link"
+                                  icon={<BiLink className="text-base" />}
+                                />
+                                <ButtonText
+                                  onClick={() =>
+                                    actions.handleCopyURL(
+                                      `${window.location.hostname}${
+                                        window.location.port
+                                          ? `:${window.location.port}`
+                                          : ""
+                                      }/testimoni/${client?.slug}`
+                                    )
+                                  }
+                                  size="medium"
+                                  title="Copy Link Testimonial"
+                                  icon={<BiMessageAdd className="text-base" />}
+                                />
+                              </>
+                            )}
+                            {!client.is_preview && (
                               <ButtonText
                                 onClick={() =>
-                                  actions.handleCopyURL(
-                                    `${window.location.hostname}${
-                                      window.location.port
-                                        ? `:${window.location.port}`
-                                        : ""
-                                    }/${client?.slug}?untuk=Nama Undangan`
+                                  actions.handleSetAsPreview(
+                                    client.id as number
                                   )
                                 }
-                                type="button"
                                 size="medium"
-                                title="Copy Invitation Link"
-                                icon={<BiLink className="text-base" />}
+                                title="Set as Preview"
+                                icon={<BiSlideshow className="text-base" />}
                               />
                             )}
+                            {!client.is_using_service &&
+                            client.status === "paid" ? (
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleSetUsingService(
+                                    client.id as number
+                                  )
+                                }
+                                size="medium"
+                                title="Set as Using Services"
+                                icon={<BiStar className="text-base" />}
+                              />
+                            ) : null}
                             <ButtonText
                               onClick={() =>
                                 router.push(`/admin/clients/${client.slug}`)

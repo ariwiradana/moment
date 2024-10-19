@@ -12,7 +12,7 @@ interface ButtonFloatingProps
 
 const ButtonFloating: FC<ButtonFloatingProps> = (props) => {
   return (
-    <div className="fixed bottom-6 right-6 md:right-12 md:bottom-12 z-20">
+    <div className="fixed bottom-6 right-6 md:right-12 md:bottom-12 z-[999]">
       <button
         {...props}
         disabled={props.isloading ? true : false}
