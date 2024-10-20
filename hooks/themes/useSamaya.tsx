@@ -6,7 +6,7 @@ import { getClient } from "@/lib/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
-import { BiCheck, BiSolidCheckCircle } from "react-icons/bi";
+import { BiCheck, BiLoader, BiSolidCheckCircle, BiX } from "react-icons/bi";
 
 interface Countdown {
   days: number;
@@ -105,7 +105,30 @@ const useSamaya = (client: Client | null): useSamaya => {
     const payload = { client_id: Number(client?.id), ...formData };
 
     setLoading(true);
-    const toastSubmit = toast.loading("Memberikan ucapan");
+    const toastSubmit = toast.custom((t) => (
+      <div
+        className={`${
+          t.visible ? "animate-enter" : "animate-leave"
+        } max-w-md w-full bg-samaya-primary shadow-lg rounded-md pointer-events-auto flex items-center justify-between p-2 border-samaya-primary`}
+      >
+        <div className="flex items-center gap-2">
+          <div className="text-samaya-dark text-2xl mr-2">
+            <BiLoader />
+          </div>
+          <div className="text-sm font-medium text-gray-900">
+            Memberikan ucapan
+          </div>
+        </div>
+        <div>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="text-samaya-dark"
+          >
+            <BiX />
+          </button>
+        </div>
+      </div>
+    ));
     try {
       reviewSchema.parse(formData);
       const response = await getClient(`/api/_pb/_w`, {
@@ -124,14 +147,33 @@ const useSamaya = (client: Client | null): useSamaya => {
         mutate();
         setLoading(false);
         setFormData(initialReviewForm);
-        toast.success("Berhasil. Terima kasih atas ucapannya!", {
-          id: toastSubmit,
-          icon: (
-            <div className="text-samaya-primary text-2xl">
-              <BiSolidCheckCircle />
+        toast.custom(
+          (t) => (
+            <div
+              className={`${
+                t.visible ? "animate-enter" : "animate-leave"
+              } max-w-md w-full bg-samaya-primary shadow-lg rounded-md pointer-events-auto flex items-center justify-between p-2 border-samaya-primary`}
+            >
+              <div className="flex items-center gap-2">
+                <div className="text-samaya-dark text-2xl mr-2">
+                  <BiSolidCheckCircle />
+                </div>
+                <div className="text-sm font-medium text-gray-900">
+                  Berhasil, terima kasih atas ucapannya!
+                </div>
+              </div>
+              <div>
+                <button
+                  onClick={() => toast.dismiss(t.id)}
+                  className="text-samaya-dark"
+                >
+                  <BiX />
+                </button>
+              </div>
             </div>
           ),
-        });
+          { id: toastSubmit }
+        );
       } else {
         toast.error("Gagal membuat ucapan", { id: toastSubmit });
       }
@@ -237,13 +279,33 @@ const useSamaya = (client: Client | null): useSamaya => {
     navigator.clipboard
       .writeText(rekening)
       .then(() => {
-        toast.success("Berhasil disalin", {
-          icon: (
-            <div className="text-samaya-primary text-2xl">
-              <BiSolidCheckCircle />
+        toast.custom(
+          (t) => (
+            <div
+              className={`${
+                t.visible ? "animate-enter" : "animate-leave"
+              } max-w-md w-full bg-samaya-primary shadow-lg rounded-md pointer-events-auto flex items-center justify-between p-2 border-samaya-primary`}
+            >
+              <div className="flex items-center gap-2">
+                <div className="text-samaya-dark text-2xl mr-2">
+                  <BiSolidCheckCircle />
+                </div>
+                <div className="text-sm font-medium text-gray-900">
+                  Berhasil disalin
+                </div>
+              </div>
+              <div>
+                <button
+                  onClick={() => toast.dismiss(t.id)}
+                  className="text-samaya-dark"
+                >
+                  <BiX />
+                </button>
+              </div>
             </div>
           ),
-        });
+          { duration: 3000 }
+        );
       })
       .catch((err) => {
         toast.error("Gagal disalin");

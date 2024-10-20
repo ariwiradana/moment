@@ -34,7 +34,7 @@ const GiftComponent: FC<Props> = (props) => {
           <div className="flex justify-center pt-12 relative z-20">
             <div
               data-aos="zoom-out-up"
-              className={`h-52 lg:h-56 md:w-96 w-full p-8 rounded-2xl flex flex-col justify-between shadow-lg relative border-[0.5px] border-samaya-primary ${afacad.className}`}
+              className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative border-[0.5px] border-samaya-primary ${afacad.className}`}
             >
               <Image
                 sizes="100px"

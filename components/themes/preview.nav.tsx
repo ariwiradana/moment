@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 import ButtonPrimary from "../dashboard/elements/button.primary";
 import { dm } from "@/lib/fonts";
-import { BiCalendarEvent, BiLogoWhatsapp } from "react-icons/bi";
-import ButtonFloating from "../dashboard/elements/button.floating";
+import { BiCalendarEvent } from "react-icons/bi";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import { sosmedURLs } from "@/constants/sosmed";
 
@@ -16,23 +15,20 @@ const PreviewNav: FC<Props> = ({ state }) => {
     const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
       message
     )}`;
-    window.open(whatsappLink);
+
+    if (typeof window !== "undefined") {
+      window.open(whatsappLink);
+    }
   };
 
   if (state.client)
     return (
       <>
-        <ButtonFloating
-          aria-label="button-whatsapp"
-          onClick={() => window.open("https://wa.me/+6281246768627")}
-          className="bg-green-500 text-white"
-          icon={<BiLogoWhatsapp />}
-        />
         <nav className="fixed inset-x-0 z-[999]">
           <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 h-16 md:h-20 lg:h-24 bg-dashboard-dark bg-opacity-30 backdrop-blur-md">
             <li>
               <h1
-                className={`${dm.className} text-2xl lg:text-3xl font-bold text-white`}
+                className={`${dm.className} text-xl lg:text-2xl font-bold text-white`}
               >
                 Preview Tema
               </h1>
