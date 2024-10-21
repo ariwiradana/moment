@@ -1,14 +1,18 @@
 import ButtonPrimary from "@/components/dashboard/elements/button.primary";
+import ButtonSecondary from "@/components/dashboard/elements/button.secondary";
 import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
-import { paymentMethods, PaymentProvider } from "@/constants/paymentMethod";
+import { PaymentMethod, paymentMethods } from "@/constants/paymentMethod";
 import { sosmedURLs } from "@/constants/sosmed";
 import useDashboardStore from "@/lib/dashboardStore";
 import { afacad, dm } from "@/lib/fonts";
 import Image from "next/image";
+import Link from "next/link";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiCheck, BiCopyAlt } from "react-icons/bi";
+import { BiCheck, BiCopyAlt, BiLogoWhatsapp } from "react-icons/bi";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const DashboardPayment: FC = () => {
   const { setActiveSection } = useDashboardStore();
@@ -16,6 +20,14 @@ const DashboardPayment: FC = () => {
   useEffect(() => setActiveSection("section6"), []);
 
   const [url, setUrl] = useState<string>("");
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 0,
+    });
+  }, []);
 
   useEffect(() => {
     setUrl(
@@ -50,7 +62,7 @@ const DashboardPayment: FC = () => {
 
       <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 lg:px-24">
         <div className="py-16">
-          <div>
+          <div data-aos="fade-up">
             <h1
               className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
             >
@@ -61,62 +73,71 @@ const DashboardPayment: FC = () => {
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
             >
               Pembayaran dapat dilakukan melalui e-wallet atau bank transfer.
-              Setelah transfer, kirimkan bukti pembayaran untuk memproses
-              undangan kamu.
+              Setelah transfer, konfirmasikan pembayaranmu dengan mengirimkan
+              bukti transfer pada pesan WhatsApp.
             </p>
             <p
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
             ></p>
           </div>
-          {paymentMethods.map((payment) => (
-            <div key={payment.type} className="mt-10">
-              <h1
-                className={`${afacad.className} text-lg lg:text-xl font-semibold text-dashboard-dark mb-2`}
-              >
-                {payment.type}
-              </h1>
-              <div className="flex flex-col gap-4">
-                {payment.paymentProvider.map((payment) => (
-                  <BankCard
-                    key={payment.paymentProvider}
-                    accountName={payment.accountName}
-                    accountNumber={payment.accountNumber}
-                    iconSrc={payment.iconSrc}
-                    paymentProvider={payment.paymentProvider}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+          <div className="grid md:grid-cols-2 gap-4 mt-6">
+            {paymentMethods.map((payment) => (
+              <BankCard
+                key={payment.paymentProvider}
+                accountName={payment.accountName}
+                accountNumber={payment.accountNumber}
+                iconSrc={payment.iconSrc}
+                paymentProvider={payment.paymentProvider}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div
+          className="w-full rounded-lg p-8 lg:p-16 bg-dashboard-dark mt-6 mb-16"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          <h1
+            className={`${dm.className} text-3xl lg:text-4xl text-white font-semibold`}
+          >
+            Konfirmasi Pembayaran
+          </h1>
+          <p
+            className={`${afacad.className} text-white text-lg md:text-xl mt-3 mb-8`}
+          >
+            Setelah melakukan pembayaran, kirim bukti transfer Anda langsung
+            melalui WhatsApp untuk proses verifikasi yang lebih cepat!.
+          </p>
+          <Link target="_blank" href={sosmedURLs.whatsapp}>
+            <ButtonPrimary
+              title="Konfirmasi Pembayaran"
+              icon={<BiLogoWhatsapp />}
+            />
+          </Link>
         </div>
       </div>
     </Layout>
   );
 };
 
-const BankCard: FC<PaymentProvider> = ({
+const BankCard: FC<PaymentMethod> = ({
   paymentProvider,
   accountName,
   accountNumber,
   iconSrc,
 }) => {
-  const handleCopyPayment = (
-    paymentProvider: string,
-    accountNumber: number
-  ) => {
+  const handleCopyPayment = (accountNumber: number) => {
     navigator.clipboard
       .writeText(accountNumber.toString())
       .then(() => {
-        toast.success(
-          `Metode pembayaran ${paymentProvider} berhasil disalin.`,
-          {
-            icon: (
-              <div className="p-1 rounded bg-dashboard-primary">
-                <BiCheck />
-              </div>
-            ),
-          }
-        );
+        toast.success(`Berhasil disalin.`, {
+          icon: (
+            <div className="p-1 rounded bg-dashboard-primary">
+              <BiCheck />
+            </div>
+          ),
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -125,14 +146,18 @@ const BankCard: FC<PaymentProvider> = ({
   };
 
   return (
-    <div className={`p-4 rounded-lg border border-zinc-100`}>
+    <div
+      data-aos="fade-up"
+      data-aos-delay="200"
+      className={`p-6 rounded-lg bg-white border`}
+    >
       <div className="flex justify-between items-center">
         <div className="flex gap-4 lg:gap-8 items-center">
-          <div className="relative w-28 lg:w-36 aspect-video rounded-lg">
+          <div className="relative w-20 lg:w-28 aspect-video rounded-lg">
             <Image
               alt={paymentProvider}
               src={iconSrc}
-              className="object-contain p-2"
+              className="object-contain"
               fill
             />
           </div>
@@ -143,14 +168,17 @@ const BankCard: FC<PaymentProvider> = ({
               {accountName}
             </h1>
             <p
-              className={`${afacad.className} text-zinc-500 text-base lg:text-lg font-semibold`}
+              className={`${afacad.className} text-zinc-400 text-base lg:text-lg font-semibold`}
             >
-              *****{accountNumber?.toString().slice(5)}
+              *****{accountNumber?.slice(4)}
             </p>
           </div>
         </div>
-        <ButtonPrimary
-          onClick={() => handleCopyPayment(paymentProvider, accountNumber)}
+        <ButtonSecondary
+          title="Salin"
+          onClick={() =>
+            handleCopyPayment(parseInt(accountNumber.replaceAll("-", "")))
+          }
           size="small"
           icon={<BiCopyAlt />}
         />

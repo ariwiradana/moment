@@ -2,16 +2,23 @@ import { afacad } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
-interface ButtonSecondaryProps
+interface ButtonPrimaryProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  title: string;
+  title?: string | undefined;
   className?: string | "";
   icon?: ReactNode;
   size?: "extrasmall" | "small" | "medium" | "large";
   isloading?: boolean;
 }
 
-const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
+const ButtonPrimary: FC<ButtonPrimaryProps> = ({
+  title = undefined,
+  className = "",
+  icon,
+  size = "large",
+  isloading = false,
+  ...props
+}) => {
   const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
@@ -24,29 +31,35 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
         return "px-6 py-3 text-lg gap-x-3";
     }
   };
+  const iconStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
+    switch (size) {
+      case "extrasmall":
+        return "text-sm";
+      case "small":
+        return "text-base";
+      case "medium":
+        return "text-lg";
+      case "large":
+        return "text-xl";
+    }
+  };
 
   return (
     <button
       {...props}
+      disabled={isloading ? true : false}
       className={`${afacad.className} ${
-        props.className ?? ""
-      } flex items-center text-dashboard-dark rounded font-medium bg-gray-300 bg-opacity-95 transition duration-500 hover:bg-gray-400 justify-start ${buttonStyles(
-        props.size ?? "large"
-      )} ${
-        props.isloading &&
-        "pointer-events-none bg-opacity-10 cursor-not-allowed"
-      }`}
+        className ?? ""
+      } flex items-center text-white rounded whitespace-nowrap font-medium bg-dashboard-dark bg-opacity-95 transition duration-500 hover:bg-opacity-100 justify-start ${
+        !title ? "p-2 md:p-2 lg:p-2" : buttonStyles(size)
+      } ${isloading && "pointer-events-none bg-opacity-10 cursor-not-allowed"}`}
     >
-      <span className="text-lg lg:text-xl">
-        {props.isloading ? (
-          <BiLoaderAlt className="animate-spin" />
-        ) : (
-          props.icon
-        )}
+      <span className={iconStyles(size)}>
+        {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
       </span>
-      <span>{props.title}</span>
+      {title && <span>{title}</span>}
     </button>
   );
 };
 
-export default ButtonSecondary;
+export default ButtonPrimary;
