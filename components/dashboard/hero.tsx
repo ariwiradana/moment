@@ -75,15 +75,15 @@ const HeroComponent = () => {
             data-aos-delay="200"
             className={`mb-4 text-dashboard-dark uppercase flex items-center gap-x-2 ${marcellus.className}`}
           >
-            <span className="pr-2">Simple</span>
+            <span className="pr-2">Praktis</span>
             <span>
               <div className="w-1 h-1 bg-dashboard-dark rounded"></div>
             </span>
-            <span className="px-2">Minimalis</span>
+            <span className="px-2">Mudah</span>
             <span>
               <div className="w-1 h-1 bg-dashboard-dark rounded"></div>
             </span>
-            <span className="pl-2">Elegan</span>
+            <span className="pl-2">Cepat</span>
           </div>
           <h1
             data-aos="fade-right"
