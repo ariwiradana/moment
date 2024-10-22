@@ -34,8 +34,12 @@ const config: Config = {
           "dark-chocolate": "#1e1918",
         },
         samaya: {
-          dark: "#1E201E",
           primary: "#D1CAA1",
+          dark: "#1E201E",
+        },
+        flora: {
+          primary: "#FFCA61",
+          dark: "#252015",
         },
         admin: {
           primary: "#3366FF",

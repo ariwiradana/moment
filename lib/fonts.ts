@@ -7,6 +7,7 @@ import {
   The_Nautigal,
   WindSong,
   Engagement,
+  Italiana,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -42,6 +43,11 @@ export const windsong = WindSong({
 });
 
 export const engagement = Engagement({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+export const italiana = Italiana({
   subsets: ["latin"],
   weight: ["400"],
 });
