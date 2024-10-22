@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { italiana, marcellus, windsong } from "@/lib/fonts";
+import { italiana, marcellus } from "@/lib/fonts";
 import Button from "../elements/button";
-import Image from "next/image";
 import { BiSolidEnvelopeOpen } from "react-icons/bi";
 import { useFlora } from "@/hooks/themes/useFlora";
 import moment from "moment";
+import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useFlora["state"];
@@ -34,98 +34,70 @@ const Cover: FC<Props> = (props) => {
 
   return (
     <div
-      className={`w-full h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 bg-flora-dark flex flex-col justify-center items-center p-8 md:p-16 ${
+      className={`w-full h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 bg-flora-dark flex flex-col items-center justify-center${
         props.state.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
-      <p
-        className={`${marcellus.className} text-white text-base lg:text-lg relative`}
-        data-aos="fade-up"
-      >
-        Undangan Pernikahan
-        <Image
-          width={65}
-          height={90}
-          alt="leaf"
-          src="/images/flora/leaf.svg"
-          className="absolute -top-12 left-1/2 transform -translate-x-1/2"
-        />
-      </p>
+      <div className="flex h-dvh w-dvw items-center justify-between flex-col relative py-20 lg:py-40">
+        <div className="fixed inset-0">
+          {props.state.client?.cover && (
+            <ImageShimmer
+              fill
+              alt={`cover-img-image`}
+              priority
+              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+              className="object-cover fixed inset-0"
+              src={props.state.client?.cover as string}
+            />
+          )}
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#252015] via-[#252015]/20 to-[#252015]"></div>
+        <div className="flex justify-between items-center relative w-full gap-8 lg:gap-20">
+          <div
+            className={`transform transition-all duration-500 ease-in-out flex items-center gap-x-6 lg:gap-x-12 pl-12 lg:pl-40 ${
+              fade ? "opacity-100 translate-y-0" : "opacity-10 translate-y-1"
+            }`}
+          >
+            <p
+              className={`${marcellus.className} text-white text-xs lg:text-lg text-center whitespace-nowrap`}
+            >
+              {events[currentIndex].name}
+            </p>
+            <div className="w-[2px] h-[2px] lg:h-1 lg:w-1 rounded-full bg-white"></div>
+            <p
+              className={`${marcellus.className} text-white text-xs lg:text-lg text-center whitespace-nowrap`}
+            >
+              {moment(events[currentIndex].date).format("DD / MMM / YYYY")}
+            </p>
+          </div>
+          <div className="h-[0.5px] w-full bg-white"></div>
+        </div>
 
-      <h1
-        className={`${windsong.className} text-white text-[40px] lg:text-5xl mb-5 lg:mt-3`}
-        data-aos="fade-up"
-        data-aos-delay="100"
-      >
-        {props.state.groom?.nickname} & {props.state.bride?.nickname}
-      </h1>
-      <div
-        className="relative h-[330px] w-[173px]"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
-        <Image
-          alt="cover-image"
-          src={props.state.client?.cover as string}
-          fill
-          className="object-cover rounded-t-full rounded-b-full"
-        />
-        <Image
-          alt="cover-frame"
-          src="/images/flora/cover-frame.svg"
-          fill
-          className="absolute w-full object-contain transform scale-[1.4]"
-        />
-      </div>
-      <p
-        className={`${marcellus.className} text-white text-base lg:text-lg mt-9`}
-        data-aos="fade-up"
-        data-aos-delay="300"
-      >
-        Kepada Yth Bapak/Ibu/Saudara/i
-      </p>
-      <h2
-        className={`${italiana.className} text-white text-3xl mt-1 mb-4`}
-        data-aos="fade-up"
-        data-aos-delay="400"
-      >
-        {props.untuk}
-      </h2>
-      <div
-        data-aos="fade-up"
-        data-aos-delay="500"
-        className={`border-y border-y-white w-full flex justify-between max-w-sm`}
-      >
-        <div
-          className={`transform transition-all duration-500 ease-in-out w-full ${
-            fade ? "opacity-100 translate-y-0" : "opacity-10 translate-y-1"
-          }`}
-        >
-          <p
-            className={`${marcellus.className} text-white text-center p-[10px]`}
+        <div className="relative flex flex-col w-full px-12 lg:px-40">
+          <h1
+            className={`${italiana.className} text-white text-[40px] lg:text-7xl leading-[40px] mb-8 lg:mb-12`}
           >
-            {events[currentIndex].name}
-          </p>
-        </div>
-        <div className="w-[1px] h-full bg-white"></div>
-        <div
-          className={`transform transition-all duration-500 ease-in-out w-full delay-200 ${
-            fade ? "opacity-100 translate-y-0" : "opacity-10 translate-y-1"
-          }`}
-        >
+            {props.state.groom?.nickname}
+            <br />& {props.state.bride?.nickname}
+          </h1>
           <p
-            className={`${marcellus.className} text-white text-center p-[10px]`}
+            className={`${marcellus.className} text-white text-xs lg:text-xl mb-2 lg:mb-4`}
           >
-            {moment(events[currentIndex].date).format("DD / MMMM / YYYY")}
+            Kepada Yth. Bapak/Ibu/Saudara/i
           </p>
+          <h2
+            className={`${italiana.className} text-white text-2xl lg:text-5xl`}
+          >
+            {props.untuk}
+          </h2>
+          <div className="mt-6 lg:mt-10">
+            <Button
+              onClick={props.actions.handleOpenCover}
+              icon={<BiSolidEnvelopeOpen className="lg:text-lg" />}
+              title="Buka Undangan"
+            />
+          </div>
         </div>
-      </div>
-      <div className="mt-6" data-aos="fade-up" data-aos-delay="600">
-        <Button
-          onClick={props.actions.handleOpenCover}
-          icon={<BiSolidEnvelopeOpen className="lg:text-lg" />}
-          title="Buka Undangan"
-        />
       </div>
     </div>
   );

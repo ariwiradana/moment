@@ -38,7 +38,7 @@ const config: Config = {
           dark: "#1E201E",
         },
         flora: {
-          primary: "#FFCA61",
+          primary: "#E1D7C6",
           dark: "#252015",
         },
         admin: {

@@ -23,7 +23,7 @@ const Button: FC<Props> = ({
       {...props}
       className={`${marcellus.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} text-flora-dark rounded-full min-w-24 bg-flora-primary px-5 py-3 text-base flex ${
+      } ${className} text-flora-dark rounded-lg min-w-24 bg-flora-primary px-5 py-3 text-sm flex ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-2 lg:gap-x-4 relative overflow-hidden shadow-sm`}
     >
