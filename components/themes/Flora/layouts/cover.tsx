@@ -1,4 +1,4 @@
-import React, { FC} from "react";
+import React, { FC } from "react";
 import { italiana, marcellus } from "@/lib/fonts";
 import Button from "../elements/button";
 import { BiSolidEnvelopeOpen } from "react-icons/bi";
@@ -31,17 +31,9 @@ const Cover: FC<Props> = (props) => {
             />
           )}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#252015] via-[#252015]/20 to-[#252015]"></div>
-        <div className="flex justify-between items-center relative w-full gap-8 lg:gap-20 pl-8 md:pl-20 lg:pl-32">
-          <p
-            className={`${marcellus.className} text-white md:text-lg text-center whitespace-nowrap`}
-          >
-            Undangan Pernikahan
-          </p>
-          <div className="h-[0.5px] w-full bg-white"></div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-flora-dark/20 to-flora-dark"></div>
 
-        <div className="relative flex flex-col w-full px-8 md:px-20 lg:px-32">
+        <div className="relative flex flex-col justify-end h-full w-full px-8 md:px-20 lg:px-32">
           <h1
             className={`${italiana.className} text-white text-5xl md:text-6xl leading-[40px] mb-6 lg:mb-12`}
           >

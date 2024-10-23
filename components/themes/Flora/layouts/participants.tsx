@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import {  italiana, marcellus } from "@/lib/fonts";
-import ImageShimmer from "../../../image.shimmer";
+import { italiana, marcellus } from "@/lib/fonts";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
@@ -10,6 +9,7 @@ import {
   BiLogoTiktok,
   BiLogoTwitter,
 } from "react-icons/bi";
+import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useSamaya["state"];
@@ -21,9 +21,41 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative bg-white z-10">
-        {props.state.groom && <ParticipantComponent data={props.state.groom} />}
-        {props.state.bride && <ParticipantComponent data={props.state.bride} />}
+      <section className="relative bg-flora-dark z-10 gap-12 flex flex-col px-8 md:px-20 py-16 md:py-24">
+        <div className="relative w-full h-full flex justify-center mb-5">
+          {props.state.groom?.image && props.state.bride?.image ? (
+            <>
+              <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] bg-flora-primary/20 transform translate-x-6 relative z-10 shadow-xl">
+                <ImageShimmer
+                  sizes="188px"
+                  priority
+                  src={props.state.groom?.image as string}
+                  fill
+                  className="object-cover"
+                  alt="image-groom"
+                />
+              </div>
+              <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] bg-flora-primary/30 transform -translate-x-6 translate-y-5 relative shadow-xl">
+                <ImageShimmer
+                  sizes="188px"
+                  priority
+                  src={props.state.bride?.image as string}
+                  fill
+                  className="object-cover"
+                  alt="image-bride"
+                />
+              </div>
+            </>
+          ) : null}
+        </div>
+        <div className="flex flex-col lg:flex-row max-w-screen-lg mx-auto gap-12 lg:gap-32">
+          {props.state.groom && (
+            <ParticipantComponent data={props.state.groom} />
+          )}
+          {props.state.bride && (
+            <ParticipantComponent data={props.state.bride} />
+          )}
+        </div>
       </section>
     );
 };
@@ -34,50 +66,34 @@ interface ComponentProps {
 const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div
-      className={`flex flex-col py-12 px-8 ${
-        props.data.role === "groom"
-          ? "bg-flora-primary/40"
-          : "bg-flora-primary/60"
-      }`}
+      className={`flex flex-col justify-center items-center w-full text-center`}
     >
-      {props.data.image && (
-        <div className="relative w-full aspect-[3/4] shadow-lg self-center">
-          <ImageShimmer
-            fill
-            priority
-            sizes="311px"
-            className="object-cover w-full h-full"
-            src={props.data.image as string}
-            alt={props.data.name}
-          />
-        </div>
-      )}
       <p
-        className={`${marcellus.className} uppercase mt-9 text-sm text-flora-dark/40 border-b border-b-flora-dark/20 pb-1`}
+        className={`${marcellus.className} uppercase text-sm md:text-base text-flora-primary/60`}
       >
-        The Groom
+        The {props.data.role}
       </p>
+      <div className="mt-2 md:mt-4 w-6 h-[0.5px] bg-flora-primary/30"></div>
       <h1
-        className={`text-[28px] text-flora-dark relative mt-3 ${italiana.className}`}
+        className={`text-[28px] md:text-4xl text-flora-primary relative mt-3 md:mt-5 ${italiana.className}`}
       >
         {props.data.name}
       </h1>
-      <div
-        className={`${marcellus.className} mt-4 mb-6 border-b border-b-flora-dark/20 pb-6`}
-      >
+      <div className={`${marcellus.className} mt-3 md:mt-5 mb-4 text-center`}>
         {props.data.role !== "participant" && (
           <>
-            <p className="text-xs text-flora-dark/40 mb-1">
+            <p className="text-sm md:text-base text-flora-primary/60 mb-2 md:mb-4">
               {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
               {props.data.child} dari pasangan
             </p>
-            <h2 className="text-sm text-flora-dark">
+            <h2 className="text-base md:text-lg text-flora-primary">
               Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
             </h2>
           </>
         )}
       </div>
-      <div className="flex gap-x-2 text-flora-dark text-lg">
+      <div className="flex gap-x-5 text-flora-primary text-lg md:text-2xl w-full items-center">
+        <div className="w-full h-[0.5px] bg-flora-primary/30 mr-2"></div>
         {props.data.facebook && (
           <Link
             aria-label="sosmed-facebook-link"
@@ -114,6 +130,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             <BiLogoTiktok />
           </Link>
         )}
+        <div className="w-full h-[0.5px] bg-flora-primary/30 ml-2"></div>
       </div>
     </div>
   );

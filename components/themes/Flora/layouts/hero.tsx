@@ -69,7 +69,7 @@ const HeroComponent: FC<Props> = (props) => {
                 ))
               : null}
           </Swiper>
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent md:max-w-[70dvw] lg:max-w-[40dvw] 2xl:max-w-[30dvw] via-[#252015]/20 to-flora-dark flex flex-col justify-end px-8 lg:px-32 py-16 lg:py-32">
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent md:max-w-[70dvw] lg:max-w-[40dvw] 2xl:max-w-[30dvw] via-[#252015]/20 to-flora-dark flex flex-col justify-end px-8 md:px-20 lg:px-32 py-16 lg:py-32">
             <h1
               className={`${italiana.className} text-white text-5xl md:text-6xl leading-[40px]`}
             >
