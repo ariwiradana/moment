@@ -21,7 +21,14 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative bg-flora-dark z-10 gap-12 flex flex-col px-8 md:px-20 py-16 md:py-24">
+      <section
+        className="relative bg-flora-dark z-10 gap-12 flex flex-col px-8 md:px-20 py-16 md:py-24"
+        style={{
+          backgroundImage: "url('/images/flora/pattern.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "auto",
+        }}
+      >
         <div className="relative w-full h-full flex justify-center mb-5">
           {props.state.groom?.image && props.state.bride?.image ? (
             <>
