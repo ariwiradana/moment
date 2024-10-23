@@ -1,8 +1,7 @@
 import ImageShimmer from "@/components/image.shimmer";
 import { useSamaya } from "@/hooks/themes/useSamaya";
-import { marcellus, windsong } from "@/lib/fonts";
+import { italiana, marcellus } from "@/lib/fonts";
 import moment from "moment";
-import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,7 +24,7 @@ const HeroComponent: FC<Props> = (props) => {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
           setFade(true);
         }, 500);
-      }, 5000);
+      }, 7000);
 
       return () => clearInterval(interval);
     }
@@ -34,7 +33,7 @@ const HeroComponent: FC<Props> = (props) => {
   return (
     <section>
       <div className="relative h-dvh w-full overflow-hidden z-20 bg-samaya-dark">
-        <div className="h-[95dvh] relative">
+        <div className="h-dvh relative">
           <Swiper
             loop
             autoplay={{
@@ -42,7 +41,7 @@ const HeroComponent: FC<Props> = (props) => {
               disableOnInteraction: false,
             }}
             speed={10000}
-            className="w-full transition-transform h-[95dvh]"
+            className="w-full transition-transform h-dvh"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay]}
@@ -69,53 +68,50 @@ const HeroComponent: FC<Props> = (props) => {
                 ))
               : null}
           </Swiper>
-          <div
-            className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark h-[400px] md:h-[800px] flex flex-col justify-end items-center"
-            data-aos="fade-up"
-          >
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent md:max-w-[70dvw] lg:max-w-[40dvw] via-[#252015]/20 to-flora-dark flex flex-col justify-end px-8 lg:px-32 py-16 lg:py-32">
             <h1
-              data-aos="fade-up"
-              data-aos-delay="100"
-              className={`${windsong.className} text-white text-[40px] mt-2 lg:text-6xl lg:mb-6`}
+              className={`${italiana.className} text-white text-5xl md:text-6xl leading-[40px]`}
             >
-              {props.state.groom?.nickname} & {props.state.bride?.nickname}
+              {props.state.groom?.nickname}
+              <br />& {props.state.bride?.nickname}
             </h1>
-            <div
-              className="w-full flex justify-center"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
+            <div className="py-2 border-y border-y-white w-full my-6 md:my-12">
               <div
-                className={`w-full justify-center flex items-center gap-x-3 transform transition-all duration-500 ease-in-out ${
-                  fade
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-10 translate-y-1"
+                className={`flex justify-center items-center gap-x-5 transform transition-all ease-in-out duration-700 ${
+                  fade ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
                 }`}
               >
                 <p
-                  className={`${marcellus.className} text-white text-base md:text-lg lg:text-xl`}
+                  className={`${marcellus.className} text-white text-sm md:text-base`}
                 >
                   {events[currentIndex].name}
                 </p>
-                <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
+                <div className="w-[5px] h-[5px] rounded-full bg-white"></div>
+
                 <p
-                  className={`${marcellus.className} text-white text-base lg:text-xl`}
+                  className={`${marcellus.className} text-white text-sm md:text-base`}
                 >
-                  {moment(events[currentIndex].date).format("DD / MMMM / YYYY")}
+                  {moment(events[currentIndex].date).format(
+                    "dddd, DD / MM / YYYY"
+                  )}
                 </p>
               </div>
             </div>
-            <div
-              className="h-12 lg:h-16 aspect-video relative m-4"
-              data-aos="zoom-in-up"
-              data-aos-delay="300"
+            <p
+              className={`${marcellus.className} text-white text-xs md:text-sm`}
             >
-              <Image
-                fill
-                alt="floral-top-corner"
-                src="/images/samaya/leaf-primary.svg"
-                className="object-contain"
-              />
+              Wahai pasangan suami-isteri, semoga kalian tetap bersatu dan tidak
+              pernah terpisahkan. Semoga kalian mencapai hidup penuh
+              kebahagiaan, tinggal di rumah yang penuh kegembiraan bersama
+              seluruh keturunanmu.
+            </p>
+            <div className="flex items-center mt-4 gap-x-2 md:gap-x-4">
+              <div className="h-[0.5px] w-4 bg-white"></div>
+              <p
+                className={`${marcellus.className} text-white text-sm md:text-base`}
+              >
+                Rgveda X.85.42
+              </p>
             </div>
           </div>
         </div>
