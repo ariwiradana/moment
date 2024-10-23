@@ -57,9 +57,10 @@ const HeroComponent: FC<Props> = (props) => {
                     <div className="absolute inset-0">
                       <ImageShimmer
                         fill
+                        quality={100}
                         alt={`hero-img-${index}`}
                         priority
-                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+                        sizes="100vw"
                         className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
                         src={image}
                         style={{ transform: "translateZ(0)" }}
