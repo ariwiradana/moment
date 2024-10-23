@@ -34,7 +34,7 @@ interface UpdateClientProps {
   token: string | null;
 }
 
-const UpdateClient: React.FC<UpdateClientProps> = ({ slug , token}) => {
+const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
 
   return (

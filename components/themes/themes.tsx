@@ -2,6 +2,7 @@ import { Client } from "@/lib/types";
 import React from "react";
 import Samaya from "./Samaya/theme";
 import Aakarshana from "./Akarshana/theme";
+import Flora from "./Flora/theme";
 
 export const themes: Record<
   string,
@@ -12,5 +13,8 @@ export const themes: Record<
   ),
   Samaya: (client: Client, untuk: string) => (
     <Samaya client={client} untuk={untuk} />
+  ),
+  Flora: (client: Client, untuk: string) => (
+    <Flora client={client} untuk={untuk} />
   ),
 };

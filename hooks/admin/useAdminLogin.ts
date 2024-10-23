@@ -28,9 +28,9 @@ export const useAdminLogin = () => {
       const result = await res.json();
       if (!result.success) {
         toast.error(result.message);
+        setIsLoading(false);
       }
       router.push("/admin/clients");
-      setIsLoading(false);
     } catch (error: any) {
       toast.error(error.message);
       setIsLoading(false);

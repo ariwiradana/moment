@@ -20,7 +20,11 @@ const FooterComponent = () => {
   const router = useRouter();
 
   return (
-    <section className="bg-admin-hover-dark" data-aos="fade-up">
+    <section
+      className="bg-admin-hover-dark"
+      data-aos="fade-up"
+      data-aos-offset="0"
+    >
       <div className="relative pt-16 pb-8 md:py-16">
         <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative">
           <div className="grid md:grid-cols-2 gap-8">

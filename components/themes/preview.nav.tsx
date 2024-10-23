@@ -25,7 +25,7 @@ const PreviewNav: FC<Props> = ({ state }) => {
     return (
       <>
         <nav className="fixed inset-x-0 z-[999]">
-          <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 h-16 md:h-20 lg:h-24 bg-dashboard-dark bg-opacity-30 backdrop-blur-md">
+          <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 h-16 md:h-20 bg-dashboard-dark bg-opacity-30 backdrop-blur-md">
             <li>
               <h1
                 className={`${dm.className} text-xl lg:text-2xl font-bold text-white`}
@@ -47,7 +47,7 @@ const PreviewNav: FC<Props> = ({ state }) => {
                   title="Pilih Tema"
                 />
               </div>
-              <div className="hidden md:block lg:hidden">
+              <div className="hidden md:block">
                 <ButtonPrimary
                   onClick={() =>
                     handleChooseTheme(
@@ -57,19 +57,6 @@ const PreviewNav: FC<Props> = ({ state }) => {
                   }
                   icon={<BiCalendarEvent />}
                   size="medium"
-                  title="Pilih Tema"
-                />
-              </div>
-              <div className="hidden lg:block">
-                <ButtonPrimary
-                  onClick={() =>
-                    handleChooseTheme(
-                      state.client?.theme?.name as string,
-                      state.client?.theme?.category as string
-                    )
-                  }
-                  icon={<BiCalendarEvent />}
-                  size="large"
                   title="Pilih Tema"
                 />
               </div>

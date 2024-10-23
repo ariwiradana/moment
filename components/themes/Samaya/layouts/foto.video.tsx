@@ -5,7 +5,8 @@ import "yet-another-react-lightbox/styles.css";
 import { marcellus, windsong } from "@/lib/fonts";
 import YouTubePlayer from "@/components/admin/elements/youtube.player";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
-import ImageShimmer from "@/components/image.shimmer";
+import { ImageList, ImageListItem } from "@mui/material";
+import Image from "next/image";
 
 interface Props {
   state: useSamaya["state"];
@@ -60,32 +61,7 @@ const GalleryComponent: FC<Props> = (props) => {
             Kisah
           </h1>
         </div>
-        <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto">
-          <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
-            {images.map((img, index) => (
-              <div
-                onClick={() => {
-                  setOpen(() => true);
-                  setImageIndex(() => index);
-                }}
-                key={img}
-                className={`${
-                  index % 3 === 0 || index === images.length - 1
-                    ? "col-span-2"
-                    : "col-span-1"
-                } lg:min-h-96 md:min-h-72 min-h-80 w-full relative rounded-lg overflow-hidden`}
-              >
-                <ImageShimmer
-                  sizes="300px"
-                  priority
-                  src={img}
-                  alt={`gallery-img-${index + 1}`}
-                  fill
-                  className="object-cover rounded-lg hover:scale-[1.01] ease-in-out duration-500 w-full h-full"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-2">
           {videos.length > 0 && (
             <div className="grid gap-4">
               {videos.map((v, index) => {
@@ -101,6 +77,26 @@ const GalleryComponent: FC<Props> = (props) => {
               })}
             </div>
           )}
+          <ImageList variant="masonry" cols={2} gap={8}>
+            {images.map((img, index) => (
+              <ImageListItem key={img}>
+                <Image
+                  onClick={() => {
+                    setOpen(() => true);
+                    setImageIndex(() => index);
+                  }}
+                  className="rounded"
+                  src={img}
+                  alt={`gallery-img-${index + 1}`}
+                  width={248}
+                  height={248}
+                  layout="responsive"
+                  objectFit="cover"
+                  priority
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
         </div>
       </div>
     </section>

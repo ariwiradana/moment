@@ -151,13 +151,13 @@ const BankCard: FC<PaymentMethod> = ({
       data-aos-delay="200"
       className={`p-6 rounded-lg bg-white border`}
     >
-      <div className="flex justify-between items-center">
-        <div className="flex gap-4 lg:gap-8 items-center">
+      <div className="flex justify-between items-end md:items-center">
+        <div className="flex md:flex-row flex-col gap-4 lg:gap-8 md:items-center">
           <div className="relative w-20 lg:w-28 aspect-video rounded-lg">
             <Image
               alt={paymentProvider}
               src={iconSrc}
-              className="object-contain"
+              className="object-contain -ml-2 md:ml-0"
               fill
             />
           </div>
