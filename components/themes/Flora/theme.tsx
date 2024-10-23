@@ -10,7 +10,7 @@ import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
 import GiftComponent from "./layouts/gift";
-import PreviewNav from "../preview.nav";
+// import PreviewNav from "../preview.nav";
 import useFlora from "@/hooks/themes/useFlora";
 interface Props {
   untuk: string;
@@ -31,7 +31,7 @@ const Flora: FC<Props> = (props) => {
       }
     >
       <>
-        {state.client?.is_preview && <PreviewNav state={state} />}
+        {/* {state.client?.is_preview && <PreviewNav state={state} />} */}
         <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (
           <div className="relative">
