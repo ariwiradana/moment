@@ -32,7 +32,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
         <div className="relative w-full h-full flex justify-center mb-5">
           {props.state.groom?.image && props.state.bride?.image ? (
             <>
-              <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] bg-flora-primary/20 transform -rotate-3 translate-x-6 relative z-10 shadow-xl">
+              <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] transform -rotate-3 translate-x-6 relative z-10 shadow-xl">
                 <ImageShimmer
                   sizes="188px"
                   priority
@@ -42,7 +42,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   alt="image-groom"
                 />
               </div>
-              <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] bg-flora-primary/30 transform rotate-3 -translate-x-6 translate-y-5 relative shadow-xl">
+              <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] transform rotate-3 -translate-x-6 translate-y-5 relative shadow-xl">
                 <ImageShimmer
                   sizes="188px"
                   priority
