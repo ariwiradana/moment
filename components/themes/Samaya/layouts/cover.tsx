@@ -4,6 +4,7 @@ import Button from "../elements/button";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Image from "next/image";
 import { BiSolidEnvelopeOpen } from "react-icons/bi";
+import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useSamaya["state"];
@@ -47,12 +48,12 @@ const Cover: FC<Props> = (props) => {
             data-aos="zoom-out"
             data-aos-delay="300"
           >
-            <Image
+            <ImageShimmer
               height={210}
               width={210}
               alt={`cover-img-image`}
               priority
-              sizes="400px"
+              sizes="300px"
               className="object-cover rounded-full aspect-square overflow-hidden"
               src={props.state.client?.cover as string}
             />
