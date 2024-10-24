@@ -84,29 +84,39 @@ const ClientComponent = () => {
                       >
                         <span>
                           {(() => {
-                            const participantNames = c.participants.map(
-                              (p) => p.nickname
+                            const groom = c.participants.filter(
+                              (p) => p.role === "groom"
+                            );
+                            const bride = c.participants.filter(
+                              (p) => p.role === "bride"
+                            );
+                            const participant = c.participants.filter(
+                              (p) => p.role === "participant"
                             );
 
-                            let formattedNames;
-                            if (participantNames.length === 2) {
-                              formattedNames = participantNames.join(" & ");
-                            } else if (participantNames.length > 2) {
-                              const lastName = participantNames.pop();
-                              formattedNames =
-                                participantNames.join(", ") + " & " + lastName;
-                            } else {
-                              formattedNames = participantNames[0] || "";
-                            }
+                            let name = "";
 
-                            return formattedNames;
+                            if (participant.length === 2) {
+                              name = `${participant[0].nickname} & ${participant[1].nickname}`;
+                            } else if (participant.length > 2) {
+                              const allButLast = participant
+                                .slice(0, -1)
+                                .map((p) => p.nickname)
+                                .join(", ");
+                              const last =
+                                participant[participant.length - 1].nickname;
+                              name = `${allButLast} & ${last}`;
+                            } else {
+                              name = `${groom[0].nickname} & ${bride[0].nickname}`;
+                            }
+                            return name;
                           })()}
                         </span>
                       </h1>
                       <p
-                        className={`w-full flex gap-2 items-center font-light text-zinc-200 ${afacad.className}`}
+                        className={`font-light text-zinc-200 ${afacad.className}`}
                       >
-                        <span>Undangan {c.theme?.category}</span>
+                        Undangan {c.theme?.category}
                       </p>
                     </div>
                   </SwiperSlide>

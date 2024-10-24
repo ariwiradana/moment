@@ -67,6 +67,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           countQuery += ` WHERE is_using_service = $${valueIndex} AND is_preview = $${
             valueIndex + 1
           }`;
+
           values.push(isTestimoniBoolean, false);
           countValues.push(isTestimoniBoolean, false);
         }

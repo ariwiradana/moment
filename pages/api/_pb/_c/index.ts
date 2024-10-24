@@ -50,10 +50,15 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           const valueIndex = values.length + 1;
           const isTestimoniBoolean = is_using_service === "true";
 
-          query += ` WHERE is_using_service = $${valueIndex}`;
-          countQuery += ` WHERE is_using_service = $${valueIndex}`;
-          values.push(isTestimoniBoolean);
-          countValues.push(isTestimoniBoolean);
+          query += ` WHERE is_using_service = $${valueIndex} AND is_preview = $${
+            valueIndex + 1
+          }`;
+          countQuery += ` WHERE is_using_service = $${valueIndex} AND is_preview = $${
+            valueIndex + 1
+          }`;
+
+          values.push(isTestimoniBoolean, false);
+          countValues.push(isTestimoniBoolean, false);
         }
 
         query += ` ORDER BY updated_at DESC`;
