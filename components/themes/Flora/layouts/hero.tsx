@@ -33,7 +33,11 @@ const HeroComponent: FC<Props> = (props) => {
   return (
     <section>
       <div className="relative h-dvh w-full overflow-hidden z-20 bg-samaya-dark">
-        <div className="h-dvh relative">
+        <div
+          className="h-dvh relative"
+          data-aos="zoom-out"
+          data-aos-delay="200"
+        >
           <Swiper
             loop
             autoplay={{
@@ -69,14 +73,24 @@ const HeroComponent: FC<Props> = (props) => {
                 ))
               : null}
           </Swiper>
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent md:max-w-[70dvw] lg:max-w-[40dvw] 2xl:max-w-[30dvw] via-flora-dark/20 to-flora-dark flex flex-col justify-end px-8 md:px-20 lg:px-32 py-16 lg:py-32">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="400"
+            className="absolute inset-0 z-10 bg-gradient-to-b from-transparent md:max-w-[70dvw] lg:max-w-[40dvw] 2xl:max-w-[30dvw] via-flora-dark/20 to-flora-dark flex flex-col justify-end px-8 md:px-20 lg:px-32 py-16 lg:py-32"
+          >
             <h1
+              data-aos="fade-up"
+              data-aos-delay="600"
               className={`${italiana.className} text-white text-5xl md:text-6xl leading-[40px]`}
             >
               {props.state.groom?.nickname}
               <br />& {props.state.bride?.nickname}
             </h1>
-            <div className="py-2 border-y border-y-white w-full my-6 md:my-12">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="800"
+              className="py-2 border-y border-y-white w-full my-6 md:my-12"
+            >
               <div
                 className={`flex justify-center items-center gap-x-5 transform transition-all ease-in-out duration-700 ${
                   fade ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
@@ -99,6 +113,8 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
             </div>
             <p
+              data-aos="fade-up"
+              data-aos-delay="1000"
               className={`${marcellus.className} text-white text-xs md:text-sm`}
             >
               Wahai pasangan suami-isteri, semoga kalian tetap bersatu dan tidak
@@ -106,7 +122,11 @@ const HeroComponent: FC<Props> = (props) => {
               kebahagiaan, tinggal di rumah yang penuh kegembiraan bersama
               seluruh keturunanmu.
             </p>
-            <div className="flex items-center mt-4 gap-x-2 md:gap-x-4">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="1200"
+              className="flex items-center mt-4 gap-x-2 md:gap-x-4"
+            >
               <div className="h-[0.5px] w-4 bg-white"></div>
               <p
                 className={`${marcellus.className} text-white text-sm md:text-base`}

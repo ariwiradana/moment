@@ -19,7 +19,7 @@ const Cover: FC<Props> = (props) => {
       }`}
     >
       <div className="flex h-dvh w-dvw items-center justify-between flex-col relative py-16 md:py-24 lg:py-32">
-        <div className="fixed inset-0">
+        <div data-aos="zoom-out" data-aos-delay="200" className="fixed inset-0">
           {props.state.client?.cover && (
             <ImageShimmer
               fill
@@ -35,22 +35,31 @@ const Cover: FC<Props> = (props) => {
 
         <div className="relative flex flex-col justify-end h-full w-full px-8 md:px-20 lg:px-32">
           <h1
+            data-aos="fade-up"
             className={`${italiana.className} text-white text-5xl md:text-6xl leading-[40px] mb-6 lg:mb-12`}
           >
             {props.state.groom?.nickname}
             <br />& {props.state.bride?.nickname}
           </h1>
           <p
+            data-aos="fade-up"
+            data-aos-delay="200"
             className={`${marcellus.className} text-white md:text-lg mb-1 md:mb-2`}
           >
             Kepada Yth. Bapak/Ibu/Saudara/i
           </p>
           <h2
+            data-aos="fade-up"
+            data-aos-delay="400"
             className={`${italiana.className} text-white text-[32px] md:text-4xl`}
           >
             {props.untuk}
           </h2>
-          <div className="mt-6 md:mt-10">
+          <div
+            className="mt-6 md:mt-10"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
             <Button
               onClick={props.actions.handleOpenCover}
               icon={<BiSolidEnvelopeOpen className="md:text-lg" />}

@@ -34,7 +34,11 @@ const HeroComponent: FC<Props> = (props) => {
   return (
     <section>
       <div className="relative h-dvh w-full overflow-hidden z-20 bg-samaya-dark">
-        <div className="h-[95dvh] relative">
+        <div
+          className="h-[95dvh] relative"
+          data-aos="zoom-out"
+          data-aos-delay="300"
+        >
           <Swiper
             loop
             autoplay={{

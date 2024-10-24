@@ -32,8 +32,8 @@ const Cover: FC<Props> = (props) => {
       <div className="absolute top-0 left-0 w-[180px] lg:w-[260px] aspect-square">
         <Image
           data-aos="fade-down-right"
-          className="object-contain"
           data-aos-delay="200"
+          className="object-contain"
           alt="floral-top-corner"
           src="/images/samaya/floral-corner-top.svg"
           fill
@@ -44,7 +44,8 @@ const Cover: FC<Props> = (props) => {
         {props.state.client?.cover && (
           <div
             className="relative w-[240px] aspect-square rounded-full"
-            data-aos="fade-up"
+            data-aos="zoom-out"
+            data-aos-delay="300"
           >
             <Image
               height={240}
@@ -56,8 +57,6 @@ const Cover: FC<Props> = (props) => {
               src={props.state.client?.cover as string}
             />
             <Image
-              data-aos="zoom-in"
-              data-aos-delay="100"
               className="absolute inset-x-0 -top-4"
               alt="floral-top-corner"
               src="/images/samaya/circle-frame-image.svg"

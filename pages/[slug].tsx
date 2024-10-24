@@ -18,7 +18,7 @@ interface Props {
 const MainPage: FC<Props> = (props) => {
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: 1200,
       offset: 10,
     });
   }, []);
