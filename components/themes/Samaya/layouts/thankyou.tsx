@@ -22,8 +22,7 @@ const ThankyouComponent: FC<Props> = (props) => {
     props.state.client.closing_description
   )
     return (
-      <section className="px-4 py-8 relative">
-        <div className="absolute inset-0 bg-samaya-dark bg-opacity-80 backdrop-blur-md"></div>
+      <section className="px-4 py-8 relative bg-samaya-dark">
         <div className="flex justify-center">
           <div
             className="h-12 lg:h-16 aspect-video relative m-4"
@@ -47,12 +46,12 @@ const ThankyouComponent: FC<Props> = (props) => {
           </p>
           <div data-aos="fade-up">
             <Title
-              className="text-2xl mt-8 text-white"
+              className="text-2xl mt-8"
               title={props.state.client?.closing_title as string}
             />
           </div>
           <div className="flex justify-center my-4" data-aos="fade-up">
-            <div className="w-[0.5px] h-8 bg-white"></div>
+            <div className="w-[0.5px] h-8 bg-samaya-primary"></div>
           </div>
           <p
             data-aos="fade-up"

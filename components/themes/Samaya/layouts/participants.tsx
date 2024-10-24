@@ -60,14 +60,14 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           <ImageShimmer
             fill
             priority
-            sizes="277px"
+            sizes="600px"
             className="object-cover w-full h-full overflow-hidden p-[10px]"
             src={props.data.image as string}
             alt={props.data.name}
           />
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <Image
-            className="absolute inset-0 z-30"
+            className="absolute inset-0 z-30 transform scale-[1.03]"
             alt="floral-top-corner"
             src="/images/samaya/frame-primary.svg"
             height={277}
@@ -105,7 +105,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         {props.data.address}
       </p>
       <div
-        className="flex mt-4 gap-x-6 text-samaya-primary text-xl md:text-3xl text-center"
+        className="flex mt-4 gap-x-6 text-samaya-primary text-xl md:text-2xl text-center"
         data-aos="fade-up"
       >
         {props.data.facebook && (

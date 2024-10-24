@@ -35,7 +35,7 @@ const config: Config = {
         },
         samaya: {
           primary: "#D1CAA1",
-          dark: "#1E201E",
+          dark: "#151515",
         },
         flora: {
           primary: "#E1D7C6",

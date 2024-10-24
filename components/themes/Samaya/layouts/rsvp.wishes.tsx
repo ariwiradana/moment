@@ -22,10 +22,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   };
   return (
     <section className="relative bg-samaya-dark w-full">
-      <div
-        className="relative w-full flex flex-col justify-center items-center z-20"
-        data-aos="fade-up"
-      >
+      <div className="relative w-full flex flex-col justify-center items-center z-20 bg-samaya-primary/5 py-12">
         <div className="w-full">
           <div className="text-center" data-aos="fade-up">
             <h1
@@ -101,7 +98,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
 
           {props.state.reviews && props.state.reviews?.length > 0 ? (
             <div
-              className="flex flex-col w-full gap-4 bg-samaya-primary bg-opacity-10 px-4 py-12 max-h-[440px] overflow-y-auto"
+              className="flex flex-col w-full gap-4 px-4 pb-12 pt-4 max-h-[440px] overflow-y-auto"
               data-aos="fade-up"
             >
               <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">

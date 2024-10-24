@@ -5,7 +5,12 @@ import "yet-another-react-lightbox/styles.css";
 import { marcellus, windsong } from "@/lib/fonts";
 import YouTubePlayer from "@/components/admin/elements/youtube.player";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
-import { ImageList, ImageListItem } from "@mui/material";
+import {
+  ImageList,
+  ImageListItem,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
 
 interface Props {
@@ -30,6 +35,23 @@ const GalleryComponent: FC<Props> = (props) => {
       ? props.state.client.videos
       : [];
 
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const getCols = () => {
+    if (isDesktop) return 3;
+    if (isTablet) return 3;
+    if (isMobile) return 2;
+  };
+
+  const getGap = () => {
+    if (isDesktop) return 32;
+    if (isTablet) return 32;
+    if (isMobile) return 16;
+  };
+
   return (
     <section className="relative bg-samaya-dark overflow-hidden">
       <Lightbox
@@ -47,7 +69,7 @@ const GalleryComponent: FC<Props> = (props) => {
 
       <div
         data-aos="fade-up"
-        className="w-full h-full relative py-16 lg:py-24 px-4 z-20"
+        className="w-full h-full relative py-16 lg:py-24 px-4 z-20 bg-gradient-to-b from-transparent to-samaya-primary/5"
       >
         <div className="text-center" data-aos="fade-up">
           <h1
@@ -61,13 +83,41 @@ const GalleryComponent: FC<Props> = (props) => {
             Kisah
           </h1>
         </div>
-        <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-2">
+        <div
+          className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-4 md:gap-8"
+          data-aos="zoom-in-up"
+        >
+          <ImageList
+            variant="masonry"
+            cols={getCols()}
+            gap={getGap()}
+            className="overflow-hidden"
+          >
+            {images.map((img, index) => (
+              <ImageListItem key={img}>
+                <Image
+                  onClick={() => {
+                    setOpen(() => true);
+                    setImageIndex(() => index);
+                  }}
+                  className="rounded hover:scale-[0.99] transition-transform ease-in-out duration-500"
+                  src={img}
+                  alt={`gallery-img-${index + 1}`}
+                  width={360}
+                  height={360}
+                  layout="responsive"
+                  objectFit="cover"
+                  priority
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
           {videos.length > 0 && (
             <div className="grid gap-4">
               {videos.map((v, index) => {
                 const youtubeId = getYouTubeVideoId(v);
                 return (
-                  <div key={`video-${index + 1}`} data-aos="zoom-in-up">
+                  <div key={`video-${index + 1}`}>
                     <YouTubePlayer
                       key={`video-${index}`}
                       youtubeId={youtubeId as string}
@@ -77,26 +127,6 @@ const GalleryComponent: FC<Props> = (props) => {
               })}
             </div>
           )}
-          <ImageList variant="masonry" cols={2} gap={8}>
-            {images.map((img, index) => (
-              <ImageListItem key={img} data-aos="zoom-in-up">
-                <Image
-                  onClick={() => {
-                    setOpen(() => true);
-                    setImageIndex(() => index);
-                  }}
-                  className="rounded"
-                  src={img}
-                  alt={`gallery-img-${index + 1}`}
-                  width={248}
-                  height={248}
-                  layout="responsive"
-                  objectFit="cover"
-                  priority
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
         </div>
       </div>
     </section>

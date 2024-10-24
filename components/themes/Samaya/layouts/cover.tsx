@@ -4,7 +4,6 @@ import Button from "../elements/button";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Image from "next/image";
 import { BiSolidEnvelopeOpen } from "react-icons/bi";
-import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useSamaya["state"];
@@ -15,7 +14,7 @@ interface Props {
 const Cover: FC<Props> = (props) => {
   return (
     <div
-      className={`w-full h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 bg-samaya-dark flex flex-col items-center p-4 md:p-16 ${
+      className={`w-full h-dvh fixed inset-x-0 z-30 transition-all ease-in-out delay-500 duration-1000 bg-gradient-to-b from-samaya-dark/90 to-samaya-dark flex flex-col items-center p-4 md:p-16 ${
         props.state.open ? "-top-full invisible opacity-0" : "top-0 visible"
       }`}
     >
@@ -44,13 +43,13 @@ const Cover: FC<Props> = (props) => {
       <div className="flex h-dvh flex-col items-center justify-center relative z-20">
         {props.state.client?.cover && (
           <div
-            className="relative w-[210px] aspect-square rounded-full"
+            className="relative w-[210px] md:w-[260px] aspect-square rounded-full"
             data-aos="zoom-out"
             data-aos-delay="300"
           >
-            <ImageShimmer
-              height={210}
-              width={210}
+            <Image
+              height={280}
+              width={280}
               alt={`cover-img-image`}
               priority
               sizes="300px"
@@ -58,16 +57,16 @@ const Cover: FC<Props> = (props) => {
               src={props.state.client?.cover as string}
             />
             <Image
-              className="absolute inset-x-0 -top-4"
+              className="absolute inset-x-0 -top-4 transform scale-105"
               alt="floral-top-corner"
               src="/images/samaya/circle-frame-image.svg"
-              height={210}
-              width={210}
+              height={280}
+              width={280}
             />
           </div>
         )}
         <p
-          className={`${marcellus.className} text-white text-base lg:text-xl mt-10`}
+          className={`${marcellus.className} text-white text-base lg:text-xl mt-10 md:mt-16`}
           data-aos="fade-up"
           data-aos-delay="100"
         >
