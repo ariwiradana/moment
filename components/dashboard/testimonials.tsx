@@ -93,7 +93,7 @@ const TestimonialsComponent = () => {
                       <p
                         className={`${afacad.className} text-zinc-300 flex items-center gap-x-2 md:text-lg`}
                       >
-                        Undangan {t.theme_category}
+                        Undangan Tema {t.theme_name}
                       </p>
                     </div>
                   </div>
