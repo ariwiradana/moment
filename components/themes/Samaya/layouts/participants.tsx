@@ -31,7 +31,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
           <p
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`${marcellus.className} text-base md:text-lg text-center leading-5 text-white mb-12 max-w-screen-md mx-auto`}
+            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white mb-12 max-w-screen-md mx-auto`}
           >
             {props.state.client?.opening_description}
           </p>
@@ -88,7 +88,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
               {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
               {props.data.child} dari pasangan
             </p>
-            <h2 className="text-base md:text-lg text-white mt-2">
+            <h2 className="text-sm md:text-lg text-white mt-2">
               Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
             </h2>
           </>
@@ -99,13 +99,13 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         data-aos="fade-up"
       ></div>
       <p
-        className={`text-samaya-primary text-base md:text-lg text-center ${marcellus.className}`}
+        className={`text-samaya-primary text-sm md:text-lg text-center ${marcellus.className}`}
         data-aos="fade-up"
       >
         {props.data.address}
       </p>
       <div
-        className="flex mt-4 gap-x-2 text-samaya-primary text-2xl md:text-3xl text-center"
+        className="flex mt-4 gap-x-6 text-samaya-primary text-xl md:text-3xl text-center"
         data-aos="fade-up"
       >
         {props.data.facebook && (

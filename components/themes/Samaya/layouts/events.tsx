@@ -59,14 +59,14 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                   <h1 className={`text-3xl lg:text-5xl md:mb-2`}>
                     {moment(event.date).format("dddd")}
                   </h1>
-                  <p className="text-base md:text-xl mt-1">
+                  <p className="text-sm md:text-xl mt-1">
                     {moment(event.date).format("DD / MMMM / YYYY")}
                   </p>
                   <div className="w-full h-[1px] bg-samaya-primary my-3 lg:my-5"></div>
-                  <p className="text-base md:text-xl">
+                  <p className="text-sm md:text-xl">
                     {event.start_time} - {event.end_time}
                   </p>
-                  <p className="text-base md:text-xl">{event.address}</p>
+                  <p className="text-sm md:text-xl">{event.address}</p>
                   <div className="w-full h-[1px] bg-samaya-primary my-3 lg:my-5"></div>
                   <div className="mt-2 inline-flex flex-col gap-4">
                     <Link target="_blank" href={event.address_url}>

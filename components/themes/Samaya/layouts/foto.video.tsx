@@ -79,7 +79,7 @@ const GalleryComponent: FC<Props> = (props) => {
           )}
           <ImageList variant="masonry" cols={2} gap={8}>
             {images.map((img, index) => (
-              <ImageListItem key={img}>
+              <ImageListItem key={img} data-aos="zoom-in-up">
                 <Image
                   onClick={() => {
                     setOpen(() => true);

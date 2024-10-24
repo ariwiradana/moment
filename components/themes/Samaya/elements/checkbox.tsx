@@ -15,7 +15,7 @@ const InputCheckbox: FC<Props> = (props) => {
         className={`bg-samaya-primary bg-opacity-5 w-4 h-4 outline-none accent-samaya-primary focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${marcellus.className}`}
       />
       <p
-        className={`text-base ${marcellus.className} text-samaya-primary mt-[2px]`}
+        className={`text-base ${marcellus.className} text-samaya-primary text-sm mt-[2px]`}
       >
         {props.label}
       </p>

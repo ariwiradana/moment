@@ -19,7 +19,7 @@ const Cover: FC<Props> = (props) => {
       }`}
     >
       <div
-        className="absolute bottom-0 right-0 w-[180px] lg:w-[260px] aspect-square"
+        className="absolute bottom-0 right-0 w-[160px] lg:w-[260px] aspect-square"
         data-aos="fade-up-left"
       >
         <Image
@@ -29,7 +29,7 @@ const Cover: FC<Props> = (props) => {
           fill
         />
       </div>
-      <div className="absolute top-0 left-0 w-[180px] lg:w-[260px] aspect-square">
+      <div className="absolute top-0 left-0 w-[160px] lg:w-[260px] aspect-square">
         <Image
           data-aos="fade-down-right"
           data-aos-delay="200"
@@ -43,13 +43,13 @@ const Cover: FC<Props> = (props) => {
       <div className="flex h-dvh flex-col items-center justify-center relative z-20">
         {props.state.client?.cover && (
           <div
-            className="relative w-[240px] aspect-square rounded-full"
+            className="relative w-[210px] aspect-square rounded-full"
             data-aos="zoom-out"
             data-aos-delay="300"
           >
             <Image
-              height={240}
-              width={240}
+              height={210}
+              width={210}
               alt={`cover-img-image`}
               priority
               sizes="200px"
@@ -60,13 +60,13 @@ const Cover: FC<Props> = (props) => {
               className="absolute inset-x-0 -top-4"
               alt="floral-top-corner"
               src="/images/samaya/circle-frame-image.svg"
-              height={240}
-              width={240}
+              height={210}
+              width={210}
             />
           </div>
         )}
         <p
-          className={`${marcellus.className} text-white text-lg lg:text-xl mt-10`}
+          className={`${marcellus.className} text-white text-base lg:text-xl mt-10`}
           data-aos="fade-up"
           data-aos-delay="100"
         >
@@ -80,27 +80,27 @@ const Cover: FC<Props> = (props) => {
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
         <p
-          className={`${marcellus.className} text-white text-base mt-4 lg:text-lg`}
+          className={`${marcellus.className} text-white text-sm mt-2 lg:text-lg`}
           data-aos="fade-up"
           data-aos-delay="300"
         >
           Kepada
         </p>
         <p
-          className={`${marcellus.className} text-white text-lg mt-1 lg:text-lg`}
+          className={`${marcellus.className} text-white text-base mt-1 lg:text-lg`}
           data-aos="fade-up"
           data-aos-delay="400"
         >
           Bapak/Ibu/Saudara/i
         </p>
         <h2
-          className={`${marcellus.className} text-samaya-primary text-2xl mt-3 lg:text-3xl`}
+          className={`${marcellus.className} text-samaya-primary text-2xl mt-2 lg:text-3xl`}
           data-aos="fade-up"
           data-aos-delay="500"
         >
           {props.untuk}
         </h2>
-        <div className="mt-8" data-aos="fade-up" data-aos-delay="600">
+        <div className="mt-6" data-aos="fade-up" data-aos-delay="600">
           <Button
             onClick={props.actions.handleOpenCover}
             icon={<BiSolidEnvelopeOpen className="lg:text-lg" />}
