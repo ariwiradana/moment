@@ -134,7 +134,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               state.formData.gallery.length > 0
                 ? state.formData.gallery.map((img: string, index: number) => (
                     <div
-                      className="relative w-full aspect-video group"
+                      className="relative w-full aspect-square group"
                       key={index}
                     >
                       <div className="absolute top-2 right-2 z-10">
