@@ -66,7 +66,7 @@ export const useAdminCreateTheme = (token: string | null) => {
   const handleUploadThumbnail = async () => {
     let url = "";
     if (formData.thumbnail) {
-      const MAX_SIZE = 3 * 1024 * 1024;
+      const MAX_SIZE = 6 * 1024 * 1024;
 
       if (formData.thumbnail instanceof FileList) {
         const image = formData.thumbnail[0];

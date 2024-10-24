@@ -299,7 +299,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const handleUploadGallery = async () => {
     const imageURLs: string[] = [];
     if (galleryImagesForm && galleryImagesForm.length) {
-      const MAX_SIZE = 3 * 1024 * 1024;
+      const MAX_SIZE = 6 * 1024 * 1024;
 
       let i = 0;
 
@@ -540,7 +540,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
       if (file && file[0]) {
         const image = file[0] as File;
-        const MAX_SIZE = 3 * 1024 * 1024;
+        const MAX_SIZE = 6 * 1024 * 1024;
 
         const toastUpload = toast.loading(
           `Uploading participant ${i + 1} image`
