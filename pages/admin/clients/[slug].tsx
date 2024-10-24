@@ -129,12 +129,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               label="Gallery"
             />
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {Array.isArray(state.formData.gallery) &&
               state.formData.gallery.length > 0
                 ? state.formData.gallery.map((img: string, index: number) => (
                     <div
-                      className="relative w-full aspect-square group"
+                      className="relative w-full aspect-video group"
                       key={index}
                     >
                       <div className="absolute top-2 right-2 z-10">
