@@ -323,6 +323,11 @@ const DashboardThemes = () => {
                           );
                         }
                       })}
+                      <ThemeCard
+                        hasPreview={false}
+                        name="Coming Soon"
+                        thumbnail="/images/Theme Card.png"
+                      />
                     </div>
                   )}
                 </>
