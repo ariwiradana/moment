@@ -20,7 +20,7 @@ interface Query {
   page?: number;
   limit?: number;
   id?: number;
-  is_testimoni?: boolean | string;
+  is_using_service?: boolean | string;
 }
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -32,7 +32,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           page = 1,
           id,
           limit = 10,
-          is_testimoni,
+          is_using_service,
         }: Query = request.query;
 
         let query = `SELECT * FROM clients`;
@@ -57,12 +57,12 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           countValues.push(slug);
         }
 
-        if (is_testimoni) {
+        if (is_using_service) {
           const valueIndex = values.length + 1;
-          const isTestimoniBoolean = is_testimoni === "true";
+          const isTestimoniBoolean = is_using_service === "true";
 
-          query += ` WHERE is_testimoni = $${valueIndex}`;
-          countQuery += ` WHERE is_testimoni = $${valueIndex}`;
+          query += ` WHERE is_using_service = $${valueIndex}`;
+          countQuery += ` WHERE is_using_service = $${valueIndex}`;
           values.push(isTestimoniBoolean);
           countValues.push(isTestimoniBoolean);
         }
