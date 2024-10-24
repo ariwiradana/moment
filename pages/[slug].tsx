@@ -19,7 +19,7 @@ const MainPage: FC<Props> = (props) => {
   useEffect(() => {
     AOS.init({
       duration: 1200,
-      offset: 10,
+      offset: 0,
     });
   }, []);
 
