@@ -13,7 +13,7 @@ interface Props {
 }
 
 const EventsComponent: FC<Props> = ({ state, actions }) => {
-  const { events = [], gallery = [] } = state.client || {}; // Default to empty arrays
+  const { events = [], gallery = [] } = state.client || {};
 
   if (events.length > 0) {
     return (
@@ -39,7 +39,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
         </div>
         <div className="absolute bg-samaya-dark/20 inset-0 md:bg-gradient-to-r from-samaya-dark/70 via-transparent to-samaya-dark/70"></div>
         <div className="absolute bg-samaya-dark/20 inset-0 md:bg-gradient-to-b from-samaya-dark/20 via-samaya-dark/60 to-samaya-dark"></div>
-        <div className="flex flex-col z-10 items-center justify-center p-12 md:py-28 lg:py-40">
+        <div className="flex flex-col z-10 items-center justify-center px-8 py-12 md:py-28 lg:py-40">
           <div
             className={`grid lg:${
               events.length > 1 ? "grid-cols-2" : "grid-cols-1"
