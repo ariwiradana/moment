@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { engagement, marcellus } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
-import Title from "../elements/title";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import { Participant } from "@/lib/types";
 import Link from "next/link";

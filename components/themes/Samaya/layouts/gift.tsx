@@ -3,7 +3,6 @@ import { useSamaya } from "@/hooks/themes/useSamaya";
 import "yet-another-react-lightbox/styles.css";
 import { afacad, marcellus, windsong } from "@/lib/fonts";
 import { BiSolidCopy } from "react-icons/bi";
-import Image from "next/image";
 
 interface Props {
   state: useSamaya["state"];
