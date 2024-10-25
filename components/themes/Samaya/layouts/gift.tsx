@@ -3,6 +3,7 @@ import { useSamaya } from "@/hooks/themes/useSamaya";
 import "yet-another-react-lightbox/styles.css";
 import { afacad, marcellus, windsong } from "@/lib/fonts";
 import { BiSolidCopy } from "react-icons/bi";
+import Image from "next/image";
 
 interface Props {
   state: useSamaya["state"];
@@ -17,14 +18,15 @@ const GiftComponent: FC<Props> = (props) => {
   )
     return (
       <section className="relative bg-samaya-dark overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
-          style={{
-            backgroundImage: "url('/images/samaya/texture.jpg')",
-          }}
-        ></div>
-        <div className="bg-gradient-to-b from-samaya-primary/5 to-samaya-dark">
-          <div className="relative h-full w-full px-4 pb-16 z-30">
+        <Image
+          className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+          alt="mandala-top-gift"
+          src="/images/samaya/mandala.svg"
+          height={500}
+          width={500}
+        />
+        <div className="bg-gradient-to-b from-samaya-primary/10 to-samaya-primary/5">
+          <div className="relative h-full w-full px-4 py-16 z-30">
             <div className="text-center" data-aos="fade-up">
               <h1
                 className={`${marcellus.className} text-white text-4xl lg:text-5xl mr-8`}
