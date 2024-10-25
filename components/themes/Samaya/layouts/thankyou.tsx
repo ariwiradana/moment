@@ -37,23 +37,20 @@ const ThankyouComponent: FC<Props> = (props) => {
         />
         <div className="max-w-screen-sm mx-auto px-4 py-16">
           <div className="flex justify-center w-full">
-            <div className="w-96 relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-samaya-dark/20 to-samaya-dark"></div>
+            <div className="w-96 h-[500px] md:h-[550px] relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-samaya-dark/20 to-samaya-dark z-10"></div>
               <Image
-                className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500"
+                className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500 object-cover"
                 src={props.state.client.cover as string}
                 alt={`thankyou-img`}
-                width={360}
-                height={360}
-                layout="responsive"
-                objectFit="cover"
+                fill
                 priority
               />
             </div>
           </div>
           <p
             data-aos="fade-up"
-            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white max-w-screen-md mx-auto -mt-8`}
+            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white max-w-screen-md mx-auto -mt-8 relative z-20`}
           >
             {props.state.client?.closing_description}
           </p>
@@ -69,19 +66,19 @@ const ThankyouComponent: FC<Props> = (props) => {
           </p>
           <h1
             data-aos="fade-up"
-            className={`${windsong.className} text-4xl text-center mt-8 leading-7 text-white font-medium mb-8`}
+            className={`${windsong.className} text-4xl text-center mt-8 leading-7 text-white font-medium mb-24`}
           >
             {props.state.groom?.nickname} & {props.state.bride?.nickname}
           </h1>
           <h1
             data-aos="fade-up"
-            className={`${marcellus.className} text-3xl md:text-4xl text-center mt-16 text-samaya-primary mb-8`}
+            className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary`}
           >
             {props.state.client.closing_title}
           </h1>
         </div>
         <ul
-          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-16"
+          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24"
           data-aos="zoom-in-up"
         >
           <li
@@ -118,7 +115,10 @@ const ThankyouComponent: FC<Props> = (props) => {
           </li>
           <li className="font-semibold text-white text-base flex items-center gap-x-1 z-30 relative">
             <span className={`${afacad.className} text-xs font-light`}>
-              Designed with ❤️ by Moment Invitations
+              Designed with ❤️ by{" "}
+              <Link target="_blank" href="/">
+                Moment Invitations
+              </Link>
             </span>
           </li>
         </ul>

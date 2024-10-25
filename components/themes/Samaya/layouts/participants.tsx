@@ -40,14 +40,14 @@ const ParticipantsComponent: FC<Props> = (props) => {
         <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-xl mx-auto">
           <h1
             data-aos="fade-up"
-            className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary mb-8`}
+            className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary`}
           >
             {props.state.client.opening_title}
           </h1>
           <p
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white mb-12 max-w-screen-md mx-auto`}
+            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto`}
           >
             {props.state.client?.opening_description}
           </p>
