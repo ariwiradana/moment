@@ -35,7 +35,7 @@ const HeroComponent: FC<Props> = (props) => {
     <section>
       <div className="relative h-vh w-full overflow-hidden z-20 bg-samaya-dark">
         <div
-          className="h-[95dvh] relative"
+          className="h-[95vh] relative"
           data-aos="zoom-out"
           data-aos-delay="300"
         >
@@ -46,7 +46,7 @@ const HeroComponent: FC<Props> = (props) => {
               disableOnInteraction: false,
             }}
             speed={10000}
-            className="w-full transition-transform h-[95dvh]"
+            className="w-full transition-transform h-[95vh]"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay]}
