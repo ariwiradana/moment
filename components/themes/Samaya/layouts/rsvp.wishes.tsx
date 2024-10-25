@@ -8,6 +8,7 @@ import InputCheckbox from "../elements/checkbox";
 import { afacad, marcellus, windsong } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
+import Image from "next/image";
 
 interface Props {
   state: useSamaya["state"];
@@ -21,24 +22,26 @@ const RSVPWishesComponent: FC<Props> = (props) => {
     "Masih Ragu": "Maaf saya masih ragu",
   };
   return (
-    <section className="relative bg-samaya-dark w-full">
-      <div className="relative w-full flex flex-col justify-center items-center z-20 bg-gradient-to-b from-samaya-primary/5 to-samaya-dark pt-12">
+    <section className="relative bg-samaya-dark w-full overflow-hidden">
+      <Image
+        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+        alt="mandala-top-gift"
+        src="/images/samaya/mandala.svg"
+        height={500}
+        width={500}
+      />
+      <div className="relative w-full flex flex-col justify-center items-center z-20 pt-16 lg:pt-24">
         <div className="w-full">
           <div className="text-center" data-aos="fade-up">
             <h1
-              className={`${marcellus.className} text-white text-4xl lg:text-5xl mr-8`}
+              className={`${windsong.className} text-samaya-primary text-4xl lg:text-6xl transform -translate-y-3`}
             >
-              RSVP &
-            </h1>
-            <h1
-              className={`${windsong.className} text-samaya-primary text-5xl lg:text-6xl transform -translate-y-3`}
-            >
-              Ucapan
+              Ucapan & Doa
             </h1>
           </div>
           <form
             onSubmit={props.actions.handleSubmit}
-            className="flex flex-col gap-4 w-full px-4 py-12 md:max-w-screen-sm mx-auto"
+            className="flex flex-col gap-4 w-full px-4 py-10 lg:pb-24 md:max-w-screen-sm mx-auto"
             data-aos="fade-up"
           >
             <Input
@@ -98,7 +101,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
 
           {props.state.reviews && props.state.reviews?.length > 0 ? (
             <div
-              className="flex flex-col w-full gap-4 px-4 py-12 max-h-[440px] overflow-y-auto bg-samaya-primary/5"
+              className="flex flex-col w-full gap-4 px-4 py-16 max-h-[440px] overflow-y-auto bg-samaya-primary/5"
               data-aos="fade-up"
             >
               <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">

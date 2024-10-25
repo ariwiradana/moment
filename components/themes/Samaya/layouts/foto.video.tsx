@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { marcellus, windsong } from "@/lib/fonts";
+import { windsong } from "@/lib/fonts";
 import YouTubePlayer from "@/components/admin/elements/youtube.player";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import {
@@ -86,14 +86,9 @@ const GalleryComponent: FC<Props> = (props) => {
       >
         <div className="text-center" data-aos="fade-up">
           <h1
-            className={`${marcellus.className} text-white text-4xl lg:text-5xl mr-8`}
+            className={`${windsong.className} text-samaya-primary text-4xl lg:text-6xl transform -translate-y-3`}
           >
-            Jejak
-          </h1>
-          <h1
-            className={`${windsong.className} text-samaya-primary text-5xl lg:text-6xl transform -translate-y-3`}
-          >
-            Kisah
+            Momen Bahagia
           </h1>
         </div>
         <div

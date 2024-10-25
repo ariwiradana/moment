@@ -40,8 +40,8 @@ const Samaya: FC<Props> = (props) => {
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
             <GalleryComponent state={state} />
-            <GiftComponent actions={actions} state={state} />
             <RSVPWishes actions={actions} state={state} />
+            <GiftComponent actions={actions} state={state} />
             <ThankyouComponent state={state} />
           </div>
         )}

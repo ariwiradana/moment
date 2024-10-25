@@ -21,7 +21,7 @@ const ThankyouComponent: FC<Props> = (props) => {
     props.state.client.closing_description
   )
     return (
-      <section className="relative bg-samaya-dark py-8 md:py-16">
+      <section className="relative bg-samaya-dark">
         <div
           className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
           style={{
@@ -78,7 +78,7 @@ const ThankyouComponent: FC<Props> = (props) => {
           </h1>
         </div>
         <ul
-          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24"
+          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24 mb-12"
           data-aos="zoom-in-up"
         >
           <li
