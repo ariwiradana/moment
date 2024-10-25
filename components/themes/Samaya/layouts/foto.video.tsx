@@ -96,7 +96,10 @@ const GalleryComponent: FC<Props> = (props) => {
             Kisah
           </h1>
         </div>
-        <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-4 md:gap-8">
+        <div
+          className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-4 md:gap-8"
+          data-aos="zoom-in-up"
+        >
           <ImageList
             variant="masonry"
             cols={getCols()}
@@ -104,7 +107,7 @@ const GalleryComponent: FC<Props> = (props) => {
             className="overflow-hidden"
           >
             {images.map((img, index) => (
-              <ImageListItem data-aos="zoom-in-up" key={img}>
+              <ImageListItem key={img}>
                 <Image
                   onClick={() => {
                     setOpen(() => true);
