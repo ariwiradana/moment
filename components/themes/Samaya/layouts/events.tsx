@@ -35,17 +35,17 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
         </div>
         <div className="absolute bg-samaya-dark/20 inset-0 md:bg-gradient-to-r from-samaya-dark/70 via-transparent to-samaya-dark/70"></div>
         <div className="absolute bg-samaya-dark/20 inset-0 md:bg-gradient-to-b from-samaya-dark/20 via-samaya-dark/60 to-samaya-dark"></div>
-        <div className="flex flex-col z-10 items-center justify-center py-12 md:py-28 lg:py-40">
+        <div className="flex flex-col z-10 items-center justify-center p-12 md:py-28 lg:py-40">
           <div
-            className={`px-8 grid lg:${
+            className={`grid lg:${
               events.length > 1 ? "grid-cols-2" : "grid-cols-1"
-            } gap-8 md:gap-20 relative z-20`}
+            } gap-12 md:gap-28 lg:gap-40 relative z-20`}
           >
             {events.map((event) => (
               <div
                 key={`event-${event.id}`}
                 data-aos="fade-up"
-                className="p-12 bg-samaya-dark/80 rounded-3xl text-center min-w-[400px]"
+                className="p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px]"
               >
                 <h1
                   className={`${marcellus.className} text-2xl md:text-3xl text-white uppercase`}
