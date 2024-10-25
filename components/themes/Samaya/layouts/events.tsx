@@ -27,7 +27,11 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 alt="bg-countdown"
                 fill
                 className="object-cover"
-                src={gallery[gallery.length - 1] as string}
+                src={
+                  gallery.length > 2
+                    ? (gallery[gallery.length - 2] as string)
+                    : (gallery[gallery.length - 1] as string)
+                }
                 style={{ transform: "translateZ(0)" }}
               />
             )}
