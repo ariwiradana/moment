@@ -43,7 +43,7 @@ const GalleryComponent: FC<Props> = (props) => {
   const getCols = () => {
     if (isDesktop) return 3;
     if (isTablet) return 3;
-    if (isMobile) return 2;
+    if (isMobile) return 1;
   };
 
   const getGap = () => {
@@ -54,6 +54,19 @@ const GalleryComponent: FC<Props> = (props) => {
 
   return (
     <section className="relative bg-samaya-dark overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
+        style={{
+          backgroundImage: "url('/images/samaya/texture.jpg')",
+        }}
+      ></div>
+      <Image
+        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+        alt="mandala-top-img-video"
+        src="/images/samaya/mandala.svg"
+        height={500}
+        width={500}
+      />
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .9)" } }}
         close={() => setOpen(false)}
@@ -83,10 +96,7 @@ const GalleryComponent: FC<Props> = (props) => {
             Kisah
           </h1>
         </div>
-        <div
-          className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-4 md:gap-8"
-          data-aos="zoom-in-up"
-        >
+        <div className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-4 md:gap-8">
           <ImageList
             variant="masonry"
             cols={getCols()}
@@ -94,13 +104,13 @@ const GalleryComponent: FC<Props> = (props) => {
             className="overflow-hidden"
           >
             {images.map((img, index) => (
-              <ImageListItem key={img}>
+              <ImageListItem data-aos="zoom-in-up" key={img}>
                 <Image
                   onClick={() => {
                     setOpen(() => true);
                     setImageIndex(() => index);
                   }}
-                  className="rounded hover:scale-[0.99] transition-transform ease-in-out duration-500"
+                  className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500"
                   src={img}
                   alt={`gallery-img-${index + 1}`}
                   width={360}
@@ -113,7 +123,7 @@ const GalleryComponent: FC<Props> = (props) => {
             ))}
           </ImageList>
           {videos.length > 0 && (
-            <div className="grid gap-4">
+            <div className="grid gap-4" data-aos="zoom-in-up">
               {videos.map((v, index) => {
                 const youtubeId = getYouTubeVideoId(v);
                 return (

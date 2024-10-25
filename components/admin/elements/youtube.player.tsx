@@ -15,7 +15,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ youtubeId, poster }) => {
   };
 
   return (
-    <div className="relative w-full aspect-video rounded bg-gray-100 object-cover">
+    <div className="relative w-full aspect-square md:aspect-video rounded-3xl bg-gray-100 object-cover">
       {!isPlaying && poster && (
         <div className="relative inset-0 w-full h-full">
           <div className="absolute inset-0 flex justify-center items-center z-10">
@@ -32,7 +32,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ youtubeId, poster }) => {
             alt={`Video poster ${poster}`}
             fill
             objectFit="cover"
-            className="rounded"
+            className="rounded-3xl"
           />
         </div>
       )}
@@ -40,7 +40,7 @@ const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ youtubeId, poster }) => {
         <iframe
           width="100%"
           height="100%"
-          className="rounded"
+          className="rounded-3xl"
           src={`https://www.youtube.com/embed/${youtubeId}?loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0`}
           title="YouTube video player"
           frameBorder="0"

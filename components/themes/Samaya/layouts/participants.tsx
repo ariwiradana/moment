@@ -23,11 +23,28 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative bg-samaya-dark z-10 pb-4 pt-16 md:py-16">
+      <section className="relative bg-samaya-dark z-10 pb-4 pt-16 md:py-16 lg:py-24 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-cover bg-blend-lighten"
+          style={{
+            backgroundImage: "url('/images/samaya/texture.jpg')",
+          }}
+        ></div>
+        <Image
+          className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+          alt="mandala-bottom-participant"
+          src="/images/samaya/mandala.svg"
+          height={500}
+          width={500}
+        />
+
         <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-xl mx-auto">
-          <div className="mb-8" data-aos="fade-up">
-            <Title title={props.state.client?.opening_title as string} />
-          </div>
+          <h1
+            data-aos="fade-up"
+            className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary mb-8`}
+          >
+            {props.state.client.opening_title}
+          </h1>
           <p
             data-aos="fade-up"
             data-aos-delay="100"
@@ -36,7 +53,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
             {props.state.client?.opening_description}
           </p>
 
-          <div className="grid md:grid-cols-2 w-full gap-20 py-8">
+          <div className="grid md:grid-cols-2 w-full gap-20 pt-8">
             {props.state.groom && (
               <ParticipantComponent data={props.state?.groom as Participant} />
             )}

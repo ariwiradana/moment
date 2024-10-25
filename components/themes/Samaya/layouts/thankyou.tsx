@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { afacad, marcellus } from "@/lib/fonts";
+import { afacad, marcellus, windsong } from "@/lib/fonts";
 import Image from "next/image";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Title from "../elements/title";
@@ -22,34 +22,43 @@ const ThankyouComponent: FC<Props> = (props) => {
     props.state.client.closing_description
   )
     return (
-      <section className="px-4 py-8 relative bg-samaya-dark">
-        <div className="flex justify-center">
-          <div
-            className="h-12 lg:h-16 aspect-video relative m-4"
-            data-aos="zoom-in-up"
-          >
-            <Image
-              fill
-              alt="floral-top-corner"
-              src="/images/samaya/leaf-primary.svg"
-              className="object-contain"
-            />
+      <section className="relative bg-samaya-dark py-8 md:py-16">
+        <div
+          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
+          style={{
+            backgroundImage: "url('/images/samaya/texture.jpg')",
+          }}
+        ></div>
+        <Image
+          className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+          alt="mandala-bottom-participant"
+          src="/images/samaya/mandala.svg"
+          height={500}
+          width={500}
+        />
+        <div className="max-w-screen-sm mx-auto px-4 py-16">
+          <div className="flex justify-center w-full">
+            <div className="w-96 relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-samaya-dark/20 to-samaya-dark"></div>
+              <Image
+                className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500"
+                src={props.state.client.cover as string}
+                alt={`thankyou-img`}
+                width={360}
+                height={360}
+                layout="responsive"
+                objectFit="cover"
+                priority
+              />
+            </div>
           </div>
-        </div>
-        <div className="max-w-screen-sm mx-auto">
           <p
             data-aos="fade-up"
-            data-aos-delay="100"
-            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white mb-12 max-w-screen-md mx-auto`}
+            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white max-w-screen-md mx-auto -mt-8`}
           >
             {props.state.client?.closing_description}
           </p>
-          <div data-aos="fade-up">
-            <Title
-              className="text-2xl mt-8"
-              title={props.state.client?.closing_title as string}
-            />
-          </div>
+
           <div className="flex justify-center my-4" data-aos="fade-up">
             <div className="w-[0.5px] h-8 bg-samaya-primary"></div>
           </div>
@@ -59,18 +68,22 @@ const ThankyouComponent: FC<Props> = (props) => {
           >
             Kami yang berbahagia
           </p>
-          <p
+          <h1
             data-aos="fade-up"
-            className={`${marcellus.className} text-base md:text-xl text-center mt-3 leading-7 text-white font-medium mb-8`}
+            className={`${windsong.className} text-4xl text-center mt-8 leading-7 text-white font-medium mb-8`}
           >
-            Kel. Bapak {props.state.groom?.parents_male} <br /> & <br /> Kel.
-            Bapak {props.state.bride?.parents_male}
-          </p>
+            {props.state.groom?.nickname} & {props.state.bride?.nickname}
+          </h1>
+          <h1
+            data-aos="fade-up"
+            className={`${marcellus.className} text-3xl md:text-4xl text-center mt-16 text-samaya-primary mb-8`}
+          >
+            {props.state.client.closing_title}
+          </h1>
         </div>
         <ul
-          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24"
+          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-16"
           data-aos="zoom-in-up"
-          data-aos-offset="20"
         >
           <li
             className={`flex items-center justify-center gap-2 text-base mt-2 text-white`}
