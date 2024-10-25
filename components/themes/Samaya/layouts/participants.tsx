@@ -22,7 +22,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative bg-samaya-dark z-10 pb-4 pt-16 md:py-16 lg:py-24 overflow-hidden">
+      <section className="relative bg-samaya-dark z-10 py-16 lg:py-24 overflow-hidden">
         <div
           className="absolute inset-0 opacity-20 bg-repeat bg-center bg-cover bg-blend-lighten"
           style={{
