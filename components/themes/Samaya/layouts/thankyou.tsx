@@ -79,7 +79,7 @@ const ThankyouComponent: FC<Props> = (props) => {
           </h1>
         </div>
         <ul
-          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24 mb-12"
+          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24 pb-12"
           data-aos="zoom-in-up"
         >
           <li
