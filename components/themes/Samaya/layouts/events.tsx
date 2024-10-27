@@ -49,21 +49,21 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
               <div
                 key={`event-${event.id}`}
                 data-aos="fade-up"
-                className="p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px]"
+                className={`p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px] ${marcellus.className}`}
               >
                 <h1
                   className={`${marcellus.className} text-2xl md:text-3xl text-white uppercase`}
                 >
                   {event.name}
                 </h1>
-                <p className="text-sm md:text-lg mt-4 text-white">
+                <p className="text-sm md:text-base mt-4 text-white">
                   {moment(event.date).format("DD / MMMM / YYYY")}
                 </p>
-                <p className="text-sm md:text-lg text-white">
+                <p className="text-sm md:text-base text-white">
                   {event.start_time} - {event.end_time}
                 </p>
 
-                <p className="text-sm md:text-lg text-white mt-4">
+                <p className="text-sm md:text-base text-white mt-4">
                   Bertempat di
                   <br />
                   {event.address}
