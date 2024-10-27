@@ -50,7 +50,8 @@ const ThankyouComponent: FC<Props> = (props) => {
           </div>
           <p
             data-aos="fade-up"
-            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white max-w-screen-md mx-auto -mt-8 relative z-20`}
+            data-aos-delay="100"
+            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white pb-12 max-w-screen-md mx-auto`}
           >
             {props.state.client?.closing_description}
           </p>

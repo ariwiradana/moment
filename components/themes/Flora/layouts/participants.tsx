@@ -63,7 +63,8 @@ const ParticipantsComponent: FC<Props> = (props) => {
                 <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] transform -rotate-3 translate-x-6 relative z-10 shadow-xl">
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-[70%] to-flora-dark/80 z-20"></div>
                   <ImageShimmer
-                    sizes="188px"
+                    sizes="320px"
+                    quality={100}
                     priority
                     src={props.state.groom?.image as string}
                     fill
@@ -74,7 +75,8 @@ const ParticipantsComponent: FC<Props> = (props) => {
                 <div className="w-[188px] md:w-[230px] h-[282px] md:h-[320px] transform rotate-3 -translate-x-6 translate-y-5 relative shadow-xl">
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-[70%] to-flora-dark/80 z-20"></div>
                   <ImageShimmer
-                    sizes="188px"
+                    quality={100}
+                    sizes="320px"
                     priority
                     src={props.state.bride?.image as string}
                     fill
