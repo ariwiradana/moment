@@ -98,6 +98,15 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             </p>
                           </div>
                         )}
+                        <Link
+                          target="_bank"
+                          href={`/${client.slug}?untuk=${encodeURIComponent(
+                            "Nama Undangan"
+                          )}`}
+                          className="text-gray-500 text-lg"
+                        >
+                          <BiSolidShow />
+                        </Link>
                       </div>
 
                       <div className="ml-2 flex items-center relative z-10">
@@ -310,7 +319,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             <div className="ml-2 flex items-center relative z-10">
                               <Link
                                 target="_bank"
-                                href={`/${client.slug}?untuk=Nama Undangan`}
+                                href={`/${
+                                  client.slug
+                                }?untuk=${encodeURIComponent("Nama Undangan")}`}
                                 className="text-gray-500 text-lg"
                               >
                                 <BiSolidShow />
