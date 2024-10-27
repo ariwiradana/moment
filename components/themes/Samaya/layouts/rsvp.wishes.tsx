@@ -89,14 +89,16 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                 }
               />
             </div>
-            <div className="mt-4">
-              <Button
-                isLoading={props.state.loading ? true : false}
-                type="submit"
-                title="Kirim"
-                icon={<BiSolidSend />}
-              />
-            </div>
+            {props.state.client?.status === "paid" && (
+              <div className="mt-4">
+                <Button
+                  isLoading={props.state.loading ? true : false}
+                  type="submit"
+                  title="Kirim"
+                  icon={<BiSolidSend />}
+                />
+              </div>
+            )}
           </form>
 
           {props.state.reviews && props.state.reviews?.length > 0 ? (

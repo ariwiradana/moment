@@ -10,7 +10,7 @@ import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
 import GiftComponent from "./layouts/gift";
-// import PreviewNav from "../preview.nav";
+import PreviewNav from "../preview.nav";
 import useFlora from "@/hooks/themes/useFlora";
 interface Props {
   untuk: string;
@@ -24,14 +24,14 @@ const Flora: FC<Props> = (props) => {
     <Layout
       pageTitle={
         state.client
-          ? state.client.is_preview
-            ? `Preview Tema ${state.client.theme?.name} | Moment`
-            : `${state.groom?.nickname} & ${state.bride?.nickname}`
+          ? state.client.status === "unpaid"
+            ? `Preview Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
+            : `Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
           : "Moment"
       }
     >
       <>
-        {/* {state.client?.is_preview && <PreviewNav state={state} />} */}
+        {state.client?.status === "unpaid" && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (
           <div className="relative">

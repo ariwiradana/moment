@@ -307,17 +307,15 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 </div>
                               )}
                             </div>
-                            {client.status === "paid" && (
-                              <div className="ml-2 flex items-center relative z-10">
-                                <Link
-                                  target="_bank"
-                                  href={`/${client.slug}?untuk=Nama Undangan`}
-                                  className="text-gray-500 text-lg"
-                                >
-                                  <BiSolidShow />
-                                </Link>
-                              </div>
-                            )}
+                            <div className="ml-2 flex items-center relative z-10">
+                              <Link
+                                target="_bank"
+                                href={`/${client.slug}?untuk=Nama Undangan`}
+                                className="text-gray-500 text-lg"
+                              >
+                                <BiSolidShow />
+                              </Link>
+                            </div>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
