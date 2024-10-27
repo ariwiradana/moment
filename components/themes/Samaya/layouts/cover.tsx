@@ -58,7 +58,7 @@ const Cover: FC<Props> = (props) => {
               src={props.state.client?.cover as string}
             />
             <Image
-              className="absolute inset-x-0 -top-4 transform scale-105"
+              className="absolute inset-x-0 -top-4 md:-top-5 transform scale-105"
               alt="floral-top-corner"
               src="/images/samaya/circle-frame-image.svg"
               height={280}
@@ -71,7 +71,7 @@ const Cover: FC<Props> = (props) => {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          Undangan Pernikahan
+          Undangan {props.state.client?.theme?.category}
         </p>
         <h1
           data-aos="fade-up"

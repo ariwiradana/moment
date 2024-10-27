@@ -52,7 +52,57 @@ const ParticipantsComponent: FC<Props> = (props) => {
             {props.state.client?.opening_description}
           </p>
 
-          <div className="grid md:grid-cols-2 w-full gap-20 pt-8">
+          <div
+            className={`w-full gap-20 place-items-center ${
+              props.state.groom?.image && props.state.bride?.image
+                ? "grid md:grid-cols-2"
+                : "flex justify-center"
+            }`}
+          >
+            {props.state.groom?.image && (
+              <div data-aos="zoom-in" className="relative w-[277px] h-[368px]">
+                <ImageShimmer
+                  fill
+                  priority
+                  sizes="600px"
+                  className="object-cover w-full h-full overflow-hidden p-[10px]"
+                  src={props.state.groom?.image as string}
+                  alt={props.state.groom?.name}
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <Image
+                  className="absolute inset-0 z-30 transform scale-[1.02]"
+                  alt="floral-top-corner"
+                  src="/images/samaya/frame-primary.svg"
+                  height={277}
+                  width={368}
+                />
+              </div>
+            )}
+
+            {props.state.bride?.image && (
+              <div data-aos="zoom-in" className="relative w-[277px] h-[368px]">
+                <ImageShimmer
+                  fill
+                  priority
+                  sizes="600px"
+                  className="object-cover w-full h-full overflow-hidden p-[10px]"
+                  src={props.state.bride?.image as string}
+                  alt={props.state.bride?.name}
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <Image
+                  className="absolute inset-0 z-30 transform scale-[1.02]"
+                  alt="floral-top-corner"
+                  src="/images/samaya/frame-primary.svg"
+                  height={277}
+                  width={368}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="grid md:grid-cols-2 w-full gap-8 pt-8">
             {props.state.groom && (
               <ParticipantComponent data={props.state?.groom as Participant} />
             )}
@@ -71,26 +121,6 @@ interface ComponentProps {
 const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col justify-center items-center">
-      {props.data.image && (
-        <div data-aos="zoom-in" className="relative w-[277px] h-[368px]">
-          <ImageShimmer
-            fill
-            priority
-            sizes="600px"
-            className="object-cover w-full h-full overflow-hidden p-[10px]"
-            src={props.data.image as string}
-            alt={props.data.name}
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-          <Image
-            className="absolute inset-0 z-30 transform scale-[1.03]"
-            alt="floral-top-corner"
-            src="/images/samaya/frame-primary.svg"
-            height={277}
-            width={368}
-          />
-        </div>
-      )}
       <h1
         data-aos="fade-up"
         className={`text-4xl font-semibold text-samaya-primary relative mt-10 ${engagement.className}`}
