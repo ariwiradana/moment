@@ -177,7 +177,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                       )}
 
                       <ImageShimmer
-                        sizes="200px"
+                        sizes="400px"
                         priority
                         alt={`gallery-${index + 1}`}
                         src={img}

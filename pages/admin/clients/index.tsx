@@ -272,6 +272,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               {client.cover ? (
                                 <div className="w-10 h-10 rounded-full flex justify-center items-center relative overflow-hidden">
                                   <ImageShimmer
+                                    sizes="40px"
                                     priority
                                     alt={client.name}
                                     src={client.cover}
