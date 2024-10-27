@@ -62,7 +62,7 @@ const HeroComponent: FC<Props> = (props) => {
                         fill
                         alt={`hero-img-${index}`}
                         priority
-                        quality={100}
+                        quality={90}
                         sizes="100vw"
                         className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
                         src={image}

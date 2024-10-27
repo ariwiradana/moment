@@ -61,7 +61,7 @@ const HeroComponent: FC<Props> = (props) => {
                     <div className="absolute inset-0">
                       <ImageShimmer
                         fill
-                        quality={100}
+                        quality={90}
                         alt={`hero-img-${index}`}
                         priority
                         sizes="100vw"

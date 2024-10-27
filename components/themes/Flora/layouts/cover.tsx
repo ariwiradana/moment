@@ -22,11 +22,11 @@ const Cover: FC<Props> = (props) => {
         <div data-aos="zoom-out" data-aos-delay="200" className="fixed inset-0">
           {props.state.client?.cover && (
             <ImageShimmer
-              quality={100}
+              quality={90}
               fill
               alt={`cover-img-image`}
               priority
-              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+              sizes="100vw"
               className="object-cover fixed inset-0"
               src={props.state.client?.cover as string}
             />
