@@ -102,7 +102,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
             )}
           </div>
 
-          <div className="grid md:grid-cols-2 w-full gap-10 pt-10">
+          <div className="grid md:grid-cols-2 w-full gap-16 pt-16">
             {props.state.groom && (
               <ParticipantComponent data={props.state?.groom as Participant} />
             )}
