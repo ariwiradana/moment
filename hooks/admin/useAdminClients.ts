@@ -82,14 +82,13 @@ export const useAdminClients = (token: string | null) => {
       },
     });
   };
-
-  const handleSetUsingService = async (id: number) => {
-    const setUsingService = async () => {
+  const handleSetCompletedStatus = async (id: number) => {
+    const setCompleted = async () => {
       const response = await getClient(
-        `/api/_c/_sus`,
+        `/api/_c/_ss`,
         {
           method: "POST",
-          body: JSON.stringify({ is_using_service: true, id }),
+          body: JSON.stringify({ status: "completed", id }),
         },
         token
       );
@@ -99,18 +98,19 @@ export const useAdminClients = (token: string | null) => {
       }
       return await response.json();
     };
-    toast.promise(setUsingService(), {
-      loading: "Set using service...",
+    toast.promise(setCompleted(), {
+      loading: "Mark as completed...",
       success: () => {
         mutate();
-        return "Successfully set using service";
+        return "Successfully mark as completed";
       },
       error: (error: any) => {
-        return error.message || "Failed to set using service";
+        return error.message || "Failed to mark as completed";
       },
     });
   };
 
+  
   const handleSetAsPreview = async (id: number) => {
     const setAsPreview = async () => {
       const response = await getClient(
@@ -154,7 +154,7 @@ export const useAdminClients = (token: string | null) => {
       handleDelete,
       handleCopyURL,
       handleSetPaidStatus,
-      handleSetUsingService,
+      handleSetCompletedStatus,
       handleSetAsPreview,
     },
   };

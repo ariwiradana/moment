@@ -7,6 +7,7 @@ import moment from "moment";
 import Link from "next/link";
 import React from "react";
 import {
+  BiCheckSquare,
   BiEditAlt,
   BiLink,
   BiMessageAdd,
@@ -14,7 +15,6 @@ import {
   BiPlus,
   BiSlideshow,
   BiSolidShow,
-  BiStar,
   BiTrash,
 } from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
@@ -111,33 +111,18 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
 
                       <div className="ml-2 flex items-center relative z-10">
                         <ButtonActionDialog>
-                          {["unpaid"].includes(client?.status as string) ? (
+                          {!client.is_preview && (
                             <ButtonText
                               onClick={() =>
-                                actions.handleSetPaidStatus(client.id as number)
+                                actions.handleSetAsPreview(client.id as number)
                               }
-                              type="button"
                               size="small"
-                              title="Mark as Paid"
-                              icon={<BiMoneyWithdraw className="text-base" />}
+                              title="Set as Preview"
+                              icon={<BiSlideshow className="text-base" />}
                             />
-                          ) : (
+                          )}
+                          {client.status === "completed" && (
                             <>
-                              <ButtonText
-                                onClick={() =>
-                                  actions.handleCopyURL(
-                                    `${window.location.hostname}${
-                                      window.location.port
-                                        ? `:${window.location.port}`
-                                        : ""
-                                    }/${client?.slug}?untuk=Nama Undangan`
-                                  )
-                                }
-                                type="button"
-                                size="small"
-                                title="Copy Invitation Link"
-                                icon={<BiLink className="text-base" />}
-                              />
                               <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
@@ -154,29 +139,48 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               />
                             </>
                           )}
-                          {!client.is_preview && (
+                          {client.status === "paid" && (
+                            <>
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleSetCompletedStatus(
+                                    client.id as number
+                                  )
+                                }
+                                type="button"
+                                size="small"
+                                title="Mark as Completed"
+                                icon={<BiCheckSquare className="text-base" />}
+                              />
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleCopyURL(
+                                    `${window.location.hostname}${
+                                      window.location.port
+                                        ? `:${window.location.port}`
+                                        : ""
+                                    }/${client?.slug}?untuk=Nama Undangan`
+                                  )
+                                }
+                                type="button"
+                                size="small"
+                                title="Copy Invitation Link"
+                                icon={<BiLink className="text-base" />}
+                              />
+                            </>
+                          )}
+                          {client.status === "unpaid" && (
                             <ButtonText
                               onClick={() =>
-                                actions.handleSetAsPreview(client.id as number)
+                                actions.handleSetPaidStatus(client.id as number)
                               }
+                              type="button"
                               size="small"
-                              title="Set as Preview"
-                              icon={<BiSlideshow className="text-base" />}
+                              title="Mark as Paid"
+                              icon={<BiMoneyWithdraw className="text-base" />}
                             />
                           )}
-                          {!client.is_using_service &&
-                          client.status === "paid" ? (
-                            <ButtonText
-                              onClick={() =>
-                                actions.handleSetUsingService(
-                                  client.id as number
-                                )
-                              }
-                              size="small"
-                              title="Set as Using Services"
-                              icon={<BiStar className="text-base" />}
-                            />
-                          ) : null}
+
                           <ButtonText
                             onClick={() =>
                               router.push(`/admin/clients/${client.slug}`)
@@ -354,21 +358,28 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex items-center">
-                            {client.status === "paid" ? (
-                              <div className="bg-[#eefbf4] px-3 py-1 rounded-lg flex items-center gap-x-2">
-                                <div className="w-2 h-2 rounded-lg bg-[#2cc971]"></div>
-                                <span className="capitalize text-[#254e2e]">
-                                  {client.status}
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="bg-[#f7f7f9] px-3 py-1 rounded-lg flex items-center gap-x-2">
-                                <div className="w-2 h-2 rounded-lg bg-[#d2d3de]"></div>
-                                <span className="capitalize text-gray-800">
-                                  {client.status}
-                                </span>
-                              </div>
-                            )}
+                            <div
+                              className={`${
+                                client.status === "paid"
+                                  ? "bg-admin-success/10"
+                                  : client.status === "completed"
+                                  ? "bg-admin-primary/10"
+                                  : "bg-admin-hover-dark/10"
+                              } px-3 py-1 rounded-lg flex items-center gap-x-2`}
+                            >
+                              <div
+                                className={`w-2 h-2 rounded-lg ${
+                                  client.status === "paid"
+                                    ? "bg-admin-success"
+                                    : client.status === "completed"
+                                    ? "bg-admin-primary"
+                                    : "bg-admin-hover-dark/30"
+                                }`}
+                              ></div>
+                              <span className="capitalize text-admin-hover-dark">
+                                {client.status}
+                              </span>
+                            </div>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -376,35 +387,20 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>
-                            {["unpaid"].includes(client?.status as string) ? (
+                            {!client.is_preview && (
                               <ButtonText
                                 onClick={() =>
-                                  actions.handleSetPaidStatus(
+                                  actions.handleSetAsPreview(
                                     client.id as number
                                   )
                                 }
-                                type="button"
                                 size="medium"
-                                title="Mark as Paid"
-                                icon={<BiMoneyWithdraw className="text-base" />}
+                                title="Set as Preview"
+                                icon={<BiSlideshow className="text-base" />}
                               />
-                            ) : (
+                            )}
+                            {client.status === "completed" && (
                               <>
-                                <ButtonText
-                                  onClick={() =>
-                                    actions.handleCopyURL(
-                                      `${window.location.hostname}${
-                                        window.location.port
-                                          ? `:${window.location.port}`
-                                          : ""
-                                      }/${client?.slug}?untuk=Nama Undangan`
-                                    )
-                                  }
-                                  type="button"
-                                  size="medium"
-                                  title="Copy Invitation Link"
-                                  icon={<BiLink className="text-base" />}
-                                />
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleCopyURL(
@@ -421,31 +417,50 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 />
                               </>
                             )}
-                            {!client.is_preview && (
+                            {client.status === "paid" && (
+                              <>
+                                <ButtonText
+                                  onClick={() =>
+                                    actions.handleSetCompletedStatus(
+                                      client.id as number
+                                    )
+                                  }
+                                  type="button"
+                                  size="medium"
+                                  title="Mark as Completed"
+                                  icon={<BiCheckSquare className="text-base" />}
+                                />
+                                <ButtonText
+                                  onClick={() =>
+                                    actions.handleCopyURL(
+                                      `${window.location.hostname}${
+                                        window.location.port
+                                          ? `:${window.location.port}`
+                                          : ""
+                                      }/${client?.slug}?untuk=Nama Undangan`
+                                    )
+                                  }
+                                  type="button"
+                                  size="medium"
+                                  title="Copy Invitation Link"
+                                  icon={<BiLink className="text-base" />}
+                                />
+                              </>
+                            )}
+                            {client.status === "unpaid" && (
                               <ButtonText
                                 onClick={() =>
-                                  actions.handleSetAsPreview(
+                                  actions.handleSetPaidStatus(
                                     client.id as number
                                   )
                                 }
+                                type="button"
                                 size="medium"
-                                title="Set as Preview"
-                                icon={<BiSlideshow className="text-base" />}
+                                title="Mark as Paid"
+                                icon={<BiMoneyWithdraw className="text-base" />}
                               />
                             )}
-                            {!client.is_using_service &&
-                            client.status === "paid" ? (
-                              <ButtonText
-                                onClick={() =>
-                                  actions.handleSetUsingService(
-                                    client.id as number
-                                  )
-                                }
-                                size="medium"
-                                title="Set as Using Services"
-                                icon={<BiStar className="text-base" />}
-                              />
-                            ) : null}
+
                             <ButtonText
                               onClick={() =>
                                 router.push(`/admin/clients/${client.slug}`)

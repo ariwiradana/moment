@@ -34,7 +34,7 @@ CREATE TABLE clients (
   gallery TEXT[],
   videos TEXT[],
   music VARCHAR(255),
-  status VARCHAR(20) CHECK (status IN ('paid', 'unpaid')),
+  status VARCHAR(20) CHECK (status IN ('paid', 'unpaid', 'completed')) DEFAULT 'unpaid',
   is_using_service BOOLEAN DEFAULT FALSE,
   is_preview BOOLEAN DEFAULT FALSE,
   opening_title VARCHAR(255),

@@ -9,20 +9,14 @@ interface Query {
   page?: number;
   limit?: number;
   id?: number;
-  is_using_service?: boolean | string;
+  status?: Client["status"];
 }
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   switch (request.method) {
     case "GET":
       try {
-        const {
-          slug,
-          page = 1,
-          id,
-          limit = 10,
-          is_using_service,
-        }: Query = request.query;
+        const { slug, page = 1, id, limit = 10, status }: Query = request.query;
 
         let query = `SELECT * FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
@@ -46,19 +40,18 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           countValues.push(slug);
         }
 
-        if (is_using_service) {
+        if (status) {
           const valueIndex = values.length + 1;
-          const isTestimoniBoolean = is_using_service === "true";
 
-          query += ` WHERE is_using_service = $${valueIndex} AND is_preview = $${
+          query += ` WHERE status = $${valueIndex} AND is_preview = $${
             valueIndex + 1
           }`;
-          countQuery += ` WHERE is_using_service = $${valueIndex} AND is_preview = $${
+          countQuery += ` WHERE status = $${valueIndex} AND is_preview = $${
             valueIndex + 1
           }`;
 
-          values.push(isTestimoniBoolean, false);
-          countValues.push(isTestimoniBoolean, false);
+          values.push(status, false);
+          countValues.push(status, false);
         }
 
         query += ` ORDER BY updated_at DESC`;

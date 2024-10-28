@@ -42,7 +42,7 @@ const ButtonActionDialog: FC<Props> = ({ children }) => {
         {isOpen && (
           <div
             ref={dialogRef}
-            className="bg-white absolute top-10 right-0 rounded border z-20 shadow flex flex-col divide-y"
+            className="bg-white absolute top-10 right-0 rounded border z-50 shadow flex flex-col divide-y"
           >
             <div
               className="relative z-50 w-full flex flex-col"
