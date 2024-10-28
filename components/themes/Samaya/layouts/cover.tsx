@@ -76,7 +76,7 @@ const Cover: FC<Props> = (props) => {
         <h1
           data-aos="fade-up"
           data-aos-delay="200"
-          className={`${windsong.className} text-samaya-primary text-3xl sm:text-[40px] lg:text-6xl mt-2 lg:mt-6`}
+          className={`${windsong.className} text-samaya-primary text-4xl sm:text-[40px] lg:text-6xl mt-2 lg:mt-6`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>

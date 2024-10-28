@@ -81,7 +81,7 @@ const HeroComponent: FC<Props> = (props) => {
             <h1
               data-aos="fade-up"
               data-aos-delay="100"
-              className={`${windsong.className} text-white text-3xl sm:text-[40px] mt-2 lg:text-6xl lg:mb-6 text-center`}
+              className={`${windsong.className} text-white text-4xl sm:text-[40px] mt-2 lg:text-6xl lg:mb-6 text-center`}
             >
               {props.state.groom?.nickname} & {props.state.bride?.nickname}
             </h1>
