@@ -24,7 +24,7 @@ interface FormData {
 
 export interface useSamaya {
   refs: {
-    audioRef: React.RefObject<ReactAudioPlayer>;
+    audioRef: React.RefObject<HTMLAudioElement> | null;
   };
   state: {
     loading: boolean;
@@ -71,7 +71,7 @@ const useSamaya = (client: Client | null): useSamaya => {
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const audioRef = useRef<ReactAudioPlayer>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { data, mutate } = useSWR(
     client?.id
@@ -226,17 +226,12 @@ const useSamaya = (client: Client | null): useSamaya => {
 
   const handlePlayPause = () => {
     if (audioRef.current) {
-      const audioElement = audioRef.current.audioEl.current;
-
       if (isPlaying) {
-        audioElement?.pause();
+        audioRef.current.pause();
       } else {
-        audioElement?.play().catch((error) => {
-          console.error("Error playing audio:", error);
-        });
+        audioRef.current.play();
       }
-
-      setIsPlaying((prevState) => !prevState);
+      setIsPlaying(!isPlaying);
     }
   };
 

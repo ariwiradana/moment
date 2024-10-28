@@ -1,7 +1,6 @@
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Image from "next/image";
 import React, { FC } from "react";
-import ReactAudioPlayer from "react-audio-player";
 import toast from "react-hot-toast";
 import { BiPause, BiPlay } from "react-icons/bi";
 
@@ -22,7 +21,7 @@ const MusicComponent: FC<Props> = (props) => {
           props.className ?? ""
         }`}
         data-aos="zoom-in-up"
-        data-aos-offset="100"
+        data-aos-offset="80"
       >
         <button
           aria-label={props.state.isPlaying ? "Pause music" : "Play music"}
@@ -46,17 +45,18 @@ const MusicComponent: FC<Props> = (props) => {
           <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[50%] h-[50%] rounded-full flex justify-center items-center border border-white/30"></div>
         </button>
 
-        <ReactAudioPlayer
+        <audio
           ref={props.refs.audioRef}
-          src={musicSrc}
+          controls={false}
           onPlay={() => props.actions.setIsPlaying(true)}
           onPause={() => props.actions.setIsPlaying(false)}
           onError={() => {
             console.error("Error loading audio");
             toast.error("Audio tidak dapat diputar. Coba lagi nanti.");
           }}
-          controls={false}
-        />
+        >
+          <source src={musicSrc} type="audio/mpeg" />
+        </audio>
       </div>
     );
   }
