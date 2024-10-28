@@ -60,6 +60,7 @@ const initalFormData: Client = {
   gift_account_number: "",
   is_preview: false,
   status: null,
+  slug: "",
 };
 
 export const useAdminUpdateClient = (slug: string, token: string | null) => {
@@ -204,6 +205,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         gift_account_name: currentClient.gift_account_name,
         is_preview: currentClient.is_preview,
         status: currentClient.status,
+        slug: currentClient.slug,
       }));
     }
   }, [client, themeOptions, packageOptions]);
