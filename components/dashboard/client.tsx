@@ -69,7 +69,7 @@ const ClientComponent = () => {
                   >
                     <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#000000ca]"></div>
                     <Image
-                      sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
+                      sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
                       src={
                         c.cover ||
                         `https://placehold.co/400/png?font=playfair-display`
