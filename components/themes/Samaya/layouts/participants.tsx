@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { engagement, marcellus } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
-import { useSamaya } from "@/hooks/themes/useSamaya";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
 import {
@@ -11,6 +10,7 @@ import {
   BiLogoTwitter,
 } from "react-icons/bi";
 import Image from "next/image";
+import { useSamaya } from "@/hooks/themes/useSamaya";
 
 interface Props {
   state: useSamaya["state"];

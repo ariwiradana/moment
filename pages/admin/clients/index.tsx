@@ -84,7 +84,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         )}
 
                         <div>
-                          <h1 className="text-gray-800 font-semibold text-sm">
+                          <h1 className="text-gray-800 font-semibold text-sm whitespace-nowrap">
                             {client.name}
                           </h1>
                           <p className="text-gray-500 font-medium text-xs">
@@ -257,6 +257,14 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           {client.theme?.name ?? "-"}
                         </p>
                       </div>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Theme Category
+                        </p>
+                        <p className="text-gray-800 font-semibold text-sm">
+                          {client.theme?.category ?? "-"}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -272,6 +280,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         Client
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        Theme
+                      </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Event(s)
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
@@ -279,9 +290,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Status
-                      </td>
-                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Theme
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
                         Actions
@@ -326,7 +334,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               )}
 
                               <div>
-                                <span>{client.name}</span>
+                                <span className="whitespace-nowrap">
+                                  {client.name}
+                                </span>
                                 <p className="text-gray-500 font-medium text-xs">
                                   {client.slug}
                                 </p>
@@ -351,6 +361,12 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               </Link>
                             </div>
                           </div>
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          <p>{client.theme?.name ?? "-"}</p>
+                          <p className="text-gray-500 font-medium text-xs">
+                            {client.theme?.category}
+                          </p>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="grid grid-cols-2 gap-4">
@@ -400,9 +416,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               </span>
                             </div>
                           </div>
-                        </td>
-                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {client.theme?.name ?? "-"}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>

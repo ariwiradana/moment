@@ -6,6 +6,6 @@ export function createSlug(input: string): string {
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .trim();
   else {
-    return ""
-  }// Remove any leading/trailing spaces
+    return "";
+  } // Remove any leading/trailing spaces
 }
