@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
 import { BiCheck, BiLoader, BiSolidCheckCircle, BiX } from "react-icons/bi";
+import ReactAudioPlayer from "react-audio-player";
 
 interface Countdown {
   days: number;
@@ -23,7 +24,7 @@ interface FormData {
 
 export interface useSamaya {
   refs: {
-    audioRef: React.RefObject<HTMLVideoElement> | null;
+    audioRef: React.RefObject<ReactAudioPlayer>;
   };
   state: {
     loading: boolean;
@@ -69,7 +70,7 @@ const useSamaya = (client: Client | null): useSamaya => {
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const audioRef = useRef<HTMLVideoElement | null>(null);
+  const audioRef = useRef<ReactAudioPlayer>(null);
 
   const { data, mutate } = useSWR(
     client?.id
@@ -222,16 +223,17 @@ const useSamaya = (client: Client | null): useSamaya => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
-  const handlePlayPause = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
+ const handlePlayPause = () => {
+   if (audioRef.current) {
+     const audioElement = audioRef.current.audioEl.current;
+     if (isPlaying) {
+       audioElement?.pause();
+     } else {
+       audioElement?.play();
+     }
+     setIsPlaying(!isPlaying);
+   }
+ };
 
   const handleCopyRekening = (rekening: string) => {
     navigator.clipboard

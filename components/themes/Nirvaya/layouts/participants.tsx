@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { engagement, marcellus } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
 import {
@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useNirvaya["state"];
 }
 
 const ParticipantsComponent: FC<Props> = (props) => {

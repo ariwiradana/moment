@@ -1,12 +1,12 @@
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import Image from "next/image";
 import React, { FC } from "react";
 import { BiPause, BiPlay } from "react-icons/bi";
 
 interface Props {
-  actions: useSamaya["actions"];
-  state: useSamaya["state"];
-  refs: useSamaya["refs"];
+  actions: useNirvaya["actions"];
+  state: useNirvaya["state"];
+  refs: useNirvaya["refs"];
 }
 
 const MusicComponent: FC<Props> = (props) => {

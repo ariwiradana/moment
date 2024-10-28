@@ -21,7 +21,7 @@ interface FormData {
   attendant: string;
 }
 
-export interface useSamaya {
+export interface useNirvaya {
   refs: {
     audioRef: React.RefObject<HTMLAudioElement> | null;
   };
@@ -53,7 +53,7 @@ const initialReviewForm = {
   wishes: "",
 };
 
-const useSamaya = (client: Client | null): useSamaya => {
+const useNirvaya = (client: Client | null): useNirvaya => {
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -307,4 +307,4 @@ const useSamaya = (client: Client | null): useSamaya => {
   };
 };
 
-export default useSamaya;
+export default useNirvaya;

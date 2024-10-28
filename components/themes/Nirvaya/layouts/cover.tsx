@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import { marcellus, windsong } from "@/lib/fonts";
 import Button from "../elements/button";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import Image from "next/image";
 import { BiSolidEnvelopeOpen } from "react-icons/bi";
 
 interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
+  state: useNirvaya["state"];
+  actions: useNirvaya["actions"];
   untuk: string;
 }
 

@@ -3,7 +3,7 @@ import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
 import { Client } from "@/lib/types";
-import useSamaya from "@/hooks/themes/useSamaya";
+import useNirvaya from "@/hooks/themes/useNirvaya";
 import GalleryComponent from "./layouts/foto.video";
 import ThankyouComponent from "./layouts/thankyou";
 import RSVPWishes from "./layouts/rsvp.wishes";
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const Samaya: FC<Props> = (props) => {
-  const { state, actions, refs } = useSamaya(props.client);
+  const { state, actions, refs } = useNirvaya(props.client);
 
   return (
     <Layout

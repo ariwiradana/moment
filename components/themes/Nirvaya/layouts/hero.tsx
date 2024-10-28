@@ -1,5 +1,5 @@
 import ImageShimmer from "@/components/image.shimmer";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import { marcellus, windsong } from "@/lib/fonts";
 import moment from "moment";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useNirvaya["state"];
 }
 
 const HeroComponent: FC<Props> = (props) => {

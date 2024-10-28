@@ -1,6 +1,7 @@
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Image from "next/image";
 import React, { FC } from "react";
+import ReactAudioPlayer from "react-audio-player";
 import { BiPause, BiPlay } from "react-icons/bi";
 
 interface Props {
@@ -38,12 +39,10 @@ const MusicComponent: FC<Props> = (props) => {
           <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[80%] h-[80%] rounded-full flex justify-center items-center border border-white/30"></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[50%] h-[50%] rounded-full flex justify-center items-center border border-white/30"></div>
         </button>
-        <video
-          className="w-10 h-10 md:h-12 md:w-12"
+        <ReactAudioPlayer
           ref={props.refs.audioRef}
           src={props.state.client?.music as string}
           autoPlay
-          loop
         />
       </div>
     );
