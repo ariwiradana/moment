@@ -11,6 +11,7 @@ import {
   BiImageAlt,
   BiLeftArrowAlt,
   BiSolidPlusCircle,
+  BiSolidShow,
   BiTime,
   BiX,
 } from "react-icons/bi";
@@ -46,7 +47,47 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             <span className="text-sm font-medium">back</span>
           </div>
         </Link>
-        <h1 className="text-2xl font-bold mb-8 mt-2">Client Information(s)</h1>
+        <div className="flex flex-wrap items-center mb-8 mt-2 gap-3">
+          <h1 className="text-2xl font-bold">Client</h1>
+
+          {state.formData.status && (
+            <div className="flex items-center text-gray-800 font-semibold text-sm">
+              <div
+                className={`${
+                  state.formData.status === "paid"
+                    ? "bg-admin-success/10"
+                    : state.formData.status === "completed"
+                    ? "bg-admin-primary/10"
+                    : "bg-admin-hover-dark/10"
+                } px-3 py-1 rounded-lg flex items-center gap-x-2 ${
+                  montserrat.className
+                }`}
+              >
+                <div
+                  className={`w-2 h-2 rounded-lg ${
+                    state.formData.status === "paid"
+                      ? "bg-admin-success"
+                      : state.formData.status === "completed"
+                      ? "bg-admin-primary"
+                      : "bg-admin-hover-dark/30"
+                  }`}
+                ></div>
+                <span className="capitalize text-admin-hover-dark">
+                  {state.formData.status}
+                </span>
+              </div>
+            </div>
+          )}
+          <Link
+            target="_bank"
+            href={`/${state.formData.slug}?untuk=${encodeURIComponent(
+              "Nama Undangan"
+            )}`}
+            className="text-gray-500 text-lg"
+          >
+            <BiSolidShow />
+          </Link>
+        </div>
         {state.isLoading ? (
           <div className="max-w-screen-md">
             <Loader />
@@ -227,7 +268,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
 
             <Input
               id="music"
-              accept="audio/mp3"
+              accept="audio/mpeg"
               type="file"
               multiple
               onChange={(e) =>
@@ -246,7 +287,10 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   controls
                   className="rounded-lg bg-gray-100 aspect-video object-cover"
                 >
-                  <source src={state.formData.music as string} />
+                  <source
+                    type="audio/mpeg"
+                    src={state.formData.music as string}
+                  />
                 </audio>
                 <ButtonPrimary
                   type="button"

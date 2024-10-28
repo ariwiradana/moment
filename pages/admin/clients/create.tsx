@@ -114,7 +114,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             label="Youtube URL Video"
           />
           <Input
-            accept="audio/mp3"
+            accept="audio/mpeg"
             type="file"
             multiple
             onChange={(e) =>

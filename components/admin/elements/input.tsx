@@ -1,8 +1,8 @@
 import { montserrat } from "@/lib/fonts";
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+  label?: string | ReactNode;
   error?: string;
   className?: string;
   id?: string;
