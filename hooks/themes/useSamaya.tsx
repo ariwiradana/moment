@@ -45,6 +45,7 @@ export interface useSamaya {
     handlePlayPause: () => void;
     handleCopyRekening: (rekening: string) => void;
     handleAddToCalendar: (event: Event) => void;
+    setIsPlaying: (isPlaying: boolean) => void;
   };
 }
 
@@ -69,7 +70,7 @@ const useSamaya = (client: Client | null): useSamaya => {
   const [page] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const audioRef = useRef<ReactAudioPlayer>(null);
 
   const { data, mutate } = useSWR(
@@ -223,17 +224,21 @@ const useSamaya = (client: Client | null): useSamaya => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
- const handlePlayPause = () => {
-   if (audioRef.current) {
-     const audioElement = audioRef.current.audioEl.current;
-     if (isPlaying) {
-       audioElement?.pause();
-     } else {
-       audioElement?.play();
-     }
-     setIsPlaying(!isPlaying);
-   }
- };
+  const handlePlayPause = () => {
+    if (audioRef.current) {
+      const audioElement = audioRef.current.audioEl.current;
+
+      if (isPlaying) {
+        audioElement?.pause();
+      } else {
+        audioElement?.play().catch((error) => {
+          console.error("Error playing audio:", error);
+        });
+      }
+
+      setIsPlaying((prevState) => !prevState);
+    }
+  };
 
   const handleCopyRekening = (rekening: string) => {
     navigator.clipboard
@@ -305,6 +310,7 @@ const useSamaya = (client: Client | null): useSamaya => {
       handlePlayPause,
       handleCopyRekening,
       handleAddToCalendar,
+      setIsPlaying,
     },
   };
 };

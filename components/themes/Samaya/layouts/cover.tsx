@@ -103,7 +103,10 @@ const Cover: FC<Props> = (props) => {
         </h2>
         <div className="mt-6" data-aos="fade-up" data-aos-delay="600">
           <Button
-            onClick={props.actions.handleOpenCover}
+            onClick={() => {
+              props.actions.handleOpenCover();
+              props.actions.handlePlayPause();
+            }}
             icon={<BiSolidEnvelopeOpen className="lg:text-lg" />}
             title="Buka Undangan"
           />

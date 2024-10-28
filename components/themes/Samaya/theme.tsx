@@ -33,9 +33,14 @@ const Samaya: FC<Props> = (props) => {
       <>
         {state.client?.status === "unpaid" && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />
+        <MusicComponent
+          className={!state.open ? "invisible" : "visible"}
+          actions={actions}
+          refs={refs}
+          state={state}
+        />
         {state.open && (
           <div className="relative">
-            <MusicComponent actions={actions} refs={refs} state={state} />
             <HeroComponent state={state} />
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
