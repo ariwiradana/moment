@@ -72,7 +72,7 @@ const DashboardPayment: FC = () => {
             <p
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
             >
-              Pembayaran dapat dilakukan melalui e-wallet atau bank transfer.
+              Pembayaran dapat dilakukan melalui bank transfer.
               Setelah transfer, konfirmasikan pembayaranmu dengan mengirimkan
               bukti transfer pada pesan WhatsApp.
             </p>

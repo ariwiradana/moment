@@ -11,6 +11,7 @@ import {
   BiEditAlt,
   BiLink,
   BiMessageAdd,
+  BiMoney,
   BiMoneyWithdraw,
   BiPlus,
   BiSlideshow,
@@ -170,15 +171,33 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             </>
                           )}
                           {client.status === "unpaid" && (
-                            <ButtonText
-                              onClick={() =>
-                                actions.handleSetPaidStatus(client.id as number)
-                              }
-                              type="button"
-                              size="small"
-                              title="Mark as Paid"
-                              icon={<BiMoneyWithdraw className="text-base" />}
-                            />
+                            <>
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleCopyURL(
+                                    `${window.location.hostname}${
+                                      window.location.port
+                                        ? `:${window.location.port}`
+                                        : ""
+                                    }/pembayaran/${client?.slug}`
+                                  )
+                                }
+                                size="small"
+                                title="Copy Link Payment"
+                                icon={<BiMoney className="text-base" />}
+                              />
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleSetPaidStatus(
+                                    client.id as number
+                                  )
+                                }
+                                type="button"
+                                size="small"
+                                title="Mark as Paid"
+                                icon={<BiMoneyWithdraw className="text-base" />}
+                              />
+                            </>
                           )}
 
                           <ButtonText
@@ -448,17 +467,35 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               </>
                             )}
                             {client.status === "unpaid" && (
-                              <ButtonText
-                                onClick={() =>
-                                  actions.handleSetPaidStatus(
-                                    client.id as number
-                                  )
-                                }
-                                type="button"
-                                size="medium"
-                                title="Mark as Paid"
-                                icon={<BiMoneyWithdraw className="text-base" />}
-                              />
+                              <>
+                                <ButtonText
+                                  onClick={() =>
+                                    actions.handleCopyURL(
+                                      `${window.location.hostname}${
+                                        window.location.port
+                                          ? `:${window.location.port}`
+                                          : ""
+                                      }/pembayaran/${client?.slug}`
+                                    )
+                                  }
+                                  size="medium"
+                                  title="Copy Link Payment"
+                                  icon={<BiMoney className="text-base" />}
+                                />
+                                <ButtonText
+                                  onClick={() =>
+                                    actions.handleSetPaidStatus(
+                                      client.id as number
+                                    )
+                                  }
+                                  type="button"
+                                  size="medium"
+                                  title="Mark as Paid"
+                                  icon={
+                                    <BiMoneyWithdraw className="text-base" />
+                                  }
+                                />
+                              </>
                             )}
 
                             <ButtonText
