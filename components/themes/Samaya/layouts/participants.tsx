@@ -74,7 +74,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                   <Image
-                    className="absolute inset-0 z-30 transform scale-[1.02]"
+                    className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
                     alt="floral-top-corner"
                     src="/images/samaya/frame-primary.svg"
                     height={277}
@@ -97,7 +97,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                   <Image
-                    className="absolute inset-0 z-30 transform scale-[1.02]"
+                    className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
                     alt="floral-top-corner"
                     src="/images/samaya/frame-primary.svg"
                     height={277}
@@ -146,7 +146,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           />
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <Image
-            className="absolute inset-0 z-30 transform scale-[1.02]"
+            className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
             alt="floral-top-corner"
             src="/images/samaya/frame-primary.svg"
             height={277}
