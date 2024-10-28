@@ -73,7 +73,6 @@ export interface Client {
   packages?: Package;
   theme?: Theme | null;
   cover: null | string;
-  is_using_service?: boolean;
   is_preview?: boolean;
   created_at?: Date | string;
   updated_at?: Date | string;
