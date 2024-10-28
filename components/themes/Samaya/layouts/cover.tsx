@@ -95,7 +95,7 @@ const Cover: FC<Props> = (props) => {
           Bapak/Ibu/Saudara/i
         </p>
         <h2
-          className={`${marcellus.className} text-samaya-primary text-lg sm:text-2xl mt-2 lg:text-3xl text-center`}
+          className={`${marcellus.className} text-samaya-primary text-xl sm:text-2xl mt-2 lg:text-3xl text-center`}
           data-aos="fade-up"
           data-aos-delay="500"
         >
