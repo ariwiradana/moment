@@ -65,7 +65,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           countValues.push(status, false);
         }
 
-        query += ` ORDER BY updated_at DESC`;
+        query += ` ORDER BY status DESC, updated_at DESC`;
 
         const pageNumber = Number(page);
         const limitNumber = Number(limit);

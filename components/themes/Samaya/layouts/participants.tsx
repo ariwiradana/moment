@@ -17,6 +17,9 @@ interface Props {
 }
 
 const ParticipantsComponent: FC<Props> = (props) => {
+  const bothHasImg =
+    props.state.groom?.image && props.state.bride?.image ? true : false;
+
   if (
     props.state.client?.participants &&
     props.state.client?.participants.length > 0
@@ -52,62 +55,71 @@ const ParticipantsComponent: FC<Props> = (props) => {
             {props.state.client?.opening_description}
           </p>
 
-          <div
-            className={`w-full gap-20 place-items-center ${
-              props.state.groom?.image && props.state.bride?.image
-                ? "grid md:grid-cols-2"
-                : "flex justify-center"
-            }`}
-          >
-            {props.state.groom?.image && (
-              <div data-aos="zoom-in" className="relative w-[277px] h-[368px]">
-                <ImageShimmer
-                  fill
-                  priority
-                  sizes="600px"
-                  className="object-cover w-full h-full overflow-hidden p-[10px]"
-                  src={props.state.groom?.image as string}
-                  alt={props.state.groom?.name}
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                <Image
-                  className="absolute inset-0 z-30 transform scale-[1.02]"
-                  alt="floral-top-corner"
-                  src="/images/samaya/frame-primary.svg"
-                  height={277}
-                  width={368}
-                />
-              </div>
-            )}
+          {!bothHasImg && (
+            <div
+              className={`w-full gap-20 place-items-center flex justify-center`}
+            >
+              {props.state.groom?.image && (
+                <div
+                  data-aos="zoom-in"
+                  className="relative w-[277px] h-[368px] mb-12"
+                >
+                  <ImageShimmer
+                    fill
+                    priority
+                    sizes="600px"
+                    className="object-cover w-full h-full overflow-hidden p-[10px]"
+                    src={props.state.groom?.image as string}
+                    alt={props.state.groom?.name}
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                  <Image
+                    className="absolute inset-0 z-30 transform scale-[1.02]"
+                    alt="floral-top-corner"
+                    src="/images/samaya/frame-primary.svg"
+                    height={277}
+                    width={368}
+                  />
+                </div>
+              )}
+              {props.state.bride?.image && (
+                <div
+                  data-aos="zoom-in"
+                  className="relative w-[277px] h-[368px] mb-12"
+                >
+                  <ImageShimmer
+                    fill
+                    priority
+                    sizes="600px"
+                    className="object-cover w-full h-full overflow-hidden p-[10px]"
+                    src={props.state.bride?.image as string}
+                    alt={props.state.bride?.name}
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                  <Image
+                    className="absolute inset-0 z-30 transform scale-[1.02]"
+                    alt="floral-top-corner"
+                    src="/images/samaya/frame-primary.svg"
+                    height={277}
+                    width={368}
+                  />
+                </div>
+              )}
+            </div>
+          )}
 
-            {props.state.bride?.image && (
-              <div data-aos="zoom-in" className="relative w-[277px] h-[368px]">
-                <ImageShimmer
-                  fill
-                  priority
-                  sizes="600px"
-                  className="object-cover w-full h-full overflow-hidden p-[10px]"
-                  src={props.state.bride?.image as string}
-                  alt={props.state.bride?.name}
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                <Image
-                  className="absolute inset-0 z-30 transform scale-[1.02]"
-                  alt="floral-top-corner"
-                  src="/images/samaya/frame-primary.svg"
-                  height={277}
-                  width={368}
-                />
-              </div>
-            )}
-          </div>
-
-          <div className="grid md:grid-cols-2 w-full gap-16 pt-16">
+          <div className="grid md:grid-cols-2 w-full gap-16">
             {props.state.groom && (
-              <ParticipantComponent data={props.state?.groom as Participant} />
+              <ParticipantComponent
+                bothHasImg={bothHasImg}
+                data={props.state?.groom as Participant}
+              />
             )}
             {props.state.bride && (
-              <ParticipantComponent data={props.state?.bride as Participant} />
+              <ParticipantComponent
+                bothHasImg={bothHasImg}
+                data={props.state?.bride as Participant}
+              />
             )}
           </div>
         </div>
@@ -117,10 +129,31 @@ const ParticipantsComponent: FC<Props> = (props) => {
 
 interface ComponentProps {
   data: Participant;
+  bothHasImg: boolean;
 }
 const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col justify-center items-center">
+      {props.data.image && props.bothHasImg ? (
+        <div data-aos="zoom-in" className="relative w-[277px] h-[368px] mb-8">
+          <ImageShimmer
+            fill
+            priority
+            sizes="600px"
+            className="object-cover w-full h-full overflow-hidden p-[10px]"
+            src={props.data.image as string}
+            alt={props.data.name}
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+          <Image
+            className="absolute inset-0 z-30 transform scale-[1.02]"
+            alt="floral-top-corner"
+            src="/images/samaya/frame-primary.svg"
+            height={277}
+            width={368}
+          />
+        </div>
+      ) : null}
       <div
         className="flex justify-center gap-2 items-center mb-4"
         data-aos="fade-up"

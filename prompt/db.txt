@@ -81,6 +81,7 @@ CREATE TABLE reviews (
 CREATE TABLE packages (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,           
+    custom_opening_closing BOOLEAN DEFAULT TRUE,
     unlimited_revisions BOOLEAN NOT NULL,
     custom_opening BOOLEAN NOT NULL,
     custom_closing BOOLEAN NOT NULL,

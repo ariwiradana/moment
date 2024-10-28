@@ -92,6 +92,7 @@ export interface Package {
   id: number;
   name: string;
   unlimited_revisions: boolean;
+  custom_opening_closing: boolean;
   unlimited_guest_names: boolean;
   max_events: string;
   max_gallery_photos: string;
