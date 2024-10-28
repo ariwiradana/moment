@@ -111,7 +111,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
 
                       <div className="ml-2 flex items-center relative z-10">
                         <ButtonActionDialog>
-                          {client.status === "unpaid" ? (
+                          {["unpaid"].includes(client?.status as string) ? (
                             <ButtonText
                               onClick={() =>
                                 actions.handleSetPaidStatus(client.id as number)
@@ -376,7 +376,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>
-                            {client.status === "unpaid" ? (
+                            {["unpaid"].includes(client?.status as string) ? (
                               <ButtonText
                                 onClick={() =>
                                   actions.handleSetPaidStatus(

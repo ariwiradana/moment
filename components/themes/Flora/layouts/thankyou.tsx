@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { afacad, marcellus } from "@/lib/fonts";
 import Image from "next/image";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 import Title from "../elements/title";
 import Link from "next/link";
 import { sosmedURLs } from "@/constants/sosmed";
@@ -13,7 +13,7 @@ import {
 } from "react-icons/ai";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useFlora["state"];
 }
 
 const ThankyouComponent: FC<Props> = (props) => {

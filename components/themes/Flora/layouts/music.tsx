@@ -1,12 +1,12 @@
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 import Image from "next/image";
 import React, { FC } from "react";
 import { BiPause, BiPlay } from "react-icons/bi";
 
 interface Props {
-  actions: useSamaya["actions"];
-  state: useSamaya["state"];
-  refs: useSamaya["refs"];
+  actions: useFlora["actions"];
+  state: useFlora["state"];
+  refs: useFlora["refs"];
 }
 
 const MusicComponent: FC<Props> = (props) => {

@@ -43,7 +43,7 @@ const Cover: FC<Props> = (props) => {
       <div className="flex h-dvh flex-col items-center justify-center relative z-20">
         {props.state.client?.cover && (
           <div
-            className="relative w-[210px] md:w-[260px] aspect-square rounded-full"
+            className="relative w-[160px] sm:w-[210px] md:w-[260px] aspect-square rounded-full"
             data-aos="zoom-out"
             data-aos-delay="300"
           >
@@ -76,7 +76,7 @@ const Cover: FC<Props> = (props) => {
         <h1
           data-aos="fade-up"
           data-aos-delay="200"
-          className={`${windsong.className} text-samaya-primary text-[40px] lg:text-6xl mt-2 lg:mt-6`}
+          className={`${windsong.className} text-samaya-primary text-3xl sm:text-[40px] lg:text-6xl mt-2 lg:mt-6`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
@@ -95,7 +95,7 @@ const Cover: FC<Props> = (props) => {
           Bapak/Ibu/Saudara/i
         </p>
         <h2
-          className={`${marcellus.className} text-samaya-primary text-2xl mt-2 lg:text-3xl`}
+          className={`${marcellus.className} text-samaya-primary text-lg sm:text-2xl mt-2 lg:text-3xl text-center`}
           data-aos="fade-up"
           data-aos-delay="500"
         >

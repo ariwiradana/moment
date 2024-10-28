@@ -67,7 +67,7 @@ export interface Client {
   gallery?: string[] | FileList | [];
   videos?: string[] | FileList | [];
   music?: string | File | null;
-  status?: "paid" | "unpaid";
+  status?: "paid" | "unpaid" | "completed";
   theme_id: number | null;
   package_id: number | null;
   packages?: Package;

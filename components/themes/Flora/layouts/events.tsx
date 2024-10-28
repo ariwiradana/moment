@@ -3,13 +3,13 @@ import { marcellus } from "@/lib/fonts";
 import moment from "moment";
 import Button from "../elements/button";
 import { BiSolidCalendar, BiSolidMap } from "react-icons/bi";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 import ImageShimmer from "@/components/image.shimmer";
 import Link from "next/link";
 
 interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
+  state: useFlora["state"];
+  actions: useFlora["actions"];
 }
 
 const EventsComponent: FC<Props> = ({ state, actions }) => {

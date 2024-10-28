@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { marcellus, windsong } from "@/lib/fonts";
@@ -8,7 +8,7 @@ import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useFlora["state"];
 }
 
 const GalleryComponent: FC<Props> = (props) => {

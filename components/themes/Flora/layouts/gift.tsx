@@ -1,13 +1,13 @@
 import React, { FC } from "react";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 import Image from "next/image";
 import "yet-another-react-lightbox/styles.css";
 import { afacad, marcellus, windsong } from "@/lib/fonts";
 import { BiSolidCopy } from "react-icons/bi";
 
 interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
+  state: useFlora["state"];
+  actions: useFlora["actions"];
 }
 
 const GiftComponent: FC<Props> = (props) => {

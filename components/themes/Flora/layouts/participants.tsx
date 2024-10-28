@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { italiana, marcellus } from "@/lib/fonts";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
 import {
@@ -12,7 +12,7 @@ import {
 import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useFlora["state"];
 }
 
 const ParticipantsComponent: FC<Props> = (props) => {

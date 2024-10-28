@@ -23,7 +23,7 @@ interface FormData {
 
 export interface useSamaya {
   refs: {
-    audioRef: React.RefObject<HTMLAudioElement> | null;
+    audioRef: React.RefObject<HTMLVideoElement> | null;
   };
   state: {
     loading: boolean;
@@ -69,7 +69,7 @@ const useSamaya = (client: Client | null): useSamaya => {
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLVideoElement | null>(null);
 
   const { data, mutate } = useSWR(
     client?.id

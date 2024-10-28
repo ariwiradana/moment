@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import Button from "../elements/button";
 import { BiSolidSend, BiTime, BiUser } from "react-icons/bi";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
@@ -10,8 +10,8 @@ import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 
 interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
+  state: useFlora["state"];
+  actions: useFlora["actions"];
 }
 
 const RSVPWishesComponent: FC<Props> = (props) => {
