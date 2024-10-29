@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { engagement, marcellus } from "@/lib/fonts";
+import { balthazar, italiana } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import {
   BiLogoTiktok,
   BiLogoTwitter,
 } from "react-icons/bi";
-import Image from "next/image";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 
 interface Props {
@@ -17,109 +16,71 @@ interface Props {
 }
 
 const ParticipantsComponent: FC<Props> = (props) => {
-  const bothHasImg =
-    props.state.groom?.image && props.state.bride?.image ? true : false;
-
   if (
     props.state.client?.participants &&
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative bg-samaya-dark z-10 py-16 lg:py-24 overflow-hidden">
+      <section className="relative z-10 py-[60px] md:py-[100px] overflow-hidden px-8">
         <div
-          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-cover bg-blend-lighten"
+          className="absolute inset-0 bg-repeat bg-center"
           style={{
-            backgroundImage: "url('/images/samaya/texture.jpg')",
+            backgroundImage: "url('/images/nirvaya/texture.svg')",
           }}
         ></div>
-        <Image
-          className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
-          alt="mandala-bottom-participant"
-          src="/images/samaya/mandala.svg"
-          height={500}
-          width={500}
-        />
 
-        <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-xl mx-auto">
+        <div className="w-full h-full relative max-w-screen-xl mx-auto">
           <h1
             data-aos="fade-up"
-            className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary`}
+            className={`${italiana.className} text-[28px] md:text-4xl text-center text-nirvaya-dark`}
           >
             {props.state.client.opening_title}
           </h1>
           <p
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto`}
+            className={`${balthazar.className} text-xs md:text-sm text-nirvaya-dark/80 mt-8 md:mt-10 text-center max-w-screen-sm mx-auto`}
           >
             {props.state.client?.opening_description}
           </p>
 
-          {!bothHasImg && (
-            <div
-              className={`w-full gap-20 place-items-center flex justify-center`}
-            >
-              {props.state.groom?.image && (
-                <div
-                  data-aos="zoom-in"
-                  className="relative w-[277px] h-[368px] mb-12"
-                >
-                  <ImageShimmer
-                    fill
-                    priority
-                    sizes="600px"
-                    className="object-cover w-full h-full overflow-hidden p-[10px]"
-                    src={props.state.groom?.image as string}
-                    alt={props.state.groom?.name}
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                  <Image
-                    className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
-                    alt="floral-top-corner"
-                    src="/images/samaya/frame-primary.svg"
-                    height={277}
-                    width={368}
-                  />
-                </div>
-              )}
-              {props.state.bride?.image && (
-                <div
-                  data-aos="zoom-in"
-                  className="relative w-[277px] h-[368px] mb-12"
-                >
-                  <ImageShimmer
-                    fill
-                    priority
-                    sizes="600px"
-                    className="object-cover w-full h-full overflow-hidden p-[10px]"
-                    src={props.state.bride?.image as string}
-                    alt={props.state.bride?.name}
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                  <Image
-                    className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
-                    alt="floral-top-corner"
-                    src="/images/samaya/frame-primary.svg"
-                    height={277}
-                    width={368}
-                  />
-                </div>
-              )}
-            </div>
-          )}
+          <div className="flex justify-center my-8 md:my-10">
+            {props.state.groom?.image && (
+              <div
+                data-aos="zoom-in"
+                className="relative w-[173px] md:w-[193px] h-[226px] md:h-[256px] border-2 border-white rounded-t-[100px] rounded-b-[20px] overflow-hidden -mr-6"
+              >
+                <ImageShimmer
+                  fill
+                  priority
+                  className="object-cover"
+                  src={props.state.groom.image as string}
+                  alt={props.state.groom.name}
+                />
+              </div>
+            )}
+            {props.state.bride?.image && (
+              <div
+                data-aos="zoom-in"
+                className="relative w-[173px] md:w-[193px] h-[226px] md:h-[256px] border-2 border-white rounded-t-[100px] rounded-b-[20px] overflow-hidden mt-6 -ml-6"
+              >
+                <ImageShimmer
+                  fill
+                  priority
+                  className="object-cover"
+                  src={props.state.bride.image as string}
+                  alt={props.state.bride.name}
+                />
+              </div>
+            )}
+          </div>
 
-          <div className="grid md:grid-cols-2 w-full gap-16">
+          <div className="grid md:grid-cols-2 w-full gap-8 max-w-screen-md mx-auto">
             {props.state.groom && (
-              <ParticipantComponent
-                bothHasImg={bothHasImg}
-                data={props.state?.groom as Participant}
-              />
+              <ParticipantComponent data={props.state?.groom as Participant} />
             )}
             {props.state.bride && (
-              <ParticipantComponent
-                bothHasImg={bothHasImg}
-                data={props.state?.bride as Participant}
-              />
+              <ParticipantComponent data={props.state?.bride as Participant} />
             )}
           </div>
         </div>
@@ -129,38 +90,13 @@ const ParticipantsComponent: FC<Props> = (props) => {
 
 interface ComponentProps {
   data: Participant;
-  bothHasImg: boolean;
 }
 const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col justify-center items-center">
-      {props.data.image && props.bothHasImg ? (
-        <div data-aos="zoom-in" className="relative w-[277px] h-[368px] mb-8">
-          <ImageShimmer
-            fill
-            priority
-            sizes="600px"
-            className="object-cover w-full h-full overflow-hidden p-[10px]"
-            src={props.data.image as string}
-            alt={props.data.name}
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-          <Image
-            className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
-            alt="floral-top-corner"
-            src="/images/samaya/frame-primary.svg"
-            height={277}
-            width={368}
-          />
-        </div>
-      ) : null}
-      <div
-        className="flex justify-center gap-2 items-center mb-4"
-        data-aos="fade-up"
-      >
-        <div className="h-[0.5px] w-16 bg-samaya-primary"></div>
+      <div className="flex flex-col items-center" data-aos="fade-up">
         <p
-          className={`text-samaya-primary text-xs md:text-base capitalize ${marcellus.className}`}
+          className={`text-nirvaya-dark/60 text-xs md:text-sm uppercase ${balthazar.className}`}
         >
           {props.data.role === "groom"
             ? "Mempelai Pria"
@@ -168,37 +104,42 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             ? "Mempelai Wanita"
             : ""}
         </p>
-        <div className="h-[0.5px] w-16 bg-samaya-primary"></div>
+        <div className="h-[0.5px] w-6 md:w-8 bg-nirvaya-dark/50 mt-2 md:mt-4"></div>
       </div>
       <h1
         data-aos="fade-up"
-        className={`text-4xl font-semibold text-samaya-primary relative ${engagement.className}`}
+        className={`text-2xl md:text-3xl font-semibold text-nirvaya-dark relative my-3 md:my-5 text-center ${italiana.className}`}
       >
         {props.data.name}
       </h1>
-      <div className={`${marcellus.className} text-center`} data-aos="fade-up">
+      <div data-aos="fade-up">
         {props.data.role !== "participant" && (
           <>
-            <p className="text-gray-300 text-sm md:text-lg mt-4 capitalize font-italic">
+            <p
+              className={`text-nirvaya-dark/60 text-xs md:text-sm text-center ${balthazar.className}`}
+            >
               {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
               {props.data.child} dari pasangan
             </p>
-            <h2 className="text-sm md:text-lg text-white mt-2">
+            <h2
+              className={`text-nirvaya-dark mt-3 md:mt-5 text-center md:text-lg ${balthazar.className}`}
+            >
               Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
             </h2>
           </>
         )}
       </div>
       <p
-        className={`text-samaya-primary text-sm md:text-lg text-center mt-4 ${marcellus.className}`}
+        className={`text-nirvaya-dark/60 text-sm md:text-base text-center mt-3 md:mt-5 ${balthazar.className}`}
         data-aos="fade-up"
       >
         {props.data.address}
       </p>
       <div
-        className="flex mt-4 gap-x-6 text-samaya-primary text-xl md:text-2xl text-center"
+        className="flex justify-between items-center mt-5 md:mt-7 gap-x-5 text-nirvaya-dark text-lg md:text-xl text-center"
         data-aos="fade-up"
       >
+        <div className="h-[0.5px] bg-nirvaya-dark/50 w-16 md:w-20"></div>
         {props.data.facebook && (
           <Link
             aria-label="sosmed-facebook-link"
@@ -235,6 +176,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             <BiLogoTiktok />
           </Link>
         )}
+        <div className="h-[0.5px] bg-nirvaya-dark/50 w-20"></div>
       </div>
     </div>
   );

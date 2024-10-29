@@ -33,6 +33,7 @@ const Nirvaya: FC<Props> = (props) => {
       <>
         {state.client?.status === "unpaid" && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />
+        <HeroComponent state={state} />
         <MusicComponent
           className={!state.open ? "invisible" : "visible"}
           actions={actions}
@@ -41,7 +42,6 @@ const Nirvaya: FC<Props> = (props) => {
         />
         {state.open && (
           <div className="relative">
-            <HeroComponent state={state} />
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
             <GalleryComponent state={state} />

@@ -8,6 +8,7 @@ import {
   WindSong,
   Engagement,
   Italiana,
+  Balthazar,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -48,6 +49,11 @@ export const engagement = Engagement({
 });
 
 export const italiana = Italiana({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+export const balthazar = Balthazar({
   subsets: ["latin"],
   weight: ["400"],
 });
