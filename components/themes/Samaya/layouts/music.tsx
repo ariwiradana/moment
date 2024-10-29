@@ -33,7 +33,7 @@ const MusicComponent: FC<Props> = (props) => {
             alt="cover-music"
             priority
             sizes="50px"
-            className={`object-cover w-full rounded-full transition-all ease-in-out delay-200 grayscale-[60%] ${
+            className={`object-cover w-full rounded-full transition-all ease-in-out delay-200 grayscale-[60%] p-2 ${
               props.state.isPlaying ? "animate-spin-slow" : "animate-none"
             }`}
             src={props.state.client?.cover as string}
@@ -41,8 +41,10 @@ const MusicComponent: FC<Props> = (props) => {
           <div className="relative z-20 w-full h-full rounded-full flex justify-center items-center">
             {props.state.isPlaying ? <BiPause /> : <BiPlay />}
           </div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[80%] h-[80%] rounded-full flex justify-center items-center border border-white/30"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[50%] h-[50%] rounded-full flex justify-center items-center border border-white/30"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[90%] h-[90%] rounded-full flex justify-center items-center border border-white/20"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[70%] h-[70%] rounded-full flex justify-center items-center border border-white/20"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[50%] h-[50%] rounded-full flex justify-center items-center border border-white/20"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[30%] h-[30%] rounded-full flex justify-center items-center border border-white/20"></div>
         </button>
 
         <audio

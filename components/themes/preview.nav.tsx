@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { dm } from "@/lib/fonts";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useFlora } from "@/hooks/themes/useFlora";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useFlora["state"];
 }
 
 const PreviewNav: FC<Props> = ({ state }) => {

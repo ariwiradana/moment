@@ -45,7 +45,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
               events.length > 1 ? "grid-cols-2" : "grid-cols-1"
             } gap-12 md:gap-28 lg:gap-40 relative z-20`}
           >
-            {events.map((event) => (
+            {events.map((event, index) => (
               <div
                 key={`event-${event.id}`}
                 data-aos="fade-up"
@@ -68,7 +68,33 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                   <br />
                   {event.address}
                 </p>
-                <div className="mt-8 inline-flex flex-wrap justify-center gap-4">
+                <div className="flex justify-between text-white my-8 gap-3 md:gap-4">
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].days}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Hari</h4>
+                  </div>
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].hours}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Jam</h4>
+                  </div>
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].minutes}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Menit</h4>
+                  </div>
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].seconds}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Detik</h4>
+                  </div>
+                </div>
+                <div className="inline-flex flex-wrap justify-center gap-4">
                   <Link target="_blank" href={event.address_url}>
                     <Button
                       icon={<BiSolidMap className="lg:text-lg" />}

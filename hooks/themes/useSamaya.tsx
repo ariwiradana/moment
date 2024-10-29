@@ -22,6 +22,13 @@ interface FormData {
   attendant: string;
 }
 
+interface TimeRemaining {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 export interface useSamaya {
   refs: {
     audioRef: React.RefObject<HTMLAudioElement> | null;
@@ -37,6 +44,7 @@ export interface useSamaya {
     formData: FormData;
     reviews: Review[] | null;
     errors: Record<string, string | undefined>;
+    timeRemainings: TimeRemaining[];
   };
   actions: {
     handleOpenCover: () => void;
@@ -71,6 +79,54 @@ const useSamaya = (client: Client | null): useSamaya => {
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
+    client?.events
+      ? client?.events.map(() => ({
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        }))
+      : []
+  );
+
+  useEffect(() => {
+    if (!client?.events) return;
+
+    const updateCountdowns = () => {
+      const newTimeRemaining = client.events!.map((event) => {
+        const targetDateTime = moment(
+          `${event.date} ${event.start_time}`,
+          "YYYY-MM-DD HH:mm"
+        );
+        const now = moment();
+        const diffDuration = moment.duration(targetDateTime.diff(now));
+
+        if (diffDuration.asMilliseconds() > 0) {
+          return {
+            days: Math.floor(diffDuration.asDays()),
+            hours: diffDuration.hours(),
+            minutes: diffDuration.minutes(),
+            seconds: diffDuration.seconds(),
+          };
+        } else {
+          return {
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+          };
+        }
+      });
+
+      setTimeRemainings(newTimeRemaining);
+    };
+
+    const intervalId = setInterval(updateCountdowns, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { data, mutate } = useSWR(
@@ -297,6 +353,7 @@ const useSamaya = (client: Client | null): useSamaya => {
       reviews,
       errors,
       isPlaying,
+      timeRemainings,
     },
     actions: {
       handleOpenCover,
