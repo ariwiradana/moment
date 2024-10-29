@@ -49,7 +49,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
               <div
                 key={`event-${event.id}`}
                 data-aos="fade-up"
-                className={`p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px] ${marcellus.className}`}
+                className={`px-4 py-12 md:p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px] ${marcellus.className}`}
               >
                 <h1
                   className={`${marcellus.className} text-2xl md:text-3xl text-white uppercase`}
