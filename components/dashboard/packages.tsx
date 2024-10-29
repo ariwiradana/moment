@@ -52,13 +52,15 @@ const PackageComponent = () => {
                     {p.unlimited_guest_names && "Nama tamu tidak terbatas"}
                   </li>
                   <li className="list-disc">
-                    {p.custom_opening_closing && "Kustomisasi kalimat pembuka & penutup"}
+                    {p.custom_opening_closing &&
+                      "Kustomisasi kalimat pembuka & penutup"}
                   </li>
                   <li className="list-disc">
                     {p.max_events === "unlimited"
                       ? "Acara tak terbatas per undangan"
                       : `${p.max_events} acara per undangan`}
                   </li>
+                  <li className="list-disc">Hitung Mundur Waktu</li>
                   <li className="list-disc">
                     Galeri foto (maksimal {p.max_gallery_photos} foto)
                   </li>

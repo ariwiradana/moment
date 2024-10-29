@@ -13,6 +13,8 @@ import {
   BiMap,
   BiMusic,
   BiParty,
+  BiText,
+  BiTime,
   BiVideo,
 } from "react-icons/bi";
 import Link from "next/link";
@@ -38,10 +40,21 @@ export const featured: Feature[] = [
       "Tambahkan nama tamu sebanyak yang Anda inginkan tanpa batasan.",
   },
   {
+    title: "Kustomisasi Kalimat Pembuka & Penutup",
+    icon: <BiText />,
+    description: "Buat kalimat pembuka & penutup seperti yang kamu inginkan.",
+  },
+  {
     title: "Acara Tak Terbatas per Undangan",
     icon: <BiParty />,
     description:
       "Buat dan kelola berbagai acara dalam satu undangan tanpa batas.",
+  },
+  {
+    title: "Hitung Mundur Waktu",
+    icon: <BiTime />,
+    description:
+      "Fitur hitung mundur waktu berdasarkan tanggal acaramu.",
   },
   {
     title: "Galeri Foto",
