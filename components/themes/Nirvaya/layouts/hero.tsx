@@ -47,24 +47,26 @@ const HeroComponent: FC<Props> = (props) => {
         >
           {Array.isArray(props.state.client?.gallery) &&
           props.state.client?.gallery.length > 0
-            ? props.state.client?.gallery.map((image, index) => (
-                <SwiperSlide
-                  className="relative w-full h-full"
-                  key={`hero-img-${index}`}
-                >
-                  <div className="absolute inset-0 z-0">
-                    <ImageShimmer
-                      fill
-                      quality={90}
-                      alt={`hero-img-${index}`}
-                      priority
-                      sizes="100vw"
-                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                      src={image}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))
+            ? props.state.client.gallery
+                .filter((image) => image !== props.state.client?.cover)
+                .map((image, index) => (
+                  <SwiperSlide
+                    className="relative w-full h-full"
+                    key={`hero-img-${index}`}
+                  >
+                    <div className="absolute inset-0 z-0">
+                      <ImageShimmer
+                        fill
+                        quality={100}
+                        alt={`hero-img-${index}`}
+                        priority
+                        sizes="100vw"
+                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                        src={image}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))
             : null}
         </Swiper>
       </div>
@@ -131,7 +133,9 @@ const HeroComponent: FC<Props> = (props) => {
                 </p>
                 <div className="flex items-center gap-x-2 mt-4 md:mt-6">
                   <div className="h-[0.5px] w-4 bg-white"></div>
-                  <p className={`${balthazar.className} text-white text-sm md:text-base`}>
+                  <p
+                    className={`${balthazar.className} text-white text-sm md:text-base`}
+                  >
                     Rgveda X.85.42
                   </p>
                 </div>
