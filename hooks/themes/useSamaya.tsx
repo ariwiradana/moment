@@ -6,8 +6,7 @@ import { getClient } from "@/lib/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
-import { BiCheck, BiLoader, BiSolidCheckCircle, BiX } from "react-icons/bi";
-import ReactAudioPlayer from "react-audio-player";
+import { BiCheck } from "react-icons/bi";
 
 interface Countdown {
   days: number;

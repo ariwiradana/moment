@@ -1,13 +1,13 @@
 import React, { FC } from "react";
-import { useNirvaya } from "@/hooks/themes/useNirvaya";
+import { useSamaya } from "@/hooks/themes/useSamaya";
 import "yet-another-react-lightbox/styles.css";
 import { afacad, marcellus, windsong } from "@/lib/fonts";
 import { BiSolidCopy } from "react-icons/bi";
 import Image from "next/image";
 
 interface Props {
-  state: useNirvaya["state"];
-  actions: useNirvaya["actions"];
+  state: useSamaya["state"];
+  actions: useSamaya["actions"];
 }
 
 const GiftComponent: FC<Props> = (props) => {
@@ -18,6 +18,12 @@ const GiftComponent: FC<Props> = (props) => {
   )
     return (
       <section className="relative bg-samaya-dark overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
+          style={{
+            backgroundImage: "url('/images/samaya/texture.jpg')",
+          }}
+        ></div>
         <Image
           className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
           alt="mandala-top-gift"
@@ -25,21 +31,23 @@ const GiftComponent: FC<Props> = (props) => {
           height={500}
           width={500}
         />
-        <div className="bg-gradient-to-b from-samaya-primary/10 to-samaya-primary/5">
-          <div className="relative h-full w-full px-4 py-16 z-30">
-            <div className="text-center" data-aos="fade-up">
-              <h1
-                className={`${marcellus.className} text-white text-4xl lg:text-5xl mr-8`}
-              >
-                Kado
-              </h1>
-              <h1
-                className={`${windsong.className} text-samaya-primary text-5xl lg:text-6xl transform -translate-y-3`}
-              >
-                Digital
-              </h1>
-            </div>
-            <div className="flex justify-center pt-12 relative z-20">
+        <div className="">
+          <div className="relative h-full w-full px-4 py-16 lg:py-24 z-30">
+            <h1
+              data-aos="fade-up"
+              className={`${windsong.className} text-samaya-primary text-4xl lg:text-6xl transform -translate-y-3 text-center`}
+            >
+              Kado Digital
+            </h1>
+            <p
+              data-aos="fade-up"
+              className={`${marcellus.className} text-sm md:text-lg leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto text-center`}
+            >
+              Hadir dan memberi restu adalah hadiah yang sangat berharga bagi
+              kami. Namun, bila berkeinginan untuk berbagi dalam bentuk lain,
+              kado digital dapat diberikan melalui transfer.
+            </p>
+            <div className="flex justify-center relative z-20">
               <div
                 data-aos="zoom-out-up"
                 className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-samaya-primary/40 to-samaya-primary overflow-hidden ${afacad.className}`}

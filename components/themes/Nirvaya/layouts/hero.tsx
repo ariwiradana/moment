@@ -1,5 +1,5 @@
 import ImageShimmer from "@/components/image.shimmer";
-import { useNirvaya } from "@/hooks/themes/useNirvaya";
+import { useSamaya } from "@/hooks/themes/useSamaya";
 import { marcellus, windsong } from "@/lib/fonts";
 import moment from "moment";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 interface Props {
-  state: useNirvaya["state"];
+  state: useSamaya["state"];
 }
 
 const HeroComponent: FC<Props> = (props) => {
@@ -81,7 +81,7 @@ const HeroComponent: FC<Props> = (props) => {
             <h1
               data-aos="fade-up"
               data-aos-delay="100"
-              className={`${windsong.className} text-white text-[40px] mt-2 lg:text-6xl lg:mb-6`}
+              className={`${windsong.className} text-white text-4xl sm:text-[40px] my-2 lg:text-6xl lg:mb-6 text-center`}
             >
               {props.state.groom?.nickname} & {props.state.bride?.nickname}
             </h1>

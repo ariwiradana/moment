@@ -6,7 +6,7 @@ import { getClient } from "@/lib/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
-import { BiCheck, BiLoader, BiSolidCheckCircle, BiX } from "react-icons/bi";
+import { BiCheck } from "react-icons/bi";
 
 interface Countdown {
   days: number;
@@ -19,6 +19,13 @@ interface FormData {
   name: string;
   wishes: string;
   attendant: string;
+}
+
+interface TimeRemaining {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
 }
 
 export interface useNirvaya {
@@ -36,6 +43,7 @@ export interface useNirvaya {
     formData: FormData;
     reviews: Review[] | null;
     errors: Record<string, string | undefined>;
+    timeRemainings: TimeRemaining[];
   };
   actions: {
     handleOpenCover: () => void;
@@ -44,6 +52,7 @@ export interface useNirvaya {
     handlePlayPause: () => void;
     handleCopyRekening: (rekening: string) => void;
     handleAddToCalendar: (event: Event) => void;
+    setIsPlaying: (isPlaying: boolean) => void;
   };
 }
 
@@ -68,7 +77,55 @@ const useNirvaya = (client: Client | null): useNirvaya => {
   const [page] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
+    client?.events
+      ? client?.events.map(() => ({
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        }))
+      : []
+  );
+
+  useEffect(() => {
+    if (!client?.events) return;
+
+    const updateCountdowns = () => {
+      const newTimeRemaining = client.events!.map((event) => {
+        const targetDateTime = moment(
+          `${event.date} ${event.start_time}`,
+          "YYYY-MM-DD HH:mm"
+        );
+        const now = moment();
+        const diffDuration = moment.duration(targetDateTime.diff(now));
+
+        if (diffDuration.asMilliseconds() > 0) {
+          return {
+            days: Math.floor(diffDuration.asDays()),
+            hours: diffDuration.hours(),
+            minutes: diffDuration.minutes(),
+            seconds: diffDuration.seconds(),
+          };
+        } else {
+          return {
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+          };
+        }
+      });
+
+      setTimeRemainings(newTimeRemaining);
+    };
+
+    const intervalId = setInterval(updateCountdowns, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { data, mutate } = useSWR(
@@ -295,6 +352,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       reviews,
       errors,
       isPlaying,
+      timeRemainings,
     },
     actions: {
       handleOpenCover,
@@ -303,6 +361,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       handlePlayPause,
       handleCopyRekening,
       handleAddToCalendar,
+      setIsPlaying,
     },
   };
 };

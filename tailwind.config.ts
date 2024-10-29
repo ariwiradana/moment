@@ -41,6 +41,9 @@ const config: Config = {
           primary: "#E1D7C6",
           dark: "#252015",
         },
+        nirvaya: {
+          dark: "#101010",
+        },
         admin: {
           primary: "#3366FF",
           success: "#33B747",

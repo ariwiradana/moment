@@ -43,7 +43,7 @@ const Cover: FC<Props> = (props) => {
       <div className="flex h-dvh flex-col items-center justify-center relative z-20">
         {props.state.client?.cover && (
           <div
-            className="relative w-[210px] md:w-[260px] aspect-square rounded-full"
+            className="relative w-[180px] sm:w-[210px] md:w-[260px] aspect-square rounded-full"
             data-aos="zoom-out"
             data-aos-delay="300"
           >
@@ -52,12 +52,13 @@ const Cover: FC<Props> = (props) => {
               width={280}
               alt={`cover-img-image`}
               priority
-              sizes="300px"
+              sizes="280px"
+              quality={90}
               className="object-cover rounded-full aspect-square overflow-hidden"
               src={props.state.client?.cover as string}
             />
             <Image
-              className="absolute inset-x-0 -top-4 transform scale-105"
+              className="absolute inset-x-0 -top-4 md:-top-5 transform scale-105"
               alt="floral-top-corner"
               src="/images/samaya/circle-frame-image.svg"
               height={280}
@@ -70,12 +71,12 @@ const Cover: FC<Props> = (props) => {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          Undangan Pernikahan
+          Undangan {props.state.client?.theme?.category}
         </p>
         <h1
           data-aos="fade-up"
           data-aos-delay="200"
-          className={`${windsong.className} text-samaya-primary text-[40px] lg:text-6xl mt-2 lg:mt-6`}
+          className={`${windsong.className} text-samaya-primary text-4xl sm:text-[40px] lg:text-6xl mt-2 lg:mt-6 text-center`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
@@ -94,7 +95,7 @@ const Cover: FC<Props> = (props) => {
           Bapak/Ibu/Saudara/i
         </p>
         <h2
-          className={`${marcellus.className} text-samaya-primary text-2xl mt-2 lg:text-3xl`}
+          className={`${marcellus.className} text-samaya-primary text-xl sm:text-2xl mt-2 lg:text-3xl text-center`}
           data-aos="fade-up"
           data-aos-delay="500"
         >
@@ -102,7 +103,10 @@ const Cover: FC<Props> = (props) => {
         </h2>
         <div className="mt-6" data-aos="fade-up" data-aos-delay="600">
           <Button
-            onClick={props.actions.handleOpenCover}
+            onClick={() => {
+              props.actions.handleOpenCover();
+              props.actions.handlePlayPause();
+            }}
             icon={<BiSolidEnvelopeOpen className="lg:text-lg" />}
             title="Buka Undangan"
           />

@@ -3,6 +3,7 @@ import React from "react";
 import Samaya from "./Samaya/theme";
 import Aakarshana from "./Akarshana/theme";
 import Flora from "./Flora/theme";
+import Nirvaya from "./Nirvaya/theme";
 
 export const themes: Record<
   string,
@@ -16,5 +17,8 @@ export const themes: Record<
   ),
   Flora: (client: Client, untuk: string) => (
     <Flora client={client} untuk={untuk} />
+  ),
+  Nirvaya: (client: Client, untuk: string) => (
+    <Nirvaya client={client} untuk={untuk} />
   ),
 };

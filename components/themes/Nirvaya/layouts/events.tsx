@@ -3,13 +3,13 @@ import { marcellus } from "@/lib/fonts";
 import moment from "moment";
 import Button from "../elements/button";
 import { BiSolidCalendar, BiSolidMap } from "react-icons/bi";
-import { useNirvaya } from "@/hooks/themes/useNirvaya";
+import { useSamaya } from "@/hooks/themes/useSamaya";
 import ImageShimmer from "@/components/image.shimmer";
 import Link from "next/link";
 
 interface Props {
-  state: useNirvaya["state"];
-  actions: useNirvaya["actions"];
+  state: useSamaya["state"];
+  actions: useSamaya["actions"];
 }
 
 const EventsComponent: FC<Props> = ({ state, actions }) => {
@@ -45,30 +45,56 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
               events.length > 1 ? "grid-cols-2" : "grid-cols-1"
             } gap-12 md:gap-28 lg:gap-40 relative z-20`}
           >
-            {events.map((event) => (
+            {events.map((event, index) => (
               <div
                 key={`event-${event.id}`}
                 data-aos="fade-up"
-                className="p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px]"
+                className={`px-6 py-12 md:p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px] ${marcellus.className}`}
               >
                 <h1
                   className={`${marcellus.className} text-2xl md:text-3xl text-white uppercase`}
                 >
                   {event.name}
                 </h1>
-                <p className="text-sm md:text-lg mt-4 text-white">
+                <p className="text-sm md:text-base mt-4 text-white">
                   {moment(event.date).format("DD / MMMM / YYYY")}
                 </p>
-                <p className="text-sm md:text-lg text-white">
+                <p className="text-sm md:text-base text-white">
                   {event.start_time} - {event.end_time}
                 </p>
 
-                <p className="text-sm md:text-lg text-white mt-4">
+                <p className="text-sm md:text-base text-white mt-4">
                   Bertempat di
                   <br />
                   {event.address}
                 </p>
-                <div className="mt-8 inline-flex flex-wrap justify-center gap-4">
+                <div className="flex justify-between text-white my-8 gap-3 md:gap-4">
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].days}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Hari</h4>
+                  </div>
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].hours}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Jam</h4>
+                  </div>
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].minutes}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Menit</h4>
+                  </div>
+                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                    <h2 className="text-xl md:text-2xl">
+                      {state.timeRemainings[index].seconds}
+                    </h2>
+                    <h4 className="text-sm md:text-base">Detik</h4>
+                  </div>
+                </div>
+                <div className="inline-flex flex-wrap justify-center gap-4">
                   <Link target="_blank" href={event.address_url}>
                     <Button
                       icon={<BiSolidMap className="lg:text-lg" />}
