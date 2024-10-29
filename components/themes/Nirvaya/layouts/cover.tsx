@@ -64,7 +64,7 @@ const Cover: FC<Props> = (props) => {
           <p
             data-aos="fade-up"
             data-aos-delay="1000"
-            className={`${balthazar.className} text-white text-xs md:text-sm mt-2 md:mt-4 w-[200px] mx-auto text-center`}
+            className={`${balthazar.className} text-white text-xs md:text-sm mt-2 md:mt-4 max-w-sm mx-auto text-center`}
           >
             Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
             acara pernikahan kami
