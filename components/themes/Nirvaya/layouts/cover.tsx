@@ -22,7 +22,7 @@ const Cover: FC<Props> = (props) => {
       >
         <div
           data-aos="zoom-out-up"
-          className="flex h-dvh flex-col items-center justify-end relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-transparent via-nirvaya-dark/50 via-[50%] to-[70%] to-nirvaya-dark"
+          className="flex h-dvh flex-col items-center justify-end relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-transparent via-nirvaya-dark/50 via-[50%] md:via-[30%] to-[70%] md:to-[80%] to-nirvaya-dark"
         >
           <p
             data-aos="fade-up"

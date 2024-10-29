@@ -72,7 +72,7 @@ const HeroComponent: FC<Props> = (props) => {
       </div>
 
       <div
-        className={`absolute inset-0 flex flex-col justify-between items-center z-10 bg-gradient-to-b from-nirvaya-dark/95 via-[30%] via-transparent to-nirvaya-dark/90 py-[60px] md:py-[100px] px-8 transition-all ease-in-out duration-1000 delay-500 ${
+        className={`absolute h-dvh inset-0 flex flex-col justify-between items-center z-10 bg-gradient-to-b from-nirvaya-dark/95 via-[30%] via-transparent to-nirvaya-dark/90 py-[60px] md:py-[100px] px-8 transition-opacity ease-in-out duration-1000 delay-500 ${
           props.state.open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
