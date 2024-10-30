@@ -24,7 +24,10 @@ const ThankyouComponent: FC<Props> = (props) => {
         >
           {props.state.client?.closing_description} <br />
           <br />
-          {props.state.client?.closing_title}.
+          <span className="text-base md:text-lg">
+            {props.state.client?.closing_title}
+          </span>
+          .
         </p>
 
         <p
