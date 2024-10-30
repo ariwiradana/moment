@@ -78,7 +78,7 @@ const DashboardThemes = () => {
     return categories?.data || [];
   }, [categories]);
 
-  let url = `/api/_pb/_th?page=${page}&limit=${limit}`;
+  let url = `/api/_pb/_th?page=${page}&limit=${limit}&order=DESC`;
 
   if (selectedPackageId) {
     url += `&package_id=${selectedPackageId}`;
@@ -92,7 +92,7 @@ const DashboardThemes = () => {
     selectedPackageId ? url : undefined,
     fetcher
   );
-  const { data: allThemes } = useSWR(`/api/_pb/_th`, fetcher);
+  const { data: allThemes } = useSWR(`/api/_pb/_th?order=DESC`, fetcher);
 
   useEffect(() => {
     if (packageCategories && packageCategories.data.length > 0) {
