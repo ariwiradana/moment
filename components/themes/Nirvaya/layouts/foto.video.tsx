@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { balthazar, dm, italiana } from "@/lib/fonts";
@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useNirvaya["state"];
 }
 
 const GalleryComponent: FC<Props> = (props) => {

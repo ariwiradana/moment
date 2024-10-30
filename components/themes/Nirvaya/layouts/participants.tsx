@@ -9,10 +9,10 @@ import {
   BiLogoTiktok,
   BiLogoTwitter,
 } from "react-icons/bi";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { useNirvaya } from "@/hooks/themes/useNirvaya";
 
 interface Props {
-  state: useSamaya["state"];
+  state: useNirvaya["state"];
 }
 
 const ParticipantsComponent: FC<Props> = (props) => {
