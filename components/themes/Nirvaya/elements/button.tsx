@@ -23,7 +23,7 @@ const Button: FC<Props> = ({
       {...props}
       className={`${balthazar.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} text-white rounded-full min-w-24 bg-white/10 backdrop-blur-sm px-5 py-3 flex hover:bg-transparent border-[0.5px] border-white transition-colors ease-in-out duration-500 ${
+      } ${className} text-white hover:text-nirvaya-dark rounded-full min-w-24 bg-white/10 backdrop-blur-sm px-5 py-3 flex hover:bg-white border-[0.5px] border-white transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-2 md:gap-x-4 relative overflow-hidden shadow-sm`}
     >

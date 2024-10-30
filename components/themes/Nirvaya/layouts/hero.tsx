@@ -3,7 +3,7 @@ import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import { balthazar, italiana } from "@/lib/fonts";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 interface Props {
@@ -31,19 +31,20 @@ const HeroComponent: FC<Props> = (props) => {
   }, [events.length]);
 
   return (
-    <section>
-      <div>
+    <section className="relative h-dvh">
+      <div className="fixed inset-0">
         <Swiper
           loop
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,
           }}
-          speed={10000}
+          effect="fade"
+          speed={3000}
           className="w-full transition-transform h-dvh"
           spaceBetween={0}
           slidesPerView={1}
-          modules={[Autoplay]}
+          modules={[Autoplay, EffectFade]}
         >
           <>
             {props.state.client?.cover && (
@@ -90,7 +91,6 @@ const HeroComponent: FC<Props> = (props) => {
           </>
         </Swiper>
       </div>
-
       <div
         className={`absolute h-dvh inset-0 flex flex-col justify-between items-center z-10 bg-gradient-to-b from-nirvaya-dark/95 via-[30%] via-transparent to-nirvaya-dark/90 py-[60px] md:py-[100px] px-8 transition-opacity ease-in-out duration-1000 delay-500 ${
           props.state.open ? "visible opacity-100" : "invisible opacity-0"

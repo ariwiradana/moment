@@ -365,18 +365,10 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           </p>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <div className="grid grid-cols-2 gap-4">
-                            {client.events.map((event) => (
-                              <div key={`event-desktop-${event.id}`}>
-                                <h1>{event.name}</h1>
-                                <p className="text-gray-500 font-medium text-xs">
-                                  {moment(event.date).format(
-                                    "dddd, D MMM YYYY"
-                                  )}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
+                          <h1>
+                            {client.events.length}{" "}
+                            {client.events.length > 1 ? "Event" : "Events"}
+                          </h1>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex">
