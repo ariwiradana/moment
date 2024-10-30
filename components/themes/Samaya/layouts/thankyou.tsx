@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { afacad, marcellus, windsong } from "@/lib/fonts";
+import { balthazar, italiana, marcellus, windsong } from "@/lib/fonts";
 import Image from "next/image";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Link from "next/link";
@@ -17,24 +17,10 @@ interface Props {
 
 const ThankyouComponent: FC<Props> = (props) => {
   return (
-    <section className="relative bg-samaya-dark">
-      <div
-        className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
-        style={{
-          backgroundImage: "url('/images/samaya/texture.jpg')",
-        }}
-      ></div>
-      <Image
-        className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
-        alt="mandala-bottom-participant"
-        src="/images/samaya/mandala.svg"
-        height={500}
-        width={500}
-      />
+    <section className="relative bg-gradient-to-b from-samaya-dark/70 to-samaya-dark">
       <div className="max-w-screen-sm mx-auto px-4 py-16">
         <div className="flex justify-center w-full">
           <div className="w-96 h-[500px] md:h-[550px] relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-samaya-dark/20 to-samaya-dark z-10"></div>
             {props.state.client?.cover && (
               <Image
                 className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500 object-cover"
@@ -49,7 +35,7 @@ const ThankyouComponent: FC<Props> = (props) => {
         <p
           data-aos="fade-up"
           data-aos-delay="100"
-          className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white max-w-screen-md mx-auto`}
+          className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white max-w-screen-md mx-auto mt-12`}
         >
           {props.state.client?.closing_description}
         </p>
@@ -59,29 +45,29 @@ const ThankyouComponent: FC<Props> = (props) => {
         </div>
         <p
           data-aos="fade-up"
-          className={`${marcellus.className} text-sm md:text-lg text-white text-center`}
+          className={`${marcellus.className} text-sm md:text-base text-white text-center`}
         >
           Kami yang berbahagia
         </p>
         <h1
           data-aos="fade-up"
-          className={`${windsong.className} text-4xl text-center mt-8 leading-7 text-white font-medium mb-24`}
+          className={`${windsong.className} text-4xl md:text-5xl text-center mt-8 leading-7 text-white font-medium mb-24`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
         <h1
           data-aos="fade-up"
-          className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary`}
+          className={`${italiana.className} text-4xl md:text-5xl text-center text-samaya-primary`}
         >
           {props.state.client?.closing_title}
         </h1>
       </div>
       <ul
-        className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24 pb-12"
+        className="flex flex-col justify-center gap-2 items-center relative z-30 pb-12 mt-24"
         data-aos="zoom-in-up"
       >
         <li
-          className={`flex items-center justify-center gap-2 text-base mt-2 text-white`}
+          className={`flex items-center justify-center gap-2 text-base text-white mt-2`}
         >
           <Link
             aria-label="footer-whatsapp-link"
@@ -112,13 +98,14 @@ const ThankyouComponent: FC<Props> = (props) => {
             <AiOutlineYoutube />
           </Link>
         </li>
-        <li className="font-semibold text-white text-base flex items-center gap-x-1 z-30 relative">
-          <span className={`${afacad.className} text-xs font-light`}>
-            Designed with ❤️ by{" "}
-            <Link target="_blank" href="/">
-              Moment Invitations
-            </Link>
-          </span>
+        <li className="mt-2">
+          <Link href="/" target="_blank">
+            <p
+              className={`${balthazar.className} text-center text-white text-xs md:text-sm`}
+            >
+              Undangan Digital © 2024 | Moment Invitation
+            </p>
+          </Link>
         </li>
       </ul>
     </section>

@@ -19,34 +19,20 @@ const GiftComponent: FC<Props> = (props) => {
   )
     return (
       <section className="relative bg-samaya-dark overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
-          style={{
-            backgroundImage: "url('/images/samaya/texture.jpg')",
-          }}
-        ></div>
-        <Image
-          className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
-          alt="mandala-top-gift"
-          src="/images/samaya/mandala.svg"
-          height={500}
-          width={500}
-        />
-        <div className="">
-          <div className="relative h-full w-full px-4 py-16 lg:py-24 z-30">
+        <div>
+          <div className="relative h-full w-full px-4 py-16 lg:py-24 z-30 bg-white/[0.02]">
             <h1
               data-aos="fade-up"
-              className={`${windsong.className} text-samaya-primary text-4xl lg:text-6xl transform -translate-y-3 text-center`}
+              className={`${windsong.className} text-4xl md:text-5xl text-center text-samaya-primary`}
             >
               Kado Digital
             </h1>
             <p
               data-aos="fade-up"
-              className={`${marcellus.className} text-sm md:text-lg leading-5 text-white mt-8 max-w-screen-md mx-auto text-center`}
+              className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-4 mb-8 max-w-screen-sm mx-auto`}
             >
-              Hadir dan memberi restu adalah hadiah yang sangat berharga bagi
-              kami. Namun, bila berkeinginan untuk berbagi dalam bentuk lain,
-              kado digital dapat diberikan melalui transfer.
+              Tanpa mengurangi rasa hormat kami bagi tamu yang ingin mengirimkan
+              hadiah kepada kedua mempelai dapat mengirimkannya melalui :
             </p>
             <div data-aos="fade-up" className="flex justify-center mt-6">
               <Button

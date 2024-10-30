@@ -24,21 +24,27 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   return (
     <section className="relative bg-samaya-dark w-full overflow-hidden">
       <Image
-        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-[0.03]"
         alt="mandala-top-gift"
         src="/images/samaya/mandala.svg"
         height={500}
         width={500}
       />
-      <div className="relative w-full flex flex-col justify-center items-center z-20 pt-16 lg:pt-24">
+      <div className="relative w-full flex flex-col justify-center items-center z-20 py-16 lg:py-24">
         <div className="w-full">
-          <div className="text-center" data-aos="fade-up">
-            <h1
-              className={`${windsong.className} text-samaya-primary text-4xl lg:text-6xl transform -translate-y-3`}
-            >
-              Ucapan & Doa
-            </h1>
-          </div>
+          <h1
+            data-aos="fade-up"
+            className={`${windsong.className} text-4xl md:text-5xl text-center text-samaya-primary`}
+          >
+            Ucapan & Doa
+          </h1>
+          <p
+            data-aos="fade-up"
+            className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-4 mb-8 max-w-screen-sm mx-auto`}
+          >
+            Bagikan doa dan ucapan kamu untuk kedua mempelai sebagai tanda kasih
+            dan kebahagiaan.
+          </p>
           <form
             onSubmit={props.actions.handleSubmit}
             className="flex flex-col gap-4 w-full px-4 py-10 lg:pb-24 md:max-w-screen-sm mx-auto"
@@ -103,14 +109,14 @@ const RSVPWishesComponent: FC<Props> = (props) => {
 
           {props.state.reviews && props.state.reviews?.length > 0 ? (
             <div
-              className="flex flex-col w-full gap-4 px-4 py-16 max-h-[440px] overflow-y-auto bg-samaya-primary/5"
+              className="flex flex-col w-full gap-4 max-h-[440px] overflow-y-auto px-4"
               data-aos="fade-up"
             >
               <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">
                 {props.state.reviews?.map((r) => (
                   <div key={r.id} className="flex">
                     <div className="flex-shrink-0">
-                      <div className="w-9 h-9 bg-samaya-dark rounded-full flex justify-center items-center text-sm font-medium text-samaya-primary">
+                      <div className="w-9 h-9 bg-samaya-primary/10 rounded-full flex justify-center items-center text-sm font-medium text-samaya-primary">
                         <span className={marcellus.className}>
                           {getInitial(r.name)}
                         </span>
@@ -118,18 +124,21 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                     </div>
 
                     <div className="ml-4 relative">
-                      <div className="p-3 bg-samaya-dark rounded-lg relative">
+                      <div className="p-3 bg-samaya-primary/10 rounded-lg relative">
                         <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark"></div>
 
                         <div className="flex items-center gap-x-3">
-                          <h1
-                            className={`${marcellus.className} text-base text-samaya-primary font-semibold`}
-                          >
-                            {r.name}
-                          </h1>
+                          <div className="flex items-center gap-x-2">
+                            <div className="h-[0.5px] w-4 bg-white"></div>
+                            <p
+                              className={`${marcellus.className} text-white text-base md:text-lg`}
+                            >
+                              {r.name}
+                            </p>
+                          </div>
                         </div>
                         <p
-                          className={`${afacad.className} text-base text-white leading-5 my-2`}
+                          className={`${afacad.className} text-base text-samaya-primary leading-5 mt-1`}
                         >
                           {r.wishes}
                         </p>

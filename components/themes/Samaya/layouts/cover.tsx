@@ -67,7 +67,7 @@ const Cover: FC<Props> = (props) => {
           </div>
         )}
         <p
-          className={`${marcellus.className} text-white text-base lg:text-xl mt-10 md:mt-16`}
+          className={`${marcellus.className} text-white text-sm lg:text-base mt-10 md:mt-16`}
           data-aos="fade-up"
           data-aos-delay="100"
         >
@@ -76,32 +76,35 @@ const Cover: FC<Props> = (props) => {
         <h1
           data-aos="fade-up"
           data-aos-delay="200"
-          className={`${windsong.className} text-samaya-primary text-4xl sm:text-[40px] lg:text-6xl mt-2 lg:mt-6 text-center`}
+          className={`${windsong.className} text-samaya-primary text-4xl sm:text-[40px] lg:text-6xl mt-2 lg:mt-4 text-center`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
+
         <p
-          className={`${marcellus.className} text-white text-sm mt-2 lg:text-lg`}
-          data-aos="fade-up"
-          data-aos-delay="300"
-        >
-          Kepada
-        </p>
-        <p
-          className={`${marcellus.className} text-white text-base mt-1 lg:text-lg`}
+          className={`${marcellus.className} text-white text-sm lg:text-base mt-4`}
           data-aos="fade-up"
           data-aos-delay="400"
         >
-          Bapak/Ibu/Saudara/i
+          Yth. Bapak/Ibu/Saudara/i
         </p>
+
         <h2
-          className={`${marcellus.className} text-samaya-primary text-xl sm:text-2xl mt-2 lg:text-3xl text-center`}
+          className={`${marcellus.className} text-samaya-primary text-xl sm:text-2xl mt-1 lg:text-3xl text-center`}
           data-aos="fade-up"
           data-aos-delay="500"
         >
           {props.untuk}
         </h2>
-        <div className="mt-6" data-aos="fade-up" data-aos-delay="600">
+        <p
+          data-aos="fade-up"
+          data-aos-delay="600"
+          className={`${marcellus.className} text-white text-sm lg:text-base mt-3 max-w-sm mx-auto text-center`}
+        >
+          Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
+          acara pernikahan kami
+        </p>
+        <div className="mt-8" data-aos="fade-up" data-aos-delay="700">
           <Button
             onClick={() => {
               props.actions.handleOpenCover();

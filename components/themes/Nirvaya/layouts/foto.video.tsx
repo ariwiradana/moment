@@ -81,8 +81,8 @@ const GalleryComponent: FC<Props> = (props) => {
           data-aos-delay="100"
           className={`${balthazar.className} text-sm md:text-base text-nirvaya-dark/80 px-8 mt-1 mb-8 md:mb-12 text-center max-w-screen-sm mx-auto`}
         >
-          Foto & Video dari Klien {props.state.groom?.nickname} &{" "}
-          {props.state.bride?.nickname}
+          Foto {videos.length > 0 && "& Video "} dari Klien{" "}
+          {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </p>
         {videos.length > 0 && (
           <div className="grid gap-4 mb-2 px-2" data-aos="zoom-in-up">

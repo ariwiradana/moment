@@ -2,8 +2,7 @@ import React, { FC, useState } from "react";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { windsong } from "@/lib/fonts";
-import YouTubePlayer from "@/components/admin/elements/youtube.player";
+import { marcellus, windsong } from "@/lib/fonts";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import {
   ImageList,
@@ -55,13 +54,13 @@ const GalleryComponent: FC<Props> = (props) => {
   return (
     <section className="relative bg-samaya-dark overflow-hidden">
       <div
-        className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
+        className="absolute inset-0 bg-repeat bg-center opacity-[0.02]"
         style={{
           backgroundImage: "url('/images/samaya/texture.jpg')",
         }}
       ></div>
       <Image
-        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-[0.03]"
         alt="mandala-top-img-video"
         src="/images/samaya/mandala.svg"
         height={500}
@@ -84,15 +83,21 @@ const GalleryComponent: FC<Props> = (props) => {
         data-aos="fade-up"
         className="w-full h-full relative py-16 lg:py-24 px-4 z-20 bg-gradient-to-b from-transparent to-samaya-primary/5"
       >
-        <div className="text-center" data-aos="fade-up">
-          <h1
-            className={`${windsong.className} text-samaya-primary text-4xl lg:text-6xl transform -translate-y-3`}
-          >
-            Momen Bahagia
-          </h1>
-        </div>
+        <h1
+          data-aos="fade-up"
+          className={`${windsong.className} text-4xl md:text-5xl text-center text-samaya-primary`}
+        >
+          Momen Bahagia
+        </h1>
+        <p
+          data-aos="fade-up"
+          className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-4 mb-8 max-w-screen-md mx-auto`}
+        >
+          Foto {videos.length > 0 && "& Video "} dari Klien{" "}
+          {props.state.groom?.nickname} & {props.state.bride?.nickname}
+        </p>
         <div
-          className="mt-10 md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col gap-4 md:gap-8"
+          className="mt-10 flex flex-col gap-4 md:gap-8"
           data-aos="zoom-in-up"
         >
           <ImageList
@@ -121,15 +126,21 @@ const GalleryComponent: FC<Props> = (props) => {
             ))}
           </ImageList>
           {videos.length > 0 && (
-            <div className="grid gap-4" data-aos="zoom-in-up">
-              {videos.map((v, index) => {
+            <div className="grid gap-4 -mt-4 md:mt-0" data-aos="zoom-in-up">
+              {videos.map((v) => {
                 const youtubeId = getYouTubeVideoId(v);
                 return (
-                  <div key={`video-${index + 1}`}>
-                    <YouTubePlayer
-                      key={`video-${index}`}
-                      youtubeId={youtubeId as string}
-                    />
+                  <div
+                    key={youtubeId}
+                    className="relative w-full aspect-video rounded-3xl overflow-hidden"
+                  >
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0`}
+                      title={v}
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
                   </div>
                 );
               })}

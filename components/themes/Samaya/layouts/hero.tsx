@@ -99,13 +99,13 @@ const HeroComponent: FC<Props> = (props) => {
                 }`}
               >
                 <p
-                  className={`${marcellus.className} text-white text-sm md:text-lg lg:text-xl`}
+                  className={`${marcellus.className} text-white text-sm md:text-base`}
                 >
                   {events[currentIndex].name}
                 </p>
                 <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
                 <p
-                  className={`${marcellus.className} text-white text-sm lg:text-xl`}
+                  className={`${marcellus.className} text-white text-sm md:text-base`}
                 >
                   {moment(events[currentIndex].date).format("DD / MMMM / YYYY")}
                 </p>

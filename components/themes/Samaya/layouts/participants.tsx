@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { engagement, marcellus } from "@/lib/fonts";
+import { italiana, marcellus } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
@@ -27,13 +27,13 @@ const ParticipantsComponent: FC<Props> = (props) => {
     return (
       <section className="relative bg-samaya-dark z-10 py-16 lg:py-24 overflow-hidden">
         <div
-          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-cover bg-blend-lighten"
+          className="absolute inset-0 bg-repeat bg-center opacity-5"
           style={{
             backgroundImage: "url('/images/samaya/texture.jpg')",
           }}
         ></div>
         <Image
-          className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
+          className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-[0.03]"
           alt="mandala-bottom-participant"
           src="/images/samaya/mandala.svg"
           height={500}
@@ -43,14 +43,14 @@ const ParticipantsComponent: FC<Props> = (props) => {
         <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-xl mx-auto">
           <h1
             data-aos="fade-up"
-            className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary`}
+            className={`${italiana.className} text-4xl md:text-5xl text-center text-samaya-primary`}
           >
             {props.state.client.opening_title}
           </h1>
           <p
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto`}
+            className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto`}
           >
             {props.state.client?.opening_description}
           </p>
@@ -160,7 +160,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       >
         <div className="h-[0.5px] w-16 bg-samaya-primary"></div>
         <p
-          className={`text-samaya-primary text-xs md:text-base capitalize ${marcellus.className}`}
+          className={`text-samaya-primary text-xs md:text-sm capitalize ${marcellus.className}`}
         >
           {props.data.role === "groom"
             ? "Mempelai Pria"
@@ -172,25 +172,25 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       </div>
       <h1
         data-aos="fade-up"
-        className={`text-4xl font-semibold text-samaya-primary relative ${engagement.className}`}
+        className={`text-3xl font-semibold text-samaya-primary relative ${italiana.className}`}
       >
         {props.data.name}
       </h1>
       <div className={`${marcellus.className} text-center`} data-aos="fade-up">
         {props.data.role !== "participant" && (
           <>
-            <p className="text-gray-300 text-sm md:text-lg mt-4 capitalize font-italic">
+            <p className="text-gray-300 text-sm md:text-base mt-4 capitalize font-italic">
               {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
               {props.data.child} dari pasangan
             </p>
-            <h2 className="text-sm md:text-lg text-white mt-2">
+            <h2 className="text-sm md:text-base text-white mt-2">
               Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
             </h2>
           </>
         )}
       </div>
       <p
-        className={`text-samaya-primary text-sm md:text-lg text-center mt-4 ${marcellus.className}`}
+        className={`text-samaya-primary text-sm md:text-base text-center mt-4 ${marcellus.className}`}
         data-aos="fade-up"
       >
         {props.data.address}
