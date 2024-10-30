@@ -29,7 +29,7 @@ const Button: FC<Props> = ({
         !white
           ? "text-white hover:text-nirvaya-dark hover:bg-white bg-white/10"
           : "text-nirvaya-dark bg-white"
-      } rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex border-[0.5px] border-white transition-colors ease-in-out duration-700 ${
+      } rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex border border-white transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-2 md:gap-x-4 relative overflow-hidden shadow-sm`}
     >

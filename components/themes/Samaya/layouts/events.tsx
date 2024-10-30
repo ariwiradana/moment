@@ -69,7 +69,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                   {event.address}
                 </p>
                 <div className="grid grid-cols-4 text-white my-6 gap-3 md:gap-4">
-                  <div className="flex flex-col border-[0.5px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
+                  <div className="flex flex-col border border-white aspect-square justify-center rounded-xl md:rounded-2xl">
                     <h2 className="text-xl md:text-2xl">
                       {state.timeRemainings[index].days}
                     </h2>
