@@ -28,7 +28,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           backgroundImage: "url('/images/nirvaya/texture.svg')",
         }}
       ></div>
-      <div className="relative w-full flex flex-col justify-center items-center z-20 px-8 py-[60px] md:py-[100px]">
+      <div className="relative w-full flex flex-col justify-center items-center z-20 py-[60px] md:py-[100px]">
         <h1
           data-aos="fade-up"
           className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark px-8`}
@@ -45,7 +45,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
         </p>
         <form
           onSubmit={props.actions.handleSubmit}
-          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto"
+          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto px-8"
           data-aos="fade-up"
         >
           <Input
@@ -106,7 +106,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
 
         {props.state.reviews && props.state.reviews?.length > 0 ? (
           <div
-            className="flex flex-col w-full gap-4 max-h-[440px] overflow-y-auto mt-12"
+            className="flex flex-col w-full gap-4 max-h-[440px] overflow-y-auto mt-12 px-8"
             data-aos="fade-up"
           >
             <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">

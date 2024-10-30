@@ -40,7 +40,7 @@ const GalleryComponent: FC<Props> = (props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const getCols = () => {
-    if (isDesktop) return 2;
+    if (isDesktop) return 3;
     if (isTablet) return 2;
     if (isMobile) return 2;
   };
@@ -68,7 +68,7 @@ const GalleryComponent: FC<Props> = (props) => {
 
       <div
         data-aos="fade-up"
-        className="w-full h-full relative z-20 py-[60px] md:py-[100px] max-w-screen-lg mx-auto"
+        className="w-full h-full relative z-20 py-[60px] md:py-[100px]"
       >
         <h1
           data-aos="fade-up"
@@ -137,7 +137,7 @@ const GalleryComponent: FC<Props> = (props) => {
 
         <div
           data-aos="fade-up"
-          className="px-8 mt-12 md:mt-16 max-w-md mx-auto"
+          className="px-8 mt-[60px] md:mt-[100px] max-w-lg mx-auto"
         >
           <h1
             className={` ${dm.className} text-white text-5xl h-10 text-center`}
@@ -145,7 +145,7 @@ const GalleryComponent: FC<Props> = (props) => {
             &rdquo;
           </h1>
           <p
-            className={`${balthazar.className} text-white text-sm md:text-base text-center`}
+            className={`${balthazar.className} text-white text-base md:text-lg text-center`}
           >
             Cinta sejati dimulai ketika satu orang menerima semua kekurangan
             orang lain, dan tetap memilih untuk bersama.
