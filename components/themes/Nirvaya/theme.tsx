@@ -26,6 +26,8 @@ const Nirvaya: FC<Props> = (props) => {
         state.client
           ? state.client.status === "unpaid"
             ? `Preview Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
+            : state.client.is_preview
+            ? `Preview Undangan Tema ${state.client.theme?.name} | Moment`
             : `Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
           : "Moment"
       }
