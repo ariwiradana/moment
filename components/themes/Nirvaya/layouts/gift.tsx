@@ -45,12 +45,19 @@ const GiftComponent: FC<Props> = (props) => {
             type="button"
             title="Klik Disini"
             white
-            icon={<BiChevronRightCircle />}
+            icon={
+              <BiChevronRightCircle
+                className={`transition-transform duration-500 delay-100 ease-in-out ${
+                  props.state.isGiftShown ? "rotate-90" : "rotate-0"
+                }`}
+              />
+            }
           />
         </div>
         {props.state.isGiftShown && (
           <div
             data-aos="zoom-out-up"
+            data-aos-delay="200"
             className="flex justify-center relative z-20 mt-12"
           >
             <div

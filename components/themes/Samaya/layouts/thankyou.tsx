@@ -17,7 +17,7 @@ interface Props {
 
 const ThankyouComponent: FC<Props> = (props) => {
   return (
-    <section className="relative bg-gradient-to-b from-samaya-dark/70 to-samaya-dark">
+    <section className="relative bg-gradient-to-b from-samaya-dark/70 to-samaya-dark to-[90%] z-20">
       <div className="max-w-screen-sm mx-auto px-4 py-16">
         <div className="flex justify-center w-full">
           <div className="w-96 h-[500px] md:h-[550px] relative">

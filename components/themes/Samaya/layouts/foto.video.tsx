@@ -40,7 +40,7 @@ const GalleryComponent: FC<Props> = (props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const getCols = () => {
-    if (isDesktop) return 3;
+    if (isDesktop) return 4;
     if (isTablet) return 3;
     if (isMobile) return 1;
   };
@@ -52,20 +52,7 @@ const GalleryComponent: FC<Props> = (props) => {
   };
 
   return (
-    <section className="relative bg-samaya-dark overflow-hidden">
-      <div
-        className="absolute inset-0 bg-repeat bg-center opacity-[0.02]"
-        style={{
-          backgroundImage: "url('/images/samaya/texture.jpg')",
-        }}
-      ></div>
-      <Image
-        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-[0.03]"
-        alt="mandala-top-img-video"
-        src="/images/samaya/mandala.svg"
-        height={500}
-        width={500}
-      />
+    <section className="relative bg-samaya-dark overflow-hidden z-20">
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .9)" } }}
         close={() => setOpen(false)}
@@ -81,7 +68,7 @@ const GalleryComponent: FC<Props> = (props) => {
 
       <div
         data-aos="fade-up"
-        className="w-full h-full relative py-16 lg:py-24 px-4 z-20 bg-gradient-to-b from-transparent to-samaya-primary/5"
+        className="w-full h-full relative pt-16 lg:pt-24 pb-4 md:pb-8 px-4 md:px-8 z-20"
       >
         <h1
           data-aos="fade-up"

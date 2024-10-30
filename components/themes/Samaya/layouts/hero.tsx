@@ -34,49 +34,71 @@ const HeroComponent: FC<Props> = (props) => {
   return (
     <section>
       <div className="relative h-dvh w-full overflow-hidden z-20 bg-samaya-dark">
-        <div
-          className="h-[95dvh] relative"
-          data-aos="zoom-out"
-          data-aos-delay="300"
-        >
+        <div className="fixed inset-0">
           <Swiper
             loop
             autoplay={{
-              delay: 5000,
+              delay: 4000,
               disableOnInteraction: false,
             }}
-            speed={10000}
-            className="w-full transition-transform h-[95dvh]"
+            speed={5000}
+            className="w-full transition-transform h-dvh"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay]}
           >
-            {Array.isArray(props.state.client?.gallery) &&
-            props.state.client?.gallery.length > 0
-              ? props.state.client.gallery
-                  .filter((image) => image !== props.state.client?.cover)
-                  .map((image, index) => (
-                    <SwiperSlide
-                      className="relative w-full h-full"
-                      key={`hero-img-${index}`}
-                    >
-                      <div className="absolute inset-0 z-0">
-                        <ImageShimmer
-                          fill
-                          quality={100}
-                          alt={`hero-img-${index}`}
-                          priority
-                          sizes="100vw"
-                          className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                          src={image}
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))
-              : null}
+            <>
+              {props.state.client?.cover && (
+                <SwiperSlide
+                  className="relative w-full h-full"
+                  key={`hero-cover`}
+                >
+                  <div className="absolute inset-0 z-0">
+                    <ImageShimmer
+                      fill
+                      quality={100}
+                      alt={`hero-cover`}
+                      priority
+                      sizes="100vw"
+                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                      src={props.state.client.cover}
+                    />
+                  </div>
+                </SwiperSlide>
+              )}
+              {Array.isArray(props.state.client?.gallery) &&
+              props.state.client?.gallery.length > 0
+                ? props.state.client.gallery
+                    .filter((image) => image !== props.state.client?.cover)
+                    .map((image, index) => (
+                      <SwiperSlide
+                        className="relative w-full h-full"
+                        key={`hero-img-${index}`}
+                      >
+                        <div className="absolute inset-0 z-0">
+                          <ImageShimmer
+                            fill
+                            quality={100}
+                            alt={`hero-img-${index}`}
+                            priority
+                            sizes="100vw"
+                            className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                            src={image}
+                          />
+                        </div>
+                      </SwiperSlide>
+                    ))
+                : null}
+            </>
           </Swiper>
+        </div>
+        <div
+          className="h-dvh relative"
+          data-aos="zoom-out"
+          data-aos-delay="300"
+        >
           <div
-            className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark h-[400px] md:h-[800px] flex flex-col justify-end items-center"
+            className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark to-[90%] h-[400px] md:h-[800px] flex flex-col justify-end items-center py-8"
             data-aos="fade-up"
           >
             <h1

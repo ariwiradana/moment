@@ -8,7 +8,6 @@ import InputCheckbox from "../elements/checkbox";
 import { afacad, marcellus, windsong } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
-import Image from "next/image";
 
 interface Props {
   state: useSamaya["state"];
@@ -22,14 +21,13 @@ const RSVPWishesComponent: FC<Props> = (props) => {
     "Masih Ragu": "Maaf saya masih ragu",
   };
   return (
-    <section className="relative bg-samaya-dark w-full overflow-hidden">
-      <Image
-        className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-[0.03]"
-        alt="mandala-top-gift"
-        src="/images/samaya/mandala.svg"
-        height={500}
-        width={500}
-      />
+    <section className="relative bg-samaya-dark w-full overflow-hidden z-20">
+      <div
+        className="absolute inset-0 bg-repeat opacity-80 md:opacity-35 bg-center"
+        style={{
+          backgroundImage: "url('/images/samaya/texture.svg')",
+        }}
+      ></div>
       <div className="relative w-full flex flex-col justify-center items-center z-20 py-16 lg:py-24">
         <div className="w-full">
           <h1

@@ -25,20 +25,13 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative bg-samaya-dark z-10 py-16 lg:py-24 overflow-hidden">
+      <section className="relative bg-samaya-dark z-20 py-16 lg:py-24 overflow-hidden">
         <div
-          className="absolute inset-0 bg-repeat bg-center opacity-5"
+          className="absolute inset-0 bg-repeat opacity-80 md:opacity-35 bg-center"
           style={{
-            backgroundImage: "url('/images/samaya/texture.jpg')",
+            backgroundImage: "url('/images/samaya/texture.svg')",
           }}
         ></div>
-        <Image
-          className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-[0.03]"
-          alt="mandala-bottom-participant"
-          src="/images/samaya/mandala.svg"
-          height={500}
-          width={500}
-        />
 
         <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-xl mx-auto">
           <h1

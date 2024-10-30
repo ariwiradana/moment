@@ -18,9 +18,9 @@ const GiftComponent: FC<Props> = (props) => {
     props.state.client?.gift_account_number
   )
     return (
-      <section className="relative bg-samaya-dark overflow-hidden">
+      <section className="relative bg-samaya-dark/70 overflow-hidden z-20">
         <div>
-          <div className="relative h-full w-full px-4 py-16 lg:py-24 z-30 bg-white/[0.02]">
+          <div className="relative h-full w-full px-4 py-16 lg:py-24 z-30">
             <h1
               data-aos="fade-up"
               className={`${windsong.className} text-4xl md:text-5xl text-center text-samaya-primary`}
@@ -41,16 +41,23 @@ const GiftComponent: FC<Props> = (props) => {
                 }
                 type="button"
                 title="Klik Disini"
-                icon={<BiSolidChevronRightCircle />}
+                icon={
+                  <BiSolidChevronRightCircle
+                    className={`transition-transform duration-500 delay-100 ease-in-out ${
+                      props.state.isGiftShown ? "rotate-90" : "rotate-0"
+                    }`}
+                  />
+                }
               />
             </div>
             {props.state.isGiftShown && (
               <div
                 data-aos="zoom-out-up"
+                data-aos-delay="200"
                 className="flex justify-center relative z-20 mt-12"
               >
                 <div
-                  className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-samaya-primary/40 to-samaya-primary overflow-hidden ${afacad.className}`}
+                  className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-samaya-dark bg-gradient-to-tr from-white/5 to-white/10 overflow-hidden ${afacad.className}`}
                 >
                   <div className="w-44 h-44 rounded-full border border-white/30 absolute -right-20 -top-20"></div>
                   <div className="w-64 h-64 rounded-full border border-white/30 absolute -left-20 -bottom-20"></div>
@@ -65,7 +72,7 @@ const GiftComponent: FC<Props> = (props) => {
                       />
                     </div>
                     <h1
-                      className={`text-3xl font-bold text-samaya-dark ${afacad.className}`}
+                      className={`text-3xl font-bold text-white ${afacad.className}`}
                     >
                       {props.state.client?.gift_bank_name}
                     </h1>
@@ -73,12 +80,12 @@ const GiftComponent: FC<Props> = (props) => {
                   <div className="relative z-10">
                     <div>
                       <p
-                        className={`text-xl leading-5 text-samaya-dark ${marcellus.className}`}
+                        className={`text-lg md:text-xl leading-5 text-white ${marcellus.className}`}
                       >
                         {props.state.client?.gift_account_name}
                       </p>
                       <p
-                        className={`text-xl font-medium text-samaya-dark ${afacad.className}`}
+                        className={`text-lg md:text-xl font-medium text-white ${afacad.className}`}
                       >
                         {props.state.client?.gift_account_number}
                       </p>
@@ -90,7 +97,7 @@ const GiftComponent: FC<Props> = (props) => {
                           props.state.client?.gift_account_number as string
                         )
                       }
-                      className="bg-samaya-dark outline-none text-samaya-primary px-2 rounded-lg text-sm flex items-center gap-x-1 mt-3 relative z-10"
+                      className="bg-samaya-primary outline-none text-samaya-dark px-3 py-1 rounded-lg text-sm flex items-center gap-x-1 mt-3 relative z-10"
                     >
                       <span>Salin No Rekening</span>
                       <BiSolidCopy className="text-xs" />

@@ -82,7 +82,7 @@ const Cover: FC<Props> = (props) => {
         </h1>
 
         <p
-          className={`${marcellus.className} text-white text-sm lg:text-base mt-4`}
+          className={`${marcellus.className} text-white text-sm lg:text-base mt-6`}
           data-aos="fade-up"
           data-aos-delay="400"
         >
@@ -96,14 +96,6 @@ const Cover: FC<Props> = (props) => {
         >
           {props.untuk}
         </h2>
-        <p
-          data-aos="fade-up"
-          data-aos-delay="600"
-          className={`${marcellus.className} text-white text-sm lg:text-base mt-3 max-w-sm mx-auto text-center`}
-        >
-          Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
-          acara pernikahan kami
-        </p>
         <div className="mt-8" data-aos="fade-up" data-aos-delay="700">
           <Button
             onClick={() => {
