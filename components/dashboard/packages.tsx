@@ -9,6 +9,8 @@ import { formatToRupiah } from "@/utils/formatToRupiah";
 import useDashboardStore from "@/lib/dashboardStore";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import { MdDiscount } from "react-icons/md";
+import { getDiscountPrice } from "@/utils/getDiscountPrice";
 
 const PackageComponent = () => {
   const { data } = useSWR("/api/_pb/_p", fetcher);
@@ -41,9 +43,25 @@ const PackageComponent = () => {
                 >
                   Paket {p.name}
                 </h1>
-                <h2 className={`${afacad.className} text-xl`}>
+                <h2
+                  className={`${afacad.className} text-lg mt-4 leading-4 ${
+                    isLast ? "text-white/50" : "text-dashboard-dark/50"
+                  } line-through`}
+                >
                   {formatToRupiah(p.price)}
                 </h2>
+                <div className="flex items-center gap-2">
+                  <h2 className={`${afacad.className} font-medium text-2xl`}>
+                    {formatToRupiah(getDiscountPrice(p.price, 20))}
+                  </h2>
+
+                  <div
+                    className={`${afacad.className} font-medium flex items-center gap-1 bg-dashboard-primary rounded-full px-2 py-1 text-sm text-dashboard-dark`}
+                  >
+                    <MdDiscount />
+                    {20}%
+                  </div>
+                </div>
                 <ul className={`${afacad.className} mt-6 ml-4 text-lg`}>
                   <li className="list-disc">
                     {p.unlimited_revisions && "Revisi tidak terbatas"}

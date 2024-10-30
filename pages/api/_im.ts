@@ -16,9 +16,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     const validImageExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
-    const imageBlobs = blobs.filter((blob) =>
-      validImageExtensions.some((ext) => blob.url.endsWith(ext))
-    );
+    const imageBlobs = blobs
+      .filter((blob) =>
+        validImageExtensions.some((ext) => blob.url.endsWith(ext))
+      )
+      .sort(
+        (a, b) =>
+          new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+      );
 
     return res.status(200).json({ success: true, blobs: imageBlobs });
   } catch (error) {

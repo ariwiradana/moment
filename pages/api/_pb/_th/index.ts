@@ -73,7 +73,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           countQuery += " WHERE " + countConditions.join(" AND ");
         }
 
-        query += ` ORDER BY updated_at ${order}`;
+        query += ` ORDER BY created_at ${order}`;
 
         if (page && limit) {
           const limitNumber = Number(limit);

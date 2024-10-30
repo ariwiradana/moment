@@ -18,6 +18,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { formatToRupiah } from "@/utils/formatToRupiah";
+import { getDiscountPrice } from "@/utils/getDiscountPrice";
 
 interface DashboardPaymentProps {
   slug: string;
@@ -91,9 +92,11 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
               {client && (
                 <>
                   {" "}
-                  dengan harga{" "}
+                  dengan harga promo{" "}
                   <span className="text-dashboard-dark font-semibold">
-                    {formatToRupiah(client?.packages?.price || 0)}
+                    {formatToRupiah(
+                      getDiscountPrice(client?.packages?.price || 0, 20)
+                    )}
                   </span>{" "}
                   sesuai dengan{" "}
                   <span className="text-dashboard-dark font-semibold">

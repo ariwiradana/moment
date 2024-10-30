@@ -33,7 +33,6 @@ const HeroComponent = () => {
           {images.length > 0 && (
             <div className="w-[180px] lg:w-[260px]" data-aos="zoom-out-up">
               <Swiper
-                initialSlide={1}
                 speed={2000}
                 autoplay
                 effect="cards"
