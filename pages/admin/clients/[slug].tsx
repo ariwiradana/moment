@@ -80,9 +80,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
           )}
           <Link
             target="_bank"
-            href={`/${state.formData.slug}?untuk=${encodeURIComponent(
-              "Nama Undangan"
-            )}`}
+            href={`/${state.formData.slug}`}
             className="text-gray-500 text-lg"
           >
             <BiSolidShow />

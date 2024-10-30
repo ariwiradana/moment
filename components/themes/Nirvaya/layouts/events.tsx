@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { marcellus } from "@/lib/fonts";
+import { balthazar, italiana } from "@/lib/fonts";
 import moment from "moment";
 import Button from "../elements/button";
-import { BiSolidCalendar, BiSolidMap } from "react-icons/bi";
+import { BiCalendar, BiMap } from "react-icons/bi";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import ImageShimmer from "@/components/image.shimmer";
 import Link from "next/link";
@@ -18,7 +18,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
   if (events.length > 0) {
     return (
       <section className="relative overflow-hidden z-0">
-        <div className="fixed inset-0 z-0" data-aos="zoom-in">
+        <div className="fixed inset-0 z-0" data-aos="zoom-out-up">
           <div className="relative h-full w-full">
             {gallery.length > 0 && (
               <ImageShimmer
@@ -26,7 +26,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 priority
                 alt="bg-countdown"
                 fill
-                className="object-cover"
+                className="object-cover grayscale"
                 src={
                   gallery.length > 2
                     ? (gallery[gallery.length - 2] as string)
@@ -37,74 +37,98 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
             )}
           </div>
         </div>
-        <div className="absolute bg-samaya-dark/20 inset-0 md:bg-gradient-to-r from-samaya-dark/70 via-transparent to-samaya-dark/70"></div>
-        <div className="absolute bg-samaya-dark/20 inset-0 md:bg-gradient-to-b from-samaya-dark/20 via-samaya-dark/60 to-samaya-dark"></div>
-        <div className="flex flex-col z-10 items-center justify-center px-8 py-12 md:py-28 lg:py-40">
+        <div className="absolute bg-nirvaya-dark/70 inset-0"></div>
+        <div className="flex flex-col z-10 items-center justify-center px-8 py-[60px] md:py-[100px] max-w-screen-xl mx-auto">
           <div
-            className={`grid lg:${
-              events.length > 1 ? "grid-cols-2" : "grid-cols-1"
-            } gap-12 md:gap-28 lg:gap-40 relative z-20`}
+            className={`flex flex-wrap justify-center gap-[60px] md:gap-[100px] relative z-20 divide-y-[0.5px] md:divide-y-0`}
           >
             {events.map((event, index) => (
               <div
-                key={`event-${event.id}`}
                 data-aos="fade-up"
-                className={`px-6 py-12 md:p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px] ${marcellus.className}`}
+                key={`event-${event.id}`}
+                className={`text-center ${index > 0 && "pt-[60px] md:pt-0"}`}
               >
                 <h1
-                  className={`${marcellus.className} text-2xl md:text-3xl text-white uppercase`}
+                  data-aos="fade-up"
+                  className={`${italiana.className} text-4xl md:text-5xl text-white uppercase`}
                 >
                   {event.name}
                 </h1>
-                <p className="text-sm md:text-base mt-4 text-white">
-                  {moment(event.date).format("DD / MMMM / YYYY")}
-                </p>
-                <p className="text-sm md:text-base text-white">
-                  {event.start_time} - {event.end_time}
-                </p>
+                <div data-aos="fade-up" data-aos-delay="200">
+                  <p
+                    className={`text-base md:text-lg mt-2 md:mt-5 text-white ${balthazar.className} uppercase`}
+                  >
+                    {moment(event.date).format("dddd, DD MMMM YYYY")}
+                  </p>
+                  <p
+                    className={`text-base md:text-lg mt-1 text-white ${balthazar.className}`}
+                  >
+                    {event.start_time} - {event.end_time}
+                  </p>
+                  <div className="flex justify-center gap-7 md:gap-10 mt-3 md:mt-6">
+                    <div
+                      className={`flex flex-col justify-center ${balthazar.className}`}
+                    >
+                      <h2 className="text-2xl md:text-3xl text-white">
+                        {state.timeRemainings[index].days}
+                      </h2>
+                      <h4 className="text-sm md:text-base text-white/80">
+                        Hari
+                      </h4>
+                    </div>
+                    <div
+                      className={`flex flex-col justify-center ${balthazar.className}`}
+                    >
+                      <h2 className="text-2xl md:text-3xl text-white">
+                        {state.timeRemainings[index].hours}
+                      </h2>
+                      <h4 className="text-sm md:text-base text-white/80">
+                        Jam
+                      </h4>
+                    </div>
+                    <div
+                      className={`flex flex-col justify-center ${balthazar.className}`}
+                    >
+                      <h2 className="text-2xl md:text-3xl text-white">
+                        {state.timeRemainings[index].minutes}
+                      </h2>
+                      <h4 className="text-sm md:text-base text-white/80">
+                        Menit
+                      </h4>
+                    </div>
+                    <div
+                      className={`flex flex-col justify-center ${balthazar.className}`}
+                    >
+                      <h2 className="text-2xl md:text-3xl text-white">
+                        {state.timeRemainings[index].seconds}
+                      </h2>
+                      <h4 className="text-sm md:text-base text-white/80">
+                        Detik
+                      </h4>
+                    </div>
+                  </div>
 
-                <p className="text-sm md:text-base text-white mt-4">
-                  Bertempat di
-                  <br />
-                  {event.address}
-                </p>
-                <div className="flex justify-between text-white my-8 gap-3 md:gap-4">
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
-                    <h2 className="text-xl md:text-2xl">
-                      {state.timeRemainings[index].days}
-                    </h2>
-                    <h4 className="text-sm md:text-base">Hari</h4>
-                  </div>
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
-                    <h2 className="text-xl md:text-2xl">
-                      {state.timeRemainings[index].hours}
-                    </h2>
-                    <h4 className="text-sm md:text-base">Jam</h4>
-                  </div>
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
-                    <h2 className="text-xl md:text-2xl">
-                      {state.timeRemainings[index].minutes}
-                    </h2>
-                    <h4 className="text-sm md:text-base">Menit</h4>
-                  </div>
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
-                    <h2 className="text-xl md:text-2xl">
-                      {state.timeRemainings[index].seconds}
-                    </h2>
-                    <h4 className="text-sm md:text-base">Detik</h4>
-                  </div>
+                  <p
+                    className={`text-sm md:text-base text-white mt-3 md:mt-6 ${balthazar.className}`}
+                  >
+                    Bertempat di
+                    <br />
+                    {event.address}
+                  </p>
                 </div>
-                <div className="inline-flex flex-wrap justify-center gap-4">
+
+                <div
+                  data-aos="fade-up"
+                  data-aos-delay="400"
+                  className="inline-flex flex-wrap justify-center gap-4 mt-4 md:mt-7"
+                >
                   <Link target="_blank" href={event.address_url}>
-                    <Button
-                      icon={<BiSolidMap className="lg:text-lg" />}
-                      title="Petunjuk Lokasi"
-                    />
+                    <Button icon={<BiMap />} title="Petunjuk Lokasi" />
                   </Link>
                   <div>
                     <Button
                       onClick={() => actions.handleAddToCalendar(event)}
-                      icon={<BiSolidCalendar className="lg:text-lg" />}
+                      icon={<BiCalendar />}
                       title="Simpan Tanggal"
                     />
                   </div>

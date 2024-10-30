@@ -101,9 +101,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         )}
                         <Link
                           target="_bank"
-                          href={`/${client.slug}?untuk=${encodeURIComponent(
-                            "Nama Undangan"
-                          )}`}
+                          href={`/${client.slug}`}
                           className="text-gray-500 text-lg"
                         >
                           <BiSolidShow />
@@ -160,7 +158,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                       window.location.port
                                         ? `:${window.location.port}`
                                         : ""
-                                    }/${client?.slug}?untuk=Nama Undangan`
+                                    }/${client?.slug}`
                                   )
                                 }
                                 type="button"
@@ -352,9 +350,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             <div className="ml-2 flex items-center relative z-10">
                               <Link
                                 target="_bank"
-                                href={`/${
-                                  client.slug
-                                }?untuk=${encodeURIComponent("Nama Undangan")}`}
+                                href={`/${client.slug}`}
                                 className="text-gray-500 text-lg"
                               >
                                 <BiSolidShow />
@@ -469,7 +465,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                         window.location.port
                                           ? `:${window.location.port}`
                                           : ""
-                                      }/${client?.slug}?untuk=Nama Undangan`
+                                      }/${client?.slug}`
                                     )
                                   }
                                   type="button"

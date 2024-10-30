@@ -45,29 +45,49 @@ const HeroComponent: FC<Props> = (props) => {
           slidesPerView={1}
           modules={[Autoplay]}
         >
-          {Array.isArray(props.state.client?.gallery) &&
-          props.state.client?.gallery.length > 0
-            ? props.state.client.gallery
-                .filter((image) => image !== props.state.client?.cover)
-                .map((image, index) => (
-                  <SwiperSlide
-                    className="relative w-full h-full"
-                    key={`hero-img-${index}`}
-                  >
-                    <div className="absolute inset-0 z-0">
-                      <ImageShimmer
-                        fill
-                        quality={100}
-                        alt={`hero-img-${index}`}
-                        priority
-                        sizes="100vw"
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                        src={image}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))
-            : null}
+          <>
+            {props.state.client?.cover && (
+              <SwiperSlide
+                className="relative w-full h-full"
+                key={`hero-cover`}
+              >
+                <div className="absolute inset-0 z-0">
+                  <ImageShimmer
+                    fill
+                    quality={100}
+                    alt={`hero-cover`}
+                    priority
+                    sizes="100vw"
+                    className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                    src={props.state.client.cover}
+                  />
+                </div>
+              </SwiperSlide>
+            )}
+            {Array.isArray(props.state.client?.gallery) &&
+            props.state.client?.gallery.length > 0
+              ? props.state.client.gallery
+                  .filter((image) => image !== props.state.client?.cover)
+                  .map((image, index) => (
+                    <SwiperSlide
+                      className="relative w-full h-full"
+                      key={`hero-img-${index}`}
+                    >
+                      <div className="absolute inset-0 z-0">
+                        <ImageShimmer
+                          fill
+                          quality={100}
+                          alt={`hero-img-${index}`}
+                          priority
+                          sizes="100vw"
+                          className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                          src={image}
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))
+              : null}
+          </>
         </Swiper>
       </div>
 
@@ -82,7 +102,7 @@ const HeroComponent: FC<Props> = (props) => {
               <p
                 data-aos="fade-up"
                 data-aos-delay="1200"
-                className={`${balthazar.className} text-white text-sm md:text-base uppercase text-center`}
+                className={`${balthazar.className} text-white md:text-base text-sm uppercase text-center`}
               >
                 Undangan {props.state.client?.theme?.category}
               </p>
@@ -94,7 +114,7 @@ const HeroComponent: FC<Props> = (props) => {
                 {props.state.groom?.nickname} & {props.state.bride?.nickname}
               </h1>
             </div>
-            <div className="max-w-screen-sm mx-auto">
+            <div className="max-w-md mx-auto">
               <div
                 data-aos="fade-up"
                 data-aos-delay="1600"
@@ -108,13 +128,13 @@ const HeroComponent: FC<Props> = (props) => {
                   }`}
                 >
                   <p
-                    className={`${balthazar.className} text-white text-sm md:text-base`}
+                    className={`${balthazar.className} text-white text-base md:text-lg`}
                   >
                     {events[currentIndex].name}
                   </p>
                   <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
                   <p
-                    className={`${balthazar.className} text-white text-sm md:text-base`}
+                    className={`${balthazar.className} text-white text-base md:text-lg`}
                   >
                     {moment(events[currentIndex].date).format(
                       "DD / MMMM / YYYY"
@@ -124,7 +144,7 @@ const HeroComponent: FC<Props> = (props) => {
               </div>
               <div data-aos="fade-up" data-aos-delay="1800">
                 <p
-                  className={`${balthazar.className} text-white text-xs md:text-sm text-justify mt-4 md:mt-6`}
+                  className={`${balthazar.className} text-white text-sm md:text-base text-justify mt-4 md:mt-6`}
                 >
                   Wahai pasangan suami-isteri, semoga kalian tetap bersatu dan
                   tidak pernah terpisahkan. Semoga kalian mencapai hidup penuh
@@ -134,7 +154,7 @@ const HeroComponent: FC<Props> = (props) => {
                 <div className="flex items-center gap-x-2 mt-4 md:mt-6">
                   <div className="h-[0.5px] w-4 bg-white"></div>
                   <p
-                    className={`${balthazar.className} text-white text-sm md:text-base`}
+                    className={`${balthazar.className} text-white text-base md:text-lg`}
                   >
                     Rgveda X.85.42
                   </p>

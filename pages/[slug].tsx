@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      untuk: untuk ?? "",
+      untuk: untuk ?? "Tamu Undangan",
       slug,
     },
   };

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { balthazar, italiana, marcellus } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
-import { BiSolidEnvelopeOpen } from "react-icons/bi";
+import { BiEnvelopeOpen } from "react-icons/bi";
 
 interface Props {
   state: useNirvaya["state"];
@@ -14,7 +14,7 @@ const Cover: FC<Props> = (props) => {
   return (
     <>
       <div
-        className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 z-50 ${
+        className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
           props.state.open
             ? "-bottom-full invisible opacity-0"
             : "bottom-0 visible"
@@ -40,12 +40,12 @@ const Cover: FC<Props> = (props) => {
           </h1>
           <div data-aos="fade-up" data-aos-delay="800">
             <p
-              className={`${balthazar.className} text-white text-xs md:text-sm mt-4 md:mt-6 text-center`}
+              className={`${balthazar.className} text-white text-sm md:text-base mt-4 md:mt-6 text-center`}
             >
               Yth. Bapak/Ibu/Saudara/i
             </p>
             <p
-              className={`${marcellus.className} text-white text-lg md:text-xl mt-1 md:mt-3 text-center`}
+              className={`${marcellus.className} text-white text-xl md:text-2xl mt-1 md:mt-3 text-center`}
             >
               {props.untuk}
             </p>
@@ -53,7 +53,7 @@ const Cover: FC<Props> = (props) => {
           <p
             data-aos="fade-up"
             data-aos-delay="1000"
-            className={`${balthazar.className} text-white text-xs md:text-sm mt-2 md:mt-4 max-w-sm mx-auto text-center`}
+            className={`${balthazar.className} text-white text-sm md:text-base mt-2 md:mt-4 max-w-sm mx-auto text-center`}
           >
             Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
             acara pernikahan kami
@@ -68,7 +68,7 @@ const Cover: FC<Props> = (props) => {
                 props.actions.handleOpenCover();
                 props.actions.handlePlayPause();
               }}
-              icon={<BiSolidEnvelopeOpen className="lg:text-lg" />}
+              icon={<BiEnvelopeOpen />}
               title="Buka Undangan"
             />
           </div>

@@ -1,4 +1,4 @@
-import {  balthazar } from "@/lib/fonts";
+import { balthazar } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
@@ -23,7 +23,7 @@ const Button: FC<Props> = ({
       {...props}
       className={`${balthazar.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} text-nirvaya-dark rounded min-w-24 bg-white px-5 py-3 flex uppercase hover:bg-transparent border border-white hover:text-white transition-colors ease-in-out duration-500 ${
+      } ${className} text-white rounded-full min-w-24 bg-white/10 backdrop-blur-sm px-5 py-3 flex hover:bg-transparent border-[0.5px] border-white transition-colors ease-in-out duration-500 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-2 md:gap-x-4 relative overflow-hidden shadow-sm`}
     >

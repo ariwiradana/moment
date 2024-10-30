@@ -71,7 +71,7 @@ const ThemeCard: FC<Props> = ({
               <div className="flex justify-center">
                 <Link
                   aria-label={`${slug}-preview-link`}
-                  href={`/${slug}?untuk=${encodeURIComponent("Nama Undangan")}`}
+                  href={`/${slug}`}
                   target="_blank"
                 >
                   <ButtonPrimary

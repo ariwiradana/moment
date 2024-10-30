@@ -21,7 +21,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative z-10 py-[60px] md:py-[100px] overflow-hidden px-8">
+      <section className="relative z-10 py-[60px] md:py-[100px] overflow-hidden px-8 bg-white">
         <div
           className="absolute inset-0 bg-repeat bg-center"
           style={{
@@ -32,14 +32,14 @@ const ParticipantsComponent: FC<Props> = (props) => {
         <div className="w-full h-full relative max-w-screen-xl mx-auto">
           <h1
             data-aos="fade-up"
-            className={`${italiana.className} text-[28px] md:text-4xl text-center text-nirvaya-dark`}
+            className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark`}
           >
             {props.state.client.opening_title}
           </h1>
           <p
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`${balthazar.className} text-xs md:text-sm text-nirvaya-dark/80 mt-8 md:mt-10 text-center max-w-screen-sm mx-auto`}
+            className={`${balthazar.className} text-sm md:text-base text-nirvaya-dark/80 mt-8 md:mt-12 text-center max-w-screen-sm mx-auto`}
           >
             {props.state.client?.opening_description}
           </p>
@@ -96,7 +96,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col items-center" data-aos="fade-up">
         <p
-          className={`text-nirvaya-dark/60 text-xs md:text-sm uppercase ${balthazar.className}`}
+          className={`text-nirvaya-dark/60 text-sm md:text-base uppercase ${balthazar.className}`}
         >
           {props.data.role === "groom"
             ? "Mempelai Pria"
@@ -108,7 +108,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       </div>
       <h1
         data-aos="fade-up"
-        className={`text-2xl md:text-3xl font-semibold text-nirvaya-dark relative my-3 md:my-5 text-center ${italiana.className}`}
+        className={`text-3xl md:text-4xl font-semibold text-nirvaya-dark relative my-3 md:my-5 text-center ${italiana.className}`}
       >
         {props.data.name}
       </h1>
@@ -116,13 +116,13 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         {props.data.role !== "participant" && (
           <>
             <p
-              className={`text-nirvaya-dark/60 text-xs md:text-sm text-center ${balthazar.className}`}
+              className={`text-nirvaya-dark/60 text-sm md:text-base text-center ${balthazar.className}`}
             >
               {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
               {props.data.child} dari pasangan
             </p>
             <h2
-              className={`text-nirvaya-dark mt-3 md:mt-5 text-center md:text-lg ${balthazar.className}`}
+              className={`text-nirvaya-dark mt-3 md:mt-5 text-center text-lg md:text-xl ${balthazar.className}`}
             >
               Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
             </h2>
@@ -130,13 +130,13 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         )}
       </div>
       <p
-        className={`text-nirvaya-dark/60 text-sm md:text-base text-center mt-3 md:mt-5 ${balthazar.className}`}
+        className={`text-nirvaya-dark/60 text-base md:text-lg text-center mt-3 md:mt-5 ${balthazar.className}`}
         data-aos="fade-up"
       >
         {props.data.address}
       </p>
       <div
-        className="flex justify-between items-center mt-5 md:mt-7 gap-x-5 text-nirvaya-dark text-lg md:text-xl text-center"
+        className="flex justify-between items-center mt-5 md:mt-7 gap-x-5 text-nirvaya-dark text-xl md:text-2xl text-center"
         data-aos="fade-up"
       >
         <div className="h-[0.5px] bg-nirvaya-dark/50 w-16 md:w-20"></div>
