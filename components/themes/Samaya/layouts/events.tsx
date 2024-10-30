@@ -52,11 +52,11 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 className={`px-6 py-12 md:p-12 bg-samaya-dark/80 rounded-3xl text-center md:min-w-[400px] ${marcellus.className}`}
               >
                 <h1
-                  className={`${marcellus.className} text-2xl md:text-3xl text-white uppercase`}
+                  className={`${marcellus.className} text-3xl md:text-4xl text-white uppercase`}
                 >
                   {event.name}
                 </h1>
-                <p className="text-sm md:text-base mt-4 text-white">
+                <p className="text-sm md:text-base mt-6 text-white">
                   {moment(event.date).format("DD / MMMM / YYYY")}
                 </p>
                 <p className="text-sm md:text-base text-white">
@@ -68,26 +68,26 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                   <br />
                   {event.address}
                 </p>
-                <div className="flex justify-between text-white my-8 gap-3 md:gap-4">
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                <div className="grid grid-cols-4 text-white my-6 gap-3 md:gap-4">
+                  <div className="flex flex-col border-[0.5px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
                     <h2 className="text-xl md:text-2xl">
                       {state.timeRemainings[index].days}
                     </h2>
                     <h4 className="text-sm md:text-base">Hari</h4>
                   </div>
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                  <div className="flex flex-col border-[0.5px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
                     <h2 className="text-xl md:text-2xl">
                       {state.timeRemainings[index].hours}
                     </h2>
                     <h4 className="text-sm md:text-base">Jam</h4>
                   </div>
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                  <div className="flex flex-col border-[0.5px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
                     <h2 className="text-xl md:text-2xl">
                       {state.timeRemainings[index].minutes}
                     </h2>
                     <h4 className="text-sm md:text-base">Menit</h4>
                   </div>
-                  <div className="flex flex-col justify-center border border-white w-16 md:w-20 aspect-square rounded-xl md:rounded-2xl">
+                  <div className="flex flex-col border-[0.5px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
                     <h2 className="text-xl md:text-2xl">
                       {state.timeRemainings[index].seconds}
                     </h2>

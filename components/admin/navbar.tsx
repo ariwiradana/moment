@@ -6,6 +6,7 @@ import { useAdminSidebar } from "@/hooks/admin/useAdminSidebar";
 import { getGreeting } from "@/utils/getGreeting";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
+import Link from "next/link";
 
 const Navbar: FC = () => {
   const { isSidebarOpen, toggleSidebar } = useAdminSidebar();
@@ -23,16 +24,18 @@ const Navbar: FC = () => {
         }`}
       />
       <div className="flex gap-x-4 items-center">
-        <div className="rounded-full overflow-hidden relative flex justify-center items-center aspect-square w-10">
-          <ImageShimmer
-            priority
-            sizes="100px"
-            alt="user-image"
-            fill
-            className="object-cover h-full w-full rounded-full overflow-hidden"
-            src="https://avatar.iran.liara.run/public/2"
-          />
-        </div>
+        <Link href="/">
+          <div className="relative flex justify-center items-center aspect-square w-12">
+            <ImageShimmer
+              priority
+              sizes="100px"
+              alt="user-image"
+              fill
+              className="object-contain h-full w-full"
+              src="/logo.png"
+            />
+          </div>
+        </Link>
         <div>
           <h1 className="font-semibold text-admin-dark">{sanitizedUser}</h1>
           <p className="text-xs text-darkgray">

@@ -2,8 +2,9 @@ import React, { FC } from "react";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import "yet-another-react-lightbox/styles.css";
 import { afacad, marcellus, windsong } from "@/lib/fonts";
-import { BiSolidCopy } from "react-icons/bi";
+import { BiSolidChevronRightCircle, BiSolidCopy } from "react-icons/bi";
 import Image from "next/image";
+import Button from "../elements/button";
 
 interface Props {
   state: useSamaya["state"];
@@ -41,55 +42,77 @@ const GiftComponent: FC<Props> = (props) => {
             </h1>
             <p
               data-aos="fade-up"
-              className={`${marcellus.className} text-sm md:text-lg leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto text-center`}
+              className={`${marcellus.className} text-sm md:text-lg leading-5 text-white mt-8 max-w-screen-md mx-auto text-center`}
             >
               Hadir dan memberi restu adalah hadiah yang sangat berharga bagi
               kami. Namun, bila berkeinginan untuk berbagi dalam bentuk lain,
               kado digital dapat diberikan melalui transfer.
             </p>
-            <div className="flex justify-center relative z-20">
+            <div data-aos="fade-up" className="flex justify-center mt-6">
+              <Button
+                onClick={() =>
+                  props.actions.setIsGiftShown(!props.state.isGiftShown)
+                }
+                type="button"
+                title="Klik Disini"
+                icon={<BiSolidChevronRightCircle />}
+              />
+            </div>
+            {props.state.isGiftShown && (
               <div
                 data-aos="zoom-out-up"
-                className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-samaya-primary/40 to-samaya-primary overflow-hidden ${afacad.className}`}
+                className="flex justify-center relative z-20 mt-12"
               >
-                <div className="w-44 h-44 rounded-full border border-white/30 absolute -right-20 -top-20"></div>
-                <div className="w-64 h-64 rounded-full border border-white/30 absolute -left-20 -bottom-20"></div>
-                <div className="w-64 h-64 rounded-full border border-white/30 absolute -left-10 -bottom-40"></div>
-                <div className="flex justify-end relative z-10">
-                  <h1
-                    className={`text-3xl font-bold text-samaya-dark ${afacad.className}`}
-                  >
-                    {props.state.client?.gift_bank_name}
-                  </h1>
-                </div>
-                <div className="relative z-10">
-                  <div>
-                    <p
-                      className={`text-xl leading-5 text-samaya-dark ${marcellus.className}`}
+                <div
+                  className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-samaya-primary/40 to-samaya-primary overflow-hidden ${afacad.className}`}
+                >
+                  <div className="w-44 h-44 rounded-full border border-white/30 absolute -right-20 -top-20"></div>
+                  <div className="w-64 h-64 rounded-full border border-white/30 absolute -left-20 -bottom-20"></div>
+                  <div className="w-64 h-64 rounded-full border border-white/30 absolute -left-10 -bottom-40"></div>
+                  <div className="flex justify-between relative z-10">
+                    <div className="relative w-14">
+                      <Image
+                        fill
+                        alt="card-chip"
+                        src="/images/nirvaya/card-chip.svg"
+                        className="object-contain"
+                      />
+                    </div>
+                    <h1
+                      className={`text-3xl font-bold text-samaya-dark ${afacad.className}`}
                     >
-                      {props.state.client?.gift_account_name}
-                    </p>
-                    <p
-                      className={`text-xl font-medium text-samaya-dark ${afacad.className}`}
-                    >
-                      {props.state.client?.gift_account_number}
-                    </p>
+                      {props.state.client?.gift_bank_name}
+                    </h1>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      props.actions.handleCopyRekening(
-                        props.state.client?.gift_account_number as string
-                      )
-                    }
-                    className="bg-samaya-dark outline-none text-samaya-primary px-2 rounded-lg text-sm flex items-center gap-x-1 mt-3 relative z-10"
-                  >
-                    <span>Salin No Rekening</span>
-                    <BiSolidCopy className="text-xs" />
-                  </button>
+                  <div className="relative z-10">
+                    <div>
+                      <p
+                        className={`text-xl leading-5 text-samaya-dark ${marcellus.className}`}
+                      >
+                        {props.state.client?.gift_account_name}
+                      </p>
+                      <p
+                        className={`text-xl font-medium text-samaya-dark ${afacad.className}`}
+                      >
+                        {props.state.client?.gift_account_number}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        props.actions.handleCopyRekening(
+                          props.state.client?.gift_account_number as string
+                        )
+                      }
+                      className="bg-samaya-dark outline-none text-samaya-primary px-2 rounded-lg text-sm flex items-center gap-x-1 mt-3 relative z-10"
+                    >
+                      <span>Salin No Rekening</span>
+                      <BiSolidCopy className="text-xs" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>

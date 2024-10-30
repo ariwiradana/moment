@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 44.51 34.54">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: url(#Degradado_sin_nombre_2-2);
+        mix-blend-mode: screen;
+        opacity: .5;
+      }
+
+      .cls-3 {
+        isolation: isolate;
+      }
+
+      .cls-4 {
+        fill: #231912;
+      }
+
+      .cls-5 {
+        fill: url(#Degradado_sin_nombre_2);
+      }
+
+      .cls-6 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" width="44.51" height="34.54"/>
+    </clipPath>
+    <linearGradient id="Degradado_sin_nombre_2" data-name="Degradado sin nombre 2" x1="1.57" y1=".32" x2="45.12" y2="36.01" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b56110"/>
+      <stop offset=".15" stop-color="#b56110"/>
+      <stop offset=".46" stop-color="#e5ac5b"/>
+      <stop offset=".61" stop-color="#f9cc7b"/>
+      <stop offset=".72" stop-color="#ffe6a6"/>
+      <stop offset=".84" stop-color="#f9cc7b"/>
+      <stop offset="1" stop-color="#b56110"/>
+    </linearGradient>
+    <linearGradient id="Degradado_sin_nombre_2-2" data-name="Degradado sin nombre 2" x1="-3.23" y1="16.85" x2="47" y2="16.85" xlink:href="#Degradado_sin_nombre_2"/>
+  </defs>
+  <g class="cls-3">
+    <g id="Layer_2">
+      <g id="OBJECTS">
+        <g class="cls-6">
+          <path class="cls-5" d="M5.08,0h34.34c2.81,0,5.08,2.28,5.08,5.08v24.37c0,2.81-2.28,5.08-5.08,5.08H5.08c-2.81,0-5.08-2.28-5.08-5.08V5.08C0,2.28,2.28,0,5.08,0Z"/>
+          <path class="cls-2" d="M47,17.25v-.79h-19.08v-5.08l4.26-4.26h13.37v-.79h-13.7l-4.49,4.49h-5.08V-1.86h-.79v12.67h-5.08l-4.49-4.49H-1.78v.79h13.37l4.26,4.26v5.08H-3.23v.79H15.84v5.08l-4.65,4.65H-1.78v.79h13.3l4.88-4.88h5.08v12.67h.79v-12.67h5.08l4.88,4.88h13.3v-.79h-12.97l-4.65-4.65v-5.08h19.08ZM27.13,22.1h-10.5v-10.5h10.5v10.5Z"/>
+          <path class="cls-4" d="M47.37,17.66v-.79h-19.08v-5.08l4.26-4.26h13.37v-.79h-13.7l-4.49,4.49h-5.08V-1.45h-.79v12.67h-5.08l-4.49-4.49H-1.41v.79h13.37l4.26,4.26v5.08H-2.86v.79h19.08v5.08l-4.65,4.65H-1.41v.79h13.3l4.88-4.88h5.08v12.67h.79v-12.67h5.08l4.88,4.88h13.3v-.79h-12.97l-4.65-4.65v-5.08h19.08ZM27.5,22.52h-10.5v-10.5h10.5v10.5Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

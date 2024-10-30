@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import "yet-another-react-lightbox/styles.css";
-import { afacad, marcellus, windsong } from "@/lib/fonts";
-import { BiSolidCopy } from "react-icons/bi";
+import { afacad, balthazar, italiana } from "@/lib/fonts";
+import { BiChevronRightCircle, BiCopy } from "react-icons/bi";
 import Image from "next/image";
+import Button from "../elements/button";
 
 interface Props {
   state: useNirvaya["state"];
@@ -17,81 +18,88 @@ const GiftComponent: FC<Props> = (props) => {
     props.state.client?.gift_account_number
   )
     return (
-      <section className="relative bg-samaya-dark overflow-hidden">
+      <section className="relative bg-nirvaya-dark-dark overflow-hidden px-8 py-[60px] md:py-[100px] bg-nirvaya-dark">
+        <h1
+          data-aos="fade-up"
+          className={`${italiana.className} text-4xl md:text-5xl text-center text-white`}
+        >
+          Kado Digital
+        </h1>
+        <p
+          data-aos="fade-up"
+          data-aos-delay="100"
+          className={`${balthazar.className} text-sm md:text-base text-white/80 mt-1 mb-4 text-center max-w-screen-sm mx-auto`}
+        >
+          Tanpa mengurangi rasa hormat kami bagi tamu yang ingin mengirimkan
+          hadiah kepada kedua mempelai dapat mengirimkannya melalui :
+        </p>
         <div
-          className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
-          style={{
-            backgroundImage: "url('/images/samaya/texture.jpg')",
-          }}
-        ></div>
-        <Image
-          className="absolute -top-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
-          alt="mandala-top-gift"
-          src="/images/samaya/mandala.svg"
-          height={500}
-          width={500}
-        />
-        <div className="">
-          <div className="relative h-full w-full px-4 py-16 lg:py-24 z-30">
-            <h1
-              data-aos="fade-up"
-              className={`${windsong.className} text-samaya-primary text-4xl lg:text-6xl transform -translate-y-3 text-center`}
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className="flex justify-center"
+        >
+          <Button
+            onClick={() =>
+              props.actions.setIsGiftShown(!props.state.isGiftShown)
+            }
+            type="button"
+            title="Klik Disini"
+            white
+            icon={<BiChevronRightCircle />}
+          />
+        </div>
+        {props.state.isGiftShown && (
+          <div
+            data-aos="zoom-out-up"
+            className="flex justify-center relative z-20 mt-12"
+          >
+            <div
+              className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-white/50 via-white via-[20%] to-[90%] to-white/70 overflow-hidden ${afacad.className}`}
             >
-              Kado Digital
-            </h1>
-            <p
-              data-aos="fade-up"
-              className={`${marcellus.className} text-sm md:text-lg leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto text-center`}
-            >
-              Hadir dan memberi restu adalah hadiah yang sangat berharga bagi
-              kami. Namun, bila berkeinginan untuk berbagi dalam bentuk lain,
-              kado digital dapat diberikan melalui transfer.
-            </p>
-            <div className="flex justify-center relative z-20">
-              <div
-                data-aos="zoom-out-up"
-                className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-samaya-primary/40 to-samaya-primary overflow-hidden ${afacad.className}`}
-              >
-                <div className="w-44 h-44 rounded-full border border-white/30 absolute -right-20 -top-20"></div>
-                <div className="w-64 h-64 rounded-full border border-white/30 absolute -left-20 -bottom-20"></div>
-                <div className="w-64 h-64 rounded-full border border-white/30 absolute -left-10 -bottom-40"></div>
-                <div className="flex justify-end relative z-10">
-                  <h1
-                    className={`text-3xl font-bold text-samaya-dark ${afacad.className}`}
-                  >
-                    {props.state.client?.gift_bank_name}
-                  </h1>
+              <div className="flex justify-between relative z-10">
+                <div className="relative w-14">
+                  <Image
+                    fill
+                    alt="card-chip"
+                    src="/images/nirvaya/card-chip.svg"
+                    className="object-contain"
+                  />
                 </div>
-                <div className="relative z-10">
-                  <div>
-                    <p
-                      className={`text-xl leading-5 text-samaya-dark ${marcellus.className}`}
-                    >
-                      {props.state.client?.gift_account_name}
-                    </p>
-                    <p
-                      className={`text-xl font-medium text-samaya-dark ${afacad.className}`}
-                    >
-                      {props.state.client?.gift_account_number}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      props.actions.handleCopyRekening(
-                        props.state.client?.gift_account_number as string
-                      )
-                    }
-                    className="bg-samaya-dark outline-none text-samaya-primary px-2 rounded-lg text-sm flex items-center gap-x-1 mt-3 relative z-10"
+                <h1
+                  className={`text-3xl md:text-4xl font-bold text-nirvaya-dark ${balthazar.className}`}
+                >
+                  {props.state.client?.gift_bank_name}
+                </h1>
+              </div>
+              <div className="relative z-10">
+                <div>
+                  <p
+                    className={`text-xl leading-5 text-nirvaya-dark ${balthazar.className}`}
                   >
-                    <span>Salin No Rekening</span>
-                    <BiSolidCopy className="text-xs" />
-                  </button>
+                    {props.state.client?.gift_account_name}
+                  </p>
+                  <p
+                    className={`text-xl text-nirvaya-dark ${balthazar.className}`}
+                  >
+                    {props.state.client?.gift_account_number}
+                  </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    props.actions.handleCopyRekening(
+                      props.state.client?.gift_account_number as string
+                    )
+                  }
+                  className="bg-nirvaya-dark outline-none text-nirvaya-primary px-2 rounded text-sm md:text-base flex items-center gap-x-1 mt-3 relative z-10 text-white"
+                >
+                  <span>Salin No Rekening</span>
+                  <BiCopy className="text-sm" />
+                </button>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
     );
 };

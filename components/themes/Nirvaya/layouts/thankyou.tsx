@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { afacad, marcellus, windsong } from "@/lib/fonts";
-import Image from "next/image";
+import { balthazar, italiana } from "@/lib/fonts";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import Link from "next/link";
 import { sosmedURLs } from "@/constants/sosmed";
@@ -17,67 +16,32 @@ interface Props {
 
 const ThankyouComponent: FC<Props> = (props) => {
   return (
-    <section className="relative bg-samaya-dark">
-      <div
-        className="absolute inset-0 opacity-20 bg-repeat bg-center bg-blend-lighten"
-        style={{
-          backgroundImage: "url('/images/samaya/texture.jpg')",
-        }}
-      ></div>
-      <Image
-        className="absolute -bottom-[250px] left-1/2 transform -translate-x-1/2 z-30 opacity-5"
-        alt="mandala-bottom-participant"
-        src="/images/samaya/mandala.svg"
-        height={500}
-        width={500}
-      />
-      <div className="max-w-screen-sm mx-auto px-4 py-16">
-        <div className="flex justify-center w-full">
-          <div className="w-96 h-[500px] md:h-[550px] relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-samaya-dark/20 to-samaya-dark z-10"></div>
-            {props.state.client?.cover && (
-              <Image
-                className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500 object-cover"
-                src={props.state.client?.cover as string}
-                alt={`thankyou-img`}
-                fill
-                priority
-              />
-            )}
-          </div>
-        </div>
+    <section className="relative flex flex-col justify-between gap-[60px] md:gap-[100px] bg-gradient-to-b from-nirvaya-dark/70 via-nirvaya-dark/50 via-[50%] md:via-[40%] to-[80%] to-nirvaya-dark">
+      <div className="max-w-screen-sm mx-auto py-[60px] md:py-[100px] px-8">
         <p
           data-aos="fade-up"
-          data-aos-delay="100"
-          className={`${marcellus.className} text-sm md:text-lg text-center leading-5 text-white max-w-screen-md mx-auto`}
+          className={`${balthazar.className} mt-8 md:mt-12 text-sm md:text-base text-white text-center max-w-screen-sm mx-auto`}
         >
-          {props.state.client?.closing_description}
+          {props.state.client?.closing_description} <br />
+          <br />
+          {props.state.client?.closing_title}.
         </p>
 
-        <div className="flex justify-center my-4" data-aos="fade-up">
-          <div className="w-[0.5px] h-8 bg-samaya-primary"></div>
-        </div>
         <p
           data-aos="fade-up"
-          className={`${marcellus.className} text-sm md:text-lg text-white text-center`}
+          className={`${balthazar.className} text-white md:text-base text-sm mt-12 md:mt-16 uppercase text-center`}
         >
-          Kami yang berbahagia
+          Kami Yang Berbahagia
         </p>
         <h1
           data-aos="fade-up"
-          className={`${windsong.className} text-4xl text-center mt-8 leading-7 text-white font-medium mb-24`}
+          className={`${italiana.className} text-white text-center text-[40px] md:text-5xl`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
-        <h1
-          data-aos="fade-up"
-          className={`${marcellus.className} text-3xl md:text-4xl text-center text-samaya-primary`}
-        >
-          {props.state.client?.closing_title}
-        </h1>
       </div>
       <ul
-        className="flex flex-col justify-center gap-2 items-center relative z-30 mt-24 pb-12"
+        className="flex flex-col justify-center gap-2 items-center relative z-30 pb-8"
         data-aos="zoom-in-up"
       >
         <li
@@ -113,7 +77,7 @@ const ThankyouComponent: FC<Props> = (props) => {
           </Link>
         </li>
         <li className="font-semibold text-white text-base flex items-center gap-x-1 z-30 relative">
-          <span className={`${afacad.className} text-xs font-light`}>
+          <span className={`${balthazar.className} text-xs font-light`}>
             Designed with ❤️ by{" "}
             <Link target="_blank" href="/">
               Moment Invitations

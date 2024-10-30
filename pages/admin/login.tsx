@@ -48,6 +48,7 @@ const AdminLogin: FC = () => {
               inputSize="medium"
             />
             <Input
+              type="password"
               onChange={actions.handleChange}
               name="password"
               value={state.formData.password}

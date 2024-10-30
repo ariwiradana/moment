@@ -36,7 +36,7 @@ const HeroComponent: FC<Props> = (props) => {
         <Swiper
           loop
           autoplay={{
-            delay: 5000,
+            delay: 4000,
             disableOnInteraction: false,
           }}
           effect="fade"

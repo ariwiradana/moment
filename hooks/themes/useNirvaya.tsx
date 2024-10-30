@@ -44,6 +44,7 @@ export interface useNirvaya {
     reviews: Review[] | null;
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
+    isGiftShown: boolean;
   };
   actions: {
     handleOpenCover: () => void;
@@ -53,6 +54,7 @@ export interface useNirvaya {
     handleCopyRekening: (rekening: string) => void;
     handleAddToCalendar: (event: Event) => void;
     setIsPlaying: (isPlaying: boolean) => void;
+    setIsGiftShown: (isGiftShown: boolean) => void;
   };
 }
 
@@ -78,6 +80,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
   const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
     client?.events
       ? client?.events.map(() => ({
@@ -353,6 +356,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       errors,
       isPlaying,
       timeRemainings,
+      isGiftShown,
     },
     actions: {
       handleOpenCover,
@@ -362,6 +366,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       handleCopyRekening,
       handleAddToCalendar,
       setIsPlaying,
+      setIsGiftShown,
     },
   };
 };

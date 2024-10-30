@@ -44,6 +44,7 @@ export interface useSamaya {
     reviews: Review[] | null;
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
+    isGiftShown: boolean;
   };
   actions: {
     handleOpenCover: () => void;
@@ -53,6 +54,7 @@ export interface useSamaya {
     handleCopyRekening: (rekening: string) => void;
     handleAddToCalendar: (event: Event) => void;
     setIsPlaying: (isPlaying: boolean) => void;
+    setIsGiftShown: (isGiftShown: boolean) => void;
   };
 }
 
@@ -67,6 +69,7 @@ const useSamaya = (client: Client | null): useSamaya => {
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<Countdown>({
     days: 0,
     hours: 0,
@@ -353,6 +356,7 @@ const useSamaya = (client: Client | null): useSamaya => {
       errors,
       isPlaying,
       timeRemainings,
+      isGiftShown
     },
     actions: {
       handleOpenCover,
@@ -362,6 +366,7 @@ const useSamaya = (client: Client | null): useSamaya => {
       handleCopyRekening,
       handleAddToCalendar,
       setIsPlaying,
+      setIsGiftShown
     },
   };
 };

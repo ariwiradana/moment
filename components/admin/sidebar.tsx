@@ -11,6 +11,7 @@ import { getGreeting } from "@/utils/getGreeting";
 import { getClient } from "@/lib/client";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import Link from "next/link";
 
 type MenuItem = {
   name: string;
@@ -67,16 +68,18 @@ const Sidebar: FC = () => {
       >
         <nav className="flex items-center px-4 py-3 gap-3 md:gap-x-6 justify-center md:justify-between">
           <div className="flex gap-x-4 items-center">
-            <div className="rounded-full overflow-hidden relative flex justify-center items-center aspect-square w-10 md:w-14">
-              <ImageShimmer
-                priority
-                sizes="100px"
-                alt="user-image"
-                fill
-                className="object-cover h-full w-full rounded-full overflow-hidden"
-                src="https://avatar.iran.liara.run/public/2"
-              />
-            </div>
+            <Link href="/">
+              <div className="relative flex justify-center items-center aspect-square w-12 md:w-14">
+                <ImageShimmer
+                  priority
+                  sizes="100px"
+                  alt="user-image"
+                  fill
+                  className="object-contain h-full w-full"
+                  src="/logo.png"
+                />
+              </div>
+            </Link>
             <div className="pr-4">
               <h1 className="font-semibold text-admin-dark capitalize">
                 {sanitizedUser}
