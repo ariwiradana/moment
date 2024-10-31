@@ -48,6 +48,7 @@ const HeroComponent: FC<Props> = (props) => {
                 autoPlay
                 muted
                 loop
+                playsInline
               ></video>
             </div>
           </div>
