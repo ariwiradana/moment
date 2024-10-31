@@ -86,23 +86,25 @@ const GalleryComponent: FC<Props> = (props) => {
         </p>
         {videos.length > 0 && (
           <div className="grid gap-4 mb-2 px-2" data-aos="zoom-in-up">
-            {videos.map((v) => {
-              const youtubeId = getYouTubeVideoId(v);
-              return (
-                <div
-                  key={youtubeId}
-                  className="relative w-full aspect-video rounded overflow-hidden"
-                >
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0`}
-                    title={v}
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              );
-            })}
+            {videos
+              .filter((v) => v.includes("www.youtube.com"))
+              .map((v) => {
+                const youtubeId = getYouTubeVideoId(v);
+                return (
+                  <div
+                    key={youtubeId}
+                    className="relative w-full aspect-video rounded overflow-hidden"
+                  >
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0`}
+                      title={v}
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                );
+              })}
           </div>
         )}
         <div className="mx-auto flex flex-col gap-4 px-2" data-aos="zoom-in-up">

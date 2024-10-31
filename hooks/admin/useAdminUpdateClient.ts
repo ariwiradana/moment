@@ -104,6 +104,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const [galleryImagesForm, setGalleryImagesForm] = useState<FileList | null>(
     null
   );
+  const [videoFileForm, setVideoFileForm] = useState<FileList | null>(null);
   const [videosForm, setVideosForm] = useState<string[]>([]);
   const [musicForm, setMusicForm] = useState<File | null>(null);
   const [participantImagesForm, setParticipantImagesForm] = useState<
@@ -112,9 +113,13 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
   const clearFileInput = () => {
     const galleryInput = document.getElementById("gallery") as HTMLInputElement;
+    const videoFileInput = document.getElementById(
+      "video-file"
+    ) as HTMLInputElement;
     const musicInput = document.getElementById("music") as HTMLInputElement;
 
     if (galleryInput) galleryInput.value = "";
+    if (videoFileInput) videoFileInput.value = "";
     if (musicInput) musicInput.value = "";
     setVideosForm([]);
   };
@@ -218,6 +223,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       setGalleryImagesForm(value as FileList);
     } else if (name === "videos") {
       setVideosForm(value as string[]);
+    } else if (name === "video-file") {
+      setVideoFileForm(value as FileList);
     } else if (name === "music") {
       setMusicForm(value as File);
     } else {
@@ -396,12 +403,58 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     return musicURL;
   };
 
+  console.log(videoFileForm);
+
+  const handleUploadVideoFile = async () => {
+    let videoFileURL: string = "";
+    alert("video exist");
+    if (videoFileForm) {
+      const MAX_SIZE = 50 * 1024 * 1024;
+      let i = 0;
+
+      if (videoFileForm instanceof File) {
+        i++;
+        const toastUpload = toast.loading(`Uploading video cover`);
+        try {
+          if (videoFileForm.size > MAX_SIZE) {
+            toast.error(`Video cover size to large`, {
+              id: toastUpload,
+            });
+            return;
+          }
+
+          const filename = getFilename(
+            "Clients",
+            formData.name,
+            "Video",
+            videoFileForm.type
+          );
+          const res = await getClient(`/api/_ub?filename=${filename}`, {
+            method: "POST",
+            body: videoFileForm,
+          });
+          const result = await res.json();
+          if (result.success) {
+            toast.success(`Video cover uploaded successfully!`, {
+              id: toastUpload,
+            });
+            videoFileURL = result.data.url;
+          }
+        } catch (error: any) {
+          toast.error(error.message || `Error uploading video cover`);
+        }
+      }
+    }
+    return videoFileURL;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     const newGalleryURLs = await handleUploadGallery();
     const newMusicURL = await handleUploadMusic();
+    const newVideoFileURL = await handleUploadVideoFile();
     const updatedParticipant = await handleUploadImageParticipant();
 
     const modifiedFormdata: Client = { ...formData };
@@ -411,7 +464,11 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     const currentVideos = Array.isArray(formData.videos) ? formData.videos : [];
 
     modifiedFormdata["gallery"] = [...currentGallery, ...newGalleryURLs];
-    modifiedFormdata["videos"] = [...currentVideos, ...videosForm];
+    modifiedFormdata["videos"] = [
+      ...currentVideos,
+      ...videosForm,
+      ...(newVideoFileURL ? [newVideoFileURL as string] : []),
+    ];
     modifiedFormdata["music"] =
       !formData.music && newMusicURL ? newMusicURL : formData.music;
     modifiedFormdata["participants"] = updatedParticipant as Participant[];

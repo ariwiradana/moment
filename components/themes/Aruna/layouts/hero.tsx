@@ -30,66 +30,86 @@ const HeroComponent: FC<Props> = (props) => {
     }
   }, [events.length]);
 
+  const video =
+    Array.isArray(props.state.client?.videos) &&
+    props.state.client.videos.length > 0
+      ? props.state.client.videos.filter((v) => !v.includes("www.youtube.com"))
+      : [];
+
   return (
     <section className="relative h-dvh">
-      <div className="fixed inset-0">
-        <Swiper
-          loop
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
-          effect="fade"
-          speed={3000}
-          className="w-full transition-transform h-dvh"
-          spaceBetween={0}
-          slidesPerView={1}
-          modules={[Autoplay, EffectFade]}
-        >
-          <>
-            {props.state.client?.cover && (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`hero-cover`}
-              >
-                <div className="absolute inset-0 z-0">
-                  <ImageShimmer
-                    fill
-                    quality={100}
-                    alt={`hero-cover`}
-                    priority
-                    sizes="100vw"
-                    className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                    src={props.state.client.cover}
-                  />
-                </div>
-              </SwiperSlide>
-            )}
-            {Array.isArray(props.state.client?.gallery) &&
-            props.state.client?.gallery.length > 0
-              ? props.state.client.gallery
-                  .filter((image) => image !== props.state.client?.cover)
-                  .map((image, index) => (
-                    <SwiperSlide
-                      className="relative w-full h-full"
-                      key={`hero-img-${index}`}
-                    >
-                      <div className="absolute inset-0 z-0">
-                        <ImageShimmer
-                          fill
-                          quality={100}
-                          alt={`hero-img-${index}`}
-                          priority
-                          sizes="100vw"
-                          className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                          src={image}
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))
-              : null}
-          </>
-        </Swiper>
+      <div className="fixed inset-0" data-aos="zoom-out" data-aos-delay="500">
+        {video && video?.length > 0 ? (
+          <div className="h-dvh w-full">
+            <div className="absolute left-0 top-0 w-full h-full overflow-hidden">
+              <video
+                className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 object-cover"
+                src={video[0]}
+                autoPlay
+                muted
+                loop
+              ></video>
+            </div>
+          </div>
+        ) : (
+          <Swiper
+            loop
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            effect="fade"
+            speed={3000}
+            className="w-full transition-transform h-dvh"
+            spaceBetween={0}
+            slidesPerView={1}
+            modules={[Autoplay, EffectFade]}
+          >
+            <>
+              {props.state.client?.cover && (
+                <SwiperSlide
+                  className="relative w-full h-full"
+                  key={`hero-cover`}
+                >
+                  <div className="absolute inset-0 z-0">
+                    <ImageShimmer
+                      fill
+                      quality={100}
+                      alt={`hero-cover`}
+                      priority
+                      sizes="100vw"
+                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                      src={props.state.client.cover}
+                    />
+                  </div>
+                </SwiperSlide>
+              )}
+              {Array.isArray(props.state.client?.gallery) &&
+              props.state.client?.gallery.length > 0
+                ? props.state.client.gallery
+                    .filter((image) => image !== props.state.client?.cover)
+                    .map((image, index) => (
+                      <SwiperSlide
+                        className="relative w-full h-full"
+                        key={`hero-img-${index}`}
+                      >
+                        <div className="absolute inset-0 z-0">
+                          <ImageShimmer
+                            fill
+                            quality={100}
+                            alt={`hero-img-${index}`}
+                            priority
+                            sizes="100vw"
+                            className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                            src={image}
+                          />
+                        </div>
+                      </SwiperSlide>
+                    ))
+                : null}
+            </>
+          </Swiper>
+        )}
       </div>
       <div
         className={`absolute inset-0 z-10 bg-gradient-to-b from-aruna-dark/80 from-[15%] via-aruna-dark/0 to-[85%] to-aruna-dark/80 transition-opacity ease-in-out duration-1000 delay-500 ${

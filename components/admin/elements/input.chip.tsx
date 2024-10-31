@@ -41,11 +41,11 @@ const InputChip: React.FC<InputChipProps> = ({
   const paddingStyles = (size: "small" | "medium" | "large") => {
     switch (size) {
       case "small":
-        return "p-1";
-      case "medium":
         return "p-2";
+      case "medium":
+        return "p-3";
       case "large":
-        return "p-[14px]";
+        return `${chips.length > 0 ? "py-[17px]" : "py-[19px]"}  px-4 `;
     }
   };
 

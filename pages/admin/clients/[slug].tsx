@@ -227,11 +227,28 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   ))
                 : null}
             </div>
-            <InputChip
-              chips={state.videosForm}
-              onChange={(value) => actions.handleChangeClient(value, "videos")}
-              label="Youtube URL Video"
-            />
+            <div className="grid grid-cols-2 gap-4">
+              <InputChip
+                chips={state.videosForm}
+                onChange={(value) =>
+                  actions.handleChangeClient(value, "videos")
+                }
+                label="Youtube URL Video"
+              />
+              <Input
+                id="video-file"
+                accept="video/*"
+                type="file"
+                onChange={(e) =>
+                  actions.handleChangeClient(
+                    e.target.files?.length ? (e.target.files[0] as File) : "",
+                    "video-file"
+                  )
+                }
+                className="w-full"
+                label="Video Cover"
+              />
+            </div>
 
             {state.formData.videos && (
               <div className="grid gap-2 relative">
@@ -239,6 +256,8 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 state.formData.videos.length > 0
                   ? state.formData.videos.map((video) => {
                       const youtubeId = getYouTubeVideoId(video);
+                      const isYouTubeVideo = video.includes("www.youtube.com");
+
                       return (
                         <div className="relative" key={youtubeId}>
                           <div className="absolute top-2 right-2 z-20">
@@ -256,7 +275,16 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               <BiX />
                             </button>
                           </div>
-                          <YouTubePlayer youtubeId={youtubeId as string} />
+
+                          {isYouTubeVideo ? (
+                            <YouTubePlayer youtubeId={youtubeId as string} />
+                          ) : (
+                            <video
+                              src={video}
+                              controls
+                              className="w-full h-auto" // Add classes for responsiveness
+                            />
+                          )}
                         </div>
                       );
                     })
