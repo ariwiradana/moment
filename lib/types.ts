@@ -101,7 +101,7 @@ export interface Package {
   background_sound: boolean;
   max_videos: string;
   rsvp_and_greetings: boolean;
-  custom_cover_photo: boolean;
+  custom_cover: boolean;
   digital_envelope: boolean;
   google_maps_integration: boolean;
   add_to_calendar: boolean;

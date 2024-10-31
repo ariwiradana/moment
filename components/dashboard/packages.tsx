@@ -39,19 +39,19 @@ const PackageComponent = () => {
                 key={p.id}
               >
                 <h1
-                  className={`${dm.className} text-3xl lg:text-4xl font-bold`}
+                  className={`${dm.className} text-3xl lg:text-[40px] font-bold`}
                 >
                   Paket {p.name}
                 </h1>
                 <h2
-                  className={`${afacad.className} text-lg mt-4 leading-4 ${
+                  className={`${afacad.className} text-xl mt-6 leading-4 ${
                     isLast ? "text-white/50" : "text-dashboard-dark/50"
                   } line-through`}
                 >
                   {formatToRupiah(p.price)}
                 </h2>
-                <div className="flex items-center gap-2">
-                  <h2 className={`${afacad.className} font-medium text-2xl`}>
+                <div className="flex items-center gap-2 mt-1">
+                  <h2 className={`${afacad.className} font-medium text-2xl md:text-3xl`}>
                     {formatToRupiah(getDiscountPrice(p.price, 20))}
                   </h2>
 
@@ -62,7 +62,7 @@ const PackageComponent = () => {
                     {20}%
                   </div>
                 </div>
-                <ul className={`${afacad.className} mt-6 ml-4 text-lg`}>
+                <ul className={`${afacad.className} mt-6 ml-4 text-lg capitalize leading-8`}>
                   <li className="list-disc">
                     {p.unlimited_revisions && "Revisi tidak terbatas"}
                   </li>
@@ -128,10 +128,10 @@ const PackageComponent = () => {
                   </li>
                   <li
                     className={`list-disc ${
-                      !p.custom_cover_photo && "line-through text-gray-300"
+                      !p.custom_cover && "line-through text-gray-300"
                     }`}
                   >
-                    Pilih cover foto undangan
+                    Pilih cover foto / Cover video
                   </li>
                   <li
                     className={`list-disc ${

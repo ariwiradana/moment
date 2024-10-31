@@ -53,9 +53,21 @@ const ThemeComponent: FC = () => {
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          <div
+            data-aos="fade-up"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+          >
             {slideThemes.map((t, index) => {
-              return <ThemeCard key={t.id} index={index} theme={t} />;
+              return (
+                <div
+                  key={t.id}
+                  className={`${
+                    index === slideThemes.length - 1 && "md:hidden lg:block"
+                  }`}
+                >
+                  <ThemeCard index={index} theme={t} />
+                </div>
+              );
             })}
           </div>
 
@@ -71,41 +83,6 @@ const ThemeComponent: FC = () => {
               />
             </Link>
           </div>
-
-          {/* <div className="mt-6" data-aos="fade-up" data-aos-delay="200">
-            <Swiper
-              autoplay
-              pagination={{
-                dynamicBullets: true,
-                clickable: true,
-              }}
-              modules={[Autoplay, Pagination]}
-              spaceBetween={24}
-              speed={1000}
-              breakpoints={{
-                0: {
-                  slidesPerView: 1,
-                },
-                640: {
-                  slidesPerView: 1,
-                },
-                768: {
-                  slidesPerView: 2,
-                },
-                1024: {
-                  slidesPerView: 2,
-                },
-              }}
-            >
-              {slideThemes.map((t, index) => {
-                return (
-                  <SwiperSlide key={t.slug} className="w-full mb-12">
-                    <ThemeCard index={index} theme={t} />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </div> */}
         </div>
       </section>
     );

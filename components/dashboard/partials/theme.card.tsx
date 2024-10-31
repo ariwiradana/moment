@@ -16,7 +16,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
   if (theme.name)
     return (
       <div
-        className={`select-none py-4 lg:p-10 rounded group transition-all ease-in-out duration-1000 relative overflow-hidden border flex flex-col justify-between h-full`}
+        className={`select-none pt-6 pb-8 lg:p-8 rounded group transition-all ease-in-out duration-1000 relative overflow-hidden border flex flex-col justify-between h-full`}
       >
         <div>
           <p
@@ -59,7 +59,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
         <div>
           {showActions ? (
             <Link href={`/${theme.slug}`} target="_blank">
-              <div className="w-full aspect-[3/4.5] relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 mt-8">
+              <div className="w-full aspect-[3/4] md:aspect-[3/4.5] relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 mt-8">
                 <ImageShimmer
                   sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
                   priority
@@ -71,7 +71,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
               </div>
             </Link>
           ) : (
-            <div className="w-full aspect-[3/4.5] relative transform transition-transform delay-200 ease-in-out duration-500 mt-8">
+            <div className="w-full aspect-[3/4] md:aspect-[3/4.5] relative transform transition-transform delay-200 ease-in-out duration-500 mt-8">
               <ImageShimmer
                 sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
                 priority
