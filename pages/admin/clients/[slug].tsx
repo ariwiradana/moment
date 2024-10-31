@@ -276,6 +276,13 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             </button>
                           </div>
 
+                          {!isYouTubeVideo && (
+                            <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 absolute top-3 left-2 z-20 backdrop-blur text-white">
+                              <BiImageAlt className="text-base font-medium" />
+                              <span>Video Cover</span>
+                            </div>
+                          )}
+
                           {isYouTubeVideo ? (
                             <YouTubePlayer youtubeId={youtubeId as string} />
                           ) : (
