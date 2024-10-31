@@ -121,7 +121,11 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     if (galleryInput) galleryInput.value = "";
     if (videoFileInput) videoFileInput.value = "";
     if (musicInput) musicInput.value = "";
+    setGalleryImagesForm(null);
     setVideosForm([]);
+    setVideoFileForm(null);
+    setMusicForm(null);
+    setVideoFileForm(null);
   };
 
   useEffect(() => {
@@ -407,7 +411,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
   const handleUploadVideoFile = async () => {
     let videoFileURL: string = "";
-    alert("video exist");
     if (videoFileForm) {
       const MAX_SIZE = 50 * 1024 * 1024;
       let i = 0;

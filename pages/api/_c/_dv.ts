@@ -2,6 +2,7 @@ import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 
 import { Client } from "@/lib/types";
+import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import type { NextApiResponse, NextApiRequest } from "next";
 
@@ -31,6 +32,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       `UPDATE clients SET videos = $1 WHERE id = $2 RETURNING *`,
       [filteredVideos, Number(id)]
     );
+
+    if (!url.includes("www.youtube.com")) {
+      await del(url);
+    }
 
     return response.status(200).json({
       success: true,

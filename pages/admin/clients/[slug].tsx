@@ -282,7 +282,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             <video
                               src={video}
                               controls
-                              className="w-full h-auto" // Add classes for responsiveness
+                              className="w-full h-auto rounded-2xl"
                             />
                           )}
                         </div>
