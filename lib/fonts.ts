@@ -9,6 +9,7 @@ import {
   Engagement,
   Italiana,
   Balthazar,
+  Lora,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -54,6 +55,11 @@ export const italiana = Italiana({
 });
 
 export const balthazar = Balthazar({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+export const lora = Lora({
   subsets: ["latin"],
   weight: ["400"],
 });

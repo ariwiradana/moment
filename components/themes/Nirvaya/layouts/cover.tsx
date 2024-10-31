@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { balthazar, italiana, marcellus } from "@/lib/fonts";
+import { balthazar, italiana } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import { BiEnvelopeOpen } from "react-icons/bi";
@@ -45,7 +45,7 @@ const Cover: FC<Props> = (props) => {
               Yth. Bapak/Ibu/Saudara/i
             </p>
             <p
-              className={`${marcellus.className} text-white text-xl md:text-2xl mt-1 md:mt-3 text-center`}
+              className={`${balthazar.className} text-white text-xl md:text-2xl mt-1 md:mt-3 text-center`}
             >
               {props.untuk}
             </p>

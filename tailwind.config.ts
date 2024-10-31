@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        "tan-pearl": ["TanPearl", "sans-serif"],
+      },
       animation: {
         "spin-slow": "spin 5s linear infinite",
         "typing-effect": "pulse 1s linear infinite",
@@ -42,6 +45,9 @@ const config: Config = {
           dark: "#252015",
         },
         nirvaya: {
+          dark: "#101010",
+        },
+        aruna: {
           dark: "#101010",
         },
         admin: {

@@ -4,6 +4,7 @@ import Samaya from "./Samaya/theme";
 import Aakarshana from "./Akarshana/theme";
 import Flora from "./Flora/theme";
 import Nirvaya from "./Nirvaya/theme";
+import Aruna from "./Aruna/theme";
 
 export const themes: Record<
   string,
@@ -20,5 +21,8 @@ export const themes: Record<
   ),
   Nirvaya: (client: Client, untuk: string) => (
     <Nirvaya client={client} untuk={untuk} />
+  ),
+  Aruna: (client: Client, untuk: string) => (
+    <Aruna client={client} untuk={untuk} />
   ),
 };
