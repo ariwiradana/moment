@@ -44,7 +44,7 @@ const initialEvent: Event = {
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
 
-const initalFormData: Client = {
+const initalFormData: Client & { coverVideo: FileList | null } = {
   name: "",
   opening_title: "",
   opening_description: "",
@@ -62,12 +62,15 @@ const initalFormData: Client = {
   videos: [],
   cover: null,
   music: null,
+  coverVideo: null,
 };
 
 export const useAdminCreateClient = (token: string | null) => {
   const router = useRouter();
   const [errors, setErrors] = useState<ErrorState>(initialErrorState);
-  const [formData, setFormData] = useState<Client>(initalFormData);
+  const [formData, setFormData] = useState<
+    Client & { coverVideo: FileList | null }
+  >(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
   const [packageOptions, setPackageOptions] = useState<Option[]>([
@@ -268,6 +271,49 @@ export const useAdminCreateClient = (token: string | null) => {
     return musicURL;
   };
 
+  const handleUploadCoverVideo = async () => {
+    let coverVideoURL: string = "";
+    if (formData.coverVideo) {
+      const MAX_SIZE = 50 * 1024 * 1024;
+
+      let i = 0;
+
+      if (formData.coverVideo instanceof File) {
+        const coverVideo = formData.coverVideo;
+        i++;
+        const toastUpload = toast.loading(`Uploading cover video`);
+        try {
+          if (coverVideo.size > MAX_SIZE) {
+            toast.error(`Cover video size to large`, {
+              id: toastUpload,
+            });
+            return;
+          }
+          const filename = getFilename(
+            "Clients",
+            formData.name,
+            "Video",
+            coverVideo.type
+          );
+          const res = await getClient(`/api/_ub?filename=${filename}`, {
+            method: "POST",
+            body: coverVideo,
+          });
+          const result = await res.json();
+          if (result.success) {
+            toast.success(`Cover video uploaded successfully!`, {
+              id: toastUpload,
+            });
+            coverVideoURL = result.data.url;
+          }
+        } catch (error: any) {
+          toast.error(error.message || `Error uploading cover video`);
+        }
+      }
+    }
+    return coverVideoURL;
+  };
+
   const handleUploadImageParticipant = async () => {
     let currentParticipants: Participant[] = formData.participants;
 
@@ -410,11 +456,15 @@ export const useAdminCreateClient = (token: string | null) => {
       const newVideoURLs = await handleUploadVideos();
       const updatedParticipant = await handleUploadImageParticipant();
       const newMusicURL = await handleUploadMusic();
+      const newVideoFileURL = await handleUploadCoverVideo();
 
       const modifiedFormdata: Client = { ...formData };
 
       modifiedFormdata["gallery"] = newGalleryURLs;
-      modifiedFormdata["videos"] = newVideoURLs;
+      modifiedFormdata["videos"] = [
+        ...newVideoURLs,
+        ...(newVideoFileURL ? [newVideoFileURL as string] : []),
+      ];
       modifiedFormdata["music"] = newMusicURL;
       modifiedFormdata["cover"] =
         !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : null;

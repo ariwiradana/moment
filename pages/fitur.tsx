@@ -100,7 +100,7 @@ const DashboardFeatures = () => {
         author="Moment"
       />
       <section className="md:pt-20 lg:pt-24">
-        <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 py-24">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 py-24">
           <div className="flex">
             <button
               onClick={() => {

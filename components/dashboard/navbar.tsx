@@ -46,7 +46,7 @@ const NavbarComponent = () => {
         open={isOpenSidebar}
         toggle={() => setIsOpenSidebar((state) => !state)}
       />
-      <nav className={`${afacad.className} max-w-screen-xl mx-auto`}>
+      <nav className={`${afacad.className} max-w-screen-2xl mx-auto`}>
         <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 h-16 md:h-20 lg:h-24">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
             <Link href="/">

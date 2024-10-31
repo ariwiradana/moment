@@ -4,7 +4,6 @@ import useDashboardStore from "@/lib/dashboardStore";
 import { fetcher } from "@/lib/fetcher";
 import { afacad, marcellus } from "@/lib/fonts";
 import { Theme } from "@/lib/types";
-import { createSlug } from "@/utils/createSlug";
 import { Pagination } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -194,7 +193,7 @@ const DashboardThemes = () => {
           author="Moment"
         />
         <section className="md:pt-20 lg:pt-24">
-          <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 py-24">
+          <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 py-24">
             <div className="flex">
               <button
                 onClick={() => {
@@ -307,26 +306,17 @@ const DashboardThemes = () => {
               ) : (
                 <>
                   {themes.length > 0 && (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-4">
-                      {themes.map((t) => {
-                        const slug = createSlug(t.name);
-                        if (slug) {
-                          return (
-                            <ThemeCard
-                              category={t.category as string}
-                              key={slug}
-                              name={t.name}
-                              thumbnail={t.thumbnail as string}
-                              slug={slug}
-                              availablePackages={t.packages}
-                            />
-                          );
-                        }
-                      })}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {themes.map((t, i) => (
+                        <ThemeCard key={t.id} theme={t} index={i} />
+                      ))}
                       <ThemeCard
-                        hasPreview={false}
-                        name="Coming Soon"
-                        thumbnail="/images/Theme Card.png"
+                        showActions={false}
+                        theme={{
+                          ...themes[0],
+                          name: "Coming Soon",
+                          thumbnail: "/images/Coming Soon.png",
+                        }}
                       />
                     </div>
                   )}

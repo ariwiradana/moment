@@ -22,7 +22,7 @@ const FooterComponent = () => {
   return (
     <section className="bg-admin-hover-dark">
       <div className="relative pt-16 pb-8 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative">
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <Link href="/">

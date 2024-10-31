@@ -12,6 +12,7 @@ interface FormData {
   thumbnail: File | string;
   category: string;
   package_ids: number[] | [];
+  cover_video: boolean;
 }
 
 const initalFormData: FormData = {
@@ -19,6 +20,7 @@ const initalFormData: FormData = {
   thumbnail: "",
   category: themeCategoryOptions[0].value as string,
   package_ids: [],
+  cover_video: false,
 };
 
 export const useAdminCreateTheme = (token: string | null) => {
@@ -54,6 +56,11 @@ export const useAdminCreateTheme = (token: string | null) => {
       setFormData((state) => ({
         ...state,
         package_ids: currentPackages,
+      }));
+    } else if (name === "cover_video") {
+      setFormData((state) => ({
+        ...state,
+        cover_video: !JSON.parse(value),
       }));
     } else {
       setFormData((state) => ({

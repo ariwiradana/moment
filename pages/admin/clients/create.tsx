@@ -108,15 +108,28 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             className="w-full"
             label="Gallery"
           />
-          <InputChip
-            chips={state.formData.videos as string[]}
-            onChange={(value) => actions.handleChangeClient(value, "videos")}
-            label="Youtube URL Video"
-          />
+          <div className="grid md:grid-cols-2 gap-4">
+            <InputChip
+              chips={state.formData.videos as string[]}
+              onChange={(value) => actions.handleChangeClient(value, "videos")}
+              label="Youtube URL Video"
+            />
+            <Input
+              accept="video/*"
+              type="file"
+              onChange={(e) =>
+                actions.handleChangeClient(
+                  e.target.files?.length ? (e.target.files[0] as File) : "",
+                  "coverVideo"
+                )
+              }
+              className="w-full"
+              label="Cover Video"
+            />
+          </div>
           <Input
             accept="audio/mpeg"
             type="file"
-            multiple
             onChange={(e) =>
               actions.handleChangeClient(
                 e.target.files?.length ? (e.target.files[0] as File) : "",

@@ -110,7 +110,7 @@ const FeaturesComponent = () => {
       className="py-16 lg:py-24 relative select-none"
       id="section2"
     >
-      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative">
+      <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative">
         <div
           className="flex gap-4 flex-col md:flex-row md:justify-between md:items-center"
           data-aos="fade-up"

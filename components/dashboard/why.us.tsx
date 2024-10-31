@@ -36,7 +36,7 @@ const WhyUsComponent = () => {
         fill
         className="object-cover w-full h-full opacity-5 lg:opacity-10 grayscale"
       />
-      <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[400px] z-20 flex flex-col gap-8 md:gap-12 lg:grid lg:grid-cols-3 lg:gap-32">
+      <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative lg:min-h-[400px] z-20 flex flex-col gap-8 md:gap-12 lg:grid lg:grid-cols-3 lg:gap-32">
         <div className="lg:col-span-2 flex flex-col justify-center">
           <div data-aos="fade-up">
             <p className={`${marcellus.className} text-lg md:text-xl mb-1`}>

@@ -113,7 +113,7 @@ const HeroComponent: FC<Props> = (props) => {
         )}
       </div>
       <div
-        className={`absolute inset-0 z-10 bg-gradient-to-b from-aruna-dark/80 from-[15%] via-aruna-dark/0 to-[85%] to-aruna-dark/80 transition-opacity ease-in-out duration-1000 delay-500 ${
+        className={`absolute inset-0 z-10 bg-gradient-to-b from-[5%] from-aruna-dark/50 via-aruna-dark/20 to-[95%] to-aruna-dark/40 transition-opacity ease-in-out duration-1000 delay-500 ${
           props.state.open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >

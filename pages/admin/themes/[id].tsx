@@ -41,11 +41,27 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
             className="mt-8 max-w-screen-md flex flex-col gap-y-4"
             onSubmit={actions.handleSubmit}
           >
-            <Input
-              value={state.formData.name}
-              onChange={(e) => actions.handleChange(e.target.value, "name")}
-              label="Name"
-            />
+            <div className="flex gap-4 items-center">
+              <Input
+                className="w-full"
+                value={state.formData.name}
+                onChange={(e) => actions.handleChange(e.target.value, "name")}
+                label="Name"
+              />
+              <div className="mt-5">
+                <InputCheckbox
+                  onChange={() =>
+                    actions.handleChange(
+                      !state.formData.cover_video,
+                      "cover_video"
+                    )
+                  }
+                  checked={state.formData.cover_video as boolean}
+                  name="cover_video"
+                  label="Cover Video"
+                />
+              </div>
+            </div>
             <InputSelect
               onChange={(e) => actions.handleChange(e.target.value, "category")}
               name="category"
@@ -74,6 +90,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                   ))}
               </div>
             </div>
+
             <Input
               id="thumbnail"
               accept="image/*"

@@ -14,6 +14,7 @@ const initalFormData: Theme = {
   thumbnail: null,
   category: "Pernikahan",
   package_ids: [],
+  cover_video: false,
 };
 
 export const useAdminUpdateTheme = (id: number, token: string | null) => {
@@ -52,11 +53,17 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
         thumbnail: currentTheme.thumbnail,
         category: currentTheme.category ?? "Pernikahan",
         package_ids: currentTheme.package_ids,
+        cover_video: currentTheme.cover_video,
       }));
     }
   }, [themes]);
 
-  const handleChange = (value: string | number | FileList, name: string) => {
+  console.log({ formData });
+
+  const handleChange = (
+    value: string | number | FileList | boolean,
+    name: string
+  ) => {
     if (name === "thumbnail") {
       setThumbnailImageForm(value as FileList);
     } else if (name === "package_ids") {

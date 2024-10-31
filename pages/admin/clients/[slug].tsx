@@ -27,7 +27,6 @@ import ImageShimmer from "@/components/image.shimmer";
 import Loader from "@/components/admin/elements/loader";
 import InputChip from "@/components/admin/elements/input.chip";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
-import YouTubePlayer from "@/components/admin/elements/youtube.player";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 interface UpdateClientProps {
@@ -227,7 +226,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   ))
                 : null}
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               <InputChip
                 chips={state.videosForm}
                 onChange={(value) =>
@@ -236,17 +235,17 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 label="Youtube URL Video"
               />
               <Input
-                id="video-file"
+                id="cover-video"
                 accept="video/*"
                 type="file"
                 onChange={(e) =>
                   actions.handleChangeClient(
                     e.target.files?.length ? (e.target.files[0] as File) : "",
-                    "video-file"
+                    "cover-video"
                   )
                 }
                 className="w-full"
-                label="Video Cover"
+                label="Cover Video"
               />
             </div>
 
@@ -284,7 +283,18 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           )}
 
                           {isYouTubeVideo ? (
-                            <YouTubePlayer youtubeId={youtubeId as string} />
+                            <div
+                              key={youtubeId}
+                              className="relative w-full aspect-video overflow-hidden rounded-2xl"
+                            >
+                              <iframe
+                                className="absolute top-0 left-0 w-full h-full"
+                                src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
+                                title={youtubeId as string}
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              ></iframe>
+                            </div>
                           ) : (
                             <video
                               src={video}

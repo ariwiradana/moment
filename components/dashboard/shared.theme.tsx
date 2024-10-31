@@ -25,7 +25,7 @@ const SharedThemeComponent = () => {
           className="object-cover w-full h-full"
         />
         <span className="absolute inset-0 bg-black bg-opacity-20"></span>
-        <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-8 relative z-20">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-8 relative z-20">
           <div
             data-aos="fade-up"
             className="text-white flex flex-col items-center gap-y-2"

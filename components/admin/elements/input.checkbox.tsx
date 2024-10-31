@@ -19,9 +19,9 @@ const InputCheckbox: FC<InputProps> = (props) => {
           type="checkbox"
           {...props}
           id={props.id}
-          className={`w-full border rounded-lg outline-none accent-black`}
+          className={`border rounded-lg outline-none accent-black w-4 h-4`}
         />
-        <label htmlFor={props.id ?? props.name} className="block text-gray-700">
+        <label htmlFor={props.id ?? props.name} className="block text-admin-dark font-medium whitespace-nowrap">
           {props.label}{" "}
           <span className="text-xs text-gray-400">
             {props.optional && "(optional)"}

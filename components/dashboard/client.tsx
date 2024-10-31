@@ -19,7 +19,7 @@ const ClientComponent = () => {
         className="py-16 lg:py-24 relative select-none"
         id="section5"
       >
-        <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 relative">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative">
           <div data-aos="fade-up">
             <h1
               className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}

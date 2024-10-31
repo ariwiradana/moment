@@ -28,7 +28,7 @@ const HeroComponent = () => {
       id="section1"
       className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-zinc-50 overflow-x-hidden`}
     >
-      <div className="max-w-screen-xl mx-auto flex flex-col md:grid md:grid-cols-5 gap-16 lg:gap-36 pt-16 pb-24 lg:pb-32 relative px-6 md:px-12 lg:px-24">
+      <div className="max-w-screen-2xl mx-auto flex flex-col md:grid md:grid-cols-5 gap-16 lg:gap-36 pt-16 pb-24 lg:pb-32 relative px-6 md:px-12 lg:px-24">
         <div className="h-full flex justify-center md:col-span-2">
           {images.length > 0 && (
             <div className="w-[180px] lg:w-[260px]" data-aos="zoom-out-up">

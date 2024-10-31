@@ -32,12 +32,24 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
           onSubmit={actions.handleSubmit}
           className="mt-8 max-w-screen-md flex flex-col gap-y-4"
         >
-          <Input
-            onChange={actions.handleChange}
-            name="name"
-            label="Theme Name"
-            value={state.formData.name}
-          />
+          <div className="flex items-center gap-4">
+            <Input
+              className="w-full"
+              onChange={actions.handleChange}
+              name="name"
+              label="Theme Name"
+              value={state.formData.name}
+            />
+            <div className="mt-5">
+              <InputCheckbox
+                onChange={actions.handleChange}
+                checked={state.formData.cover_video as boolean}
+                name="cover_video"
+                label="Cover Video"
+                value={String(state.formData.cover_video)}
+              />
+            </div>
+          </div>
           <InputSelect
             onChange={actions.handleChange}
             name="category"

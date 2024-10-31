@@ -11,6 +11,7 @@ export interface Theme {
   thumbnail?: string | null;
   package_ids: number[];
   packages?: Package[];
+  cover_video?: boolean;
 }
 
 export interface Option {

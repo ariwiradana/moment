@@ -104,7 +104,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const [galleryImagesForm, setGalleryImagesForm] = useState<FileList | null>(
     null
   );
-  const [videoFileForm, setVideoFileForm] = useState<FileList | null>(null);
+  const [coverVideoForm, setCoverVideoForm] = useState<FileList | null>(null);
   const [videosForm, setVideosForm] = useState<string[]>([]);
   const [musicForm, setMusicForm] = useState<File | null>(null);
   const [participantImagesForm, setParticipantImagesForm] = useState<
@@ -114,7 +114,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const clearFileInput = () => {
     const galleryInput = document.getElementById("gallery") as HTMLInputElement;
     const videoFileInput = document.getElementById(
-      "video-file"
+      "cover-video"
     ) as HTMLInputElement;
     const musicInput = document.getElementById("music") as HTMLInputElement;
 
@@ -123,9 +123,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     if (musicInput) musicInput.value = "";
     setGalleryImagesForm(null);
     setVideosForm([]);
-    setVideoFileForm(null);
+    setCoverVideoForm(null);
     setMusicForm(null);
-    setVideoFileForm(null);
+    setCoverVideoForm(null);
   };
 
   useEffect(() => {
@@ -227,8 +227,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       setGalleryImagesForm(value as FileList);
     } else if (name === "videos") {
       setVideosForm(value as string[]);
-    } else if (name === "video-file") {
-      setVideoFileForm(value as FileList);
+    } else if (name === "cover-video") {
+      setCoverVideoForm(value as FileList);
     } else if (name === "music") {
       setMusicForm(value as File);
     } else {
@@ -407,20 +407,20 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     return musicURL;
   };
 
-  console.log(videoFileForm);
+  console.log(coverVideoForm);
 
-  const handleUploadVideoFile = async () => {
+  const handleUploadCoverVideo = async () => {
     let videoFileURL: string = "";
-    if (videoFileForm) {
+    if (coverVideoForm) {
       const MAX_SIZE = 50 * 1024 * 1024;
       let i = 0;
 
-      if (videoFileForm instanceof File) {
+      if (coverVideoForm instanceof File) {
         i++;
-        const toastUpload = toast.loading(`Uploading video cover`);
+        const toastUpload = toast.loading(`Uploading cover video`);
         try {
-          if (videoFileForm.size > MAX_SIZE) {
-            toast.error(`Video cover size to large`, {
+          if (coverVideoForm.size > MAX_SIZE) {
+            toast.error(`cover video size to large`, {
               id: toastUpload,
             });
             return;
@@ -430,21 +430,21 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             "Clients",
             formData.name,
             "Video",
-            videoFileForm.type
+            coverVideoForm.type
           );
           const res = await getClient(`/api/_ub?filename=${filename}`, {
             method: "POST",
-            body: videoFileForm,
+            body: coverVideoForm,
           });
           const result = await res.json();
           if (result.success) {
-            toast.success(`Video cover uploaded successfully!`, {
+            toast.success(`Cover video uploaded successfully!`, {
               id: toastUpload,
             });
             videoFileURL = result.data.url;
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading video cover`);
+          toast.error(error.message || `Error uploading cover video`);
         }
       }
     }
@@ -457,7 +457,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
     const newGalleryURLs = await handleUploadGallery();
     const newMusicURL = await handleUploadMusic();
-    const newVideoFileURL = await handleUploadVideoFile();
+    const newVideoFileURL = await handleUploadCoverVideo();
     const updatedParticipant = await handleUploadImageParticipant();
 
     const modifiedFormdata: Client = { ...formData };

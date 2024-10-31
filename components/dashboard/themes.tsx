@@ -1,21 +1,20 @@
 import React, { FC } from "react";
 import { HiArrowLongRight } from "react-icons/hi2";
-import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Autoplay, Pagination } from "swiper/modules";
 import { afacad, dm } from "@/lib/fonts";
 import Link from "next/link";
-import { createSlug } from "@/utils/createSlug";
 import ThemeCard from "./partials/theme.card";
 import { Theme } from "@/lib/types";
+import ButtonPrimary from "./elements/button.primary";
+import { BiGridHorizontal } from "react-icons/bi";
 
 const ThemeComponent: FC = () => {
   const { data } = useSWR("/api/_pb/_th?order=DESC", fetcher);
 
   const themes: Theme[] = data?.data || [];
 
-  const slideThemes = themes && themes.length > 5 ? themes.slice(5) : themes;
+  const slideThemes = themes && themes.length > 4 ? themes.slice(4) : themes;
 
   if (slideThemes.length > 0)
     return (
@@ -24,7 +23,7 @@ const ThemeComponent: FC = () => {
         className="py-16 lg:py-24 bg-zinc-50 select-none"
         id="section3"
       >
-        <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24">
           <div
             className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
             data-aos="fade-up"
@@ -54,7 +53,26 @@ const ThemeComponent: FC = () => {
             </Link>
           </div>
 
-          <div className="mt-6" data-aos="fade-up" data-aos-delay="200">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+            {slideThemes.map((t, index) => {
+              return <ThemeCard key={t.id} index={index} theme={t} />;
+            })}
+          </div>
+
+          <div
+            className="mt-6 flex justify-center md:hidden"
+            data-aos="fade-up"
+          >
+            <Link href="/tema" aria-label="all-theme-link">
+              <ButtonPrimary
+                icon={<BiGridHorizontal />}
+                title="Lihat Semua Tema"
+                size="medium"
+              />
+            </Link>
+          </div>
+
+          {/* <div className="mt-6" data-aos="fade-up" data-aos-delay="200">
             <Swiper
               autoplay
               pagination={{
@@ -62,7 +80,7 @@ const ThemeComponent: FC = () => {
                 clickable: true,
               }}
               modules={[Autoplay, Pagination]}
-              spaceBetween={16}
+              spaceBetween={24}
               speed={1000}
               breakpoints={{
                 0: {
@@ -79,22 +97,15 @@ const ThemeComponent: FC = () => {
                 },
               }}
             >
-              {slideThemes.map((t) => {
-                const slug = createSlug(t.name);
+              {slideThemes.map((t, index) => {
                 return (
-                  <SwiperSlide key={slug} className="w-full mb-12">
-                    <ThemeCard
-                      category={t.category as string}
-                      name={t.name}
-                      slug={slug}
-                      thumbnail={t.thumbnail as string}
-                      availablePackages={t.packages}
-                    />
+                  <SwiperSlide key={t.slug} className="w-full mb-12">
+                    <ThemeCard index={index} theme={t} />
                   </SwiperSlide>
                 );
               })}
             </Swiper>
-          </div>
+          </div> */}
         </div>
       </section>
     );

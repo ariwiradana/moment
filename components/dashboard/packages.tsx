@@ -26,7 +26,7 @@ const PackageComponent = () => {
         className="py-16 lg:py-24 select-none"
         id="section4"
       >
-        <div className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {pacakages.map((p, index) => {
             const isLast = index === pacakages.length - 1;
             return (

@@ -16,10 +16,10 @@ import { BiDetail, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
 import Cookies from "cookies";
 
 interface PageProps {
-  token: string | null
+  token: string | null;
 }
 
-const ReviewDashboard: React.FC<PageProps> = ({token}) => {
+const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
   const { state, actions } = useAdminThemes(token);
   const router = useRouter();
 
@@ -208,10 +208,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      token
+      token,
     },
   };
 };
-
 
 export default ReviewDashboard;
