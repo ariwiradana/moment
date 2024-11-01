@@ -72,7 +72,7 @@ const ThemeComponent: FC = () => {
           </div>
 
           <div
-            className="mt-6 flex justify-center md:hidden"
+            className="mt-8 flex justify-center md:hidden"
             data-aos="fade-up"
           >
             <Link href="/tema" aria-label="all-theme-link">

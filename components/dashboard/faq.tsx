@@ -4,6 +4,7 @@ import Accordion from "./elements/accordion.button";
 import Link from "next/link";
 import useDashboardStore from "@/lib/dashboardStore";
 import { useRouter } from "next/router";
+import { sosmedURLs } from "@/constants/sosmed";
 
 const FaqComponent = () => {
   const { setActiveSection } = useDashboardStore();
@@ -95,7 +96,7 @@ const FaqComponent = () => {
                   <span className="font-bold">Pesan WhatsApp</span> kami atau{" "}
                   <Link
                     className="text-dashboard-primary underline font-medium"
-                    href="https://wa.me/+6281246768627"
+                    href={sosmedURLs.whatsapp}
                   >
                     Klik Disini.
                   </Link>

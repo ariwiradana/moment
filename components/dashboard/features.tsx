@@ -163,7 +163,7 @@ const FeaturesComponent = () => {
             </div>
           ))}
         </div>
-        <div className="mt-6 flex justify-center md:hidden" data-aos="fade-up">
+        <div className="mt-8 flex justify-center md:hidden" data-aos="fade-up">
           <Link href="/fitur" aria-label="all-feature-link">
             <ButtonPrimary
               icon={<BiGridHorizontal />}
