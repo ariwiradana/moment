@@ -56,7 +56,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
               </div>
             )}
 
-            {[0, 1].includes(index) && (
+            {index === 0 && (
               <div className="flex bg-white shadow-sm items-center gap-x-2 rounded font-medium px-3 py-2 text-dashboard-dark">
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   Desain Baru
