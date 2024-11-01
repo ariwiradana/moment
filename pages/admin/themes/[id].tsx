@@ -110,7 +110,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                     alt="theme-thumbnail"
                     src={state.formData.thumbnail ?? ""}
                     fill
-                    className="object-contain rounded-lg"
+                    className="object-cover rounded-lg"
                   />
                 </div>
                 <div className="absolute top-2 right-2 z-10">

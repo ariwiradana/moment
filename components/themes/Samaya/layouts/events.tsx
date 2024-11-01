@@ -71,7 +71,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                       {state.timeRemainings[index].seconds}
                     </h2>
                     <h4 className="text-sm">Detik</h4>
-                  </div>
+                </div>
                 </div>
                 <div className="inline-flex flex-wrap justify-center gap-4">
                   <Link target="_blank" href={event.address_url}>

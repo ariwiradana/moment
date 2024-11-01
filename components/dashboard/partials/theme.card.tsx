@@ -16,72 +16,79 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
   if (theme.name)
     return (
       <div
-        className={`select-none pt-6 pb-8 lg:p-8 rounded group transition-all ease-in-out duration-1000 relative overflow-hidden border flex flex-col justify-between h-full`}
+        className={`select-none rounded group transition-all ease-in-out duration-1000 relative overflow-hidden flex flex-col h-full`}
       >
-        <div>
-          <p
-            className={`${afacad.className} text-xl text-center text-gray-500`}
-          >
-            {theme.category && showActions
-              ? `Undangan ${theme.category}`
-              : "Tema Undangan"}
-          </p>
-
-          <h1
-            className={`${marcellus.className} text-2xl lg:text-4xl text-center text-dashboard-dark leading-8`}
-          >
-            {theme.name}
-          </h1>
-          {showActions && (
-            <div className="flex justify-center mt-3">
-              <div className="flex gap-3">
-                {theme.cover_video && (
-                  <div className="flex bg-dashboard-dark items-center gap-x-2 rounded-full font-medium px-3 py-1 text-white">
-                    <p className={`text-xs md:text-sm ${afacad.className}`}>
-                      Video Cover
-                    </p>
-                    <BiPlayCircle />
-                  </div>
-                )}
-
-                {[0, 1].includes(index) && (
-                  <div className="flex bg-gray-200 items-center gap-x-2 rounded-full font-medium px-3 py-1 text-dashboard-dark">
-                    <p className={`text-xs md:text-sm ${afacad.className}`}>
-                      Desain Baru
-                    </p>
-                    <BiNews />
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
         <div>
           {showActions ? (
             <Link href={`/${theme.slug}`} target="_blank">
-              <div className="w-full aspect-[3/4] md:aspect-[3/4.5] relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 mt-8">
+              <div className="w-full aspect-square relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 rounded overflow-hidden">
                 <ImageShimmer
                   sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
                   priority
                   fill
                   src={theme.thumbnail as string}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   alt={`theme-${theme.name}`}
                 />
               </div>
             </Link>
           ) : (
-            <div className="w-full aspect-[3/4] md:aspect-[3/4.5] relative transform transition-transform delay-200 ease-in-out duration-500 mt-8">
+            <div className="w-full aspect-square relative transform transition-transform delay-200 ease-in-out duration-500 rounded overflow-hidden">
               <ImageShimmer
                 sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
                 priority
                 fill
                 src={theme.thumbnail as string}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
                 alt={`theme-${theme.name}`}
               />
             </div>
           )}
+        </div>
+        {showActions && (
+          <div className="flex gap-2 absolute top-4 left-4">
+            {theme.cover_video && (
+              <div className="flex bg-dashboard-dark shadow-sm items-center gap-x-2 rounded font-medium px-3 py-2 text-white">
+                <p className={`text-xs md:text-sm ${afacad.className}`}>
+                  Video Cover
+                </p>
+                <BiPlayCircle />
+              </div>
+            )}
+
+            {[0, 1].includes(index) && (
+              <div className="flex bg-white shadow-sm items-center gap-x-2 rounded font-medium px-3 py-2 text-dashboard-dark">
+                <p className={`text-xs md:text-sm ${afacad.className}`}>
+                  Desain Baru
+                </p>
+                <BiNews />
+              </div>
+            )}
+          </div>
+        )}
+        <div className="mt-4">
+          <p className={`${afacad.className} text-xl text-gray-500`}>
+            {theme.category && showActions
+              ? `Undangan ${theme.category}`
+              : "Tema Undangan"}
+          </p>
+          <h1
+            className={`${marcellus.className} text-2xl lg:text-4xl text-dashboard-dark leading-8`}
+          >
+            {theme.name}
+          </h1>
+          <div className="flex gap-2 mt-4">
+            {theme.packages?.map((pk) => (
+              <div
+                key={`package-${pk.name}`}
+                className="flex bg-gray-200 items-center gap-x-2 rounded font-medium px-3 py-2 text-dashboard-dark"
+              >
+                <p className={`text-xs md:text-sm ${afacad.className}`}>
+                  {pk.name}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
