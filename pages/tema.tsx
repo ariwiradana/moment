@@ -310,14 +310,6 @@ const DashboardThemes = () => {
                       {themes.map((t, i) => (
                         <ThemeCard key={t.id} theme={t} index={i} />
                       ))}
-                      <ThemeCard
-                        showActions={false}
-                        theme={{
-                          ...themes[0],
-                          name: "Coming Soon",
-                          thumbnail: "/images/Coming Soon.png",
-                        }}
-                      />
                     </div>
                   )}
                 </>
