@@ -23,7 +23,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
             <Link href={`/${theme.slug}`} target="_blank">
               <div className="w-full aspect-square relative transform group-hover:scale-[1.02] transition-transform delay-200 ease-in-out duration-500 rounded overflow-hidden">
                 <ImageShimmer
-                  sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
+                  sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
                   priority
                   fill
                   src={theme.thumbnail as string}
@@ -35,7 +35,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
           ) : (
             <div className="w-full aspect-square relative transform transition-transform delay-200 ease-in-out duration-500 rounded overflow-hidden">
               <ImageShimmer
-                sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
+                sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
                 priority
                 fill
                 src={theme.thumbnail as string}
@@ -77,7 +77,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
           >
             {theme.name}
           </h1>
-          <div className="flex gap-2 mt-4">
+          <div className="flex gap-2 mt-3">
             {theme.packages?.map((pk) => (
               <div
                 key={`package-${pk.name}`}
