@@ -124,7 +124,7 @@ const Dashboard = () => {
       />
       <ButtonFloating
         aria-label="button-whatsapp"
-        onClick={() => window.open("https://wa.me/+6281246768627")}
+        onClick={() => window.open(sosmedURLs.whatsapp)}
         className="bg-green-500 text-white"
         icon={<BiLogoWhatsapp />}
       />
