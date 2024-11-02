@@ -15,7 +15,12 @@ const HeroComponent: FC<Props> = (props) => {
   const events = props.state.client?.events || [];
   const gallery: string[] = (props.state.client?.gallery || []) as string[];
 
-  const images = gallery.filter((g) => g !== props.state.client?.cover);
+  const images = props.state.client?.cover
+    ? [
+        props.state.client?.cover,
+        ...gallery.filter((g) => g !== props.state.client?.cover),
+      ]
+    : gallery;
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [fade, setFade] = useState<boolean>(true);
