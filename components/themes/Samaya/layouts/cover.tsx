@@ -21,7 +21,7 @@ const Cover: FC<Props> = (props) => {
       >
         <div
           data-aos="fade-in"
-          className="flex h-dvh flex-col items-center justify-center relative z-30 gap-[40px] md:gap-[60px] py-[60px] md:py-[100px] px-8 bg-samaya-dark/90 to-samaya-dark"
+          className="flex h-dvh flex-col items-center justify-between relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-samaya-dark via-samaya-dark/70 to-samaya-dark backdrop-blur-sm"
         >
           <div>
             <p
