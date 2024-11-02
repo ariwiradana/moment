@@ -381,6 +381,8 @@ export const useAdminCreateClient = (token: string | null) => {
     setToggleEndTimes(currentToggleEndTimes);
   };
 
+  console.log(formData);
+
   const handleChangeClient = (
     value: string | number | FileList | File | string[],
     name: string
@@ -389,6 +391,35 @@ export const useAdminCreateClient = (token: string | null) => {
       ...state,
       [name]: "",
     }));
+
+    const selectedPackage = packages?.data.find(
+      (pk: Package) => pk.id === formData.package_id
+    );
+
+    if (name === "gallery") {
+      if (
+        (value as FileList).length > Number(selectedPackage?.max_gallery_photos)
+      ) {
+        toast.error(
+          `Maximum gallery photos is ${selectedPackage?.max_gallery_photos}`
+        );
+        const galleryInput = document.getElementById(
+          "gallery"
+        ) as HTMLInputElement;
+        if (galleryInput) galleryInput.value = "";
+        setFormData((state) => ({
+          ...state,
+          gallery: [],
+        }));
+      }
+    }
+
+    if (name === "videos") {
+      if ((value as string[]).length > Number(selectedPackage?.max_videos)) {
+        toast.error(`Maximum videos is ${selectedPackage?.max_videos}`);
+        return
+      }
+    }
 
     setFormData((state) => ({
       ...state,
@@ -522,6 +553,8 @@ export const useAdminCreateClient = (token: string | null) => {
       toggleEndTimes,
       loading,
       errors,
+      packages,
+      themes,
     },
     actions: {
       handleChangeClient,

@@ -22,6 +22,7 @@ import InputChip from "@/components/admin/elements/input.chip";
 import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
+import { Package, Theme } from "@/lib/types";
 
 interface CreateClientProps {
   token: string | null;
@@ -29,6 +30,15 @@ interface CreateClientProps {
 
 const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
   const { state, actions } = useAdminCreateClient(token);
+
+  const selectedPackage = state.packages?.data.find(
+    (pk: Package) => pk.id === state.formData.package_id
+  );
+  const selectedTheme = state.themes?.data.find(
+    (th: Theme) => th.id === state.formData.theme_id
+  );
+
+  console.log(selectedPackage);
 
   return (
     <AdminLayout>
@@ -99,6 +109,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
           />
           <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
           <Input
+            id="gallery"
             accept="image/*"
             type="file"
             multiple
@@ -108,37 +119,53 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             className="w-full"
             label="Gallery"
           />
-          <div className="grid md:grid-cols-2 gap-4">
-            <InputChip
-              chips={state.formData.videos as string[]}
-              onChange={(value) => actions.handleChangeClient(value, "videos")}
-              label="Youtube URL Video"
-            />
+          <div
+            className={`grid md:${
+              selectedTheme?.cover_video &&
+              !state.formData.coverVideo &&
+              ["Exclusive"].includes(selectedPackage?.name as string)
+                ? "grid-cols-2"
+                : "grid-cols-1"
+            } gap-4`}
+          >
+            {!["Basic"].includes(selectedPackage?.name as string) && (
+              <InputChip
+                chips={state.formData.videos as string[]}
+                onChange={(value) =>
+                  actions.handleChangeClient(value, "videos")
+                }
+                label="Youtube URL Video"
+              />
+            )}
+            {selectedTheme?.cover_video && !state.formData.coverVideo ? (
+              <Input
+                accept="video/*"
+                type="file"
+                onChange={(e) =>
+                  actions.handleChangeClient(
+                    e.target.files?.length ? (e.target.files[0] as File) : "",
+                    "coverVideo"
+                  )
+                }
+                className="w-full"
+                label="Cover Video"
+              />
+            ) : null}
+          </div>
+          {selectedPackage?.background_sound && (
             <Input
-              accept="video/*"
+              accept="audio/mpeg"
               type="file"
               onChange={(e) =>
                 actions.handleChangeClient(
                   e.target.files?.length ? (e.target.files[0] as File) : "",
-                  "coverVideo"
+                  "music"
                 )
               }
               className="w-full"
-              label="Cover Video"
+              label="Music"
             />
-          </div>
-          <Input
-            accept="audio/mpeg"
-            type="file"
-            onChange={(e) =>
-              actions.handleChangeClient(
-                e.target.files?.length ? (e.target.files[0] as File) : "",
-                "music"
-              )
-            }
-            className="w-full"
-            label="Music"
-          />
+          )}
           <h1 className="text-2xl font-bold mb-4 mt-8">Event(s)</h1>
           <div className="flex flex-col gap-y-4">
             {state.formData.events.map((event, index) => (
@@ -253,15 +280,19 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                 }
               />
             ))}
-            <div className="">
-              <ButtonSecondary
-                onClick={actions.handleAddAnotherEvent}
-                type="button"
-                title="Add Another"
-                size="small"
-                icon={<BiSolidPlusCircle />}
-              />
-            </div>
+            {selectedPackage?.max_events === "unlimited" ||
+            state.formData.events.length <
+              Number(selectedPackage?.max_events) ? (
+              <div>
+                <ButtonSecondary
+                  onClick={actions.handleAddAnotherEvent}
+                  type="button"
+                  title="Add Another"
+                  size="small"
+                  icon={<BiSolidPlusCircle />}
+                />
+              </div>
+            ) : null}
           </div>
 
           <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
@@ -399,65 +430,75 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                       }
                     />
 
-                    <h1 className="text-base font-bold mt-6">Social Media</h1>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <Input
-                        optional
-                        value={
-                          state.formData.participants[index].facebook as string
-                        }
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.value,
-                            "facebook",
-                            index
-                          )
-                        }
-                        label="Facebook"
-                      />
-                      <Input
-                        optional
-                        value={
-                          state.formData.participants[index].twitter as string
-                        }
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.value,
-                            "twitter",
-                            index
-                          )
-                        }
-                        label="Twitter/X"
-                      />
-                      <Input
-                        optional
-                        value={
-                          state.formData.participants[index].instagram as string
-                        }
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.value,
-                            "instagram",
-                            index
-                          )
-                        }
-                        label="Instagram"
-                      />
-                      <Input
-                        optional
-                        value={
-                          state.formData.participants[index].tiktok as string
-                        }
-                        onChange={(e) =>
-                          actions.handleChangeParticipant(
-                            e.target.value,
-                            "tiktok",
-                            index
-                          )
-                        }
-                        label="TikTok"
-                      />
-                    </div>
+                    {selectedPackage?.contact_social_media && (
+                      <>
+                        <h1 className="text-base font-bold mt-6">
+                          Social Media
+                        </h1>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <Input
+                            optional
+                            value={
+                              state.formData.participants[index]
+                                .facebook as string
+                            }
+                            onChange={(e) =>
+                              actions.handleChangeParticipant(
+                                e.target.value,
+                                "facebook",
+                                index
+                              )
+                            }
+                            label="Facebook"
+                          />
+                          <Input
+                            optional
+                            value={
+                              state.formData.participants[index]
+                                .twitter as string
+                            }
+                            onChange={(e) =>
+                              actions.handleChangeParticipant(
+                                e.target.value,
+                                "twitter",
+                                index
+                              )
+                            }
+                            label="Twitter/X"
+                          />
+                          <Input
+                            optional
+                            value={
+                              state.formData.participants[index]
+                                .instagram as string
+                            }
+                            onChange={(e) =>
+                              actions.handleChangeParticipant(
+                                e.target.value,
+                                "instagram",
+                                index
+                              )
+                            }
+                            label="Instagram"
+                          />
+                          <Input
+                            optional
+                            value={
+                              state.formData.participants[index]
+                                .tiktok as string
+                            }
+                            onChange={(e) =>
+                              actions.handleChangeParticipant(
+                                e.target.value,
+                                "tiktok",
+                                index
+                              )
+                            }
+                            label="TikTok"
+                          />
+                        </div>
+                      </>
+                    )}
                   </div>
                 }
               />
@@ -472,33 +513,40 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
               />
             </div>
           </div>
-          <h1 className="text-2xl font-bold mb-4 mt-8">Digital Gift</h1>
-          <div className="grid md:grid-cols-3 gap-4">
-            <Input
-              value={state.formData.gift_bank_name}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "gift_bank_name")
-              }
-              label="Bank / Platform Name"
-            />
-            <Input
-              value={state.formData.gift_account_name}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "gift_account_name")
-              }
-              label="Account Name"
-            />
-            <Input
-              value={state.formData.gift_account_number}
-              onChange={(e) =>
-                actions.handleChangeClient(
-                  e.target.value,
-                  "gift_account_number"
-                )
-              }
-              label="Account Number"
-            />
-          </div>
+          {selectedPackage?.digital_envelope && (
+            <>
+              <h1 className="text-2xl font-bold mb-4 mt-8">Digital Gift</h1>
+              <div className="grid md:grid-cols-3 gap-4">
+                <Input
+                  value={state.formData.gift_bank_name}
+                  onChange={(e) =>
+                    actions.handleChangeClient(e.target.value, "gift_bank_name")
+                  }
+                  label="Bank / Platform Name"
+                />
+                <Input
+                  value={state.formData.gift_account_name}
+                  onChange={(e) =>
+                    actions.handleChangeClient(
+                      e.target.value,
+                      "gift_account_name"
+                    )
+                  }
+                  label="Account Name"
+                />
+                <Input
+                  value={state.formData.gift_account_number}
+                  onChange={(e) =>
+                    actions.handleChangeClient(
+                      e.target.value,
+                      "gift_account_number"
+                    )
+                  }
+                  label="Account Number"
+                />
+              </div>
+            </>
+          )}
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
               isloading={state.loading}

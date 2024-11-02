@@ -66,8 +66,12 @@ const Nirvaya: FC<Props> = (props) => {
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
             <GalleryComponent state={state} />
-            <RSVPWishes actions={actions} state={state} />
-            <GiftComponent actions={actions} state={state} />
+            {state.client?.packages?.rsvp_and_greetings && (
+              <RSVPWishes actions={actions} state={state} />
+            )}
+            {state.client?.packages?.digital_envelope && (
+              <GiftComponent actions={actions} state={state} />
+            )}
             <ThankyouComponent state={state} />
           </div>
         )}
