@@ -45,6 +45,7 @@ export interface useAruna {
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
+    url: string;
   };
   actions: {
     handleOpenCover: () => void;
@@ -91,6 +92,16 @@ const useAruna = (client: Client | null): useAruna => {
         }))
       : []
   );
+
+  const [url, setUrl] = useState<string>("");
+
+  useEffect(() => {
+    setUrl(
+      `${window.location.hostname}${
+        window.location.port ? `:${window.location.port}` : ""
+      }`
+    );
+  }, []);
 
   useEffect(() => {
     if (!client?.events) return;
@@ -345,6 +356,7 @@ const useAruna = (client: Client | null): useAruna => {
       audioRef,
     },
     state: {
+      url,
       loading,
       open,
       countdown,

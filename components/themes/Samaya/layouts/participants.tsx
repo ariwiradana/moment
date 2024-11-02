@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { italiana, marcellus } from "@/lib/fonts";
+import { marcellus } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
@@ -36,7 +36,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
         <div className="w-full h-full px-4 md:px-12 relative z-40 max-w-screen-xl mx-auto">
           <h1
             data-aos="fade-up"
-            className={`${italiana.className} text-4xl md:text-5xl text-center text-samaya-primary`}
+            className={`font-tan-pearl text-2xl md:text-3xl text-center text-samaya-primary`}
           >
             {props.state.client.opening_title}
           </h1>
@@ -165,7 +165,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       </div>
       <h1
         data-aos="fade-up"
-        className={`text-3xl font-semibold text-samaya-primary relative ${italiana.className}`}
+        className={`text-xl font-semibold text-samaya-primary relative font-tan-pearl`}
       >
         {props.data.name}
       </h1>

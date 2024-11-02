@@ -12,6 +12,8 @@ import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
 import GiftComponent from "./layouts/gift";
 import PreviewNav from "../preview.nav";
+import Seo from "@/components/dashboard/elements/seo";
+import { sosmedURLs } from "@/constants/sosmed";
 interface Props {
   untuk: string;
   client: Client;
@@ -19,22 +21,39 @@ interface Props {
 
 const Samaya: FC<Props> = (props) => {
   const { state, actions, refs } = useSamaya(props.client);
-
+  const pageTitle = state.client
+    ? state.client.status === "unpaid"
+      ? `Preview Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
+      : state.client.is_preview
+      ? `Preview Undangan Tema ${state.client.theme?.name} | Moment`
+      : `Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
+    : "Moment";
   return (
-    <Layout
-      pageTitle={
-        state.client
-          ? state.client.status === "unpaid"
-            ? `Preview Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
-            : state.client.is_preview
-            ? `Preview Undangan Tema ${state.client.theme?.name} | Moment`
-            : `Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
-          : "Moment"
-      }
-    >
+    <Layout pageTitle={pageTitle}>
       <>
+        <Seo
+          title={pageTitle}
+          description={`${state.client?.opening_title}, ${state.client?.opening_description}`}
+          keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
+          ogImage={state.client?.cover ?? "/images/logo-white.png"}
+          ogUrl={state.url}
+          structuredData={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Moment Invitations",
+            url: state.url,
+            sameAs: [
+              sosmedURLs.email,
+              sosmedURLs.instagram,
+              sosmedURLs.whatsapp,
+              sosmedURLs.youtube,
+            ],
+          }}
+          author="Moment"
+        />
         {state.open && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />
+        <HeroComponent state={state} />
         <MusicComponent
           className={!state.open ? "invisible" : "visible"}
           actions={actions}
@@ -43,7 +62,6 @@ const Samaya: FC<Props> = (props) => {
         />
         {state.open && (
           <div className="relative">
-            <HeroComponent state={state} />
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
             <GalleryComponent state={state} />

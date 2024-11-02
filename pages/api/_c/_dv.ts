@@ -2,6 +2,7 @@ import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 
 import { Client } from "@/lib/types";
+import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { del } from "@vercel/blob";
 import { sql } from "@vercel/postgres";
 import type { NextApiResponse, NextApiRequest } from "next";
@@ -33,7 +34,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       [filteredVideos, Number(id)]
     );
 
-    if (!url.includes("www.youtube.com")) {
+    if (!isYoutubeVideo(url)) {
       await del(url);
     }
 

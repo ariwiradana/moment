@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { marcellus, windsong } from "@/lib/fonts";
+import { marcellus } from "@/lib/fonts";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import {
   ImageList,
@@ -40,7 +40,7 @@ const GalleryComponent: FC<Props> = (props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const getCols = () => {
-    if (isDesktop) return 4;
+    if (isDesktop) return 3;
     if (isTablet) return 3;
     if (isMobile) return 1;
   };
@@ -52,7 +52,7 @@ const GalleryComponent: FC<Props> = (props) => {
   };
 
   return (
-    <section className="relative bg-samaya-dark overflow-hidden z-20">
+    <section className="relative bg-gradient-to-b from-samaya-dark to-samaya-dark/80 overflow-hidden z-20">
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .9)" } }}
         close={() => setOpen(false)}
@@ -72,13 +72,13 @@ const GalleryComponent: FC<Props> = (props) => {
       >
         <h1
           data-aos="fade-up"
-          className={`${windsong.className} text-4xl md:text-5xl text-center text-samaya-primary`}
+          className={`font-tan-pearl text-2xl md:text-3xl text-center text-samaya-primary`}
         >
           Momen Bahagia
         </h1>
         <p
           data-aos="fade-up"
-          className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-4 mb-8 max-w-screen-md mx-auto`}
+          className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-2 mb-8 max-w-screen-md mx-auto`}
         >
           Foto {videos.length > 0 && "& Video "} dari Klien{" "}
           {props.state.groom?.nickname} & {props.state.bride?.nickname}

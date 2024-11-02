@@ -11,6 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Image from "next/image";
+import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 
 interface Props {
   state: useAruna["state"];
@@ -87,7 +88,7 @@ const GalleryComponent: FC<Props> = (props) => {
         {videos.length > 0 && (
           <div className="grid gap-4 mb-2 px-2" data-aos="zoom-in-up">
             {videos
-              .filter((v) => v.includes("www.youtube.com"))
+              .filter((v) => isYoutubeVideo(v))
               .map((v) => {
                 const youtubeId = getYouTubeVideoId(v);
                 return (

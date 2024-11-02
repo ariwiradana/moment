@@ -29,6 +29,7 @@ import InputChip from "@/components/admin/elements/input.chip";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
+import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 interface UpdateClientProps {
   slug: string;
   token: string | null;
@@ -36,6 +37,8 @@ interface UpdateClientProps {
 
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
+
+  console.log(state.formData.videos);
 
   return (
     <AdminLayout>
@@ -255,7 +258,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 state.formData.videos.length > 0
                   ? state.formData.videos.map((video) => {
                       const youtubeId = getYouTubeVideoId(video);
-                      const isYouTubeVideo = video.includes("www.youtube.com");
+                      const isYouTubeVideo = isYoutubeVideo(video);
 
                       return (
                         <div className="relative" key={youtubeId}>

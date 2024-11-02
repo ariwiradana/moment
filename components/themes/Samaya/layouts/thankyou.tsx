@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { balthazar, italiana, marcellus, windsong } from "@/lib/fonts";
+import { balthazar, marcellus } from "@/lib/fonts";
 import Image from "next/image";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import Link from "next/link";
@@ -17,7 +17,7 @@ interface Props {
 
 const ThankyouComponent: FC<Props> = (props) => {
   return (
-    <section className="relative bg-gradient-to-b from-samaya-dark/70 to-samaya-dark to-[90%] z-20">
+    <section className="relative bg-gradient-to-b from-samaya-dark/80 to-samaya-dark to-[90%] z-20">
       <div className="max-w-screen-sm mx-auto px-4 py-16">
         <div className="flex justify-center w-full">
           <div className="w-96 h-[500px] md:h-[550px] relative">
@@ -32,34 +32,32 @@ const ThankyouComponent: FC<Props> = (props) => {
             )}
           </div>
         </div>
+
         <p
           data-aos="fade-up"
-          data-aos-delay="100"
-          className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white max-w-screen-md mx-auto mt-12`}
+          className={`${marcellus.className} mt-12 text-sm md:text-base text-center leading-5 text-white max-w-screen-md mx-auto`}
         >
           {props.state.client?.closing_description}
         </p>
 
-        <div className="flex justify-center my-4" data-aos="fade-up">
-          <div className="w-[0.5px] h-8 bg-samaya-primary"></div>
-        </div>
+        <h1
+          data-aos="fade-up"
+          className={`font-tan-pearl text-2xl md:text-3xl text-center text-samaya-primary mt-12`}
+        >
+          {props.state.client?.closing_title}
+        </h1>
+
         <p
           data-aos="fade-up"
-          className={`${marcellus.className} text-sm md:text-base text-white text-center`}
+          className={`${marcellus.className} text-sm md:text-base text-white text-center mt-12`}
         >
           Kami yang berbahagia
         </p>
         <h1
           data-aos="fade-up"
-          className={`${windsong.className} text-4xl md:text-5xl text-center mt-8 leading-7 text-white font-medium mb-24`}
+          className={`font-tan-pearl text-2xl md:text-3xl text-center mt-8 leading-7 text-white font-medium mb-24`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
-        </h1>
-        <h1
-          data-aos="fade-up"
-          className={`${italiana.className} text-4xl md:text-5xl text-center text-samaya-primary`}
-        >
-          {props.state.client?.closing_title}
         </h1>
       </div>
       <ul

@@ -1,6 +1,7 @@
 import ImageShimmer from "@/components/image.shimmer";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { lora } from "@/lib/fonts";
+import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
@@ -33,7 +34,7 @@ const HeroComponent: FC<Props> = (props) => {
   const video =
     Array.isArray(props.state.client?.videos) &&
     props.state.client.videos.length > 0
-      ? props.state.client.videos.filter((v) => !v.includes("www.youtube.com"))
+      ? props.state.client.videos.filter((v) => !isYoutubeVideo(v))
       : [];
 
   return (

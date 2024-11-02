@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { italiana, marcellus } from "@/lib/fonts";
+import { marcellus } from "@/lib/fonts";
 import moment from "moment";
 import Button from "../elements/button";
 import { BiSolidCalendar, BiSolidMap } from "react-icons/bi";
@@ -31,7 +31,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 className={`text-center md:min-w-[400px] ${marcellus.className}`}
               >
                 <h1
-                  className={`${italiana.className} text-3xl md:text-4xl text-white uppercase`}
+                  className={`font-tan-pearl text-2xl md:text-3xl text-white uppercase`}
                 >
                   {event.name}
                 </h1>
@@ -71,7 +71,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                       {state.timeRemainings[index].seconds}
                     </h2>
                     <h4 className="text-sm">Detik</h4>
-                </div>
+                  </div>
                 </div>
                 <div className="inline-flex flex-wrap justify-center gap-4">
                   <Link target="_blank" href={event.address_url}>

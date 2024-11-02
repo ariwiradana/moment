@@ -5,7 +5,7 @@ import { useSamaya } from "@/hooks/themes/useSamaya";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
-import { afacad, marcellus, windsong } from "@/lib/fonts";
+import { afacad, marcellus } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 
@@ -32,13 +32,13 @@ const RSVPWishesComponent: FC<Props> = (props) => {
         <div className="w-full">
           <h1
             data-aos="fade-up"
-            className={`${windsong.className} text-4xl md:text-5xl text-center text-samaya-primary`}
+            className={`font-tan-pearl text-2xl md:text-3xl text-center text-samaya-primary`}
           >
             Ucapan & Doa
           </h1>
           <p
             data-aos="fade-up"
-            className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-4 mb-8 max-w-screen-sm mx-auto`}
+            className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-2 mb-8 max-w-screen-sm mx-auto`}
           >
             Bagikan doa dan ucapan kamu untuk kedua mempelai sebagai tanda kasih
             dan kebahagiaan.

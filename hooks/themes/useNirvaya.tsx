@@ -45,6 +45,7 @@ export interface useNirvaya {
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
+    url: string;
   };
   actions: {
     handleOpenCover: () => void;
@@ -91,6 +92,15 @@ const useNirvaya = (client: Client | null): useNirvaya => {
         }))
       : []
   );
+  const [url, setUrl] = useState<string>("");
+
+  useEffect(() => {
+    setUrl(
+      `${window.location.hostname}${
+        window.location.port ? `:${window.location.port}` : ""
+      }`
+    );
+  }, []);
 
   useEffect(() => {
     if (!client?.events) return;
@@ -357,6 +367,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       isPlaying,
       timeRemainings,
       isGiftShown,
+      url,
     },
     actions: {
       handleOpenCover,
