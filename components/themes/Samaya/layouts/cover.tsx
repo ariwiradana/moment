@@ -3,6 +3,7 @@ import { marcellus } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import { BiEnvelopeOpen } from "react-icons/bi";
+import Image from "next/image";
 
 interface Props {
   state: useSamaya["state"];
@@ -20,7 +21,7 @@ const Cover: FC<Props> = (props) => {
       >
         <div
           data-aos="fade-in"
-          className="flex h-dvh flex-col items-center justify-between relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-t from-samaya-dark from-[20%] via-samaya-dark/10 to-samaya-dark"
+          className="flex h-dvh flex-col items-center justify-center relative z-30 gap-[40px] md:gap-[60px] py-[60px] md:py-[100px] px-8 bg-samaya-dark/90 to-samaya-dark"
         >
           <div>
             <p
@@ -38,8 +39,26 @@ const Cover: FC<Props> = (props) => {
               {props.state.groom?.nickname} & {props.state.bride?.nickname}
             </h1>
           </div>
+          <div
+            data-aos="zoom-out-up"
+            data-aos-delay="800"
+            className="relative w-[180px] md:w-[200px] lg:w-[220px] aspect-square"
+          >
+            <Image
+              src="/images/samaya/frame-circle.svg"
+              className="object-contain absolute inset-0 z-10 transform scale-125"
+              fill
+              alt="cover-frame"
+            />
+            <Image
+              src={props.state.client?.cover as string}
+              className="object-cover rounded-full bg-samaya-dark/80"
+              fill
+              alt="cover"
+            />
+          </div>
           <div>
-            <div data-aos="fade-up" data-aos-delay="800">
+            <div data-aos="fade-up" data-aos-delay="1000">
               <p
                 className={`${marcellus.className} text-white text-sm md:text-base text-center`}
               >
@@ -53,7 +72,7 @@ const Cover: FC<Props> = (props) => {
             </div>
             <p
               data-aos="fade-up"
-              data-aos-delay="1000"
+              data-aos-delay="1200"
               className={`${marcellus.className} text-white text-sm md:text-base mt-4 md:mt-6 max-w-sm mx-auto text-center`}
             >
               Tanpa mengurangi rasa hormat, kami mengundang anda untuk
@@ -62,7 +81,7 @@ const Cover: FC<Props> = (props) => {
             <div
               className="flex justify-center mt-6 md:mt-8"
               data-aos="fade-up"
-              data-aos-delay="1200"
+              data-aos-delay="1400"
             >
               <Button
                 onClick={() => {
