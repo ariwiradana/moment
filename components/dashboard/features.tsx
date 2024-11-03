@@ -8,6 +8,7 @@ import {
   BiGlobe,
   BiGridHorizontal,
   BiGroup,
+  BiHeart,
   BiImage,
   BiImageAdd,
   BiMap,
@@ -53,8 +54,13 @@ export const featured: Feature[] = [
   {
     title: "Hitung Mundur Waktu",
     icon: <BiTime />,
+    description: "Fitur hitung mundur waktu berdasarkan tanggal acaramu.",
+  },
+  {
+    title: "Perjalanan Cinta",
+    icon: <BiHeart />,
     description:
-      "Fitur hitung mundur waktu berdasarkan tanggal acaramu.",
+      "Ceritakan perjalanan kisah cintamu hingga menuju hari bahagia.",
   },
   {
     title: "Galeri Foto",

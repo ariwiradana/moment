@@ -3,6 +3,7 @@ import { lora } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { BiEnvelopeOpen } from "react-icons/bi";
+import Image from "next/image";
 
 interface Props {
   state: useAruna["state"];
@@ -20,16 +21,24 @@ const Cover: FC<Props> = (props) => {
             : "bottom-0 visible"
         }`}
       >
+        {props.state.client?.cover && (
+          <Image
+            src={props.state.client?.cover as string}
+            fill
+            className="object-cover"
+            alt="cover"
+          />
+        )}
         <div
           data-aos="fade-in"
-          className="relative z-30 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark"
+          className="relative z-20 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark"
         >
-          <div className="flex h-dvh flex-col justify-between py-[60px] md:py-[100px] px-8 max-w-screen-xl mx-auto">
+          <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
             <div>
               <p
                 data-aos="fade-up"
                 data-aos-delay="200"
-                className={`${lora.className} text-white md:text-base text-sm mb-2`}
+                className={`${lora.className} text-white/80 md:text-base text-sm mb-2 tracking-[4px] uppercase`}
               >
                 Undangan {props.state.client?.theme?.category}
               </p>
@@ -37,16 +46,15 @@ const Cover: FC<Props> = (props) => {
                 style={{ lineHeight: "normal" }}
                 data-aos="fade-up"
                 data-aos-delay="400"
-                className={`font-tan-pearl text-white text-[32px] md:text-5xl`}
+                className={`font-tan-pearl text-white text-3xl md:text-4xl 2xl:text-5xl`}
               >
-                {props.state.groom?.nickname}
-                <br />& {props.state.bride?.nickname}
+                {props.state.groom?.nickname} & {props.state.bride?.nickname}
               </h1>
             </div>
             <div
               data-aos="zoom-in"
               data-aos-delay="1000"
-              className="h-full w-[1px] bg-white/50 my-8"
+              className="h-full md:h-[40vh] lg:h-[30vh] w-[1px] bg-white/50 my-8"
             ></div>
             <div>
               <div data-aos="fade-down" data-aos-delay="800">

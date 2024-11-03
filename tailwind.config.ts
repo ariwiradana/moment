@@ -49,6 +49,7 @@ const config: Config = {
         },
         aruna: {
           dark: "#101010",
+          background: "#f7f7f2",
         },
         admin: {
           primary: "#3366FF",

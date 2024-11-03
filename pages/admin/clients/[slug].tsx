@@ -170,7 +170,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               label="Gallery"
             />
 
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
+            <div className="grid md:grid-cols-2 gap-2">
               {Array.isArray(state.formData.gallery) &&
               state.formData.gallery.length > 0
                 ? state.formData.gallery.map((img: string, index: number) => (

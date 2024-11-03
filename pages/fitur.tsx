@@ -139,7 +139,7 @@ const DashboardFeatures = () => {
           <div
             data-aos="fade-up"
             data-aos-delay="500"
-            className="grid md:grid-cols-2 lg:grid-cols-4 mt-6 gap-4"
+            className="grid md:grid-cols-2 lg:grid-cols-3 mt-6 gap-4"
           >
             {featured.map((f: Feature) => (
               <div

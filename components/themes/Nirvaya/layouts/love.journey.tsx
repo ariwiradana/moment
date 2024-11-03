@@ -19,16 +19,17 @@ const LoveJourneyComponent: FC<Props> = (props) => {
         {props.state.client?.journey_image && (
           <div
             data-aos="zoom-out-up"
-            className="relative w-[173px] md:w-[193px] h-[226px] md:h-[256px]  my-8 mx-auto"
+            className="relative w-full max-w-screen-md mx-auto aspect-[4/3] lg:aspect-video mb-16 rounded-3xl lg:rounded-[40px] overflow-hidden"
           >
             <Image
               src={props.state.client?.journey_image as string}
               fill
               alt="journey-img"
-              className="object-cover rounded w-full h-full rounded-t-[100px] rounded-b-[20px] border-2 border-white"
+              className="object-cover w-full h-full"
             />
           </div>
         )}
+
         <h1
           data-aos="fade-up"
           className={`${italiana.className} text-4xl md:text-5xl text-center text-white`}
@@ -44,12 +45,12 @@ const LoveJourneyComponent: FC<Props> = (props) => {
         </p>
 
         <div
-          className={`flex justify-center flex-wrap gap-8 mt-12 max-w-screen-lg mx-auto`}
+          className={`flex flex-col lg:flex-row justify-center flex-wrap gap-8 mt-12 md:max-w-screen-sm lg:max-w-screen-2xl mx-auto items-stretch pb-16`}
         >
           {journey?.map((j) => (
             <div
               key={j.title}
-              className="p-8 bg-white rounded w-full md:min-w-80 md:max-w-[300px] md:w-auto"
+              className="p-8 bg-white rounded w-full lg:max-w-[300px] lg:w-auto"
               data-aos="zoom-in-up"
             >
               <div className="flex items-center gap-x-2">

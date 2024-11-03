@@ -53,7 +53,7 @@ const GalleryComponent: FC<Props> = (props) => {
   };
 
   return (
-    <section className="relative bg-gradient-to-b from-white via-white via-[60%] to-nirvaya-dark/70 to-[85%] overflow-hidden">
+    <section className="relative overflow-hidden -mt-10">
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .8)" } }}
         close={() => setOpen(false)}
@@ -67,10 +67,15 @@ const GalleryComponent: FC<Props> = (props) => {
         }}
       />
 
-      <div
-        data-aos="fade-up"
-        className="w-full h-full relative z-20 py-[60px] md:py-[100px]"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 20">
+        <path
+          className="fill-white"
+          fill-opacity="1"
+          d="M0,0L120,5C240,10,480,20,720,20C960,20,1200,10,1320,5L1440,0L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+        ></path>
+      </svg>
+
+      <div className="w-full h-full relative z-20 py-[60px] md:py-[100px] bg-gradient-to-b from-white via-white via-[60%] to-nirvaya-dark/70 to-[85%]">
         <h1
           data-aos="fade-up"
           className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark px-8`}

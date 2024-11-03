@@ -29,7 +29,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     const filteredGallery = gallery.filter((g) => g !== url);
 
     await sql.query(
-      `UPDATE clients SET gallery = $1, cover = $2, journey_image = $3 WHERE id = $3`,
+      `UPDATE clients SET gallery = $1, cover = $2, journey_image = $3 WHERE id = $4`,
       [
         filteredGallery,
         currentClient.cover === url ? null : currentClient.cover,

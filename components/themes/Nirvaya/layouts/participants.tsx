@@ -21,67 +21,74 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative z-10 py-[60px] md:py-[100px] overflow-hidden px-8 bg-white">
-        <div
-          className="absolute inset-0 bg-repeat bg-center"
-          style={{
-            backgroundImage: "url('/images/nirvaya/texture.svg')",
-          }}
-        ></div>
+      <section className="relative z-10 -mt-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 20">
+          <path
+            className="fill-white"
+            fill-opacity="1"
+            d="M0,0L120,5C240,10,480,20,720,20C960,20,1200,10,1320,5L1440,0L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+          ></path>
+        </svg>
 
-        <div className="w-full h-full relative max-w-screen-xl mx-auto">
-          <h1
-            data-aos="fade-up"
-            className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark`}
-          >
-            {props.state.client.opening_title}
-          </h1>
-          <p
-            data-aos="fade-up"
-            data-aos-delay="100"
-            className={`${balthazar.className} text-sm md:text-base text-nirvaya-dark/80 mt-8 md:mt-12 text-center max-w-screen-sm mx-auto`}
-          >
-            {props.state.client?.opening_description}
-          </p>
+        <div className="bg-white py-[60px] md:py-[100px] px-8">
+          <div className="w-full h-full relative max-w-screen-xl mx-auto">
+            <h1
+              data-aos="fade-up"
+              className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark`}
+            >
+              {props.state.client.opening_title}
+            </h1>
+            <p
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className={`${balthazar.className} text-sm md:text-base text-nirvaya-dark/80 mt-8 md:mt-12 text-center max-w-screen-sm mx-auto`}
+            >
+              {props.state.client?.opening_description}
+            </p>
 
-          <div className="flex justify-center my-8 md:my-10">
-            {props.state.groom?.image && (
-              <div
-                data-aos="zoom-in"
-                className="relative w-[173px] md:w-[193px] h-[226px] md:h-[256px] border-2 border-white rounded-t-[100px] rounded-b-[20px] overflow-hidden -mr-6"
-              >
-                <ImageShimmer
-                  fill
-                  priority
-                  className="object-cover"
-                  src={props.state.groom.image as string}
-                  alt={props.state.groom.name}
+            <div className="flex justify-center my-8 md:my-10">
+              {props.state.groom?.image && (
+                <div
+                  data-aos="zoom-in"
+                  className="relative w-[173px] md:w-[240px] h-[226px] md:h-[300px] lg:w-[320px] lg:h-[420px] border-2 border-white rounded-t-[100px] md:rounded-t-[150px] lg:rounded-t-[200px] rounded-b-[20px] overflow-hidden -mr-6"
+                >
+                  <ImageShimmer
+                    fill
+                    priority
+                    className="object-cover"
+                    src={props.state.groom.image as string}
+                    alt={props.state.groom.name}
+                  />
+                </div>
+              )}
+              {props.state.bride?.image && (
+                <div
+                  data-aos="zoom-in"
+                  className="relative w-[173px] md:w-[240px] h-[226px] md:h-[300px] lg:w-[320px] lg:h-[420px] border-2 border-white rounded-t-[100px] md:rounded-t-[150px] lg:rounded-t-[200px] rounded-b-[20px] overflow-hidden mt-6 -ml-6"
+                >
+                  <ImageShimmer
+                    fill
+                    priority
+                    className="object-cover"
+                    src={props.state.bride.image as string}
+                    alt={props.state.bride.name}
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="grid md:grid-cols-2 w-full gap-8 max-w-screen-lg mx-auto">
+              {props.state.groom && (
+                <ParticipantComponent
+                  data={props.state?.groom as Participant}
                 />
-              </div>
-            )}
-            {props.state.bride?.image && (
-              <div
-                data-aos="zoom-in"
-                className="relative w-[173px] md:w-[193px] h-[226px] md:h-[256px] border-2 border-white rounded-t-[100px] rounded-b-[20px] overflow-hidden mt-6 -ml-6"
-              >
-                <ImageShimmer
-                  fill
-                  priority
-                  className="object-cover"
-                  src={props.state.bride.image as string}
-                  alt={props.state.bride.name}
+              )}
+              {props.state.bride && (
+                <ParticipantComponent
+                  data={props.state?.bride as Participant}
                 />
-              </div>
-            )}
-          </div>
-
-          <div className="grid md:grid-cols-2 w-full gap-8 max-w-screen-md mx-auto">
-            {props.state.groom && (
-              <ParticipantComponent data={props.state?.groom as Participant} />
-            )}
-            {props.state.bride && (
-              <ParticipantComponent data={props.state?.bride as Participant} />
-            )}
+              )}
+            </div>
           </div>
         </div>
       </section>
