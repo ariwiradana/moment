@@ -4,7 +4,6 @@ import Button from "../elements/button";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import Image from "next/image";
-import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useSamaya["state"];
@@ -22,7 +21,7 @@ const Cover: FC<Props> = (props) => {
       >
         <div
           data-aos="fade-in"
-          className="flex h-dvh flex-col items-center justify-between gap-8 relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-samaya-dark/90 via-samaya-dark/80 to-samaya-dark to-[90%]"
+          className="flex h-dvh flex-col items-center justify-between md:justify-center gap-8 md:gap-[60px] 2xl:gap-[100px] relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-samaya-dark/90 via-samaya-dark/80 to-samaya-dark to-[90%]"
         >
           <div>
             <p
@@ -43,9 +42,10 @@ const Cover: FC<Props> = (props) => {
           <div
             data-aos="zoom-out-up"
             data-aos-delay="800"
-            className="w-[160px] md:w-[180px] relative aspect-square"
+            className="w-[160px] md:w-[180px] relative aspect-square rounded-full"
           >
-            <ImageShimmer
+            <Image
+              sizes="180px"
               priority
               fill
               src={props.state.client?.cover as string}
@@ -53,6 +53,7 @@ const Cover: FC<Props> = (props) => {
               className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
             />
             <Image
+              sizes="180px"
               fill
               src="/images/samaya/frame-circle.svg"
               alt="cover-frame"

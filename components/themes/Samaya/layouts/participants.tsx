@@ -10,7 +10,6 @@ import {
 } from "react-icons/bi";
 import Image from "next/image";
 import { useSamaya } from "@/hooks/themes/useSamaya";
-import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useSamaya["state"];
@@ -57,14 +56,16 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   data-aos="zoom-out-up"
                   className="w-[180px] md:w-[200px] relative aspect-square"
                 >
-                  <ImageShimmer
+                  <Image
+                    sizes="200px"
                     priority
                     fill
-                    className="object-cover rounded-full overflow-hidden"
+                    className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
                     src={props.state.groom?.image as string}
                     alt={props.state.groom?.name}
                   />
                   <Image
+                    sizes="200px"
                     fill
                     src="/images/samaya/frame-circle.svg"
                     alt="cover-frame"
@@ -77,14 +78,16 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   data-aos="zoom-out-up"
                   className="w-[180px] md:w-[200px] relative aspect-square"
                 >
-                  <ImageShimmer
+                  <Image
+                    sizes="200px"
                     priority
                     fill
-                    className="object-cover rounded-full overflow-hidden"
+                    className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
                     src={props.state.bride?.image as string}
                     alt={props.state.bride?.name}
                   />
                   <Image
+                    sizes="200px"
                     fill
                     src="/images/samaya/frame-circle.svg"
                     alt="cover-frame"
@@ -126,14 +129,16 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           data-aos="zoom-out-up"
           className="w-[180px] md:w-[200px] relative aspect-square mb-12 md:mb-16 mt-6"
         >
-          <ImageShimmer
+          <Image
+            sizes="200px"
             priority
             fill
-            className="object-cover rounded-full overflow-hidden"
+            className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
             src={props.data?.image as string}
             alt={props.data?.name}
           />
           <Image
+            sizes="200px"
             fill
             src="/images/samaya/frame-circle.svg"
             alt="cover-frame"

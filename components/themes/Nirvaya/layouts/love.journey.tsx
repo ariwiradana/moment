@@ -45,12 +45,12 @@ const LoveJourneyComponent: FC<Props> = (props) => {
         </p>
 
         <div
-          className={`flex flex-col lg:flex-row justify-center flex-wrap gap-8 mt-12 md:max-w-screen-sm lg:max-w-screen-2xl mx-auto items-stretch pb-16`}
+          className={`flex flex-col justify-center flex-wrap gap-8 mt-12 mx-auto items-center pb-16`}
         >
           {journey?.map((j) => (
             <div
               key={j.title}
-              className="p-8 bg-white rounded w-full lg:max-w-[300px] lg:w-auto"
+              className="p-8 bg-white rounded w-full max-w-lg"
               data-aos="zoom-in-up"
             >
               <div className="flex items-center gap-x-2">
