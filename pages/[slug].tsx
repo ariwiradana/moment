@@ -20,7 +20,6 @@ const MainPage: FC<Props> = (props) => {
     AOS.init({
       duration: 1200,
       offset: 0,
-      once: true,
     });
   }, []);
 

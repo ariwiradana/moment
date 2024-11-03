@@ -14,6 +14,7 @@ import PreviewNav from "../preview.nav";
 import useNirvaya from "@/hooks/themes/useNirvaya";
 import Seo from "@/components/dashboard/elements/seo";
 import { sosmedURLs } from "@/constants/sosmed";
+import LoveJourneyComponent from "./layouts/love.journey";
 interface Props {
   untuk: string;
   client: Client;
@@ -65,6 +66,9 @@ const Nirvaya: FC<Props> = (props) => {
           <div className="relative">
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
+            {state.client?.packages?.love_journey && (
+              <LoveJourneyComponent actions={actions} state={state} />
+            )}
             <GalleryComponent state={state} />
             {state.client?.packages?.rsvp_and_greetings && (
               <RSVPWishes actions={actions} state={state} />

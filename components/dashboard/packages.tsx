@@ -51,7 +51,9 @@ const PackageComponent = () => {
                   {formatToRupiah(p.price)}
                 </h2>
                 <div className="flex items-center gap-2 mt-1">
-                  <h2 className={`${afacad.className} font-medium text-2xl md:text-3xl`}>
+                  <h2
+                    className={`${afacad.className} font-medium text-2xl md:text-3xl`}
+                  >
                     {formatToRupiah(getDiscountPrice(p.price, 20))}
                   </h2>
 
@@ -62,7 +64,9 @@ const PackageComponent = () => {
                     {20}%
                   </div>
                 </div>
-                <ul className={`${afacad.className} mt-6 ml-4 text-lg capitalize leading-8`}>
+                <ul
+                  className={`${afacad.className} mt-6 ml-4 text-lg capitalize leading-8`}
+                >
                   <li className="list-disc">
                     {p.unlimited_revisions && "Revisi tidak terbatas"}
                   </li>
@@ -118,6 +122,13 @@ const PackageComponent = () => {
                     }`}
                   >
                     Lokasi terintegrasi dengan Google Maps
+                  </li>
+                  <li
+                    className={`list-disc ${
+                      !p.love_journey && "line-through text-gray-300"
+                    }`}
+                  >
+                    Cerita Perjalanan Kisah Cinta
                   </li>
                   <li
                     className={`list-disc ${

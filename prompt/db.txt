@@ -25,11 +25,22 @@ CREATE TABLE events (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 )
 
+CREATE TABLE journey (
+  id SERIAL PRIMARY KEY,
+  client_id INT REFERENCES clients(id) ON DELETE SET NULL,
+  title VARCHAR(255),
+  date VARCHAR(100),
+  description TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+)
+
 CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   slug VARCHAR(255) UNIQUE,
   cover VARCHAR(255),
+  journey_image VARCHAR(255),
   theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
   package_id INT REFERENCES packages(id) ON DELETE SET NULL,
   gallery TEXT[],
@@ -83,6 +94,7 @@ CREATE TABLE packages (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,           
     custom_opening_closing BOOLEAN DEFAULT TRUE,
+    love_journey BOOLEAN DEFAULT FALSE,
     unlimited_revisions BOOLEAN NOT NULL,
     custom_opening BOOLEAN NOT NULL,
     custom_closing BOOLEAN NOT NULL,

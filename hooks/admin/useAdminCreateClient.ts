@@ -5,6 +5,7 @@ import { getClient } from "@/lib/client";
 import {
   Client,
   Event,
+  LoveJourney,
   Option,
   Package,
   Participant,
@@ -44,6 +45,12 @@ const initialEvent: Event = {
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
 
+const initialJourney: LoveJourney = {
+  title: "",
+  description: "",
+  date: moment().format("YYYY-MM-DD"),
+};
+
 const initalFormData: Client & { coverVideo: FileList | null } = {
   name: "",
   opening_title: "",
@@ -58,6 +65,7 @@ const initalFormData: Client & { coverVideo: FileList | null } = {
   status: "unpaid",
   participants: [initialParticipant],
   events: [initialEvent],
+  journey: [],
   gallery: [],
   videos: [],
   cover: null,
@@ -417,7 +425,7 @@ export const useAdminCreateClient = (token: string | null) => {
     if (name === "videos") {
       if ((value as string[]).length > Number(selectedPackage?.max_videos)) {
         toast.error(`Maximum videos is ${selectedPackage?.max_videos}`);
-        return
+        return;
       }
     }
 
@@ -438,6 +446,12 @@ export const useAdminCreateClient = (token: string | null) => {
     setFormData((state) => ({
       ...state,
       events: [...formData.events, initialEvent],
+    }));
+  };
+  const handleAddAnotherJourney = () => {
+    setFormData((state) => ({
+      ...state,
+      journey: [...(formData.journey ?? []), initialJourney],
     }));
   };
 
@@ -474,6 +488,20 @@ export const useAdminCreateClient = (token: string | null) => {
     setFormData({
       ...formData,
       events: currentEvents,
+    });
+  };
+
+  const handleChangeJourney = (value: string, name: string, index: number) => {
+    let currentEvents: LoveJourney[] = [...(formData.journey ?? [])];
+
+    currentEvents[index] = {
+      ...currentEvents[index],
+      [name]: value,
+    };
+
+    setFormData({
+      ...formData,
+      journey: currentEvents,
     });
   };
 
@@ -563,7 +591,9 @@ export const useAdminCreateClient = (token: string | null) => {
       handleChangeParticipant,
       handletoggleEndTime,
       handleAddAnotherEvent,
+      handleAddAnotherJourney,
       handleChangeEvent,
+      handleChangeJourney,
     },
   };
 };

@@ -3,7 +3,6 @@ import AdminLayout from "@/components/admin/layouts";
 import { useAdminClients } from "@/hooks/admin/useAdminClients";
 import { montserrat } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
-import moment from "moment";
 import Link from "next/link";
 import React from "react";
 import {
@@ -221,16 +220,27 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                   </div>
                   <div className="pt-3 flex flex-col gap-y-2">
                     <div className="grid grid-cols-2 gap-2">
-                      {client.events.map((event) => (
-                        <div key={`event-${event.id}`}>
-                          <p className="text-gray-500 font-medium text-xs">
-                            {moment(event.date).format("dddd, D MMM YYYY")}
-                          </p>
-                          <h1 className="text-gray-800 font-semibold text-sm capitalize">
-                            {event.name}
-                          </h1>
-                        </div>
-                      ))}
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Event(s)
+                        </p>
+                        <p className="text-gray-800 font-semibold text-sm capitalize">
+                          {client.events.length}{" "}
+                          {client.events.length > 1 ? "Events" : "Event"}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Journey(s)
+                        </p>
+                        <p className="text-gray-800 font-semibold text-sm capitalize">
+                          {client.journey.length === 0
+                            ? "-"
+                            : client.journey?.length > 1
+                            ? `${client.journey.length} Journies`
+                            : `${client.journey.length} Journey`}
+                        </p>
+                      </div>
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
                           Status
@@ -282,6 +292,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Event(s)
+                      </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        Journey(s)
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Package
@@ -368,6 +381,15 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           <h1>
                             {client.events.length}{" "}
                             {client.events.length > 1 ? "Event" : "Events"}
+                          </h1>
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          <h1>
+                            {client.journey.length === 0
+                              ? "-"
+                              : client.journey?.length > 1
+                              ? `${client.journey.length} Journies`
+                              : `${client.journey.length} Journey`}
                           </h1>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">

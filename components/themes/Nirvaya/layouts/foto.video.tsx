@@ -11,6 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Image from "next/image";
+import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 
 interface Props {
   state: useNirvaya["state"];
@@ -88,20 +89,22 @@ const GalleryComponent: FC<Props> = (props) => {
           <div className="grid gap-4 mb-2 px-2" data-aos="zoom-in-up">
             {videos.map((v) => {
               const youtubeId = getYouTubeVideoId(v);
-              return (
-                <div
-                  key={youtubeId}
-                  className="relative w-full aspect-video rounded overflow-hidden"
-                >
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
-                    title={v}
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              );
+              const youtubeVideo = isYoutubeVideo(v);
+              if (youtubeVideo)
+                return (
+                  <div
+                    key={youtubeId}
+                    className="relative w-full aspect-video rounded overflow-hidden"
+                  >
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
+                      title={v}
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                );
             })}
           </div>
         )}

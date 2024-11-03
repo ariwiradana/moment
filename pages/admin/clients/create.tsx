@@ -22,7 +22,7 @@ import InputChip from "@/components/admin/elements/input.chip";
 import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
-import { Package, Theme } from "@/lib/types";
+import { LoveJourney, Package, Theme } from "@/lib/types";
 
 interface CreateClientProps {
   token: string | null;
@@ -37,8 +37,6 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
   const selectedTheme = state.themes?.data.find(
     (th: Theme) => th.id === state.formData.theme_id
   );
-
-  console.log(selectedPackage);
 
   return (
     <AdminLayout>
@@ -166,6 +164,72 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
               label="Music"
             />
           )}
+
+          {selectedPackage?.love_journey &&
+          (state.formData.journey as LoveJourney[])?.length > 0 ? (
+            <>
+              <h1 className="text-2xl font-bold mb-4 mt-8">Love Journey(s)</h1>
+              <div className="flex flex-col gap-y-4">
+                {state.formData.journey?.map((journey, index) => (
+                  <Accordion
+                    key={`journey-${index}`}
+                    title={`Journey ${index + 1}`}
+                    content={
+                      <div className="flex flex-col gap-y-4">
+                        <Input
+                          value={journey.date}
+                          onChange={(e) =>
+                            actions.handleChangeJourney(
+                              e.target.value,
+                              "date",
+                              index
+                            )
+                          }
+                          className="w-full"
+                          type="date"
+                          label="Date"
+                        />
+                        <Input
+                          value={journey.title}
+                          onChange={(e) =>
+                            actions.handleChangeJourney(
+                              e.target.value,
+                              "title",
+                              index
+                            )
+                          }
+                          className="w-full"
+                          label="Title"
+                        />
+                        <InputTextarea
+                          rows={6}
+                          value={journey.description}
+                          onChange={(e) =>
+                            actions.handleChangeJourney(
+                              e.target.value,
+                              "description",
+                              index
+                            )
+                          }
+                          label="Description"
+                        />
+                      </div>
+                    }
+                  />
+                ))}
+                <div>
+                  <ButtonSecondary
+                    onClick={actions.handleAddAnotherJourney}
+                    type="button"
+                    title="Add Another"
+                    size="small"
+                    icon={<BiSolidPlusCircle />}
+                  />
+                </div>
+              </div>
+            </>
+          ) : null}
+
           <h1 className="text-2xl font-bold mb-4 mt-8">Event(s)</h1>
           <div className="flex flex-col gap-y-4">
             {state.formData.events.map((event, index) => (

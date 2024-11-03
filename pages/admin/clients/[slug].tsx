@@ -170,12 +170,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               label="Gallery"
             />
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
               {Array.isArray(state.formData.gallery) &&
               state.formData.gallery.length > 0
                 ? state.formData.gallery.map((img: string, index: number) => (
                     <div
-                      className="relative w-full aspect-square group"
+                      className="relative w-full aspect-[3/2] group overflow-hidden"
                       key={index}
                     >
                       <div className="absolute top-2 right-2 z-10">
@@ -193,13 +193,23 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           <BiX />
                         </button>
                       </div>
-                      {state.formData.cover === img ? (
-                        <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 absolute bottom-2 left-2 z-20 backdrop-blur text-white">
-                          <BiImageAlt className="text-base font-medium" />
-                          <span>Cover</span>
-                        </div>
-                      ) : (
-                        <div className="absolute -bottom-2 invisible left-2 z-10 opacity-0 group-hover:bottom-2 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500">
+
+                      <div className="absolute top-2 left-2 z-20 flex gap-2">
+                        {state.formData.cover === img && (
+                          <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 backdrop-blur bg-admin-dark/30 text-white">
+                            <BiImageAlt className="text-base font-medium" />
+                            <span>Cover</span>
+                          </div>
+                        )}
+                        {state.formData.journey_image === img && (
+                          <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 backdrop-blur bg-admin-dark/30 text-white">
+                            <BiImageAlt className="text-base font-medium" />
+                            <span>Journey</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="absolute -bottom-4 invisible inset-x-0 w-full bg-admin-dark/80 rounded-b-lg overflow-hidden z-10 opacity-0 group-hover:bottom-0 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500 flex justify-center">
+                        {state.formData.cover !== img && (
                           <button
                             onClick={() =>
                               actions.handleSetCover(
@@ -209,13 +219,29 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             }
                             type="button"
                             disabled={state.loading || state.isLoading}
-                            className="h-5 px-2 rounded-md font-medium bg-white flex justify-center items-center text-center text-xs gap-x-1"
+                            className="px-2 w-full font-medium hover:bg-admin-dark p-4 transition-colors ease-in-out duration-500 text-white flex justify-center items-center text-center text-xs gap-x-1"
                           >
                             <BiImageAdd className="text-base" />
-                            <span>Set as Cover</span>
+                            <span>Set Cover Image</span>
                           </button>
-                        </div>
-                      )}
+                        )}
+                        {state.formData.journey_image !== img && (
+                          <button
+                            onClick={() =>
+                              actions.handleSetJourneyImage(
+                                img,
+                                state.formData.id as number
+                              )
+                            }
+                            type="button"
+                            disabled={state.loading || state.isLoading}
+                            className="px-2 w-full font-medium hover:bg-admin-dark p-4 transition-colors ease-in-out duration-500 text-white flex justify-center items-center text-center text-xs gap-x-1"
+                          >
+                            <BiImageAdd className="text-base" />
+                            <span>Set Journey Image</span>
+                          </button>
+                        )}
+                      </div>
 
                       <ImageShimmer
                         sizes="400px"
@@ -471,17 +497,19 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex">
-                        <ButtonPrimary
-                          type="button"
-                          onClick={() =>
-                            actions.handleDeleteEvent(event.id as number)
-                          }
-                          size="small"
-                          title="Remove"
-                          icon={<BiX />}
-                        />
-                      </div>
+                      {event.id && (
+                        <div className="flex">
+                          <ButtonPrimary
+                            type="button"
+                            onClick={() =>
+                              actions.handleDeleteEvent(event.id as number)
+                            }
+                            size="small"
+                            title="Remove"
+                            icon={<BiX />}
+                          />
+                        </div>
+                      )}
                     </div>
                   }
                 />
@@ -496,6 +524,83 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 />
               </div>
             </div>
+
+            <>
+              <h1 className="text-2xl font-bold mb-4 mt-8">Love Journey(s)</h1>
+              <div className="flex flex-col gap-y-4">
+                {state.formData.journey?.map((journey, index) => (
+                  <Accordion
+                    key={`journey-${index}`}
+                    title={`Journey ${index + 1}`}
+                    content={
+                      <div className="flex flex-col gap-y-4">
+                        <Input
+                          value={journey.date}
+                          onChange={(e) =>
+                            actions.handleChangeJourney(
+                              e.target.value,
+                              "date",
+                              index
+                            )
+                          }
+                          className="w-full"
+                          type="date"
+                          label="Date"
+                        />
+                        <Input
+                          value={journey.title}
+                          onChange={(e) =>
+                            actions.handleChangeJourney(
+                              e.target.value,
+                              "title",
+                              index
+                            )
+                          }
+                          className="w-full"
+                          label="Title"
+                        />
+                        <InputTextarea
+                          rows={6}
+                          value={journey.description}
+                          onChange={(e) =>
+                            actions.handleChangeJourney(
+                              e.target.value,
+                              "description",
+                              index
+                            )
+                          }
+                          label="Description"
+                        />
+                        {journey.id && (
+                          <div className="flex">
+                            <ButtonPrimary
+                              type="button"
+                              onClick={() =>
+                                actions.handleDeleteJourney(
+                                  journey.id as number
+                                )
+                              }
+                              size="small"
+                              title="Remove"
+                              icon={<BiX />}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    }
+                  />
+                ))}
+                <div>
+                  <ButtonSecondary
+                    onClick={actions.handleAddAnotherJourney}
+                    type="button"
+                    title="Add Another"
+                    size="small"
+                    icon={<BiSolidPlusCircle />}
+                  />
+                </div>
+              </div>
+            </>
 
             <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
             <div className="flex flex-col gap-y-4">
@@ -727,20 +832,22 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           label="TikTok"
                         />
                       </div>
-                      <div className="flex">
-                        <ButtonPrimary
-                          type="button"
-                          onClick={() =>
-                            actions.handleDeleteParticipant(
-                              participant.id as number,
-                              participant.image as string
-                            )
-                          }
-                          size="small"
-                          title="Remove"
-                          icon={<BiX />}
-                        />
-                      </div>
+                      {participant.id && (
+                        <div className="flex">
+                          <ButtonPrimary
+                            type="button"
+                            onClick={() =>
+                              actions.handleDeleteParticipant(
+                                participant.id as number,
+                                participant.image as string
+                              )
+                            }
+                            size="small"
+                            title="Remove"
+                            icon={<BiX />}
+                          />
+                        </div>
+                      )}
                     </div>
                   }
                 />
