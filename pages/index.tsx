@@ -90,22 +90,22 @@ const Dashboard = () => {
     }
   }, [activeSection, manualScroll]);
 
-    const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>("");
 
-    useEffect(() => {
-      setUrl(
-        `${window.location.hostname}${
-          window.location.port ? `:${window.location.port}` : ""
-        }`
-      );
-    }, []);
+  useEffect(() => {
+    setUrl(
+      `${window.location.hostname}${
+        window.location.port ? `:${window.location.port}` : ""
+      }`
+    );
+  }, []);
 
   return (
     <Layout>
       <Seo
         title="Buat Undangan Digital Disini! | Moment"
         description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
-        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
+        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali"
         ogImage="/images/logo-white.png"
         ogUrl={url}
         structuredData={{

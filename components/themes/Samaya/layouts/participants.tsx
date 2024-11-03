@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { marcellus } from "@/lib/fonts";
-import ImageShimmer from "../../../image.shimmer";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
 import {
@@ -11,6 +10,7 @@ import {
 } from "react-icons/bi";
 import Image from "next/image";
 import { useSamaya } from "@/hooks/themes/useSamaya";
+import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useSamaya["state"];
@@ -50,51 +50,45 @@ const ParticipantsComponent: FC<Props> = (props) => {
 
           {!bothHasImg && (
             <div
-              className={`w-full gap-20 place-items-center flex justify-center`}
+              className={`w-full gap-20 place-items-center flex justify-center my-16`}
             >
               {props.state.groom?.image && (
                 <div
-                  data-aos="zoom-in"
-                  className="relative w-[277px] h-[368px] mb-12"
+                  data-aos="zoom-out-up"
+                  className="w-[180px] md:w-[200px] relative aspect-square"
                 >
                   <ImageShimmer
-                    fill
                     priority
-                    sizes="600px"
-                    className="object-cover w-full h-full overflow-hidden p-[10px]"
+                    fill
+                    className="object-cover rounded-full overflow-hidden"
                     src={props.state.groom?.image as string}
                     alt={props.state.groom?.name}
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                   <Image
-                    className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
-                    alt="floral-top-corner"
-                    src="/images/samaya/frame-primary.svg"
-                    height={277}
-                    width={368}
+                    fill
+                    src="/images/samaya/frame-circle.svg"
+                    alt="cover-frame"
+                    className="object-contain w-full h-full transform scale-[1.4]"
                   />
                 </div>
               )}
               {props.state.bride?.image && (
                 <div
-                  data-aos="zoom-in"
-                  className="relative w-[277px] h-[368px] mb-12"
+                  data-aos="zoom-out-up"
+                  className="w-[180px] md:w-[200px] relative aspect-square"
                 >
                   <ImageShimmer
-                    fill
                     priority
-                    sizes="600px"
-                    className="object-cover w-full h-full overflow-hidden p-[10px]"
+                    fill
+                    className="object-cover rounded-full overflow-hidden"
                     src={props.state.bride?.image as string}
                     alt={props.state.bride?.name}
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                   <Image
-                    className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
-                    alt="floral-top-corner"
-                    src="/images/samaya/frame-primary.svg"
-                    height={277}
-                    width={368}
+                    fill
+                    src="/images/samaya/frame-circle.svg"
+                    alt="cover-frame"
+                    className="object-contain w-full h-full transform scale-[1.4]"
                   />
                 </div>
               )}
@@ -128,22 +122,22 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col justify-center items-center">
       {props.data.image && props.bothHasImg ? (
-        <div data-aos="zoom-in" className="relative w-[277px] h-[368px] mb-8">
+        <div
+          data-aos="zoom-out-up"
+          className="w-[180px] md:w-[200px] relative aspect-square mb-12 md:mb-16 mt-6"
+        >
           <ImageShimmer
-            fill
             priority
-            sizes="600px"
-            className="object-cover w-full h-full overflow-hidden p-[10px]"
-            src={props.data.image as string}
-            alt={props.data.name}
+            fill
+            className="object-cover rounded-full overflow-hidden"
+            src={props.data?.image as string}
+            alt={props.data?.name}
           />
-          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <Image
-            className="absolute inset-0 z-30 transform scale-[1.02] mt-[2px]"
-            alt="floral-top-corner"
-            src="/images/samaya/frame-primary.svg"
-            height={277}
-            width={368}
+            fill
+            src="/images/samaya/frame-circle.svg"
+            alt="cover-frame"
+            className="object-contain w-full h-full transform scale-[1.4]"
           />
         </div>
       ) : null}

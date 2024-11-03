@@ -80,7 +80,7 @@ const GalleryComponent: FC<Props> = (props) => {
           data-aos="fade-up"
           className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-2 mb-8 max-w-screen-md mx-auto`}
         >
-          Foto {videos.length > 0 && "& Video "} dari Klien{" "}
+          Foto {videos.length > 0 && "& Video "} dari{" "}
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </p>
         <div
