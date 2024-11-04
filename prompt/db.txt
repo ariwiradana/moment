@@ -79,7 +79,7 @@ CREATE TABLE participants (
   tiktok VARCHAR(255) DEFAULT NULL
 );
 
-CREATE TABLE reviews (
+CREATE TABLE wishes (
   id SERIAL PRIMARY KEY,
   client_id INT REFERENCES clients(id) ON DELETE SET NULL,
   name VARCHAR(255),
@@ -96,8 +96,6 @@ CREATE TABLE packages (
     custom_opening_closing BOOLEAN DEFAULT TRUE,
     love_journey BOOLEAN DEFAULT FALSE,
     unlimited_revisions BOOLEAN NOT NULL,
-    custom_opening BOOLEAN NOT NULL,
-    custom_closing BOOLEAN NOT NULL,
     unlimited_guest_names BOOLEAN NOT NULL,
     max_events VARCHAR(10),              
     max_gallery_photos VARCHAR(10) NOT NULL,
@@ -105,7 +103,7 @@ CREATE TABLE packages (
     background_sound BOOLEAN NOT NULL, 
     max_videos VARCHAR(10) NOT NULL,    
     rsvp_and_greetings BOOLEAN NOT NULL, 
-    custom_cover_photo BOOLEAN NOT NULL, 
+    custom_cover BOOLEAN NOT NULL, 
     digital_envelope BOOLEAN NOT NULL,   
     google_maps_integration BOOLEAN NOT NULL,
     add_to_calendar BOOLEAN NOT NULL,

@@ -41,7 +41,7 @@ export interface useAruna {
     groom: Participant | null;
     client: Client | null;
     formData: FormData;
-    reviews: Review[] | null;
+    wishes: Review[] | null;
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
@@ -149,7 +149,7 @@ const useAruna = (client: Client | null): useAruna => {
     fetcher
   );
 
-  const reviewSchema = z.object({
+  const wisheschema = z.object({
     name: z
       .string()
       .min(1, "Nama harus diisi")
@@ -160,7 +160,7 @@ const useAruna = (client: Client | null): useAruna => {
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
 
-  const reviews: Review[] = data?.data ?? [];
+  const wishes: Review[] = data?.data ?? [];
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -178,7 +178,7 @@ const useAruna = (client: Client | null): useAruna => {
     setLoading(true);
     const toastSubmit = toast.loading("Memberikan ucapan...");
     try {
-      reviewSchema.parse(formData);
+      wisheschema.parse(formData);
       const response = await getClient(`/api/_pb/_w`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -364,7 +364,7 @@ const useAruna = (client: Client | null): useAruna => {
       groom,
       client,
       formData,
-      reviews,
+      wishes,
       errors,
       isPlaying,
       timeRemainings,

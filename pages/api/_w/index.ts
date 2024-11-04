@@ -13,8 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       case "GET":
         const { client_id, page = 1, limit = 10 } = req.query;
 
-        let query = `SELECT * FROM reviews`;
-        let countQuery = `SELECT COUNT(*) FROM reviews`;
+        let query = `SELECT * FROM wishes`;
+        let countQuery = `SELECT COUNT(*) FROM wishes`;
 
         const values: (string | number)[] = [];
         const countValues: (string | number)[] = [];
@@ -56,7 +56,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const insertQuery = `
-          INSERT INTO reviews (client_id, name, wishes, attendant) 
+          INSERT INTO wishes (client_id, name, wishes, attendant) 
           VALUES ($1, $2, $3, $4) 
           RETURNING *
         `;
@@ -81,7 +81,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const updateQuery = `
-          UPDATE reviews 
+          UPDATE wishes 
           SET client_id = $1, name = $2, attendant = $3, wishes = $4 
           WHERE id = $5 
           RETURNING *
@@ -114,7 +114,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         // Fetch review before deleting
         const { rows: reviewRows } = await sql.query(
-          `SELECT * FROM reviews WHERE id = $1`,
+          `SELECT * FROM wishes WHERE id = $1`,
           [Number(deleteId)]
         );
 
@@ -123,9 +123,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         // Delete review
-        await sql.query(`DELETE FROM reviews WHERE id = $1`, [
-          Number(deleteId),
-        ]);
+        await sql.query(`DELETE FROM wishes WHERE id = $1`, [Number(deleteId)]);
 
         result = {
           success: true,

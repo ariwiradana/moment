@@ -111,7 +111,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             className="flex flex-col mt-8 w-full max-h-[25rem] overflow-y-auto gap-2"
             data-aos="fade-up"
           >
-            {props.state.reviews?.map((r) => (
+            {props.state.wishes?.map((r) => (
               <div key={r.id} className="flex mb-4">
                 <div className="flex-shrink-0">
                   <div className="w-9 h-9 bg-zinc-100 rounded-full flex justify-center items-center text-base font-medium text-aakarshana-primary">

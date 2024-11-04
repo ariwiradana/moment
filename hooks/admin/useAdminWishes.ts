@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
 
-export const useAdminReviews = (token: string | null) => {
+export const useAdminWishes = (token: string | null) => {
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [clientId, setClientId] = useState<number | null>(null);
@@ -74,7 +74,7 @@ export const useAdminReviews = (token: string | null) => {
 
   return {
     state: {
-      reviews: data?.data || [],
+      wishes: data?.data || [],
       isLoading,
       isError: error,
       page,

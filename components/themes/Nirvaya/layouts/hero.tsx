@@ -41,7 +41,7 @@ const HeroComponent: FC<Props> = (props) => {
   ];
 
   return (
-    <section className={`relative h-[105vh]`}>
+    <section className={`relative h-[calc(100svh+40px)]`}>
       <div className="fixed inset-0">
         <Swiper
           loop
@@ -51,7 +51,7 @@ const HeroComponent: FC<Props> = (props) => {
           }}
           effect="fade"
           speed={3000}
-          className="w-full transition-transform h-[105vh]"
+          className="w-full transition-transform h-[calc(100svh+40px)]"
           spaceBetween={0}
           slidesPerView={1}
           modules={[Autoplay, EffectFade]}
@@ -97,7 +97,7 @@ const HeroComponent: FC<Props> = (props) => {
         </Swiper>
       </div>
       <div
-        className={`absolute h-[105vh] inset-0 flex flex-col justify-between items-center z-10 bg-gradient-to-b from-nirvaya-dark/95 via-[30%] via-transparent to-nirvaya-dark/90 py-[60px] md:py-[100px] px-8 transition-opacity ease-in-out duration-1000 delay-500 ${
+        className={`absolute h-[calc(100svh+40px)] inset-0 flex flex-col justify-between items-center z-10 bg-gradient-to-b from-nirvaya-dark/95 via-[30%] via-transparent to-nirvaya-dark/90 py-[60px] md:py-[100px] px-8 transition-opacity ease-in-out duration-1000 delay-500 ${
           props.state.open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
@@ -150,7 +150,7 @@ const HeroComponent: FC<Props> = (props) => {
               <div
                 data-aos="fade-up"
                 data-aos-delay="1800"
-                className="pb-[5vh]"
+                className="pb-10"
               >
                 <p
                   className={`${balthazar.className} text-white text-sm md:text-base text-justify mt-4 md:mt-6`}

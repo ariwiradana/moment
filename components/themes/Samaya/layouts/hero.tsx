@@ -15,7 +15,7 @@ const HeroComponent: FC<Props> = (props) => {
   const events = props.state.client?.events || [];
   const gallery: string[] = (props.state.client?.gallery || []) as string[];
 
-  const images = gallery.filter((g) => g !== props.state.client?.cover)
+  const images = gallery.filter((g) => g !== props.state.client?.cover);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [fade, setFade] = useState<boolean>(true);
@@ -35,7 +35,7 @@ const HeroComponent: FC<Props> = (props) => {
   }, [events.length]);
 
   return (
-    <section className="h-dvh">
+    <section className="h-svh">
       {images.length > 0 && (
         <div className="fixed inset-0" data-aos="zoom-out">
           <Swiper
@@ -46,7 +46,7 @@ const HeroComponent: FC<Props> = (props) => {
               disableOnInteraction: false,
             }}
             speed={3000}
-            className="w-full transition-transform h-dvh"
+            className="w-full transition-transform h-svh"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay, EffectFade]}
@@ -74,7 +74,7 @@ const HeroComponent: FC<Props> = (props) => {
       )}
       {props.state.open && (
         <div
-          className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark to-[90%] h-dvh flex flex-col justify-end items-center py-8"
+          className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark to-[90%] h-svh flex flex-col justify-end items-center py-8"
           data-aos="fade-up"
           data-aos-delay="800"
         >

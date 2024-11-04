@@ -41,7 +41,7 @@ export interface useNirvaya {
     groom: Participant | null;
     client: Client | null;
     formData: FormData;
-    reviews: Review[] | null;
+    wishes: Review[] | null;
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
@@ -148,7 +148,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
     fetcher
   );
 
-  const reviewSchema = z.object({
+  const wisheschema = z.object({
     name: z
       .string()
       .min(1, "Nama harus diisi")
@@ -159,7 +159,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
 
-  const reviews: Review[] = data?.data ?? [];
+  const wishes: Review[] = data?.data ?? [];
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -177,7 +177,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
     setLoading(true);
     const toastSubmit = toast.loading("Memberikan ucapan...");
     try {
-      reviewSchema.parse(formData);
+      wisheschema.parse(formData);
       const response = await getClient(`/api/_pb/_w`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -362,7 +362,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       groom,
       client,
       formData,
-      reviews,
+      wishes,
       errors,
       isPlaying,
       timeRemainings,

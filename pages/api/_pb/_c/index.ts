@@ -102,7 +102,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         );
 
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
-        const { rows: reviews } = await sql.query(`SELECT * FROM reviews`);
+        const { rows: wishes } = await sql.query(`SELECT * FROM wishes`);
         const { rows: packages } = await sql.query(`SELECT * FROM packages`);
 
         const clients = rows.map((client: Client) => {
@@ -119,7 +119,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           const clientPackages: Package[] = packages.find(
             (t) => t.id === client.package_id
           );
-          const clientReviews: Review[] = reviews.filter(
+          const clientwishes: Review[] = wishes.filter(
             (r) => r.client_id === client.id
           );
           return {
@@ -128,7 +128,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             events: clientEvents,
             journey: clientJourney,
             theme: clientTheme,
-            reviews: clientReviews,
+            wishes: clientwishes,
             packages: clientPackages,
           };
         });

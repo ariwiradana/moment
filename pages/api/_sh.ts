@@ -13,11 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           `SELECT COUNT(*) FROM clients`
         );
         const { rows: guest } = await sql.query(
-          `SELECT COUNT(*) FROM reviews WHERE attendant = 'Hadir'`
+          `SELECT COUNT(*) FROM wishes WHERE attendant = 'Hadir'`
         );
-        const { rows: wishes } = await sql.query(
-          `SELECT COUNT(*) FROM reviews`
-        );
+        const { rows: wishes } = await sql.query(`SELECT COUNT(*) FROM wishes`);
 
         return res.status(200).json({
           success: true,

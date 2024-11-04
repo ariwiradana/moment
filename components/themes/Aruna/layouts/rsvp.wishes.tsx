@@ -103,13 +103,13 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           )}
         </form>
 
-        {props.state.reviews && props.state.reviews?.length > 0 ? (
+        {props.state.wishes && props.state.wishes?.length > 0 ? (
           <div
             className="flex flex-col w-full gap-4 max-h-[440px] overflow-y-auto mt-12 px-8"
             data-aos="fade-up"
           >
             <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">
-              {props.state.reviews?.map((r) => (
+              {props.state.wishes?.map((r) => (
                 <div key={r.id} className="flex">
                   <div className="flex-shrink-0">
                     <div className="w-9 h-9 bg-nirvaya-dark rounded-full flex justify-center items-center text-base font-medium text-white">

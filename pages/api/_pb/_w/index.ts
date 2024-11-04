@@ -11,8 +11,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       case "GET":
         const { client_id, page = 1, limit = 10 } = req.query;
 
-        let query = `SELECT * FROM reviews`;
-        let countQuery = `SELECT COUNT(*) FROM reviews`;
+        let query = `SELECT * FROM wishes`;
+        let countQuery = `SELECT COUNT(*) FROM wishes`;
 
         const values: (string | number)[] = [];
         const countValues: (string | number)[] = [];
@@ -54,7 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const insertQuery = `
-          INSERT INTO reviews (client_id, name, wishes, attendant) 
+          INSERT INTO wishes (client_id, name, wishes, attendant) 
           VALUES ($1, $2, $3, $4) 
           RETURNING *
         `;

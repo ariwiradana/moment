@@ -3,7 +3,6 @@ import ButtonText from "@/components/admin/elements/button.text";
 import Loader from "@/components/admin/elements/loader";
 import InputSelect from "@/components/admin/elements/select";
 import AdminLayout from "@/components/admin/layouts";
-import { useAdminReviews } from "@/hooks/admin/useAdminReviews";
 import { isTokenExpired } from "@/lib/auth";
 import { montserrat } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
@@ -13,13 +12,14 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import { BiTrash } from "react-icons/bi";
 import Cookies from "cookies";
+import { useAdminWishes } from "@/hooks/admin/useAdminWishes";
 
 interface WishesDashboardProps {
   token: string | null;
 }
 
 const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
-  const { state, actions } = useAdminReviews(token);
+  const { state, actions } = useAdminWishes(token);
 
   return (
     <AdminLayout>
@@ -45,7 +45,7 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
             )}
             <div className="mt-4 lg:mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
-                {state.reviews.map((review) => (
+                {state.wishes.map((review) => (
                   <div key={review.id} className="border rounded-lg p-3">
                     <div className="flex justify-between items-center pb-3 border-b">
                       <div className="flex justify-between items-center gap-x-2 w-full">
@@ -109,11 +109,11 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {state.reviews.map((review, index) => (
+                      {state.wishes.map((review, index) => (
                         <tr
                           key={review.id}
                           className={`border-b ${
-                            state.reviews.length - 1 === index
+                            state.wishes.length - 1 === index
                               ? "border-b-transparent"
                               : "border-b-gray-200"
                           }`}

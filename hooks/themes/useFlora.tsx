@@ -34,7 +34,7 @@ export interface useFlora {
     groom: Participant | null;
     client: Client | null;
     formData: FormData;
-    reviews: Review[] | null;
+    wishes: Review[] | null;
     errors: Record<string, string | undefined>;
   };
   actions: {
@@ -78,7 +78,7 @@ const useFlora = (client: Client | null): useFlora => {
     fetcher
   );
 
-  const reviewSchema = z.object({
+  const wisheschema = z.object({
     name: z
       .string()
       .min(1, "Nama harus diisi")
@@ -89,7 +89,7 @@ const useFlora = (client: Client | null): useFlora => {
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
 
-  const reviews: Review[] = data?.data ?? [];
+  const wishes: Review[] = data?.data ?? [];
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -130,7 +130,7 @@ const useFlora = (client: Client | null): useFlora => {
       </div>
     ));
     try {
-      reviewSchema.parse(formData);
+      wisheschema.parse(formData);
       const response = await getClient(`/api/_pb/_w`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -354,7 +354,7 @@ const useFlora = (client: Client | null): useFlora => {
       groom,
       client,
       formData,
-      reviews,
+      wishes,
       errors,
       isPlaying,
     },
