@@ -18,7 +18,7 @@ const useDashboardStore = create<StoreState>((set) => ({
   setManualScroll: (manualScroll) => set({ manualScroll }),
   disableScroll: false,
   setDisableScroll: (disableScroll) => set({ disableScroll }),
-  selectedPackageId: 1,
+  selectedPackageId: null,
   setSelectedPackageId: (selectedPackageId) => set({ selectedPackageId }),
 }));
 

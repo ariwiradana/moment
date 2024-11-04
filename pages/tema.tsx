@@ -73,6 +73,13 @@ const DashboardThemes = () => {
     fetcher
   );
 
+  useEffect(() => {
+    if (packageCategories && !selectedPackageId) {
+      const initialPackageId = packageCategories.data[0].id;
+      setSelectedPackageId(initialPackageId);
+    }
+  }, [packageCategories, selectedPackageId]);
+
   const themeCategories: Filter[] = useMemo(() => {
     return categories?.data || [];
   }, [categories]);
