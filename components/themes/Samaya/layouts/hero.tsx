@@ -42,10 +42,10 @@ const HeroComponent: FC<Props> = (props) => {
             loop
             effect="fade"
             autoplay={{
-              delay: 3000,
+              delay: 2000,
               disableOnInteraction: false,
             }}
-            speed={3000}
+            speed={2000}
             className="w-full transition-transform h-lvh"
             spaceBetween={0}
             slidesPerView={1}
