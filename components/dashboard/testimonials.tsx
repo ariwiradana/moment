@@ -7,8 +7,6 @@ import { Testimonials } from "@/lib/types";
 import { getInitial } from "@/utils/getInitial";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
-import moment from "moment";
-import { BiTime } from "react-icons/bi";
 
 const TestimonialsComponent = () => {
   const { data } = useSWR("/api/_pb/_ts", fetcher);
@@ -98,15 +96,9 @@ const TestimonialsComponent = () => {
                     </div>
                   </div>
 
-                  <p className={`${afacad.className} font-light text-lg my-3`}>
+                  <p className={`${afacad.className} font-light text-lg mt-3`}>
                     {t.comments}
                   </p>
-                  <div className="flex items-center gap-x-2 text-zinc-300 md:text-lg">
-                    <BiTime className="text-sm" />
-                    <p className={`${afacad.className} `}>
-                      {moment(t.created_at).fromNow()}
-                    </p>
-                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
