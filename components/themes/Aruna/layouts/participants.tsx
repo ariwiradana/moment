@@ -53,7 +53,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-aruna-dark/20 to-aruna-dark/80 to-[90%]"></div>
-        <div className="absolute inset-0 z-20 h-dvh w-full flex flex-col justify-end px-8 py-[60px] md:p-[100px] max-w-screen-sm lg:max-w-screen-lg mx-auto">
+        <div className="absolute inset-0 z-20 h-dvh w-full flex flex-col justify-end px-8 md:p-[60px] 2xl:p-[100px] max-w-screen-sm lg:max-w-screen-lg mx-auto">
           <div
             className="flex items-center mt-2 md:mt-4 gap-x-3"
             data-aos="fade-up"

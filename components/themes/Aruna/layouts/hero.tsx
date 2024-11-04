@@ -47,7 +47,7 @@ const HeroComponent: FC<Props> = (props) => {
             }}
             effect="fade"
             speed={3000}
-            className="w-full transition-transform h-dvh"
+            className="w-full transition-transform h-lvh"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay, EffectFade]}
