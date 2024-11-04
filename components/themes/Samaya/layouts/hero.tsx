@@ -46,7 +46,7 @@ const HeroComponent: FC<Props> = (props) => {
               disableOnInteraction: false,
             }}
             speed={3000}
-            className="w-full transition-transform h-svh"
+            className="w-full transition-transform h-lvh"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay, EffectFade]}
