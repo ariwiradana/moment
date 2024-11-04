@@ -57,7 +57,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   className="w-[180px] md:w-[200px] relative aspect-square"
                 >
                   <Image
-                    sizes="200px"
+                    sizes="400px"
                     priority
                     fill
                     className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
@@ -65,7 +65,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                     alt={props.state.groom?.name}
                   />
                   <Image
-                    sizes="200px"
+                    sizes="400px"
                     fill
                     src="/images/samaya/frame-circle.svg"
                     alt="cover-frame"
@@ -79,7 +79,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   className="w-[180px] md:w-[200px] relative aspect-square"
                 >
                   <Image
-                    sizes="200px"
+                    sizes="400px"
                     priority
                     fill
                     className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
@@ -87,7 +87,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                     alt={props.state.bride?.name}
                   />
                   <Image
-                    sizes="200px"
+                    sizes="400px"
                     fill
                     src="/images/samaya/frame-circle.svg"
                     alt="cover-frame"
@@ -130,7 +130,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
           className="w-[180px] md:w-[200px] relative aspect-square mb-12 md:mb-16 mt-6"
         >
           <Image
-            sizes="200px"
+            sizes="400px"
             priority
             fill
             className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
@@ -138,7 +138,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             alt={props.data?.name}
           />
           <Image
-            sizes="200px"
+            sizes="400px"
             fill
             src="/images/samaya/frame-circle.svg"
             alt="cover-frame"

@@ -45,7 +45,7 @@ const Cover: FC<Props> = (props) => {
             className="w-[160px] md:w-[180px] lg:w-[200px] 2xl:w-[240px] relative aspect-square rounded-full"
           >
             <Image
-              sizes="180px"
+              sizes="360px"
               priority
               fill
               src={props.state.client?.cover as string}
@@ -53,7 +53,7 @@ const Cover: FC<Props> = (props) => {
               className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
             />
             <Image
-              sizes="180px"
+              sizes="360px"
               fill
               src="/images/samaya/frame-circle.svg"
               alt="cover-frame"
