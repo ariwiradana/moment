@@ -84,7 +84,7 @@ const Aruna: FC<Props> = (props) => {
         <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (
           <div className="flex justify-between overflow-hidden">
-            <div className="fixed inset-0 hidden xl:block">
+            <div className="fixed inset-0 hidden xl:block z-40">
               <div className="relative xl:w-[60vw] 2xl:w-[70vw] h-dvh">
                 <div className="bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark absolute inset-0 z-20 flex flex-col justify-end p-[100px]">
                   <h1

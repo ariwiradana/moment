@@ -42,7 +42,7 @@ const Cover: FC<Props> = (props) => {
           <div
             data-aos="zoom-out-up"
             data-aos-delay="800"
-            className="w-[160px] md:w-[180px] relative aspect-square rounded-full"
+            className="w-[160px] md:w-[180px] lg:w-[200px] 2xl:w-[240px] relative aspect-square rounded-full"
           >
             <Image
               sizes="180px"

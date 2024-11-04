@@ -46,11 +46,11 @@ const HeroComponent: FC<Props> = (props) => {
         <Swiper
           loop
           autoplay={{
-            delay: 4000,
+            delay: 2000,
             disableOnInteraction: false,
           }}
           effect="fade"
-          speed={3000}
+          speed={2000}
           className="w-full transition-transform h-[calc(100svh+40px)]"
           spaceBetween={0}
           slidesPerView={1}
@@ -147,11 +147,7 @@ const HeroComponent: FC<Props> = (props) => {
                   </p>
                 </div>
               </div>
-              <div
-                data-aos="fade-up"
-                data-aos-delay="1800"
-                className="pb-10"
-              >
+              <div data-aos="fade-up" data-aos-delay="1800" className="pb-10">
                 <p
                   className={`${balthazar.className} text-white text-sm md:text-base text-justify mt-4 md:mt-6`}
                 >
