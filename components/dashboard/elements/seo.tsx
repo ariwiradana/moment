@@ -27,7 +27,10 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image }) => {
       <meta name="author" content="Moment" />
       <link rel="author" href={url} />
       <meta name="robots" content="index, follow" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      />
       <link rel="canonical" href={url} />
       <meta name="keywords" content={keywords} />
 
