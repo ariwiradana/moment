@@ -9,8 +9,6 @@ import ClientNotFound from "@/components/themes/client.notfound";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import LoadingComponent from "@/components/themes/loading";
-import { sosmedURLs } from "@/constants/sosmed";
-import Seo from "@/components/dashboard/elements/seo";
 
 interface Props {
   slug: string;
@@ -50,30 +48,10 @@ const MainPage: FC<Props> = (props) => {
 
   const ThemeComponent = themes[themeName];
 
-  return (
-    <>
-      <Seo
-        title="Undangan | Moment"
-        description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
-        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        ogImage="/images/logo-white.png"
-        ogUrl={url}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Moment Invitations",
-          url,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.whatsapp,
-            sosmedURLs.youtube,
-          ],
-        }}
-        author="Moment"
-      />
-      {ThemeComponent ? ThemeComponent(client, props.untuk) : <ThemeNotFound />}
-    </>
+  return ThemeComponent ? (
+    ThemeComponent(client, props.untuk)
+  ) : (
+    <ThemeNotFound />
   );
 };
 

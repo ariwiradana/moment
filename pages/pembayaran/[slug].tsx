@@ -8,7 +8,7 @@ import useDashboardStore from "@/lib/dashboardStore";
 import { afacad, dm } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import toast from "react-hot-toast";
 import { BiCheck, BiCopyAlt, BiLogoWhatsapp } from "react-icons/bi";
 import AOS from "aos";
@@ -29,8 +29,6 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
 
   useEffect(() => setActiveSection("section6"), []);
 
-  const [url, setUrl] = useState<string>("");
-
   const { data } = useSWR(slug ? `/api/_pb/_c?slug=${slug}` : null, fetcher);
 
   const client: Client | null = data?.data?.length ? data.data[0] : null;
@@ -43,37 +41,13 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
     });
   }, []);
 
-  useEffect(() => {
-    setUrl(
-      `${window.location.hostname}${
-        window.location.port ? `:${window.location.port}` : ""
-      }`
-    );
-  }, []);
-
-  console.log({ client });
-
   return (
     <Layout>
       <Seo
         title="Pembayaran | Moment"
         description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        ogImage="/images/logo-white.png"
-        ogUrl={url}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Moment Invitations",
-          url,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.whatsapp,
-            sosmedURLs.youtube,
-          ],
-        }}
-        author="Moment"
+        image="/images/logo-white.png"
       />
 
       <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 lg:px-24">

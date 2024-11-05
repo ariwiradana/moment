@@ -14,7 +14,6 @@ import "aos/dist/aos.css";
 import { BiCheck, BiFilter } from "react-icons/bi";
 import Loader from "@/components/admin/elements/loader";
 import Seo from "@/components/dashboard/elements/seo";
-import { sosmedURLs } from "@/constants/sosmed";
 
 interface Filter {
   id: number;
@@ -144,37 +143,13 @@ const DashboardThemes = () => {
     setPage(value);
   };
 
-  const [seoUrl, setSeoUrl] = useState<string>("");
-
-  useEffect(() => {
-    setSeoUrl(
-      `${window.location.hostname}${
-        window.location.port ? `:${window.location.port}` : ""
-      }`
-    );
-  }, []);
-
   return (
     <Layout>
       <Seo
         title="Koleksi Tema Kami | Moment"
         description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        ogImage="/images/logo-white.png"
-        ogUrl={seoUrl}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Moment Invitations",
-          url: seoUrl,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.whatsapp,
-            sosmedURLs.youtube,
-          ],
-        }}
-        author="Moment"
+        image="/images/logo-white.png"
       />
       <section className="md:pt-20 lg:pt-24">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 py-24">

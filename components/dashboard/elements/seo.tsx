@@ -1,42 +1,66 @@
+import { sosmedURLs } from "@/constants/sosmed";
 import Head from "next/head";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface SEOProps {
   title: string;
   description: string;
-  keywords?: string;
-  ogImage: string;
-  ogUrl?: string;
-  author?: string;
-  structuredData?: object;
+  keywords: string;
+  image: string;
 }
 
-const Seo: FC<SEOProps> = ({
-  title,
-  description,
-  keywords = "default, keywords",
-  ogImage,
-  ogUrl,
-  author,
-  structuredData,
-}) => {
+const Seo: FC<SEOProps> = ({ title, description, keywords, image }) => {
+  const [url, setUrl] = useState<string>("");
+
+  useEffect(() => {
+    setUrl(
+      `${window.location.hostname}${
+        window.location.port ? `:${window.location.port}` : ""
+      }${window.location.pathname}`
+    );
+  }, []);
+
   return (
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
+      <meta name="author" content="Moment" />
+      <link rel="author" href={url} />
       <meta name="robots" content="index, follow" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="canonical" href={url} />
+      <meta name="keywords" content={keywords} />
+
+      {/* Open Graph meta tags for social media */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
-      {ogUrl && <meta property="og:url" content={ogUrl} />}
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
-      {author && <meta name="author" content={author} />}
-      {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      )}
+
+      {/* Twitter Card meta tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+
+      <meta name="keywords" content="keyword1, keyword2, keyword3" />
+      <link rel="apple-touch-icon" href="/icon.png" />
+      <link rel="icon" href="/favicon.ico" />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Moment Invitations",
+          url: url,
+          sameAs: [
+            sosmedURLs.email,
+            sosmedURLs.instagram,
+            sosmedURLs.whatsapp,
+            sosmedURLs.youtube,
+          ],
+        })}
+      </script>
     </Head>
   );
 };

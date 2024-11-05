@@ -8,7 +8,7 @@ import useDashboardStore from "@/lib/dashboardStore";
 import { afacad, dm } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import toast from "react-hot-toast";
 import { BiCheck, BiCopyAlt, BiLogoWhatsapp } from "react-icons/bi";
 import AOS from "aos";
@@ -19,8 +19,6 @@ const DashboardPayment: FC = () => {
 
   useEffect(() => setActiveSection("section6"), []);
 
-  const [url, setUrl] = useState<string>("");
-
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -29,35 +27,13 @@ const DashboardPayment: FC = () => {
     });
   }, []);
 
-  useEffect(() => {
-    setUrl(
-      `${window.location.hostname}${
-        window.location.port ? `:${window.location.port}` : ""
-      }`
-    );
-  }, []);
-
   return (
     <Layout>
       <Seo
         title="Pembayaran | Moment"
         description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        ogImage="/images/logo-white.png"
-        ogUrl={url}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Moment Invitations",
-          url,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.whatsapp,
-            sosmedURLs.youtube,
-          ],
-        }}
-        author="Moment"
+        image="/images/logo-white.png"
       />
 
       <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 lg:px-24">
@@ -72,9 +48,9 @@ const DashboardPayment: FC = () => {
             <p
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
             >
-              Pembayaran dapat dilakukan melalui bank transfer.
-              Setelah transfer, konfirmasikan pembayaranmu dengan mengirimkan
-              bukti transfer pada pesan WhatsApp.
+              Pembayaran dapat dilakukan melalui bank transfer. Setelah
+              transfer, konfirmasikan pembayaranmu dengan mengirimkan bukti
+              transfer pada pesan WhatsApp.
             </p>
             <p
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}

@@ -14,7 +14,7 @@ import { sosmedURLs } from "@/constants/sosmed";
 import useDashboardStore from "@/lib/dashboardStore";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { BiLogoWhatsapp } from "react-icons/bi";
 
 const Dashboard = () => {
@@ -90,37 +90,13 @@ const Dashboard = () => {
     }
   }, [activeSection, manualScroll]);
 
-  const [url, setUrl] = useState<string>("");
-
-  useEffect(() => {
-    setUrl(
-      `${window.location.hostname}${
-        window.location.port ? `:${window.location.port}` : ""
-      }`
-    );
-  }, []);
-
   return (
     <Layout>
       <Seo
         title="Buat Undangan Digital Disini! | Moment"
         description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis"
-        ogImage="/images/logo-white.png"
-        ogUrl={url}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Moment Invitations",
-          url,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.whatsapp,
-            sosmedURLs.youtube,
-          ],
-        }}
-        author="Moment"
+        image="/images/logo-white.png"
       />
       <ButtonFloating
         aria-label="button-whatsapp"
