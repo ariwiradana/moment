@@ -12,10 +12,10 @@ const InputCheckbox: FC<Props> = (props) => {
         {...props}
         type="checkbox"
         id={props.id}
-        className={`bg-white bg-opacity-5 w-4 h-4 outline-none accent-nirvaya-dark focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${balthazar.className}`}
+        className={`bg-white bg-opacity-5 w-4 h-4 outline-none accent-nirvaya-primary focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${balthazar.className}`}
       />
       <p
-        className={`text-base ${balthazar.className} text-nirvaya-dark text-sm md:text-base mt-[2px]`}
+        className={`text-base ${balthazar.className} text-white text-sm md:text-base mt-[2px]`}
       >
         {props.label}
       </p>

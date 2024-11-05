@@ -84,8 +84,6 @@ const useSamaya = (client: Client | null): useSamaya => {
     seconds: 0,
   });
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
-  const [page, setPage] = useState<number>(1);
-  const [limit] = useState<number>(5);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
@@ -138,13 +136,6 @@ const useSamaya = (client: Client | null): useSamaya => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const { data, mutate } = useSWR(
-    client?.id
-      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
-      : null,
-    fetcher
-  );
-
   const wisheschema = z.object({
     name: z
       .string()
@@ -155,9 +146,6 @@ const useSamaya = (client: Client | null): useSamaya => {
       .min(1, "Kolom ucapan tidak boleh kosong")
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
-
-  const wishes: Review[] = data?.data || [];
-  const totalRows: number = data?.total_rows || 0;
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -354,6 +342,24 @@ const useSamaya = (client: Client | null): useSamaya => {
   ) => {
     setPage(value);
   };
+
+  const [limit] = useState<number>(4);
+  const [page, setPage] = useState(1);
+  const [wishes, setWishes] = useState<Review[]>([]);
+  const [totalRows, setTotalRows] = useState<number>(0);
+
+  const { data: fetchedWishes, mutate } = useSWR(
+    client?.id
+      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
+      : null,
+    fetcher
+  );
+  useEffect(() => {
+    if (fetchedWishes && fetchedWishes.data.length > 0) {
+      setWishes(fetchedWishes.data);
+      setTotalRows(fetchedWishes?.total_rows);
+    }
+  }, [fetchedWishes]);
 
   return {
     refs: {

@@ -8,6 +8,7 @@ import InputCheckbox from "../elements/checkbox";
 import { balthazar, italiana } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
+import { Pagination } from "@mui/material";
 
 interface Props {
   state: useNirvaya["state"];
@@ -21,32 +22,31 @@ const RSVPWishesComponent: FC<Props> = (props) => {
     "Masih Ragu": "Maaf saya masih ragu",
   };
   return (
-    <section className="relative bg-white w-full overflow-hidden">
+    <section className="relative bg-nirvaya-primary w-full overflow-hidden">
       <div
-        className="absolute inset-0 bg-repeat bg-center"
+        className="absolute inset-0 bg-repeat bg-center opacity-10"
         style={{
           backgroundImage: "url('/images/nirvaya/texture.svg')",
         }}
       ></div>
-      <div className="relative w-full flex flex-col justify-center items-center z-20 py-[60px] md:py-[100px]">
+      <div
+        data-aos="fade-up"
+        className="relative w-full flex flex-col justify-center items-center z-20 py-[60px] md:py-[100px] px-4"
+      >
         <h1
-          data-aos="fade-up"
-          className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark px-8`}
+          className={`${italiana.className} text-4xl md:text-5xl text-center text-white px-8`}
         >
           RSVP & Ucapan
         </h1>
         <p
-          data-aos="fade-up"
-          data-aos-delay="100"
-          className={`${balthazar.className} text-sm md:text-base text-nirvaya-dark/80 px-8 mt-1 mb-8 md:mb-12 text-center max-w-screen-sm mx-auto`}
+          className={`${balthazar.className} text-sm md:text-base text-white/80 px-8 mt-1 mb-8 md:mb-12 text-center max-w-screen-sm mx-auto`}
         >
           Bagikan doa dan ucapan kamu untuk kedua mempelai sebagai tanda kasih
           dan kebahagiaan.
         </p>
         <form
           onSubmit={props.actions.handleSubmit}
-          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto px-8"
-          data-aos="fade-up"
+          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto"
         >
           <Input
             error={props.state.errors.name}
@@ -105,15 +105,17 @@ const RSVPWishesComponent: FC<Props> = (props) => {
         </form>
 
         {props.state.wishes && props.state.wishes?.length > 0 ? (
-          <div
-            className="flex flex-col w-full gap-4 max-h-[440px] overflow-y-auto mt-12 px-8"
-            data-aos="fade-up"
-          >
-            <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">
+          <div className="flex flex-col w-full gap-4 py-8">
+            <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5 border-t border-t-white/50">
+              <p
+                className={`${balthazar.className} text-base md:text-lg font-medium text-white leading-5 mt-4`}
+              >
+                {props.state.totalRows} Ucapan
+              </p>
               {props.state.wishes?.map((r) => (
                 <div key={r.id} className="flex">
                   <div className="flex-shrink-0">
-                    <div className="w-9 h-9 bg-nirvaya-dark rounded-full flex justify-center items-center text-base font-medium text-white">
+                    <div className="w-10 h-10 bg-nirvaya-primary rounded-full flex justify-center items-center text-lg font-medium text-white">
                       <span className={italiana.className}>
                         {getInitial(r.name)}
                       </span>
@@ -121,8 +123,8 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                   </div>
 
                   <div className="ml-4 relative">
-                    <div className="p-4 bg-nirvaya-dark rounded-lg relative">
-                      <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark"></div>
+                    <div className="p-4 bg-nirvaya-primary rounded-lg relative">
+                      <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-nirvaya-primary"></div>
                       <div className="flex items-center gap-x-3">
                         <div className="flex items-center gap-x-2">
                           <div className="h-[0.5px] w-4 bg-white"></div>
@@ -141,13 +143,13 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                     </div>
 
                     <div
-                      className={`flex divide-x-[0.5px] divide-nirvaya-dark mt-2 ${balthazar.className}`}
+                      className={`flex divide-x-[0.5px] divide-white mt-2 ${balthazar.className}`}
                     >
-                      <div className="flex gap-1 text-sm md:text-base text-nirvaya-dark pr-2">
+                      <div className="flex gap-1 text-sm md:text-base text-white pr-2">
                         <BiTime className="mt-[3px]" />
                         <p>{moment(r.created_at).fromNow()}</p>
                       </div>
-                      <div className="flex gap-1 text-sm md:text-base text-nirvaya-dark pl-2">
+                      <div className="flex gap-1 text-sm md:text-base text-white pl-2">
                         <BiUser className="mt-[3px]" />
                         <p>{attendantText[r.attendant]}</p>
                       </div>
@@ -158,6 +160,37 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             </div>
           </div>
         ) : null}
+
+        {props.state.totalRows > props.state.limit && (
+          <div className="md:max-w-screen-sm mx-auto w-full border-t border-t-white/50 pt-4">
+            <div className="md:-ml-4 flex justify-center md:justify-start">
+              <Pagination
+                shape="rounded"
+                page={props.state.page}
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "#40534C",
+                      color: "white",
+                    },
+                  },
+                  "& .MuiPaginationItem-page.Mui-selected": {
+                    backgroundColor: "#40534C",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "#40534C",
+                      color: "white",
+                      cursor: "default",
+                    },
+                  },
+                }}
+                onChange={props.actions.handleChangePagination}
+                count={Math.ceil(props.state.totalRows / props.state.limit)}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

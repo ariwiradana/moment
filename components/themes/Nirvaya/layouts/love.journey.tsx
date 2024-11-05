@@ -15,7 +15,7 @@ const LoveJourneyComponent: FC<Props> = (props) => {
   const journey: LoveJourney[] = props.state.client?.journey || [];
   if (journey.length > 0)
     return (
-      <section className="relative bg-gradient-to-b from-nirvaya-dark/70 via-nirvaya-dark to-nirvaya-dark overflow-hidden px-8 py-[60px] md:py-[100px]">
+      <section className="relative bg-gradient-to-b from-nirvaya-dark/70 via-nirvaya-primary to-nirvaya-primary overflow-hidden px-8 py-[60px] md:py-[100px]">
         {props.state.client?.journey_image && (
           <div
             data-aos="zoom-out-up"

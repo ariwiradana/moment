@@ -16,7 +16,6 @@ interface Props {
 }
 
 const RSVPWishesComponent: FC<Props> = (props) => {
-  console.log(props.state.totalRows);
   const attendantText: Record<string, string> = {
     Hadir: "Saya akan hadir",
     "Tidak Hadir": "Maaf saya tidak bisa hadir",
@@ -107,7 +106,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             )}
           </form>
           {props.state.wishes && props.state.wishes?.length > 0 ? (
-            <div className="flex flex-col w-full gap-4 px-4 mt-8">
+            <div className="flex flex-col w-full gap-4 px-4 mt-8" id="wishes">
               <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-7 border-t border-t-samaya-primary/50 py-4">
                 <p
                   className={`${marcellus.className} text-sm md:text-base leading-5 text-white`}

@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { balthazar, italiana } from "@/lib/fonts";
 import moment from "moment";
-import Button from "../elements/button";
 import { BiCalendar, BiMap } from "react-icons/bi";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import Link from "next/link";
+import ButtonPrimary from "../elements/button.primary";
 
 interface Props {
   state: useNirvaya["state"];
@@ -16,9 +16,9 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
 
   if (events.length > 0) {
     return (
-      <section className="relative overflow-hidden z-0">
+      <section className="relative overflow-hidden z-0 -mt-6">
         <div className="absolute bg-nirvaya-dark/70 inset-0"></div>
-        <div className="flex flex-col z-10 items-center justify-center px-8 py-[60px] md:py-[100px] max-w-screen-xl mx-auto">
+        <div className="flex flex-col z-10 items-center justify-center px-8 py-[80px] md:py-[100px] max-w-screen-xl mx-auto">
           <div
             className={`flex flex-wrap justify-center gap-[60px] lg:gap-[100px] relative z-20 divide-y-[0.5px] lg:divide-y-0`}
           >
@@ -100,16 +100,16 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 <div
                   data-aos="fade-up"
                   data-aos-delay="400"
-                  className="inline-flex flex-wrap justify-center gap-4 mt-4 md:mt-7"
+                  className="inline-flex flex-wrap justify-center gap-4 mt-4 md:mt-7 pb-6"
                 >
                   {state.client?.packages?.google_maps_integration && (
                     <Link target="_blank" href={event.address_url}>
-                      <Button icon={<BiMap />} title="Petunjuk Lokasi" />
+                      <ButtonPrimary icon={<BiMap />} title="Petunjuk Lokasi" />
                     </Link>
                   )}
                   {state.client?.packages?.add_to_calendar && (
                     <div>
-                      <Button
+                      <ButtonPrimary
                         onClick={() => actions.handleAddToCalendar(event)}
                         icon={<BiCalendar />}
                         title="Simpan Tanggal"

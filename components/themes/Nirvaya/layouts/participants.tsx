@@ -50,7 +50,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
               {props.state.groom?.image && (
                 <div
                   data-aos="zoom-in"
-                  className="relative w-[173px] md:w-[240px] h-[226px] md:h-[300px] lg:w-[320px] lg:h-[420px] border-2 border-white rounded-t-[100px] md:rounded-t-[150px] lg:rounded-t-[200px] rounded-b-[20px] overflow-hidden -mr-6"
+                  className="relative w-[173px] md:w-[240px] h-[226px] md:h-[300px] lg:w-[320px] lg:h-[420px] border-[3px] border-white rounded-t-[100px] md:rounded-t-[150px] lg:rounded-t-[200px] rounded-b-[20px] overflow-hidden -mr-6"
                 >
                   <ImageShimmer
                     fill
@@ -64,7 +64,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
               {props.state.bride?.image && (
                 <div
                   data-aos="zoom-in"
-                  className="relative w-[173px] md:w-[240px] h-[226px] md:h-[300px] lg:w-[320px] lg:h-[420px] border-2 border-white rounded-t-[100px] md:rounded-t-[150px] lg:rounded-t-[200px] rounded-b-[20px] overflow-hidden mt-6 -ml-6"
+                  className="relative w-[173px] md:w-[240px] h-[226px] md:h-[300px] lg:w-[320px] lg:h-[420px] border-[3px] border-white rounded-t-[100px] md:rounded-t-[150px] lg:rounded-t-[200px] rounded-b-[20px] overflow-hidden mt-6 -ml-6"
                 >
                   <ImageShimmer
                     fill
@@ -91,6 +91,17 @@ const ParticipantsComponent: FC<Props> = (props) => {
             </div>
           </div>
         </div>
+        <svg
+          className="transform rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 20"
+        >
+          <path
+            className="fill-white"
+            fill-opacity="1"
+            d="M0,0L120,5C240,10,480,20,720,20C960,20,1200,10,1320,5L1440,0L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+          ></path>
+        </svg>
       </section>
     );
 };

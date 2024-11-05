@@ -4,7 +4,7 @@ import "yet-another-react-lightbox/styles.css";
 import { afacad, balthazar, italiana } from "@/lib/fonts";
 import { BiChevronRightCircle, BiCopy } from "react-icons/bi";
 import Image from "next/image";
-import Button from "../elements/button";
+import ButtonPrimary from "../elements/button.primary";
 
 interface Props {
   state: useNirvaya["state"];
@@ -46,7 +46,7 @@ const GiftComponent: FC<Props> = (props) => {
             data-aos-delay="200"
             className="flex justify-center"
           >
-            <Button
+            <ButtonPrimary
               onClick={() =>
                 props.actions.setIsGiftShown(!props.state.isGiftShown)
               }
@@ -69,11 +69,12 @@ const GiftComponent: FC<Props> = (props) => {
               className="flex justify-center relative z-20 mt-12"
             >
               <div
-                className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-white/50 via-white via-[20%] to-[90%] to-white/70 overflow-hidden ${afacad.className}`}
+                className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-nirvaya-primary/50 via-nirvaya-primary to-nirvaya-primary/50 overflow-hidden ${afacad.className}`}
               >
                 <div className="flex justify-between relative z-10">
                   <div className="relative w-14">
                     <Image
+                      sizes="100px"
                       fill
                       alt="card-chip"
                       src="/images/nirvaya/card-chip.svg"
@@ -81,7 +82,7 @@ const GiftComponent: FC<Props> = (props) => {
                     />
                   </div>
                   <h1
-                    className={`text-3xl md:text-4xl font-bold text-nirvaya-dark ${balthazar.className}`}
+                    className={`text-3xl md:text-4xl font-bold text-white ${balthazar.className}`}
                   >
                     {props.state.client?.gift_bank_name}
                   </h1>
@@ -89,12 +90,12 @@ const GiftComponent: FC<Props> = (props) => {
                 <div className="relative z-10">
                   <div>
                     <p
-                      className={`text-xl leading-5 text-nirvaya-dark ${balthazar.className}`}
+                      className={`text-xl leading-5 text-white ${balthazar.className}`}
                     >
                       {props.state.client?.gift_account_name}
                     </p>
                     <p
-                      className={`text-xl text-nirvaya-dark ${balthazar.className}`}
+                      className={`text-xl text-white/60 ${balthazar.className}`}
                     >
                       {props.state.client?.gift_account_number}
                     </p>

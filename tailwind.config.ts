@@ -46,6 +46,7 @@ const config: Config = {
         },
         nirvaya: {
           dark: "#101010",
+          primary: "#40534C",
         },
         aruna: {
           dark: "#101010",

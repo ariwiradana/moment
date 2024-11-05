@@ -45,6 +45,9 @@ export interface useNirvaya {
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
+    page: number;
+    limit: number;
+    totalRows: number;
   };
   actions: {
     handleOpenCover: () => void;
@@ -55,6 +58,10 @@ export interface useNirvaya {
     handleAddToCalendar: (event: Event) => void;
     setIsPlaying: (isPlaying: boolean) => void;
     setIsGiftShown: (isGiftShown: boolean) => void;
+    handleChangePagination: (
+      event: React.ChangeEvent<unknown>,
+      value: number
+    ) => void;
   };
 }
 
@@ -69,6 +76,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<Countdown>({
     days: 0,
     hours: 0,
@@ -76,11 +84,8 @@ const useNirvaya = (client: Client | null): useNirvaya => {
     seconds: 0,
   });
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
-  const [page] = useState<number>(1);
-  const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
     client?.events
       ? client?.events.map(() => ({
@@ -91,7 +96,6 @@ const useNirvaya = (client: Client | null): useNirvaya => {
         }))
       : []
   );
-
 
   useEffect(() => {
     if (!client?.events) return;
@@ -132,13 +136,6 @@ const useNirvaya = (client: Client | null): useNirvaya => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const { data, mutate } = useSWR(
-    client?.id
-      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
-      : null,
-    fetcher
-  );
-
   const wisheschema = z.object({
     name: z
       .string()
@@ -149,8 +146,6 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       .min(1, "Kolom ucapan tidak boleh kosong")
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
-
-  const wishes: Review[] = data?.data ?? [];
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -166,9 +161,9 @@ const useNirvaya = (client: Client | null): useNirvaya => {
     const payload = { client_id: Number(client?.id), ...formData };
 
     setLoading(true);
-    const toastSubmit = toast.loading("Memberikan ucapan...");
     try {
       wisheschema.parse(formData);
+      const toastSubmit = toast.loading("Memberikan ucapan...");
       const response = await getClient(`/api/_pb/_w`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -188,7 +183,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
         toast.success("Berhasil. Terima kasih atas ucapannya!", {
           id: toastSubmit,
           icon: (
-            <div className="p-1 rounded-full bg-nirvaya-dark text-white">
+            <div className="p-1 rounded bg-samaya-primary">
               <BiCheck />
             </div>
           ),
@@ -300,7 +295,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       .then(() => {
         toast.success("Berhasil disalin.", {
           icon: (
-            <div className="p-1 rounded-full bg-nirvaya-dark text-white">
+            <div className="p-1 rounded bg-samaya-primary">
               <BiCheck />
             </div>
           ),
@@ -341,6 +336,32 @@ const useNirvaya = (client: Client | null): useNirvaya => {
     window.open(googleCalendarUrl, "_blank");
   };
 
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
+
+  const [limit] = useState<number>(4);
+  const [page, setPage] = useState(1);
+  const [wishes, setWishes] = useState<Review[]>([]);
+  const [totalRows, setTotalRows] = useState<number>(0);
+
+  const { data: fetchedWishes, mutate } = useSWR(
+    client?.id
+      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
+      : null,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (fetchedWishes && fetchedWishes.data.length > 0) {
+      setWishes(fetchedWishes.data);
+      setTotalRows(fetchedWishes?.total_rows);
+    }
+  }, [fetchedWishes]);
+
   return {
     refs: {
       audioRef,
@@ -358,6 +379,9 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       isPlaying,
       timeRemainings,
       isGiftShown,
+      page,
+      limit,
+      totalRows,
     },
     actions: {
       handleOpenCover,
@@ -368,6 +392,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       handleAddToCalendar,
       setIsPlaying,
       setIsGiftShown,
+      handleChangePagination,
     },
   };
 };
