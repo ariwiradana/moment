@@ -11,6 +11,7 @@ import "aos/dist/aos.css";
 import LoadingComponent from "@/components/themes/loading";
 import Seo from "@/components/dashboard/elements/seo";
 import { sosmedURLs } from "@/constants/sosmed";
+import Head from "next/head";
 
 interface Props {
   slug: string;
@@ -51,26 +52,41 @@ const MainPage: FC<Props> = (props) => {
 
   return (
     <>
-      <Seo
-        title="Coba"
-        description={`${client?.opening_title}, ${client?.opening_description}`}
-        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis"
-        ogImage={client?.cover ?? "/images/logo-white.png"}
-        ogUrl={url}
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Moment Invitations",
-          url: url,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.whatsapp,
-            sosmedURLs.youtube,
-          ],
-        }}
-        author="Moment"
-      />
+      <Head>
+        <title>Your Page Title | Your Brand Name</title>
+        <meta
+          name="description"
+          content="A brief description of your page that includes relevant keywords."
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.yourwebsite.com/your-page" />
+
+        <meta property="og:title" content="Your Page Title" />
+        <meta
+          property="og:description"
+          content="A brief description of your page that includes relevant keywords."
+        />
+        <meta
+          property="og:image"
+          content="https://www.yourwebsite.com/image.jpg"
+        />
+        <meta
+          property="og:url"
+          content="https://www.yourwebsite.com/your-page"
+        />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Your Page Title" />
+        <meta
+          name="twitter:description"
+          content="A brief description of your page that includes relevant keywords."
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.yourwebsite.com/image.jpg"
+        />
+      </Head>
       {ThemeComponent ? ThemeComponent(client, props.untuk) : <ThemeNotFound />}
     </>
   );
