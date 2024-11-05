@@ -35,7 +35,6 @@ const MainPage: FC<Props> = (props) => {
 
   const themeName = client.theme?.name || "";
 
-  console.log({ themeName });
   const ThemeComponent = themes[themeName];
 
   return ThemeComponent ? (
