@@ -38,7 +38,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
         {showActions && (
           <div className="flex gap-2 absolute top-4 left-4">
             {theme.cover_video && (
-              <div className="flex bg-dashboard-dark shadow-sm items-center gap-x-2 rounded-md font-medium px-3 py-2 text-white">
+              <div className="flex bg-dashboard-dark shadow-sm items-center gap-x-2 rounded-full font-medium px-3 py-2 text-white">
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   Video Cover
                 </p>
@@ -47,7 +47,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
             )}
 
             {[0].includes(index) && (
-              <div className="flex bg-white shadow-sm items-center gap-x-2 rounded-md font-medium px-3 py-2 text-dashboard-dark">
+              <div className="flex bg-white shadow-sm items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark">
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   Desain Baru
                 </p>
@@ -78,7 +78,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
             {theme.theme_categories?.map((tc) => (
               <div
                 key={`theme-category-${tc.name}`}
-                className="flex bg-dashboard-dark/5 items-center gap-x-2 rounded-md font-medium px-3 py-2 text-dashboard-dark"
+                className="flex bg-dashboard-dark/5 items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark"
               >
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   {tc.name}
