@@ -31,9 +31,9 @@ const SharedThemeComponent = () => {
             className="text-white flex flex-col items-center gap-y-2"
           >
             <BiParty className="text-5xl lg:text-6xl" />
-            <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
+            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
               {formatNumber(data?.events)}
-            </h1>
+            </h2>
             <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
               Acara
             </h2>
@@ -44,9 +44,9 @@ const SharedThemeComponent = () => {
             className="text-white flex flex-col items-center gap-y-2"
           >
             <BiUser className="text-5xl lg:text-6xl" />
-            <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
+            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
               {formatNumber(data?.clients)}
-            </h1>
+            </h2>
             <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
               Klien
             </h2>
@@ -57,9 +57,9 @@ const SharedThemeComponent = () => {
             className="text-white flex flex-col items-center gap-y-2"
           >
             <BiMessageDetail className="text-5xl lg:text-6xl" />
-            <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
+            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
               {formatNumber(data?.wishes)}
-            </h1>
+            </h2>
             <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
               Ucapan & Doa
             </h2>
@@ -70,9 +70,9 @@ const SharedThemeComponent = () => {
             className="text-white flex flex-col items-center gap-y-2"
           >
             <BiBookContent className="text-5xl lg:text-6xl" />
-            <h1 className={`${dm.className} text-5xl lg:text-6xl`}>
+            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
               {formatNumber(data?.guest)}
-            </h1>
+            </h2>
             <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
               Tamu Undangan
             </h2>

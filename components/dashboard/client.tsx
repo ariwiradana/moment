@@ -21,13 +21,13 @@ const ClientComponent = () => {
       >
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative">
           <div data-aos="fade-up">
-            <h1
+            <h2
               className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
             >
               Klien Yang Telah
               <br />
               Menggunakan Jasa Kami
-            </h1>
+            </h2>
             <p
               className={`${afacad.className} text-lg md:text-xl mt-3 text-gray-500`}
             >
@@ -79,7 +79,7 @@ const ClientComponent = () => {
                       className="object-cover w-full h-full rounded"
                     />
                     <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
-                      <h1
+                      <h2
                         className={`w-full flex gap-2 ${marcellus.className} text-2xl`}
                       >
                         <span>
@@ -112,7 +112,7 @@ const ClientComponent = () => {
                             return name;
                           })()}
                         </span>
-                      </h1>
+                      </h2>
                       <p
                         className={`font-light text-zinc-200 ${afacad.className}`}
                       >

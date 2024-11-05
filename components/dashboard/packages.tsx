@@ -38,11 +38,11 @@ const PackageComponent = () => {
                 } border p-12 rounded`}
                 key={p.id}
               >
-                <h1
+                <h2
                   className={`${dm.className} text-3xl lg:text-[40px] font-bold`}
                 >
                   Paket {p.name}
-                </h1>
+                </h2>
                 <h2
                   className={`${afacad.className} text-xl mt-6 leading-4 ${
                     isLast ? "text-white/50" : "text-dashboard-dark/50"

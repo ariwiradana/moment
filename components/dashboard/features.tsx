@@ -122,11 +122,11 @@ const FeaturesComponent = () => {
           data-aos="fade-up"
         >
           <div>
-            <h1
+            <h2
               className={`${dm.className} text-3xl md:text-4xl lg:text-5xl text-dashboard-dark font-semibold`}
             >
               Temukan Fitur Menarik
-            </h1>
+            </h2>
             <p
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
             >

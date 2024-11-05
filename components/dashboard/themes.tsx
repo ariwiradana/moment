@@ -14,7 +14,7 @@ const ThemeComponent: FC = () => {
 
   const themes: Theme[] = data?.data || [];
 
-  const slideThemes = themes && themes.length > 3 ? themes.slice(0, 3) : themes;
+  const slideThemes = themes && themes.length > 4 ? themes.slice(0, 4) : themes;
 
   if (slideThemes.length > 0)
     return (
@@ -29,11 +29,11 @@ const ThemeComponent: FC = () => {
             data-aos="fade-up"
           >
             <div>
-              <h1
+              <h2
                 className={`${dm.className} text-3xl md:text-4xl lg:text-5xl text-dashboard-dark font-semibold`}
               >
                 Koleksi Tema Undangan
-              </h1>
+              </h2>
               <p
                 className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
               >
@@ -55,7 +55,7 @@ const ThemeComponent: FC = () => {
 
           <div
             data-aos="fade-up"
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6"
           >
             {slideThemes.map((t, index) => {
               return (

@@ -22,11 +22,11 @@ const TestimonialsComponent = () => {
       >
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative ">
           <div data-aos="fade-up">
-            <h1
+            <h2
               className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
             >
               Bagaimana <br /> Pengalaman Klien?
-            </h1>
+            </h2>
             <p
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3`}
             >
@@ -83,11 +83,11 @@ const TestimonialsComponent = () => {
                       )}
                     </div>
                     <div>
-                      <h1
+                      <h2
                         className={`${marcellus.className} text-xl lg:text-2xl capitalize`}
                       >
                         {t.name}
-                      </h1>
+                      </h2>
                       <p
                         className={`${afacad.className} text-zinc-300 flex items-center gap-x-2 md:text-lg`}
                       >

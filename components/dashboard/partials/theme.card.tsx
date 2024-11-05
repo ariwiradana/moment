@@ -38,7 +38,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
         {showActions && (
           <div className="flex gap-2 absolute top-4 left-4">
             {theme.cover_video && (
-              <div className="flex bg-dashboard-dark shadow-sm items-center gap-x-2 rounded-full font-medium px-3 py-2 text-white">
+              <div className="flex bg-dashboard-dark shadow-sm items-center gap-x-2 rounded-md font-medium px-3 py-2 text-white">
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   Video Cover
                 </p>
@@ -46,8 +46,8 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
               </div>
             )}
 
-            {[0, 1].includes(index) && (
-              <div className="flex bg-white shadow-sm items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark">
+            {[0].includes(index) && (
+              <div className="flex bg-white shadow-sm items-center gap-x-2 rounded-md font-medium px-3 py-2 text-dashboard-dark">
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   Desain Baru
                 </p>
@@ -58,7 +58,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
         )}
         <div className="mt-4">
           <p
-            className={`${afacad.className} text-base md:text-lg text-gray-400 uppercase flex`}
+            className={`${afacad.className} text-sm md:text-base uppercase flex text-gray-500`}
           >
             {theme.packages?.map((pk: Package, index) => (
               <p key={pk.name} className="flex items-center">
@@ -70,7 +70,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
             ))}
           </p>
           <h1
-            className={`${marcellus.className} text-2xl lg:text-3xl text-dashboard-dark leading-8 font-medium`}
+            className={`${marcellus.className} text-xl lg:text-2xl text-dashboard-dark leading-8 font-medium`}
           >
             {theme.name}
           </h1>
@@ -78,7 +78,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
             {theme.theme_categories?.map((tc) => (
               <div
                 key={`theme-category-${tc.name}`}
-                className="flex bg-gray-200 items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark"
+                className="flex bg-dashboard-dark/5 items-center gap-x-2 rounded-md font-medium px-3 py-2 text-dashboard-dark"
               >
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   {tc.name}

@@ -42,7 +42,7 @@ const DashboardThemes = () => {
   const [charIndex, setCharIndex] = useState<number>(0);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
-  const [limit] = useState<number>(6);
+  const [limit] = useState<number>(8);
   const [isOpenFilter, setIsOpenFilter] = useState<boolean>(false);
 
   const router = useRouter();
@@ -279,7 +279,7 @@ const DashboardThemes = () => {
             ) : (
               <>
                 {themes.length > 0 && (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {themes.map((t, i) => (
                       <ThemeCard key={t.id} theme={t} index={i} />
                     ))}

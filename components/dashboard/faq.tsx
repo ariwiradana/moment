@@ -24,12 +24,12 @@ const FaqComponent = () => {
     >
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative ">
         <div data-aos="fade-up">
-          <h1
+          <h2
             className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
           >
             Pertanyaan yang
             <br /> Sering Diajukan?
-          </h1>
+          </h2>
         </div>
         <div
           className="mt-8 flex flex-col gap-4"

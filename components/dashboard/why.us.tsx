@@ -42,11 +42,11 @@ const WhyUsComponent = () => {
             <p className={`${marcellus.className} text-lg md:text-xl mb-1`}>
               Kenapa Memilih Kami?
             </p>
-            <h1
+            <h2
               className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
             >
               Mudah dan Praktis untuk Undangan Acara Anda
-            </h1>
+            </h2>
           </div>
 
           <div
