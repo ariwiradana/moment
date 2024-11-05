@@ -21,13 +21,21 @@ interface Query {
   limit?: number;
   id?: number;
   status?: Client["status"];
+  is_preview?: Client["is_preview"];
 }
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   switch (request.method) {
     case "GET":
       try {
-        const { slug, page = 1, id, limit = 10, status }: Query = request.query;
+        const {
+          slug,
+          page = 1,
+          id,
+          limit = 10,
+          status,
+          is_preview,
+        }: Query = request.query;
 
         let query = `SELECT * FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
@@ -35,34 +43,49 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const values: (number | string | boolean)[] = [];
         const countValues: (number | string | boolean)[] = [];
 
+        let hasCondition = false;
+
         if (id) {
           const valueIndex = values.length + 1;
           query += ` WHERE id = $${valueIndex}`;
           countQuery += ` WHERE id = $${valueIndex}`;
           values.push(id);
           countValues.push(id);
+          hasCondition = true;
         }
 
         if (slug) {
           const valueIndex = values.length + 1;
-          query += ` WHERE slug = $${valueIndex}`;
-          countQuery += ` WHERE slug = $${valueIndex}`;
+          query += hasCondition ? ` AND` : ` WHERE`;
+          query += ` slug = $${valueIndex}`;
+          countQuery += hasCondition ? ` AND` : ` WHERE`;
+          countQuery += ` slug = $${valueIndex}`;
           values.push(slug);
           countValues.push(slug);
+          hasCondition = true;
         }
 
         if (status) {
           const valueIndex = values.length + 1;
+          query += hasCondition ? ` AND` : ` WHERE`;
+          query += ` status = $${valueIndex}`;
+          countQuery += hasCondition ? ` AND` : ` WHERE`;
+          countQuery += ` status = $${valueIndex}`;
+          values.push(status);
+          countValues.push(status);
+          hasCondition = true;
+        }
 
-          query += ` WHERE status = $${valueIndex} AND is_preview = $${
-            valueIndex + 1
-          }`;
-          countQuery += ` WHERE status = $${valueIndex} AND is_preview = $${
-            valueIndex + 1
-          }`;
-
-          values.push(status, false);
-          countValues.push(status, false);
+        if (is_preview) {
+          const valueIndex = values.length + 1;
+          const is_preview_bool = String(is_preview) === "true";
+          query += hasCondition ? ` AND` : ` WHERE`;
+          query += ` is_preview = $${valueIndex}`;
+          countQuery += hasCondition ? ` AND` : ` WHERE`;
+          countQuery += ` is_preview = $${valueIndex}`;
+          values.push(is_preview_bool);
+          countValues.push(is_preview_bool);
+          hasCondition = true;
         }
 
         query += ` ORDER BY status DESC, updated_at DESC`;

@@ -58,7 +58,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
         )}
         <div className="mt-4">
           <p
-            className={`${afacad.className} text-sm md:text-base uppercase flex text-gray-500`}
+            className={`${afacad.className} text-base uppercase flex text-gray-500`}
           >
             {theme.packages?.map((pk: Package, index) => (
               <p key={pk.name} className="flex items-center">

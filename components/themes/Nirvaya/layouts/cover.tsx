@@ -3,6 +3,7 @@ import { balthazar, italiana } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import { BiEnvelopeOpen } from "react-icons/bi";
+import { getEventNames } from "@/utils/getEventNames";
 
 interface Props {
   state: useNirvaya["state"];
@@ -29,7 +30,7 @@ const Cover: FC<Props> = (props) => {
             data-aos-delay="400"
             className={`${balthazar.className} text-white md:text-base text-sm mt-8 uppercase text-center`}
           >
-            Undangan {props.state.client?.theme?.category}
+            Undangan {getEventNames(props.state.client?.events || [])}
           </p>
           <h1
             data-aos="fade-up"
@@ -56,7 +57,11 @@ const Cover: FC<Props> = (props) => {
             className={`${balthazar.className} text-white text-sm md:text-base mt-2 md:mt-4 max-w-sm mx-auto text-center`}
           >
             Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
-            acara pernikahan kami
+            acara{" "}
+            <span className="lowercase">
+              {getEventNames(props.state.client?.events || [])}
+            </span>{" "}
+            kami
           </p>
           <div
             className="mt-6 md:mt-8"
