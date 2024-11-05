@@ -9,7 +9,6 @@ import Link from "next/link";
 import Loader from "@/components/admin/elements/loader";
 import { useAdminUpdateTheme } from "@/hooks/admin/useAdminUpdateTheme";
 import ImageShimmer from "@/components/image.shimmer";
-import InputSelect from "@/components/admin/elements/select";
 import InputCheckbox from "@/components/admin/elements/input.checkbox";
 import { isTokenExpired } from "@/lib/auth";
 import Cookies from "cookies";
@@ -62,16 +61,33 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                 />
               </div>
             </div>
-            <InputSelect
-              onChange={(e) => actions.handleChange(e.target.value, "category")}
-              name="category"
-              label="Theme Category"
-              value={state.formData.category}
-              options={state.themeCategoryOptions}
-            />
+            <div>
+              <p className="text-sm text-gray-700 mb-2">Theme Categories</p>
+              <div className="flex gap-x-4">
+                {state.themeCategories.length > 0 &&
+                  state.themeCategories.map((tc) => (
+                    <InputCheckbox
+                      key={`theme-category-${tc.id}`}
+                      checked={state.formData.theme_category_ids.includes(
+                        tc.id
+                      )}
+                      onChange={(e) =>
+                        actions.handleChange(
+                          Number(e.target.value),
+                          "theme_category_ids"
+                        )
+                      }
+                      name="theme_category_ids"
+                      label={tc.name}
+                      value={tc.id}
+                    />
+                  ))}
+              </div>
+            </div>
+
             <div>
               <p className="text-sm text-gray-700 mb-2">Packages</p>
-              <div className="flex gap-x-6">
+              <div className="flex gap-x-4">
                 {state.packages.length > 0 &&
                   state.packages.map((pk) => (
                     <InputCheckbox

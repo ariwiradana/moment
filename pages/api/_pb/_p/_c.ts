@@ -3,23 +3,17 @@ import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { theme_category } = req.query;
-
   switch (req.method) {
     case "GET":
       try {
-        const values = [];
+        const values: (number | string)[] = [];
 
         let query = `
-        SELECT p.id, p.name AS category, COUNT(DISTINCT t.id)::int AS amount
-        FROM themes t
-        JOIN UNNEST(ARRAY(SELECT DISTINCT unnest(t.package_ids))) AS package_id ON TRUE
-        JOIN packages p ON p.id = package_id
-      `;
-        if (theme_category) {
-          query += ` WHERE t.category = $1`;
-          values.push(theme_category);
-        }
+          SELECT p.id, p.name AS category, COUNT(DISTINCT t.id)::int AS amount
+          FROM themes t
+          JOIN UNNEST(ARRAY(SELECT DISTINCT unnest(t.package_ids))) AS package_id ON TRUE
+          JOIN packages p ON p.id = package_id
+        `;
 
         query += ` GROUP BY p.name, p.id;`;
 

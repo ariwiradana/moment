@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getClient } from "@/lib/client";
-import { Option, Package, Theme } from "@/lib/types";
+import { Option, Package, Theme, ThemeCategory } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { themeCategoryOptions } from "@/constants/themeCategories";
 
 const initalFormData: Theme = {
   slug: "",
   id: null,
   name: "",
   thumbnail: null,
-  category: "Pernikahan",
   package_ids: [],
+  theme_category_ids: [],
   cover_video: false,
 };
 
@@ -34,13 +33,21 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
     data: Package[];
   }>(`/api/_p`, (url: string) => fetcher(url, token));
 
+  const { data: themeCategoryResults } = useSWR<{
+    success: boolean;
+    data: ThemeCategory[];
+  }>(`/api/_tc`, (url: string) => fetcher(url, token));
+
   const packages = packageResult?.data || [];
+  const themeCategories = themeCategoryResults?.data || [];
 
   const [formData, setFormData] = useState<Theme>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);
   const [thumbnailImageForm, setThumbnailImageForm] = useState<null | FileList>(
     null
   );
+
+  console.log(thumbnailImageForm);
 
   useEffect(() => {
     if (themes && themes.data.length > 0) {
@@ -52,13 +59,12 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
         name: currentTheme.name,
         thumbnail: currentTheme.thumbnail,
         category: currentTheme.category ?? "Pernikahan",
-        package_ids: currentTheme.package_ids,
+        package_ids: currentTheme.package_ids ?? [],
+        theme_category_ids: currentTheme.theme_category_ids ?? [],
         cover_video: currentTheme.cover_video,
       }));
     }
   }, [themes]);
-
-  console.log({ formData });
 
   const handleChange = (
     value: string | number | FileList | boolean,
@@ -66,16 +72,16 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
   ) => {
     if (name === "thumbnail") {
       setThumbnailImageForm(value as FileList);
-    } else if (name === "package_ids") {
-      let currentPackages = [...formData.package_ids];
-      if (currentPackages.includes(Number(value))) {
-        currentPackages = currentPackages.filter((p) => p !== Number(value));
+    } else if (name === "package_ids" || name === "theme_category_ids") {
+      let currentValues = [...formData[name]];
+      if (currentValues.includes(Number(value))) {
+        currentValues = currentValues.filter((p) => p !== Number(value));
       } else {
-        currentPackages.push(Number(value));
+        currentValues.push(Number(value));
       }
       setFormData((state) => ({
         ...state,
-        package_ids: currentPackages,
+        [name]: currentValues,
       }));
     } else {
       setFormData((state) => ({
@@ -87,7 +93,6 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
 
   const clearFileInput = () => {
     const thumbInput = document.getElementById("thumbnail") as HTMLInputElement;
-
     if (thumbInput) thumbInput.value = "";
   };
 
@@ -221,8 +226,8 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
       isLoading,
       loading,
       thumbnailImageForm,
-      themeCategoryOptions,
       packages,
+      themeCategories,
     },
     actions: {
       handleChange,

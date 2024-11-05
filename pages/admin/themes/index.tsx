@@ -6,7 +6,7 @@ import AdminLayout from "@/components/admin/layouts";
 import { useAdminThemes } from "@/hooks/admin/useAdminThemes";
 import { isTokenExpired } from "@/lib/auth";
 import { montserrat } from "@/lib/fonts";
-import { Package } from "@/lib/types";
+import { Package, ThemeCategory } from "@/lib/types";
 import { Pagination } from "@mui/material";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
@@ -66,11 +66,18 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                   <div className="pt-3 flex flex-col gap-y-2">
                     <div>
                       <p className="text-gray-500 font-medium text-xs">
-                        Category
+                        Available Categories
                       </p>
-                      <p className="text-gray-800 font-semibold text-sm">
-                        {theme.category}
-                      </p>
+                      <div className="flex gap-2 mt-1">
+                        {theme.theme_categories?.map((tc: ThemeCategory) => (
+                          <p
+                            key={`theme-category-${tc.id}`}
+                            className={`text-admin-dark  bg-admin-dark/10 rounded-md font-semibold px-3 py-1 text-xs`}
+                          >
+                            {tc.name}
+                          </p>
+                        ))}
+                      </div>
                     </div>
                     <div>
                       <p className="text-gray-500 font-medium text-xs">
@@ -80,7 +87,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         {theme.packages?.map((pk: Package) => (
                           <p
                             key={`package-${pk.id}`}
-                            className={`text-admin-dark  bg-gray-200 rounded-md font-semibold px-3 py-1 text-xs`}
+                            className={`text-admin-dark  bg-admin-dark/10 rounded-md font-semibold px-3 py-1 text-xs`}
                           >
                             {pk.name}
                           </p>
@@ -101,7 +108,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         Name
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Category
+                        Available Categories
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Available Packages
@@ -125,19 +132,39 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                           {theme.name}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {theme.category}
+                          {theme.theme_categories &&
+                          theme.theme_categories?.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                              {theme.theme_categories?.map(
+                                (tc: ThemeCategory) => (
+                                  <p
+                                    key={`theme-category-${tc.id}`}
+                                    className={`text-admin-dark bg-admin-dark/10 rounded-lg font-semibold px-3 py-1 text-sm`}
+                                  >
+                                    {tc.name}
+                                  </p>
+                                )
+                              )}
+                            </div>
+                          ) : (
+                            "-"
+                          )}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <div className="flex gap-2">
-                            {theme.packages?.map((pk: Package) => (
-                              <p
-                                key={`package-${pk.id}`}
-                                className={`text-admin-dark  bg-gray-200 rounded-lg font-semibold px-3 py-1 text-sm`}
-                              >
-                                {pk.name}
-                              </p>
-                            ))}
-                          </div>
+                          {theme.packages && theme.packages.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                              {theme.packages?.map((pk: Package) => (
+                                <p
+                                  key={`package-${pk.id}`}
+                                  className={`text-admin-dark bg-admin-dark/10 rounded-lg font-semibold px-3 py-1 text-sm`}
+                                >
+                                  {pk.name}
+                                </p>
+                              ))}
+                            </div>
+                          ) : (
+                            "-"
+                          )}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>

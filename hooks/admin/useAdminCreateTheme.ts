@@ -2,24 +2,23 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { getClient } from "@/lib/client";
-import { themeCategoryOptions } from "@/constants/themeCategories";
-import { Package } from "@/lib/types";
+import { Package, ThemeCategory } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 
 interface FormData {
   name: string;
-  thumbnail: File | string;
-  category: string;
-  package_ids: number[] | [];
+  thumbnail: FileList | null | string;
+  package_ids: Number[];
+  theme_category_ids: Number[];
   cover_video: boolean;
 }
 
 const initalFormData: FormData = {
   name: "",
-  thumbnail: "",
-  category: themeCategoryOptions[0].value as string,
+  thumbnail: null,
   package_ids: [],
+  theme_category_ids: [],
   cover_video: false,
 };
 
@@ -33,29 +32,37 @@ export const useAdminCreateTheme = (token: string | null) => {
     data: Package[];
   }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
 
+  const { data: themeCategoryResults } = useSWR<{
+    success: boolean;
+    data: ThemeCategory[];
+  }>(token ? `/api/_tc` : null, (url: string) => fetcher(url, token));
+
   const packages = packageResult?.data || [];
+  const themeCategories = themeCategoryResults?.data || [];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
-    if (e.target instanceof HTMLInputElement && e.target.type === "file") {
+    if (name === "thumbnail" && e.target.type === "file") {
       const files = e.target.files;
-      setFormData((state) => ({
-        ...state,
-        [name]: files,
-      }));
-    } else if (name === "package_ids") {
-      let currentPackages = [...formData.package_ids];
-      if (currentPackages.includes(Number(value))) {
-        currentPackages = currentPackages.filter((p) => p !== Number(value));
+      if (files && files.length > 0) {
+        setFormData((state) => ({
+          ...state,
+          thumbnail: files,
+        }));
+      }
+    } else if (name === "package_ids" || name === "theme_category_ids") {
+      let currentValues: Number[] = [...formData[name]];
+      if (currentValues.includes(Number(value))) {
+        currentValues = currentValues.filter((v) => v !== Number(value));
       } else {
-        currentPackages.push(Number(value));
+        currentValues.push(Number(value));
       }
       setFormData((state) => ({
         ...state,
-        package_ids: currentPackages,
+        [name]: currentValues,
       }));
     } else if (name === "cover_video") {
       setFormData((state) => ({
@@ -70,9 +77,12 @@ export const useAdminCreateTheme = (token: string | null) => {
     }
   };
 
+  console.log({ formData });
+
   const handleUploadThumbnail = async () => {
     let url = "";
     if (formData.thumbnail) {
+      console.log("thunggg");
       const MAX_SIZE = 5 * 1024 * 1024;
 
       if (formData.thumbnail instanceof FileList) {
@@ -116,7 +126,7 @@ export const useAdminCreateTheme = (token: string | null) => {
     const thumbnailURL = await handleUploadThumbnail();
 
     const modifiedFormdata = { ...formData };
-    modifiedFormdata["thumbnail"] = thumbnailURL ?? "";
+    modifiedFormdata["thumbnail"] = thumbnailURL ?? null;
 
     const createTheme = async () => {
       const response = await getClient(
@@ -153,8 +163,8 @@ export const useAdminCreateTheme = (token: string | null) => {
     state: {
       formData,
       loading,
-      themeCategoryOptions,
       packages,
+      themeCategories,
     },
     actions: {
       handleChange,

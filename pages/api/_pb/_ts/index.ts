@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const { client_id, page = 1, limit = 10 } = req.query;
 
         let query = `
-            SELECT t.*, c.name as client_name, c.cover as client_cover, th.name as theme_name, th.category as theme_category
+            SELECT t.*, c.name as client_name, c.cover as client_cover, th.name as theme_name
             FROM testimonials t
             JOIN clients c ON c.id = t.client_id
             JOIN themes th ON th.id = c.theme_id

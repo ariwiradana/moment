@@ -11,6 +11,7 @@ interface Query {
   slug?: string;
   category?: string;
   package_id?: number;
+  theme_category_id?: number;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -23,8 +24,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           limit,
           order = "ASC",
           slug,
-          category,
           package_id,
+          theme_category_id,
         }: Query = req.query;
 
         let query = `SELECT * FROM themes`;
@@ -52,20 +53,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           countValues.push(slug);
         }
 
-        if (category) {
-          const valueIndex = values.length + 1;
-          conditions.push(`category = $${valueIndex}`);
-          countConditions.push(`category = $${valueIndex}`);
-          values.push(category);
-          countValues.push(category);
-        }
-
         if (package_id) {
           const valueIndex = values.length + 1;
           conditions.push(`$${valueIndex} = ANY(package_ids)`);
           countConditions.push(`$${valueIndex} = ANY(package_ids)`);
           values.push(package_id);
           countValues.push(package_id);
+        }
+
+        if (theme_category_id) {
+          const valueIndex = values.length + 1;
+          conditions.push(`$${valueIndex} = ANY(theme_category_ids)`);
+          countConditions.push(`$${valueIndex} = ANY(theme_category_ids)`);
+          values.push(theme_category_id);
+          countValues.push(theme_category_id);
         }
 
         if (conditions.length > 0) {
@@ -86,6 +87,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const { rows } = await sql.query(query, values);
         const { rows: packages } = await sql.query(`SELECT * FROM packages`);
+        const { rows: themeCategories } = await sql.query(
+          `SELECT * FROM theme_categories`
+        );
 
         const themes = rows.map((theme: Theme) => {
           const packageIdsSet = new Set(theme.package_ids);
@@ -93,9 +97,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             packageIdsSet.has(pkg.id)
           );
 
+          const themeCategoryIdsSet = new Set(theme.theme_category_ids);
+          const filteredThemeCategory = themeCategories.filter((tc) =>
+            themeCategoryIdsSet.has(tc.id)
+          );
+
           return {
             ...theme,
             packages: filteredPackage,
+            theme_categories: filteredThemeCategory,
           };
         });
 

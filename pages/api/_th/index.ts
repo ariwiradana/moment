@@ -13,8 +13,8 @@ interface Query {
   limit?: number;
   order?: string;
   slug?: string;
-  category?: string;
   package_id?: number;
+  theme_category_id?: number;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -27,8 +27,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           limit,
           order = "ASC",
           slug,
-          category,
           package_id,
+          theme_category_id,
         }: Query = req.query;
 
         let query = `SELECT * FROM themes`;
@@ -56,20 +56,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           countValues.push(slug);
         }
 
-        if (category) {
-          const valueIndex = values.length + 1;
-          conditions.push(`category = $${valueIndex}`);
-          countConditions.push(`category = $${valueIndex}`);
-          values.push(category);
-          countValues.push(category);
-        }
-
         if (package_id) {
           const valueIndex = values.length + 1;
           conditions.push(`$${valueIndex} = ANY(package_ids)`);
           countConditions.push(`$${valueIndex} = ANY(package_ids)`);
           values.push(package_id);
           countValues.push(package_id);
+        }
+
+        if (theme_category_id) {
+          const valueIndex = values.length + 1;
+          conditions.push(`$${valueIndex} = ANY(theme_category_ids)`);
+          countConditions.push(`$${valueIndex} = ANY(theme_category_ids)`);
+          values.push(theme_category_id);
+          countValues.push(theme_category_id);
         }
 
         if (conditions.length > 0) {
@@ -90,6 +90,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const { rows } = await sql.query(query, values);
         const { rows: packages } = await sql.query(`SELECT * FROM packages`);
+        const { rows: themeCategories } = await sql.query(
+          `SELECT * FROM theme_categories`
+        );
 
         const themes = rows.map((theme: Theme) => {
           const packageIdsSet = new Set(theme.package_ids);
@@ -97,9 +100,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             packageIdsSet.has(pkg.id)
           );
 
+          const themeCategoryIdsSet = new Set(theme.theme_category_ids);
+          const filteredThemeCategory = themeCategories.filter((tc) =>
+            themeCategoryIdsSet.has(tc.id)
+          );
+
           return {
             ...theme,
             packages: filteredPackage,
+            theme_categories: filteredThemeCategory,
           };
         });
 
@@ -126,35 +135,43 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "POST":
       try {
-        const { name, thumbnail, category, package_ids, cover_video } =
-          req.body;
+        const {
+          name,
+          thumbnail,
+          package_ids,
+          theme_category_ids,
+          cover_video,
+        } = req.body;
 
         const slug = createSlug(name);
 
         const { rows } = await sql.query(
           `
-            INSERT INTO themes (name, slug, thumbnail, category, package_ids, cover_video) 
+            INSERT INTO themes (name, slug, thumbnail, package_ids, theme_category_ids, cover_video) 
             VALUES ($1, $2, $3, $4, $5, $6) 
             RETURNING *;`,
-          [name, slug, thumbnail, category, package_ids, cover_video]
+          [name, slug, thumbnail, package_ids, theme_category_ids, cover_video]
         );
 
         return res.status(200).json({
           success: true,
           data: rows[0],
-          name,
-          thumbnail,
-          category,
         });
       } catch (error) {
         handleError(res, error);
       }
     case "PUT":
       try {
-        const { id, name, thumbnail, category, package_ids, cover_video } =
-          req.body;
+        const {
+          id,
+          name,
+          thumbnail,
+          package_ids,
+          theme_category_ids,
+          cover_video,
+        } = req.body;
 
-        if (!id && !name && !thumbnail && !category) {
+        if (!id && !name && !thumbnail) {
           return handleError(
             res,
             new Error("Please fill up the required field.")
@@ -178,7 +195,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const text = `
           UPDATE themes
-          SET name = $1, slug = $2, thumbnail = $3, category = $4, package_ids = $5, cover_video = $6
+          SET name = $1, slug = $2, thumbnail = $3, theme_category_ids = $4, package_ids = $5, cover_video = $6
           WHERE id = $7
           RETURNING *;`;
 
@@ -190,7 +207,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             name,
             slug,
             thumbnail,
-            category,
+            theme_category_ids,
             package_ids,
             cover_video,
             id,

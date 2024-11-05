@@ -11,6 +11,8 @@ export interface Theme {
   thumbnail?: string | null;
   package_ids: number[];
   packages?: Package[];
+  theme_category_ids: number[];
+  theme_categories?: ThemeCategory[];
   cover_video?: boolean;
 }
 
@@ -117,7 +119,7 @@ export interface Package {
   digital_envelope: boolean;
   google_maps_integration: boolean;
   add_to_calendar: boolean;
-  love_journey: boolean,
+  love_journey: boolean;
   price: number;
   created_at: string;
   updated_at: string;
@@ -148,6 +150,13 @@ export interface User {
   id: number;
   username: string;
   password?: string;
+}
+export interface ThemeCategory {
+  id: number;
+  slug: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export type ApiHandler = (

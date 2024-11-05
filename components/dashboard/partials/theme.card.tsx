@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { FC } from "react";
 import { BiNews, BiPlayCircle } from "react-icons/bi";
 import ImageShimmer from "@/components/image.shimmer";
-import { Theme } from "@/lib/types";
+import { Package, Theme } from "@/lib/types";
 
 interface Props {
   theme: Theme;
@@ -25,7 +25,10 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
                 sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
                 priority
                 fill
-                src={theme.thumbnail as string}
+                src={
+                  (theme.thumbnail as string) ||
+                  `https://placehold.co/600/png?font=afacad`
+                }
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform delay-200 ease-in-out duration-500"
                 alt={`theme-${theme.name}`}
               />
@@ -43,7 +46,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
               </div>
             )}
 
-            {index === 0 && (
+            {[0, 1].includes(index) && (
               <div className="flex bg-white shadow-sm items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark">
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
                   Desain Baru
@@ -54,24 +57,31 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
           </div>
         )}
         <div className="mt-4">
-          <p className={`${afacad.className} text-xl text-gray-500`}>
-            {theme.category && showActions
-              ? `Undangan ${theme.category}`
-              : "Tema Undangan"}
+          <p
+            className={`${afacad.className} text-base md:text-lg text-gray-400 uppercase flex`}
+          >
+            {theme.packages?.map((pk: Package, index) => (
+              <p key={pk.name} className="flex items-center">
+                {pk.name}
+                {index !== (theme.packages as Package[])?.length - 1 && (
+                  <div className="w-[3px] h-[3px] bg-gray-400 rounded-full mx-2"></div>
+                )}
+              </p>
+            ))}
           </p>
           <h1
-            className={`${marcellus.className} text-2xl lg:text-4xl text-dashboard-dark leading-8`}
+            className={`${marcellus.className} text-2xl lg:text-3xl text-dashboard-dark leading-8 font-medium`}
           >
             {theme.name}
           </h1>
-          <div className="flex gap-2 mt-3">
-            {theme.packages?.map((pk) => (
+          <div className="flex gap-3 mt-2">
+            {theme.theme_categories?.map((tc) => (
               <div
-                key={`package-${pk.name}`}
+                key={`theme-category-${tc.name}`}
                 className="flex bg-gray-200 items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark"
               >
                 <p className={`text-xs md:text-sm ${afacad.className}`}>
-                  {pk.name}
+                  {tc.name}
                 </p>
               </div>
             ))}

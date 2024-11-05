@@ -6,11 +6,11 @@ import ButtonPrimary from "@/components/admin/elements/button.primary";
 import { BiFolderPlus, BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
 import { useAdminCreateTheme } from "@/hooks/admin/useAdminCreateTheme";
-import InputSelect from "@/components/admin/elements/select";
 import InputCheckbox from "@/components/admin/elements/input.checkbox";
 import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
+import { Package } from "@/lib/types";
 
 interface CreateThemeProps {
   token: string | null;
@@ -18,6 +18,7 @@ interface CreateThemeProps {
 
 const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
   const { state, actions } = useAdminCreateTheme(token);
+
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -50,25 +51,37 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
               />
             </div>
           </div>
-          <InputSelect
-            onChange={actions.handleChange}
-            name="category"
-            label="Theme Category"
-            value={state.formData.category}
-            options={state.themeCategoryOptions}
-          />
           <Input
             onChange={actions.handleChange}
             name="thumbnail"
-            type="File"
+            type="file"
             label="Thumbnail"
           />
           <div>
-            <p className="text-sm text-gray-700 mb-2">Packages</p>
-            <div className="flex gap-x-6">
-              {state.packages.length > 0 &&
-                state.packages.map((pk) => (
+            <p className="text-sm text-gray-700 mb-2">Theme Categories</p>
+            <div className="flex gap-x-4">
+              {state.themeCategories.length > 0 &&
+                state.themeCategories.map((tc) => (
                   <InputCheckbox
+                    checked={state.formData?.theme_category_ids?.includes(
+                      tc.id
+                    )}
+                    key={`theme-category-${tc.id}`}
+                    onChange={actions.handleChange}
+                    name="theme_category_ids"
+                    label={tc.name}
+                    value={tc.id}
+                  />
+                ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-sm text-gray-700 mb-2">Packages</p>
+            <div className="flex gap-x-4">
+              {state.packages.length > 0 &&
+                state.packages.map((pk: Package) => (
+                  <InputCheckbox
+                    checked={state.formData?.package_ids?.includes(pk.id)}
                     key={`package-${pk.id}`}
                     onChange={actions.handleChange}
                     name="package_ids"

@@ -14,7 +14,7 @@ const ThemeComponent: FC = () => {
 
   const themes: Theme[] = data?.data || [];
 
-  const slideThemes = themes && themes.length > 4 ? themes.slice(4) : themes;
+  const slideThemes = themes && themes.length > 3 ? themes.slice(0, 3) : themes;
 
   if (slideThemes.length > 0)
     return (
