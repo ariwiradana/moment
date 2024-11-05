@@ -52,7 +52,7 @@ const GalleryComponent: FC<Props> = (props) => {
         ></path>
       </svg>
 
-      <div className="w-full h-full relative z-20 py-[60px] md:py-[100px] bg-gradient-to-b from-white via-white via-[60%] to-nirvaya-dark/70 to-[85%]">
+      <div className="w-full h-full relative z-20 py-[60px] md:py-[100px] bg-gradient-to-b from-white from-[40%] via-nirvaya-dark/60 to-nirvaya-dark">
         <h1
           data-aos="fade-up"
           className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark px-8`}
