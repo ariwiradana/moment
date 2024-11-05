@@ -9,8 +9,6 @@ import ClientNotFound from "@/components/themes/client.notfound";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import LoadingComponent from "@/components/themes/loading";
-import Seo from "@/components/dashboard/elements/seo";
-import { sosmedURLs } from "@/constants/sosmed";
 import Head from "next/head";
 
 interface Props {
@@ -32,6 +30,7 @@ const MainPage: FC<Props> = (props) => {
   );
 
   const [url, setUrl] = useState<string>("");
+  console.log(url);
 
   useEffect(() => {
     setUrl(
