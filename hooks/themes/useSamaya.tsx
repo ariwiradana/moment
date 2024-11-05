@@ -45,6 +45,9 @@ export interface useSamaya {
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
+    page: number;
+    limit: number;
+    totalRows: number;
   };
   actions: {
     handleOpenCover: () => void;
@@ -55,6 +58,10 @@ export interface useSamaya {
     handleAddToCalendar: (event: Event) => void;
     setIsPlaying: (isPlaying: boolean) => void;
     setIsGiftShown: (isGiftShown: boolean) => void;
+    handleChangePagination: (
+      event: React.ChangeEvent<unknown>,
+      value: number
+    ) => void;
   };
 }
 
@@ -77,8 +84,8 @@ const useSamaya = (client: Client | null): useSamaya => {
     seconds: 0,
   });
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
-  const [page] = useState<number>(1);
-  const [limit] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
+  const [limit] = useState<number>(5);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
@@ -149,7 +156,8 @@ const useSamaya = (client: Client | null): useSamaya => {
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
 
-  const wishes: Review[] = data?.data ?? [];
+  const wishes: Review[] = data?.data || [];
+  const totalRows: number = data?.total_rows || 0;
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -165,9 +173,9 @@ const useSamaya = (client: Client | null): useSamaya => {
     const payload = { client_id: Number(client?.id), ...formData };
 
     setLoading(true);
-    const toastSubmit = toast.loading("Memberikan ucapan...");
     try {
       wisheschema.parse(formData);
+      const toastSubmit = toast.loading("Memberikan ucapan...");
       const response = await getClient(`/api/_pb/_w`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -340,6 +348,13 @@ const useSamaya = (client: Client | null): useSamaya => {
     window.open(googleCalendarUrl, "_blank");
   };
 
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
+
   return {
     refs: {
       audioRef,
@@ -357,6 +372,9 @@ const useSamaya = (client: Client | null): useSamaya => {
       isPlaying,
       timeRemainings,
       isGiftShown,
+      page,
+      limit,
+      totalRows,
     },
     actions: {
       handleOpenCover,
@@ -367,6 +385,7 @@ const useSamaya = (client: Client | null): useSamaya => {
       handleAddToCalendar,
       setIsPlaying,
       setIsGiftShown,
+      handleChangePagination,
     },
   };
 };
