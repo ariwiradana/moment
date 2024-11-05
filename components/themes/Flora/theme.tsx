@@ -21,15 +21,7 @@ const Flora: FC<Props> = (props) => {
   const { state, actions, refs } = useFlora(props.client);
 
   return (
-    <Layout
-      pageTitle={
-        state.client
-          ? state.client.status === "unpaid"
-            ? `Preview Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
-            : `Undangan ${state.client.theme?.category} ${state.groom?.nickname} & ${state.bride?.nickname} | Moment`
-          : "Moment"
-      }
-    >
+    <Layout>
       <>
         {state.client?.status === "unpaid" && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />

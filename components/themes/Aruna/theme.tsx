@@ -52,7 +52,7 @@ const Aruna: FC<Props> = (props) => {
   }, [events.length]);
 
   return (
-    <Layout pageTitle={pageTitle}>
+    <Layout>
       <>
         <Seo
           title={pageTitle}

@@ -22,13 +22,7 @@ const Aakarshana: FC<Props> = (props) => {
   const { state, actions, refs } = useAakarshana(props.client);
 
   return (
-    <Layout
-      pageTitle={
-        props.client
-          ? `${state.groom?.nickname} & ${state.bride?.nickname}`
-          : "Moment"
-      }
-    >
+    <Layout>
       <>
         <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (

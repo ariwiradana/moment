@@ -31,7 +31,7 @@ const Nirvaya: FC<Props> = (props) => {
     : "Moment";
 
   return (
-    <Layout pageTitle={pageTitle}>
+    <Layout>
       <>
         <Seo
           title={pageTitle}
