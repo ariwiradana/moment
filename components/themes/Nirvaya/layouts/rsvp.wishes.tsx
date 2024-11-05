@@ -24,7 +24,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   return (
     <section className="relative bg-nirvaya-primary w-full overflow-hidden">
       <div
-        className="absolute inset-0 bg-repeat bg-center opacity-[0.03]"
+        className="absolute inset-0 bg-repeat bg-center opacity-5"
         style={{
           backgroundImage: "url('/images/nirvaya/bg-floral.png')",
         }}
@@ -115,7 +115,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
               {props.state.wishes?.map((r) => (
                 <div key={r.id} className="flex">
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 bg-nirvaya-primary rounded-full flex justify-center items-center text-lg font-medium text-white">
+                    <div className="w-10 h-10 bg-white/10 rounded-full flex justify-center items-center text-lg font-medium text-white">
                       <span className={italiana.className}>
                         {getInitial(r.name)}
                       </span>
@@ -123,8 +123,8 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                   </div>
 
                   <div className="ml-4 relative">
-                    <div className="p-4 bg-nirvaya-primary rounded-lg relative">
-                      <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-nirvaya-primary"></div>
+                    <div className="p-4 bg-white/10 rounded-lg relative">
+                      <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-white/10"></div>
                       <div className="flex items-center gap-x-3">
                         <div className="flex items-center gap-x-2">
                           <div className="h-[0.5px] w-4 bg-white"></div>
@@ -171,15 +171,15 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                   "& .MuiPaginationItem-root": {
                     color: "white",
                     "&:hover": {
-                      backgroundColor: "#40534C",
+                      backgroundColor: "#FFFFFF1A",
                       color: "white",
                     },
                   },
                   "& .MuiPaginationItem-page.Mui-selected": {
-                    backgroundColor: "#40534C",
+                    backgroundColor: "#FFFFFF1A",
                     color: "white",
                     "&:hover": {
-                      backgroundColor: "#40534C",
+                      backgroundColor: "#FFFFFF1A",
                       color: "white",
                       cursor: "default",
                     },

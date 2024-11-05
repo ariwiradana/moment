@@ -71,6 +71,12 @@ const GiftComponent: FC<Props> = (props) => {
               <div
                 className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-nirvaya-primary/70 via-nirvaya-primary to-nirvaya-primary/70 overflow-hidden ${afacad.className}`}
               >
+                <div
+                  className="absolute inset-0 bg-center opacity-10"
+                  style={{
+                    backgroundImage: "url('/images/nirvaya/texture.svg')",
+                  }}
+                ></div>
                 <div className="flex justify-between relative z-10">
                   <div className="relative w-14">
                     <Image
