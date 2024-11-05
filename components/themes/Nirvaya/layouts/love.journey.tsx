@@ -15,7 +15,7 @@ const LoveJourneyComponent: FC<Props> = (props) => {
   const journey: LoveJourney[] = props.state.client?.journey || [];
   if (journey.length > 0)
     return (
-      <section className="relative bg-gradient-to-b from-nirvaya-dark/70 via-nirvaya-dark/90 to-nirvaya-dark/95 overflow-hidden px-8 py-[60px] md:py-[100px]">
+      <section className="relative bg-gradient-to-b from-nirvaya-dark/70 via-nirvaya-dark/90 to-nirvaya-dark/95 overflow-hidden px-8 pb-[60px] md:pb-[100px]">
         {props.state.client?.journey_image && (
           <div
             data-aos="zoom-out-up"
@@ -45,7 +45,7 @@ const LoveJourneyComponent: FC<Props> = (props) => {
         </p>
 
         <div
-          className={`flex flex-col justify-center flex-wrap gap-8 mt-12 mx-auto items-center pb-16`}
+          className={`flex flex-col justify-center flex-wrap gap-4 md:gap-8 mt-12 mx-auto items-center pb-16`}
         >
           {journey?.map((j) => (
             <div

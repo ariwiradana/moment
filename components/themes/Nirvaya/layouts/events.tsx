@@ -100,7 +100,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 <div
                   data-aos="fade-up"
                   data-aos-delay="400"
-                  className="inline-flex flex-wrap justify-center gap-4 mt-4 md:mt-7 pb-6"
+                  className="inline-flex flex-wrap justify-center gap-4 mt-4 md:mt-7"
                 >
                   {state.client?.packages?.google_maps_integration && (
                     <Link target="_blank" href={event.address_url}>
