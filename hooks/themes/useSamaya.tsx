@@ -45,7 +45,6 @@ export interface useSamaya {
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
-    url: string;
   };
   actions: {
     handleOpenCover: () => void;
@@ -92,16 +91,6 @@ const useSamaya = (client: Client | null): useSamaya => {
         }))
       : []
   );
-
-  const [url, setUrl] = useState<string>("");
-
-  useEffect(() => {
-    setUrl(
-      `${window.location.hostname}${
-        window.location.port ? `:${window.location.port}` : ""
-      }`
-    );
-  }, []);
 
   useEffect(() => {
     if (!client?.events) return;
@@ -356,7 +345,6 @@ const useSamaya = (client: Client | null): useSamaya => {
       audioRef,
     },
     state: {
-      url,
       loading,
       open,
       countdown,
