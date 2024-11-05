@@ -21,8 +21,8 @@ const ParticipantsComponent: FC<Props> = (props) => {
     props.state.client?.participants.length > 0
   )
     return (
-      <section className="relative z-10 -mt-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 20">
+      <section className="relative z-20 -mt-10">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 30">
           <path
             className="fill-white"
             fill-opacity="1"
@@ -94,7 +94,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
         <svg
           className="transform rotate-180"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 20"
+          viewBox="0 0 1440 25"
         >
           <path
             className="fill-white"

@@ -4,14 +4,8 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { balthazar, dm, italiana } from "@/lib/fonts";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
-import {
-  ImageList,
-  ImageListItem,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import Image from "next/image";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
+import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useNirvaya["state"];
@@ -35,23 +29,6 @@ const GalleryComponent: FC<Props> = (props) => {
       ? props.state.client.videos
       : [];
 
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const getCols = () => {
-    if (isDesktop) return 3;
-    if (isTablet) return 2;
-    if (isMobile) return 2;
-  };
-
-  const getGap = () => {
-    if (isDesktop) return 8;
-    if (isTablet) return 8;
-    if (isMobile) return 8;
-  };
-
   return (
     <section className="relative overflow-hidden -mt-10">
       <Lightbox
@@ -67,7 +44,7 @@ const GalleryComponent: FC<Props> = (props) => {
         }}
       />
 
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 20">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 25">
         <path
           className="fill-white"
           fill-opacity="1"
@@ -91,13 +68,14 @@ const GalleryComponent: FC<Props> = (props) => {
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </p>
         {videos.length > 0 && (
-          <div className="grid gap-4 mb-2 px-2" data-aos="zoom-in-up">
+          <div className="grid gap-1 mb-2 px-1">
             {videos.map((v) => {
               const youtubeId = getYouTubeVideoId(v);
               const youtubeVideo = isYoutubeVideo(v);
               if (youtubeVideo)
                 return (
                   <div
+                    data-aos="zoom-in-up"
                     key={youtubeId}
                     className="relative w-full aspect-video rounded overflow-hidden"
                   >
@@ -113,34 +91,27 @@ const GalleryComponent: FC<Props> = (props) => {
             })}
           </div>
         )}
-        <div className="mx-auto flex flex-col gap-4 px-2" data-aos="zoom-in-up">
-          <ImageList
-            variant="masonry"
-            cols={getCols()}
-            gap={getGap()}
-            className="overflow-hidden"
-          >
-            {images.map((img, index) => (
-              <ImageListItem key={img}>
-                <div className="w-full h-full overflow-hidden rounded">
-                  <Image
-                    onClick={() => {
-                      setOpen(() => true);
-                      setImageIndex(() => index);
-                    }}
-                    className="hover:scale-110 transition-transform ease-in-out duration-500"
-                    src={img}
-                    alt={`gallery-img-${index + 1}`}
-                    width={360}
-                    height={360}
-                    layout="responsive"
-                    objectFit="cover"
-                    priority
-                  />
-                </div>
-              </ImageListItem>
-            ))}
-          </ImageList>
+        <div className="mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 px-1">
+          {images.map((img, index) => (
+            <div
+              key={`gallery-${index + 1}`}
+              data-aos="zoom-in-up"
+              className="w-full aspect-square relative"
+              onClick={() => {
+                setOpen(() => true);
+                setImageIndex(() => index);
+              }}
+            >
+              <ImageShimmer
+                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 25vw"
+                priority
+                alt={`gallery-${index + 1}`}
+                src={img}
+                className="hover:scale-110 transition-transform ease-in-out duration-500 object-cover cursor-pointer"
+                fill
+              />
+            </div>
+          ))}
         </div>
 
         <div

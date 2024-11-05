@@ -24,9 +24,9 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   return (
     <section className="relative bg-nirvaya-primary w-full overflow-hidden">
       <div
-        className="absolute inset-0 bg-repeat bg-center opacity-10"
+        className="absolute inset-0 bg-repeat bg-center opacity-[0.03]"
         style={{
-          backgroundImage: "url('/images/nirvaya/texture.svg')",
+          backgroundImage: "url('/images/nirvaya/bg-floral.png')",
         }}
       ></div>
       <div

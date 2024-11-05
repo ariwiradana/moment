@@ -4,7 +4,7 @@ import "yet-another-react-lightbox/styles.css";
 import { afacad, balthazar, italiana } from "@/lib/fonts";
 import { BiChevronRightCircle, BiCopy } from "react-icons/bi";
 import Image from "next/image";
-import ButtonPrimary from "../elements/button.primary";
+import Button from "../elements/button";
 
 interface Props {
   state: useNirvaya["state"];
@@ -19,7 +19,7 @@ const GiftComponent: FC<Props> = (props) => {
   )
     return (
       <section className="-mt-10 relative z-20">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 20">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 25">
           <path
             className="fill-nirvaya-dark"
             fill-opacity="1"
@@ -46,7 +46,7 @@ const GiftComponent: FC<Props> = (props) => {
             data-aos-delay="200"
             className="flex justify-center"
           >
-            <ButtonPrimary
+            <Button
               onClick={() =>
                 props.actions.setIsGiftShown(!props.state.isGiftShown)
               }
@@ -69,7 +69,7 @@ const GiftComponent: FC<Props> = (props) => {
               className="flex justify-center relative z-20 mt-12"
             >
               <div
-                className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-nirvaya-primary/50 via-nirvaya-primary to-nirvaya-primary/50 overflow-hidden ${afacad.className}`}
+                className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-gradient-to-tr from-nirvaya-primary/70 via-nirvaya-primary to-nirvaya-primary/70 overflow-hidden ${afacad.className}`}
               >
                 <div className="flex justify-between relative z-10">
                   <div className="relative w-14">

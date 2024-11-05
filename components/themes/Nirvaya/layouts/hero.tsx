@@ -51,7 +51,7 @@ const HeroComponent: FC<Props> = (props) => {
           }}
           effect="fade"
           speed={2000}
-          className="w-full transition-transform h-[calc(100svh+40px)]"
+          className="w-full transition-transform h-lvh"
           spaceBetween={0}
           slidesPerView={1}
           modules={[Autoplay, EffectFade]}
@@ -68,7 +68,7 @@ const HeroComponent: FC<Props> = (props) => {
                     quality={100}
                     alt={`hero-cover`}
                     priority
-                    sizes="100vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw"
                     className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
                     src={props.state.client.cover}
                   />
@@ -86,7 +86,7 @@ const HeroComponent: FC<Props> = (props) => {
                     quality={100}
                     alt={`hero-img-${index}`}
                     priority
-                    sizes="100vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw"
                     className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
                     src={image as string}
                   />
