@@ -3,7 +3,7 @@ import { balthazar, italiana } from "@/lib/fonts";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { getEventNames } from "@/utils/getEventNames";
-import ButtonPrimary from "../elements/button.primary";
+import Button from "../elements/button";
 
 interface Props {
   state: useNirvaya["state"];
@@ -68,7 +68,7 @@ const Cover: FC<Props> = (props) => {
             data-aos="fade-up"
             data-aos-delay="1200"
           >
-            <ButtonPrimary
+            <Button
               onClick={() => {
                 props.actions.handleOpenCover();
                 props.actions.handlePlayPause();

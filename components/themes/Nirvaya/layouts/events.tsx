@@ -4,7 +4,7 @@ import moment from "moment";
 import { BiCalendar, BiMap } from "react-icons/bi";
 import { useNirvaya } from "@/hooks/themes/useNirvaya";
 import Link from "next/link";
-import ButtonPrimary from "../elements/button.primary";
+import Button from "../elements/button";
 
 interface Props {
   state: useNirvaya["state"];
@@ -104,12 +104,12 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                 >
                   {state.client?.packages?.google_maps_integration && (
                     <Link target="_blank" href={event.address_url}>
-                      <ButtonPrimary icon={<BiMap />} title="Petunjuk Lokasi" />
+                      <Button icon={<BiMap />} title="Petunjuk Lokasi" />
                     </Link>
                   )}
                   {state.client?.packages?.add_to_calendar && (
                     <div>
-                      <ButtonPrimary
+                      <Button
                         onClick={() => actions.handleAddToCalendar(event)}
                         icon={<BiCalendar />}
                         title="Simpan Tanggal"
