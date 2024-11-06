@@ -183,7 +183,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
         toast.success("Berhasil. Terima kasih atas ucapannya!", {
           id: toastSubmit,
           icon: (
-            <div className="p-1 rounded bg-samaya-primary">
+            <div className="p-1 rounded bg-nirvaya-primary">
               <BiCheck />
             </div>
           ),
@@ -295,7 +295,7 @@ const useNirvaya = (client: Client | null): useNirvaya => {
       .then(() => {
         toast.success("Berhasil disalin.", {
           icon: (
-            <div className="p-1 rounded bg-samaya-primary">
+            <div className="p-1 rounded bg-nirvaya-primary">
               <BiCheck />
             </div>
           ),
