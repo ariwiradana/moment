@@ -34,7 +34,6 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image }) => {
       <link rel="canonical" href={url} />
       <meta name="keywords" content={keywords} />
 
-      {/* Open Graph meta tags for social media */}
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
@@ -44,7 +43,6 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image }) => {
       <meta property="og:image:height" content="630" />
       <meta property="og:description" content={description} />
 
-      {/* Twitter Card meta tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
