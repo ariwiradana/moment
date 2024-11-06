@@ -39,8 +39,9 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image }) => {
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
-      <meta property="og:image:height" content="1080" />
-      <meta property="og:image:width" content="1080" />
+      <meta property="og:image:secure_url" content={image} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:description" content={description} />
 
       {/* Twitter Card meta tags */}
