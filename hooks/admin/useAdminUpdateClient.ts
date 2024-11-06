@@ -149,7 +149,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   useEffect(() => {
     if (themes && themes.data.length > 0) {
       const options: Option[] = themes.data.map((theme) => ({
-        label: `${theme.category} - ${theme.name}`,
+        label: theme.name,
         value: theme.id as number,
       }));
       setThemeOptions(options);

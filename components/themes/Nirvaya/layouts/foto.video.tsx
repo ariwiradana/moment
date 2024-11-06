@@ -68,7 +68,7 @@ const GalleryComponent: FC<Props> = (props) => {
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </p>
         {videos.length > 0 && (
-          <div className="grid gap-1 mb-2 px-1">
+          <div className="grid gap-1 mb-1 px-1">
             {videos.map((v) => {
               const youtubeId = getYouTubeVideoId(v);
               const youtubeVideo = isYoutubeVideo(v);
@@ -96,7 +96,7 @@ const GalleryComponent: FC<Props> = (props) => {
             <div
               key={`gallery-${index + 1}`}
               data-aos="zoom-in-up"
-              className="w-full aspect-square relative"
+              className="w-full aspect-square relative rounded overflow-hidden"
               onClick={() => {
                 setOpen(() => true);
                 setImageIndex(() => index);
