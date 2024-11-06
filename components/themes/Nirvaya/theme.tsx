@@ -40,7 +40,7 @@ const Nirvaya: FC<Props> = (props) => {
           title={pageTitle}
           description={`${state.client?.opening_title}, ${state.client?.opening_description}`}
           keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis"
-          image={state.client?.cover ?? "/images/logo-white.png"}
+          image={state.client?.cover ?? "/images/logo-bg.jpg"}
         />
         {state.open && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />

@@ -47,7 +47,7 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
         title="Pembayaran | Moment"
         description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        image="/images/logo-white.png"
+        image="/images/logo-bg.jpg"
       />
 
       <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 lg:px-24">

@@ -58,7 +58,7 @@ const Aruna: FC<Props> = (props) => {
           title={pageTitle}
           description={`${state.client?.opening_title}, ${state.client?.opening_description}`}
           keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-          image={state.client?.cover ?? "/images/logo-white.png"}
+          image={state.client?.cover ?? "/images/logo-bg.jpg"}
         />
         <MusicComponent
           className={!state.open ? "invisible" : "visible"}

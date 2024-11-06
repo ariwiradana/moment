@@ -72,7 +72,7 @@ const DashboardFeatures = () => {
         title="Semua Fitur Kami | Moment"
         description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        image="/images/logo-white.png"
+        image="/images/logo-bg.jpg"
       />
       <section className="md:pt-20 lg:pt-24">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 py-24">
