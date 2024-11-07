@@ -1,4 +1,4 @@
-import { ApiHandler, LoveJourney } from "./../../../lib/types";
+import { ApiHandler, LoveJourney, ThemeCategory } from "./../../../lib/types";
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 
@@ -138,6 +138,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
         const { rows: wishes } = await sql.query(`SELECT * FROM wishes`);
         const { rows: packages } = await sql.query(`SELECT * FROM packages`);
+        const { rows: themeCategories } = await sql.query(
+          `SELECT * FROM theme_categories`
+        );
 
         const clients = rows.map((client: Client) => {
           const clientParticipants = participants.filter(
@@ -148,10 +151,13 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             (j) => j.client_id === client.id
           );
           const clientTheme: Theme[] = themes.find(
-            (t) => t.id === client.theme_id
+            (th) => th.id === client.theme_id
           );
           const clientPackages: Package[] = packages.find(
-            (t) => t.id === client.package_id
+            (pk) => pk.id === client.package_id
+          );
+          const clientThemeCategories: ThemeCategory[] = themeCategories.find(
+            (tc) => tc.id === client.theme_category_id
           );
           const clientwishes: Review[] = wishes.filter(
             (r) => r.client_id === client.id
@@ -163,7 +169,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             journey: clientJourney,
             theme: clientTheme,
             wishes: clientwishes,
-            packages: clientPackages,
+            package: clientPackages,
+            theme_category: clientThemeCategories,
           };
         });
 
@@ -231,6 +238,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             slug,
             name,
             theme_id,
+            theme_catgory_id,
             status,
             gallery,
             videos,
@@ -245,7 +253,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             gift_account_name,
             gift_account_number
           )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
           RETURNING *;
         `;
 
@@ -253,6 +261,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           slug,
           client.name,
           client.theme_id,
+          client.theme_category_id,
           client.status,
           client.gallery,
           client.videos,
@@ -403,8 +412,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             closing_description = $12,
             gift_bank_name = $13,
             gift_account_name = $14,
-            gift_account_number = $15
-          WHERE id = $16
+            gift_account_number = $15,
+            theme_category_id = $16
+          WHERE id = $17
           RETURNING *;`;
 
         await sql.query(updateClientQuery, [
@@ -423,6 +433,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           client.gift_bank_name,
           client.gift_account_name,
           client.gift_account_number,
+          client.theme_category_id,
           Number(id),
         ]);
 

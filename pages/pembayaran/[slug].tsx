@@ -69,12 +69,12 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
                   dengan harga promo{" "}
                   <span className="text-dashboard-dark font-semibold">
                     {formatToRupiah(
-                      getDiscountPrice(client?.packages?.price || 0, 20)
+                      getDiscountPrice(client?.package?.price || 0, 20)
                     )}
                   </span>{" "}
                   sesuai dengan{" "}
                   <span className="text-dashboard-dark font-semibold">
-                    Paket {client?.packages?.name}
+                    Paket {client?.package?.name}
                   </span>{" "}
                   yang dipilih
                 </>

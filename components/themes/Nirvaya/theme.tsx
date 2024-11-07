@@ -37,14 +37,14 @@ const Nirvaya: FC<Props> = (props) => {
           <div className="relative">
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
-            {state.client?.packages?.love_journey && (
+            {state.client?.package?.love_journey && (
               <LoveJourneyComponent actions={actions} state={state} />
             )}
             <GalleryComponent state={state} />
-            {state.client?.packages?.rsvp_and_greetings && (
+            {state.client?.package?.rsvp_and_greetings && (
               <RSVPWishes actions={actions} state={state} />
             )}
-            {state.client?.packages?.digital_envelope && (
+            {state.client?.package?.digital_envelope && (
               <GiftComponent actions={actions} state={state} />
             )}
             <ThankyouComponent state={state} />

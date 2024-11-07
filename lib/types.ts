@@ -73,8 +73,10 @@ export interface Client {
   music?: string | File | null;
   status?: "paid" | "unpaid" | "completed" | null;
   theme_id: number | null;
+  theme_category_id: number | null;
   package_id: number | null;
-  packages?: Package;
+  package?: Package;
+  theme_category?: Package;
   theme?: Theme | null;
   cover: null | string;
   journey_image?: null | string;

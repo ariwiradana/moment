@@ -9,6 +9,7 @@ import {
   Package,
   Participant,
   Theme,
+  ThemeCategory,
 } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
@@ -69,6 +70,7 @@ const initalFormData: Client = {
   is_preview: false,
   status: null,
   slug: "",
+  theme_category_id: null,
 };
 
 export const useAdminUpdateClient = (slug: string, token: string | null) => {
@@ -94,6 +96,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     data: Package[];
   }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
 
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [formData, setFormData] = useState<Client>(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,6 +108,12 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     },
   ]);
   const [packageOptions, setPackageOptions] = useState<Option[]>([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
+  const [themeCategoryOptions, setThemeCategoryOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
@@ -152,6 +162,14 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         label: theme.name,
         value: theme.id as number,
       }));
+      const initialThemeCategory: ThemeCategory[] =
+        themes.data[0].theme_categories || [];
+      const initialThemeCategoryOptions: Option[] =
+        initialThemeCategory?.map((tc) => ({
+          value: Number(tc.id),
+          label: tc.name,
+        })) ?? [];
+      setThemeCategoryOptions(initialThemeCategoryOptions);
       setThemeOptions(options);
     }
   }, [themes]);
@@ -233,6 +251,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         is_preview: currentClient.is_preview,
         status: currentClient.status,
         slug: currentClient.slug,
+        theme_category_id: !currentClient.theme_category_id
+          ? (themeCategoryOptions[0].value as number)
+          : currentClient.theme_category_id,
       }));
     }
   }, [client, themeOptions, packageOptions]);
@@ -243,6 +264,29 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   ) => {
     if (name === "images") {
       setGalleryImagesForm(value as FileList);
+    } else if (name === "theme_id") {
+      const selectedTheme: Theme = themes?.data.find(
+        (th) => th.id === Number(value)
+      ) as Theme;
+      setSelectedTheme(selectedTheme as Theme);
+      const options: Option[] =
+        selectedTheme.theme_categories?.map((tc) => ({
+          label: String(tc.name),
+          value: tc.id,
+        })) ?? [];
+      setThemeCategoryOptions(options);
+      setFormData((state) => ({
+        ...state,
+        theme_id: Number(value),
+        theme_category_id: Number(
+          (selectedTheme.theme_categories as ThemeCategory[])[0].id
+        ),
+      }));
+    } else if (name === "package_id") {
+      const selectedPackage = packages?.data.find(
+        (pk) => pk.id === Number(value)
+      );
+      setSelectedPackage(selectedPackage as Package);
     } else if (name === "videos") {
       setVideosForm(value as string[]);
     } else if (name === "cover-video") {
@@ -445,8 +489,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     }
     return musicURL;
   };
-
-  console.log(coverVideoForm);
 
   const handleUploadCoverVideo = async () => {
     let videoFileURL: string = "";
@@ -983,6 +1025,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       client,
       participantImagesForm,
       videosForm,
+      themeCategoryOptions,
+      selectedPackage,
+      selectedTheme,
     },
     actions: {
       handleChangeClient,

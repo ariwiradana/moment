@@ -38,8 +38,6 @@ interface UpdateClientProps {
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
 
-  console.log(state.formData.videos);
-
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -104,14 +102,27 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               }
               label="Client Name"
             />
-            <InputSelect
-              options={state.themeOptions}
-              value={state.formData.theme_id ?? ""}
-              onChange={(e) =>
-                actions.handleChangeClient(Number(e.target.value), "theme_id")
-              }
-              label="Theme"
-            />
+            <div className="grid md:grid-cols-2 gap-4">
+              <InputSelect
+                options={state.themeOptions}
+                value={state.formData.theme_id ?? ""}
+                onChange={(e) =>
+                  actions.handleChangeClient(Number(e.target.value), "theme_id")
+                }
+                label="Theme"
+              />
+              <InputSelect
+                options={state.themeCategoryOptions}
+                value={state.formData.theme_category_id ?? ""}
+                onChange={(e) =>
+                  actions.handleChangeClient(
+                    Number(e.target.value),
+                    "theme_category_id"
+                  )
+                }
+                label="Theme Category"
+              />
+            </div>
             <InputSelect
               options={state.packageOptions}
               value={state.formData.package_id ?? ""}

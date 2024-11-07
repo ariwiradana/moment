@@ -8,7 +8,6 @@ import ClientNotFound from "@/components/themes/client.notfound";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "@/components/dashboard/elements/seo";
-import { getEventNames } from "@/utils/getEventNames";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 
 interface Props {
@@ -32,16 +31,17 @@ const MainPage: FC<Props> = ({ client, untuk }) => {
   const themeName = client.theme?.name || "";
 
   const ThemeComponent = themes[themeName];
-  const eventNames = getEventNames(client.events || []);
   const participantNames = getParticipantNames(client.participants || []);
 
   const pageTitle = client
     ? client.status === "unpaid"
-      ? `Preview ${participantNames} | ${eventNames}`
+      ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
       : client.is_preview
       ? `Preview Undangan Tema ${client.theme?.name} | Moment`
-      : `${participantNames} | ${eventNames}`
+      : `${participantNames} | Undangan ${client.theme_category?.name}`
     : "Moment";
+
+  console.log({ client });
 
   return ThemeComponent ? (
     <>

@@ -22,7 +22,7 @@ import InputChip from "@/components/admin/elements/input.chip";
 import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
-import { LoveJourney, Package, Theme } from "@/lib/types";
+import { LoveJourney } from "@/lib/types";
 
 interface CreateClientProps {
   token: string | null;
@@ -30,13 +30,6 @@ interface CreateClientProps {
 
 const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
   const { state, actions } = useAdminCreateClient(token);
-
-  const selectedPackage = state.packages?.data.find(
-    (pk: Package) => pk.id === state.formData.package_id
-  );
-  const selectedTheme = state.themes?.data.find(
-    (th: Theme) => th.id === state.formData.theme_id
-  );
 
   return (
     <AdminLayout>
@@ -58,14 +51,27 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             onChange={(e) => actions.handleChangeClient(e.target.value, "name")}
             label="Client Name"
           />
-          <InputSelect
-            options={state.themeOptions}
-            value={state.formData.theme_id ?? ""}
-            onChange={(e) =>
-              actions.handleChangeClient(Number(e.target.value), "theme_id")
-            }
-            label="Theme"
-          />
+          <div className="grid md:grid-cols-2 gap-4">
+            <InputSelect
+              options={state.themeOptions}
+              value={state.formData.theme_id ?? ""}
+              onChange={(e) =>
+                actions.handleChangeClient(Number(e.target.value), "theme_id")
+              }
+              label="Theme"
+            />
+            <InputSelect
+              options={state.themeCategoryOptions}
+              value={state.formData.theme_category_id ?? ""}
+              onChange={(e) =>
+                actions.handleChangeClient(
+                  Number(e.target.value),
+                  "theme_category_id"
+                )
+              }
+              label="Theme Category"
+            />
+          </div>
           <InputSelect
             options={state.packageOptions}
             value={state.formData.package_id ?? ""}
@@ -119,14 +125,14 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
           />
           <div
             className={`grid md:${
-              selectedTheme?.cover_video &&
+              state.selectedTheme?.cover_video &&
               !state.formData.coverVideo &&
-              ["Exclusive"].includes(selectedPackage?.name as string)
+              ["Exclusive"].includes(state.selectedPackage?.name as string)
                 ? "grid-cols-2"
                 : "grid-cols-1"
             } gap-4`}
           >
-            {!["Basic"].includes(selectedPackage?.name as string) && (
+            {!["Basic"].includes(state.selectedPackage?.name as string) && (
               <InputChip
                 chips={state.formData.videos as string[]}
                 onChange={(value) =>
@@ -135,7 +141,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                 label="Youtube URL Video"
               />
             )}
-            {selectedTheme?.cover_video && !state.formData.coverVideo ? (
+            {state.selectedTheme?.cover_video && !state.formData.coverVideo ? (
               <Input
                 accept="video/*"
                 type="file"
@@ -150,7 +156,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
               />
             ) : null}
           </div>
-          {selectedPackage?.background_sound && (
+          {state.selectedPackage?.background_sound && (
             <Input
               accept="audio/mpeg"
               type="file"
@@ -165,7 +171,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             />
           )}
 
-          {selectedPackage?.love_journey &&
+          {state.selectedPackage?.love_journey &&
           (state.formData.journey as LoveJourney[])?.length > 0 ? (
             <>
               <h1 className="text-2xl font-bold mb-4 mt-8">Love Journey(s)</h1>
@@ -344,9 +350,9 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                 }
               />
             ))}
-            {selectedPackage?.max_events === "unlimited" ||
+            {state.selectedPackage?.max_events === "unlimited" ||
             state.formData.events.length <
-              Number(selectedPackage?.max_events) ? (
+              Number(state.selectedPackage?.max_events) ? (
               <div>
                 <ButtonSecondary
                   onClick={actions.handleAddAnotherEvent}
@@ -494,7 +500,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                       }
                     />
 
-                    {selectedPackage?.contact_social_media && (
+                    {state.selectedPackage?.contact_social_media && (
                       <>
                         <h1 className="text-base font-bold mt-6">
                           Social Media
@@ -577,7 +583,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
               />
             </div>
           </div>
-          {selectedPackage?.digital_envelope && (
+          {state.selectedPackage?.digital_envelope && (
             <>
               <h1 className="text-2xl font-bold mb-4 mt-8">Digital Gift</h1>
               <div className="grid md:grid-cols-3 gap-4">

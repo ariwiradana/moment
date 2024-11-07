@@ -10,6 +10,7 @@ import {
   Package,
   Participant,
   Theme,
+  ThemeCategory,
 } from "@/lib/types";
 import moment from "moment";
 import useSWR from "swr";
@@ -71,6 +72,7 @@ const initalFormData: Client & { coverVideo: FileList | null } = {
   cover: null,
   music: null,
   coverVideo: null,
+  theme_category_id: null,
 };
 
 export const useAdminCreateClient = (token: string | null) => {
@@ -81,14 +83,21 @@ export const useAdminCreateClient = (token: string | null) => {
   >(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [packageOptions, setPackageOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
     },
   ]);
-
   const [themeOptions, setThemeOptions] = useState<Option[]>([
+    {
+      label: "",
+      value: "",
+    },
+  ]);
+  const [themeCategoryOptions, setThemeCategoryOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
@@ -130,9 +139,18 @@ export const useAdminCreateClient = (token: string | null) => {
         value: theme.id as number,
       }));
       setThemeOptions(options);
+      const initialThemeCategory: ThemeCategory[] =
+        themes.data[0].theme_categories || [];
+      const initialThemeCategoryOptions: Option[] =
+        initialThemeCategory?.map((tc) => ({
+          value: Number(tc.id),
+          label: tc.name,
+        })) ?? [];
+      setThemeCategoryOptions(initialThemeCategoryOptions);
       setFormData((state) => ({
         ...state,
         theme_id: Number(options[0].value),
+        theme_category_id: Number(initialThemeCategory[0].id),
       }));
     }
   }, [themes]);
@@ -389,8 +407,6 @@ export const useAdminCreateClient = (token: string | null) => {
     setToggleEndTimes(currentToggleEndTimes);
   };
 
-  console.log(formData);
-
   const handleChangeClient = (
     value: string | number | FileList | File | string[],
     name: string
@@ -427,6 +443,32 @@ export const useAdminCreateClient = (token: string | null) => {
         toast.error(`Maximum videos is ${selectedPackage?.max_videos}`);
         return;
       }
+    }
+
+    if (name === "theme_id") {
+      const selectedTheme: Theme = themes?.data.find(
+        (th) => th.id === Number(value)
+      ) as Theme;
+      const options: Option[] =
+        selectedTheme.theme_categories?.map((tc) => ({
+          label: String(tc.name),
+          value: tc.id,
+        })) ?? [];
+      setThemeCategoryOptions(options);
+      setSelectedTheme(selectedTheme as Theme);
+      setFormData((state) => ({
+        ...state,
+        theme_category_id: Number(
+          (selectedTheme.theme_categories as ThemeCategory[])[0].id
+        ),
+      }));
+    }
+
+    if (name === "package_id") {
+      const selectedPackage = packages?.data.find(
+        (pk) => pk.id === Number(value)
+      );
+      setSelectedPackage(selectedPackage as Package);
     }
 
     setFormData((state) => ({
@@ -583,6 +625,9 @@ export const useAdminCreateClient = (token: string | null) => {
       errors,
       packages,
       themes,
+      selectedTheme,
+      selectedPackage,
+      themeCategoryOptions,
     },
     actions: {
       handleChangeClient,

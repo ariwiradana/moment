@@ -4,7 +4,6 @@ import Button from "../elements/button";
 import { useSamaya } from "@/hooks/themes/useSamaya";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import Image from "next/image";
-import { getEventNames } from "@/utils/getEventNames";
 
 interface Props {
   state: useSamaya["state"];
@@ -13,6 +12,7 @@ interface Props {
 }
 
 const Cover: FC<Props> = (props) => {
+  console.log(props.state);
   return (
     <>
       <div
@@ -30,7 +30,7 @@ const Cover: FC<Props> = (props) => {
               data-aos-delay="400"
               className={`${marcellus.className} text-white md:text-base text-sm uppercase text-center`}
             >
-              Undangan {getEventNames(props.state.client?.events || [])}
+              Undangan {props.state.client?.theme_category?.name}
             </p>
             <h1
               data-aos="fade-up"
@@ -82,7 +82,7 @@ const Cover: FC<Props> = (props) => {
               Tanpa mengurangi rasa hormat, kami mengundang anda untuk
               menghadiri acara{" "}
               <span className="lowercase">
-                {getEventNames(props.state.client?.events || [])}
+                {props.state.client?.theme_category?.name}
               </span>{" "}
               kami
             </p>

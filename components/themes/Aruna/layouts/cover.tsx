@@ -40,7 +40,7 @@ const Cover: FC<Props> = (props) => {
                 data-aos-delay="200"
                 className={`${lora.className} text-white/80 md:text-base text-sm mb-2 tracking-[4px] uppercase`}
               >
-                Undangan {props.state.client?.theme?.category}
+                Undangan {props.state.client?.theme_category?.name}
               </p>
               <h1
                 style={{ lineHeight: "normal" }}

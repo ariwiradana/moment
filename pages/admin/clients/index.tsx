@@ -36,6 +36,8 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
   const { state, actions } = useAdminClients(token);
   const router = useRouter();
 
+  console.log({ state });
+
   return (
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
@@ -231,18 +233,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
-                          Journey(s)
-                        </p>
-                        <p className="text-gray-800 font-semibold text-sm capitalize">
-                          {client.journey.length === 0
-                            ? "-"
-                            : client.journey?.length > 1
-                            ? `${client.journey.length} Journies`
-                            : `${client.journey.length} Journey`}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500 font-medium text-xs">
                           Status
                         </p>
                         <p className="text-gray-800 font-semibold text-sm capitalize">
@@ -254,7 +244,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           Package
                         </p>
                         <p className="text-gray-800 font-semibold text-sm capitalize">
-                          {client.packages?.name}
+                          {client.package?.name}
                         </p>
                       </div>
                       <div>
@@ -270,7 +260,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           Theme Category
                         </p>
                         <p className="text-gray-800 font-semibold text-sm">
-                          {client.theme?.category ?? "-"}
+                          {client.theme_category?.name ?? "-"}
                         </p>
                       </div>
                     </div>
@@ -292,9 +282,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Event(s)
-                      </td>
-                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Journey(s)
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Package
@@ -374,7 +361,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <p>{client.theme?.name ?? "-"}</p>
                           <p className="text-gray-500 font-medium text-xs">
-                            {client.theme?.category}
+                            {client.theme_category?.name ?? "-"}
                           </p>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -384,20 +371,11 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           </h1>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <h1>
-                            {client.journey.length === 0
-                              ? "-"
-                              : client.journey?.length > 1
-                              ? `${client.journey.length} Journies`
-                              : `${client.journey.length} Journey`}
-                          </h1>
-                        </td>
-                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex">
                             <p
                               className={`text-admin-dark  bg-gray-200 rounded-lg font-semibold px-3 py-1 text-sm`}
                             >
-                              {client.packages?.name}
+                              {client.package?.name}
                             </p>
                           </div>
                         </td>

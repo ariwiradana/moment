@@ -110,7 +110,7 @@ const HeroComponent: FC<Props> = (props) => {
               data-aos-delay="400"
               className={`${lora.className} text-white/80 md:text-base uppercase tracking-[4px] text-sm mb-2`}
             >
-              Undangan {props.state.client?.theme?.category}
+              Undangan {props.state.client?.theme_category?.name}
             </p>
             <h1
               data-aos="fade-up"

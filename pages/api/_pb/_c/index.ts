@@ -1,6 +1,6 @@
 import handleError from "@/lib/errorHandling";
 
-import { Client, Package, Review, Theme } from "@/lib/types";
+import { Client, Package, Review, Theme, ThemeCategory } from "@/lib/types";
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -104,6 +104,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
         const { rows: wishes } = await sql.query(`SELECT * FROM wishes`);
         const { rows: packages } = await sql.query(`SELECT * FROM packages`);
+        const { rows: themeCategories } = await sql.query(
+          `SELECT * FROM theme_categories`
+        );
 
         const clients = rows.map((client: Client) => {
           const clientParticipants = participants.filter(
@@ -119,6 +122,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           const clientPackages: Package[] = packages.find(
             (t) => t.id === client.package_id
           );
+          const clientThemeCategories: ThemeCategory[] = themeCategories.find(
+            (tc) => tc.id === client.theme_category_id
+          );
           const clientwishes: Review[] = wishes.filter(
             (r) => r.client_id === client.id
           );
@@ -129,7 +135,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             journey: clientJourney,
             theme: clientTheme,
             wishes: clientwishes,
-            packages: clientPackages,
+            packagesssss: clientPackages,
+            theme_category: clientThemeCategories,
           };
         });
 
