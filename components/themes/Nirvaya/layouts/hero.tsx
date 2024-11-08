@@ -31,71 +31,73 @@ const HeroComponent: FC<Props> = (props) => {
   }, [events.length]);
 
   const gallery: string[] = (props.state.client?.gallery as string[]) || [];
-  const images = [
-    props.state.client?.cover,
-    ...gallery.filter(
+  const images: string[] = [
+    ...(props.state.client?.cover ? [props.state.client.cover] : []),
+    ...(gallery?.filter(
       (g) =>
         g !== props.state.client?.cover &&
         g !== props.state.client?.journey_image
-    ),
+    ) || []),
   ];
 
   return (
     <section className={`relative h-[calc(100svh+40px)]`}>
-      <div className="fixed inset-0">
-        <Swiper
-          loop
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false,
-          }}
-          effect="fade"
-          speed={2000}
-          className="w-full transition-transform h-lvh"
-          spaceBetween={0}
-          slidesPerView={1}
-          modules={[Autoplay, EffectFade]}
-        >
-          <>
-            {props.state.client?.cover && (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`hero-cover`}
-              >
-                <div className="absolute inset-0 z-0">
-                  <ImageShimmer
-                    fill
-                    quality={100}
-                    alt={`hero-cover`}
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw"
-                    className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                    src={props.state.client.cover}
-                  />
-                </div>
-              </SwiperSlide>
-            )}
-            {images.map((image, index) => (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`hero-img-${index}`}
-              >
-                <div className="absolute inset-0 z-0">
-                  <ImageShimmer
-                    fill
-                    quality={100}
-                    alt={`hero-img-${index}`}
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw"
-                    className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                    src={image as string}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </>
-        </Swiper>
-      </div>
+      {images.length > 0 && (
+        <div className="fixed inset-0">
+          <Swiper
+            loop
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            effect="fade"
+            speed={2000}
+            className="w-full transition-transform h-lvh"
+            spaceBetween={0}
+            slidesPerView={1}
+            modules={[Autoplay, EffectFade]}
+          >
+            <>
+              {props.state.client?.cover && (
+                <SwiperSlide
+                  className="relative w-full h-full"
+                  key={`hero-cover`}
+                >
+                  <div className="absolute inset-0 z-0">
+                    <ImageShimmer
+                      fill
+                      quality={100}
+                      alt={`hero-cover`}
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw"
+                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                      src={props.state.client.cover}
+                    />
+                  </div>
+                </SwiperSlide>
+              )}
+              {images.map((image, index) => (
+                <SwiperSlide
+                  className="relative w-full h-full"
+                  key={`hero-img-${index}`}
+                >
+                  <div className="absolute inset-0 z-0">
+                    <ImageShimmer
+                      fill
+                      quality={100}
+                      alt={`hero-img-${index}`}
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 90vw"
+                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                      src={image as string}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </>
+          </Swiper>
+        </div>
+      )}
       <div
         className={`absolute h-[calc(100svh+40px)] inset-0 flex flex-col justify-between items-center z-10 bg-gradient-to-b from-nirvaya-dark/95 via-[30%] via-transparent to-nirvaya-dark/90 py-[60px] md:py-[100px] px-8 transition-opacity ease-in-out duration-1000 delay-500 ${
           props.state.open ? "visible opacity-100" : "invisible opacity-0"

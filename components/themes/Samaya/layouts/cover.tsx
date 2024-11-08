@@ -40,27 +40,29 @@ const Cover: FC<Props> = (props) => {
               {props.state.groom?.nickname} & {props.state.bride?.nickname}
             </h1>
           </div>
-          <div
-            data-aos="zoom-out-up"
-            data-aos-delay="800"
-            className="w-[160px] md:w-[180px] lg:w-[200px] 2xl:w-[240px] relative aspect-square rounded-full"
-          >
-            <Image
-              sizes="360px"
-              priority
-              fill
-              src={props.state.client?.cover as string}
-              alt="cover"
-              className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
-            />
-            <Image
-              sizes="360px"
-              fill
-              src="/images/samaya/frame-circle.svg"
-              alt="cover-frame"
-              className="object-contain w-full h-full transform scale-[1.4]"
-            />
-          </div>
+          {props.state.client?.cover && (
+            <div
+              data-aos="zoom-out-up"
+              data-aos-delay="800"
+              className="w-[160px] md:w-[180px] lg:w-[200px] 2xl:w-[240px] relative aspect-square rounded-full"
+            >
+              <Image
+                sizes="360px"
+                priority
+                fill
+                src={props.state.client?.cover as string}
+                alt="cover"
+                className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
+              />
+              <Image
+                sizes="360px"
+                fill
+                src="/images/samaya/frame-circle.svg"
+                alt="cover-frame"
+                className="object-contain w-full h-full transform scale-[1.4]"
+              />
+            </div>
+          )}
           <div>
             <div data-aos="fade-up" data-aos-delay="1000">
               <p

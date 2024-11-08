@@ -35,9 +35,6 @@ const Samaya: FC<Props> = (props) => {
           <div className="relative">
             <ParticipantsComponent state={state} />
             <EventsComponent actions={actions} state={state} />
-            {/* {state.client?.package?.love_journey && (
-              <LoveJourneyComponent actions={actions} state={state} />
-            )} */}
             <GalleryComponent state={state} />
             {state.client?.package?.rsvp_and_greetings && (
               <RSVPWishes actions={actions} state={state} />
