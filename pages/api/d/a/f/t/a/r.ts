@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { hashPassword } from "../../../../../../../lib/auth";
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import handleError from "@/lib/errorHandling";
 
 export default async function handler(

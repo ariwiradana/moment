@@ -29,7 +29,7 @@ const PreviewNav: FC<Props> = ({ state }) => {
               >
                 {state.client.is_preview
                   ? `Preview Tema ${state.client.theme?.name}`
-                  : `Preview Undangan ${state.client.theme?.category}`}
+                  : `Preview Undangan ${state.client.theme_category?.name}`}
               </h1>
             </li>
             {state.client.is_preview && (

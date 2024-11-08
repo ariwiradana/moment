@@ -2,8 +2,9 @@ import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 import { ApiHandler } from "@/lib/types";
 import { del } from "@vercel/blob";
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import delLocal from "@/lib/delLocal";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -31,7 +32,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           Number(deleteId),
         ]);
 
-        if (image_url) await del(image_url as string);
+        if (image_url) {
+          if (process.env.NODE_ENV === "production") {
+            await del(image_url as string);
+          } else {
+            await delLocal(image_url as string);
+          }
+        }
 
         result = {
           success: true,

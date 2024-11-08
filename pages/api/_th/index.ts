@@ -4,8 +4,9 @@ import { authenticateUser } from "@/lib/middleware";
 import { ApiHandler, Theme } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
 import { del } from "@vercel/blob";
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import delLocal from "@/lib/delLocal";
 
 interface Query {
   id?: number;
@@ -190,7 +191,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const theme: Theme = currentThemes[0];
 
         if (theme.thumbnail && theme.thumbnail !== thumbnail) {
-          await del(theme.thumbnail);
+          if (process.env.NODE_ENV === "production") {
+            await del(theme.thumbnail);
+          } else {
+            await delLocal(theme.thumbnail);
+          }
         }
 
         const text = `
@@ -229,9 +234,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           return handleError(res, new Error("Invalid ID provided."));
         }
 
-        const { rows: currentTheme } = await sql`
+        const { rows: currentTheme } = await sql.query(`
           SELECT * FROM themes WHERE id = ${Number(id)}
-        `;
+        `);
 
         if (!currentTheme.length) {
           return handleError(
@@ -241,11 +246,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const thumbnailURL = currentTheme[0].thumbnail;
-        if (thumbnailURL) await del(thumbnailURL);
+        if (thumbnailURL) {
+          if (process.env.NODE_ENV === "production") {
+            await del(thumbnailURL);
+          } else {
+            await delLocal(thumbnailURL);
+          }
+        }
 
-        const { rows } = await sql`
+        const { rows } = await sql.query(`
           DELETE FROM themes WHERE id = ${Number(id)} RETURNING *;
-        `;
+        `);
 
         return res.status(200).json({
           success: true,

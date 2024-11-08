@@ -162,6 +162,7 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
           }
         );
         const result = await res.json();
+        console.log({ result });
         if (result.success) {
           toast.success(`Thumbnail image uploaded successfully!`, {
             id: toastUpload,

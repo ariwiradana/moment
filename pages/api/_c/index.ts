@@ -1,7 +1,6 @@
 import { ApiHandler, LoveJourney, ThemeCategory } from "./../../../lib/types";
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
-
 import {
   Client,
   Event,
@@ -12,8 +11,11 @@ import {
 } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
 import { del } from "@vercel/blob";
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import delLocal from "@/lib/delLocal";
+import path from "path";
+import fs from "fs/promises";
 
 interface Query {
   slug?: string;
@@ -199,8 +201,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         if (client.theme_id) {
-          const checkTheme =
-            await sql`SELECT EXISTS (SELECT 1 FROM themes WHERE id = ${client.theme_id});`;
+          const checkTheme = await sql.query(
+            `SELECT EXISTS (SELECT 1 FROM themes WHERE id = $1);`,
+            [client.theme_id]
+          );
           if (!checkTheme.rows[0].exists) {
             return handleError(
               response,
@@ -210,8 +214,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         if (client.package_id) {
-          const checkPackage =
-            await sql`SELECT EXISTS (SELECT 1 FROM packages WHERE id = ${client.package_id});`;
+          const checkPackage = await sql.query(
+            `SELECT EXISTS (SELECT 1 FROM packages WHERE id = $1);`,
+            [client.package_id]
+          );
           if (!checkPackage.rows[0].exists) {
             return handleError(
               response,
@@ -223,8 +229,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const slug = createSlug(client.name);
 
         if (slug) {
-          const checkSlug =
-            await sql`SELECT EXISTS (SELECT 1 FROM clients WHERE slug = ${slug});`;
+          const checkSlug = await sql.query(
+            `SELECT EXISTS (SELECT 1 FROM clients WHERE slug = $1);`,
+            [slug]
+          );
           if (checkSlug.rows[0].exists) {
             return handleError(
               response,
@@ -234,28 +242,28 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         }
 
         const queryClient = `
-          INSERT INTO clients (
-            slug,
-            name,
-            theme_id,
-            theme_catgory_id,
-            status,
-            gallery,
-            videos,
-            cover,
-            music,
-            package_id,
-            opening_title,
-            opening_description,
-            closing_title,
-            closing_description,
-            gift_bank_name,
-            gift_account_name,
-            gift_account_number
-          )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
-          RETURNING *;
-        `;
+            INSERT INTO clients (
+              slug,
+              name,
+              theme_id,
+              theme_category_id,
+              status,
+              gallery,
+              videos,
+              cover,
+              music,
+              package_id,
+              opening_title,
+              opening_description,
+              closing_title,
+              closing_description,
+              gift_bank_name,
+              gift_account_name,
+              gift_account_number
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+            RETURNING *;
+          `;
 
         const resultClient = await sql.query(queryClient, [
           slug,
@@ -285,25 +293,25 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           const participantPromises = participants.map(
             async (p: Participant) => {
               const addParticipantQuery = `
-                  INSERT INTO participants (
-                  client_id,
-                  name,
-                  nickname,
-                  address,
-                  child,
-                  parents_male,
-                  parents_female,
-                  gender,
-                  role,
-                  image,
-                  facebook,
-                  twitter,
-                  instagram,
-                  tiktok
-                )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-                RETURNING *;
-              `;
+                    INSERT INTO participants (
+                    client_id,
+                    name,
+                    nickname,
+                    address,
+                    child,
+                    parents_male,
+                    parents_female,
+                    gender,
+                    role,
+                    image,
+                    facebook,
+                    twitter,
+                    instagram,
+                    tiktok
+                  )
+                  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+                  RETURNING *;
+                `;
 
               await sql.query(addParticipantQuery, [
                 clientId,
@@ -328,10 +336,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           const events: Event[] = client.events;
           const eventPromises = events.map(async (e: Event) => {
             const addEventQuery = `
-                INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
-                RETURNING *;
-              `;
+                  INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url)
+                  VALUES ($1, $2, $3, $4, $5, $6, $7)
+                  RETURNING *;
+                `;
 
             await sql.query(addEventQuery, [
               clientId,
@@ -348,10 +356,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           const journeys: LoveJourney[] = client.journey;
           const journeyPromises = journeys.map(async (j: LoveJourney) => {
             const addJourneyQuery = `
-                INSERT INTO journey (client_id, title, date, description)
-                VALUES ($1, $2, $3, $4)
-                RETURNING *;
-              `;
+                  INSERT INTO journey (client_id, title, date, description)
+                  VALUES ($1, $2, $3, $4)
+                  RETURNING *;
+                `;
 
             await sql.query(addJourneyQuery, [
               clientId,
@@ -398,7 +406,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const updateClientQuery = `
           UPDATE clients
           SET
-            name = $1, 
+            name = $1,
             theme_id = $2,
             slug = $3,
             gallery = $4,
@@ -406,9 +414,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             cover = $6,
             music = $7,
             package_id = $8,
-            opening_title = $9, 
-            opening_description = $10, 
-            closing_title = $11, 
+            opening_title = $9,
+            opening_description = $10,
+            closing_title = $11,
             closing_description = $12,
             gift_bank_name = $13,
             gift_account_name = $14,
@@ -519,12 +527,12 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               UPDATE participants
               SET
                 client_id = $1,
-                name = $2, 
+                name = $2,
                 nickname = $3,
-                parents_male = $4, 
-                parents_female = $5, 
-                address = $6, 
-                gender = $7, 
+                parents_male = $4,
+                parents_female = $5,
+                address = $6,
+                gender = $7,
                 child = $8,
                 role = $9,
                 image = $10,
@@ -565,11 +573,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               UPDATE events
               SET
                 client_id = $1,
-                name = $2, 
+                name = $2,
                 date = $3,
-                start_time = $4, 
-                end_time = $5, 
-                address = $6, 
+                start_time = $4,
+                end_time = $5,
+                address = $6,
                 address_url = $7
               WHERE id = $8
               RETURNING *;
@@ -596,7 +604,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               UPDATE journey
               SET
                 client_id = $1,
-                title = $2, 
+                title = $2,
                 date = $3,
                 description = $4
               WHERE id = $5
@@ -654,7 +662,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           try {
             await Promise.all(
               participantImages.map(async (url) => {
-                await del(url);
+                if (process.env.NODE_ENV === "production") {
+                  await del(url);
+                } else {
+                  await delLocal(url);
+                }
               })
             );
             console.log("Participants deleted");
@@ -669,7 +681,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           try {
             await Promise.all(
               galleryURLs.map(async (url) => {
-                await del(url);
+                if (process.env.NODE_ENV === "production") {
+                  await del(url);
+                } else {
+                  await delLocal(url);
+                }
               })
             );
             console.log("Gallery deleted");
@@ -685,7 +701,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           try {
             await Promise.all(
               videoURLs.map(async (url) => {
-                await del(url);
+                if (process.env.NODE_ENV === "production") {
+                  await del(url);
+                } else {
+                  await delLocal(url);
+                }
               })
             );
             console.log("Video deleted");
@@ -699,7 +719,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const musicURL: string | null = currentClient[0]?.music || null;
         if (musicURL && musicURL !== "") {
           try {
-            await del(musicURL);
+            if (process.env.NODE_ENV === "production") {
+              await del(musicURL);
+            } else {
+              await delLocal(musicURL);
+            }
             console.log("Music deleted");
           } catch (error) {
             console.error("Error deleting music URL:", error);
@@ -731,6 +755,20 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         });
 
         await sql.query("COMMIT");
+        if (process.env.NODE_ENV !== "production") {
+          try {
+            const filePath = path.join(
+              process.cwd(),
+              "public/uploads/Clients",
+              currentClient[0].name
+            );
+            await fs.rm(filePath, { recursive: true, force: true });
+          } catch (err: unknown) {
+            console.log(err);
+            throw new Error(`Failed to delete file locally`);
+          }
+        }
+
         return response.status(200).json({
           success: true,
           currentClient,

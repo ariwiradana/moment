@@ -1,7 +1,7 @@
 import handleError from "@/lib/errorHandling";
 
 import { Client, Package, Review, Theme, ThemeCategory } from "@/lib/types";
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface Query {
@@ -135,7 +135,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             journey: clientJourney,
             theme: clientTheme,
             wishes: clientwishes,
-            packagesssss: clientPackages,
+            package: clientPackages,
             theme_category: clientThemeCategories,
           };
         });

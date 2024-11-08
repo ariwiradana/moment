@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { verifyPassword, generateToken } from "../../../lib/auth";
-import { sql } from "@vercel/postgres";
 import handleError from "@/lib/errorHandling";
 import { serialize } from "cookie";
+import sql from "@/lib/db";
 
 export default async function loginHandler(
   req: NextApiRequest,

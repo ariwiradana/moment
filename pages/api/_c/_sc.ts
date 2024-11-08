@@ -1,7 +1,7 @@
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import type { NextApiResponse, NextApiRequest } from "next";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {

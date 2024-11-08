@@ -1,6 +1,6 @@
 import handleError from "@/lib/errorHandling";
 import { Theme } from "@/lib/types";
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface Query {

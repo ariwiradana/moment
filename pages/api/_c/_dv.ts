@@ -4,8 +4,9 @@ import { authenticateUser } from "@/lib/middleware";
 import { Client } from "@/lib/types";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { del } from "@vercel/blob";
-import { sql } from "@vercel/postgres";
+import sql from "@/lib/db";
 import type { NextApiResponse, NextApiRequest } from "next";
+import delLocal from "@/lib/delLocal";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   const { url, id } = request.body;
@@ -35,7 +36,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     );
 
     if (!isYoutubeVideo(url)) {
-      await del(url);
+      if (process.env.NODE_ENV === "production") {
+        await del(url);
+      } else {
+        await delLocal(url)
+      }
     }
 
     return response.status(200).json({

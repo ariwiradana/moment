@@ -21,6 +21,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
     "Tidak Hadir": "Maaf saya tidak bisa hadir",
     "Masih Ragu": "Maaf saya masih ragu",
   };
+  console.log(props.state.client);
   return (
     <section className="relative bg-nirvaya-primary w-full overflow-hidden">
       <div
