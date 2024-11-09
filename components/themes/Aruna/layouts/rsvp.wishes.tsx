@@ -1,13 +1,19 @@
 import React, { FC } from "react";
-import Button from "../elements/button";
-import { BiSend, BiTime, BiUser } from "react-icons/bi";
+import {
+  BiSend,
+  BiTime,
+  BiUserCheck,
+  BiUserPlus,
+  BiUserX,
+} from "react-icons/bi";
 import { useAruna } from "@/hooks/themes/useAruna";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
-import { balthazar, italiana } from "@/lib/fonts";
-import { getInitial } from "@/utils/getInitial";
+import { roboto } from "@/lib/fonts";
 import moment from "moment";
+import ButtonDark from "../elements/button.dark";
+import { Pagination } from "@mui/material";
 
 interface Props {
   state: useAruna["state"];
@@ -22,30 +28,31 @@ const RSVPWishesComponent: FC<Props> = (props) => {
   };
   return (
     <section className="relative bg-white w-full overflow-hidden">
-      <div
-        className="absolute inset-0 bg-repeat bg-center"
-        style={{
-          backgroundImage: "url('/images/nirvaya/texture.svg')",
-        }}
-      ></div>
-      <div className="relative w-full flex flex-col justify-center items-center z-20 py-[60px] md:py-[100px]">
-        <h1
-          data-aos="fade-up"
-          className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark px-8`}
-        >
-          RSVP & Ucapan
-        </h1>
-        <p
-          data-aos="fade-up"
-          data-aos-delay="100"
-          className={`${balthazar.className} text-sm md:text-base text-nirvaya-dark/80 px-8 mt-1 mb-8 md:mb-12 text-center max-w-screen-sm mx-auto`}
-        >
-          Bagikan doa dan ucapan kamu untuk kedua mempelai sebagai tanda kasih
-          dan kebahagiaan.
-        </p>
+      <div className="relative w-full flex flex-col justify-center items-center z-20 pt-[60px] md:pt-[100px]">
+        <div className="px-8">
+          <h2
+            data-aos="fade-up"
+            className="font-high-summit text-4xl md:text-5xl text-aruna-dark text-center whitespace-nowrap"
+          >
+            Mohon Doa Restu
+          </h2>
+          <p
+            data-aos="fade-up"
+            className={`${roboto.className} text-xs md:text-sm text-center text-aruna-dark/80 max-w-screen-sm my-8`}
+          >
+            Konfirmasi kehadiran Anda melalui RSVP, dan jangan lupa sampaikan
+            doa serta ucapan terbaik untuk pengantin di hari bahagia mereka.
+          </p>
+          <p
+            data-aos="fade-up"
+            className={`text-aruna-dark/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
+          >
+            RSVP & Ucapan
+          </p>
+        </div>
         <form
           onSubmit={props.actions.handleSubmit}
-          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto px-8"
+          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto p-8"
           data-aos="fade-up"
         >
           <Input
@@ -65,7 +72,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
               props.actions.handleChange("wishes", e.target.value)
             }
           />
-          <div className="flex gap-x-4 justify-between lg:justify-start">
+          <div className="flex gap-x-8 justify-between lg:justify-start">
             <InputCheckbox
               value="Hadir"
               checked={props.state.formData.attendant === "Hadir"}
@@ -93,7 +100,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           </div>
           {props.state.client?.status === "paid" && (
             <div className="mt-4">
-              <Button
+              <ButtonDark
                 isLoading={props.state.loading ? true : false}
                 type="submit"
                 title="Kirim"
@@ -104,57 +111,88 @@ const RSVPWishesComponent: FC<Props> = (props) => {
         </form>
 
         {props.state.wishes && props.state.wishes?.length > 0 ? (
-          <div
-            className="flex flex-col w-full gap-4 max-h-[440px] overflow-y-auto mt-12 px-8"
-            data-aos="fade-up"
-          >
-            <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-5">
-              {props.state.wishes?.map((r) => (
-                <div key={r.id} className="flex">
-                  <div className="flex-shrink-0">
-                    <div className="w-9 h-9 bg-nirvaya-dark rounded-full flex justify-center items-center text-base font-medium text-white">
-                      <span className={italiana.className}>
-                        {getInitial(r.name)}
-                      </span>
-                    </div>
+          <div className="w-full bg-aruna-dark py-8" data-aos="fade-up">
+            <div className="max-w-screen-sm mx-auto w-full px-8">
+              {props.state.wishes.map((wish, index) => (
+                <div key={`ucapan-${index + 1}`} className="py-6">
+                  <div className="relative flex flex-col items-start">
+                    <h4
+                      className={`${roboto.className} relative text-white text-xs md:text-sm uppercase tracking-[2px] mb-2`}
+                    >
+                      {wish.name}
+                    </h4>
                   </div>
-
-                  <div className="ml-4 relative">
-                    <div className="p-4 bg-nirvaya-dark rounded-lg relative">
-                      <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark"></div>
-                      <div className="flex items-center gap-x-3">
-                        <div className="flex items-center gap-x-2">
-                          <div className="h-[0.5px] w-4 bg-white"></div>
-                          <p
-                            className={`${balthazar.className} text-white text-base md:text-lg`}
-                          >
-                            {r.name}
-                          </p>
-                        </div>
-                      </div>
+                  <p
+                    className={`${roboto.className} text-white/60 text-xs md:text-sm`}
+                  >
+                    {wish.wishes}
+                  </p>
+                  <div className="flex mt-4 items-center gap-x-4 whitespace-nowrap">
+                    <div className="flex items-center gap-x-1 text-white/80">
+                      {wish.attendant === "Hadir" ? (
+                        <BiUserCheck className="text-xs md:text-sm" />
+                      ) : wish.attendant === "Tidak Hadir" ? (
+                        <BiUserX className="text-xs md:text-sm" />
+                      ) : (
+                        <BiUserPlus className="text-xs md:text-sm" />
+                      )}
                       <p
-                        className={`${balthazar.className} text-sm md:text-base text-gray-100 leading-5 mt-1`}
+                        className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
                       >
-                        {r.wishes}
+                        {attendantText[wish.attendant]}
                       </p>
                     </div>
-
-                    <div
-                      className={`flex divide-x-[0.5px] divide-nirvaya-dark mt-2 ${balthazar.className}`}
-                    >
-                      <div className="flex gap-1 text-sm md:text-base text-nirvaya-dark pr-2">
-                        <BiTime className="mt-[3px]" />
-                        <p>{moment(r.created_at).fromNow()}</p>
-                      </div>
-                      <div className="flex gap-1 text-sm md:text-base text-nirvaya-dark pl-2">
-                        <BiUser className="mt-[3px]" />
-                        <p>{attendantText[r.attendant]}</p>
-                      </div>
+                    <div className="w-[2px] min-w-[2px] h-[2px] min-h-[2px] rounded-full bg-white/80"></div>
+                    <div className="flex items-center gap-x-1 text-white/80">
+                      <BiTime className="text-xs md:text-sm" />
+                      <p
+                        className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
+                      >
+                        {moment(wish.created_at).fromNow()}
+                      </p>
                     </div>
+                    <div className="w-full h-[0.5px] bg-white/20"></div>
                   </div>
                 </div>
               ))}
             </div>
+
+            {props.state.totalRows > props.state.limit && (
+              <div className="max-w-screen-sm w-full py-6 px-8">
+                <div className="-ml-2">
+                  <Pagination
+                    shape="rounded"
+                    page={props.state.page}
+                    sx={{
+                      "& .MuiPaginationItem-root": {
+                        color: "white",
+                        fontSize: 12,
+                        maxWidth: 24,
+                        maxHeight: 24,
+                        minHeight: 24,
+                        minWidth: 24,
+                        borderRadius: 0,
+                        "&:hover": {
+                          backgroundColor: "#FFFFFF0D",
+                          color: "white",
+                        },
+                      },
+                      "& .MuiPaginationItem-page.Mui-selected": {
+                        backgroundColor: "#FFFFFF0D",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: "#FFFFFF0D",
+                          color: "white",
+                          cursor: "default",
+                        },
+                      },
+                    }}
+                    onChange={props.actions.handleChangePagination}
+                    count={Math.ceil(props.state.totalRows / props.state.limit)}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         ) : null}
       </div>

@@ -10,6 +10,7 @@ import {
   Italiana,
   Balthazar,
   Lora,
+  Roboto,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -18,6 +19,11 @@ export const comforta = Comfortaa({
 
 export const montserrat = Montserrat({
   subsets: ["latin"],
+});
+
+export const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 export const afacad = Afacad({

@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         "tan-pearl": ["TanPearl", "sans-serif"],
+        "high-summit": ["HighSummit", "sans-serif"],
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
@@ -51,6 +52,7 @@ const config: Config = {
         aruna: {
           dark: "#101010",
           background: "#f7f7f2",
+          primary: "#886B5B",
         },
         admin: {
           primary: "#3366FF",

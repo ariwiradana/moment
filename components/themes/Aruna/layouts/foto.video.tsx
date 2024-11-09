@@ -2,16 +2,11 @@ import React, { FC, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { balthazar, dm, italiana } from "@/lib/fonts";
-import { getYouTubeVideoId } from "@/utils/getYoutubeId";
-import {
-  ImageList,
-  ImageListItem,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import Image from "next/image";
-import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
+import { roboto } from "@/lib/fonts";
+import { getParticipantNames } from "@/utils/getParticipantNames";
+import ImageShimmer from "@/components/image.shimmer";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 interface Props {
   state: useAruna["state"];
@@ -35,25 +30,30 @@ const GalleryComponent: FC<Props> = (props) => {
       ? props.state.client.videos
       : [];
 
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  console.log(videos);
 
-  const getCols = () => {
-    if (isDesktop) return 3;
-    if (isTablet) return 2;
-    if (isMobile) return 2;
-  };
+  const gridImages = images.slice(0, 6);
+  const slideImages = images.slice(6);
 
-  const getGap = () => {
-    if (isDesktop) return 8;
-    if (isTablet) return 8;
-    if (isMobile) return 8;
+  const gridSpan = (index: number) => {
+    switch (index) {
+      case 0:
+        return "col-span-2 row-span-2 aspect-square";
+      case 1:
+        return "col-span-2 row-span-4";
+      case 2:
+        return "col-span-1 row-span-1 aspect-square";
+      case 3:
+        return "col-span-1 row-span-1 aspect-square";
+      case 4:
+        return "col-span-1 row-span-1 aspect-square";
+      case 5:
+        return "col-span-1 row-span-1 aspect-square";
+    }
   };
 
   return (
-    <section className="relative bg-gradient-to-b from-white via-white via-[60%] to-nirvaya-dark/70 to-[85%] overflow-hidden">
+    <section className="relative bg-aruna-dark overflow-hidden">
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .8)" } }}
         close={() => setOpen(false)}
@@ -67,99 +67,89 @@ const GalleryComponent: FC<Props> = (props) => {
         }}
       />
 
-      <div
-        data-aos="fade-up"
-        className="w-full h-full relative z-20 py-[60px] md:py-[100px]"
-      >
-        <h1
+      <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
+        <h2
           data-aos="fade-up"
-          className={`${italiana.className} text-4xl md:text-5xl text-center text-nirvaya-dark px-8`}
+          className="font-high-summit text-4xl md:text-5xl text-white text-center whitespace-nowrap"
         >
-          Momen Bahagia
-        </h1>
+          Galeri Kami
+        </h2>
         <p
           data-aos="fade-up"
-          data-aos-delay="100"
-          className={`${balthazar.className} text-sm md:text-base text-nirvaya-dark/80 px-8 mt-1 mb-8 md:mb-12 text-center max-w-screen-sm mx-auto`}
+          className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm my-8`}
         >
-          Foto {videos.length > 0 && "& Video "} dari Klien{" "}
-          {props.state.groom?.nickname} & {props.state.bride?.nickname}
+          Setiap langkah adalah kebahagiaan, setiap senyum adalah kenangan. Di
+          sini, kami mengabadikan momen cinta dan janji yang akan dikenang
+          selamanya.
         </p>
-        {videos.length > 0 && (
-          <div className="grid gap-4 mb-2 px-2" data-aos="zoom-in-up">
-            {videos
-              .filter((v) => isYoutubeVideo(v))
-              .map((v) => {
-                const youtubeId = getYouTubeVideoId(v);
-                return (
-                  <div
-                    key={youtubeId}
-                    className="relative w-full aspect-video rounded overflow-hidden"
-                  >
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full"
-                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
-                      title={v}
-                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                );
-              })}
-          </div>
-        )}
-        <div className="mx-auto flex flex-col gap-4 px-2" data-aos="zoom-in-up">
-          <ImageList
-            variant="masonry"
-            cols={getCols()}
-            gap={getGap()}
-            className="overflow-hidden"
-          >
-            {images.map((img, index) => (
-              <ImageListItem key={img}>
-                <div className="w-full h-full overflow-hidden rounded">
-                  <Image
-                    onClick={() => {
-                      setOpen(() => true);
-                      setImageIndex(() => index);
-                    }}
-                    className="hover:scale-110 transition-transform ease-in-out duration-500"
-                    src={img}
-                    alt={`gallery-img-${index + 1}`}
-                    width={360}
-                    height={360}
-                    layout="responsive"
-                    objectFit="cover"
-                    priority
-                  />
-                </div>
-              </ImageListItem>
-            ))}
-          </ImageList>
-        </div>
-
-        <div
+        <p
           data-aos="fade-up"
-          className="px-8 mt-[60px] md:mt-[100px] max-w-lg mx-auto"
+          className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
         >
-          <h1
-            className={` ${dm.className} text-white text-5xl h-10 text-center`}
-          >
-            &rdquo;
-          </h1>
-          <p
-            className={`${balthazar.className} text-white text-base md:text-lg text-center`}
-          >
-            Cinta sejati dimulai ketika satu orang menerima semua kekurangan
-            orang lain, dan tetap memilih untuk bersama.
-          </p>
-          <div className="flex items-center justify-center gap-x-2 mt-4 md:mt-6">
-            <div className="h-[0.5px] w-4 bg-white"></div>
-            <p
-              className={`${balthazar.className} text-white text-base md:text-lg`}
+          {getParticipantNames(props.state.client?.participants || [])}
+        </p>
+        <div
+          className="mt-10 grid grid-cols-4 grid-rows-7 gap-2"
+          data-aos="zoom-out-up"
+        >
+          {gridImages.length >= 6 &&
+            gridImages.map((img, index) => (
+              <div
+                key={`gallery-${index + 1}`}
+                onClick={() => {
+                  setOpen(() => true);
+                  setImageIndex(() => index);
+                }}
+                className={`${gridSpan(index)} w-full relative overflow-hidden`}
+              >
+                <ImageShimmer
+                  quality={100}
+                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                  priority
+                  src={img}
+                  fill
+                  alt={`gallery-${index + 1}`}
+                  className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
+                />
+              </div>
+            ))}
+          <div className="col-span-4 row-span-3 w-full">
+            <Swiper
+              loop
+              autoplay={{
+                delay: 4000,
+              }}
+              speed={2000}
+              spaceBetween={8}
+              modules={[Autoplay]}
+              className="w-full h-full"
             >
-              Fred Rogers
-            </p>
+              {slideImages.length > 0 &&
+                slideImages.map((image, index) => (
+                  <SwiperSlide
+                    key={`gallery-${index + 6}`}
+                    className="relative flex justify-center items-center h-full"
+                  >
+                    <div
+                      onClick={() => {
+                        setOpen(() => true);
+                        setImageIndex(() => index + 6);
+                      }}
+                      className="relative h-full w-full"
+                    >
+                      <ImageShimmer
+                        priority
+                        quality={100}
+                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+                        src={image}
+                        alt={`galeri-${index + 6}`}
+                        fill
+                        className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+            </Swiper>
           </div>
         </div>
       </div>

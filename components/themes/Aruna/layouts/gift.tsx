@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
-import { afacad, balthazar, italiana } from "@/lib/fonts";
+import { afacad, balthazar } from "@/lib/fonts";
 import { BiChevronRightCircle, BiCopy } from "react-icons/bi";
 import Image from "next/image";
 import Button from "../elements/button";
@@ -21,7 +21,7 @@ const GiftComponent: FC<Props> = (props) => {
       <section className="relative bg-nirvaya-dark-dark overflow-hidden px-8 py-[60px] md:py-[100px] bg-nirvaya-dark">
         <h1
           data-aos="fade-up"
-          className={`${italiana.className} text-4xl md:text-5xl text-center text-white`}
+          className={`font-high-summit text-4xl md:text-5xl text-center text-white`}
         >
           Kado Digital
         </h1>

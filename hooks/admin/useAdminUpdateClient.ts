@@ -1013,6 +1013,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     }
   };
 
+  console.log({ formData });
+
   return {
     state: {
       formData,

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { lora } from "@/lib/fonts";
+import { roboto } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { BiEnvelopeOpen } from "react-icons/bi";
@@ -35,20 +35,13 @@ const Cover: FC<Props> = (props) => {
         >
           <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
             <div>
-              <p
-                data-aos="fade-up"
-                data-aos-delay="200"
-                className={`${lora.className} text-white/80 md:text-base text-sm mb-2 tracking-[4px] uppercase`}
-              >
-                Undangan {props.state.client?.theme_category?.name}
-              </p>
               <h1
-                style={{ lineHeight: "normal" }}
                 data-aos="fade-up"
                 data-aos-delay="400"
-                className={`font-tan-pearl text-white text-3xl md:text-4xl 2xl:text-5xl`}
+                className={`font-high-summit text-white text-5xl md:text-6xl leading-10 2xl:text-7xl`}
               >
-                {props.state.groom?.nickname} & {props.state.bride?.nickname}
+                {props.state.groom?.nickname}
+                <br />& {props.state.bride?.nickname}
               </h1>
             </div>
             <div
@@ -59,12 +52,12 @@ const Cover: FC<Props> = (props) => {
             <div>
               <div data-aos="fade-down" data-aos-delay="800">
                 <p
-                  className={`${lora.className} text-white text-sm md:text-base`}
+                  className={`${roboto.className} text-white text-[10px] md:text-xs uppercase tracking-[2px] mb-1`}
                 >
                   Yth. Bapak/Ibu/Saudara/i
                 </p>
                 <p
-                  className={`${lora.className} text-white text-2xl md:text-3xl`}
+                  className={`${roboto.className} text-white text-2xl md:text-3xl`}
                 >
                   {props.untuk}
                 </p>

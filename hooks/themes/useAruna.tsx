@@ -45,7 +45,9 @@ export interface useAruna {
     errors: Record<string, string | undefined>;
     timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
-    url: string;
+    page: number;
+    limit: number;
+    totalRows: number;
   };
   actions: {
     handleOpenCover: () => void;
@@ -56,6 +58,10 @@ export interface useAruna {
     handleAddToCalendar: (event: Event) => void;
     setIsPlaying: (isPlaying: boolean) => void;
     setIsGiftShown: (isGiftShown: boolean) => void;
+    handleChangePagination: (
+      event: React.ChangeEvent<unknown>,
+      value: number
+    ) => void;
   };
 }
 
@@ -70,6 +76,7 @@ const useAruna = (client: Client | null): useAruna => {
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<Countdown>({
     days: 0,
     hours: 0,
@@ -77,11 +84,8 @@ const useAruna = (client: Client | null): useAruna => {
     seconds: 0,
   });
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
-  const [page] = useState<number>(1);
-  const [limit] = useState<number>(10);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
     client?.events
       ? client?.events.map(() => ({
@@ -92,16 +96,6 @@ const useAruna = (client: Client | null): useAruna => {
         }))
       : []
   );
-
-  const [url, setUrl] = useState<string>("");
-
-  useEffect(() => {
-    setUrl(
-      `${window.location.hostname}${
-        window.location.port ? `:${window.location.port}` : ""
-      }`
-    );
-  }, []);
 
   useEffect(() => {
     if (!client?.events) return;
@@ -142,13 +136,6 @@ const useAruna = (client: Client | null): useAruna => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const { data, mutate } = useSWR(
-    client?.id
-      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
-      : null,
-    fetcher
-  );
-
   const wisheschema = z.object({
     name: z
       .string()
@@ -159,8 +146,6 @@ const useAruna = (client: Client | null): useAruna => {
       .min(1, "Kolom ucapan tidak boleh kosong")
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
-
-  const wishes: Review[] = data?.data ?? [];
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -176,9 +161,9 @@ const useAruna = (client: Client | null): useAruna => {
     const payload = { client_id: Number(client?.id), ...formData };
 
     setLoading(true);
-    const toastSubmit = toast.loading("Memberikan ucapan...");
     try {
       wisheschema.parse(formData);
+      const toastSubmit = toast.loading("Memberikan ucapan...");
       const response = await getClient(`/api/_pb/_w`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -198,7 +183,7 @@ const useAruna = (client: Client | null): useAruna => {
         toast.success("Berhasil. Terima kasih atas ucapannya!", {
           id: toastSubmit,
           icon: (
-            <div className="p-1 rounded-full bg-nirvaya-dark text-white">
+            <div className="p-1 text-sm bg-aruna-dark text-white">
               <BiCheck />
             </div>
           ),
@@ -310,7 +295,7 @@ const useAruna = (client: Client | null): useAruna => {
       .then(() => {
         toast.success("Berhasil disalin.", {
           icon: (
-            <div className="p-1 rounded-full bg-nirvaya-dark text-white">
+            <div className="p-1 text-sm bg-aruna-dark text-white">
               <BiCheck />
             </div>
           ),
@@ -351,12 +336,37 @@ const useAruna = (client: Client | null): useAruna => {
     window.open(googleCalendarUrl, "_blank");
   };
 
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
+
+  const [limit] = useState<number>(4);
+  const [page, setPage] = useState(1);
+  const [wishes, setWishes] = useState<Review[]>([]);
+  const [totalRows, setTotalRows] = useState<number>(0);
+
+  const { data: fetchedWishes, mutate } = useSWR(
+    client?.id
+      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
+      : null,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (fetchedWishes && fetchedWishes.data.length > 0) {
+      setWishes(fetchedWishes.data);
+      setTotalRows(fetchedWishes?.total_rows);
+    }
+  }, [fetchedWishes]);
+
   return {
     refs: {
       audioRef,
     },
     state: {
-      url,
       loading,
       open,
       countdown,
@@ -369,6 +379,9 @@ const useAruna = (client: Client | null): useAruna => {
       isPlaying,
       timeRemainings,
       isGiftShown,
+      page,
+      limit,
+      totalRows,
     },
     actions: {
       handleOpenCover,
@@ -379,6 +392,7 @@ const useAruna = (client: Client | null): useAruna => {
       handleAddToCalendar,
       setIsPlaying,
       setIsGiftShown,
+      handleChangePagination,
     },
   };
 };
