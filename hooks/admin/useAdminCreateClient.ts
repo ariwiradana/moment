@@ -5,7 +5,6 @@ import { getClient } from "@/lib/client";
 import {
   Client,
   Event,
-  LoveJourney,
   Option,
   Package,
   Participant,
@@ -46,11 +45,6 @@ const initialEvent: Event = {
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
 
-const initialJourney: LoveJourney = {
-  title: "",
-  description: "",
-  date: moment().format("YYYY-MM-DD"),
-};
 
 const initalFormData: Client & { coverVideo: FileList | null } = {
   name: "",
@@ -66,7 +60,6 @@ const initalFormData: Client & { coverVideo: FileList | null } = {
   status: "unpaid",
   participants: [initialParticipant],
   events: [initialEvent],
-  journey: [],
   gallery: [],
   videos: [],
   cover: null,
@@ -490,12 +483,7 @@ export const useAdminCreateClient = (token: string | null) => {
       events: [...formData.events, initialEvent],
     }));
   };
-  const handleAddAnotherJourney = () => {
-    setFormData((state) => ({
-      ...state,
-      journey: [...(formData.journey ?? []), initialJourney],
-    }));
-  };
+  
 
   const handleChangeParticipant = (
     value: string | number | FileList,
@@ -530,20 +518,6 @@ export const useAdminCreateClient = (token: string | null) => {
     setFormData({
       ...formData,
       events: currentEvents,
-    });
-  };
-
-  const handleChangeJourney = (value: string, name: string, index: number) => {
-    let currentEvents: LoveJourney[] = [...(formData.journey ?? [])];
-
-    currentEvents[index] = {
-      ...currentEvents[index],
-      [name]: value,
-    };
-
-    setFormData({
-      ...formData,
-      journey: currentEvents,
     });
   };
 
@@ -636,9 +610,7 @@ export const useAdminCreateClient = (token: string | null) => {
       handleChangeParticipant,
       handletoggleEndTime,
       handleAddAnotherEvent,
-      handleAddAnotherJourney,
       handleChangeEvent,
-      handleChangeJourney,
     },
   };
 };

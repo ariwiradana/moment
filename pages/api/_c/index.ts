@@ -1,4 +1,4 @@
-import { ApiHandler, LoveJourney, ThemeCategory } from "./../../../lib/types";
+import { ApiHandler, ThemeCategory } from "./../../../lib/types";
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 import {
@@ -126,17 +126,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           [clientIds]
         );
 
-        const { rows: journey } = await sql.query(
-          `
-            SELECT j.*
-            FROM journey j
-            JOIN clients c ON j.client_id = c.id
-            WHERE c.id = ANY($1::int[])
-            ORDER BY j.updated_at::time ASC
-        `,
-          [clientIds]
-        );
-
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
         const { rows: wishes } = await sql.query(`SELECT * FROM wishes`);
         const { rows: packages } = await sql.query(`SELECT * FROM packages`);
@@ -149,9 +138,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             (p) => p.client_id === client.id
           );
           const clientEvents = events.filter((e) => e.client_id === client.id);
-          const clientJourney = journey.filter(
-            (j) => j.client_id === client.id
-          );
           const clientTheme: Theme[] = themes.find(
             (th) => th.id === client.theme_id
           );
@@ -168,7 +154,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             ...client,
             participants: clientParticipants,
             events: clientEvents,
-            journey: clientJourney,
             theme: clientTheme,
             wishes: clientwishes,
             package: clientPackages,
@@ -353,23 +338,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           });
           await Promise.all(eventPromises);
 
-          const journeys: LoveJourney[] = client.journey;
-          const journeyPromises = journeys.map(async (j: LoveJourney) => {
-            const addJourneyQuery = `
-                  INSERT INTO journey (client_id, title, date, description)
-                  VALUES ($1, $2, $3, $4)
-                  RETURNING *;
-                `;
-
-            await sql.query(addJourneyQuery, [
-              clientId,
-              j.title,
-              j.date,
-              j.description,
-            ]);
-          });
-          await Promise.all(journeyPromises);
-
           const newClient = resultClient.rows[0];
 
           newClient["participants"] = participants.map((participant) => ({
@@ -379,11 +347,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
           newClient["events"] = events.map((event) => ({
             ...event,
-            client_id: clientId,
-          }));
-
-          newClient["journey"] = journeys.map((journey) => ({
-            ...journey,
             client_id: clientId,
           }));
 
@@ -500,25 +463,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           await Promise.all(newEventPromises);
         }
 
-        const newJourney = client.journey?.filter((e) => !e.id);
-        if (newJourney.length > 0) {
-          const newJourneyPromises = newJourney.map(async (j: LoveJourney) => {
-            const updateNewJourneyQuery = `
-              INSERT INTO journey (client_id, title, date, description)
-              VALUES ($1, $2, $3, $4)
-              RETURNING *;
-            `;
-
-            await sql.query(updateNewJourneyQuery, [
-              Number(id),
-              j.title,
-              j.date,
-              j.description,
-            ]);
-          });
-          await Promise.all(newJourneyPromises);
-        }
-
         const currentParticipants = client.participants.filter((p) => p.id);
         if (currentParticipants.length > 0) {
           const participantPromises = currentParticipants.map(
@@ -595,31 +539,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             ]);
           });
           await Promise.all(eventPromises);
-        }
-
-        const currentJourney = client.journey.filter((j) => j.id);
-        if (currentJourney.length > 0) {
-          const journeyPromises = currentJourney.map(async (j: LoveJourney) => {
-            const updateJourneyQuery = `
-              UPDATE journey
-              SET
-                client_id = $1,
-                title = $2,
-                date = $3,
-                description = $4
-              WHERE id = $5
-              RETURNING *;
-            `;
-
-            await sql.query(updateJourneyQuery, [
-              j.client_id,
-              j.title,
-              j.date,
-              j.description,
-              j.id,
-            ]);
-          });
-          await Promise.all(journeyPromises);
         }
 
         return response.status(200).json({

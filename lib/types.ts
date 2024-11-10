@@ -67,7 +67,6 @@ export interface Client {
   slug?: string;
   events: Event[];
   participants: Participant[];
-  journey: LoveJourney[] | [];
   gallery?: string[] | FileList | [];
   videos?: string[] | FileList | [];
   music?: string | File | null;
@@ -79,7 +78,6 @@ export interface Client {
   theme_category?: Package;
   theme?: Theme | null;
   cover: null | string;
-  journey_image?: null | string;
   is_preview?: boolean;
   created_at?: Date | string;
   updated_at?: Date | string;
@@ -95,15 +93,6 @@ export interface Review {
   updated_at?: Date | string;
 }
 
-export interface LoveJourney {
-  id?: number;
-  client_id?: number;
-  date: string;
-  title: string;
-  description: string;
-  created_at?: Date | string;
-  updated_at?: Date | string;
-}
 
 export interface Package {
   id: number;
@@ -121,7 +110,6 @@ export interface Package {
   digital_envelope: boolean;
   google_maps_integration: boolean;
   add_to_calendar: boolean;
-  love_journey: boolean;
   price: number;
   created_at: string;
   updated_at: string;

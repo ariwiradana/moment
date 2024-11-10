@@ -33,11 +33,7 @@ const HeroComponent: FC<Props> = (props) => {
   const gallery: string[] = (props.state.client?.gallery as string[]) || [];
   const images: string[] = [
     ...(props.state.client?.cover ? [props.state.client.cover] : []),
-    ...(gallery?.filter(
-      (g) =>
-        g !== props.state.client?.cover &&
-        g !== props.state.client?.journey_image
-    ) || []),
+    ...(gallery?.filter((g) => g !== props.state.client?.cover) || []),
   ];
 
   return (

@@ -123,13 +123,7 @@ const PackageComponent = () => {
                   >
                     Lokasi terintegrasi dengan Google Maps
                   </li>
-                  <li
-                    className={`list-disc ${
-                      !p.love_journey && "line-through text-gray-300"
-                    }`}
-                  >
-                    Cerita Perjalanan Kisah Cinta
-                  </li>
+                  
                   <li
                     className={`list-disc ${
                       !p.add_to_calendar && "line-through text-gray-300"

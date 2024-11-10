@@ -7,6 +7,8 @@ import { getParticipantNames } from "@/utils/getParticipantNames";
 import ImageShimmer from "@/components/image.shimmer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { getYouTubeVideoId } from "@/utils/getYoutubeId";
+import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 
 interface Props {
   state: useAruna["state"];
@@ -54,6 +56,29 @@ const GalleryComponent: FC<Props> = (props) => {
 
   return (
     <section className="relative bg-aruna-dark overflow-hidden">
+      {videos.length > 0 && (
+        <div className="grid gap-2">
+          {videos.map((v) => {
+            const youtubeId = getYouTubeVideoId(v);
+            const youtubeVideo = isYoutubeVideo(v);
+            if (youtubeVideo)
+              return (
+                <div
+                  key={youtubeId}
+                  className="relative w-full aspect-video overflow-hidden"
+                >
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
+                    title={v}
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              );
+          })}
+        </div>
+      )}
       <Lightbox
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .8)" } }}
         close={() => setOpen(false)}
@@ -89,7 +114,7 @@ const GalleryComponent: FC<Props> = (props) => {
           {getParticipantNames(props.state.client?.participants || [])}
         </p>
         <div
-          className="mt-10 grid grid-cols-4 grid-rows-7 gap-2"
+          className="mt-10 grid grid-cols-4 grid-rows-6 gap-2"
           data-aos="zoom-out-up"
         >
           {gridImages.length >= 6 &&
@@ -113,7 +138,7 @@ const GalleryComponent: FC<Props> = (props) => {
                 />
               </div>
             ))}
-          <div className="col-span-4 row-span-3 w-full">
+          <div className="col-span-4 row-span-2 w-full">
             <Swiper
               loop
               autoplay={{

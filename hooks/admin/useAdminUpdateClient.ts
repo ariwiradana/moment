@@ -4,7 +4,6 @@ import { getClient } from "@/lib/client";
 import {
   Client,
   Event,
-  LoveJourney,
   Option,
   Package,
   Participant,
@@ -41,11 +40,6 @@ const initialEvent: Event = {
   start_time: moment("06:00", "HH:mm").format("HH:mm"),
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
-const initialJourney: LoveJourney = {
-  title: "",
-  date: moment().format("YYYY-MM-DD"),
-  description: "",
-};
 
 const initalFormData: Client = {
   id: undefined,
@@ -53,11 +47,9 @@ const initalFormData: Client = {
   theme_id: null,
   package_id: null,
   events: [initialEvent],
-  journey: [initialJourney],
   participants: [initialParticipants],
   gallery: [],
   cover: null,
-  journey_image: null,
   videos: [],
   music: null,
   opening_title: "",
@@ -208,14 +200,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         end_time: e.end_time,
       }));
 
-      const currentJourney: LoveJourney[] = currentClient.journey.map((e) => ({
-        id: e.id,
-        client_id: currentClient.id,
-        title: e.title,
-        date: e.date,
-        description: e.description,
-      }));
-
       setParticipantImagesForm(
         new Array(currentParticipants.length).fill(null)
       );
@@ -235,10 +219,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         gallery: currentClient.gallery,
         videos: currentClient.videos,
         cover: currentClient.cover,
-        journey_image: currentClient.journey_image,
         participants: currentParticipants,
         events: currentEvents,
-        journey: currentJourney,
         music: currentClient.music,
         package_id: currentClient.package_id,
         opening_title: currentClient.opening_title,
@@ -332,13 +314,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     }));
   };
 
-  const handleAddAnotherJourney = () => {
-    setFormData((state) => ({
-      ...state,
-      journey: [...(formData.journey ?? []), initialJourney],
-    }));
-  };
-
   const handleChangeParticipant = (
     value: string | number | FileList,
     name: string,
@@ -379,20 +354,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     setFormData({
       ...formData,
       events: currentEvents,
-    });
-  };
-
-  const handleChangeJourney = (value: string, name: string, index: number) => {
-    let currentEvents: LoveJourney[] = [...(formData.journey ?? [])];
-
-    currentEvents[index] = {
-      ...currentEvents[index],
-      [name]: value,
-    };
-
-    setFormData({
-      ...formData,
-      journey: currentEvents,
     });
   };
 
@@ -776,36 +737,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     });
   };
 
-  const handleSetJourneyImage = async (url: string, id: number) => {
-    const setJourneyImage = async () => {
-      const response = await getClient(
-        `/api/_c/_sji`,
-        {
-          method: "POST",
-          body: JSON.stringify({ url, id }),
-        },
-        token
-      );
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message);
-      }
-      return await response.json();
-    };
-    toast.promise(setJourneyImage(), {
-      loading: "Set journey image...",
-      success: () => {
-        mutate();
-        setLoading(false);
-        return "Successfully set journey image";
-      },
-      error: (error: any) => {
-        setLoading(false);
-        return error.message || "Failed to set journey image";
-      },
-    });
-  };
-
   const handleDeleteVideo = (url: string, id: number) => {
     try {
       setLoading(true);
@@ -929,43 +860,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     }
   };
 
-  const handleDeleteJourney = (id: number) => {
-    try {
-      setLoading(true);
-
-      const deleteJourney = async () => {
-        const response = await getClient(
-          `/api/_j?id=${encodeURIComponent(id)}`,
-          {
-            method: "DELETE",
-          },
-          token
-        );
-        if (!response.ok) {
-          const errorResult = await response.json();
-          throw new Error(errorResult.message);
-        }
-        return await response.json();
-      };
-
-      toast.promise(deleteJourney(), {
-        loading: "Deleting journey...",
-        success: () => {
-          mutate();
-          setLoading(false);
-          return "Successfully delete journey";
-        },
-        error: (error: any) => {
-          setLoading(false);
-          return error.message || "Failed to delete journey";
-        },
-      });
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleDeleteParticipant = (
     id: number,
     imageURL?: string | undefined
@@ -1044,12 +938,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       handleDeleteMusic,
       handleAddAnotherEvent,
       handleChangeEvent,
-      handleChangeJourney,
       handleDeleteEvent,
       handleDeleteParticipant,
-      handleAddAnotherJourney,
-      handleDeleteJourney,
-      handleSetJourneyImage,
     },
   };
 };

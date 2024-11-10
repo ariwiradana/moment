@@ -63,12 +63,12 @@ const GiftComponent: FC<Props> = (props) => {
             className="flex justify-center relative z-20 px-8 pt-4"
           >
             <div
-              className={`w-full max-w-sm aspect-[2/1.2] p-6 flex flex-col justify-between rounded-2xl bg-gradient-to-tl from-white via-[#CCCCCC] to-[#999999]`}
+              className={`w-full max-w-sm aspect-[2/1.2] p-6 flex flex-col justify-between rounded-2xl bg-white`}
             >
               <div className="flex justify-between">
                 <Image
-                  height={32}
-                  width={43}
+                  height={0}
+                  width={46}
                   alt="bank-chip"
                   src="/images/aruna/bank-chip.png"
                 />

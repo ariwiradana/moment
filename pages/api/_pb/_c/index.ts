@@ -90,17 +90,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           [clientIds]
         );
 
-        const { rows: journey } = await sql.query(
-          `
-            SELECT j.*
-            FROM journey j
-            JOIN clients c ON j.client_id = c.id
-            WHERE c.id = ANY($1::int[])
-            ORDER BY j.date ASC
-        `,
-          [clientIds]
-        );
-
         const { rows: themes } = await sql.query(`SELECT * FROM themes`);
         const { rows: wishes } = await sql.query(`SELECT * FROM wishes`);
         const { rows: packages } = await sql.query(`SELECT * FROM packages`);
@@ -113,9 +102,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             (p) => p.client_id === client.id
           );
           const clientEvents = events.filter((e) => e.client_id === client.id);
-          const clientJourney = journey.filter(
-            (j) => j.client_id === client.id
-          );
           const clientTheme: Theme[] = themes.find(
             (t) => t.id === client.theme_id
           );
@@ -132,7 +118,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             ...client,
             participants: clientParticipants,
             events: clientEvents,
-            journey: clientJourney,
             theme: clientTheme,
             wishes: clientwishes,
             package: clientPackages,

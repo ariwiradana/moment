@@ -18,7 +18,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
   if (events.length > 0) {
     return (
       <section className="relative overflow-hidden z-0">
-        <div className="absolute bg-nirvaya-dark/70 inset-0"></div>
+        <div className="absolute bg-gradient-to-b from-aruna-dark/40 via-aruna-dark/70 to-aruna-dark to-[90%] inset-0"></div>
         <div className="flex flex-col z-10 items-center justify-center px-8 py-[60px] md:p-[100px] max-w-screen-xl mx-auto">
           <div
             className={`flex flex-wrap justify-center gap-[60px] relative z-20`}
