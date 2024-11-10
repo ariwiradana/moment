@@ -23,7 +23,7 @@ const Button: FC<Props> = ({
       {...props}
       className={`${roboto.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} bg-white text-aruna-dark hover:bg-white/70 rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
+      } ${className} bg-white text-aruna-dark hover:bg-white/90 rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-3 md:gap-x-5 relative overflow-hidden shadow-sm`}
     >

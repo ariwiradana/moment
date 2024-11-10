@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { balthazar, italiana } from "@/lib/fonts";
+import { roboto } from "@/lib/fonts";
 import { useAruna } from "@/hooks/themes/useAruna";
 import Link from "next/link";
 import { sosmedURLs } from "@/constants/sosmed";
@@ -17,35 +17,35 @@ interface Props {
 const ThankyouComponent: FC<Props> = (props) => {
   return (
     <section className="relative flex flex-col justify-center bg-gradient-to-b from-nirvaya-dark via-[20%] via-nirvaya-dark/50 to-[80%] to-nirvaya-dark">
-      <div className="max-w-screen-sm mx-auto py-[60px] md:py-[100px] px-8 h-dvh flex flex-col justify-center">
+      <div className="max-w-screen-sm mx-auto py-[60px] h-full md:py-[100px] px-8 flex flex-col justify-center">
         <h1
           data-aos="fade-up"
-          className={`${italiana.className} text-4xl md:text-5xl text-center text-white`}
+          className={`font-high-summit text-4xl md:text-5xl text-white mb-8 text-center`}
         >
           {props.state.client?.closing_title}
         </h1>
         <p
           data-aos="fade-up"
-          className={`${balthazar.className} mt-8 md:mt-12 text-sm md:text-base text-white text-center max-w-screen-sm mx-auto`}
+          className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm my-8`}
         >
           {props.state.client?.closing_description}
         </p>
 
         <p
           data-aos="fade-up"
-          className={`${balthazar.className} text-white md:text-base text-sm mt-12 md:mt-16 uppercase text-center`}
+          className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
         >
           Kami Yang Berbahagia
         </p>
         <h1
           data-aos="fade-up"
-          className={`${italiana.className} text-white text-center text-[40px] md:text-5xl`}
+          className={`font-high-summit text-white text-center text-[40px] md:text-5xl mt-4`}
         >
           {props.state.groom?.nickname} & {props.state.bride?.nickname}
         </h1>
         <ul
           data-aos="zoom-in-up"
-          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-[100px]"
+          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-[100px] justify-self-end"
         >
           <li
             className={`flex items-center justify-center gap-2 text-base text-white mt-2`}
@@ -82,7 +82,7 @@ const ThankyouComponent: FC<Props> = (props) => {
           <li className="mt-2">
             <Link href="/" target="_blank">
               <p
-                className={`${balthazar.className} text-center text-white text-xs md:text-sm`}
+                className={`${roboto.className} text-center uppercase text-white/60 text-[8px] md:text-[10px] tracking-[2px]`}
               >
                 Undangan Digital © 2024 | Moment Invitation
               </p>

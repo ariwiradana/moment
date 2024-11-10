@@ -63,7 +63,7 @@ export interface Client {
   closing_description: string;
   gift_bank_name: string;
   gift_account_name: string;
-  gift_account_number: string;
+  gift_account_number: string | number;
   slug?: string;
   events: Event[];
   participants: Participant[];

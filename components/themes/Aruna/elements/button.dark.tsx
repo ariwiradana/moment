@@ -23,7 +23,7 @@ const ButtonDark: FC<Props> = ({
       {...props}
       className={`${roboto.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} bg-aruna-dark text-white hover:bg-aruna-dark/80 rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
+      } ${className} bg-aruna-dark text-white hover:bg-aruna-dark/90 rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-3 md:gap-x-5 relative overflow-hidden shadow-sm`}
     >
