@@ -30,7 +30,6 @@ const initialParticipants: Participant = {
   instagram: null,
   twitter: null,
   tiktok: null,
-  updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
 };
 
 const initialEvent: Event = {
@@ -179,7 +178,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           twitter: p.twitter,
           instagram: p.instagram,
           tiktok: p.tiktok,
-          updated_at: p.updated_at,
         })
       );
 
@@ -340,7 +338,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       currentParticipants[index] = {
         ...currentParticipants[index],
         client_id: client?.data[0].id,
-        updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
         [name]: value,
       };
 

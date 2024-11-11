@@ -110,7 +110,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             FROM participants p
             JOIN clients c ON p.client_id = c.id
             WHERE c.id = ANY($1::int[])
-            ORDER BY p.updated_at DESC
+            ORDER BY p.id ASC
         `,
           [clientIds]
         );
@@ -484,9 +484,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 facebook = $11,
                 twitter = $12,
                 instagram = $13,
-                tiktok = $14,
-                updated_at = $15
-              WHERE id = $16
+                tiktok = $14
+              WHERE id = $15
               RETURNING *;
             `;
 
@@ -505,7 +504,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 p.twitter,
                 p.instagram,
                 p.tiktok,
-                p.updated_at,
                 p.id,
               ]);
             }
