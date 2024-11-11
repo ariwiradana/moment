@@ -74,7 +74,7 @@ const Aruna: FC<Props> = (props) => {
               </div>
             </div>
             <div
-              className={`relative xl:max-w-[40vw] 2xl:max-w-[30vw] ml-auto`}
+              className={`relative w-full xl:max-w-[40vw] 2xl:max-w-[30vw] ml-auto`}
             >
               <HeroComponent state={state} />
               <ParticipantsComponent state={state} />

@@ -36,19 +36,18 @@ const ParticipantsComponent: FC<Props> = (props) => {
 
       <div className="bg-white relative overflow-hidden grid gap-[60px] mt-[72px]">
         <>
-          {props.state.bride && (
-            <ParticipantComponent
-              role="mempelai"
-              data={props.state?.bride as Participant}
-            />
-          )}
           {props.state.groom && (
             <ParticipantComponent
               role="mempelai"
               data={props.state?.groom as Participant}
             />
           )}
-
+          {props.state.bride && (
+            <ParticipantComponent
+              role="mempelai"
+              data={props.state?.bride as Participant}
+            />
+          )}
           {client?.participants
             .filter(
               (participant) =>
