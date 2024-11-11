@@ -15,6 +15,7 @@ import useAruna from "@/hooks/themes/useAruna";
 import Image from "next/image";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
+import { getEventNames } from "@/utils/getEventNames";
 interface Props {
   untuk: string;
   client: Client;
@@ -44,7 +45,7 @@ const Aruna: FC<Props> = (props) => {
                     data-aos-delay="600"
                     className={`${roboto.className} text-white/80 md:text-xs text-[10px] tracking-[4px] mb-3 uppercase`}
                   >
-                    Undangan {state.client?.theme_category?.name}
+                    Undangan {getEventNames(state.client?.events || [])}
                   </p>
                   <h1
                     data-aos="fade-up"

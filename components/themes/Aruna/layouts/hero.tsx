@@ -2,7 +2,6 @@ import ImageShimmer from "@/components/image.shimmer";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { roboto } from "@/lib/fonts";
 import { getEventNames } from "@/utils/getEventNames";
-import { getParticipantNames } from "@/utils/getParticipantNames";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
@@ -121,9 +120,7 @@ const HeroComponent: FC<Props> = (props) => {
                   </>
                 ) : (
                   <>
-                    {getParticipantNames(
-                      props.state.client?.participants || []
-                    )}
+                    Undangan {getEventNames(props.state.client?.events || [])}
                   </>
                 )}
               </h1>

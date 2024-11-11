@@ -4,6 +4,7 @@ import Button from "../elements/button";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import Image from "next/image";
+import { getEventNames } from "@/utils/getEventNames";
 
 interface Props {
   state: useAruna["state"];
@@ -52,7 +53,7 @@ const Cover: FC<Props> = (props) => {
                   <>
                     Undangan
                     <br />
-                    {props.state.client?.theme_category?.name}
+                    {getEventNames(props.state.client?.events || [])}
                   </>
                 )}
               </h1>
