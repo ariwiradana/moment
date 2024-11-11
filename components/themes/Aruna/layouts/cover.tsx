@@ -23,6 +23,7 @@ const Cover: FC<Props> = (props) => {
       >
         {props.state.client?.cover && (
           <ImageShimmer
+            priority
             sizes="100vw"
             src={props.state.client?.cover as string}
             fill
