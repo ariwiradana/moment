@@ -23,6 +23,7 @@ const Cover: FC<Props> = (props) => {
       >
         {props.state.client?.cover && (
           <Image
+            quality={100}
             priority
             sizes="100vw"
             src={props.state.client?.cover as string}

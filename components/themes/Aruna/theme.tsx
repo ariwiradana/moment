@@ -65,6 +65,9 @@ const Aruna: FC<Props> = (props) => {
                 </div>
                 {state.client?.cover && (
                   <Image
+                    priority
+                    quality={100}
+                    sizes="100vw"
                     src={state.client?.cover as string}
                     fill
                     className="object-cover"
