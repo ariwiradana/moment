@@ -1,0 +1,912 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.4
+-- Dumped by pg_dump version 16.4
+
+-- Started on 2024-11-11 19:42:13 WITA
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 224 (class 1259 OID 16528)
+-- Name: clients; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.clients (
+    id integer NOT NULL,
+    name character varying(255),
+    slug character varying(255),
+    cover character varying(255),
+    theme_id integer,
+    theme_category_id integer,
+    package_id integer,
+    gallery text[],
+    videos text[],
+    music character varying(255),
+    status character varying(20) DEFAULT 'unpaid'::character varying,
+    is_preview boolean DEFAULT false,
+    opening_title character varying(255),
+    opening_description text,
+    closing_title character varying(255),
+    closing_description text,
+    gift_bank_name character varying(100),
+    gift_account_name character varying(100),
+    gift_account_number character varying(100),
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT clients_status_check CHECK (((status)::text = ANY ((ARRAY['paid'::character varying, 'unpaid'::character varying, 'completed'::character varying])::text[])))
+);
+
+
+ALTER TABLE public.clients OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 16527)
+-- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.clients_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.clients_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3719 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.clients_id_seq OWNED BY public.clients.id;
+
+
+--
+-- TOC entry 226 (class 1259 OID 16559)
+-- Name: events; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.events (
+    id integer NOT NULL,
+    client_id integer,
+    name character varying(255),
+    date character varying(100),
+    start_time character varying(100),
+    end_time character varying(100),
+    address text,
+    address_url character varying(255),
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.events OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 16558)
+-- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.events_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.events_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3720 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.events_id_seq OWNED BY public.events.id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 16400)
+-- Name: packages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.packages (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    custom_opening_closing boolean DEFAULT true,
+    unlimited_revisions boolean NOT NULL,
+    unlimited_guest_names boolean NOT NULL,
+    max_events character varying(10),
+    max_gallery_photos character varying(10) NOT NULL,
+    contact_social_media boolean NOT NULL,
+    background_sound boolean NOT NULL,
+    max_videos character varying(10) NOT NULL,
+    rsvp_and_greetings boolean NOT NULL,
+    custom_cover boolean NOT NULL,
+    digital_envelope boolean NOT NULL,
+    google_maps_integration boolean NOT NULL,
+    add_to_calendar boolean NOT NULL,
+    price integer NOT NULL,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.packages OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 16399)
+-- Name: packages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.packages_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.packages_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3721 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: packages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.packages_id_seq OWNED BY public.packages.id;
+
+
+--
+-- TOC entry 228 (class 1259 OID 16591)
+-- Name: participants; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.participants (
+    id integer NOT NULL,
+    client_id integer,
+    name character varying(255),
+    nickname character varying(255),
+    address text,
+    child character varying(255),
+    parents_male character varying(255),
+    parents_female character varying(255),
+    image character varying(255),
+    gender character varying(20),
+    role character varying(20),
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    facebook character varying(255) DEFAULT NULL::character varying,
+    twitter character varying(255) DEFAULT NULL::character varying,
+    instagram character varying(255) DEFAULT NULL::character varying,
+    tiktok character varying(255) DEFAULT NULL::character varying,
+    CONSTRAINT participants_gender_check CHECK (((gender)::text = ANY ((ARRAY['male'::character varying, 'female'::character varying])::text[]))),
+    CONSTRAINT participants_role_check CHECK (((role)::text = ANY ((ARRAY['bride'::character varying, 'groom'::character varying, 'participant'::character varying])::text[])))
+);
+
+
+ALTER TABLE public.participants OWNER TO postgres;
+
+--
+-- TOC entry 227 (class 1259 OID 16590)
+-- Name: participants_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.participants_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.participants_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3722 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: participants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.participants_id_seq OWNED BY public.participants.id;
+
+
+--
+-- TOC entry 232 (class 1259 OID 16630)
+-- Name: testimonials; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.testimonials (
+    id integer NOT NULL,
+    client_id integer,
+    name character varying(255),
+    comments text,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.testimonials OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 16629)
+-- Name: testimonials_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.testimonials_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.testimonials_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3723 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: testimonials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.testimonials_id_seq OWNED BY public.testimonials.id;
+
+
+--
+-- TOC entry 222 (class 1259 OID 16519)
+-- Name: theme_categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.theme_categories (
+    id integer NOT NULL,
+    slug character varying(100) NOT NULL,
+    name character varying(100) NOT NULL,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.theme_categories OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 16518)
+-- Name: theme_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.theme_categories_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.theme_categories_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3724 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: theme_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.theme_categories_id_seq OWNED BY public.theme_categories.id;
+
+
+--
+-- TOC entry 218 (class 1259 OID 16411)
+-- Name: themes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.themes (
+    id integer NOT NULL,
+    slug character varying(255),
+    name character varying(255),
+    thumbnail character varying(255),
+    price integer,
+    package_ids integer[],
+    theme_category_ids integer[],
+    is_preview boolean DEFAULT true,
+    cover_video boolean DEFAULT false,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.themes OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16410)
+-- Name: themes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.themes_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.themes_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3725 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.themes_id_seq OWNED BY public.themes.id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 16509)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    username character varying(100),
+    password character varying(255),
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16508)
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3726 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- TOC entry 230 (class 1259 OID 16613)
+-- Name: wishes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.wishes (
+    id integer NOT NULL,
+    client_id integer,
+    name character varying(255),
+    attendant character varying(20),
+    wishes text,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT wishes_attendant_check CHECK (((attendant)::text = ANY ((ARRAY['Hadir'::character varying, 'Tidak Hadir'::character varying, 'Masih Ragu'::character varying])::text[])))
+);
+
+
+ALTER TABLE public.wishes OWNER TO postgres;
+
+--
+-- TOC entry 229 (class 1259 OID 16612)
+-- Name: wishes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.wishes_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.wishes_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3727 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: wishes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.wishes_id_seq OWNED BY public.wishes.id;
+
+
+--
+-- TOC entry 3497 (class 2604 OID 16531)
+-- Name: clients id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients ALTER COLUMN id SET DEFAULT nextval('public.clients_id_seq'::regclass);
+
+
+--
+-- TOC entry 3502 (class 2604 OID 16562)
+-- Name: events id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.events_id_seq'::regclass);
+
+
+--
+-- TOC entry 3483 (class 2604 OID 16403)
+-- Name: packages id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.packages ALTER COLUMN id SET DEFAULT nextval('public.packages_id_seq'::regclass);
+
+
+--
+-- TOC entry 3505 (class 2604 OID 16594)
+-- Name: participants id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.participants ALTER COLUMN id SET DEFAULT nextval('public.participants_id_seq'::regclass);
+
+
+--
+-- TOC entry 3515 (class 2604 OID 16633)
+-- Name: testimonials id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.testimonials ALTER COLUMN id SET DEFAULT nextval('public.testimonials_id_seq'::regclass);
+
+
+--
+-- TOC entry 3494 (class 2604 OID 16522)
+-- Name: theme_categories id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.theme_categories ALTER COLUMN id SET DEFAULT nextval('public.theme_categories_id_seq'::regclass);
+
+
+--
+-- TOC entry 3487 (class 2604 OID 16414)
+-- Name: themes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.themes_id_seq'::regclass);
+
+
+--
+-- TOC entry 3492 (class 2604 OID 16512)
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- TOC entry 3512 (class 2604 OID 16616)
+-- Name: wishes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.wishes ALTER COLUMN id SET DEFAULT nextval('public.wishes_id_seq'::regclass);
+
+
+--
+-- TOC entry 3705 (class 0 OID 16528)
+-- Dependencies: 224
+-- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.clients (id, name, slug, cover, theme_id, theme_category_id, package_id, gallery, videos, music, status, is_preview, opening_title, opening_description, closing_title, closing_description, gift_bank_name, gift_account_name, gift_account_number, created_at, updated_at) FROM stdin;
+12	Nirvaya	nirvaya	\N	2	1	3	\N	{}	\N	completed	f	Om Swastiastu	Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.	Om Shanti Shanti Shanti Om	Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/ Ibu/ Saudara/i, berkenan hadir untuk memberikan doa restu. Atas kehadiran dan doa restunya kami ucapkan terimakasih.	BCA	Ni Putu Ning Widi Astiti	773-078-9364	2024-11-08 14:37:19.213416+08	2024-11-08 14:37:19.213416+08
+11	Samaya	samaya	\N	1	1	3	\N	{}	\N	completed	f	Om Swastiastu	Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.	Om Shanti Shanti Shanti Om	Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/ Ibu/ Saudara/i, berkenan hadir untuk memberikan doa restu. Atas kehadiran dan doa restunya kami ucapkan terimakasih.	BCA	Ni Putu Ning Widi Astiti	773-078-9364	2024-11-08 14:37:14.260214+08	2024-11-08 14:37:14.260214+08
+15	Testing	testing	\N	1	1	1	{}	{}		unpaid	f								2024-11-11 18:42:50.733269+08	2024-11-11 18:43:44.399829+08
+14	Aruna	aruna	/uploads/Clients/Aruna/Gallery/aruna-4zqwLjDHAf7PsmDCKwPE.jpeg	3	2	3	{/uploads/Clients/Aruna/Gallery/aruna-4zqwLjDHAf7PsmDCKwPE.jpeg,/uploads/Clients/Aruna/Gallery/aruna-xrgo0ZRMh1WErc7urecX.jpeg,/uploads/Clients/Aruna/Gallery/aruna-5QbD3TwsGvgsuSdszpND.jpeg,/uploads/Clients/Aruna/Gallery/aruna-Ab3E3ovbKYlv8XxqDohu.jpeg}	{/uploads/Clients/Aruna/Video/aruna-txCoqsuhv9bDdwUr1tAC.mp4}	\N	completed	f	Om Swastiastu	Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.	Om Shanti Shanti Shanti Om	Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/ Ibu/ Saudara/i, berkenan hadir untuk memberikan doa restu. Atas kehadiran dan doa restunya kami ucapkan terimakasih.	BCA	I Putu Rama Putra	7216277382	2024-11-11 16:16:41.876385+08	2024-11-11 17:54:02.048218+08
+\.
+
+
+--
+-- TOC entry 3707 (class 0 OID 16559)
+-- Dependencies: 226
+-- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.events (id, client_id, name, date, start_time, end_time, address, address_url, created_at, updated_at) FROM stdin;
+22	15		2024-11-11	06:00	06:00			2024-11-11 18:42:50.75633+08	2024-11-11 18:42:50.75633+08
+14	11	Pawiwahan	2024-10-25	08:00	Selesai	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	https://maps.app.goo.gl/t5XVVTBJsGKSXAGb8	2024-11-08 14:37:14.275629+08	2024-11-08 14:37:14.275629+08
+15	11	Resepsi	2024-10-26	14:00	Selesai	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	https://maps.app.goo.gl/t5XVVTBJsGKSXAGb8	2024-11-08 14:37:14.275775+08	2024-11-08 14:37:14.275775+08
+16	12	Pawiwahan	2024-10-25	08:00	Selesai	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	https://maps.app.goo.gl/t5XVVTBJsGKSXAGb8	2024-11-08 14:37:19.215909+08	2024-11-08 14:37:19.215909+08
+17	12	Resepsi	2024-10-26	14:00	Selesai	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	https://maps.app.goo.gl/t5XVVTBJsGKSXAGb8	2024-11-08 14:37:19.215976+08	2024-11-08 14:37:19.215976+08
+21	14	Pawiwahan	2025-04-25	08:00	Selesai	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	https://maps.app.goo.gl/t5XVVTBJsGKSXAGb8	2024-11-11 16:16:41.89274+08	2024-11-11 16:16:41.89274+08
+\.
+
+
+--
+-- TOC entry 3697 (class 0 OID 16400)
+-- Dependencies: 216
+-- Data for Name: packages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.packages (id, name, custom_opening_closing, unlimited_revisions, unlimited_guest_names, max_events, max_gallery_photos, contact_social_media, background_sound, max_videos, rsvp_and_greetings, custom_cover, digital_envelope, google_maps_integration, add_to_calendar, price, created_at, updated_at) FROM stdin;
+1	Basic	t	t	t	1	5	f	f	0	f	f	f	f	f	150000	2024-11-08 02:42:53.212291+08	2024-11-08 02:42:53.212291+08
+2	Premium	t	t	t	2	10	t	t	1	t	f	f	t	f	200000	2024-11-08 02:42:53.212291+08	2024-11-08 02:42:53.212291+08
+3	Exclusive	t	t	t	3	50	t	t	10	t	t	t	t	t	250000	2024-11-08 02:42:53.212291+08	2024-11-08 02:42:53.212291+08
+\.
+
+
+--
+-- TOC entry 3709 (class 0 OID 16591)
+-- Dependencies: 228
+-- Data for Name: participants; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.participants (id, client_id, name, nickname, address, child, parents_male, parents_female, image, gender, role, created_at, updated_at, facebook, twitter, instagram, tiktok) FROM stdin;
+15	11	Ni Putu Shinta Dewi	Shinta	Ds. Banjar, Kec. Banjar, Kab. Buleleng, Bali	pertama	I Nyoman Putra	Ni Putu Anyani	\N	female	bride	2024-11-08 14:37:14.264009+08	2024-11-08 14:37:14.264009+08	https://facebook.com		https://instagram.com	https://tiktok.com
+16	11	I Putu Rama Putra	Rama	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	pertama	I Wayan Yasa	Ni Made Yanti	\N	male	groom	2024-11-08 14:37:14.272664+08	2024-11-08 14:37:14.272664+08	https://facebook.com	\N	https://instagram.com	\N
+17	12	Ni Putu Shinta Dewi	Shinta	Ds. Banjar, Kec. Banjar, Kab. Buleleng, Bali	pertama	I Nyoman Putra	Ni Putu Anyani	\N	female	bride	2024-11-08 14:37:19.214775+08	2024-11-08 14:37:19.214775+08	https://facebook.com		https://instagram.com	https://tiktok.com
+18	12	I Putu Rama Putra	Rama	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	pertama	I Wayan Yasa	Ni Made Yanti	\N	male	groom	2024-11-08 14:37:19.215+08	2024-11-08 14:37:19.215+08	https://facebook.com	\N	https://instagram.com	\N
+26	14	Widya Pramesti	Widya		pertama			\N	male	participant	2024-11-11 16:31:43.310871+08	2024-11-11 16:31:53+08	\N	\N	\N	\N
+25	14	I Made Ari Wiradana	Ari		pertama			\N	male	participant	2024-11-11 16:30:25.979015+08	2024-11-11 16:30:25.979+08	\N	\N	\N	\N
+23	14	Ni Putu Shinta Dewi	Shinta	Ds. Banjar, Kec. Banjar, Kab. Buleleng, Bali	pertama	I Nyoman Putra	Ni Putu Anyani	\N	female	bride	2024-11-11 16:16:41.882548+08	2024-11-11 16:28:32+08	https://facebook.com		https://instagram.com	https://tiktok.com
+24	14	I Putu Rama Putra	Rama	Ds. Kelusa, Kec. Payangan, Kab. Gianyar, Bali, Indonesia	pertama	I Wayan Yasa	Ni Made Yanti	\N	male	groom	2024-11-11 16:16:41.890652+08	2024-11-11 16:28:06+08	https://facebook.com	\N	https://instagram.com	\N
+27	15	Wahyu	Wahyu		pertama			\N	male	participant	2024-11-11 18:42:50.742318+08	2024-11-11 18:42:50.742+08	\N	\N	\N	\N
+28	15	Janu	Janu		pertama			\N	male	participant	2024-11-11 18:42:50.752514+08	2024-11-11 18:42:50.752+08	\N	\N	\N	\N
+29	15	Ari w	Ari		pertama			\N	male	participant	2024-11-11 18:42:50.752845+08	2024-11-11 18:43:43+08	\N	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 3713 (class 0 OID 16630)
+-- Dependencies: 232
+-- Data for Name: testimonials; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.testimonials (id, client_id, name, comments, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3703 (class 0 OID 16519)
+-- Dependencies: 222
+-- Data for Name: theme_categories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.theme_categories (id, slug, name, created_at, updated_at) FROM stdin;
+1	pernikahan	Pernikahan	2024-11-08 11:00:30.215728+08	2024-11-08 11:00:30.215728+08
+2	metatah	Mepandes	2024-11-08 11:00:30.215728+08	2024-11-08 11:00:30.215728+08
+\.
+
+
+--
+-- TOC entry 3699 (class 0 OID 16411)
+-- Dependencies: 218
+-- Data for Name: themes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.themes (id, slug, name, thumbnail, price, package_ids, theme_category_ids, is_preview, cover_video, created_at, updated_at) FROM stdin;
+2	nirvaya	Nirvaya	/uploads/Themes/Nirvaya.jpeg	\N	{1,2,3}	{1}	t	f	2024-11-08 14:06:39.941734+08	2024-11-08 14:06:39.941734+08
+1	samaya	Samaya	/uploads/Themes/Samaya.jpeg	\N	{1,2,3}	{1}	t	f	2024-11-08 03:12:19.99961+08	2024-11-08 03:12:19.99961+08
+3	aruna	Aruna	/uploads/Themes/Aruna.jpeg	\N	{1,2,3}	{1,2}	t	t	2024-11-08 15:10:50.901951+08	2024-11-08 15:10:50.901951+08
+\.
+
+
+--
+-- TOC entry 3701 (class 0 OID 16509)
+-- Dependencies: 220
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, username, password, created_at) FROM stdin;
+1	admin	$2a$10$2rey0stGXS5079Upsq3Thu0vP5XPTTWEi0UR/.zNoZ9OmrbpCu5te	2024-11-08 03:05:36.278015+08
+\.
+
+
+--
+-- TOC entry 3711 (class 0 OID 16613)
+-- Dependencies: 230
+-- Data for Name: wishes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.wishes (id, client_id, name, attendant, wishes, created_at, updated_at) FROM stdin;
+1	\N	oba	Hadir	coba	2024-11-08 14:13:36.508499+08	2024-11-08 14:13:36.508499+08
+2	\N	hahaha	Hadir	adada	2024-11-08 14:13:41.74337+08	2024-11-08 14:13:41.74337+08
+3	\N	ad	Hadir	adad	2024-11-08 14:13:44.995314+08	2024-11-08 14:13:44.995314+08
+4	\N	tes	Hadir	tes	2024-11-09 16:51:33.175467+08	2024-11-09 16:51:33.175467+08
+5	\N	Samaya	Hadir	Selamat yaa	2024-11-09 16:57:15.587093+08	2024-11-09 16:57:15.587093+08
+6	\N	Widya	Hadir	Selamat bro astungkara langgeng	2024-11-09 16:57:33.966627+08	2024-11-09 16:57:33.966627+08
+7	\N	Wira	Tidak Hadir	Selamat menempuh hidup baru	2024-11-09 17:12:55.330034+08	2024-11-09 17:12:55.330034+08
+8	\N	Jaya	Masih Ragu	Selamat menempuh hidup baru, maaf masih ragu untuk hadir	2024-11-09 17:13:14.217352+08	2024-11-09 17:13:14.217352+08
+9	\N	Ari Wiradana	Tidak Hadir	semalat menempu hidup baruuu	2024-11-09 17:53:17.643358+08	2024-11-09 17:53:17.643358+08
+10	\N	asd	Hadir	ada	2024-11-09 17:54:05.24804+08	2024-11-09 17:54:05.24804+08
+11	\N	ada	Hadir	asdsad	2024-11-09 17:54:14.873521+08	2024-11-09 17:54:14.873521+08
+\.
+
+
+--
+-- TOC entry 3728 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.clients_id_seq', 15, true);
+
+
+--
+-- TOC entry 3729 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.events_id_seq', 22, true);
+
+
+--
+-- TOC entry 3730 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: packages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.packages_id_seq', 3, true);
+
+
+--
+-- TOC entry 3731 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: participants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.participants_id_seq', 29, true);
+
+
+--
+-- TOC entry 3732 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: testimonials_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.testimonials_id_seq', 1, true);
+
+
+--
+-- TOC entry 3733 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: theme_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.theme_categories_id_seq', 2, true);
+
+
+--
+-- TOC entry 3734 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: themes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.themes_id_seq', 3, true);
+
+
+--
+-- TOC entry 3735 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+
+
+--
+-- TOC entry 3736 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: wishes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.wishes_id_seq', 11, true);
+
+
+--
+-- TOC entry 3535 (class 2606 OID 16540)
+-- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3537 (class 2606 OID 16542)
+-- Name: clients clients_slug_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_slug_key UNIQUE (slug);
+
+
+--
+-- TOC entry 3539 (class 2606 OID 16568)
+-- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3523 (class 2606 OID 16409)
+-- Name: packages packages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.packages
+    ADD CONSTRAINT packages_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3541 (class 2606 OID 16606)
+-- Name: participants participants_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.participants
+    ADD CONSTRAINT participants_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3545 (class 2606 OID 16639)
+-- Name: testimonials testimonials_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.testimonials
+    ADD CONSTRAINT testimonials_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3533 (class 2606 OID 16526)
+-- Name: theme_categories theme_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.theme_categories
+    ADD CONSTRAINT theme_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3525 (class 2606 OID 16422)
+-- Name: themes themes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT themes_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3527 (class 2606 OID 16424)
+-- Name: themes themes_slug_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT themes_slug_key UNIQUE (slug);
+
+
+--
+-- TOC entry 3529 (class 2606 OID 16515)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3531 (class 2606 OID 16517)
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 3543 (class 2606 OID 16623)
+-- Name: wishes wishes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.wishes
+    ADD CONSTRAINT wishes_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3546 (class 2606 OID 16553)
+-- Name: clients clients_package_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_package_id_fkey FOREIGN KEY (package_id) REFERENCES public.packages(id) ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3547 (class 2606 OID 16548)
+-- Name: clients clients_theme_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_theme_category_id_fkey FOREIGN KEY (theme_category_id) REFERENCES public.theme_categories(id) ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3548 (class 2606 OID 16543)
+-- Name: clients clients_theme_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_theme_id_fkey FOREIGN KEY (theme_id) REFERENCES public.themes(id) ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3549 (class 2606 OID 16569)
+-- Name: events events_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id) ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3550 (class 2606 OID 16607)
+-- Name: participants participants_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.participants
+    ADD CONSTRAINT participants_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id) ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3552 (class 2606 OID 16640)
+-- Name: testimonials testimonials_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.testimonials
+    ADD CONSTRAINT testimonials_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id) ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3551 (class 2606 OID 16624)
+-- Name: wishes wishes_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.wishes
+    ADD CONSTRAINT wishes_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id) ON DELETE SET NULL;
+
+
+-- Completed on 2024-11-11 19:42:13 WITA
+
+--
+-- PostgreSQL database dump complete
+--
+
