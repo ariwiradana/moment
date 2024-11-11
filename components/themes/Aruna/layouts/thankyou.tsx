@@ -31,18 +31,22 @@ const ThankyouComponent: FC<Props> = (props) => {
           {props.state.client?.closing_description}
         </p>
 
-        <p
-          data-aos="fade-up"
-          className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
-        >
-          Kami Yang Berbahagia
-        </p>
-        <h1
-          data-aos="fade-up"
-          className={`font-high-summit text-white text-center text-[40px] md:text-5xl mt-4`}
-        >
-          {props.state.groom?.nickname} & {props.state.bride?.nickname}
-        </h1>
+        {props.state.client?.theme_category?.name === "Pernikahan" && (
+          <>
+            <p
+              data-aos="fade-up"
+              className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
+            >
+              Kami Yang Berbahagia
+            </p>
+            <h1
+              data-aos="fade-up"
+              className={`font-high-summit text-white text-center text-[40px] md:text-5xl mt-4`}
+            >
+              {props.state.groom?.nickname} & {props.state.bride?.nickname}
+            </h1>
+          </>
+        )}
         <ul
           data-aos="zoom-in-up"
           className="flex flex-col justify-center gap-2 items-center relative z-30 mt-[100px] justify-self-end"
