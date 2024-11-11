@@ -17,7 +17,7 @@ interface Props {
 const ThankyouComponent: FC<Props> = (props) => {
   return (
     <section className="relative flex flex-col justify-center bg-gradient-to-b from-aruna-dark via-[20%] via-aruna-dark/50 to-[80%] to-aruna-dark/90">
-      <div className="max-w-screen-sm mx-auto py-[60px] h-full md:py-[100px] px-8 flex flex-col justify-center">
+      <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center">
         <h1
           data-aos="fade-up"
           className={`font-high-summit text-4xl md:text-5xl text-white mb-8 text-center`}
