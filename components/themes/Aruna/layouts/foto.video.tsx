@@ -32,10 +32,8 @@ const GalleryComponent: FC<Props> = (props) => {
       ? props.state.client.videos
       : [];
 
-  console.log(videos);
-
-  const gridImages = images.slice(0, 6);
-  const slideImages = images.slice(6);
+  const gridImages = images.length > 6 ? images.slice(0, 6) : images;
+  const slideImages = images.length > 6 ? images.slice(6) : [];
 
   const gridSpan = (index: number) => {
     switch (index) {
@@ -101,7 +99,7 @@ const GalleryComponent: FC<Props> = (props) => {
         </h2>
         <p
           data-aos="fade-up"
-          className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm my-8`}
+          className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm mx-auto my-8`}
         >
           Setiap langkah adalah kebahagiaan, setiap senyum adalah kenangan. Di
           sini, kami mengabadikan momen cinta dan janji yang akan dikenang
@@ -114,30 +112,32 @@ const GalleryComponent: FC<Props> = (props) => {
           {getParticipantNames(props.state.client?.participants || [])}
         </p>
         <div
-          className="mt-10 grid grid-cols-4 grid-rows-6 gap-2"
+          className={`mt-10 grid grid-cols-4 ${
+            slideImages.length > 0 ? "grid-rows-6" : "grid-rows-4"
+          } gap-2`}
           data-aos="zoom-out-up"
         >
-          {gridImages.length >= 6 &&
-            gridImages.map((img, index) => (
-              <div
-                key={`gallery-${index + 1}`}
-                onClick={() => {
-                  setOpen(() => true);
-                  setImageIndex(() => index);
-                }}
-                className={`${gridSpan(index)} w-full relative overflow-hidden`}
-              >
-                <ImageShimmer
-                  quality={100}
-                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                  priority
-                  src={img}
-                  fill
-                  alt={`gallery-${index + 1}`}
-                  className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
-                />
-              </div>
-            ))}
+          {gridImages.map((img, index) => (
+            <div
+              key={`gallery-${index + 1}`}
+              onClick={() => {
+                setOpen(() => true);
+                setImageIndex(() => index);
+              }}
+              className={`${gridSpan(index)} w-full relative overflow-hidden`}
+            >
+              <ImageShimmer
+                quality={100}
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                priority
+                src={img}
+                fill
+                alt={`gallery-${index + 1}`}
+                className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
+              />
+            </div>
+          ))}
+
           {slideImages.length > 0 && (
             <div className="col-span-4 row-span-2 w-full">
               <Swiper

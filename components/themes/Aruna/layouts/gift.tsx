@@ -30,7 +30,7 @@ const GiftComponent: FC<Props> = (props) => {
           </h2>
           <p
             data-aos="fade-up"
-            className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm my-8`}
+            className={`${roboto.className} text-xs md:text-sm text-center mx-auto text-white/80 max-w-screen-sm my-8`}
           >
             Tanpa mengurangi rasa hormat kami bagi tamu yang ingin mengirimkan
             hadiah kepada kedua mempelai dapat mengirimkannya melalui :

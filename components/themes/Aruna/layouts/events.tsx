@@ -36,7 +36,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     alt={`event-${event.name}`}
                     fill
                     className="object-cover"
-                    src={gallery[index] as string}
+                    src={gallery[gallery.length - 1 - index] as string}
                   />
                 </div>
                 <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 rounded-b-3xl text-center">
