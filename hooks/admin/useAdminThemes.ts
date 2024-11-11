@@ -13,8 +13,9 @@ export const useAdminThemes = (token: string | null) => {
     success: boolean;
     data: Theme[];
     total_rows: number;
-  }>(token ? `/api/_th?page=${page}&limit=${limit}` : null, (url: string) =>
-    fetcher(url, token)
+  }>(
+    token ? `/api/_th?page=${page}&limit=${limit}&order=DESC` : null,
+    (url: string) => fetcher(url, token)
   );
 
   const handleChangePagination = (
