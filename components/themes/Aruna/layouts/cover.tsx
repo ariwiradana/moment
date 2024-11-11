@@ -3,7 +3,7 @@ import { roboto } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { BiEnvelopeOpen } from "react-icons/bi";
-import ImageShimmer from "@/components/image.shimmer";
+import Image from "next/image";
 
 interface Props {
   state: useAruna["state"];
@@ -22,7 +22,7 @@ const Cover: FC<Props> = (props) => {
         }`}
       >
         {props.state.client?.cover && (
-          <ImageShimmer
+          <Image
             priority
             sizes="100vw"
             src={props.state.client?.cover as string}
@@ -33,7 +33,7 @@ const Cover: FC<Props> = (props) => {
         )}
         <div
           data-aos="fade-in"
-          className="relative z-20 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark"
+          className="relative z-40 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark"
         >
           <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
             <div>
