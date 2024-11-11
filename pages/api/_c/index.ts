@@ -90,7 +90,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           hasCondition = true;
         }
 
-        query += ` ORDER BY status DESC, updated_at DESC`;
+        query += ` ORDER BY status DESC, updated_at DESC, is_preview ASC`;
 
         const pageNumber = Number(page);
         const limitNumber = Number(limit);

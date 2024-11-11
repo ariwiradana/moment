@@ -47,9 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export const config: PageConfig = {
   api: {
-    bodyParser: {
-      sizeLimit: "50mb",
-    },
+    bodyParser: false,
   },
 };
 
