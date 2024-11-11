@@ -26,7 +26,7 @@ const MusicComponent: FC<Props> = (props) => {
         <button
           aria-label={props.state.isPlaying ? "Pause music" : "Play music"}
           onClick={props.actions.handlePlayPause}
-          className="w-10 h-10 md:h-12 md:w-12 bg-nirvaya-dark border border-white/30 rounded-full overflow-hidden flex justify-center items-center text-white text-2xl relative shadow-sm md:text-2xl lg:text-3xl"
+          className="w-10 h-10 md:h-12 md:w-12 bg-white rounded-full overflow-hidden flex justify-center items-center text-white text-2xl relative shadow-sm md:text-2xl lg:text-3xl"
         >
           <Image
             fill

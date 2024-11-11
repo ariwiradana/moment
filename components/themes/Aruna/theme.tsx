@@ -35,7 +35,7 @@ const Aruna: FC<Props> = (props) => {
         {state.open && <PreviewNav state={state} />}
         <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (
-          <div className="flex justify-between overflow-hidden">
+          <div className="flex justify-between">
             <div className="fixed inset-0 hidden xl:block">
               <div className="relative xl:w-[60vw] 2xl:w-[70vw] h-dvh">
                 <div className="bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark absolute inset-0 z-20 flex flex-col justify-end p-[100px]">
@@ -74,7 +74,7 @@ const Aruna: FC<Props> = (props) => {
               </div>
             </div>
             <div
-              className={`relative xl:max-w-[40vw] 2xl:max-w-[30vw] overflow-auto ml-auto`}
+              className={`relative xl:max-w-[40vw] 2xl:max-w-[30vw] ml-auto`}
             >
               <HeroComponent state={state} />
               <ParticipantsComponent state={state} />
