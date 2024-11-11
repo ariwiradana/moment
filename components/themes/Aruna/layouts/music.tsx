@@ -26,7 +26,7 @@ const MusicComponent: FC<Props> = (props) => {
         <button
           aria-label={props.state.isPlaying ? "Pause music" : "Play music"}
           onClick={props.actions.handlePlayPause}
-          className="w-10 h-10 md:h-12 md:w-12 bg-white rounded-full overflow-hidden flex justify-center items-center text-white text-2xl relative shadow-sm md:text-2xl lg:text-3xl"
+          className="w-10 h-10 md:h-12 md:w-12 bg-aruna-dark rounded-full overflow-hidden flex justify-center items-center text-white text-2xl relative shadow-sm md:text-2xl lg:text-3xl"
         >
           <Image
             fill
@@ -41,10 +41,11 @@ const MusicComponent: FC<Props> = (props) => {
           <div className="relative z-20 w-full h-full rounded-full flex justify-center items-center">
             {props.state.isPlaying ? <BiPause /> : <BiPlay />}
           </div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[90%] h-[90%] rounded-full flex justify-center items-center border border-white/20"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[70%] h-[70%] rounded-full flex justify-center items-center border border-white/20"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[50%] h-[50%] rounded-full flex justify-center items-center border border-white/20"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[30%] h-[30%] rounded-full flex justify-center items-center border border-white/20"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[90%] h-[90%] rounded-full flex justify-center items-center border border-white/10"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[80%] h-[80%] rounded-full flex justify-center items-center border border-white/10"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[70%] h-[70%] rounded-full flex justify-center items-center border border-white/10"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[60%] h-[60%] rounded-full flex justify-center items-center border border-white/10"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-20 w-[50%] h-[50%] rounded-full flex justify-center items-center border border-white/10"></div>
         </button>
 
         <audio
