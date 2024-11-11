@@ -3,7 +3,7 @@ import { roboto } from "@/lib/fonts";
 import Button from "../elements/button";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { BiEnvelopeOpen } from "react-icons/bi";
-import Image from "next/image";
+import ImageShimmer from "@/components/image.shimmer";
 
 interface Props {
   state: useAruna["state"];
@@ -22,7 +22,8 @@ const Cover: FC<Props> = (props) => {
         }`}
       >
         {props.state.client?.cover && (
-          <Image
+          <ImageShimmer
+            sizes="100vw"
             src={props.state.client?.cover as string}
             fill
             className="object-cover"

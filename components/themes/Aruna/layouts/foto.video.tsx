@@ -138,44 +138,46 @@ const GalleryComponent: FC<Props> = (props) => {
                 />
               </div>
             ))}
-          <div className="col-span-4 row-span-2 w-full">
-            <Swiper
-              loop
-              autoplay={{
-                delay: 4000,
-              }}
-              speed={2000}
-              spaceBetween={8}
-              modules={[Autoplay]}
-              className="w-full h-full"
-            >
-              {slideImages.length > 0 &&
-                slideImages.map((image, index) => (
-                  <SwiperSlide
-                    key={`gallery-${index + 6}`}
-                    className="relative flex justify-center items-center h-full"
-                  >
-                    <div
-                      onClick={() => {
-                        setOpen(() => true);
-                        setImageIndex(() => index + 6);
-                      }}
-                      className="relative h-full w-full"
+          {slideImages.length > 0 && (
+            <div className="col-span-4 row-span-2 w-full">
+              <Swiper
+                loop
+                autoplay={{
+                  delay: 4000,
+                }}
+                speed={2000}
+                spaceBetween={8}
+                modules={[Autoplay]}
+                className="w-full h-full"
+              >
+                {slideImages.length > 0 &&
+                  slideImages.map((image, index) => (
+                    <SwiperSlide
+                      key={`gallery-${index + 6}`}
+                      className="relative flex justify-center items-center h-full"
                     >
-                      <ImageShimmer
-                        priority
-                        quality={100}
-                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
-                        src={image}
-                        alt={`galeri-${index + 6}`}
-                        fill
-                        className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
-          </div>
+                      <div
+                        onClick={() => {
+                          setOpen(() => true);
+                          setImageIndex(() => index + 6);
+                        }}
+                        className="relative h-full w-full"
+                      >
+                        <ImageShimmer
+                          priority
+                          quality={100}
+                          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+                          src={image}
+                          alt={`galeri-${index + 6}`}
+                          fill
+                          className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+              </Swiper>
+            </div>
+          )}
         </div>
       </div>
     </section>
