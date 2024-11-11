@@ -40,8 +40,18 @@ const Cover: FC<Props> = (props) => {
                 data-aos-delay="400"
                 className={`font-high-summit text-white text-5xl md:text-6xl leading-10 2xl:text-7xl`}
               >
-                {props.state.groom?.nickname}
-                <br />& {props.state.bride?.nickname}
+                {props.state.client?.theme_category?.name === "Pernikahan" ? (
+                  <>
+                    {props.state.groom?.nickname}
+                    <br />& {props.state.bride?.nickname}
+                  </>
+                ) : (
+                  <>
+                    Undangan
+                    <br />
+                    {props.state.client?.theme_category?.name}
+                  </>
+                )}
               </h1>
             </div>
             <div

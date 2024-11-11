@@ -110,7 +110,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             FROM participants p
             JOIN clients c ON p.client_id = c.id
             WHERE c.id = ANY($1::int[])
-            ORDER BY c.created_at ASC
+            ORDER BY p.updated_at DESC
         `,
           [clientIds]
         );
@@ -384,7 +384,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             gift_bank_name = $13,
             gift_account_name = $14,
             gift_account_number = $15,
-            theme_category_id = $16
+            theme_category_id = $16,
+            updated_at = NOW()
           WHERE id = $17
           RETURNING *;`;
 
@@ -483,8 +484,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 facebook = $11,
                 twitter = $12,
                 instagram = $13,
-                tiktok = $14
-              WHERE id = $15
+                tiktok = $14,
+                updated_at = $15
+              WHERE id = $16
               RETURNING *;
             `;
 
@@ -503,6 +505,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 p.twitter,
                 p.instagram,
                 p.tiktok,
+                p.updated_at,
                 p.id,
               ]);
             }

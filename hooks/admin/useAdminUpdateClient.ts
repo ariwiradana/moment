@@ -30,6 +30,7 @@ const initialParticipants: Participant = {
   instagram: null,
   twitter: null,
   tiktok: null,
+  updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
 };
 
 const initialEvent: Event = {
@@ -154,14 +155,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         label: theme.name,
         value: theme.id as number,
       }));
-      const initialThemeCategory: ThemeCategory[] =
-        themes.data[0].theme_categories || [];
-      const initialThemeCategoryOptions: Option[] =
-        initialThemeCategory?.map((tc) => ({
-          value: Number(tc.id),
-          label: tc.name,
-        })) ?? [];
-      setThemeCategoryOptions(initialThemeCategoryOptions);
       setThemeOptions(options);
     }
   }, [themes]);
@@ -186,6 +179,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           twitter: p.twitter,
           instagram: p.instagram,
           tiktok: p.tiktok,
+          updated_at: p.updated_at,
         })
       );
 
@@ -240,6 +234,23 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     }
   }, [client, themeOptions, packageOptions]);
 
+  useEffect(() => {
+    if (formData.theme_id) {
+      if (formData.theme_id) {
+        const matchedTheme = themes?.data.find(
+          (th) => th.id === formData.theme_id
+        );
+        const options: Option[] = (
+          matchedTheme?.theme_categories as ThemeCategory[]
+        )?.map((tc) => ({
+          label: tc.name,
+          value: tc.id as number,
+        }));
+        setThemeCategoryOptions(options);
+      }
+    }
+  }, [formData]);
+
   const handleChangeClient = (
     value: string | number | FileList | File | string[],
     name: string
@@ -260,9 +271,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       setFormData((state) => ({
         ...state,
         theme_id: Number(value),
-        theme_category_id: Number(
-          (selectedTheme.theme_categories as ThemeCategory[])[0].id
-        ),
+        theme_category_id:
+          client?.data[0].theme_category_id ??
+          Number((selectedTheme.theme_categories as ThemeCategory[])[0].id),
       }));
     } else if (name === "package_id") {
       const selectedPackage = packages?.data.find(
@@ -329,6 +340,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       currentParticipants[index] = {
         ...currentParticipants[index],
         client_id: client?.data[0].id,
+        updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
         [name]: value,
       };
 

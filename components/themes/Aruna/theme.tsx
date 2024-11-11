@@ -14,6 +14,7 @@ import PreviewNav from "../preview.nav";
 import useAruna from "@/hooks/themes/useAruna";
 import Image from "next/image";
 import { roboto } from "@/lib/fonts";
+import { getParticipantNames } from "@/utils/getParticipantNames";
 interface Props {
   untuk: string;
   client: Client;
@@ -50,8 +51,16 @@ const Aruna: FC<Props> = (props) => {
                     data-aos-delay="800"
                     className={`font-high-summit text-white text-5xl md:text-6xl leading-10 2xl:text-7xl mb-2`}
                   >
-                    {state.groom?.nickname}
-                    <br />& {state.bride?.nickname}
+                    {state.client?.theme_category?.name === "Pernikahan" ? (
+                      <>
+                        {state.groom?.nickname}
+                        <br />& {state.bride?.nickname}
+                      </>
+                    ) : (
+                      <>
+                        {getParticipantNames(state.client?.participants || [])}
+                      </>
+                    )}
                   </h1>
                 </div>
                 {state.client?.cover && (

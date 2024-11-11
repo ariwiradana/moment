@@ -1,6 +1,8 @@
 import ImageShimmer from "@/components/image.shimmer";
 import { useAruna } from "@/hooks/themes/useAruna";
 import { roboto } from "@/lib/fonts";
+import { getEventNames } from "@/utils/getEventNames";
+import { getParticipantNames } from "@/utils/getParticipantNames";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
@@ -112,8 +114,18 @@ const HeroComponent: FC<Props> = (props) => {
                 data-aos-delay="200"
                 className={`font-high-summit text-white text-5xl md:text-6xl leading-10 2xl:text-7xl mb-2`}
               >
-                {props.state.groom?.nickname}
-                <br />& {props.state.bride?.nickname}
+                {props.state.client?.theme_category?.name === "Pernikahan" ? (
+                  <>
+                    {props.state.groom?.nickname}
+                    <br />& {props.state.bride?.nickname}
+                  </>
+                ) : (
+                  <>
+                    {getParticipantNames(
+                      props.state.client?.participants || []
+                    )}
+                  </>
+                )}
               </h1>
             </div>
             <div
@@ -150,23 +162,38 @@ const HeroComponent: FC<Props> = (props) => {
                 data-aos-delay="600"
                 className={`${roboto.className} text-white text-xs md:text-sm mt-8 max-w-screen-sm`}
               >
-                Wahai pasangan suami-isteri, semoga kalian tetap bersatu dan
-                tidak pernah terpisahkan. Semoga kalian mencapai hidup penuh
-                kebahagiaan, tinggal di rumah yang penuh kegembiraan bersama
-                seluruh keturunanmu.
+                {props.state.client?.theme_category?.name === "Pernikahan" ? (
+                  <>
+                    Wahai pasangan suami-isteri, semoga kalian tetap bersatu dan
+                    tidak pernah terpisahkan. Semoga kalian mencapai hidup penuh
+                    kebahagiaan, tinggal di rumah yang penuh kegembiraan bersama
+                    seluruh keturunanmu.
+                  </>
+                ) : (
+                  <>
+                    Tanpa mengurangi rasa hormat, kami mengundang anda untuk
+                    menghadiri acara{" "}
+                    <span className="lowercase">
+                      {getEventNames(props.state.client?.events || [])}
+                    </span>{" "}
+                    kami.
+                  </>
+                )}
               </p>
-              <div
-                className="flex items-center gap-x-3 md:gap-x-5 mt-8"
-                data-aos="fade-down"
-                data-aos-delay="400"
-              >
-                <div className="h-[0.5px] w-4 md:w-6 lg:w-8 bg-white"></div>
-                <p
-                  className={`font-high-summit text-white text-base md:text-lg`}
+              {props.state.client?.theme_category?.name === "Pernikahan" && (
+                <div
+                  className="flex items-center gap-x-3 md:gap-x-5 mt-8"
+                  data-aos="fade-down"
+                  data-aos-delay="400"
                 >
-                  Rgveda X.85.42
-                </p>
-              </div>
+                  <div className="h-[0.5px] w-4 md:w-6 lg:w-8 bg-white"></div>
+                  <p
+                    className={`font-high-summit text-white text-base md:text-lg`}
+                  >
+                    Rgveda X.85.42
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}

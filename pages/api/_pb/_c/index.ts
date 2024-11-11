@@ -1,5 +1,4 @@
 import handleError from "@/lib/errorHandling";
-
 import { Client, Package, Review, Theme, ThemeCategory } from "@/lib/types";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -10,13 +9,21 @@ interface Query {
   limit?: number;
   id?: number;
   status?: Client["status"];
+  is_preview?: Client["is_preview"];
 }
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   switch (request.method) {
     case "GET":
       try {
-        const { slug, page = 1, id, limit = 10, status }: Query = request.query;
+        const {
+          slug,
+          page = 1,
+          id,
+          limit = 10,
+          status,
+          is_preview,
+        }: Query = request.query;
 
         let query = `SELECT * FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
@@ -24,37 +31,52 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const values: (number | string | boolean)[] = [];
         const countValues: (number | string | boolean)[] = [];
 
+        let hasCondition = false;
+
         if (id) {
           const valueIndex = values.length + 1;
           query += ` WHERE id = $${valueIndex}`;
           countQuery += ` WHERE id = $${valueIndex}`;
           values.push(id);
           countValues.push(id);
+          hasCondition = true;
         }
 
         if (slug) {
           const valueIndex = values.length + 1;
-          query += ` WHERE slug = $${valueIndex}`;
-          countQuery += ` WHERE slug = $${valueIndex}`;
+          query += hasCondition ? ` AND` : ` WHERE`;
+          query += ` slug = $${valueIndex}`;
+          countQuery += hasCondition ? ` AND` : ` WHERE`;
+          countQuery += ` slug = $${valueIndex}`;
           values.push(slug);
           countValues.push(slug);
+          hasCondition = true;
         }
 
         if (status) {
           const valueIndex = values.length + 1;
-
-          query += ` WHERE status = $${valueIndex} AND is_preview = $${
-            valueIndex + 1
-          }`;
-          countQuery += ` WHERE status = $${valueIndex} AND is_preview = $${
-            valueIndex + 1
-          }`;
-
-          values.push(status, false);
-          countValues.push(status, false);
+          query += hasCondition ? ` AND` : ` WHERE`;
+          query += ` status = $${valueIndex}`;
+          countQuery += hasCondition ? ` AND` : ` WHERE`;
+          countQuery += ` status = $${valueIndex}`;
+          values.push(status);
+          countValues.push(status);
+          hasCondition = true;
         }
 
-        query += ` ORDER BY updated_at DESC`;
+        if (is_preview) {
+          const valueIndex = values.length + 1;
+          const is_preview_bool = String(is_preview) === "true";
+          query += hasCondition ? ` AND` : ` WHERE`;
+          query += ` is_preview = $${valueIndex}`;
+          countQuery += hasCondition ? ` AND` : ` WHERE`;
+          countQuery += ` is_preview = $${valueIndex}`;
+          values.push(is_preview_bool);
+          countValues.push(is_preview_bool);
+          hasCondition = true;
+        }
+
+        query += ` ORDER BY status DESC, updated_at DESC`;
 
         const pageNumber = Number(page);
         const limitNumber = Number(limit);
@@ -74,7 +96,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             FROM participants p
             JOIN clients c ON p.client_id = c.id
             WHERE c.id = ANY($1::int[])
-            ORDER BY c.created_at ASC
+            ORDER BY p.updated_at DESC
         `,
           [clientIds]
         );
@@ -85,7 +107,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             FROM events e
             JOIN clients c ON e.client_id = c.id
             WHERE c.id = ANY($1::int[])
-            ORDER BY e.date ASC, e.start_time::time ASC
+            ORDER BY e.start_time::time ASC
         `,
           [clientIds]
         );
@@ -103,10 +125,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           );
           const clientEvents = events.filter((e) => e.client_id === client.id);
           const clientTheme: Theme[] = themes.find(
-            (t) => t.id === client.theme_id
+            (th) => th.id === client.theme_id
           );
           const clientPackages: Package[] = packages.find(
-            (t) => t.id === client.package_id
+            (pk) => pk.id === client.package_id
           );
           const clientThemeCategories: ThemeCategory[] = themeCategories.find(
             (tc) => tc.id === client.theme_category_id

@@ -10,45 +10,66 @@ import {
   BiLogoTwitter,
 } from "react-icons/bi";
 import { useAruna } from "@/hooks/themes/useAruna";
+import { getEventNames } from "@/utils/getEventNames";
 
 interface Props {
   state: useAruna["state"];
 }
 
 const ParticipantsComponent: FC<Props> = (props) => {
-  if (
-    props.state.client?.participants &&
-    props.state.client?.participants.length > 0
-  )
-    return (
-      <section className="relative z-10 overflow-hidden bg-white py-[100px] px-8 md:px-16">
-        <h2
-          data-aos="fade-up"
-          className="font-high-summit text-4xl md:text-5xl text-aruna-dark mb-8 text-center"
-        >
-          {props.state.client.opening_title}
-        </h2>
-        <h2
-          data-aos="fade-up"
-          className={`${roboto.className} text-xs md:text-sm text-center text-aruna-dark/60 max-w-screen-sm`}
-        >
-          {props.state.client.opening_description}
-        </h2>
+  const { client } = props.state || null;
 
-        <div className="bg-white relative overflow-hidden grid gap-[60px] mt-[72px]">
-          {props.state.groom && (
-            <ParticipantComponent data={props.state?.groom as Participant} />
-          )}
+  return (
+    <section className="relative z-10 overflow-hidden bg-white py-[100px] px-8 md:px-16">
+      <h2
+        data-aos="fade-up"
+        className="font-high-summit text-4xl md:text-5xl text-aruna-dark mb-8 text-center"
+      >
+        {client?.opening_title}
+      </h2>
+      <h2
+        data-aos="fade-up"
+        className={`${roboto.className} text-xs md:text-sm text-center text-aruna-dark/60 max-w-screen-sm`}
+      >
+        {client?.opening_description}
+      </h2>
+
+      <div className="bg-white relative overflow-hidden grid gap-[60px] mt-[72px]">
+        <>
           {props.state.bride && (
-            <ParticipantComponent data={props.state?.bride as Participant} />
+            <ParticipantComponent
+              role="mempelai"
+              data={props.state?.bride as Participant}
+            />
           )}
-        </div>
-      </section>
-    );
+          {props.state.groom && (
+            <ParticipantComponent
+              role="mempelai"
+              data={props.state?.groom as Participant}
+            />
+          )}
+
+          {client?.participants
+            .filter(
+              (participant) =>
+                participant.role !== "bride" && participant.role !== "groom"
+            )
+            .map((participant) => (
+              <ParticipantComponent
+                role={getEventNames(client?.events || [])}
+                key={participant.id}
+                data={participant as Participant}
+              />
+            ))}
+        </>
+      </div>
+    </section>
+  );
 };
 
 interface ComponentProps {
   data: Participant;
+  role: string;
 }
 const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
@@ -78,7 +99,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             ? "Mempelai Pria"
             : props.data.role === "bride"
             ? "Mempelai Wanita"
-            : ""}
+            : `${props.role}`}
         </p>
       </div>
       <h1
@@ -87,17 +108,15 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       >
         {props.data.name}
       </h1>
-      {props.data.role !== "participant" && (
-        <p
-          data-aos="fade-up"
-          className={`text-aruna-dark/60 text-center text-xs md:text-sm mb-10 ${roboto.className}`}
-        >
-          {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
-          {props.data.child} dari pasangan
-          <br />
-          Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
-        </p>
-      )}
+      <p
+        data-aos="fade-up"
+        className={`text-aruna-dark/60 text-center text-xs md:text-sm mb-10 ${roboto.className}`}
+      >
+        {props.data.gender === "female" ? "Putri" : "Putra"} {props.data.child}{" "}
+        dari pasangan
+        <br />
+        Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
+      </p>
       <p
         data-aos="fade-up"
         className={`text-aruna-dark text-xs md:text-sm text-center ${roboto.className}`}

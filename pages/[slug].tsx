@@ -16,8 +16,7 @@ interface Props {
   client: Client | null;
 }
 
-const MainPage: FC<Props> = ({ client, untuk }) => {
-  console.log(client);
+const MainPage: FC<Props> = ({ untuk, client }) => {
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -41,8 +40,6 @@ const MainPage: FC<Props> = ({ client, untuk }) => {
       : `${participantNames} | Undangan ${client.theme_category?.name}`
     : "Moment";
 
-  console.log({ client });
-
   return ThemeComponent ? (
     <>
       <Seo
@@ -63,11 +60,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
   const baseUrl = process.env.API_BASE_URL;
-  const response = await fetcher(`${baseUrl}/api/_pb/_c?slug=${slug}`);
+  const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`);
 
-  const client: Client | null = response?.data?.length
-    ? response.data[0]
-    : null;
+  const client: Client | null = response?.data ?? null;
 
   return {
     props: {

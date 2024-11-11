@@ -43,7 +43,7 @@ const InputSelect: FC<InputSelectProps> = (props) => {
             : "focus:ring-black"
         } ${paddingStyles(props.inputSize ?? "large")}`}
       >
-        {props.options.map(({ value, label }) => (
+        {props.options?.map(({ value, label }) => (
           <option key={value} value={value}>
             {label}
           </option>

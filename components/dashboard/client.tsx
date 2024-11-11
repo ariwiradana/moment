@@ -6,6 +6,7 @@ import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
+import { getParticipantNames } from "@/utils/getParticipantNames";
 
 const ClientComponent = () => {
   const { data } = useSWR(
@@ -85,41 +86,14 @@ const ClientComponent = () => {
                       <h2
                         className={`w-full flex gap-2 ${marcellus.className} text-2xl`}
                       >
-                        <span>
-                          {(() => {
-                            const groom = c.participants.filter(
-                              (p) => p.role === "groom"
-                            );
-                            const bride = c.participants.filter(
-                              (p) => p.role === "bride"
-                            );
-                            const participant = c.participants.filter(
-                              (p) => p.role === "participant"
-                            );
-
-                            let name = "";
-
-                            if (participant.length === 2) {
-                              name = `${participant[0].nickname} & ${participant[1].nickname}`;
-                            } else if (participant.length > 2) {
-                              const allButLast = participant
-                                .slice(0, -1)
-                                .map((p) => p.nickname)
-                                .join(", ");
-                              const last =
-                                participant[participant.length - 1].nickname;
-                              name = `${allButLast} & ${last}`;
-                            } else {
-                              name = `${groom[0].nickname} & ${bride[0].nickname}`;
-                            }
-                            return name;
-                          })()}
+                        <span className="line-clamp-2">
+                          {getParticipantNames(c.participants)}
                         </span>
                       </h2>
                       <p
                         className={`font-light text-zinc-200 ${afacad.className}`}
                       >
-                        Undangan {c.theme?.category}
+                        Undangan {c.theme_category?.name}
                       </p>
                     </div>
                   </SwiperSlide>
