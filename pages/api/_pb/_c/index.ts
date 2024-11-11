@@ -96,7 +96,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             FROM participants p
             JOIN clients c ON p.client_id = c.id
             WHERE c.id = ANY($1::int[])
-            ORDER BY p.updated_at DESC
+            ORDER BY p.id ASC
         `,
           [clientIds]
         );

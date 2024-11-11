@@ -30,7 +30,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             SELECT *
             FROM participants
             WHERE client_id = $1
-            ORDER BY updated_at ASC`,
+            ORDER BY id ASC`,
             [client.id]
           );
 
