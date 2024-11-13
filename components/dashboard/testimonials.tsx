@@ -64,7 +64,7 @@ const TestimonialsComponent = () => {
               {testimonials.map((t) => (
                 <SwiperSlide
                   key={`testimoni-${t.id}`}
-                  className="bg-dashboard-dark p-8 rounded text-white mb-6"
+                  className="bg-dashboard-dark p-8 rounded text-white mb-8"
                 >
                   <div className="flex items-center gap-x-4 ">
                     <div className="w-14 h-14 min-w-14 min-h-14 text-xl rounded-full bg-zinc-100 flex justify-center items-center text-dashboard-dark relative">

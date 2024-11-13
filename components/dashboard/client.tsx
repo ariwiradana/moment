@@ -68,7 +68,7 @@ const ClientComponent = () => {
                 clients.map((c) => (
                   <SwiperSlide
                     key={`client-${c.id}`}
-                    className="bg-dashboard-dark p-8 rounded aspect-square text-white relative mb-6"
+                    className="bg-dashboard-dark p-8 rounded aspect-square text-white relative mb-8"
                   >
                     <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#000000ca]"></div>
                     <Image
