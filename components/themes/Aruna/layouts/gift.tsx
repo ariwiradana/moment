@@ -63,7 +63,7 @@ const GiftComponent: FC<Props> = (props) => {
             className="flex justify-center relative z-20 px-8 pt-4"
           >
             <div
-              className={`w-full max-w-sm aspect-[2/1.2] p-6 flex flex-col justify-between rounded-2xl bg-white`}
+              className={`w-full max-w-sm aspect-[1.5/1] p-6 flex flex-col justify-between rounded-2xl bg-white`}
             >
               <div className="flex justify-between">
                 <Image
