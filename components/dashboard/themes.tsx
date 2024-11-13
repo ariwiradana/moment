@@ -13,8 +13,9 @@ const ThemeComponent: FC = () => {
   const { data } = useSWR("/api/_pb/_th?order=DESC", fetcher);
 
   const themes: Theme[] = data?.data || [];
-
-  const slideThemes = themes && themes.length > 4 ? themes.slice(0, 4) : themes;
+  const maxShown = 4;
+  const slideThemes =
+    themes && themes.length > maxShown ? themes.slice(0, maxShown) : themes;
 
   if (slideThemes.length > 0)
     return (
@@ -41,16 +42,18 @@ const ThemeComponent: FC = () => {
                 menyesuaikan dengan konsep acara Anda.
               </p>
             </div>
-            <Link href="/tema" aria-label="all-theme-link">
-              <div className="flex gap-x-2 items-center">
-                <p
-                  className={`${afacad.className} text-lg whitespace-nowrap font-medium`}
-                >
-                  Lihat Semua Tema
-                </p>
-                <HiArrowLongRight className="mt-1 text-xl" />
-              </div>
-            </Link>
+            {themes.length > maxShown && (
+              <Link href="/tema" aria-label="all-theme-link">
+                <div className="flex gap-x-2 items-center">
+                  <p
+                    className={`${afacad.className} text-lg whitespace-nowrap font-medium`}
+                  >
+                    Lihat Semua Tema
+                  </p>
+                  <HiArrowLongRight className="mt-1 text-xl" />
+                </div>
+              </Link>
+            )}
           </div>
 
           <div
@@ -71,18 +74,20 @@ const ThemeComponent: FC = () => {
             })}
           </div>
 
-          <div
-            className="mt-8 flex justify-center md:hidden"
-            data-aos="fade-up"
-          >
-            <Link href="/tema" aria-label="all-theme-link">
-              <ButtonPrimary
-                icon={<BiGridHorizontal />}
-                title="Lihat Semua Tema"
-                size="medium"
-              />
-            </Link>
-          </div>
+          {themes.length > maxShown && (
+            <div
+              className="mt-8 flex justify-center md:hidden"
+              data-aos="fade-up"
+            >
+              <Link href="/tema" aria-label="all-theme-link">
+                <ButtonPrimary
+                  icon={<BiGridHorizontal />}
+                  title="Lihat Semua Tema"
+                  size="medium"
+                />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
     );
