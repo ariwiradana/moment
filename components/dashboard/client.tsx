@@ -6,7 +6,6 @@ import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
-import { getParticipantNames } from "@/utils/getParticipantNames";
 
 const ClientComponent = () => {
   const { data } = useSWR(
@@ -87,7 +86,7 @@ const ClientComponent = () => {
                         className={`w-full flex gap-2 ${marcellus.className} text-xl`}
                       >
                         <span className="line-clamp-1">
-                          {getParticipantNames(c.participants)}
+                          {c.name}
                         </span>
                       </h2>
                       <p
