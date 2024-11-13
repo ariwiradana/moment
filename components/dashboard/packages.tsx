@@ -136,7 +136,7 @@ const PackageComponent = () => {
                       !p.custom_cover && "line-through text-gray-300"
                     }`}
                   >
-                    Pilih cover foto / Cover video
+                    Pilih cover foto / video cover
                   </li>
                   <li
                     className={`list-disc ${

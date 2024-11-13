@@ -96,7 +96,6 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             onSubmit={actions.handleSubmit}
           >
             <Input
-              disabled
               value={state.formData.name}
               onChange={(e) =>
                 actions.handleChangeClient(e.target.value, "name")

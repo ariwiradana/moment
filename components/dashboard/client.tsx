@@ -84,9 +84,9 @@ const ClientComponent = () => {
                     />
                     <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
                       <h2
-                        className={`w-full flex gap-2 ${marcellus.className} text-2xl`}
+                        className={`w-full flex gap-2 ${marcellus.className} text-xl`}
                       >
-                        <span className="line-clamp-2">
+                        <span className="line-clamp-1">
                           {getParticipantNames(c.participants)}
                         </span>
                       </h2>

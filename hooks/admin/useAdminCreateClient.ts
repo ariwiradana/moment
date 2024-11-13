@@ -48,6 +48,7 @@ const initialEvent: Event = {
 
 const initalFormData: Client & { coverVideo: FileList | null } = {
   name: "",
+  slug: "",
   opening_title: "",
   opening_description: "",
   closing_title: "",

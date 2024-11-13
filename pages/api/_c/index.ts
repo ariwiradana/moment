@@ -211,14 +211,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           }
         }
 
-        const slug = createSlug(client.name);
-
-        if (slug) {
+        let sanitizeSlug: string = "";
+        if (client.slug) {
+          sanitizeSlug = createSlug(client.slug);
           const checkSlug = await sql.query(
             `SELECT EXISTS (SELECT 1 FROM clients WHERE slug = $1);`,
-            [slug]
+            [sanitizeSlug]
           );
-          if (checkSlug.rows[0].exists) {
+          if (checkSlug.rows.length > 0 && checkSlug.rows[0].exists) {
             return handleError(
               response,
               new Error("Client exists with the provided slug.")
@@ -251,7 +251,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           `;
 
         const resultClient = await sql.query(queryClient, [
-          slug,
+          sanitizeSlug,
           client.name,
           client.theme_id,
           client.theme_category_id,
@@ -364,8 +364,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           return handleError(response, new Error("id required"));
         }
 
-        const slug = createSlug(client.name);
-
         const updateClientQuery = `
           UPDATE clients
           SET
@@ -392,7 +390,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         await sql.query(updateClientQuery, [
           client.name,
           client.theme_id,
-          slug,
+          client.slug,
           client.gallery,
           client.videos,
           client.cover,

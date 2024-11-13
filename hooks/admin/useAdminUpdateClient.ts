@@ -44,6 +44,7 @@ const initialEvent: Event = {
 const initalFormData: Client = {
   id: undefined,
   name: "",
+  slug: "",
   theme_id: null,
   package_id: null,
   events: [initialEvent],
@@ -61,7 +62,6 @@ const initalFormData: Client = {
   gift_account_number: "",
   is_preview: false,
   status: null,
-  slug: "",
   theme_category_id: null,
 };
 
@@ -205,6 +205,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         ...state,
         id: currentClient.id,
         name: currentClient.name,
+        slug: currentClient.slug,
         theme_id: !currentClient.theme_id
           ? (themeOptions[0].value as number)
           : currentClient.theme_id,
@@ -224,7 +225,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         gift_account_name: currentClient.gift_account_name,
         is_preview: currentClient.is_preview,
         status: currentClient.status,
-        slug: currentClient.slug,
         theme_category_id: !currentClient.theme_category_id
           ? (themeCategoryOptions[0].value as number)
           : currentClient.theme_category_id,
