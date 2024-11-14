@@ -86,7 +86,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const { rows } = await sql.query(query, values);
-        const { rows: packages } = await sql.query(`SELECT * FROM packages`);
+        const { rows: packages } = await sql.query(
+          `SELECT * FROM packages ORDER BY id ASC`
+        );
         const { rows: themeCategories } = await sql.query(
           `SELECT * FROM theme_categories`
         );
