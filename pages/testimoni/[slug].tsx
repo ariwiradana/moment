@@ -59,10 +59,9 @@ const DashboardTestimonial: FC<Props> = (props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const toastSubmit = toast.loading("Membuat testimoni...");
     try {
       schema.parse(formData);
-
+      toast.loading("Membuat testimoni...");
       setLoading(true);
 
       const payload = {
@@ -77,7 +76,7 @@ const DashboardTestimonial: FC<Props> = (props) => {
       });
 
       if (!response.ok) {
-        toast.error("Gagal membuat testimoni", { id: toastSubmit });
+        toast.error("Gagal membuat testimoni");
         throw new Error("Gagal membuat testimoni");
       }
 
@@ -90,7 +89,6 @@ const DashboardTestimonial: FC<Props> = (props) => {
         toast.success(
           "Berhasil membuat testimoni. Terima kasih atas dukungan dan kepercayaan Anda!",
           {
-            id: toastSubmit,
             icon: (
               <div className="p-1 rounded bg-dashboard-primary">
                 <BiCheck />
@@ -101,6 +99,7 @@ const DashboardTestimonial: FC<Props> = (props) => {
         setActiveSection("section1");
         router.push("/");
       }
+      toast.dismiss();
     } catch (error) {
       if (error instanceof z.ZodError) {
         const validationErrors: ErrorState = {};
@@ -108,8 +107,10 @@ const DashboardTestimonial: FC<Props> = (props) => {
           validationErrors[err.path.join(".")] = err.message;
         });
         setErrors(validationErrors);
+      } else {
+        toast.error("Gagal membuat testimoni");
       }
-      toast.error("Gagal membuat testimoni", { id: toastSubmit });
+      toast.dismiss();
     }
   };
 
@@ -178,7 +179,7 @@ const DashboardTestimonial: FC<Props> = (props) => {
                       />
                       <Input
                         disabled
-                        defaultValue={client?.theme?.category}
+                        defaultValue={client?.theme_category?.name}
                         label="Kategori Undangan"
                       />
                       <Input

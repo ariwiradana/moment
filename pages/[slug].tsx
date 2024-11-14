@@ -27,8 +27,6 @@ const MainPage: FC<Props> = ({ untuk, client }) => {
 
   if (!client) return <ClientNotFound />;
 
-  console.log(client);
-
   const themeName = client.theme?.name || "";
 
   const ThemeComponent = themes[themeName];
