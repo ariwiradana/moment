@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import useDashboardStore from "@/lib/dashboardStore";
 
 const HeroComponent = () => {
-  const { data } = useSWR(`/api/_pb/_th`, fetcher);
+  const { data } = useSWR(`/api/_pb/_th?order=DESC`, fetcher);
 
   const themes: Theme[] = data?.data || [];
   const slideThemes = themes.filter((th) => th.phone_thumbnail !== null) || [];
