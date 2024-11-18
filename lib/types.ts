@@ -9,6 +9,7 @@ export interface Theme {
   created_at?: Date | string;
   updated_at?: Date | string;
   thumbnail?: string | null;
+  phone_thumbnail?: string | null;
   package_ids: number[];
   packages?: Package[];
   theme_category_ids: number[];

@@ -139,6 +139,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const {
           name,
           thumbnail,
+          phone_thumbnail,
           package_ids,
           theme_category_ids,
           cover_video,
@@ -148,10 +149,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const { rows } = await sql.query(
           `
-            INSERT INTO themes (name, slug, thumbnail, package_ids, theme_category_ids, cover_video) 
-            VALUES ($1, $2, $3, $4, $5, $6) 
+            INSERT INTO themes (name, slug, thumbnail, phone_thumbnail, package_ids, theme_category_ids, cover_video) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7) 
             RETURNING *;`,
-          [name, slug, thumbnail, package_ids, theme_category_ids, cover_video]
+          [
+            name,
+            slug,
+            thumbnail,
+            phone_thumbnail,
+            package_ids,
+            theme_category_ids,
+            cover_video,
+          ]
         );
 
         return res.status(200).json({
@@ -167,12 +176,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           id,
           name,
           thumbnail,
+          phone_thumbnail,
           package_ids,
           theme_category_ids,
           cover_video,
         } = req.body;
 
-        if (!id && !name && !thumbnail) {
+        if (!id && !name && !thumbnail && !phone_thumbnail) {
           return handleError(
             res,
             new Error("Please fill up the required field.")
@@ -198,10 +208,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         }
 
+        if (
+          theme.phone_thumbnail &&
+          theme.phone_thumbnail !== phone_thumbnail
+        ) {
+          if (process.env.NODE_ENV === "production") {
+            await del(theme.phone_thumbnail);
+          } else {
+            await delLocal(theme.phone_thumbnail);
+          }
+        }
+
         const text = `
           UPDATE themes
-          SET name = $1, slug = $2, thumbnail = $3, theme_category_ids = $4, package_ids = $5, cover_video = $6
-          WHERE id = $7
+          SET name = $1, slug = $2, thumbnail = $3, theme_category_ids = $4, package_ids = $5, cover_video = $6, phone_thumbnail = $7
+          WHERE id = $8
           RETURNING *;`;
 
         const slug = createSlug(name);
@@ -215,6 +236,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             theme_category_ids,
             package_ids,
             cover_video,
+            phone_thumbnail,
             id,
           ],
         });
@@ -246,11 +268,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const thumbnailURL = currentTheme[0].thumbnail;
+        const phoneThumbnailURL = currentTheme[0].phone_thumbnail;
         if (thumbnailURL) {
           if (process.env.NODE_ENV === "production") {
             await del(thumbnailURL);
           } else {
             await delLocal(thumbnailURL);
+          }
+        }
+
+        if (phoneThumbnailURL) {
+          if (process.env.NODE_ENV === "production") {
+            await del(phoneThumbnailURL);
+          } else {
+            await delLocal(phoneThumbnailURL);
           }
         }
 

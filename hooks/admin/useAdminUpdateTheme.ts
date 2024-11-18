@@ -11,6 +11,7 @@ const initalFormData: Theme = {
   id: null,
   name: "",
   thumbnail: null,
+  phone_thumbnail: null,
   package_ids: [],
   theme_category_ids: [],
   cover_video: false,
@@ -46,8 +47,8 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
   const [thumbnailImageForm, setThumbnailImageForm] = useState<null | FileList>(
     null
   );
-
-  console.log(thumbnailImageForm);
+  const [phoneThumbnailImageForm, setPhoneThumbnailImageForm] =
+    useState<null | FileList>(null);
 
   useEffect(() => {
     if (themes && themes.data.length > 0) {
@@ -58,6 +59,7 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
         id: currentTheme.id,
         name: currentTheme.name,
         thumbnail: currentTheme.thumbnail,
+        phone_thumbnail: currentTheme.phone_thumbnail,
         category: currentTheme.category ?? "Pernikahan",
         package_ids: currentTheme.package_ids ?? [],
         theme_category_ids: currentTheme.theme_category_ids ?? [],
@@ -72,6 +74,8 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
   ) => {
     if (name === "thumbnail") {
       setThumbnailImageForm(value as FileList);
+    } else if (name === "phone_thumbnail") {
+      setPhoneThumbnailImageForm(value as FileList);
     } else if (name === "package_ids" || name === "theme_category_ids") {
       let currentValues = [...formData[name]];
       if (currentValues.includes(Number(value))) {
@@ -93,16 +97,22 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
 
   const clearFileInput = () => {
     const thumbInput = document.getElementById("thumbnail") as HTMLInputElement;
+    const phoneThumbInput = document.getElementById(
+      "phone_thumbnail"
+    ) as HTMLInputElement;
     if (thumbInput) thumbInput.value = "";
+    if (phoneThumbInput) phoneThumbInput.value = "";
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    const newImageUrl = await handleUploadThumbnail();
+    const newThumbnailURL = await handleUploadThumbnail();
+    const newPhoneThumbnailURL = await handleUploadPhoneThumbnail();
     const modifiedFormdata: Theme = { ...formData };
-    modifiedFormdata["thumbnail"] = newImageUrl;
+    modifiedFormdata["thumbnail"] = newThumbnailURL;
+    modifiedFormdata["phone_thumbnail"] = newPhoneThumbnailURL;
 
     const updateTheme = async () => {
       const response = await getClient(
@@ -171,6 +181,47 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
         }
       } catch (error: any) {
         toast.error(error.message || `Error uploading thumbnail image`, {
+          id: toastUpload,
+        });
+      }
+    }
+    return imageURL;
+  };
+
+  const handleUploadPhoneThumbnail = async () => {
+    let imageURL = formData.phone_thumbnail;
+    if (phoneThumbnailImageForm && phoneThumbnailImageForm.length) {
+      const MAX_SIZE = 5 * 1024 * 1024;
+
+      let i = 0;
+
+      const toastUpload = toast.loading(`Uploading phone thumbnail image...`);
+      try {
+        const image = phoneThumbnailImageForm[0];
+        if (image.size > MAX_SIZE) {
+          toast.error(`Phone thumbnnail image size to large`, {
+            id: toastUpload,
+          });
+        }
+
+        const res = await getClient(
+          `/api/_ub?filename=Themes/Phone ${formData.name}.${
+            image.type.split("/")[1]
+          }`,
+          {
+            method: "POST",
+            body: image,
+          }
+        );
+        const result = await res.json();
+        if (result.success) {
+          toast.success(`Phone thumbnail image uploaded successfully!`, {
+            id: toastUpload,
+          });
+          imageURL = result.data.url;
+        }
+      } catch (error: any) {
+        toast.error(error.message || `Error uploading phone thumbnail image`, {
           id: toastUpload,
         });
       }

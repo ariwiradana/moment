@@ -5,7 +5,7 @@ import { BiCalendarEvent, BiEdit } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Blob } from "@/lib/types";
+import { Theme } from "@/lib/types";
 import { Autoplay, EffectCards } from "swiper/modules";
 import { dm, marcellus } from "@/lib/fonts";
 import toast from "react-hot-toast";
@@ -13,12 +13,10 @@ import { useRouter } from "next/router";
 import useDashboardStore from "@/lib/dashboardStore";
 
 const HeroComponent = () => {
-  const { data } = useSWR(`/api/_im?pathname=Themes/Dashboard`, fetcher);
+  const { data } = useSWR(`/api/_pb/_th`, fetcher);
 
-  const blobs: Blob[] = data?.blobs || [];
-
-  const slideThumbs = blobs && blobs.length > 3 ? blobs.slice(3) : blobs;
-
+  const themes: Theme[] = data?.data || [];
+  const slideThemes = themes.filter((th) => th.phone_thumbnail !== null) || [];
   const router = useRouter();
 
   const { setSelectedPackageId } = useDashboardStore();
@@ -30,7 +28,7 @@ const HeroComponent = () => {
     >
       <div className="max-w-screen-2xl mx-auto flex flex-col md:grid md:grid-cols-5 gap-16 lg:gap-36 pt-16 pb-24 lg:pb-32 relative px-6 md:px-12 lg:px-24">
         <div className="h-full flex justify-center md:col-span-2">
-          {slideThumbs.length > 0 && (
+          {slideThemes.length > 0 && (
             <div className="w-[180px] lg:w-[260px]" data-aos="zoom-out-up">
               <Swiper
                 speed={2000}
@@ -49,7 +47,7 @@ const HeroComponent = () => {
                   perSlideRotate: 4,
                 }}
               >
-                {slideThumbs.map((image, index) => (
+                {slideThemes.map((theme, index) => (
                   <SwiperSlide
                     className="select-none"
                     key={`thumbnail-${index}`}
@@ -57,7 +55,7 @@ const HeroComponent = () => {
                     <Image
                       priority
                       sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
-                      src={image.url ?? ""}
+                      src={theme.phone_thumbnail ?? ""}
                       alt={`thumbnail-${index}`}
                       width={260}
                       height={80}

@@ -107,45 +107,95 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
               </div>
             </div>
 
-            <Input
-              id="thumbnail"
-              accept="image/*"
-              type="file"
-              multiple
-              onChange={(e) =>
-                actions.handleChange(e.target.files as FileList, "thumbnail")
-              }
-              className="w-full"
-              label="Thumbnail"
-            />
-            {state.formData.thumbnail && (
-              <div className="md:w-1/2 w-full relative">
-                <div className="relative h-[24rem]">
-                  <ImageShimmer
-                    priority
-                    alt="theme-thumbnail"
-                    src={state.formData.thumbnail ?? ""}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-                <div className="absolute top-2 right-2 z-10">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      actions.handleDeleteThumbnail(
-                        state.formData.thumbnail as string,
-                        state.formData.id as number
-                      )
-                    }
-                    disabled={state.loading || state.isLoading}
-                    className="w-5 h-5 rounded-full bg-gray-200 text-admin-dark flex justify-center items-center"
-                  >
-                    <BiX />
-                  </button>
-                </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-6">
+                <Input
+                  id="thumbnail"
+                  accept="image/*"
+                  type="file"
+                  onChange={(e) =>
+                    actions.handleChange(
+                      e.target.files as FileList,
+                      "thumbnail"
+                    )
+                  }
+                  className="w-full"
+                  label="Thumbnail"
+                />
+                {state.formData.thumbnail && (
+                  <div className="relative">
+                    <div className="relative w-full aspect-square">
+                      <ImageShimmer
+                        priority
+                        alt="theme-thumbnail"
+                        src={state.formData.thumbnail ?? ""}
+                        fill
+                        className="object-contain rounded-lg"
+                      />
+                    </div>
+                    <div className="absolute top-2 right-2 z-10">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          actions.handleDeleteThumbnail(
+                            state.formData.thumbnail as string,
+                            state.formData.id as number
+                          )
+                        }
+                        disabled={state.loading || state.isLoading}
+                        className="w-5 h-5 rounded-full bg-gray-200 text-admin-dark flex justify-center items-center"
+                      >
+                        <BiX />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+              <div className="flex flex-col gap-6">
+                <Input
+                  id="phone_thumbnail"
+                  accept="image/*"
+                  type="file"
+                  onChange={(e) =>
+                    actions.handleChange(
+                      e.target.files as FileList,
+                      "phone_thumbnail"
+                    )
+                  }
+                  className="w-full"
+                  label="Phone Thumbnail"
+                />
+                {state.formData.phone_thumbnail && (
+                  <div className="relative">
+                    <div className="relative w-full aspect-square">
+                      <ImageShimmer
+                        priority
+                        alt="theme-phone-thumbnail"
+                        src={state.formData.phone_thumbnail ?? ""}
+                        fill
+                        className="object-contain rounded-lg"
+                      />
+                    </div>
+                    <div className="absolute top-2 right-2 z-10">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          actions.handleDeleteThumbnail(
+                            state.formData.phone_thumbnail as string,
+                            state.formData.id as number
+                          )
+                        }
+                        disabled={state.loading || state.isLoading}
+                        className="w-5 h-5 rounded-full bg-gray-200 text-admin-dark flex justify-center items-center"
+                      >
+                        <BiX />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
               <ButtonPrimary
                 isloading={state.loading || state.isLoading}

@@ -3,6 +3,7 @@ CREATE TABLE themes (
   slug VARCHAR(255) UNIQUE,
   name VARCHAR(255),
   thumbnail VARCHAR(255),
+  phone_thumbnail VARCHAR(255),
   price INTEGER,
   package_ids INTEGER[],
   theme_category_ids INTEGER[],

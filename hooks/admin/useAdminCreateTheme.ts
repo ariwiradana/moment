@@ -9,6 +9,7 @@ import { fetcher } from "@/lib/fetcher";
 interface FormData {
   name: string;
   thumbnail: FileList | null | string;
+  phone_thumbnail: FileList | null | string;
   package_ids: Number[];
   theme_category_ids: Number[];
   cover_video: boolean;
@@ -17,6 +18,7 @@ interface FormData {
 const initalFormData: FormData = {
   name: "",
   thumbnail: null,
+  phone_thumbnail: null,
   package_ids: [],
   theme_category_ids: [],
   cover_video: false,
@@ -45,12 +47,15 @@ export const useAdminCreateTheme = (token: string | null) => {
   ) => {
     const { name, value } = e.target;
 
-    if (name === "thumbnail" && e.target.type === "file") {
+    if (
+      ["thumbnail", "phone_thumbnail"].includes(name) &&
+      e.target.type === "file"
+    ) {
       const files = e.target.files;
       if (files && files.length > 0) {
         setFormData((state) => ({
           ...state,
-          thumbnail: files,
+          [name]: files,
         }));
       }
     } else if (name === "package_ids" || name === "theme_category_ids") {
@@ -77,12 +82,9 @@ export const useAdminCreateTheme = (token: string | null) => {
     }
   };
 
-  console.log({ formData });
-
   const handleUploadThumbnail = async () => {
     let url = "";
     if (formData.thumbnail) {
-      console.log("thunggg");
       const MAX_SIZE = 5 * 1024 * 1024;
 
       if (formData.thumbnail instanceof FileList) {
@@ -118,15 +120,55 @@ export const useAdminCreateTheme = (token: string | null) => {
     }
     return url as string;
   };
+  const handleUploadPhoneThumbnail = async () => {
+    let url = "";
+    if (formData.phone_thumbnail) {
+      const MAX_SIZE = 5 * 1024 * 1024;
+
+      if (formData.phone_thumbnail instanceof FileList) {
+        const image = formData.phone_thumbnail[0];
+        const toastUpload = toast.loading(`Uploading phone thumbnail...`);
+        try {
+          if (image.size > MAX_SIZE) {
+            toast.error(`File size is to large`, { id: toastUpload });
+            return;
+          }
+          const res = await getClient(
+            `/api/_ub?filename=Themes/Phone ${formData.name}.${
+              image.type.split("/")[1]
+            }`,
+            {
+              method: "POST",
+              body: image,
+            }
+          );
+          const result = await res.json();
+          if (result.success) {
+            toast.success(`Phone thumbnail uploaded successfully!`, {
+              id: toastUpload,
+            });
+            url = result.data.url;
+          }
+        } catch (error: any) {
+          toast.error(error.message || `Error uploading phone thumbnail`, {
+            id: toastUpload,
+          });
+        }
+      }
+    }
+    return url as string;
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setLoading(true);
     const thumbnailURL = await handleUploadThumbnail();
+    const phoneThumbnailURL = await handleUploadPhoneThumbnail();
 
     const modifiedFormdata = { ...formData };
     modifiedFormdata["thumbnail"] = thumbnailURL ?? null;
+    modifiedFormdata["phone_thumbnail"] = phoneThumbnailURL ?? null;
 
     const createTheme = async () => {
       const response = await getClient(

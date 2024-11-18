@@ -51,12 +51,20 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
               />
             </div>
           </div>
-          <Input
-            onChange={actions.handleChange}
-            name="thumbnail"
-            type="file"
-            label="Thumbnail"
-          />
+          <div className="grid md:grid-cols-2 gap-4">
+            <Input
+              onChange={actions.handleChange}
+              name="thumbnail"
+              type="file"
+              label="Thumbnail"
+            />
+            <Input
+              onChange={actions.handleChange}
+              name="phone_thumbnail"
+              type="file"
+              label="Phone Thumbnail"
+            />
+          </div>
           <div>
             <p className="text-sm text-gray-700 mb-2">Theme Categories</p>
             <div className="flex gap-x-4">
