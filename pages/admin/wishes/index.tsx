@@ -59,7 +59,7 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                             {getInitial(review.name)}
                           </div>
                           <div>
-                            <h1 className="text-gray-800 font-semibold text-sm">
+                            <h1 className="text-gray-800 font-semibold text-sm whitespace-nowrap">
                               {review.name}
                             </h1>
                             <p className="text-gray-500 font-medium text-xs">
@@ -131,7 +131,9 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                                 </span>
                               </div>
                               <div>
-                                <span>{review.name}</span>
+                                <span className="whitespace-nowrap">
+                                  {review.name}
+                                </span>
                                 <p className="text-gray-500 font-medium text-xs">
                                   {review.attendant}
                                 </p>
