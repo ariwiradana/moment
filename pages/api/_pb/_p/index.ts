@@ -22,6 +22,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           values.push(Number(id));
         }
 
+        query += ` ORDER BY id ASC`;
+
         const { rows } = await sql.query(query, values);
         return res.status(200).json({
           success: true,
