@@ -66,12 +66,14 @@ const GiftComponent: FC<Props> = (props) => {
               className={`w-full max-w-sm aspect-[1.5/1] p-6 flex flex-col justify-between rounded-2xl bg-white`}
             >
               <div className="flex justify-between">
-                <Image
-                  height={0}
-                  width={46}
-                  alt="bank-chip"
-                  src="/images/aruna/bank-chip.png"
-                />
+                <div className="relative w-14">
+                  <Image
+                    fill
+                    alt="card-chip"
+                    src="/images/card-chip.svg"
+                    className="object-contain"
+                  />
+                </div>
                 <h1
                   className={`text-xl md:text-2xl font-semibold text-aruna-dark ${roboto.className}`}
                 >
