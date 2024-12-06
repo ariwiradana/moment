@@ -13,7 +13,6 @@ import {
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { getFilename } from "@/utils/getFilename";
 
 const initialParticipants: Participant = {
   name: "",
@@ -387,24 +386,20 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
               continue;
             }
 
-            const filename = getFilename(
-              "Clients",
-              formData.name,
-              "Gallery",
-              image.type
-            );
-
-            const res = await getClient(`/api/_ub?filename=${filename}`, {
+            const fd = new FormData();
+            fd.append("file", image);
+            const response = await fetch(`/api/_ub`, {
               method: "POST",
-              body: image,
+              body: fd,
             });
-            const result = await res.json();
+            const result = await response.json();
+
             if (result.success) {
               toast.success(
                 `Gallery image ${i} of ${galleryImagesForm.length} uploaded successfully!`,
                 { id: toastUpload }
               );
-              imageURLs.push(result.data.url);
+              imageURLs.push(result.data.secure_url);
             }
           } catch (error: any) {
             toast.error(
@@ -435,22 +430,19 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             return;
           }
 
-          const filename = getFilename(
-            "Clients",
-            formData.name,
-            "Music",
-            musicForm.type
-          );
-          const res = await getClient(`/api/_ub?filename=${filename}`, {
+          const fd = new FormData();
+          fd.append("file", musicForm);
+          const response = await fetch(`/api/_ub`, {
             method: "POST",
-            body: musicForm,
+            body: fd,
           });
-          const result = await res.json();
+          const result = await response.json();
+
           if (result.success) {
             toast.success(`Music uploaded successfully!`, {
               id: toastUpload,
             });
-            musicURL = result.data.url;
+            musicURL = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(error.message || `Error uploading music`);
@@ -477,22 +469,19 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             return;
           }
 
-          const filename = getFilename(
-            "Clients",
-            formData.name,
-            "Video",
-            coverVideoForm.type
-          );
-          const res = await getClient(`/api/_ub?filename=${filename}`, {
+          const fd = new FormData();
+          fd.append("file", coverVideoForm);
+          const response = await fetch(`/api/_ub`, {
             method: "POST",
-            body: coverVideoForm,
+            body: fd,
           });
-          const result = await res.json();
+          const result = await response.json();
+
           if (result.success) {
             toast.success(`Cover video uploaded successfully!`, {
               id: toastUpload,
             });
-            videoFileURL = result.data.url;
+            videoFileURL = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(error.message || `Error uploading cover video`);
@@ -671,19 +660,13 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             continue;
           }
 
-          const filename = getFilename(
-            "Clients",
-            formData.name,
-            "Participants",
-            image.type
-          );
-
-          const res = await getClient(`/api/_ub?filename=${filename}`, {
+          const fd = new FormData();
+          fd.append("file", image);
+          const response = await fetch(`/api/_ub`, {
             method: "POST",
-            body: image,
+            body: fd,
           });
-
-          const result = await res.json();
+          const result = await response.json();
 
           if (result.success) {
             toast.success(`Image participant ${i + 1} uploaded successfully!`, {
@@ -704,7 +687,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
               );
             }
 
-            currentParticipants[i].image = result.data.url;
+            currentParticipants[i].image = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(

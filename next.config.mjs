@@ -28,6 +28,11 @@ const nextConfig = {
         hostname: "placehold.co",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+      },
     ],
   },
   async redirects() {

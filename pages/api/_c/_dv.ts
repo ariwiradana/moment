@@ -1,12 +1,18 @@
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
-
 import { Client } from "@/lib/types";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
-import { del } from "@vercel/blob";
 import sql from "@/lib/db";
 import type { NextApiResponse, NextApiRequest } from "next";
-import delLocal from "@/lib/delLocal";
+import { v2 as cloudinary } from "cloudinary";
+import { getCloudinaryID } from "@/utils/getCloudinaryID";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   const { url, id } = request.body;
@@ -36,11 +42,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     );
 
     if (!isYoutubeVideo(url)) {
-      if (process.env.NODE_ENV === "production") {
-        await del(url);
-      } else {
-        await delLocal(url)
-      }
+      const publicId = getCloudinaryID(url as string);
+      const env = process.env.NODE_ENV || "development";
+      await cloudinary.uploader.destroy(`${env}/${publicId}`);
     }
 
     return response.status(200).json({

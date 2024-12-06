@@ -14,7 +14,6 @@ import {
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { getFilename } from "@/utils/getFilename";
 import * as z from "zod";
 
 type ErrorState = Record<string, string>;
@@ -44,7 +43,6 @@ const initialEvent: Event = {
   start_time: moment("06:00", "HH:mm").format("HH:mm"),
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
-
 
 const initalFormData: Client & { coverVideo: FileList | null } = {
   name: "",
@@ -170,23 +168,21 @@ export const useAdminCreateClient = (token: string | null) => {
               });
               continue;
             }
-            const filename = getFilename(
-              "Clients",
-              formData.name,
-              "Gallery",
-              image.type
-            );
-            const res = await getClient(`/api/_ub?filename=${filename}`, {
+
+            const fd = new FormData();
+            fd.append("file", image);
+            const response = await fetch(`/api/_ub`, {
               method: "POST",
-              body: image,
+              body: fd,
             });
-            const result = await res.json();
+            const result = await response.json();
+
             if (result.success) {
               toast.success(
                 `Gallery image ${i} of ${images.length} uploaded successfully!`,
                 { id: toastUpload }
               );
-              imageURLs.push(result.data.url);
+              imageURLs.push(result.data.secure_url);
             }
           } catch (error: any) {
             toast.error(
@@ -221,23 +217,21 @@ export const useAdminCreateClient = (token: string | null) => {
               });
               continue;
             }
-            const filename = getFilename(
-              "Clients",
-              formData.name,
-              "Videos",
-              video.type
-            );
-            const res = await getClient(`/api/_ub?filename=${filename}`, {
+
+            const fd = new FormData();
+            fd.append("file", video);
+            const response = await fetch(`/api/_ub`, {
               method: "POST",
-              body: video,
+              body: fd,
             });
-            const result = await res.json();
+            const result = await response.json();
+
             if (result.success) {
               toast.success(
                 `Video ${i} of ${videos.length} uploaded successfully!`,
                 { id: toastUpload }
               );
-              videoURLs.push(result.data.url);
+              videoURLs.push(result.data.secure_url);
             }
           } catch (error: any) {
             toast.error(
@@ -268,20 +262,18 @@ export const useAdminCreateClient = (token: string | null) => {
             });
             return;
           }
-          const filename = getFilename(
-            "Clients",
-            formData.name,
-            "Music",
-            music.type
-          );
-          const res = await getClient(`/api/_ub?filename=${filename}`, {
+
+          const fd = new FormData();
+          fd.append("file", music);
+          const response = await fetch(`/api/_ub`, {
             method: "POST",
-            body: music,
+            body: fd,
           });
-          const result = await res.json();
+          const result = await response.json();
+
           if (result.success) {
             toast.success(`Music uploaded successfully!`, { id: toastUpload });
-            musicURL = result.data.url;
+            musicURL = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(error.message || `Error uploading music`);
@@ -309,22 +301,20 @@ export const useAdminCreateClient = (token: string | null) => {
             });
             return;
           }
-          const filename = getFilename(
-            "Clients",
-            formData.name,
-            "Video",
-            coverVideo.type
-          );
-          const res = await getClient(`/api/_ub?filename=${filename}`, {
+
+          const fd = new FormData();
+          fd.append("file", coverVideo);
+          const response = await fetch(`/api/_ub`, {
             method: "POST",
-            body: coverVideo,
+            body: fd,
           });
-          const result = await res.json();
+          const result = await response.json();
+
           if (result.success) {
             toast.success(`Cover video uploaded successfully!`, {
               id: toastUpload,
             });
-            coverVideoURL = result.data.url;
+            coverVideoURL = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(error.message || `Error uploading cover video`);
@@ -356,24 +346,19 @@ export const useAdminCreateClient = (token: string | null) => {
             continue;
           }
 
-          const filename = getFilename(
-            "Clients",
-            formData.name,
-            "Participants",
-            image.type
-          );
-          const res = await getClient(`/api/_ub?filename=${filename}`, {
+          const fd = new FormData();
+          fd.append("file", image);
+          const response = await fetch(`/api/_ub`, {
             method: "POST",
-            body: image,
+            body: fd,
           });
-
-          const result = await res.json();
+          const result = await response.json();
 
           if (result.success) {
             toast.success(`Image participant ${i + 1} uploaded successfully!`, {
               id: toastUpload,
             });
-            currentParticipants[i].image = result.data.url;
+            currentParticipants[i].image = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(
@@ -484,7 +469,6 @@ export const useAdminCreateClient = (token: string | null) => {
       events: [...formData.events, initialEvent],
     }));
   };
-  
 
   const handleChangeParticipant = (
     value: string | number | FileList,

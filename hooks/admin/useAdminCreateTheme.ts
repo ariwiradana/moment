@@ -6,7 +6,7 @@ import { Package, ThemeCategory } from "@/lib/types";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 
-interface FormData {
+interface Form {
   name: string;
   thumbnail: FileList | null | string;
   phone_thumbnail: FileList | null | string;
@@ -15,7 +15,7 @@ interface FormData {
   cover_video: boolean;
 }
 
-const initalFormData: FormData = {
+const initalFormData: Form = {
   name: "",
   thumbnail: null,
   phone_thumbnail: null,
@@ -25,7 +25,7 @@ const initalFormData: FormData = {
 };
 
 export const useAdminCreateTheme = (token: string | null) => {
-  const [formData, setFormData] = useState<FormData>(initalFormData);
+  const [formData, setFormData] = useState<Form>(initalFormData);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -95,21 +95,20 @@ export const useAdminCreateTheme = (token: string | null) => {
             toast.error(`File size is to large`, { id: toastUpload });
             return;
           }
-          const res = await getClient(
-            `/api/_ub?filename=Themes/${formData.name}.${
-              image.type.split("/")[1]
-            }`,
-            {
-              method: "POST",
-              body: image,
-            }
-          );
-          const result = await res.json();
+
+          const fd = new FormData();
+          fd.append("file", image);
+          const response = await fetch(`/api/_ub`, {
+            method: "POST",
+            body: fd,
+          });
+          const result = await response.json();
+
           if (result.success) {
             toast.success(`Thumbnail uploaded successfully!`, {
               id: toastUpload,
             });
-            url = result.data.url;
+            url = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(error.message || `Error uploading thumbnail`, {
@@ -133,21 +132,20 @@ export const useAdminCreateTheme = (token: string | null) => {
             toast.error(`File size is to large`, { id: toastUpload });
             return;
           }
-          const res = await getClient(
-            `/api/_ub?filename=Themes/Phone ${formData.name}.${
-              image.type.split("/")[1]
-            }`,
-            {
-              method: "POST",
-              body: image,
-            }
-          );
-          const result = await res.json();
+
+          const fd = new FormData();
+          fd.append("file", image);
+          const response = await fetch(`/api/_ub`, {
+            method: "POST",
+            body: fd,
+          });
+          const result = await response.json();
+
           if (result.success) {
             toast.success(`Phone thumbnail uploaded successfully!`, {
               id: toastUpload,
             });
-            url = result.data.url;
+            url = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(error.message || `Error uploading phone thumbnail`, {

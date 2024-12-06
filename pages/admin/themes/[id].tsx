@@ -139,7 +139,8 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                         onClick={() =>
                           actions.handleDeleteThumbnail(
                             state.formData.thumbnail as string,
-                            state.formData.id as number
+                            state.formData.id as number,
+                            'thumbnail'
                           )
                         }
                         disabled={state.loading || state.isLoading}
@@ -182,7 +183,8 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                         onClick={() =>
                           actions.handleDeleteThumbnail(
                             state.formData.phone_thumbnail as string,
-                            state.formData.id as number
+                            state.formData.id as number,
+                            'phone_thumbnail'
                           )
                         }
                         disabled={state.loading || state.isLoading}

@@ -10,12 +10,19 @@ import {
   Theme,
 } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
-import { del } from "@vercel/blob";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
-import delLocal from "@/lib/delLocal";
 import path from "path";
 import fs from "fs/promises";
+import { v2 as cloudinary } from "cloudinary";
+import { getCloudinaryID } from "@/utils/getCloudinaryID";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 interface Query {
   slug?: string;
@@ -571,6 +578,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             new Error("Client does not exist with the provided ID.")
           );
         }
+        const env = process.env.NODE_ENV || "development";
 
         const participantImages: string[] = currentClient
           .map((p) => p.participant_image)
@@ -578,15 +586,13 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
         if (participantImages.length > 0) {
           try {
-            await Promise.all(
-              participantImages.map(async (url) => {
-                if (process.env.NODE_ENV === "production") {
-                  await del(url);
-                } else {
-                  await delLocal(url);
-                }
-              })
+            const allParticipantImagePublicIDs = participantImages.map(
+              (url) => `${env}/${getCloudinaryID(url)}`
             );
+            if (allParticipantImagePublicIDs.length > 0)
+              await cloudinary.api.delete_resources(
+                allParticipantImagePublicIDs
+              );
             console.log("Participants deleted");
           } catch (error) {
             console.error("Error deleting participants:", error);
@@ -594,18 +600,16 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         } else {
           console.log("No participant URL found");
         }
+
         const galleryURLs: string[] = currentClient[0]?.gallery || [];
         if (galleryURLs.length > 0) {
           try {
-            await Promise.all(
-              galleryURLs.map(async (url) => {
-                if (process.env.NODE_ENV === "production") {
-                  await del(url);
-                } else {
-                  await delLocal(url);
-                }
-              })
+            const allGalleryPublicIDs = galleryURLs.map(
+              (url) => `${env}/${getCloudinaryID(url)}`
             );
+            if (allGalleryPublicIDs.length > 0)
+              await cloudinary.api.delete_resources(allGalleryPublicIDs);
+
             console.log("Gallery deleted");
           } catch (error) {
             console.error("Error deleting gallery URLs:", error);
@@ -617,15 +621,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const videoURLs: string[] = currentClient[0]?.videos || [];
         if (videoURLs.length > 0) {
           try {
-            await Promise.all(
-              videoURLs.map(async (url) => {
-                if (process.env.NODE_ENV === "production") {
-                  await del(url);
-                } else {
-                  await delLocal(url);
-                }
-              })
+            const allVideoPublicIDs = videoURLs.map(
+              (url) => `${env}/${getCloudinaryID(url)}`
             );
+            if (allVideoPublicIDs.length > 0)
+              await cloudinary.api.delete_resources(allVideoPublicIDs);
             console.log("Video deleted");
           } catch (error) {
             console.error("Error deleting video URLs:", error);
@@ -637,11 +637,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const musicURL: string | null = currentClient[0]?.music || null;
         if (musicURL && musicURL !== "") {
           try {
-            if (process.env.NODE_ENV === "production") {
-              await del(musicURL);
-            } else {
-              await delLocal(musicURL);
-            }
+            const musicPublicId = getCloudinaryID(musicURL as string);
+            await cloudinary.uploader.destroy(`${env}/${musicPublicId}`);
             console.log("Music deleted");
           } catch (error) {
             console.error("Error deleting music URL:", error);

@@ -162,22 +162,20 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
           });
         }
 
-        const res = await getClient(
-          `/api/_ub?filename=Themes/${formData.name}.${
-            image.type.split("/")[1]
-          }`,
-          {
-            method: "POST",
-            body: image,
-          }
-        );
-        const result = await res.json();
+        const fd = new FormData();
+        fd.append("file", image);
+        const response = await fetch(`/api/_ub`, {
+          method: "POST",
+          body: fd,
+        });
+        const result = await response.json();
+
         console.log({ result });
         if (result.success) {
           toast.success(`Thumbnail image uploaded successfully!`, {
             id: toastUpload,
           });
-          imageURL = result.data.url;
+          imageURL = result.data.secure_url;
         }
       } catch (error: any) {
         toast.error(error.message || `Error uploading thumbnail image`, {
@@ -204,21 +202,19 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
           });
         }
 
-        const res = await getClient(
-          `/api/_ub?filename=Themes/Phone ${formData.name}.${
-            image.type.split("/")[1]
-          }`,
-          {
-            method: "POST",
-            body: image,
-          }
-        );
-        const result = await res.json();
+        const fd = new FormData();
+        fd.append("file", image);
+        const response = await fetch(`/api/_ub`, {
+          method: "POST",
+          body: fd,
+        });
+        const result = await response.json();
+
         if (result.success) {
           toast.success(`Phone thumbnail image uploaded successfully!`, {
             id: toastUpload,
           });
-          imageURL = result.data.url;
+          imageURL = result.data.secure_url;
         }
       } catch (error: any) {
         toast.error(error.message || `Error uploading phone thumbnail image`, {
@@ -229,13 +225,14 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
     return imageURL;
   };
 
-  const handleDeleteThumbnail = (url: string, id: number) => {
+  const handleDeleteThumbnail = (url: string, id: number, flag: string) => {
     try {
       setLoading(true);
 
       const payload = {
         id,
         url,
+        flag,
       };
 
       const deleteBlob = async () => {

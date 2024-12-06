@@ -1,10 +1,17 @@
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 import { ApiHandler } from "@/lib/types";
-import { del } from "@vercel/blob";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
-import delLocal from "@/lib/delLocal";
+import { getCloudinaryID } from "@/utils/getCloudinaryID";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -32,13 +39,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           Number(deleteId),
         ]);
 
-        if (image_url) {
-          if (process.env.NODE_ENV === "production") {
-            await del(image_url as string);
-          } else {
-            await delLocal(image_url as string);
-          }
-        }
+        const publicId = getCloudinaryID(image_url as string);
+        const env = process.env.NODE_ENV || "development";
+        await cloudinary.uploader.destroy(`${env}/${publicId}`);
 
         result = {
           success: true,

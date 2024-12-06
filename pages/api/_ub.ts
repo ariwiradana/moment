@@ -1,37 +1,44 @@
-import { put } from "@vercel/blob";
-import { promises as fs } from "fs";
-import path from "path";
-import getRawBody from "raw-body";
 import type { NextApiResponse, NextApiRequest, PageConfig } from "next";
+import { v2 as cloudinary } from "cloudinary";
+import { IncomingForm, Fields, Files } from "formidable";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    const { filename } = req.query;
+    const parsedForm = await new Promise<{ fields: Fields; files: Files }>(
+      (resolve, reject) => {
+        const form = new IncomingForm();
+        form.parse(req, (err, fields, files) => {
+          if (err) reject(err);
+          else resolve({ fields, files });
+        });
+      }
+    );
 
-    if (typeof filename !== "string") {
-      return res
-        .status(400)
-        .json({ success: false, error: "Filename is required" });
-    }
+    const { files } = parsedForm;
+    const { file } = files as Files;
+
+    const folder = process.env.NODE_ENV || "development";
 
     try {
-      const rawBody = await getRawBody(req);
-
-      if (process.env.NODE_ENV === "production") {
-        const data = await put(filename, rawBody, {
-          access: "public",
-          multipart: true,
+      if (file?.length) {
+        const result = await cloudinary.uploader.upload(file[0].filepath, {
+          resource_type: "auto",
+          folder,
+          transformation: {
+            width: 1920,
+            crop: "scale",
+            fetch_format: "auto",
+            quality: "auto",
+          },
         });
-        return res.status(200).json({ success: true, data });
-      } else {
-        const url = path.join(process.cwd(), "public/uploads", filename);
-        await fs.mkdir(path.dirname(url), { recursive: true });
-        await fs.writeFile(url, rawBody);
-
-        return res.status(200).json({
-          success: true,
-          data: { url: `/uploads/${filename}` },
-        });
+        return res.status(200).json({ success: true, data: result });
       }
     } catch (error) {
       return res.status(500).json({

@@ -3,10 +3,19 @@ import { authenticateUser } from "@/lib/middleware";
 
 import { ApiHandler, Theme } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
-import { del } from "@vercel/blob";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
-import delLocal from "@/lib/delLocal";
+import { v2 as cloudinary } from "cloudinary";
+import { getCloudinaryID } from "@/utils/getCloudinaryID";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
+
+const env = process.env.NODE_ENV || "development";
 
 interface Query {
   id?: number;
@@ -201,22 +210,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const theme: Theme = currentThemes[0];
 
         if (theme.thumbnail && theme.thumbnail !== thumbnail) {
-          if (process.env.NODE_ENV === "production") {
-            await del(theme.thumbnail);
-          } else {
-            await delLocal(theme.thumbnail);
-          }
+          const thumbnailPublicId = getCloudinaryID(theme.thumbnail as string);
+          await cloudinary.uploader.destroy(`${env}/${thumbnailPublicId}`);
         }
 
         if (
           theme.phone_thumbnail &&
           theme.phone_thumbnail !== phone_thumbnail
         ) {
-          if (process.env.NODE_ENV === "production") {
-            await del(theme.phone_thumbnail);
-          } else {
-            await delLocal(theme.phone_thumbnail);
-          }
+          const phoneThumbnailPublicId = getCloudinaryID(
+            theme.phone_thumbnail as string
+          );
+
+          await cloudinary.uploader.destroy(`${env}/${phoneThumbnailPublicId}`);
         }
 
         const text = `
@@ -269,20 +275,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const thumbnailURL = currentTheme[0].thumbnail;
         const phoneThumbnailURL = currentTheme[0].phone_thumbnail;
+
         if (thumbnailURL) {
-          if (process.env.NODE_ENV === "production") {
-            await del(thumbnailURL);
-          } else {
-            await delLocal(thumbnailURL);
-          }
+          const thumbnailPublicId = getCloudinaryID(thumbnailURL as string);
+          const thumbnailResult = await cloudinary.uploader.destroy(
+            `${env}/${thumbnailPublicId}`
+          );
+          console.log({ thumbnailResult });
         }
 
         if (phoneThumbnailURL) {
-          if (process.env.NODE_ENV === "production") {
-            await del(phoneThumbnailURL);
-          } else {
-            await delLocal(phoneThumbnailURL);
-          }
+          const phoneThumbnailPublicId = getCloudinaryID(
+            phoneThumbnailURL as string
+          );
+          const phoneThumbnailResult = await cloudinary.uploader.destroy(
+            `${env}/${phoneThumbnailPublicId}`
+          );
+          console.log({ phoneThumbnailResult });
         }
 
         const { rows } = await sql.query(`
