@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "prod": "next build && next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -26,6 +27,7 @@
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "next": "14.2.13",
+    "next-sitemap": "^4.2.3",
     "pg": "^8.13.1",
     "raw-body": "^3.0.0",
     "react": "^18",
