@@ -146,10 +146,11 @@ const DashboardThemes = () => {
   return (
     <Layout>
       <Seo
+        url="https://momentinvitaions.com/tema"
         title="Koleksi Tema Kami | Moment"
-        description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
-        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        image="/images/logo-bg.jpg"
+        description="Koleksi tema undangan digital Moment"
+        keywords="momentinvitations, tema, undangan online, undangan pernikahan, undangan metatah, momentinvitations, moment"
+        image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
       <section className="md:pt-20 lg:pt-24">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 py-24">

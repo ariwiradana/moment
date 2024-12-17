@@ -69,10 +69,11 @@ const DashboardFeatures = () => {
   return (
     <Layout>
       <Seo
+        url="https://momentinvitaions.com/fitur"
         title="Semua Fitur Kami | Moment"
-        description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
-        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah"
-        image="/images/logo-bg.jpg"
+        description="Semua fitur undangan digital Moment"
+        keywords="momentinvitations, fitur, undangan online, undangan pernikahan, undangan metatah, momentinvitations, moment"
+        image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
       <section className="md:pt-20 lg:pt-24">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 py-24">

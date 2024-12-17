@@ -2,6 +2,7 @@ import Input from "@/components/admin/elements/input";
 import Loader from "@/components/admin/elements/loader";
 import InputTextarea from "@/components/admin/elements/textarea";
 import ButtonPrimary from "@/components/dashboard/elements/button.primary";
+import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
 import { getClient } from "@/lib/client";
 import useDashboardStore from "@/lib/dashboardStore";
@@ -9,7 +10,6 @@ import { fetcher } from "@/lib/fetcher";
 import { afacad, dm } from "@/lib/fonts";
 import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -116,9 +116,13 @@ const DashboardTestimonial: FC<Props> = (props) => {
 
   return (
     <Layout>
-      <Head>
-        <title>Testimoni</title>
-      </Head>
+      <Seo
+        url={`https://momentinvitations.com/${props.slug}`}
+        title="Testimoni | Moment"
+        description="Testimoni undangan digital Moment"
+        keywords={`testimoni, undangan digital, undangan online, undangan pernikahan, undangan metatah, moment invitation, moment, ${props.slug}`}
+        image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
+      />
 
       <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 lg:px-24">
         <div className="py-16">
