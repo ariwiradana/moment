@@ -62,6 +62,7 @@ const initalFormData: Client & { coverVideo: FileList | null } = {
   gallery: [],
   videos: [],
   cover: null,
+  seo: null,
   music: null,
   coverVideo: null,
   theme_category_id: null,
@@ -527,6 +528,8 @@ export const useAdminCreateClient = (token: string | null) => {
       ];
       modifiedFormdata["music"] = newMusicURL;
       modifiedFormdata["cover"] =
+        !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : null;
+      modifiedFormdata["seo"] =
         !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : null;
       modifiedFormdata["participants"] = updatedParticipant;
 

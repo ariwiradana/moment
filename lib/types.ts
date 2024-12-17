@@ -79,6 +79,7 @@ export interface Client {
   theme_category?: Package;
   theme?: Theme | null;
   cover: null | string;
+  seo: null | string;
   is_preview?: boolean;
   created_at?: Date | string;
   updated_at?: Date | string;

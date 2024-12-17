@@ -188,7 +188,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               label="Gallery"
             />
 
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-2">
+            <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-2">
               {Array.isArray(state.formData.gallery) &&
               state.formData.gallery.length > 0
                 ? state.formData.gallery.map((img: string, index: number) => (
@@ -219,8 +219,14 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             <span>Cover</span>
                           </div>
                         )}
+                        {state.formData.seo === img && (
+                          <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 backdrop-blur bg-admin-dark/30 text-white">
+                            <BiImageAlt className="text-base font-medium" />
+                            <span>Seo</span>
+                          </div>
+                        )}
                       </div>
-                      <div className="absolute -bottom-4 invisible inset-x-0 w-full bg-admin-dark/80 rounded-b-lg overflow-hidden z-10 opacity-0 group-hover:bottom-0 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500 flex justify-center">
+                      <div className="absolute -bottom-4 invisible inset-x-0 w-full bg-admin-dark/80 rounded-b-lg overflow-hidden z-10 opacity-0 group-hover:bottom-0 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500 flex flex-col justify-center">
                         {state.formData.cover !== img && (
                           <button
                             onClick={() =>
@@ -235,6 +241,22 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           >
                             <BiImageAdd className="text-base" />
                             <span>Set Cover Image</span>
+                          </button>
+                        )}
+                        {state.formData.seo !== img && (
+                          <button
+                            onClick={() =>
+                              actions.handleSetSeoImage(
+                                img,
+                                state.formData.id as number
+                              )
+                            }
+                            type="button"
+                            disabled={state.loading || state.isLoading}
+                            className="px-2 w-full font-medium hover:bg-admin-dark p-4 transition-colors ease-in-out duration-500 text-white flex justify-center items-center text-center text-xs gap-x-1"
+                          >
+                            <BiImageAdd className="text-base" />
+                            <span>Set Seo Image</span>
                           </button>
                         )}
                       </div>

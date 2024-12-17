@@ -50,6 +50,7 @@ const initalFormData: Client = {
   participants: [initialParticipants],
   gallery: [],
   cover: null,
+  seo: null,
   videos: [],
   music: null,
   opening_title: "",
@@ -211,6 +212,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         gallery: currentClient.gallery,
         videos: currentClient.videos,
         cover: currentClient.cover,
+        seo: currentClient.seo,
         participants: currentParticipants,
         events: currentEvents,
         music: currentClient.music,
@@ -729,6 +731,36 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     });
   };
 
+  const handleSetSeoImage = async (url: string, id: number) => {
+    const setCover = async () => {
+      const response = await getClient(
+        `/api/_c/_sse`,
+        {
+          method: "POST",
+          body: JSON.stringify({ url, id }),
+        },
+        token
+      );
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      return await response.json();
+    };
+    toast.promise(setCover(), {
+      loading: "Set seo image...",
+      success: () => {
+        mutate();
+        setLoading(false);
+        return "Successfully set seo image";
+      },
+      error: (error: any) => {
+        setLoading(false);
+        return error.message || "Failed to set seo image";
+      },
+    });
+  };
+
   const handleDeleteVideo = (url: string, id: number) => {
     try {
       setLoading(true);
@@ -932,6 +964,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       handleChangeEvent,
       handleDeleteEvent,
       handleDeleteParticipant,
+      handleSetSeoImage,
     },
   };
 };
