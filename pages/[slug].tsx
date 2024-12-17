@@ -9,6 +9,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "@/components/dashboard/elements/seo";
 import { getParticipantNames } from "@/utils/getParticipantNames";
+import useDisableInspect from "@/hooks/useDisableInspect";
 
 interface Props {
   slug: string;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const MainPage: FC<Props> = ({ untuk, client }) => {
+  useDisableInspect();
   useEffect(() => {
     AOS.init({
       duration: 1200,
