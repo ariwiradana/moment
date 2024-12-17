@@ -1,6 +1,6 @@
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
-import { ApiHandler } from "@/lib/types";
+import { ApiHandler, Package } from "@/lib/types";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -32,6 +32,41 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         handleError(res, error);
       }
+    case "PUT":
+      const body: Package = req.body;
+
+      const fields = [];
+      const values = [];
+      let valueIndex = 1;
+
+      for (const [key, value] of Object.entries(body)) {
+        if (
+          key !== "id" &&
+          key !== "created_at" &&
+          key !== "updated_at" &&
+          key !== "userId"
+        ) {
+          fields.push(`${key} = $${valueIndex}`);
+          values.push(value);
+          valueIndex++;
+        }
+      }
+      const setClause = fields.join(", ");
+      const query = `UPDATE packages SET ${setClause} WHERE id = $${valueIndex}`;
+
+      values.push(body.id);
+
+      try {
+        const { rows } = await sql.query(query, values);
+        return res.status(200).json({
+          success: true,
+          data: rows,
+          message: `Package ${body.name} successfully updated`,
+        });
+      } catch (error) {
+        handleError(res, error);
+      }
+      break;
 
     default:
       res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);

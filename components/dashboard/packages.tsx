@@ -9,8 +9,9 @@ import { formatToRupiah } from "@/utils/formatToRupiah";
 import useDashboardStore from "@/lib/dashboardStore";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-import { MdDiscount } from "react-icons/md";
-import { getDiscountPrice } from "@/utils/getDiscountPrice";
+import { calculateDiscountPercentage } from "@/utils/calculateDiscount";
+
+import { RiDiscountPercentFill } from "react-icons/ri";
 
 const PackageComponent = () => {
   const { data } = useSWR("/api/_pb/_p", fetcher);
@@ -18,6 +19,8 @@ const PackageComponent = () => {
   const router = useRouter();
 
   const pacakages: Package[] = data?.data || [];
+
+  console.log({ pacakages });
 
   if (pacakages.length > 0)
     return (
@@ -43,55 +46,83 @@ const PackageComponent = () => {
                 >
                   Paket {p.name}
                 </h2>
-                <h2
-                  className={`${afacad.className} text-xl mt-6 leading-4 ${
-                    isLast ? "text-white/50" : "text-dashboard-dark/50"
-                  } line-through`}
-                >
-                  {formatToRupiah(p.price)}
-                </h2>
-                <div className="flex items-center gap-2 mt-1">
+                {p.discount > 0 && (
+                  <h2
+                    className={`${afacad.className} text-xl mt-4 leading-4 ${
+                      isLast ? "text-white/50" : "text-dashboard-dark/50"
+                    } line-through`}
+                  >
+                    {formatToRupiah(p.price)}
+                  </h2>
+                )}
+                <div className="flex items-center gap-2 mt-2">
                   <h2
                     className={`${afacad.className} font-medium text-2xl md:text-3xl`}
                   >
-                    {formatToRupiah(getDiscountPrice(p.price, 20))}
+                    {formatToRupiah(p.price - p.discount)}
                   </h2>
 
-                  <div
-                    className={`${afacad.className} font-medium flex items-center gap-1 bg-dashboard-primary rounded-full px-2 py-1 text-sm text-dashboard-dark`}
-                  >
-                    <MdDiscount />
-                    {20}%
-                  </div>
+                  {p.discount > 0 && (
+                    <div
+                      className={`${afacad.className} font-medium flex items-center gap-1 bg-dashboard-primary rounded-full px-2 py-1 text-sm text-dashboard-dark`}
+                    >
+                      <RiDiscountPercentFill className="text-lg" />-{" "}
+                      {calculateDiscountPercentage(p.price, p.discount)}%
+                    </div>
+                  )}
                 </div>
                 <ul
                   className={`${afacad.className} mt-6 ml-4 text-lg capitalize leading-8`}
                 >
-                  <li className="list-disc">
-                    {p.unlimited_revisions && "Revisi tidak terbatas"}
-                  </li>
-                  <li className="list-disc">
-                    {p.unlimited_guest_names && "Nama tamu tidak terbatas"}
-                  </li>
-                  <li className="list-disc">
-                    {p.custom_opening_closing &&
-                      "Kustomisasi kalimat pembuka & penutup"}
-                  </li>
-                  <li className="list-disc">
-                    {p.max_events === "unlimited"
-                      ? "Acara tak terbatas per undangan"
-                      : `${p.max_events} acara per undangan`}
-                  </li>
-                  <li className="list-disc">Hitung Mundur Waktu</li>
-                  <li className="list-disc">
-                    Galeri foto (maksimal {p.max_gallery_photos} foto)
+                  <li
+                    className={`list-disc ${
+                      !p.unlimited_revisions && "line-through text-gray-300"
+                    }`}
+                  >
+                    Revisi tidak terbatas
                   </li>
                   <li
                     className={`list-disc ${
-                      p.max_videos === "0" && "line-through text-gray-300"
+                      !p.unlimited_guest_names && "line-through text-gray-300"
                     }`}
                   >
-                    {p.max_videos !== "0"
+                    Nama tamu tidak terbatas
+                  </li>
+                  <li
+                    className={`list-disc ${
+                      !p.custom_opening_closing && "line-through text-gray-300"
+                    }`}
+                  >
+                    Kustomisasi kalimat pembuka & penutup
+                  </li>
+                  <li
+                    className={`list-disc ${
+                      !p.countdown && "line-through text-gray-300"
+                    }`}
+                  >
+                    Hitung Mundur Waktu
+                  </li>
+                  <li className="list-disc">
+                    {Number(p.max_events) === 0
+                      ? "Acara tak terbatas per undangan"
+                      : `Maksimal ${p.max_events} acara per undangan`}
+                  </li>
+                  <li
+                    className={`list-disc ${
+                      Number(p.max_gallery_photos) === 0 &&
+                      "line-through text-gray-300"
+                    }`}
+                  >
+                    {Number(p.max_gallery_photos) !== 0
+                      ? `Galeri Foto (maksimal ${p.max_gallery_photos} foto)`
+                      : "Galeri Foto"}
+                  </li>
+                  <li
+                    className={`list-disc ${
+                      Number(p.max_videos) === 0 && "line-through text-gray-300"
+                    }`}
+                  >
+                    {Number(p.max_videos) !== 0
                       ? `Rekaman video (maksimal ${p.max_videos} video)`
                       : "Rekaman video"}
                   </li>
@@ -100,14 +131,14 @@ const PackageComponent = () => {
                       !p.contact_social_media && "line-through text-gray-300"
                     }`}
                   >
-                    Kontak media sosial
+                    Kontak Media Sosial
                   </li>
                   <li
                     className={`list-disc ${
                       !p.background_sound && "line-through text-gray-300"
                     }`}
                   >
-                    Musik latar
+                    Musik Latar
                   </li>
                   <li
                     className={`list-disc ${
@@ -123,7 +154,6 @@ const PackageComponent = () => {
                   >
                     Lokasi terintegrasi dengan Google Maps
                   </li>
-
                   <li
                     className={`list-disc ${
                       !p.add_to_calendar && "line-through text-gray-300"
@@ -149,7 +179,7 @@ const PackageComponent = () => {
                 <div className="mt-8">
                   <ButtonPrimary
                     onClick={() => {
-                      setSelectedPackageId(p.id);
+                      setSelectedPackageId(p.id as number);
                       toast.success(
                         `Silahkan pilih tema dengan Paket ${p.name} yang tersedia.`,
                         {

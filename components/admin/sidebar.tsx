@@ -5,6 +5,7 @@ import {
   BiFolder,
   BiLogOut,
   BiMessageSquareDots,
+  BiPackage,
   BiUser,
   BiX,
 } from "react-icons/bi";
@@ -39,6 +40,11 @@ const Sidebar: FC = () => {
       name: "Testimonials",
       path: "/admin/testimonials",
       icon: <BiMessageSquareDots />,
+    },
+    {
+      name: "Packages",
+      path: "/admin/packages",
+      icon: <BiPackage />,
     },
   ];
 

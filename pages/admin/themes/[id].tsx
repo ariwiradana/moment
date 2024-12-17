@@ -92,7 +92,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                   state.packages.map((pk) => (
                     <InputCheckbox
                       key={`package-${pk.id}`}
-                      checked={state.formData.package_ids.includes(pk.id)}
+                      checked={state.formData.package_ids.includes(pk.id as number)}
                       onChange={(e) =>
                         actions.handleChange(
                           Number(e.target.value),

@@ -296,9 +296,8 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                 }
               />
             ))}
-            {state.selectedPackage?.max_events === "unlimited" ||
-            state.formData.events.length <
-              Number(state.selectedPackage?.max_events) ? (
+            {state.formData.events.length <
+            Number(state.selectedPackage?.max_events) ? (
               <div>
                 <ButtonSecondary
                   onClick={actions.handleAddAnotherEvent}

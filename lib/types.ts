@@ -97,24 +97,26 @@ export interface Review {
 
 
 export interface Package {
-  id: number;
+  id?: number;
   name: string;
   unlimited_revisions: boolean;
   custom_opening_closing: boolean;
   unlimited_guest_names: boolean;
-  max_events: string;
-  max_gallery_photos: string;
+  max_events: number;
+  max_gallery_photos: number;
+  max_videos: number;
   contact_social_media: boolean;
   background_sound: boolean;
-  max_videos: string;
   rsvp_and_greetings: boolean;
   custom_cover: boolean;
   digital_envelope: boolean;
   google_maps_integration: boolean;
   add_to_calendar: boolean;
   price: number;
-  created_at: string;
-  updated_at: string;
+  discount: number;
+  countdown: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Blob {

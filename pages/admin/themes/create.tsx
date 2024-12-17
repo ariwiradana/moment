@@ -89,7 +89,7 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
               {state.packages.length > 0 &&
                 state.packages.map((pk: Package) => (
                   <InputCheckbox
-                    checked={state.formData?.package_ids?.includes(pk.id)}
+                    checked={state.formData?.package_ids?.includes(pk.id as number)}
                     key={`package-${pk.id}`}
                     onChange={actions.handleChange}
                     name="package_ids"
