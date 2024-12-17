@@ -76,7 +76,11 @@ const HeroComponent: FC<Props> = (props) => {
               {Array.isArray(props.state.client?.gallery) &&
               props.state.client?.gallery.length > 0
                 ? props.state.client.gallery
-                    .filter((image) => image !== props.state.client?.cover)
+                    .filter(
+                      (image) =>
+                        image !== props.state.client?.cover &&
+                        image !== props.state.client?.seo
+                    )
                     .map((image, index) => (
                       <SwiperSlide
                         className="relative w-full h-full"
