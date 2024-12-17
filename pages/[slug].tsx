@@ -47,10 +47,7 @@ const MainPage: FC<Props> = ({ untuk, client }) => {
         title={pageTitle}
         description={`${client?.opening_title}, ${client?.opening_description}`}
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-        image={
-          client?.seo ||
-          "https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
-        }
+        image={client?.seo as string}
       />
       {ThemeComponent(client, untuk)}
     </>
