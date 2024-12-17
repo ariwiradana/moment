@@ -31,7 +31,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
           <div>
             <ButtonPrimary
               size="small"
-              title="Add"
+              title="Add Theme"
               icon={<BiPlus className="text-lg" />}
             />
           </div>
