@@ -67,7 +67,8 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
           }
         />
       )}
-      {!client ? <ClientNotFound /> : ThemeComponent(untuk)}
+      {client && ThemeComponent(untuk)}
+      {!client && <ClientNotFound />}
     </>
   );
 };
