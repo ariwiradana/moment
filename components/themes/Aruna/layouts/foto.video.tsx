@@ -98,7 +98,7 @@ const GalleryComponent: FC<Props> = (props) => {
           <div className="flex justify-end z-10 fixed top-0 inset-x-0">
             <button
               onClick={() => setOpen(false)}
-              className="text-white/60 hover:text-white text-3xl p-4 relative z-10 transition-colors ease-in-out"
+              className="text-white/60 hover:text-white text-2xl md:text-3xl p-4 relative z-10 transition-colors ease-in-out"
             >
               <HiOutlineXMark />
             </button>
@@ -108,7 +108,7 @@ const GalleryComponent: FC<Props> = (props) => {
           <button
             disabled={imageIndex === 0}
             onClick={gotoPrevious}
-            className="text-white text-2xl p-1 relative z-10 disabled:opacity-30 bg-white/10 hover:bg-white/20 disabled:hover:bg-white/10 rounded-full flex justify-center items-center ml-3 md:ml-6 transition-colors ease-in-out backdrop-blur-lg"
+            className="text-white text-2xl p-1 relative z-10 disabled:opacity-30 bg-white/10 hover:bg-white/20 disabled:hover:bg-white/10 rounded-full flex justify-center items-center ml-3 md:ml-6 transition-colors ease-in-out backdrop-blur"
           >
             <HiChevronLeft />
           </button>
@@ -117,7 +117,7 @@ const GalleryComponent: FC<Props> = (props) => {
           <button
             disabled={imageIndex === lightboxImage.length - 1}
             onClick={gotoNext}
-            className="text-white text-2xl p-1 relative z-10 disabled:opacity-30 bg-white/10 hover:bg-white/20 disabled:hover:bg-white/10 rounded-full flex items-center justify-center mr-3 md:mr-6 transition-colors ease-in-out backdrop-blur-lg"
+            className="text-white text-2xl p-1 relative z-10 disabled:opacity-30 bg-white/10 hover:bg-white/20 disabled:hover:bg-white/10 rounded-full flex items-center justify-center mr-3 md:mr-6 transition-colors ease-in-out backdrop-blur"
           >
             <HiChevronRight />
           </button>
