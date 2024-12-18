@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useMemo, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
@@ -20,30 +20,39 @@ const GalleryComponent: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
-  const images =
-    Array.isArray(props.state.client?.gallery) &&
-    props.state.client?.gallery.length > 0
+  const images = useMemo(() => {
+    return Array.isArray(props.state.client?.gallery) &&
+      props.state.client?.gallery.length > 0
       ? props.state.client?.gallery.filter(
           (g) =>
             g !== props.state.client?.cover && g !== props.state.client?.seo
         )
       : [];
+  }, [
+    props.state.client?.gallery,
+    props.state.client?.cover,
+    props.state.client?.seo,
+  ]);
+
+  const videos = useMemo(() => {
+    return Array.isArray(props.state.client?.videos) &&
+      props.state.client.videos.length > 0
+      ? props.state.client.videos
+      : [];
+  }, [props.state.client?.videos]);
 
   const lightboxImage = images.map((img, index) => ({
     src: img,
     alt: `gallery-${index + 1}`,
   }));
 
-  const gotoPrevious = () => imageIndex > 0 && setImageIndex(imageIndex - 1);
+  const gotoPrevious = useCallback(() => {
+    if (imageIndex > 0) setImageIndex(imageIndex - 1);
+  }, [imageIndex]);
 
-  const gotoNext = () =>
-    imageIndex + 1 < images.length && setImageIndex(imageIndex + 1);
-
-  const videos =
-    Array.isArray(props.state.client?.videos) &&
-    props.state.client.videos.length > 0
-      ? props.state.client.videos
-      : [];
+  const gotoNext = useCallback(() => {
+    if (imageIndex + 1 < images.length) setImageIndex(imageIndex + 1);
+  }, [imageIndex, images.length]);
 
   const gridImages = images.length > 6 ? images.slice(0, 6) : images;
   const slideImages = images.length > 6 ? images.slice(6) : [];
@@ -67,10 +76,11 @@ const GalleryComponent: FC<Props> = (props) => {
 
   const handleToggleLightbox = useCallback(
     (idx: number) => {
+      if (images.length === 0 || idx < 0 || idx >= images.length) return;
       setImageIndex(idx);
-      setOpen(!open);
+      setOpen((prev) => !prev);
     },
-    [images, open]
+    [images, imageIndex]
   );
 
   return (
@@ -100,7 +110,10 @@ const GalleryComponent: FC<Props> = (props) => {
               {imageIndex + 1} / {lightboxImage.length}
             </p>
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                setImageIndex(0);
+              }}
               className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out backdrop-blur-sm"
             >
               <HiOutlineXMark />
