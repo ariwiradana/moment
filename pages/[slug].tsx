@@ -21,36 +21,48 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
   const { client, setClient } = useClientStore();
 
   useDisableInspect();
+
   useEffect(() => {
+    if (!client) {
+      setClient(clientData);
+    }
+
     AOS.init({
       duration: 1200,
       offset: 0,
       once: true,
     });
-    setClient(clientData);
-  }, []);
+  }, [clientData, client, setClient]);
 
   const themeName = client?.theme?.name || "";
-
   const ThemeComponent = themes[themeName];
   const participantNames = getParticipantNames(client?.participants || []);
 
   const pageTitle = client
-    ? client?.status === "unpaid"
-      ? `Preview ${participantNames} | Undangan ${client?.theme_category?.name}`
-      : client?.is_preview
-      ? `Preview Undangan Tema ${client?.theme?.name} | Moment`
-      : `${participantNames} | Undangan ${client?.theme_category?.name}`
+    ? client.status === "unpaid"
+      ? `Preview ${participantNames || ""} | Undangan ${
+          client?.theme_category?.name || ""
+        }`
+      : client.is_preview
+      ? `Preview Undangan Tema ${client?.theme?.name || ""} | Moment`
+      : `${participantNames || ""} | Undangan ${
+          client?.theme_category?.name || ""
+        }`
     : "Moment";
 
   return (
     <>
       <Seo
-        url={`https://momentinvitations.com/${client?.slug}`}
+        url={`https://momentinvitations.com/${client?.slug || ""}`}
         title={pageTitle}
-        description={`${client?.opening_title}, ${client?.opening_description}`}
+        description={`${client?.opening_title || ""}, ${
+          client?.opening_description || ""
+        }`}
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-        image={client?.seo as string}
+        image={
+          client?.seo ||
+          "https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
+        }
       />
       {!client ? <ClientNotFound /> : ThemeComponent(untuk)}
     </>
