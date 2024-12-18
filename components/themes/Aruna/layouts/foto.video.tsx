@@ -102,7 +102,7 @@ const GalleryComponent: FC<Props> = (props) => {
         images={lightboxImage}
         currentIndex={imageIndex}
         onClose={() => setOpen(false)}
-        className={`bg-black/50`}
+        className={`bg-black/70`}
         renderHeader={() => (
           <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
             <p className={`text-white relative z-10 p-2 ${roboto.className}`}>
