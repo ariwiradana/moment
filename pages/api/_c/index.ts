@@ -394,10 +394,12 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           WHERE id = $17
           RETURNING *;`;
 
+        const sanitizeSlug = createSlug(client.slug as string);
+
         await sql.query(updateClientQuery, [
           client.name,
           client.theme_id,
-          client.slug,
+          sanitizeSlug,
           client.gallery,
           client.videos,
           client.cover,

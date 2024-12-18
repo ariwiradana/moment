@@ -95,20 +95,22 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             className="mt-8 max-w-screen-md flex flex-col gap-y-4"
             onSubmit={actions.handleSubmit}
           >
-            <Input
-              value={state.formData.name}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "name")
-              }
-              label={
-                <>
-                  <span>Client Name</span>{" "}
-                  <span className="text-admin-dark/60 text-xs">
-                    (slug : {state.formData.slug})
-                  </span>
-                </>
-              }
-            />
+            <div className="grid md:grid-cols-2 gap-4">
+              <Input
+                value={state.formData.name}
+                onChange={(e) =>
+                  actions.handleChangeClient(e.target.value, "name")
+                }
+                label="Client Name"
+              />
+              <Input
+                value={state.formData.slug}
+                onChange={(e) =>
+                  actions.handleChangeClient(e.target.value, "slug")
+                }
+                label="Client Slug"
+              />
+            </div>
             <div className="grid md:grid-cols-2 gap-4">
               <InputSelect
                 options={state.themeOptions}

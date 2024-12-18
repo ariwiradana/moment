@@ -13,6 +13,8 @@ import {
 import moment from "moment";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { useRouter } from "next/router";
+import { createSlug } from "@/utils/createSlug";
 
 const initialParticipants: Participant = {
   name: "",
@@ -120,6 +122,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const [participantImagesForm, setParticipantImagesForm] = useState<
     (FileList | null)[] | []
   >([]);
+
+  const router = useRouter();
 
   const clearFileInput = () => {
     const galleryInput = document.getElementById("gallery") as HTMLInputElement;
@@ -545,6 +549,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         mutate();
         setLoading(false);
         clearFileInput();
+        router.push(`/admin/clients/${createSlug(formData.slug as string)}`);
         return "Successfully update client";
       },
       error: (error: any) => {
