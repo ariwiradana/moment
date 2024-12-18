@@ -41,7 +41,7 @@ const ThankyouComponent: FC<Props> = (props) => {
             </p>
             <h1
               data-aos="fade-up"
-              className={`font-high-summit text-white text-center text-[40px] md:text-5xl mt-4`}
+              className={`font-high-summit text-white text-center text-4xl md:text-5xl mt-4`}
             >
               {props.state.groom?.nickname} & {props.state.bride?.nickname}
             </h1>
