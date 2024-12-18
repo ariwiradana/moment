@@ -44,7 +44,7 @@
     "vercel": "^37.6.1",
     "yet-another-react-lightbox": "^3.21.6",
     "zod": "^3.23.8",
-    "zustand": "^5.0.0-rc.2"
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
