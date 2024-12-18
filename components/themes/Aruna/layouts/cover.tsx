@@ -16,7 +16,7 @@ const Cover: FC<Props> = (props) => {
   return (
     <>
       <div
-        className={`w-full h-lvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
+        className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
           props.state.open
             ? "-bottom-full invisible opacity-0"
             : "bottom-0 visible"
@@ -37,7 +37,7 @@ const Cover: FC<Props> = (props) => {
           data-aos="fade-in"
           className="relative z-40 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark"
         >
-          <div className="flex h-lvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
+          <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
             <div>
               <h1
                 data-aos="fade-up"
