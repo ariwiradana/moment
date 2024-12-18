@@ -2,7 +2,7 @@ import React, { FC, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { afacad } from "@/lib/fonts";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import {
   AiOutlineInstagram,
   AiOutlineMail,

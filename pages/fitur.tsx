@@ -1,5 +1,5 @@
 import Layout from "@/components/dashboard/layout";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { afacad, marcellus } from "@/lib/fonts";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";

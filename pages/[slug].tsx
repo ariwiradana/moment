@@ -10,6 +10,7 @@ import "aos/dist/aos.css";
 import Seo from "@/components/dashboard/elements/seo";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import useDisableInspect from "@/hooks/useDisableInspect";
+import useClientStore from "@/store/useClientStore";
 
 interface Props {
   slug: string;
@@ -17,7 +18,9 @@ interface Props {
   client: Client | null;
 }
 
-const MainPage: FC<Props> = ({ untuk, client }) => {
+const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
+  const { client, setClient } = useClientStore();
+
   useDisableInspect();
   useEffect(() => {
     AOS.init({
@@ -25,6 +28,7 @@ const MainPage: FC<Props> = ({ untuk, client }) => {
       offset: 0,
       once: true,
     });
+    setClient(clientData);
   }, []);
 
   if (!client) return <ClientNotFound />;
@@ -51,7 +55,7 @@ const MainPage: FC<Props> = ({ untuk, client }) => {
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
         image={client?.seo as string}
       />
-      {ThemeComponent(client, untuk)}
+      {ThemeComponent(untuk)}
     </>
   ) : (
     <ThemeNotFound />

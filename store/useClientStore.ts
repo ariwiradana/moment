@@ -1,12 +1,14 @@
 import { Client } from "@/lib/types";
 import { create } from "zustand";
 
-type ClientStore = {
+interface StoreState {
   client: Client | null;
-  setClient: (client: Client) => void;
-};
+  setClient: (client: Client | null) => void;
+}
 
-export const useClientStore = create<ClientStore>()((set) => ({
+const useClientStore = create<StoreState>((set) => ({
   client: null,
-  setClient: (client) => set(() => ({ client })),
+  setClient: (client) => set({ client }),
 }));
+
+export default useClientStore;

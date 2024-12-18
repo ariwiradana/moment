@@ -13,7 +13,7 @@ interface Props {
   state: useAruna["state"];
 }
 
-const FotoComponent = ({ state }: Props) => {
+const Component = ({ state }: Props) => {
   const [open, setOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
@@ -151,7 +151,6 @@ const FotoComponent = ({ state }: Props) => {
                   priority={index < 2}
                   src={img}
                   fill
-                  quality={75}
                   alt={`gallery-${index + 1}`}
                   className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
                 />
@@ -179,7 +178,6 @@ const FotoComponent = ({ state }: Props) => {
                           src={image}
                           alt={`galeri-${index + 6}`}
                           fill
-                          quality={75}
                           className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
                         />
                       </div>
@@ -195,4 +193,4 @@ const FotoComponent = ({ state }: Props) => {
   );
 };
 
-export default memo(FotoComponent);
+export default memo(Component);

@@ -10,7 +10,7 @@ import { Autoplay, EffectCards } from "swiper/modules";
 import { dm, marcellus } from "@/lib/fonts";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 
 const HeroComponent = () => {
   const { data } = useSWR(`/api/_pb/_th?order=DESC`, fetcher);

@@ -6,7 +6,7 @@ import { fetcher } from "@/lib/fetcher";
 import { Package } from "@/lib/types";
 import { afacad, dm } from "@/lib/fonts";
 import { formatToRupiah } from "@/utils/formatToRupiah";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { calculateDiscountPercentage } from "@/utils/calculateDiscount";

@@ -1,6 +1,6 @@
 import Layout from "@/components/dashboard/layout";
 import ThemeCard from "@/components/dashboard/partials/theme.card";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { fetcher } from "@/lib/fetcher";
 import { afacad, marcellus } from "@/lib/fonts";
 import { Theme } from "@/lib/types";

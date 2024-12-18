@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
 import { BiCheck } from "react-icons/bi";
+import useClientStore from "@/store/useClientStore";
 
 export interface useAruna {
   refs: {
@@ -28,7 +29,8 @@ export interface useAruna {
   };
 }
 
-const useAruna = (client: Client | null): useAruna => {
+const useAruna = (): useAruna => {
+  const { client } = useClientStore();
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);

@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useCallback, useState } from "react";
 import { BiCalendarEvent, BiEdit, BiMenu } from "react-icons/bi";
 import Sidebar from "./sidebar";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import { NavData, navData } from "@/constants/dashboardNavbar";
 import ButtonPrimary from "./elements/button.primary";

@@ -3,7 +3,7 @@ import { afacad } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
 import { navData } from "@/constants/dashboardNavbar";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import {
   AiOutlineInstagram,

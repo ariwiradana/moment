@@ -5,7 +5,7 @@ import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
 import { getClient } from "@/lib/client";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { fetcher } from "@/lib/fetcher";
 import { afacad, dm } from "@/lib/fonts";
 import { Client } from "@/lib/types";

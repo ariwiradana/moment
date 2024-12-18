@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { dm } from "@/lib/fonts";
 import Accordion from "./elements/accordion.button";
 import Link from "next/link";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import { sosmedURLs } from "@/constants/sosmed";
 

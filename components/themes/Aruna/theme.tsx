@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import Layout from "../layout";
-import { Client } from "@/lib/types";
 import PreviewNav from "../preview.nav";
 import useAruna from "@/hooks/themes/useAruna";
 import Image from "next/image";
@@ -20,7 +19,7 @@ const FotoComponent = dynamic(() => import("./layouts/foto"), {
   ssr: false,
 });
 const ThankyouComponent = dynamic(() => import("./layouts/thankyou"));
-const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"));
+// const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"));
 const MusicComponent = dynamic(() => import("./layouts/music"));
 const EventsComponent = dynamic(() => import("./layouts/events"));
 const ParticipantsComponent = dynamic(() => import("./layouts/participants"));
@@ -28,11 +27,10 @@ const GiftComponent = dynamic(() => import("./layouts/gift"));
 
 interface Props {
   untuk: string;
-  client: Client;
 }
 
 const Aruna: FC<Props> = (props) => {
-  const { state, actions, refs } = useAruna(props.client);
+  const { state, actions, refs } = useAruna();
 
   return (
     <Layout>
@@ -96,7 +94,7 @@ const Aruna: FC<Props> = (props) => {
               <VideoComponent state={state} />
               <FotoComponent state={state} />
               <GiftComponent actions={actions} state={state} />
-              <RSVPWishes actions={actions} state={state} />
+              {/* <RSVPWishes actions={actions} state={state} /> */}
               <ThankyouComponent state={state} />
             </div>
           </div>

@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
-import { Client } from "@/lib/types";
 import useSamaya from "@/hooks/themes/useSamaya";
 import GalleryComponent from "./layouts/foto.video";
 import ThankyouComponent from "./layouts/thankyou";
@@ -14,11 +13,11 @@ import GiftComponent from "./layouts/gift";
 import PreviewNav from "../preview.nav";
 interface Props {
   untuk: string;
-  client: Client;
 }
 
 const Samaya: FC<Props> = (props) => {
-  const { state, actions, refs } = useSamaya(props.client);
+  const { state, actions, refs } = useSamaya();
+
   return (
     <Layout>
       <>

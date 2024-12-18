@@ -4,7 +4,7 @@ import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
 import { PaymentMethod, paymentMethods } from "@/constants/paymentMethod";
 import { sosmedURLs } from "@/constants/sosmed";
-import useDashboardStore from "@/lib/dashboardStore";
+import useDashboardStore from "@/store/useDashboardStore";
 import { afacad, dm } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
