@@ -9,17 +9,15 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "@/components/dashboard/elements/seo";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-import useSWR from "swr";
-import LoadingComponent from "@/components/themes/loading";
 import useDisableInspect from "@/hooks/useDisableInspect";
 
 interface Props {
   slug: string;
   untuk: string;
-  // client: Client | null;
+  client: Client | null;
 }
 
-const MainPage: FC<Props> = ({ untuk, slug }) => {
+const MainPage: FC<Props> = ({ untuk, client }) => {
   useDisableInspect();
   useEffect(() => {
     AOS.init({
@@ -28,15 +26,6 @@ const MainPage: FC<Props> = ({ untuk, slug }) => {
       once: true,
     });
   }, []);
-
-  const { data, isLoading } = useSWR(`/api/_pb/_c/_u?slug=${slug}`, fetcher, {
-    revalidateOnFocus: false,
-    dedupingInterval: 10000,
-  });
-
-  if (isLoading) return <LoadingComponent />;
-
-  const client: Client | null = data?.data ?? null;
 
   if (!client) return <ClientNotFound />;
 
@@ -73,21 +62,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { untuk } = context.query;
   const { slug } = context.params as { slug: string };
 
-  // const baseUrl = process.env.API_BASE_URL;
-  // const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`).catch(
-  //   (error) => {
-  //     console.error("API fetch error:", error);
-  //     return null;
-  //   }
-  // );
+  const baseUrl = process.env.API_BASE_URL;
+  const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`).catch(
+    (error) => {
+      console.error("API fetch error:", error);
+      return null;
+    }
+  );
 
-  // const client: Client | null = response?.data ?? null;
+  const client: Client | null = response?.data ?? null;
 
   return {
     props: {
       untuk: untuk ?? "Tamu Undangan",
       slug,
-      // client,
+      client,
     },
   };
 };
