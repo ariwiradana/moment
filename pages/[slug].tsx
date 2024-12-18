@@ -26,13 +26,12 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
     if (!client) {
       setClient(clientData);
     }
-
     AOS.init({
       duration: 1200,
       offset: 0,
       once: true,
     });
-  }, [clientData, client, setClient]);
+  }, []);
 
   const themeName = client?.theme?.name || "";
   const ThemeComponent = themes[themeName];
