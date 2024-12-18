@@ -3,8 +3,8 @@ import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import YoutubeEmbed from "../elements/youtube.embed";
@@ -200,7 +200,7 @@ const GalleryComponent: FC<Props> = (props) => {
               </div>
             ))}
 
-            {/* {slideImages.length > 0 && (
+            {slideImages.length > 0 && (
               <div className="col-span-4 row-span-2 w-full">
                 <Swiper
                   autoplay
@@ -229,7 +229,7 @@ const GalleryComponent: FC<Props> = (props) => {
                   ))}
                 </Swiper>
               </div>
-            )} */}
+            )}
           </div>
         </div>
       </section>
