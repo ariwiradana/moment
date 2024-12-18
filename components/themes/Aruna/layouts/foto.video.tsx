@@ -4,7 +4,6 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-import ImageShimmer from "@/components/image.shimmer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
@@ -142,32 +141,28 @@ const GalleryComponent: FC<Props> = (props) => {
             <div className="col-span-4 row-span-2 w-full">
               <Swiper
                 autoplay
-                speed={2000}
                 spaceBetween={8}
                 modules={[Autoplay]}
                 className="w-full h-full"
               >
-                {slideImages.length > 0 &&
-                  slideImages.map((image, index) => (
-                    <SwiperSlide
-                      key={`gallery-${index + 6}`}
-                      className="relative flex justify-center items-center h-full"
-                    >
-                      <div
-                        onClick={() => handleToggleLightbox(image)}
-                        className="relative h-full w-full"
-                      >
-                        <Image
-                          priority
-                          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
-                          src={image}
-                          alt={`galeri-${index + 6}`}
-                          fill
-                          className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
+                {slideImages.map((image, index) => (
+                  <SwiperSlide
+                    onClick={() => handleToggleLightbox(image)}
+                    key={`gallery-${index + 6}`}
+                    className="relative flex justify-center items-center h-full"
+                  >
+                    <div className="relative h-full w-full">
+                      <Image
+                        priority
+                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+                        src={image}
+                        alt={`galeri-${index + 6}`}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </div>
           )}
