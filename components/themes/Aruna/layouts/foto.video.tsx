@@ -54,8 +54,8 @@ const GalleryComponent: FC<Props> = (props) => {
     if (imageIndex + 1 < images.length) setImageIndex(imageIndex + 1);
   }, [imageIndex, images.length]);
 
-  const gridImages = images.length > 6 ? images.slice(0, 6) : images;
-  const slideImages = images.length > 6 ? images.slice(6) : [];
+  const gridImages = images.length > 11 ? images.slice(0, 11) : images;
+  const slideImages = images.length > 11 ? images.slice(11) : [];
 
   const gridSpan = (index: number) => {
     switch (index) {
@@ -70,6 +70,16 @@ const GalleryComponent: FC<Props> = (props) => {
       case 4:
         return "col-span-1 row-span-1 aspect-square";
       case 5:
+        return "col-span-1 row-span-1 aspect-square";
+      case 6:
+        return "col-span-2 row-span-2 aspect-square";
+      case 7:
+        return "col-span-1 row-span-1 aspect-square";
+      case 8:
+        return "col-span-1 row-span-1 aspect-square";
+      case 9:
+        return "col-span-1 row-span-1 aspect-square";
+      case 10:
         return "col-span-1 row-span-1 aspect-square";
     }
   };
@@ -168,7 +178,7 @@ const GalleryComponent: FC<Props> = (props) => {
           </p>
           <div
             className={`mt-10 grid grid-cols-4 ${
-              slideImages.length > 0 ? "grid-rows-6" : "grid-rows-4"
+              slideImages.length > 0 ? "grid-rows-8" : "grid-rows-6"
             } gap-2`}
             data-aos="zoom-out-up"
           >
@@ -201,8 +211,8 @@ const GalleryComponent: FC<Props> = (props) => {
                 >
                   {slideImages.map((image, index) => (
                     <SwiperSlide
-                      onClick={() => handleToggleLightbox(index + 6)}
-                      key={`gallery-${index + 6}`}
+                      onClick={() => handleToggleLightbox(index + 11)}
+                      key={`gallery-${index + 11}`}
                       className="relative flex justify-center items-center h-full"
                     >
                       <div className="relative h-full w-full">
