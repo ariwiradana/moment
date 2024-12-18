@@ -2,13 +2,13 @@ import React, { FC, memo, useCallback, useMemo, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
-// import { getParticipantNames } from "@/utils/getParticipantNames";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Autoplay } from "swiper/modules";
+import { getParticipantNames } from "@/utils/getParticipantNames";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import YoutubeEmbed from "../elements/youtube.embed";
-// import Image from "next/image";
+import Image from "next/image";
 import Lightbox from "react-spring-lightbox";
 import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
 
@@ -54,34 +54,34 @@ const GalleryComponent: FC<Props> = (props) => {
     if (imageIndex + 1 < images.length) setImageIndex(imageIndex + 1);
   }, [imageIndex, images.length]);
 
-  // const gridImages = images.length > 6 ? images.slice(0, 6) : images;
-  // const slideImages = images.length > 6 ? images.slice(6) : [];
+  const gridImages = images.length > 6 ? images.slice(0, 6) : images;
+  const slideImages = images.length > 6 ? images.slice(6) : [];
 
-  // const gridSpan = (index: number) => {
-  //   switch (index) {
-  //     case 0:
-  //       return "col-span-2 row-span-2 aspect-square";
-  //     case 1:
-  //       return "col-span-2 row-span-4";
-  //     case 2:
-  //       return "col-span-1 row-span-1 aspect-square";
-  //     case 3:
-  //       return "col-span-1 row-span-1 aspect-square";
-  //     case 4:
-  //       return "col-span-1 row-span-1 aspect-square";
-  //     case 5:
-  //       return "col-span-1 row-span-1 aspect-square";
-  //   }
-  // };
+  const gridSpan = (index: number) => {
+    switch (index) {
+      case 0:
+        return "col-span-2 row-span-2 aspect-square";
+      case 1:
+        return "col-span-2 row-span-4";
+      case 2:
+        return "col-span-1 row-span-1 aspect-square";
+      case 3:
+        return "col-span-1 row-span-1 aspect-square";
+      case 4:
+        return "col-span-1 row-span-1 aspect-square";
+      case 5:
+        return "col-span-1 row-span-1 aspect-square";
+    }
+  };
 
-  // const handleToggleLightbox = useCallback(
-  //   (idx: number) => {
-  //     if (images.length === 0 || idx < 0 || idx >= images.length) return;
-  //     setImageIndex(idx);
-  //     setOpen((prev) => !prev);
-  //   },
-  //   [images, imageIndex]
-  // );
+  const handleToggleLightbox = useCallback(
+    (idx: number) => {
+      if (images.length === 0 || idx < 0 || idx >= images.length) return;
+      setImageIndex(idx);
+      setOpen((prev) => !prev);
+    },
+    [images, imageIndex]
+  );
 
   return (
     <>
@@ -145,7 +145,7 @@ const GalleryComponent: FC<Props> = (props) => {
           </div>
         )}
 
-        {/* <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
+        <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
           <h2
             data-aos="fade-up"
             className="font-high-summit text-4xl md:text-5xl text-white text-center whitespace-nowrap"
@@ -223,7 +223,7 @@ const GalleryComponent: FC<Props> = (props) => {
               </div>
             )}
           </div>
-        </div> */}
+        </div>
       </section>
     </>
   );
