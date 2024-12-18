@@ -101,7 +101,7 @@ const GalleryComponent: FC<Props> = (props) => {
             </p>
             <button
               onClick={() => setOpen(false)}
-              className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center ml-2 transition-colors ease-in-out backdrop-blur-sm"
+              className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out backdrop-blur-sm"
             >
               <HiOutlineXMark />
             </button>
@@ -111,7 +111,7 @@ const GalleryComponent: FC<Props> = (props) => {
           <button
             disabled={imageIndex === 0}
             onClick={gotoPrevious}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center ml-2 transition-colors ease-in-out backdrop-blur-sm"
+            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out backdrop-blur-sm"
           >
             <HiChevronLeft />
           </button>
