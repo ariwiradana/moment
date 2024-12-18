@@ -9,6 +9,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 interface Props {
   state: useAruna["state"];
@@ -55,6 +57,12 @@ const GalleryComponent: FC<Props> = (props) => {
     }
   };
 
+  const handleToggleLightbox = (image: string) => {
+    const imageIndex = images.findIndex((img) => img === image) as number;
+    setImageIndex(imageIndex);
+    setOpen(!open);
+  };
+
   return (
     <section className="relative bg-aruna-dark overflow-hidden">
       {videos.length > 0 && (
@@ -86,9 +94,10 @@ const GalleryComponent: FC<Props> = (props) => {
         slides={lightboxImage}
         index={imageIndex}
         open={open}
+        plugins={[Fullscreen, Zoom]}
         on={{
-          view(props: { index: number }) {
-            setImageIndex(props.index);
+          view({ index }) {
+            setImageIndex(index);
           },
         }}
       />
@@ -123,10 +132,7 @@ const GalleryComponent: FC<Props> = (props) => {
           {gridImages.map((img, index) => (
             <div
               key={`gallery-${index + 1}`}
-              onClick={() => {
-                setOpen(() => true);
-                setImageIndex(() => index);
-              }}
+              onClick={() => handleToggleLightbox(img)}
               className={`${gridSpan(index)} w-full relative overflow-hidden`}
             >
               <ImageShimmer
@@ -136,7 +142,7 @@ const GalleryComponent: FC<Props> = (props) => {
                 src={img}
                 fill
                 alt={`gallery-${index + 1}`}
-                className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
+                className="object-cover hover:scale-105 transition-transform ease-in-out duration-500"
               />
             </div>
           ))}
@@ -144,9 +150,7 @@ const GalleryComponent: FC<Props> = (props) => {
           {slideImages.length > 0 && (
             <div className="col-span-4 row-span-2 w-full">
               <Swiper
-                autoplay={{
-                  delay: 4000,
-                }}
+                autoplay
                 speed={2000}
                 spaceBetween={8}
                 modules={[Autoplay]}
@@ -159,10 +163,7 @@ const GalleryComponent: FC<Props> = (props) => {
                       className="relative flex justify-center items-center h-full"
                     >
                       <div
-                        onClick={() => {
-                          setOpen(() => true);
-                          setImageIndex(() => index + 6);
-                        }}
+                        onClick={() => handleToggleLightbox(image)}
                         className="relative h-full w-full"
                       >
                         <ImageShimmer
@@ -172,7 +173,7 @@ const GalleryComponent: FC<Props> = (props) => {
                           src={image}
                           alt={`galeri-${index + 6}`}
                           fill
-                          className="object-cover hover:scale-110 transition-transform ease-in-out duration-500"
+                          className="object-cover hover:scale-105 transition-transform ease-in-out duration-500"
                         />
                       </div>
                     </SwiperSlide>

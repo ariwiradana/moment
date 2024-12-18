@@ -89,7 +89,7 @@ const GiftComponent: FC<Props> = (props) => {
                 )}
               </h3>
 
-              <div className="flex justify-between items-end">
+              <div className="flex justify-between items-end gap-x-3">
                 <p
                   className={`text-sm leading-5 text-aruna-dark/60 ${roboto.className}`}
                 >
