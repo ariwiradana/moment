@@ -9,7 +9,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "@/components/dashboard/elements/seo";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-// import useDisableInspect from "@/hooks/useDisableInspect";
+import useDisableInspect from "@/hooks/useDisableInspect";
 
 interface Props {
   slug: string;
@@ -18,38 +18,38 @@ interface Props {
 }
 
 const MainPage: FC<Props> = ({ untuk, client }) => {
-  // useDisableInspect();
+  useDisableInspect();
+
   useEffect(() => {
-    AOS.init({
-      duration: 1200,
-      offset: 0,
-      once: true,
-    });
+    AOS.init({ duration: 1200, offset: 0, once: true });
   }, []);
 
   if (!client) return <ClientNotFound />;
 
   const themeName = client.theme?.name || "";
-
   const ThemeComponent = themes[themeName];
   const participantNames = getParticipantNames(client.participants || []);
 
-  const pageTitle = client
-    ? client.status === "unpaid"
+  const pageTitle =
+    client?.status === "unpaid"
       ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
-      : client.is_preview
+      : client?.is_preview
       ? `Preview Undangan Tema ${client.theme?.name} | Moment`
-      : `${participantNames} | Undangan ${client.theme_category?.name}`
-    : "Moment";
+      : `${participantNames} | Undangan ${client.theme_category?.name}`;
+
+  const seoDescription = `${client?.opening_title || ""}, ${
+    client?.opening_description || ""
+  }`;
+  const seoImage = client?.seo as string;
 
   return ThemeComponent ? (
     <>
       <Seo
         url={`https://momentinvitations.com/${client?.slug}`}
-        title={pageTitle}
-        description={`${client?.opening_title}, ${client?.opening_description}`}
-        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-        image={client?.seo as string}
+        title={pageTitle || "Moment"}
+        description={seoDescription}
+        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, platform undangan online, Moment Invitation, undangan digital premium"
+        image={seoImage}
       />
       {ThemeComponent(client, untuk)}
     </>
@@ -63,14 +63,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
   const baseUrl = process.env.API_BASE_URL;
-  const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`).catch(
-    (error) => {
-      console.error("API fetch error:", error);
-      return null;
-    }
-  );
+  let client: Client | null = null;
 
-  const client: Client | null = response?.data ?? null;
+  try {
+    const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`);
+    client = response?.data ?? null;
+  } catch (error) {
+    console.error("API fetch error:", error);
+  }
 
   return {
     props: {
