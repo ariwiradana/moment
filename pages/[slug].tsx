@@ -35,8 +35,9 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
 
   const themeName = client?.theme?.name || "";
   const ThemeComponent = themes[themeName];
-  const participantNames = getParticipantNames(client?.participants || []);
+
   const pageTitle = React.useMemo(() => {
+    const participantNames = getParticipantNames(client?.participants || []);
     return client
       ? client.status === "unpaid"
         ? `Preview ${participantNames || ""} | Undangan ${
@@ -48,7 +49,7 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
             client?.theme_category?.name || ""
           }`
       : "Moment";
-  }, [client, participantNames]);
+  }, [client]);
 
   return (
     <>
