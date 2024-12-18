@@ -19,9 +19,9 @@ const FotoComponent = dynamic(() => import("./layouts/foto"), {
   ssr: false,
 });
 const ThankyouComponent = dynamic(() => import("./layouts/thankyou"));
-const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"), {
-  ssr: false,
-});
+// const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"), {
+//   ssr: false,
+// });
 const MusicComponent = dynamic(() => import("./layouts/music"));
 const EventsComponent = dynamic(() => import("./layouts/events"));
 const ParticipantsComponent = dynamic(() => import("./layouts/participants"));
@@ -96,7 +96,7 @@ const Aruna: FC<Props> = (props) => {
               <VideoComponent state={state} />
               <FotoComponent state={state} />
               <GiftComponent actions={actions} state={state} />
-              <RSVPWishes />
+              {/* <RSVPWishes /> */}
               <ThankyouComponent state={state} />
             </div>
           </div>

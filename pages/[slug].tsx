@@ -2,7 +2,7 @@ import ThemeNotFound from "@/components/themes/theme.notfound";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { themes } from "@/components/themes/themes";
 import ClientNotFound from "@/components/themes/client.notfound";
 import AOS from "aos";
@@ -13,14 +13,25 @@ import useDisableInspect from "@/hooks/useDisableInspect";
 import useClientStore from "@/store/useClientStore";
 
 interface Props {
+  url: string;
   untuk: string;
   client: Client | null;
-  slug: string;
+  themeName: string;
+  pageTitle: string;
+  description: string;
+  seoImage: string;
 }
 
-const MainPage: FC<Props> = ({ untuk, client: clientData, slug }) => {
-  const { client, setClient } = useClientStore();
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+const MainPage: FC<Props> = ({
+  untuk,
+  client: clientData,
+  themeName,
+  pageTitle,
+  description,
+  seoImage,
+  url,
+}) => {
+  const { setClient } = useClientStore();
 
   useDisableInspect();
   useEffect(() => {
@@ -30,26 +41,9 @@ const MainPage: FC<Props> = ({ untuk, client: clientData, slug }) => {
       once: true,
     });
     setClient(clientData);
-    setIsMounted(true);
   }, []);
 
-  if (!client && isMounted) return <ClientNotFound />;
-
-  const themeName = client?.theme?.name || "";
-  const participantNames =
-    getParticipantNames(client?.participants || []) || "";
-  const description = `${client?.opening_title || ""}, ${
-    client?.opening_description || ""
-  }`;
-  const seoImage = client?.seo || "";
-  const url = `https://momentinvitations.com/${encodeURIComponent(slug)}`;
-  const pageTitle = client
-    ? client.status === "unpaid"
-      ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
-      : client.is_preview
-      ? `Preview Undangan Tema ${client.theme?.name} | Moment`
-      : `${participantNames} | Undangan ${client.theme_category?.name}`
-    : "Moment";
+  if (!clientData) return <ClientNotFound />;
 
   const ThemeComponent = themes[themeName];
 
@@ -82,12 +76,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 
   const client: Client | null = response?.data ?? null;
+  const themeName = client?.theme?.name || "";
+  const participantNames =
+    getParticipantNames(client?.participants || []) || "";
+  const description = `${client?.opening_title || ""}, ${
+    client?.opening_description || ""
+  }`;
+  const seoImage = client?.seo || "";
+  const url = `https://momentinvitations.com/${encodeURIComponent(slug)}`;
+  const pageTitle = client
+    ? client.status === "unpaid"
+      ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
+      : client.is_preview
+      ? `Preview Undangan Tema ${client.theme?.name} | Moment`
+      : `${participantNames} | Undangan ${client.theme_category?.name}`
+    : "Moment";
 
   return {
     props: {
       untuk: untuk ?? "Tamu Undangan",
       slug,
       client,
+      themeName,
+      pageTitle,
+      description,
+      seoImage,
+      url,
     },
   };
 };
