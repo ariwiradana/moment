@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo, useCallback } from "react";
 import {
   BiSend,
   BiTime,
@@ -6,7 +6,6 @@ import {
   BiUserPlus,
   BiUserX,
 } from "react-icons/bi";
-import { useAruna } from "@/hooks/themes/useAruna";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
@@ -14,41 +13,113 @@ import { roboto } from "@/lib/fonts";
 import moment from "moment";
 import ButtonDark from "../elements/button.dark";
 import { Pagination } from "@mui/material";
-import { Client } from "@/lib/types";
 import useWishes from "@/hooks/themes/Aruna/useWishes";
+import { Review } from "@/lib/types";
 
-interface Props {
-  state: useAruna["state"];
-  actions: useAruna["actions"];
-}
+// Memoized Child Component for individual wish rendering
+const WishItem = memo(
+  ({
+    wish,
+    attendantText,
+  }: {
+    wish: Review;
+    attendantText: Record<string, string>;
+  }) => (
+    <div className="py-6">
+      <div className="relative flex flex-col items-start">
+        <h4
+          className={`${roboto.className} relative text-white text-xs md:text-sm uppercase tracking-[2px] mb-2`}
+        >
+          {wish.name}
+        </h4>
+      </div>
+      <p className={`${roboto.className} text-white/60 text-xs md:text-sm`}>
+        {wish.wishes}
+      </p>
+      <div className="flex mt-4 items-center gap-x-4 whitespace-nowrap">
+        <div className="flex items-center gap-x-1 text-white/80">
+          {wish.attendant === "Hadir" ? (
+            <BiUserCheck className="text-xs md:text-sm" />
+          ) : wish.attendant === "Tidak Hadir" ? (
+            <BiUserX className="text-xs md:text-sm" />
+          ) : (
+            <BiUserPlus className="text-xs md:text-sm" />
+          )}
+          <p
+            className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
+          >
+            {attendantText[wish.attendant]}
+          </p>
+        </div>
+        <div className="w-[2px] min-w-[2px] h-[2px] min-h-[2px] rounded-full bg-white/80"></div>
+        <div className="flex items-center gap-x-1 text-white/80">
+          <BiTime className="text-xs md:text-sm" />
+          <p
+            className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
+          >
+            {moment(wish.created_at).fromNow()}
+          </p>
+        </div>
+        <div className="w-full h-[0.5px] bg-white/20"></div>
+      </div>
+    </div>
+  )
+);
 
-const RSVPWishesComponent: FC<Props> = (props) => {
-  const { state, actions } = useWishes(props.state.client as Client);
+WishItem.displayName = "WishItem";
+
+// Main Component
+const RSVPWishesComponent: FC = () => {
+  const { state, actions } = useWishes();
+
+  // Memoized handlers to avoid re-creating them on every render
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      actions.handleChange("name", e.target.value);
+    },
+    [actions]
+  );
+
+  const handleWishesChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      actions.handleChange("wishes", e.target.value);
+    },
+    [actions]
+  );
+
+  const handleAttendantChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      actions.handleChange("attendant", e.target.value);
+    },
+    [actions]
+  );
 
   return (
     <section className="relative bg-white w-full overflow-hidden">
       <div className="relative w-full flex flex-col justify-center items-center z-20 pt-[60px] md:pt-[100px]">
         <div className="px-8">
           <h2
-            data-aos="fade-up"
             className="font-high-summit text-4xl md:text-5xl text-aruna-dark text-center whitespace-nowrap"
+            data-aos="fade-up"
           >
             Mohon Doa Restu
           </h2>
           <p
-            data-aos="fade-up"
             className={`${roboto.className} text-xs md:text-sm text-center text-aruna-dark/80 max-w-screen-sm my-8`}
+            data-aos="fade-up"
           >
             Konfirmasi kehadiran Anda melalui RSVP, dan jangan lupa sampaikan
             doa serta ucapan terbaik untuk pengantin di hari bahagia mereka.
           </p>
           <p
-            data-aos="fade-up"
             className={`text-aruna-dark/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
+            data-aos="fade-up"
           >
             RSVP & Ucapan
           </p>
         </div>
+
+        {/* Form */}
         <form
           onSubmit={actions.handleSubmit}
           className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto p-8"
@@ -59,7 +130,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             placeholder="Masukkan nama kamu"
             value={state.formData.name}
             id="name"
-            onChange={(e) => actions.handleChange("name", e.target.value)}
+            onChange={handleNameChange}
           />
           <InputTextarea
             error={state.errors.wishes}
@@ -67,38 +138,32 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             value={state.formData.wishes}
             id="wishes"
             rows={6}
-            onChange={(e) => actions.handleChange("wishes", e.target.value)}
+            onChange={handleWishesChange}
           />
           <div className="flex gap-x-8 justify-between lg:justify-start">
             <InputCheckbox
               value="Hadir"
               checked={state.formData.attendant === "Hadir"}
               label="Hadir"
-              onChange={(e) =>
-                actions.handleChange("attendant", e.target.value)
-              }
+              onChange={handleAttendantChange}
             />
             <InputCheckbox
               value="Tidak Hadir"
               checked={state.formData.attendant === "Tidak Hadir"}
               label="Tidak Hadir"
-              onChange={(e) =>
-                actions.handleChange("attendant", e.target.value)
-              }
+              onChange={handleAttendantChange}
             />
             <InputCheckbox
               checked={state.formData.attendant === "Masih Ragu"}
               value="Masih Ragu"
               label="Masih Ragu"
-              onChange={(e) =>
-                actions.handleChange("attendant", e.target.value)
-              }
+              onChange={handleAttendantChange}
             />
           </div>
-          {props.state.client?.status === "paid" && (
+          {state.client?.status === "paid" && (
             <div className="mt-4">
               <ButtonDark
-                isLoading={state.loading ? true : false}
+                isLoading={state.loading}
                 type="submit"
                 title="Kirim"
                 icon={<BiSend />}
@@ -107,53 +172,20 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           )}
         </form>
 
-        {state.wishes && state.wishes?.length > 0 ? (
+        {/* Wishes List */}
+        {state.wishes?.length > 0 && (
           <div className="w-full bg-aruna-dark py-8" data-aos="fade-up">
             <div className="max-w-screen-sm mx-auto w-full px-8">
               {state.wishes.map((wish, index) => (
-                <div key={`ucapan-${index + 1}`} className="py-6">
-                  <div className="relative flex flex-col items-start">
-                    <h4
-                      className={`${roboto.className} relative text-white text-xs md:text-sm uppercase tracking-[2px] mb-2`}
-                    >
-                      {wish.name}
-                    </h4>
-                  </div>
-                  <p
-                    className={`${roboto.className} text-white/60 text-xs md:text-sm`}
-                  >
-                    {wish.wishes}
-                  </p>
-                  <div className="flex mt-4 items-center gap-x-4 whitespace-nowrap">
-                    <div className="flex items-center gap-x-1 text-white/80">
-                      {wish.attendant === "Hadir" ? (
-                        <BiUserCheck className="text-xs md:text-sm" />
-                      ) : wish.attendant === "Tidak Hadir" ? (
-                        <BiUserX className="text-xs md:text-sm" />
-                      ) : (
-                        <BiUserPlus className="text-xs md:text-sm" />
-                      )}
-                      <p
-                        className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
-                      >
-                        {state.attendantText[wish.attendant]}
-                      </p>
-                    </div>
-                    <div className="w-[2px] min-w-[2px] h-[2px] min-h-[2px] rounded-full bg-white/80"></div>
-                    <div className="flex items-center gap-x-1 text-white/80">
-                      <BiTime className="text-xs md:text-sm" />
-                      <p
-                        className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
-                      >
-                        {moment(wish.created_at).fromNow()}
-                      </p>
-                    </div>
-                    <div className="w-full h-[0.5px] bg-white/20"></div>
-                  </div>
-                </div>
+                <WishItem
+                  key={`ucapan-${index + 1}`}
+                  wish={wish}
+                  attendantText={state.attendantText}
+                />
               ))}
             </div>
 
+            {/* Pagination */}
             {state.totalRows > state.limit && (
               <div className="max-w-screen-sm w-full py-6 px-8">
                 <div className="-ml-2">
@@ -191,10 +223,10 @@ const RSVPWishesComponent: FC<Props> = (props) => {
               </div>
             )}
           </div>
-        ) : null}
+        )}
       </div>
     </section>
   );
 };
 
-export default RSVPWishesComponent;
+export default memo(RSVPWishesComponent);
