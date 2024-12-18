@@ -160,7 +160,7 @@ const GalleryComponent = ({ state }: Props) => {
           </p>
           <div
             className={`mt-10 grid grid-cols-4 ${
-              slideImages.length > 0 ? "grid-rows-6" : "grid-rows-4"
+              slideImages.length > 0 ? "grid-rows-7" : "grid-rows-4"
             } gap-2`}
             data-aos="zoom-out-up"
           >
@@ -183,7 +183,7 @@ const GalleryComponent = ({ state }: Props) => {
             ))}
 
             {slideImages.length > 0 && (
-              <div className="col-span-4 row-span-2 w-full">
+              <div className="col-span-4 row-span-3 w-full">
                 <Swiper
                   autoplay
                   spaceBetween={8}
