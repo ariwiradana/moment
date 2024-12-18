@@ -12,7 +12,7 @@ interface Props {
 }
 
 const MusicComponent: FC<Props> = (props) => {
-  const musicSrc = props.state.client?.music as string;
+  const musicSrc = (props.state.client?.music as string) || null;
 
   if (musicSrc) {
     return (
