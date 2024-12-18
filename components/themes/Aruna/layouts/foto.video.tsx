@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -12,6 +12,7 @@ import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import YoutubeEmbed from "../elements/youtube.embed";
+import Image from "next/image";
 
 interface Props {
   state: useAruna["state"];
@@ -126,14 +127,13 @@ const GalleryComponent: FC<Props> = (props) => {
               onClick={() => handleToggleLightbox(img)}
               className={`${gridSpan(index)} w-full relative overflow-hidden`}
             >
-              <ImageShimmer
-                quality={100}
+              <Image
                 sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                 priority
                 src={img}
                 fill
                 alt={`gallery-${index + 1}`}
-                className="object-cover hover:scale-105 transition-transform ease-in-out duration-500"
+                className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
               />
             </div>
           ))}
@@ -157,14 +157,13 @@ const GalleryComponent: FC<Props> = (props) => {
                         onClick={() => handleToggleLightbox(image)}
                         className="relative h-full w-full"
                       >
-                        <ImageShimmer
+                        <Image
                           priority
-                          quality={100}
                           sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
                           src={image}
                           alt={`galeri-${index + 6}`}
                           fill
-                          className="object-cover hover:scale-105 transition-transform ease-in-out duration-500"
+                          className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
                         />
                       </div>
                     </SwiperSlide>
@@ -178,4 +177,4 @@ const GalleryComponent: FC<Props> = (props) => {
   );
 };
 
-export default GalleryComponent;
+export default memo(GalleryComponent);
