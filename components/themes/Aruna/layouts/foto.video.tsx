@@ -21,7 +21,10 @@ const GalleryComponent: FC<Props> = (props) => {
   const images =
     Array.isArray(props.state.client?.gallery) &&
     props.state.client?.gallery.length > 0
-      ? props.state.client?.gallery
+      ? props.state.client?.gallery.filter(
+          (g) =>
+            g !== props.state.client?.cover && g !== props.state.client?.seo
+        )
       : [];
 
   const lightboxImage = images.map((img) => ({ src: img }));
@@ -141,7 +144,6 @@ const GalleryComponent: FC<Props> = (props) => {
           {slideImages.length > 0 && (
             <div className="col-span-4 row-span-2 w-full">
               <Swiper
-                loop
                 autoplay={{
                   delay: 4000,
                 }}

@@ -15,6 +15,13 @@ interface Props {
 const EventsComponent: FC<Props> = ({ state, actions }) => {
   const { events = [], gallery = [] } = state.client || {};
 
+  const images =
+    (gallery.length > 0 &&
+      (gallery as string[]).filter(
+        (g) => g !== state.client?.cover && g !== state.client?.seo
+      )) ||
+    [];
+
   if (events.length > 0) {
     return (
       <section className="relative overflow-hidden z-0">
@@ -36,7 +43,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     alt={`event-${event.name}`}
                     fill
                     className="object-cover"
-                    src={gallery[gallery.length - 1 - index] as string}
+                    src={images[images.length - 1 - index] as string}
                   />
                 </div>
                 <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 rounded-b-3xl text-center">
