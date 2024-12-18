@@ -289,6 +289,29 @@ const useSamaya = (client: Client | null): useSamaya => {
     }
   };
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        if (audioRef.current && !audioRef.current.paused) {
+          setIsPlaying(true);
+          audioRef.current.pause();
+        } else {
+          setIsPlaying(false);
+        }
+      } else if (document.visibilityState === "visible") {
+        if (isPlaying && audioRef.current) {
+          audioRef.current.play();
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [isPlaying]);
+
   const handleCopyRekening = (rekening: string) => {
     navigator.clipboard
       .writeText(rekening)
