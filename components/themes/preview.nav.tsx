@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import { dm } from "@/lib/fonts";
-import { useFlora } from "@/hooks/themes/useFlora";
 import ButtonPrimary from "../dashboard/elements/button.primary";
 import { BiMobile } from "react-icons/bi";
 import { sosmedURLs } from "@/constants/sosmed";
+import { useAruna } from "@/hooks/themes/useAruna";
 
 interface Props {
-  state: useFlora["state"];
+  state: useAruna["state"];
 }
 
 const PreviewNav: FC<Props> = ({ state }) => {

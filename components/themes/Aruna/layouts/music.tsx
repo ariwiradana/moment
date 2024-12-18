@@ -1,6 +1,6 @@
 import { useAruna } from "@/hooks/themes/useAruna";
 import Image from "next/image";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import toast from "react-hot-toast";
 import { BiPause, BiPlay } from "react-icons/bi";
 
@@ -67,4 +67,4 @@ const MusicComponent: FC<Props> = (props) => {
   return null;
 };
 
-export default MusicComponent;
+export default memo(MusicComponent);

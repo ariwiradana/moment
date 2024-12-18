@@ -14,6 +14,8 @@ import { roboto } from "@/lib/fonts";
 import moment from "moment";
 import ButtonDark from "../elements/button.dark";
 import { Pagination } from "@mui/material";
+import { Client } from "@/lib/types";
+import useWishes from "@/hooks/themes/Aruna/useWishes";
 
 interface Props {
   state: useAruna["state"];
@@ -21,11 +23,8 @@ interface Props {
 }
 
 const RSVPWishesComponent: FC<Props> = (props) => {
-  const attendantText: Record<string, string> = {
-    Hadir: "Saya akan hadir",
-    "Tidak Hadir": "Maaf saya tidak bisa hadir",
-    "Masih Ragu": "Maaf saya masih ragu",
-  };
+  const { state, actions } = useWishes(props.state.client as Client);
+
   return (
     <section className="relative bg-white w-full overflow-hidden">
       <div className="relative w-full flex flex-col justify-center items-center z-20 pt-[60px] md:pt-[100px]">
@@ -51,57 +50,55 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           </p>
         </div>
         <form
-          onSubmit={props.actions.handleSubmit}
+          onSubmit={actions.handleSubmit}
           className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto p-8"
           data-aos="fade-up"
         >
           <Input
-            error={props.state.errors.name}
+            error={state.errors.name}
             placeholder="Masukkan nama kamu"
-            value={props.state.formData.name}
+            value={state.formData.name}
             id="name"
-            onChange={(e) => props.actions.handleChange("name", e.target.value)}
+            onChange={(e) => actions.handleChange("name", e.target.value)}
           />
           <InputTextarea
-            error={props.state.errors.wishes}
+            error={state.errors.wishes}
             placeholder="Masukkan ucapan kamu"
-            value={props.state.formData.wishes}
+            value={state.formData.wishes}
             id="wishes"
             rows={6}
-            onChange={(e) =>
-              props.actions.handleChange("wishes", e.target.value)
-            }
+            onChange={(e) => actions.handleChange("wishes", e.target.value)}
           />
           <div className="flex gap-x-8 justify-between lg:justify-start">
             <InputCheckbox
               value="Hadir"
-              checked={props.state.formData.attendant === "Hadir"}
+              checked={state.formData.attendant === "Hadir"}
               label="Hadir"
               onChange={(e) =>
-                props.actions.handleChange("attendant", e.target.value)
+                actions.handleChange("attendant", e.target.value)
               }
             />
             <InputCheckbox
               value="Tidak Hadir"
-              checked={props.state.formData.attendant === "Tidak Hadir"}
+              checked={state.formData.attendant === "Tidak Hadir"}
               label="Tidak Hadir"
               onChange={(e) =>
-                props.actions.handleChange("attendant", e.target.value)
+                actions.handleChange("attendant", e.target.value)
               }
             />
             <InputCheckbox
-              checked={props.state.formData.attendant === "Masih Ragu"}
+              checked={state.formData.attendant === "Masih Ragu"}
               value="Masih Ragu"
               label="Masih Ragu"
               onChange={(e) =>
-                props.actions.handleChange("attendant", e.target.value)
+                actions.handleChange("attendant", e.target.value)
               }
             />
           </div>
           {props.state.client?.status === "paid" && (
             <div className="mt-4">
               <ButtonDark
-                isLoading={props.state.loading ? true : false}
+                isLoading={state.loading ? true : false}
                 type="submit"
                 title="Kirim"
                 icon={<BiSend />}
@@ -110,10 +107,10 @@ const RSVPWishesComponent: FC<Props> = (props) => {
           )}
         </form>
 
-        {props.state.wishes && props.state.wishes?.length > 0 ? (
+        {state.wishes && state.wishes?.length > 0 ? (
           <div className="w-full bg-aruna-dark py-8" data-aos="fade-up">
             <div className="max-w-screen-sm mx-auto w-full px-8">
-              {props.state.wishes.map((wish, index) => (
+              {state.wishes.map((wish, index) => (
                 <div key={`ucapan-${index + 1}`} className="py-6">
                   <div className="relative flex flex-col items-start">
                     <h4
@@ -139,7 +136,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                       <p
                         className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
                       >
-                        {attendantText[wish.attendant]}
+                        {state.attendantText[wish.attendant]}
                       </p>
                     </div>
                     <div className="w-[2px] min-w-[2px] h-[2px] min-h-[2px] rounded-full bg-white/80"></div>
@@ -157,12 +154,12 @@ const RSVPWishesComponent: FC<Props> = (props) => {
               ))}
             </div>
 
-            {props.state.totalRows > props.state.limit && (
+            {state.totalRows > state.limit && (
               <div className="max-w-screen-sm w-full py-6 px-8">
                 <div className="-ml-2">
                   <Pagination
                     shape="rounded"
-                    page={props.state.page}
+                    page={state.page}
                     sx={{
                       "& .MuiPaginationItem-root": {
                         color: "white",
@@ -187,8 +184,8 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                         },
                       },
                     }}
-                    onChange={props.actions.handleChangePagination}
-                    count={Math.ceil(props.state.totalRows / props.state.limit)}
+                    onChange={actions.handleChangePagination}
+                    count={Math.ceil(state.totalRows / state.limit)}
                   />
                 </div>
               </div>

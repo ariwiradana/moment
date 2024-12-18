@@ -24,6 +24,8 @@ interface Props {
 const Aruna: FC<Props> = (props) => {
   const { state, actions, refs } = useAruna(props.client);
 
+  console.log("rerender");
+
   return (
     <Layout>
       <>

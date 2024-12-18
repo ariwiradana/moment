@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
@@ -14,6 +14,7 @@ interface Props {
 }
 
 const GiftComponent: FC<Props> = (props) => {
+  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   if (
     props.state.client?.gift_bank_name &&
     props.state.client?.gift_account_name &&
@@ -42,21 +43,19 @@ const GiftComponent: FC<Props> = (props) => {
           className="flex justify-center my-8"
         >
           <Button
-            onClick={() =>
-              props.actions.setIsGiftShown(!props.state.isGiftShown)
-            }
+            onClick={() => setIsGiftShown((state) => !state)}
             type="button"
             title="Klik Disini"
             icon={
               <BiChevronRightCircle
                 className={`transition-transform duration-500 delay-100 ease-in-out ${
-                  props.state.isGiftShown ? "rotate-90" : "rotate-0"
+                  isGiftShown ? "rotate-90" : "rotate-0"
                 }`}
               />
             }
           />
         </div>
-        {props.state.isGiftShown && (
+        {isGiftShown && (
           <div
             data-aos="zoom-out-up"
             data-aos-delay="200"
@@ -113,4 +112,4 @@ const GiftComponent: FC<Props> = (props) => {
     );
 };
 
-export default GiftComponent;
+export default memo(GiftComponent);

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { roboto } from "@/lib/fonts";
 import moment from "moment";
 import { BiCalendar, BiMap } from "react-icons/bi";
@@ -6,6 +6,8 @@ import { useAruna } from "@/hooks/themes/useAruna";
 import Link from "next/link";
 import ImageShimmer from "@/components/image.shimmer";
 import ButtonDark from "../elements/button.dark";
+import useEvents from "@/hooks/themes/Aruna/useEvents";
+import { Client } from "@/lib/types";
 
 interface Props {
   state: useAruna["state"];
@@ -14,6 +16,7 @@ interface Props {
 
 const EventsComponent: FC<Props> = ({ state, actions }) => {
   const { events = [], gallery = [] } = state.client || {};
+  const { state: eventState } = useEvents(state.client as Client);
 
   const images =
     (gallery.length > 0 &&
@@ -67,7 +70,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                   >
                     <div className={`text-center ${roboto.className}`}>
                       <h2 className="text-4xl text-aruna-dark mb-1">
-                        {state.timeRemainings[index].days}
+                        {eventState.timeRemainings[index].days}
                       </h2>
                       <h4 className="text-[8px] md:text-xs text-aruna-dark/60 uppercase tracking-[4px]">
                         Hari
@@ -75,7 +78,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     </div>
                     <div className={`text-center ${roboto.className}`}>
                       <h2 className="text-4xl text-aruna-dark mb-1">
-                        {state.timeRemainings[index].hours}
+                        {eventState.timeRemainings[index].hours}
                       </h2>
                       <h4 className="text-[8px] md:text-xs text-aruna-dark/60 uppercase tracking-[4px]">
                         Jam
@@ -83,7 +86,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     </div>
                     <div className={`text-center ${roboto.className}`}>
                       <h2 className="text-4xl text-aruna-dark mb-1">
-                        {state.timeRemainings[index].minutes}
+                        {eventState.timeRemainings[index].minutes}
                       </h2>
                       <h4 className="text-[8px] md:text-xs text-aruna-dark/60 uppercase tracking-[4px]">
                         Menit
@@ -91,7 +94,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     </div>
                     <div className={`text-center ${roboto.className}`}>
                       <h2 className="text-4xl text-aruna-dark mb-1">
-                        {state.timeRemainings[index].seconds}
+                        {eventState.timeRemainings[index].seconds}
                       </h2>
                       <h4 className="text-[8px] md:text-xs text-aruna-dark/60 uppercase tracking-[4px]">
                         Detik
@@ -139,4 +142,4 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
   return null;
 };
 
-export default EventsComponent;
+export default memo(EventsComponent);

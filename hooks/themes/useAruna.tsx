@@ -8,241 +8,34 @@ import { fetcher } from "@/lib/fetcher";
 import { z } from "zod";
 import { BiCheck } from "react-icons/bi";
 
-interface Countdown {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-interface FormData {
-  name: string;
-  wishes: string;
-  attendant: string;
-}
-
-interface TimeRemaining {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
 export interface useAruna {
   refs: {
     audioRef: React.RefObject<HTMLAudioElement> | null;
   };
   state: {
-    loading: boolean;
     open: boolean;
     isPlaying: boolean;
-    countdown: Countdown;
     bride: Participant | null;
     groom: Participant | null;
     client: Client | null;
-    formData: FormData;
-    wishes: Review[] | null;
-    errors: Record<string, string | undefined>;
-    timeRemainings: TimeRemaining[];
-    isGiftShown: boolean;
-    page: number;
-    limit: number;
-    totalRows: number;
   };
   actions: {
     handleOpenCover: () => void;
-    handleChange: (name: string, value: string) => void;
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handlePlayPause: () => void;
     handleCopyRekening: (rekening: string) => void;
     handleAddToCalendar: (event: Event) => void;
     setIsPlaying: (isPlaying: boolean) => void;
-    setIsGiftShown: (isGiftShown: boolean) => void;
-    handleChangePagination: (
-      event: React.ChangeEvent<unknown>,
-      value: number
-    ) => void;
   };
 }
-
-const initialReviewForm = {
-  name: "",
-  attendant: "Hadir",
-  wishes: "",
-};
 
 const useAruna = (client: Client | null): useAruna => {
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
-  const [countdown, setCountdown] = useState<Countdown>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  const [formData, setFormData] = useState<FormData>(initialReviewForm);
-  const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
-    client?.events
-      ? client?.events.map(() => ({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        }))
-      : []
-  );
-
-  useEffect(() => {
-    if (!client?.events) return;
-
-    const updateCountdowns = () => {
-      const newTimeRemaining = client.events.map((event) => {
-        const targetDateTime = moment(
-          `${event.date} ${event.start_time}`,
-          "YYYY-MM-DD HH:mm"
-        );
-        const now = moment();
-        const diffDuration = moment.duration(targetDateTime.diff(now));
-
-        return {
-          days: Math.max(0, Math.floor(diffDuration.asDays())),
-          hours: Math.max(0, diffDuration.hours()),
-          minutes: Math.max(0, diffDuration.minutes()),
-          seconds: Math.max(0, diffDuration.seconds()),
-        };
-      });
-
-      setTimeRemainings(newTimeRemaining);
-    };
-
-    const intervalId = setInterval(updateCountdowns, 1000);
-    updateCountdowns(); // Perbarui langsung saat komponen dimount
-
-    return () => clearInterval(intervalId); // Bersihkan interval saat komponen unmount
-  }, [client?.events]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const wisheschema = z.object({
-    name: z
-      .string()
-      .min(1, "Nama harus diisi")
-      .max(100, "Nama tidak boleh melebihi 100 karakter"),
-    wishes: z
-      .string()
-      .min(1, "Kolom ucapan tidak boleh kosong")
-      .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
-  });
-
-  const handleChange = (name: string, value: string) => {
-    setFormData((state) => ({ ...state, [name]: value }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: undefined,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setErrors({}); // Reset errors sebelum validasi
-
-    const payload = { client_id: Number(client?.id), ...formData };
-
-    setLoading(true);
-    try {
-      wisheschema.parse(formData);
-      const toastSubmit = toast.loading("Memberikan ucapan...");
-      const response = await getClient(`/api/_pb/_w`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message);
-      }
-
-      const result = await response.json();
-
-      if (result.success) {
-        mutate(); // Reload data ucapan
-        setFormData(initialReviewForm); // Reset form
-        toast.success("Berhasil. Terima kasih atas ucapannya!", {
-          id: toastSubmit,
-          icon: (
-            <div className="p-1 text-sm bg-aruna-dark text-white">
-              <BiCheck />
-            </div>
-          ),
-        });
-      } else {
-        toast.error("Gagal membuat ucapan", { id: toastSubmit });
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const formattedErrors: Record<string, string | undefined> = {};
-        error.errors.forEach((err) => {
-          if (err.path[0]) {
-            formattedErrors[err.path[0] as string] = err.message;
-          }
-        });
-        setErrors(formattedErrors);
-      } else {
-        console.error(error);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateCountdown = useMemo(() => {
-    if (!client) return () => {};
-
-    return () => {
-      if (client) {
-        const events = client?.events || [];
-        const allSameDate =
-          events.length > 0
-            ? events.every(
-                (event) =>
-                  new Date(event.date).toDateString() ===
-                  new Date(events[0].date).toDateString()
-              )
-            : false;
-
-        if (allSameDate) {
-          const now = moment();
-          const eventTime = moment(`${events[0].date} ${events[0].start_time}`);
-          const duration = moment.duration(eventTime.diff(now));
-
-          const newCountdown = {
-            days: Math.floor(duration.asDays()),
-            hours: duration.hours(),
-            minutes: duration.minutes(),
-            seconds: duration.seconds(),
-          };
-
-          // Only update the countdown state if values have changed
-          setCountdown((prevCountdown) => {
-            if (
-              prevCountdown.days !== newCountdown.days ||
-              prevCountdown.hours !== newCountdown.hours ||
-              prevCountdown.minutes !== newCountdown.minutes ||
-              prevCountdown.seconds !== newCountdown.seconds
-            ) {
-              return newCountdown;
-            }
-            return prevCountdown;
-          });
-        }
-      }
-    };
-  }, [client]);
 
   const brideParticipant = useMemo(
     () => client?.participants?.find((p) => p.role === "bride") || null,
@@ -255,15 +48,10 @@ const useAruna = (client: Client | null): useAruna => {
 
   useEffect(() => {
     if (client) {
-      updateCountdown();
-      const interval = setInterval(updateCountdown, 1000);
-
       setBride(brideParticipant);
       setGroom(groomParticipant);
-
-      return () => clearInterval(interval);
     }
-  }, [client, updateCountdown, brideParticipant, groomParticipant]);
+  }, [client]);
 
   const handleOpenCover = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
@@ -350,67 +138,23 @@ const useAruna = (client: Client | null): useAruna => {
     window.open(googleCalendarUrl, "_blank");
   };
 
-  const [limit] = useState<number>(4);
-  const [page, setPage] = useState(1);
-  const [wishes, setWishes] = useState<Review[]>([]);
-  const [totalRows, setTotalRows] = useState<number>(0);
-
-  const { data: fetchedWishes, mutate } = useSWR(
-    client?.id
-      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
-      : null,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      dedupingInterval: 10000,
-    }
-  );
-
-  const handleChangePagination = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setPage(value);
-  };
-
-  useEffect(() => {
-    if (fetchedWishes && fetchedWishes.data.length > 0) {
-      setWishes(fetchedWishes.data);
-      setTotalRows(fetchedWishes.total_rows);
-    }
-  }, [fetchedWishes]);
-
   return {
     refs: {
       audioRef,
     },
     state: {
-      loading,
       open,
-      countdown,
       bride,
       groom,
       client,
-      formData,
-      wishes,
-      errors,
       isPlaying,
-      timeRemainings,
-      isGiftShown,
-      page,
-      limit,
-      totalRows,
     },
     actions: {
       handleOpenCover,
-      handleChange,
-      handleSubmit,
       handlePlayPause,
       handleCopyRekening,
       handleAddToCalendar,
       setIsPlaying,
-      setIsGiftShown,
-      handleChangePagination,
     },
   };
 };
