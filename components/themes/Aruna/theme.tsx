@@ -1,21 +1,28 @@
 import React, { FC } from "react";
 import Layout from "../layout";
-import Cover from "./layouts/cover";
-import HeroComponent from "./layouts/hero";
 import { Client } from "@/lib/types";
-// import GalleryComponent from "./layouts/foto.video";
-import ThankyouComponent from "./layouts/thankyou";
-import RSVPWishes from "./layouts/rsvp.wishes";
-import MusicComponent from "./layouts/music";
-import EventsComponent from "./layouts/events";
-import ParticipantsComponent from "./layouts/participants";
-import GiftComponent from "./layouts/gift";
 import PreviewNav from "../preview.nav";
 import useAruna from "@/hooks/themes/useAruna";
 import Image from "next/image";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import { getEventNames } from "@/utils/getEventNames";
+import dynamic from "next/dynamic";
+
+const Cover = dynamic(() => import("./layouts/cover"));
+const HeroComponent = dynamic(() => import("./layouts/hero"), {
+  ssr: false,
+});
+const GalleryComponent = dynamic(() => import("./layouts/foto.video"), {
+  ssr: false,
+});
+const ThankyouComponent = dynamic(() => import("./layouts/thankyou"));
+const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"));
+const MusicComponent = dynamic(() => import("./layouts/music"));
+const EventsComponent = dynamic(() => import("./layouts/events"));
+const ParticipantsComponent = dynamic(() => import("./layouts/participants"));
+const GiftComponent = dynamic(() => import("./layouts/gift"));
+
 interface Props {
   untuk: string;
   client: Client;
@@ -23,8 +30,6 @@ interface Props {
 
 const Aruna: FC<Props> = (props) => {
   const { state, actions, refs } = useAruna(props.client);
-
-  console.log("rerender");
 
   return (
     <Layout>
@@ -85,7 +90,7 @@ const Aruna: FC<Props> = (props) => {
               <HeroComponent state={state} />
               <ParticipantsComponent state={state} />
               <EventsComponent actions={actions} state={state} />
-              {/* <GalleryComponent state={state} /> */}
+              <GalleryComponent state={state} />
               <GiftComponent actions={actions} state={state} />
               <RSVPWishes actions={actions} state={state} />
               <ThankyouComponent state={state} />
