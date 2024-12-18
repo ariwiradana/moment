@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -11,6 +11,7 @@ import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import YoutubeEmbed from "../elements/youtube.embed";
 
 interface Props {
   state: useAruna["state"];
@@ -57,11 +58,14 @@ const GalleryComponent: FC<Props> = (props) => {
     }
   };
 
-  const handleToggleLightbox = (image: string) => {
-    const imageIndex = images.findIndex((img) => img === image) as number;
-    setImageIndex(imageIndex);
-    setOpen(!open);
-  };
+  const handleToggleLightbox = useCallback(
+    (image: string) => {
+      const imageIndex = images.findIndex((img) => img === image) as number;
+      setImageIndex(imageIndex);
+      setOpen(!open);
+    },
+    [images, open]
+  );
 
   return (
     <section className="relative bg-aruna-dark overflow-hidden">
@@ -71,20 +75,7 @@ const GalleryComponent: FC<Props> = (props) => {
             const youtubeId = getYouTubeVideoId(v);
             const youtubeVideo = isYoutubeVideo(v);
             if (youtubeVideo)
-              return (
-                <div
-                  key={youtubeId}
-                  className="relative w-full aspect-video overflow-hidden"
-                >
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
-                    title={v}
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              );
+              return <YoutubeEmbed key={youtubeId} youtubeId={youtubeId} />;
           })}
         </div>
       )}
