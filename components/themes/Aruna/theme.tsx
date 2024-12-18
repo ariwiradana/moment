@@ -13,7 +13,10 @@ const Cover = dynamic(() => import("./layouts/cover"));
 const HeroComponent = dynamic(() => import("./layouts/hero"), {
   ssr: false,
 });
-const GalleryComponent = dynamic(() => import("./layouts/foto.video"), {
+const VideoComponent = dynamic(() => import("./layouts/video"), {
+  ssr: false,
+});
+const FotoComponent = dynamic(() => import("./layouts/foto"), {
   ssr: false,
 });
 const ThankyouComponent = dynamic(() => import("./layouts/thankyou"));
@@ -90,7 +93,8 @@ const Aruna: FC<Props> = (props) => {
               <HeroComponent state={state} />
               <ParticipantsComponent state={state} />
               <EventsComponent actions={actions} state={state} />
-              <GalleryComponent state={state} />
+              <VideoComponent state={state} />
+              <FotoComponent state={state} />
               <GiftComponent actions={actions} state={state} />
               <RSVPWishes actions={actions} state={state} />
               <ThankyouComponent state={state} />

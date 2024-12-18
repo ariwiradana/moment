@@ -5,9 +5,6 @@ import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { getYouTubeVideoId } from "@/utils/getYoutubeId";
-import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
-import YoutubeEmbed from "../elements/youtube.embed";
 import Image from "next/image";
 import Lightbox from "react-spring-lightbox";
 import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
@@ -16,20 +13,13 @@ interface Props {
   state: useAruna["state"];
 }
 
-const GalleryComponent = ({ state }: Props) => {
+const FotoComponent = ({ state }: Props) => {
   const [open, setOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
   const { client } = state;
-  const {
-    gallery = [],
-    cover,
-    seo,
-    videos = [],
-    participants = [],
-  } = client || {};
+  const { gallery = [], cover, seo, participants = [] } = client || {};
 
-  // Memoized gallery images (excluding cover and seo)
   const images = useMemo(
     () => (gallery as string[]).filter((g) => g !== cover && g !== seo),
     [gallery, cover, seo]
@@ -39,12 +29,9 @@ const GalleryComponent = ({ state }: Props) => {
       images.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
     [images]
   );
-
-  // Split images into grid and sliding sections
   const gridImages = useMemo(() => images.slice(0, 6), [images]);
   const slideImages = useMemo(() => images.slice(6), [images]);
 
-  // Navigation functions for the lightbox
   const gotoPrevious = useCallback(() => {
     if (imageIndex > 0) setImageIndex((prev) => prev - 1);
   }, [imageIndex]);
@@ -53,7 +40,6 @@ const GalleryComponent = ({ state }: Props) => {
     if (imageIndex < images.length - 1) setImageIndex((prev) => prev + 1);
   }, [imageIndex, images.length]);
 
-  // Toggle lightbox visibility and set the current image index
   const handleToggleLightbox = useCallback(
     (idx: number) => {
       if (images.length > 0 && idx >= 0 && idx < images.length) {
@@ -127,16 +113,6 @@ const GalleryComponent = ({ state }: Props) => {
         }}
       />
       <section className="relative bg-aruna-dark overflow-hidden">
-        {(videos as string[]).length > 0 && (
-          <div className="grid gap-2">
-            {(videos as string[]).map((v) => {
-              const youtubeId = getYouTubeVideoId(v);
-              if (isYoutubeVideo(v))
-                return <YoutubeEmbed key={youtubeId} youtubeId={youtubeId} />;
-            })}
-          </div>
-        )}
-
         <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
           <h2
             data-aos="fade-up"
@@ -219,4 +195,4 @@ const GalleryComponent = ({ state }: Props) => {
   );
 };
 
-export default memo(GalleryComponent);
+export default memo(FotoComponent);

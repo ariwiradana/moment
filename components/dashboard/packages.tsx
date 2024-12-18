@@ -20,8 +20,6 @@ const PackageComponent = () => {
 
   const pacakages: Package[] = data?.data || [];
 
-  console.log({ pacakages });
-
   if (pacakages.length > 0)
     return (
       <section
