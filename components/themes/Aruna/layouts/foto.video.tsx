@@ -84,18 +84,7 @@ const GalleryComponent: FC<Props> = (props) => {
   );
 
   return (
-    <section className="relative bg-aruna-dark overflow-hidden">
-      {videos.length > 0 && (
-        <div className="grid gap-2">
-          {videos.map((v) => {
-            const youtubeId = getYouTubeVideoId(v);
-            const youtubeVideo = isYoutubeVideo(v);
-            if (youtubeVideo)
-              return <YoutubeEmbed key={youtubeId} youtubeId={youtubeId} />;
-          })}
-        </div>
-      )}
-
+    <>
       <Lightbox
         isOpen={open}
         onPrev={gotoPrevious}
@@ -144,83 +133,99 @@ const GalleryComponent: FC<Props> = (props) => {
           leave: { opacity: 0 },
         }}
       />
+      <section className="relative bg-aruna-dark overflow-hidden">
+        {videos.length > 0 && (
+          <div className="grid gap-2">
+            {videos.map((v) => {
+              const youtubeId = getYouTubeVideoId(v);
+              const youtubeVideo = isYoutubeVideo(v);
+              if (youtubeVideo)
+                return <YoutubeEmbed key={youtubeId} youtubeId={youtubeId} />;
+            })}
+          </div>
+        )}
 
-      <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
-        <h2
-          data-aos="fade-up"
-          className="font-high-summit text-4xl md:text-5xl text-white text-center whitespace-nowrap"
-        >
-          Galeri Kami
-        </h2>
-        <p
-          data-aos="fade-up"
-          className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm mx-auto my-8`}
-        >
-          Setiap langkah adalah kebahagiaan, setiap senyum adalah kenangan. Di
-          sini, kami mengabadikan momen cinta dan janji yang akan dikenang
-          selamanya.
-        </p>
-        <p
-          data-aos="fade-up"
-          className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
-        >
-          {getParticipantNames(props.state.client?.participants || [])}
-        </p>
-        <div
-          className={`mt-10 grid grid-cols-4 ${
-            slideImages.length > 0 ? "grid-rows-6" : "grid-rows-4"
-          } gap-2`}
-          data-aos="zoom-out-up"
-        >
-          {gridImages.map((img, index) => (
-            <div
-              key={`gallery-${index + 1}`}
-              onClick={() => handleToggleLightbox(index)}
-              className={`${gridSpan(index)} w-full relative overflow-hidden`}
-            >
-              <Image
-                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                priority
-                src={img}
-                fill
-                alt={`gallery-${index + 1}`}
-                className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
-              />
-            </div>
-          ))}
-
-          {slideImages.length > 0 && (
-            <div className="col-span-4 row-span-2 w-full">
-              <Swiper
-                autoplay
-                spaceBetween={8}
-                modules={[Autoplay]}
-                className="w-full h-full"
+        <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
+          <h2
+            data-aos="fade-up"
+            className="font-high-summit text-4xl md:text-5xl text-white text-center whitespace-nowrap"
+          >
+            Galeri Kami
+          </h2>
+          <p
+            data-aos="fade-up"
+            className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm mx-auto my-8`}
+          >
+            Setiap langkah adalah kebahagiaan, setiap senyum adalah kenangan. Di
+            sini, kami mengabadikan momen cinta dan janji yang akan dikenang
+            selamanya.
+          </p>
+          <p
+            data-aos="fade-up"
+            className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
+          >
+            {getParticipantNames(props.state.client?.participants || [])}
+          </p>
+          <div
+            className={`mt-10 grid grid-cols-4 ${
+              slideImages.length > 0 ? "grid-rows-6" : "grid-rows-4"
+            } gap-2`}
+            data-aos="zoom-out-up"
+          >
+            {gridImages.map((img, index) => (
+              <div
+                key={`gallery-${index + 1}`}
+                onClick={() => handleToggleLightbox(index)}
+                className={`${gridSpan(index)} w-full relative overflow-hidden`}
               >
-                {slideImages.map((image, index) => (
-                  <SwiperSlide
-                    onClick={() => handleToggleLightbox(index + 6)}
-                    key={`gallery-${index + 6}`}
-                    className="relative flex justify-center items-center h-full"
-                  >
-                    <div className="relative h-full w-full">
-                      <Image
-                        priority
-                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
-                        src={image}
-                        alt={`galeri-${index + 6}`}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          )}
+                <Image
+                  loading="lazy"
+                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                  priority={index < 2}
+                  src={img}
+                  fill
+                  quality={75}
+                  alt={`gallery-${index + 1}`}
+                  className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
+                />
+              </div>
+            ))}
+
+            {slideImages.length > 0 && (
+              <div className="col-span-4 row-span-2 w-full">
+                <Swiper
+                  autoplay
+                  spaceBetween={8}
+                  modules={[Autoplay]}
+                  className="w-full h-full"
+                >
+                  {slideImages.map((image, index) => (
+                    <SwiperSlide
+                      onClick={() => handleToggleLightbox(index + 6)}
+                      key={`gallery-${index + 6}`}
+                      className="relative flex justify-center items-center h-full"
+                    >
+                      <div className="relative h-full w-full">
+                        <Image
+                          loading="lazy"
+                          priority={index < 2}
+                          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
+                          src={image}
+                          alt={`galeri-${index + 6}`}
+                          fill
+                          quality={75}
+                          className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
