@@ -122,7 +122,7 @@ const GalleryComponent: FC<Props> = (props) => {
           <button
             disabled={imageIndex === lightboxImage.length - 1}
             onClick={gotoNext}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex items-center justify-center mr-2 transition-colors ease-in-out backdrop-blur-sm"
+            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex items-center justify-center md:mr-2 transition-colors ease-in-out backdrop-blur-sm"
           >
             <HiChevronRight />
           </button>
