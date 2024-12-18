@@ -179,7 +179,7 @@ const GalleryComponent: FC<Props> = (props) => {
                 className={`${gridSpan(index)} w-full relative overflow-hidden`}
               >
                 <Image
-                  loading="lazy"
+                  loading="eager"
                   sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                   priority={index < 2}
                   src={img}
@@ -207,7 +207,7 @@ const GalleryComponent: FC<Props> = (props) => {
                     >
                       <div className="relative h-full w-full">
                         <Image
-                          loading="lazy"
+                          loading="eager"
                           priority={index < 2}
                           sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
                           src={image}
