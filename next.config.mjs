@@ -1,26 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "mhpt8pyiinkgvtyo.public.blob.vercel-storage.com",
-        port: "",
-      },
-      {
-        protocol: "https",
-        hostname: "0i9ria69mw7glx7c.public.blob.vercel-storage.com",
-        port: "",
-      },
-      {
-        protocol: "https",
         hostname: "avatar.iran.liara.run",
-        port: "",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
         port: "",
       },
       {

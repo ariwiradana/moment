@@ -9,7 +9,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "@/components/dashboard/elements/seo";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-import useDisableInspect from "@/hooks/useDisableInspect";
 
 interface Props {
   slug: string;
@@ -18,7 +17,6 @@ interface Props {
 }
 
 const MainPage: FC<Props> = ({ untuk, client }) => {
-  useDisableInspect();
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -63,7 +61,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
   const baseUrl = process.env.API_BASE_URL;
-  const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`);
+  const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`).catch(
+    (error) => {
+      console.error("API fetch error:", error);
+      return null;
+    }
+  );
 
   const client: Client | null = response?.data ?? null;
 

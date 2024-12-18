@@ -101,7 +101,7 @@ const useAruna = (client: Client | null): useAruna => {
     if (!client?.events) return;
 
     const updateCountdowns = () => {
-      const newTimeRemaining = client.events!.map((event) => {
+      const newTimeRemaining = client.events.map((event) => {
         const targetDateTime = moment(
           `${event.date} ${event.start_time}`,
           "YYYY-MM-DD HH:mm"
@@ -109,30 +109,22 @@ const useAruna = (client: Client | null): useAruna => {
         const now = moment();
         const diffDuration = moment.duration(targetDateTime.diff(now));
 
-        if (diffDuration.asMilliseconds() > 0) {
-          return {
-            days: Math.floor(diffDuration.asDays()),
-            hours: diffDuration.hours(),
-            minutes: diffDuration.minutes(),
-            seconds: diffDuration.seconds(),
-          };
-        } else {
-          return {
-            days: 0,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-          };
-        }
+        return {
+          days: Math.max(0, Math.floor(diffDuration.asDays())),
+          hours: Math.max(0, diffDuration.hours()),
+          minutes: Math.max(0, diffDuration.minutes()),
+          seconds: Math.max(0, diffDuration.seconds()),
+        };
       });
 
       setTimeRemainings(newTimeRemaining);
     };
 
     const intervalId = setInterval(updateCountdowns, 1000);
+    updateCountdowns(); // Perbarui langsung saat komponen dimount
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearInterval(intervalId); // Bersihkan interval saat komponen unmount
+  }, [client?.events]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -157,6 +149,7 @@ const useAruna = (client: Client | null): useAruna => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrors({}); // Reset errors sebelum validasi
 
     const payload = { client_id: Number(client?.id), ...formData };
 
@@ -177,9 +170,8 @@ const useAruna = (client: Client | null): useAruna => {
       const result = await response.json();
 
       if (result.success) {
-        mutate();
-        setLoading(false);
-        setFormData(initialReviewForm);
+        mutate(); // Reload data ucapan
+        setFormData(initialReviewForm); // Reset form
         toast.success("Berhasil. Terima kasih atas ucapannya!", {
           id: toastSubmit,
           icon: (
@@ -253,12 +245,11 @@ const useAruna = (client: Client | null): useAruna => {
   }, [client]);
 
   const brideParticipant = useMemo(
-    () => client?.participants.find((p) => p.role === "bride") || null,
+    () => client?.participants?.find((p) => p.role === "bride") || null,
     [client]
   );
-
   const groomParticipant = useMemo(
-    () => client?.participants.find((p) => p.role === "groom") || null,
+    () => client?.participants?.find((p) => p.role === "groom") || null,
     [client]
   );
 
@@ -293,15 +284,15 @@ const useAruna = (client: Client | null): useAruna => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
         if (audioRef.current && !audioRef.current.paused) {
-          setIsPlaying(true);
           audioRef.current.pause();
-        } else {
           setIsPlaying(false);
         }
-      } else if (document.visibilityState === "visible") {
-        if (isPlaying && audioRef.current) {
-          audioRef.current.play();
-        }
+      } else if (
+        document.visibilityState === "visible" &&
+        isPlaying &&
+        audioRef.current
+      ) {
+        audioRef.current.play();
       }
     };
 
@@ -359,13 +350,6 @@ const useAruna = (client: Client | null): useAruna => {
     window.open(googleCalendarUrl, "_blank");
   };
 
-  const handleChangePagination = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setPage(value);
-  };
-
   const [limit] = useState<number>(4);
   const [page, setPage] = useState(1);
   const [wishes, setWishes] = useState<Review[]>([]);
@@ -375,13 +359,24 @@ const useAruna = (client: Client | null): useAruna => {
     client?.id
       ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
       : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 10000,
+    }
   );
+
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
 
   useEffect(() => {
     if (fetchedWishes && fetchedWishes.data.length > 0) {
       setWishes(fetchedWishes.data);
-      setTotalRows(fetchedWishes?.total_rows);
+      setTotalRows(fetchedWishes.total_rows);
     }
   }, [fetchedWishes]);
 
