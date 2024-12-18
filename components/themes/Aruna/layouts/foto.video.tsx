@@ -1,6 +1,5 @@
 import React, { FC, memo, useCallback, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
-import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
@@ -8,10 +7,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import YoutubeEmbed from "../elements/youtube.embed";
 import Image from "next/image";
+import Lightbox from "react-spring-lightbox";
+import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
 
 interface Props {
   state: useAruna["state"];
@@ -30,7 +29,15 @@ const GalleryComponent: FC<Props> = (props) => {
         )
       : [];
 
-  const lightboxImage = images.map((img) => ({ src: img }));
+  const lightboxImage = images.map((img, index) => ({
+    src: img,
+    alt: `gallery-${index + 1}`,
+  }));
+
+  const gotoPrevious = () => imageIndex > 0 && setImageIndex(imageIndex - 1);
+
+  const gotoNext = () =>
+    imageIndex + 1 < images.length && setImageIndex(imageIndex + 1);
 
   const videos =
     Array.isArray(props.state.client?.videos) &&
@@ -59,9 +66,8 @@ const GalleryComponent: FC<Props> = (props) => {
   };
 
   const handleToggleLightbox = useCallback(
-    (image: string) => {
-      const imageIndex = images.findIndex((img) => img === image) as number;
-      setImageIndex(imageIndex);
+    (idx: number) => {
+      setImageIndex(idx);
       setOpen(!open);
     },
     [images, open]
@@ -79,17 +85,47 @@ const GalleryComponent: FC<Props> = (props) => {
           })}
         </div>
       )}
+
       <Lightbox
-        styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .8)" } }}
-        close={() => setOpen(false)}
-        slides={lightboxImage}
-        index={imageIndex}
-        open={open}
-        plugins={[Fullscreen, Zoom]}
-        on={{
-          view({ index }) {
-            setImageIndex(index);
-          },
+        isOpen={open}
+        onPrev={gotoPrevious}
+        onNext={gotoNext}
+        images={lightboxImage}
+        currentIndex={imageIndex}
+        onClose={() => setOpen(false)}
+        className={`bg-black/80`}
+        renderHeader={() => (
+          <div className="flex justify-end z-10 fixed top-0 inset-x-0">
+            <button
+              onClick={() => setOpen(false)}
+              className="text-white/60 hover:text-white text-3xl p-4 relative z-10 transition-colors ease-in-out"
+            >
+              <HiOutlineXMark />
+            </button>
+          </div>
+        )}
+        renderPrevButton={() => (
+          <button
+            disabled={imageIndex === 0}
+            onClick={gotoPrevious}
+            className="text-white text-2xl p-1 relative z-10 disabled:opacity-30 bg-white/10 hover:bg-white/20 disabled:hover:bg-white/10 rounded-full flex justify-center items-center ml-3 md:ml-6 transition-colors ease-in-out backdrop-blur-lg"
+          >
+            <HiChevronLeft />
+          </button>
+        )}
+        renderNextButton={() => (
+          <button
+            disabled={imageIndex === lightboxImage.length - 1}
+            onClick={gotoNext}
+            className="text-white text-2xl p-1 relative z-10 disabled:opacity-30 bg-white/10 hover:bg-white/20 disabled:hover:bg-white/10 rounded-full flex items-center justify-center mr-3 md:mr-6 transition-colors ease-in-out backdrop-blur-lg"
+          >
+            <HiChevronRight />
+          </button>
+        )}
+        pageTransitionConfig={{
+          from: { opacity: 0 },
+          enter: { opacity: 1 },
+          leave: { opacity: 0 },
         }}
       />
 
@@ -123,7 +159,7 @@ const GalleryComponent: FC<Props> = (props) => {
           {gridImages.map((img, index) => (
             <div
               key={`gallery-${index + 1}`}
-              onClick={() => handleToggleLightbox(img)}
+              onClick={() => handleToggleLightbox(index)}
               className={`${gridSpan(index)} w-full relative overflow-hidden`}
             >
               <Image
@@ -147,7 +183,7 @@ const GalleryComponent: FC<Props> = (props) => {
               >
                 {slideImages.map((image, index) => (
                   <SwiperSlide
-                    onClick={() => handleToggleLightbox(image)}
+                    onClick={() => handleToggleLightbox(index + 6)}
                     key={`gallery-${index + 6}`}
                     className="relative flex justify-center items-center h-full"
                   >
