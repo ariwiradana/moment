@@ -13,12 +13,24 @@ import useDisableInspect from "@/hooks/useDisableInspect";
 import useClientStore from "@/store/useClientStore";
 
 interface Props {
-  slug: string;
+  url: string;
   untuk: string;
   client: Client | null;
+  themeName: string;
+  pageTitle: string;
+  description: string;
+  seoImage: string;
 }
 
-const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
+const MainPage: FC<Props> = ({
+  untuk,
+  client: clientData,
+  themeName,
+  pageTitle,
+  description,
+  seoImage,
+  url,
+}) => {
   const { setClient } = useClientStore();
 
   useDisableInspect();
@@ -33,26 +45,16 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
 
   if (!clientData) return <ClientNotFound />;
 
-  const themeName = clientData?.theme?.name || "";
   const ThemeComponent = themes[themeName];
-  const participantNames = getParticipantNames(clientData?.participants || []);
-
-  const pageTitle = clientData
-    ? clientData.status === "unpaid"
-      ? `Preview ${participantNames} | Undangan ${clientData.theme_category?.name}`
-      : clientData.is_preview
-      ? `Preview Undangan Tema ${clientData.theme?.name} | Moment`
-      : `${participantNames} | Undangan ${clientData.theme_category?.name}`
-    : "Moment";
 
   return ThemeComponent ? (
     <>
       <Seo
-        url={`https://momentinvitations.com/${clientData?.slug}`}
+        url={url}
         title={pageTitle}
-        description={`${clientData?.opening_title}, ${clientData?.opening_description}`}
+        description={description}
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-        image={clientData?.seo as string}
+        image={seoImage}
       />
       {ThemeComponent(untuk)}
     </>
@@ -74,12 +76,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 
   const client: Client | null = response?.data ?? null;
+  const themeName = client?.theme?.name || "";
+  const participantNames =
+    getParticipantNames(client?.participants || []) || "";
+  const description = `${client?.opening_title || ""}, ${
+    client?.opening_description || ""
+  }`;
+  const seoImage = client?.seo || "";
+  const url = `https://momentinvitations.com/${encodeURIComponent(slug)}`;
+  const pageTitle = client
+    ? client.status === "unpaid"
+      ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
+      : client.is_preview
+      ? `Preview Undangan Tema ${client.theme?.name} | Moment`
+      : `${participantNames} | Undangan ${client.theme_category?.name}`
+    : "Moment";
 
   return {
     props: {
       untuk: untuk ?? "Tamu Undangan",
       slug,
       client,
+      themeName,
+      pageTitle,
+      description,
+      seoImage,
+      url,
     },
   };
 };
