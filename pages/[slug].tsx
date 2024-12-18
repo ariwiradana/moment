@@ -31,28 +31,28 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
     setClient(clientData);
   }, []);
 
-  if (!client) return <ClientNotFound />;
+  if (!clientData) return <ClientNotFound />;
 
-  const themeName = client.theme?.name || "";
+  const themeName = clientData?.theme?.name || "";
   const ThemeComponent = themes[themeName];
-  const participantNames = getParticipantNames(client.participants || []);
+  const participantNames = getParticipantNames(clientData?.participants || []);
 
-  const pageTitle = client
-    ? client.status === "unpaid"
-      ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
-      : client.is_preview
-      ? `Preview Undangan Tema ${client.theme?.name} | Moment`
-      : `${participantNames} | Undangan ${client.theme_category?.name}`
+  const pageTitle = clientData
+    ? clientData.status === "unpaid"
+      ? `Preview ${participantNames} | Undangan ${clientData.theme_category?.name}`
+      : clientData.is_preview
+      ? `Preview Undangan Tema ${clientData.theme?.name} | Moment`
+      : `${participantNames} | Undangan ${clientData.theme_category?.name}`
     : "Moment";
 
   return ThemeComponent ? (
     <>
       <Seo
-        url={`https://momentinvitations.com/${client?.slug}`}
+        url={`https://momentinvitations.com/${clientData?.slug}`}
         title={pageTitle}
-        description={`${client?.opening_title}, ${client?.opening_description}`}
+        description={`${clientData?.opening_title}, ${clientData?.opening_description}`}
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-        image={client?.seo as string}
+        image={clientData?.seo as string}
       />
       {ThemeComponent(untuk)}
     </>
