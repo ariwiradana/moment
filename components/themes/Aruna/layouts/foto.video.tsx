@@ -3,8 +3,8 @@ import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Autoplay } from "swiper/modules";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import YoutubeEmbed from "../elements/youtube.embed";
@@ -189,7 +189,6 @@ const GalleryComponent: FC<Props> = (props) => {
                 className={`${gridSpan(index)} w-full relative overflow-hidden`}
               >
                 <Image
-                  loading="eager"
                   sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                   priority={index < 2}
                   src={img}
@@ -201,7 +200,7 @@ const GalleryComponent: FC<Props> = (props) => {
               </div>
             ))}
 
-            {slideImages.length > 0 && (
+            {/* {slideImages.length > 0 && (
               <div className="col-span-4 row-span-2 w-full">
                 <Swiper
                   autoplay
@@ -217,7 +216,6 @@ const GalleryComponent: FC<Props> = (props) => {
                     >
                       <div className="relative h-full w-full">
                         <Image
-                          loading="eager"
                           priority={index < 2}
                           sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
                           src={image}
@@ -231,7 +229,7 @@ const GalleryComponent: FC<Props> = (props) => {
                   ))}
                 </Swiper>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </section>
