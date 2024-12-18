@@ -50,7 +50,7 @@ const Aruna: FC<Props> = (props) => {
                   <h1
                     data-aos="fade-up"
                     data-aos-delay="800"
-                    className={`font-high-summit text-white text-5xl md:text-6xl leading-10 2xl:text-7xl mb-2`}
+                    className={`font-high-summit text-white text-4xl md:text-5xl leading-10 2xl:text-6xl mb-2`}
                   >
                     {state.client?.theme_category?.name === "Pernikahan" ? (
                       <>

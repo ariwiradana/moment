@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        responsive: "5vw",
+      },
       fontFamily: {
         "tan-pearl": ["TanPearl", "sans-serif"],
         "high-summit": ["HighSummit", "sans-serif"],
