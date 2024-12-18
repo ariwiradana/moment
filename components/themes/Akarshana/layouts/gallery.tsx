@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ImageShimmer from "../../../image.shimmer";
 import Title from "../elements/title";
 import { useAakarshana } from "@/hooks/themes/useAakarshana";
@@ -15,6 +15,14 @@ interface Props {
 const GalleryComponent: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [open]);
 
   const images =
     Array.isArray(props.state.client?.gallery) &&

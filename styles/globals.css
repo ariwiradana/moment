@@ -86,3 +86,7 @@
     font-style: normal;
   }
 }
+
+.no-scroll {
+  @apply overflow-hidden;
+}
