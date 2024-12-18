@@ -1,4 +1,3 @@
-import ThemeNotFound from "@/components/themes/theme.notfound";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
@@ -44,7 +43,7 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
       : `${participantNames} | Undangan ${client?.theme_category?.name}`
     : "Moment";
 
-  return ThemeComponent ? (
+  return (
     <>
       <Seo
         url={`https://momentinvitations.com/${client?.slug}`}
@@ -55,8 +54,6 @@ const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
       />
       {!client ? <ClientNotFound /> : ThemeComponent(untuk)}
     </>
-  ) : (
-    <ThemeNotFound />
   );
 };
 
