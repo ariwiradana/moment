@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useMemo, useState } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
@@ -16,72 +16,65 @@ interface Props {
   state: useAruna["state"];
 }
 
-const GalleryComponent: FC<Props> = (props) => {
+const GalleryComponent = ({ state }: Props) => {
   const [open, setOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
-  const images = useMemo(() => {
-    return Array.isArray(props.state.client?.gallery) &&
-      props.state.client?.gallery.length > 0
-      ? props.state.client?.gallery.filter(
-          (g) =>
-            g !== props.state.client?.cover && g !== props.state.client?.seo
-        )
-      : [];
-  }, [
-    props.state.client?.gallery,
-    props.state.client?.cover,
-    props.state.client?.seo,
-  ]);
+  const { client } = state;
+  const {
+    gallery = [],
+    cover,
+    seo,
+    videos = [],
+    participants = [],
+  } = client || {};
 
-  const videos = useMemo(() => {
-    return Array.isArray(props.state.client?.videos) &&
-      props.state.client.videos.length > 0
-      ? props.state.client.videos
-      : [];
-  }, [props.state.client?.videos]);
+  // Memoized gallery images (excluding cover and seo)
+  const images = useMemo(
+    () => (gallery as string[]).filter((g) => g !== cover && g !== seo),
+    [gallery, cover, seo]
+  );
+  const lightboxImage = useMemo(
+    () =>
+      images.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
+    [images]
+  );
 
-  const lightboxImage = images.map((img, index) => ({
-    src: img,
-    alt: `gallery-${index + 1}`,
-  }));
+  // Split images into grid and sliding sections
+  const gridImages = useMemo(() => images.slice(0, 6), [images]);
+  const slideImages = useMemo(() => images.slice(6), [images]);
 
+  // Navigation functions for the lightbox
   const gotoPrevious = useCallback(() => {
-    if (imageIndex > 0) setImageIndex(imageIndex - 1);
+    if (imageIndex > 0) setImageIndex((prev) => prev - 1);
   }, [imageIndex]);
 
   const gotoNext = useCallback(() => {
-    if (imageIndex + 1 < images.length) setImageIndex(imageIndex + 1);
+    if (imageIndex < images.length - 1) setImageIndex((prev) => prev + 1);
   }, [imageIndex, images.length]);
 
-  const gridImages = images.length > 6 ? images.slice(0, 6) : images;
-  const slideImages = images.length > 6 ? images.slice(6) : [];
+  // Toggle lightbox visibility and set the current image index
+  const handleToggleLightbox = useCallback(
+    (idx: number) => {
+      if (images.length > 0 && idx >= 0 && idx < images.length) {
+        setImageIndex(idx);
+        setOpen((prev) => !prev);
+      }
+    },
+    [images]
+  );
 
+  // Grid span logic for image layout
   const gridSpan = (index: number) => {
     switch (index) {
       case 0:
         return "col-span-2 row-span-2 aspect-square";
       case 1:
         return "col-span-2 row-span-4";
-      case 2:
-        return "col-span-1 row-span-1 aspect-square";
-      case 3:
-        return "col-span-1 row-span-1 aspect-square";
-      case 4:
-        return "col-span-1 row-span-1 aspect-square";
-      case 5:
+      default:
         return "col-span-1 row-span-1 aspect-square";
     }
   };
-
-  const handleToggleLightbox = useCallback(
-    (idx: number) => {
-      if (images.length === 0 || idx < 0 || idx >= images.length) return;
-      setImageIndex(idx);
-      setOpen((prev) => !prev);
-    },
-    [images, imageIndex]
-  );
 
   return (
     <>
@@ -92,7 +85,7 @@ const GalleryComponent: FC<Props> = (props) => {
         images={lightboxImage}
         currentIndex={imageIndex}
         onClose={() => setOpen(false)}
-        className={`bg-black/70`}
+        className="bg-black/70"
         renderHeader={() => (
           <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
             <p className={`text-white relative z-10 p-2 ${roboto.className}`}>
@@ -134,12 +127,11 @@ const GalleryComponent: FC<Props> = (props) => {
         }}
       />
       <section className="relative bg-aruna-dark overflow-hidden">
-        {videos.length > 0 && (
+        {(videos as string[]).length > 0 && (
           <div className="grid gap-2">
-            {videos.map((v) => {
+            {(videos as string[]).map((v) => {
               const youtubeId = getYouTubeVideoId(v);
-              const youtubeVideo = isYoutubeVideo(v);
-              if (youtubeVideo)
+              if (isYoutubeVideo(v))
                 return <YoutubeEmbed key={youtubeId} youtubeId={youtubeId} />;
             })}
           </div>
@@ -148,7 +140,7 @@ const GalleryComponent: FC<Props> = (props) => {
         <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
           <h2
             data-aos="fade-up"
-            className="font-high-summit text-4xl md:text-5xl text-white text-center whitespace-nowrap"
+            className="font-high-summit text-4xl md:text-5xl text-white text-center"
           >
             Galeri Kami
           </h2>
@@ -164,7 +156,7 @@ const GalleryComponent: FC<Props> = (props) => {
             data-aos="fade-up"
             className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
           >
-            {getParticipantNames(props.state.client?.participants || [])}
+            {getParticipantNames(participants)}
           </p>
           <div
             className={`mt-10 grid grid-cols-4 ${
