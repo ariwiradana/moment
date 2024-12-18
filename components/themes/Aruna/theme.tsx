@@ -3,7 +3,7 @@ import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
 import { Client } from "@/lib/types";
-// import GalleryComponent from "./layouts/foto.video";
+import GalleryComponent from "./layouts/foto.video";
 import ThankyouComponent from "./layouts/thankyou";
 import RSVPWishes from "./layouts/rsvp.wishes";
 import MusicComponent from "./layouts/music";
@@ -85,7 +85,7 @@ const Aruna: FC<Props> = (props) => {
               <HeroComponent state={state} />
               <ParticipantsComponent state={state} />
               <EventsComponent actions={actions} state={state} />
-              {/* <GalleryComponent state={state} /> */}
+              <GalleryComponent state={state} />
               <GiftComponent actions={actions} state={state} />
               <RSVPWishes actions={actions} state={state} />
               <ThankyouComponent state={state} />
