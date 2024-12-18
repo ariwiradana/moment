@@ -19,7 +19,7 @@ interface Props {
 }
 
 const MainPage: FC<Props> = ({ untuk, client: clientData }) => {
-  const { client, setClient } = useClientStore();
+  const { setClient } = useClientStore();
 
   useDisableInspect();
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { useAruna } from "@/hooks/themes/useAruna";
 import Image from "next/image";
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import toast from "react-hot-toast";
 import { BiPause, BiPlay } from "react-icons/bi";
 
@@ -11,7 +11,7 @@ interface Props {
   className?: string;
 }
 
-const MusicComponent: FC<Props> = (props) => {
+const MusicComponent = (props: Props) => {
   const musicSrc = (props.state.client?.music as string) || null;
 
   if (musicSrc) {
