@@ -702,7 +702,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
             if (currentParticipants[i].image) {
               await getClient(
-                `/api/_c/delete-participant-image`,
+                `/api/_c/_dpi`,
                 {
                   method: "POST",
                   body: JSON.stringify({
@@ -755,13 +755,13 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Image participant ${i + 1} uploaded successfully!`, {
+            toast.success(`Image event ${i + 1} uploaded successfully!`, {
               id: toastUpload,
             });
 
             if (currentEvents[i].image) {
               await getClient(
-                `/api/_c/delete-participant-image`,
+                `/api/_c/_dei`,
                 {
                   method: "POST",
                   body: JSON.stringify({
