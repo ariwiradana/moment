@@ -39,11 +39,11 @@ const HeroComponent: FC<Props> = (props) => {
   }, [events.length]);
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative h-svh overflow-hidden">
       <div className="fixed top-0 right-0 w-full xl:w-[40vw] 2xl:w-[30vw] overflow-hidden">
         {video && video?.length > 0 ? (
           <div
-            className="h-screen w-full"
+            className="h-svh w-full"
             data-aos="zoom-out"
             data-aos-delay="500"
           >
@@ -67,7 +67,7 @@ const HeroComponent: FC<Props> = (props) => {
             }}
             effect="fade"
             speed={2000}
-            className="w-full transition-transform h-screen"
+            className="w-full transition-transform h-svh"
             spaceBetween={0}
             slidesPerView={1}
             modules={[Autoplay, EffectFade]}
@@ -110,7 +110,7 @@ const HeroComponent: FC<Props> = (props) => {
         }`}
       >
         {props.state.open && (
-          <div className="h-screen flex flex-col max-w-screen-sm lg:max-w-screen-lg mx-auto py-[60px] md:py-[100px] px-8 md:px-12 w-full">
+          <div className="h-svh flex flex-col max-w-screen-sm lg:max-w-screen-lg mx-auto py-[60px] md:py-[100px] px-8 md:px-12 w-full">
             <div>
               <h1
                 data-aos="fade-up"
