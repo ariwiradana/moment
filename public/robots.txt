@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.momentinvitations.com
+Host: https://www.momentinvitation.com
 
 # Sitemaps
-Sitemap: https://www.momentinvitations.com/sitemap.xml
+Sitemap: https://www.momentinvitation.com/sitemap.xml
