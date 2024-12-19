@@ -31,12 +31,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const result = await cloudinary.uploader.upload(file[0].filepath, {
           resource_type: "auto",
           folder,
-          transformation: {
-            width: 1920,
-            crop: "scale",
-            fetch_format: "auto",
-            quality: "auto",
-          },
         });
         return res.status(200).json({ success: true, data: result });
       }
