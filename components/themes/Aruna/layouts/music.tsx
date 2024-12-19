@@ -20,8 +20,6 @@ const MusicComponent = (props: Props) => {
         className={`fixed bottom-4 right-4 md:right-8 md:bottom-8 z-50 w-10 h-10 md:h-12 md:w-12 ${
           props.className ?? ""
         }`}
-        data-aos="zoom-in-up"
-        data-aos-offset="80"
       >
         <button
           aria-label={props.state.isPlaying ? "Pause music" : "Play music"}
