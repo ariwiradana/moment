@@ -74,6 +74,10 @@ const CustomImageSlides = ({
       onTouchEnd={handleTouchEnd}
     >
       <button
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         disabled={currentIndex === images.length - 1}
         onClick={gotoNext}
         className="absolute top-1/2 right-0 transform -translate-y-1/2 text-white text-xl p-2 z-10 disabled:opacity-30 bg-black/40 hover:bg-black/60 disabled:hover:bg-black/40 flex items-center justify-center md:mr-1 transition-colors ease-in-out"
@@ -81,6 +85,10 @@ const CustomImageSlides = ({
         <HiChevronRight />
       </button>
       <button
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         disabled={currentIndex === 0}
         onClick={gotoPrevious}
         className="absolute top-1/2 left-0 transform -translate-y-1/2 text-white text-xl p-2 z-10 disabled:opacity-30 bg-black/40 hover:bg-black/60 disabled:hover:bg-black/40 flex items-center justify-center md:ml-1 transition-colors ease-in-out"
