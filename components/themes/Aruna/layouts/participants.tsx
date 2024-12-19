@@ -103,7 +103,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       </div>
       <h1
         data-aos="fade-up"
-        className={`text-3xl md:text-4xl 2xl:text-5xl text-center text-aruna-dark relative mb-8 font-high-summit mt-4 md:mt-6`}
+        className={`text-3xl md:text-4xl text-center text-aruna-dark relative mb-8 font-high-summit mt-4 md:mt-6`}
       >
         {props.data.name}
       </h1>
