@@ -3,11 +3,10 @@ import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import Image from "next/image";
 import Lightbox from "react-spring-lightbox";
 import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
+import CustomImageSlides from "../elements/custom.slides";
 
 interface Props {
   state: useAruna["state"];
@@ -29,8 +28,8 @@ const Component = ({ state }: Props) => {
       images.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
     [images]
   );
-  const gridImages = useMemo(() => images.slice(0, 6), [images]);
-  const slideImages = useMemo(() => images.slice(6), [images]);
+  const gridImages = useMemo(() => images.slice(0, 11), [images]);
+  const slideImages = useMemo(() => images.slice(11), [images]);
 
   const gotoPrevious = useCallback(() => {
     if (imageIndex > 0) setImageIndex((prev) => prev - 1);
@@ -57,6 +56,8 @@ const Component = ({ state }: Props) => {
         return "col-span-2 row-span-2 aspect-square";
       case 1:
         return "col-span-2 row-span-4";
+      case 6:
+        return "col-span-2 row-span-2 aspect-square";
       default:
         return "col-span-1 row-span-1 aspect-square";
     }
@@ -71,7 +72,7 @@ const Component = ({ state }: Props) => {
         images={lightboxImage}
         currentIndex={imageIndex}
         onClose={() => setOpen(false)}
-        className="bg-black/70"
+        className="bg-black/80"
         renderHeader={() => (
           <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
             <p className={`text-white relative z-10 p-2 ${roboto.className}`}>
@@ -136,7 +137,7 @@ const Component = ({ state }: Props) => {
           </p>
           <div
             className={`mt-10 grid grid-cols-4 ${
-              slideImages.length > 0 ? "grid-rows-6" : "grid-rows-4"
+              slideImages.length > 0 ? "grid-rows-8" : "grid-rows-6"
             } gap-2`}
             data-aos="zoom-out-up"
           >
@@ -158,32 +159,11 @@ const Component = ({ state }: Props) => {
             ))}
 
             {slideImages.length > 0 && (
-              <div className="col-span-4 row-span-2 w-full">
-                <Swiper
-                  autoplay
-                  spaceBetween={8}
-                  modules={[Autoplay]}
-                  className="w-full h-full"
-                >
-                  {slideImages.map((image, index) => (
-                    <SwiperSlide
-                      onClick={() => handleToggleLightbox(index + 6)}
-                      key={`gallery-${index + 6}`}
-                      className="relative flex justify-center items-center h-full"
-                    >
-                      <div className="relative h-full w-full">
-                        <Image
-                          priority={index < 2}
-                          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1600px"
-                          src={image}
-                          alt={`galeri-${index + 6}`}
-                          fill
-                          className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+              <div className="col-span-4 row-span-3 w-full h-full relative overflow-hidden">
+                <CustomImageSlides
+                  handleToggleLightbox={handleToggleLightbox}
+                  images={slideImages}
+                />
               </div>
             )}
           </div>
