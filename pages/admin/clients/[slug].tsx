@@ -407,17 +407,77 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   title={`Event ${index + 1}`}
                   content={
                     <div className="flex flex-col gap-y-4">
+                      <div className="flex flex-col lg:flex-row gap-4">
+                        {state.formData.events[index].image &&
+                        typeof state.formData.events[index].image ===
+                          "string" ? (
+                          <div className="relative md:w-36 lg:w-64 w-28 aspect-square">
+                            <ImageShimmer
+                              priority
+                              alt={event.name}
+                              src={state.formData.events[index].image as string}
+                              fill
+                              className="object-cover w-full rounded-lg"
+                            />
+                            <div className="absolute top-2 right-2 z-10">
+                              <button
+                                onClick={() =>
+                                  actions.handleDeleteImageEvent(
+                                    state.formData.events[index]
+                                      .image as string,
+                                    state.formData.events[index].id as number
+                                  )
+                                }
+                                type="button"
+                                disabled={state.loading || state.isLoading}
+                                className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                              >
+                                <BiX />
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                        <div className="flex flex-col gap-4 w-full">
+                          <Input
+                            value={state.formData.events[index].name}
+                            onChange={(e) =>
+                              actions.handleChangeEvent(
+                                e.target.value,
+                                "name",
+                                index
+                              )
+                            }
+                            className="w-full"
+                            label="Name"
+                          />
+                          <Input
+                            accept="image/*"
+                            type="file"
+                            onChange={(e) =>
+                              actions.handleChangeEvent(
+                                e.target.files as FileList,
+                                "image",
+                                index
+                              )
+                            }
+                            className="w-full"
+                            label="Image"
+                          />
+                        </div>
+                      </div>
                       <Input
-                        value={state.formData.events[index].name}
+                        value={state.formData.events[index].address_url}
                         onChange={(e) =>
                           actions.handleChangeEvent(
                             e.target.value,
-                            "name",
+                            "address_url",
                             index
                           )
                         }
                         className="w-full"
-                        label="Name"
+                        label="Address URL"
                       />
                       <InputTextarea
                         rows={6}
@@ -430,18 +490,6 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           )
                         }
                         label="Address"
-                      />
-                      <Input
-                        value={state.formData.events[index].address_url}
-                        onChange={(e) =>
-                          actions.handleChangeEvent(
-                            e.target.value,
-                            "address_url",
-                            index
-                          )
-                        }
-                        className="w-full"
-                        label="Address URL"
                       />
                       <Input
                         value={state.formData.events[index].date}
@@ -557,7 +605,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                         {state.formData.participants[index].image &&
                         typeof state.formData.participants[index].image ===
                           "string" ? (
-                          <div className="lg:w-64 w-28 aspect-square relative">
+                          <div className="md:w-36 lg:w-64 w-28 aspect-square relative">
                             <ImageShimmer
                               priority
                               alt={participant.name}

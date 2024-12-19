@@ -51,6 +51,7 @@ export interface Event {
   date: string;
   start_time: string;
   end_time: string;
+  image: null | string | FileList;
   created_at?: Date | string;
   updated_at?: Date | string;
 }
@@ -94,7 +95,6 @@ export interface Review {
   created_at?: Date | string;
   updated_at?: Date | string;
 }
-
 
 export interface Package {
   id?: number;

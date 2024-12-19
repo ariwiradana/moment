@@ -15,15 +15,8 @@ interface Props {
 }
 
 const EventsComponent: FC<Props> = ({ state, actions }) => {
-  const { events = [], gallery = [] } = state.client || {};
+  const { events = [] } = state.client || {};
   const { state: eventState } = useEvents(state.client as Client);
-
-  const images =
-    (gallery.length > 0 &&
-      (gallery as string[]).filter(
-        (g) => g !== state.client?.cover && g !== state.client?.seo
-      )) ||
-    [];
 
   if (events.length > 0) {
     return (
@@ -41,13 +34,15 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
               >
                 <div className="w-full h-[228px] md:h-[280px] relative">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/0 from-[50%] to-white z-10"></div>
-                  <ImageShimmer
-                    priority
-                    alt={`event-${event.name}`}
-                    fill
-                    className="object-cover"
-                    src={images[images.length - 1 - index] as string}
-                  />
+                  {event.image && (
+                    <ImageShimmer
+                      priority
+                      alt={`Acara ${event.name}`}
+                      fill
+                      className="object-cover"
+                      src={event.image as string}
+                    />
+                  )}
                 </div>
                 <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 rounded-b-3xl text-center">
                   <h2

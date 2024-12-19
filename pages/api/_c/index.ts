@@ -12,8 +12,6 @@ import {
 import { createSlug } from "@/utils/createSlug";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
-import path from "path";
-import fs from "fs/promises";
 import { v2 as cloudinary } from "cloudinary";
 import { getCloudinaryID } from "@/utils/getCloudinaryID";
 
@@ -328,8 +326,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           const events: Event[] = client.events;
           const eventPromises = events.map(async (e: Event) => {
             const addEventQuery = `
-                  INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url)
-                  VALUES ($1, $2, $3, $4, $5, $6, $7)
+                  INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url, image)
+                  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                   RETURNING *;
                 `;
 
@@ -341,6 +339,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               e.end_time,
               e.address,
               e.address_url,
+              e.image,
             ]);
           });
           await Promise.all(eventPromises);
@@ -453,8 +452,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (newEvents.length > 0) {
           const newEventPromises = newEvents.map(async (e: Event) => {
             const updateNewEventQuery = `
-              INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url)
-              VALUES ($1, $2, $3, $4, $5, $6, $7)
+              INSERT INTO events (client_id, name, date, start_time, end_time, address, address_url, image)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
               RETURNING *;
             `;
 
@@ -466,6 +465,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               e.end_time,
               e.address,
               e.address_url,
+              e.image,
             ]);
           });
           await Promise.all(newEventPromises);
@@ -530,8 +530,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 start_time = $4,
                 end_time = $5,
                 address = $6,
-                address_url = $7
-              WHERE id = $8
+                address_url = $7,
+                image = $8
+              WHERE id = $9
               RETURNING *;
             `;
 
@@ -543,6 +544,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               e.end_time,
               e.address,
               e.address_url,
+              e.image,
               e.id,
             ]);
           });
@@ -565,10 +567,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
         const { rows: currentClient } = await sql.query(
           `
-            SELECT c.*, p.image as participant_image
+            SELECT c.*, p.image as participant_image, e.image as event_image
             FROM clients c
-            LEFT JOIN participants p
-            ON c.id = p.client_id
+            LEFT JOIN participants p ON c.id = p.client_id
+            LEFT JOIN events e ON c.id = e.client_id
             WHERE c.id = $1
           `,
           [Number(id)]
@@ -601,6 +603,25 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           }
         } else {
           console.log("No participant URL found");
+        }
+
+        const eventImages: string[] = currentClient
+          .map((e) => e.event_image)
+          .filter(Boolean);
+
+        if (eventImages.length > 0) {
+          try {
+            const allEventImagePublicIDs = eventImages.map(
+              (url) => `${env}/${getCloudinaryID(url)}`
+            );
+            if (allEventImagePublicIDs.length > 0)
+              await cloudinary.api.delete_resources(allEventImagePublicIDs);
+            console.log("Event image deleted");
+          } catch (error) {
+            console.error("Error deleting event image:", error);
+          }
+        } else {
+          console.log("No event image URL found");
         }
 
         const galleryURLs: string[] = currentClient[0]?.gallery || [];
@@ -672,19 +693,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         });
 
         await sql.query("COMMIT");
-        if (process.env.NODE_ENV !== "production") {
-          try {
-            const filePath = path.join(
-              process.cwd(),
-              "public/uploads/Clients",
-              currentClient[0].name
-            );
-            await fs.rm(filePath, { recursive: true, force: true });
-          } catch (err: unknown) {
-            console.log(err);
-            throw new Error(`Failed to delete file locally`);
-          }
-        }
 
         return response.status(200).json({
           success: true,

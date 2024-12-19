@@ -37,6 +37,7 @@ const initialEvent: Event = {
   name: "",
   address: "",
   address_url: "",
+  image: null,
   date: moment().format("YYYY-MM-DD"),
   start_time: moment("06:00", "HH:mm").format("HH:mm"),
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
@@ -122,6 +123,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const [participantImagesForm, setParticipantImagesForm] = useState<
     (FileList | null)[] | []
   >([]);
+  const [eventImagesForm, setEventImagesForm] = useState<
+    (FileList | null)[] | []
+  >([]);
 
   const router = useRouter();
 
@@ -193,12 +197,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         address_url: e.address_url,
         date: e.date,
         start_time: e.start_time,
+        image: e.image,
         end_time: e.end_time,
       }));
 
       setParticipantImagesForm(
         new Array(currentParticipants.length).fill(null)
       );
+
+      setEventImagesForm(new Array(currentEvents.length).fill(null));
 
       const currentToggleEndtimes: boolean[] = currentClient.events.map((e) =>
         e.end_time === "Selesai" ? true : false
@@ -326,6 +333,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       ...state,
       events: [...formData.events, initialEvent],
     }));
+    setEventImagesForm((state) => [...state, null]);
   };
 
   const handleChangeParticipant = (
@@ -360,15 +368,21 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   ) => {
     let currentEvents: Event[] = [...formData.events];
 
-    currentEvents[index] = {
-      ...currentEvents[index],
-      [name]: value,
-    };
+    if (name === "image") {
+      let currentEventImages = [...eventImagesForm];
+      currentEventImages[index] = value as FileList;
+      setEventImagesForm(currentEventImages);
+    } else {
+      currentEvents[index] = {
+        ...currentEvents[index],
+        [name]: value,
+      };
 
-    setFormData({
-      ...formData,
-      events: currentEvents,
-    });
+      setFormData({
+        ...formData,
+        events: currentEvents,
+      });
+    }
   };
 
   const handleUploadGallery = async () => {
@@ -505,6 +519,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     const newMusicURL = await handleUploadMusic();
     const newVideoFileURL = await handleUploadCoverVideo();
     const updatedParticipant = await handleUploadImageParticipant();
+    const updatedEvent = await handleUploadImageEvent();
 
     const modifiedFormdata: Client = { ...formData };
     const currentGallery = Array.isArray(formData.gallery)
@@ -521,6 +536,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     modifiedFormdata["music"] =
       !formData.music && newMusicURL ? newMusicURL : formData.music;
     modifiedFormdata["participants"] = updatedParticipant as Participant[];
+    modifiedFormdata["events"] = updatedEvent as Event[];
     modifiedFormdata["cover"] =
       !formData.cover && newGalleryURLs.length
         ? newGalleryURLs[0]
@@ -549,7 +565,11 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         mutate();
         setLoading(false);
         clearFileInput();
-        router.push(`/admin/clients/${createSlug(formData.slug as string)}`);
+        router
+          .push(`/admin/clients/${createSlug(formData.slug as string)}`)
+          .then(() => {
+            window.location.reload();
+          });
         return "Successfully update client";
       },
       error: (error: any) => {
@@ -704,6 +724,65 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       }
     }
     return currentParticipants;
+  };
+
+  const handleUploadImageEvent = async () => {
+    let currentEvents: Event[] = formData.events;
+
+    for (let i = 0; i < eventImagesForm.length; i++) {
+      const file = eventImagesForm[i];
+
+      if (file && file[0]) {
+        const image = file[0] as File;
+        const MAX_SIZE = 5 * 1024 * 1024;
+
+        const toastUpload = toast.loading(`Uploading event ${i + 1} image`);
+
+        try {
+          if (image.size > MAX_SIZE) {
+            toast.error(`Image size of event ${i + 1} is too large`, {
+              id: toastUpload,
+            });
+            continue;
+          }
+
+          const fd = new FormData();
+          fd.append("file", image);
+          const response = await fetch(`/api/_ub`, {
+            method: "POST",
+            body: fd,
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            toast.success(`Image participant ${i + 1} uploaded successfully!`, {
+              id: toastUpload,
+            });
+
+            if (currentEvents[i].image) {
+              await getClient(
+                `/api/_c/delete-participant-image`,
+                {
+                  method: "POST",
+                  body: JSON.stringify({
+                    id: currentEvents[i].id,
+                    url: currentEvents[i].image,
+                  }),
+                },
+                token
+              );
+            }
+
+            currentEvents[i].image = result.data.secure_url;
+          }
+        } catch (error: any) {
+          toast.error(
+            error.message || `Error uploading participant image ${i + 1}`
+          );
+        }
+      }
+    }
+    return currentEvents;
   };
 
   const handleSetCover = async (url: string, id: number) => {
@@ -889,6 +968,49 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     }
   };
 
+  const handleDeleteImageEvent = (url: string, id: number) => {
+    try {
+      setLoading(true);
+
+      const payload = {
+        id,
+        url,
+      };
+
+      const deleteBlob = async () => {
+        const response = await getClient(
+          `/api/_c/_dei`,
+          {
+            method: "POST",
+            body: JSON.stringify(payload),
+          },
+          token
+        );
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        return await response.json();
+      };
+
+      toast.promise(deleteBlob(), {
+        loading: "Deleting event image...",
+        success: () => {
+          mutate();
+          setLoading(false);
+          return "Successfully delete event image";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to delete event image";
+        },
+      });
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDeleteParticipant = (
     id: number,
     imageURL?: string | undefined
@@ -970,6 +1092,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       handleDeleteEvent,
       handleDeleteParticipant,
       handleSetSeoImage,
+      handleDeleteImageEvent,
     },
   };
 };

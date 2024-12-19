@@ -198,6 +198,19 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                       className="w-full"
                       label="Name"
                     />
+                    <Input
+                      accept="image/*"
+                      type="file"
+                      onChange={(e) =>
+                        actions.handleChangeEvent(
+                          e.target.files as FileList,
+                          "image",
+                          index
+                        )
+                      }
+                      className="w-full"
+                      label="Image"
+                    />
                     <InputTextarea
                       rows={6}
                       value={state.formData.events[index].address}

@@ -37,6 +37,7 @@ const initialParticipant: Participant = {
 
 const initialEvent: Event = {
   name: "",
+  image: null,
   address: "",
   address_url: "",
   date: moment().format("YYYY-MM-DD"),
@@ -371,6 +372,48 @@ export const useAdminCreateClient = (token: string | null) => {
     return currentParticipants;
   };
 
+  const handleUploadImageEvent = async () => {
+    let currentEvents: Event[] = formData.events;
+
+    for (let i = 0; i < currentEvents.length; i++) {
+      const file = currentEvents[i].image;
+
+      if (file && file[0]) {
+        const image = file[0] as File;
+        const MAX_SIZE = 5 * 1024 * 1024;
+
+        const toastUpload = toast.loading(`Uploading event ${i + 1} image`);
+
+        try {
+          if (image.size > MAX_SIZE) {
+            toast.error(`Image size of event ${i + 1} is too large`, {
+              id: toastUpload,
+            });
+            continue;
+          }
+
+          const fd = new FormData();
+          fd.append("file", image);
+          const response = await fetch(`/api/_ub`, {
+            method: "POST",
+            body: fd,
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            toast.success(`Image event ${i + 1} uploaded successfully!`, {
+              id: toastUpload,
+            });
+            currentEvents[i].image = result.data.secure_url;
+          }
+        } catch (error: any) {
+          toast.error(error.message || `Error uploading event image ${i + 1}`);
+        }
+      }
+    }
+    return currentEvents;
+  };
+
   const handletoggleEndTime = (index: number) => {
     let currentEvents: Event[] = [...formData.events];
     let currentToggleEndTimes: boolean[] = [...toggleEndTimes];
@@ -515,6 +558,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
       const newGalleryURLs = await handleUploadGallery();
       const newVideoURLs = await handleUploadVideos();
+      const updatedEvent = await handleUploadImageEvent();
       const updatedParticipant = await handleUploadImageParticipant();
       const newMusicURL = await handleUploadMusic();
       const newVideoFileURL = await handleUploadCoverVideo();
@@ -531,6 +575,7 @@ export const useAdminCreateClient = (token: string | null) => {
         !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : null;
       modifiedFormdata["seo"] =
         !formData.cover && newGalleryURLs.length ? newGalleryURLs[0] : null;
+      modifiedFormdata["events"] = updatedEvent;
       modifiedFormdata["participants"] = updatedParticipant;
 
       const createClient = async () => {

@@ -74,6 +74,7 @@ CREATE TABLE events (
   date VARCHAR(100),
   start_time VARCHAR(100),
   end_time VARCHAR(100),
+  image VARCHAR(255),
   address TEXT,
   address_url VARCHAR(255),
   created_at TIMESTAMPTZ DEFAULT NOW(),
