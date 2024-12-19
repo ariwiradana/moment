@@ -299,7 +299,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             </div>
 
             {state.formData.videos && (
-              <div className="grid grid-cols-2 gap-2 relative">
+              <div className="grid gap-2 relative">
                 {Array.isArray(state.formData.videos) &&
                 state.formData.videos.length > 0
                   ? state.formData.videos.map((video) => {
