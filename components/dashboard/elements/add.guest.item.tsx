@@ -1,8 +1,8 @@
-import Input from "@/components/admin/elements/input";
 import React from "react";
 import { BiShareAlt, BiTrash, BiUser } from "react-icons/bi";
 import { getClient } from "@/lib/client";
 import toast from "react-hot-toast";
+import { montserrat } from "@/lib/fonts";
 
 interface AddGuestItemProps {
   value: string;
@@ -70,13 +70,12 @@ const AddGuestItem = ({
 
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full">
-      <Input
-        disabled
-        defaultValue={value}
-        className="w-full"
-        placeholder="Masukkan nama tamu baru"
-        label={`Tamu ${index}`}
-      />
+      <div className={`${montserrat.className} text-sm w-full`}>
+        <p className="block text-gray-700 mb-1">{`Tamu ${index}`}</p>
+        <div className="w-full rounded-lg border p-4 bg-zinc-50 text-dashboard-dark font-medium">
+          {value}
+        </div>
+      </div>
 
       {mode === "exist" && (
         <div className="flex justify-end gap-4 md:mt-5">
