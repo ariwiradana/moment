@@ -9,7 +9,7 @@ interface AddGuestItemProps {
   index?: number;
   mode: "empty" | "exist";
   slug: string;
-  mutate: (args: boolean) => void;
+  mutate: () => void;
 }
 
 const AddGuestItem = ({
@@ -54,7 +54,7 @@ const AddGuestItem = ({
       });
       const result = await response.json();
       if (result.success) {
-        mutate(true);
+        mutate();
         toast.success("Tamu berhasil dihapus!", {
           icon: (
             <div className="p-1 rounded bg-dashboard-primary">
