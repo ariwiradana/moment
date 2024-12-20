@@ -104,7 +104,7 @@ const CustomImageSlides = ({
           alt={`slides-image-${currentIndex}`}
           fill
           className={`object-cover hover:scale-105 transform bg-white/5 group ${
-            fade ? "opacity-100" : "opacity-20"
+            fade ? "opacity-100" : "opacity-50"
           } transition-all ease-in-out duration-500`}
         />
       ) : (
