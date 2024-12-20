@@ -120,7 +120,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
 
   if (isLoading)
     return (
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-dvh flex justify-center items-center">
         <Loader />
       </div>
     );
