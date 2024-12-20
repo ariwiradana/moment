@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { afacad } from "@/lib/fonts";
@@ -42,6 +42,14 @@ const Sidebar: FC<Props> = ({ open, toggle, navData }) => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [open]);
 
   return (
     <nav
