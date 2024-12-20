@@ -12,7 +12,8 @@ import useAddGuestStore from "@/store/useAddGuestStore";
 import useDashboardStore from "@/store/useDashboardStore";
 import { GetServerSideProps } from "next";
 import React, { FC, useEffect, useState } from "react";
-import { BiPlus } from "react-icons/bi";
+import toast from "react-hot-toast";
+import { BiPlus, BiUser } from "react-icons/bi";
 import useSWR from "swr";
 
 interface Props {
@@ -49,6 +50,13 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
         setIsLoading(false);
         resetForm();
         if (mutate) mutate();
+        toast.success("Tamu berhasil ditambahkan!", {
+          icon: (
+            <div className="p-1 rounded bg-dashboard-primary">
+              <BiUser />
+            </div>
+          ),
+        });
       }
       console.log(result);
     } catch (error) {
