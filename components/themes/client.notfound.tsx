@@ -1,19 +1,29 @@
-import { afacad, marcellus } from "@/lib/fonts";
+import { afacad, marcellus, montserrat } from "@/lib/fonts";
+import Link from "next/link";
 import React from "react";
-import { HiUserGroup } from "react-icons/hi2";
+import { TbGiftCardFilled } from "react-icons/tb";
 
 const ClientNotFound = () => {
   return (
-    <div className="text-center min-h-screen flex items-center justify-center flex-col bg-dashboard-dark p-6">
-      <HiUserGroup className="text-7xl mb-4 text-white" />
+    <div className="text-center min-h-screen flex items-center justify-center flex-col bg-admin-hover-dark p-6">
+      <TbGiftCardFilled className="text-9xl mb-4 text-dashboard-primary" />
       <h1
-        className={`mb-4 text-white text-4xl flex flex-wrap gap-x-4 ${marcellus.className}`}
+        className={`mb-4 text-white text-3xl md:text-4xl flex flex-wrap gap-x-4 font-semibold ${montserrat.className}`}
       >
-        Klien Tidak Ditemukan
+        Undangan Tidak Ditemukan
       </h1>
-      <p className={`text-base mb-8 text-white/50 ${afacad.className}`}>
-        Klien yang Anda cari tidak ditemukan atau telah dihapus
+      <p
+        className={`text-lg mb-8 text-white/50 ${afacad.className} max-w-screen-sm`}
+      >
+        Undangan yang Anda cari tidak ditemukan atau telah dihapus. Pastikan
+        Anda memeriksa kembali atau informasi link yang dimasukkan.
       </p>
+      <Link
+        href="/"
+        className={`text-dashboard-primary underline underline-offset-4 ${afacad.className}`}
+      >
+        Kembali ke Beranda
+      </Link>
     </div>
   );
 };

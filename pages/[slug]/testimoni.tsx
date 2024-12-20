@@ -17,6 +17,7 @@ import { BiCheck, BiEdit } from "react-icons/bi";
 import useSWR from "swr";
 import { z } from "zod";
 import useDisableInspect from "@/hooks/useDisableInspect";
+import ClientNotFound from "@/components/themes/client.notfound";
 
 interface Props {
   slug: string;
@@ -115,7 +116,17 @@ const DashboardTestimoni: FC<Props> = (props) => {
     }
   };
 
-  useDisableInspect()
+  useDisableInspect();
+
+  if (isLoading)
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loader />
+      </div>
+    );
+
+  if (!client) return <ClientNotFound />;
+  if (client.status !== "completed") return <ClientNotFound />;
 
   return (
     <Layout>
@@ -129,94 +140,64 @@ const DashboardTestimoni: FC<Props> = (props) => {
 
       <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
         <div className="py-16">
-          {isLoading ? (
-            <Loader />
-          ) : (
+          <div>
+            <h1
+              className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
+            >
+              Tulis Kesan Anda <br />
+              Memakai Jasa Kami
+            </h1>
+            <p
+              className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
+            >
+              Kami ingin mendengar pengalaman Anda! Isi form di bawah ini untuk
+              berbagi pendapat dan membantu orang lain menemukan layanan
+              undangan yang sempurna.
+            </p>
+            <p
+              className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
+            ></p>
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-screen-md flex flex-col gap-6 mt-16"
+          >
+            <Input
+              name="name"
+              error={errors.name}
+              onChange={(e) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  name: e.target.value,
+                }))
+              }
+              value={formData.name}
+              placeholder="Masukkan nama anda"
+              label="Nama"
+            />
+            <InputTextarea
+              name="comments"
+              error={errors.comments}
+              onChange={(e) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  comments: e.target.value,
+                }))
+              }
+              value={formData.comments}
+              placeholder="Masukkan testimoni anda"
+              label="Testimoni"
+              rows={8}
+            />
             <div>
-              {data && !client ? (
-                <div>
-                  <h1
-                    className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold select-none`}
-                  >
-                    Klien Tidak Ditemukan
-                  </h1>
-                  <p
-                    className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%] mb-4 select-none`}
-                  >
-                    Oh tidak! Sepertinya kami tidak dapat menemukan data klien
-                    Anda. Pastikan link undangan Anda sudah benar.
-                  </p>
-
-                  <p
-                    className={`${afacad.className} text-dashboard-dark font-semibold text-lg md:text-xl underline`}
-                  >
-                    Contoh link: /testimoni/link-undangan
-                  </p>
-                </div>
-              ) : (
-                <>
-                  <div>
-                    <h1
-                      className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
-                    >
-                      Tulis Kesan Anda <br />
-                      Memakai Jasa Kami
-                    </h1>
-                    <p
-                      className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
-                    >
-                      Kami ingin mendengar pengalaman Anda! Isi form di bawah
-                      ini untuk berbagi pendapat dan membantu orang lain
-                      menemukan layanan undangan yang sempurna.
-                    </p>
-                    <p
-                      className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
-                    ></p>
-                  </div>
-                  <form
-                    onSubmit={handleSubmit}
-                    className="max-w-screen-md flex flex-col gap-6 mt-16"
-                  >
-                    <Input
-                      name="name"
-                      error={errors.name}
-                      onChange={(e) =>
-                        setFormData((prevState) => ({
-                          ...prevState,
-                          name: e.target.value,
-                        }))
-                      }
-                      value={formData.name}
-                      placeholder="Masukkan nama anda"
-                      label="Nama"
-                    />
-                    <InputTextarea
-                      name="comments"
-                      error={errors.comments}
-                      onChange={(e) =>
-                        setFormData((prevState) => ({
-                          ...prevState,
-                          comments: e.target.value,
-                        }))
-                      }
-                      value={formData.comments}
-                      placeholder="Masukkan testimoni anda"
-                      label="Testimoni"
-                      rows={8}
-                    />
-                    <div>
-                      <ButtonPrimary
-                        isloading={loading}
-                        type="submit"
-                        title="Berikan Testimoni"
-                        icon={<BiEdit />}
-                      />
-                    </div>
-                  </form>
-                </>
-              )}
+              <ButtonPrimary
+                isloading={loading}
+                type="submit"
+                title="Berikan Testimoni"
+                icon={<BiEdit />}
+              />
             </div>
-          )}
+          </form>
         </div>
       </div>
     </Layout>
