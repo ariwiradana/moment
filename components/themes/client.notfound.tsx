@@ -1,4 +1,4 @@
-import { afacad, marcellus, montserrat } from "@/lib/fonts";
+import { afacad, montserrat } from "@/lib/fonts";
 import Link from "next/link";
 import React from "react";
 import { TbGiftCardFilled } from "react-icons/tb";

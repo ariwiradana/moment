@@ -4,7 +4,7 @@ import { useAdminClients } from "@/hooks/admin/useAdminClients";
 import { montserrat } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BiCheckSquare,
   BiEditAlt,
@@ -37,9 +37,14 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
   const { state, actions } = useAdminClients(token);
   const router = useRouter();
 
-  const baseURL = `${window.location.hostname}${
-    window.location.port ? `:${window.location.port}` : ""
-  }`;
+  const [baseURL, setBaseURL] = useState<string>("");
+
+  useEffect(() => {
+    const url = `${window.location.hostname}${
+      window.location.port ? `:${window.location.port}` : ""
+    }`;
+    setBaseURL(url);
+  }, []);
 
   return (
     <AdminLayout>

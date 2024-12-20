@@ -4,7 +4,6 @@ import AddGuestItem from "@/components/dashboard/elements/add.guest.item";
 import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
-import ClientNotFound from "@/components/themes/client.notfound";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
@@ -72,16 +71,6 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
 
   useDisableInspect();
 
-  if (isLoading)
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <Loader />
-      </div>
-    );
-
-  if (!client) return <ClientNotFound />;
-  if (client.status !== "paid") return <ClientNotFound />;
-
   return (
     <Layout>
       <Seo
@@ -113,22 +102,28 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
             ></p>
           </div>
           <div className="mt-16 max-w-screen-md flex flex-col gap-4">
-            {client.guests && client.guests?.length > 0
-              ? client.guests.map((name, index) => (
-                  <AddGuestItem
-                    key={`Tamu Undangan ${name}`}
-                    mutate={mutate}
-                    slug={slug}
-                    mode="exist"
-                    value={name}
-                    index={index + 1}
-                  />
-                ))
-              : null}
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                {client?.guests && client.guests?.length > 0
+                  ? client.guests.map((name, index) => (
+                      <AddGuestItem
+                        key={`Tamu Undangan ${name}`}
+                        mutate={mutate}
+                        slug={slug}
+                        mode="exist"
+                        value={name}
+                        index={index + 1}
+                      />
+                    ))
+                  : null}
+              </>
+            )}
           </div>
           <form
             className={`${
-              client.guests && client.guests?.length > 0 ? "mt-8 md:mt-12" : ""
+              client?.guests && client.guests?.length > 0 ? "mt-8 md:mt-12" : ""
             } pt-10 w-full flex flex-col md:flex-row gap-4 items-end max-w-screen-md`}
             onSubmit={handleSubmit}
           >
