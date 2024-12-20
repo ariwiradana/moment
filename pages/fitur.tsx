@@ -8,6 +8,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Feature, featured } from "@/components/dashboard/features";
 import Seo from "@/components/dashboard/elements/seo";
+import useDisableInspect from "@/hooks/useDisableInspect";
 
 const DashboardFeatures = () => {
   useEffect(() => {
@@ -65,6 +66,8 @@ const DashboardFeatures = () => {
     );
     return () => clearTimeout(typingTimer);
   }, [charIndex, isDeleting, wordIndex, words, handleTyping]);
+
+  useDisableInspect();
 
   return (
     <Layout>

@@ -2,7 +2,7 @@ import { afacad } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
-interface ButtonPrimaryProps
+interface ButtonSecondaryProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title?: string | undefined;
   className?: string | "";
@@ -11,7 +11,7 @@ interface ButtonPrimaryProps
   isloading?: boolean;
 }
 
-const ButtonPrimary: FC<ButtonPrimaryProps> = ({
+const ButtonSecondary: FC<ButtonSecondaryProps> = ({
   title = undefined,
   className = "",
   icon,
@@ -54,12 +54,14 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
         !title ? "p-2 md:p-2 lg:p-2" : buttonStyles(size)
       } ${isloading && "pointer-events-none bg-opacity-10 cursor-not-allowed"}`}
     >
-      <span className={iconStyles(size)}>
-        {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
-      </span>
+      {icon && (
+        <span className={iconStyles(size)}>
+          {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
+        </span>
+      )}
       {title && <span>{title}</span>}
     </button>
   );
 };
 
-export default ButtonPrimary;
+export default ButtonSecondary;

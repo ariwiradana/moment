@@ -14,6 +14,7 @@ import "aos/dist/aos.css";
 import { BiCheck, BiFilter } from "react-icons/bi";
 import Loader from "@/components/admin/elements/loader";
 import Seo from "@/components/dashboard/elements/seo";
+import useDisableInspect from "@/hooks/useDisableInspect";
 
 interface Filter {
   id: number;
@@ -142,6 +143,8 @@ const DashboardThemes = () => {
   ) => {
     setPage(value);
   };
+
+  useDisableInspect();
 
   return (
     <Layout>

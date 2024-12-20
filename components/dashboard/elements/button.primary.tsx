@@ -50,13 +50,19 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
       disabled={isloading ? true : false}
       className={`${afacad.className} ${
         className ?? ""
-      } flex items-center text-dashboard-dark rounded whitespace-nowrap font-medium bg-dashboard-primary bg-opacity-95 transition duration-500 hover:bg-opacity-100 justify-start ${
+      } flex items-center text-dashboard-dark justify-center rounded whitespace-nowrap font-medium bg-opacity-95 hover:bg-opacity-100 bg-dashboard-primary transition duration-500 ${
         !title ? "p-2 md:p-2 lg:p-2" : buttonStyles(size)
-      } ${isloading && "pointer-events-none bg-opacity-10 cursor-not-allowed"}`}
+      } ${
+        isloading || props.disabled
+          ? "pointer-events-none opacity-40 cursor-not-allowed"
+          : "opacity-100"
+      }`}
     >
-      <span className={iconStyles(size)}>
-        {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
-      </span>
+      {icon && (
+        <span className={iconStyles(size)}>
+          {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
+        </span>
+      )}
       {title && <span>{title}</span>}
     </button>
   );

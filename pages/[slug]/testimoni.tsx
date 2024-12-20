@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import { BiCheck, BiEdit } from "react-icons/bi";
 import useSWR from "swr";
 import { z } from "zod";
+import useDisableInspect from "@/hooks/useDisableInspect";
 
 interface Props {
   slug: string;
@@ -34,7 +35,7 @@ const initialFormData: FormData = {
 type ErrorState = Record<string, string>;
 const initialErrorState: ErrorState = {};
 
-const DashboardTestimonial: FC<Props> = (props) => {
+const DashboardTestimoni: FC<Props> = (props) => {
   const { data, isLoading } = useSWR(`/api/_pb/_c?slug=${props.slug}`, fetcher);
   const client: Client | null =
     data?.data && data?.data.length > 0 ? data?.data[0] : null;
@@ -114,17 +115,19 @@ const DashboardTestimonial: FC<Props> = (props) => {
     }
   };
 
+  useDisableInspect()
+
   return (
     <Layout>
       <Seo
-        url={`https://momentinvitations.com/${props.slug}`}
+        url={`https://momentinvitations.com/${props.slug}/testimoni`}
         title="Testimoni | Moment"
         description="Testimoni undangan digital Moment"
         keywords={`testimoni, undangan digital, undangan online, undangan pernikahan, undangan metatah, moment invitation, moment, ${props.slug}`}
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
 
-      <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 lg:px-24">
+      <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
         <div className="py-16">
           {isLoading ? (
             <Loader />
@@ -174,24 +177,6 @@ const DashboardTestimonial: FC<Props> = (props) => {
                     onSubmit={handleSubmit}
                     className="max-w-screen-md flex flex-col gap-6 mt-16"
                   >
-                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-                      <Input
-                        className="col-span-2 lg:col-span-1"
-                        disabled
-                        defaultValue={client?.name}
-                        label="Nama Klien"
-                      />
-                      <Input
-                        disabled
-                        defaultValue={client?.theme_category?.name}
-                        label="Kategori Undangan"
-                      />
-                      <Input
-                        disabled
-                        defaultValue={client?.theme?.name}
-                        label="Tema"
-                      />
-                    </div>
                     <Input
                       name="name"
                       error={errors.name}
@@ -223,7 +208,7 @@ const DashboardTestimonial: FC<Props> = (props) => {
                       <ButtonPrimary
                         isloading={loading}
                         type="submit"
-                        title="Submit"
+                        title="Berikan Testimoni"
                         icon={<BiEdit />}
                       />
                     </div>
@@ -248,4 +233,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default DashboardTestimonial;
+export default DashboardTestimoni;

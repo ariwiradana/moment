@@ -16,6 +16,7 @@ import {
   BiSlideshow,
   BiSolidShow,
   BiTrash,
+  BiUserPlus,
 } from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
 import { getRandomColors } from "@/utils/getRandomColor";
@@ -36,7 +37,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
   const { state, actions } = useAdminClients(token);
   const router = useRouter();
 
-  console.log({ state });
+  const baseURL = `${window.location.hostname}${
+    window.location.port ? `:${window.location.port}` : ""
+  }`;
 
   return (
     <AdminLayout>
@@ -126,11 +129,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
-                                    `${window.location.hostname}${
-                                      window.location.port
-                                        ? `:${window.location.port}`
-                                        : ""
-                                    }/testimoni/${client?.slug}`
+                                    `${baseURL}/${client?.slug}/testimoni/`
                                   )
                                 }
                                 size="small"
@@ -141,6 +140,16 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           )}
                           {client.status === "paid" && (
                             <>
+                              <ButtonText
+                                onClick={() =>
+                                  actions.handleCopyURL(
+                                    `${baseURL}/${client?.slug}/tamu`
+                                  )
+                                }
+                                size="small"
+                                title="Copy Link Add Guests"
+                                icon={<BiUserPlus className="text-base" />}
+                              />
                               <ButtonText
                                 onClick={() =>
                                   actions.handleSetCompletedStatus(
@@ -155,11 +164,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
-                                    `${window.location.hostname}${
-                                      window.location.port
-                                        ? `:${window.location.port}`
-                                        : ""
-                                    }/${client?.slug}`
+                                    `${baseURL}/${client?.slug}`
                                   )
                                 }
                                 type="button"
@@ -174,11 +179,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
-                                    `${window.location.hostname}${
-                                      window.location.port
-                                        ? `:${window.location.port}`
-                                        : ""
-                                    }/pembayaran/${client?.slug}`
+                                    `${baseURL}/${client?.slug}/pembayaran`
                                   )
                                 }
                                 size="small"
@@ -424,11 +425,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleCopyURL(
-                                      `${window.location.hostname}${
-                                        window.location.port
-                                          ? `:${window.location.port}`
-                                          : ""
-                                      }/testimoni/${client?.slug}`
+                                      `${baseURL}/${client?.slug}/testimoni`
                                     )
                                   }
                                   size="medium"
@@ -439,6 +436,16 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             )}
                             {client.status === "paid" && (
                               <>
+                                <ButtonText
+                                  onClick={() =>
+                                    actions.handleCopyURL(
+                                      `${baseURL}/${client?.slug}/tamu`
+                                    )
+                                  }
+                                  size="medium"
+                                  title="Copy Link Add Guests"
+                                  icon={<BiUserPlus className="text-base" />}
+                                />
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleSetCompletedStatus(
@@ -453,11 +460,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleCopyURL(
-                                      `${window.location.hostname}${
-                                        window.location.port
-                                          ? `:${window.location.port}`
-                                          : ""
-                                      }/${client?.slug}`
+                                      `${baseURL}/${client?.slug}`
                                     )
                                   }
                                   type="button"
@@ -472,11 +475,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleCopyURL(
-                                      `${window.location.hostname}${
-                                        window.location.port
-                                          ? `:${window.location.port}`
-                                          : ""
-                                      }/pembayaran/${client?.slug}`
+                                      `${baseURL}/${client?.slug}/pembayaran`
                                     )
                                   }
                                   size="medium"

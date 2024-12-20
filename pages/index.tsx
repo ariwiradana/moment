@@ -11,6 +11,7 @@ import TestimonialsComponent from "@/components/dashboard/testimonials";
 import ThemeComponent from "@/components/dashboard/themes";
 import WhyUsComponent from "@/components/dashboard/why.us";
 import { sosmedURLs } from "@/constants/sosmed";
+import useDisableInspect from "@/hooks/useDisableInspect";
 import useDashboardStore from "@/store/useDashboardStore";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -89,7 +90,7 @@ const Dashboard = () => {
       scrollTo(activeSection);
     }
   }, [activeSection, manualScroll]);
-
+  useDisableInspect();
   return (
     <Layout>
       <Seo

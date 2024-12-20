@@ -63,6 +63,7 @@ CREATE TABLE clients (
   gift_bank_name VARCHAR(100),
   gift_account_name VARCHAR(100),
   gift_account_number VARCHAR(100),
+  guests TEXT[],
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
