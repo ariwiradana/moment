@@ -1,5 +1,5 @@
-import React from "react";
-import { BiShareAlt, BiTrash, BiUser } from "react-icons/bi";
+import React, { useState } from "react";
+import { BiLoaderAlt, BiShareAlt, BiTrash, BiUser } from "react-icons/bi";
 import { getClient } from "@/lib/client";
 import toast from "react-hot-toast";
 import { montserrat } from "@/lib/fonts";
@@ -42,8 +42,11 @@ const AddGuestItem = ({
     }
   };
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleDelete = async () => {
     try {
+      setLoading(true);
       const payload = {
         slug,
         guest: value,
@@ -65,6 +68,8 @@ const AddGuestItem = ({
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,7 +95,7 @@ const AddGuestItem = ({
             onClick={handleDelete}
             className="flex items-center gap-1 text-dashboard-dark"
           >
-            <BiTrash />
+            {loading ? <BiLoaderAlt className="animate-spin" /> : <BiTrash />}
             <span className="text-sm">Hapus</span>
           </button>
         </div>
