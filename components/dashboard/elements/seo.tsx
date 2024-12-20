@@ -20,7 +20,7 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image, url }) => {
       <meta name="robots" content="index, follow" />
       <meta
         name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=5"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
       />
 
       <meta property="og:title" content={title} />
@@ -65,7 +65,9 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image, url }) => {
           url,
           sameAs: [
             sosmedURLs.email,
-            sosmedURLs.instagram, sosmedURLs.whatsapp, sosmedURLs.youtube
+            sosmedURLs.instagram,
+            sosmedURLs.whatsapp,
+            sosmedURLs.youtube,
           ],
         })}
       </script>
