@@ -40,7 +40,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
   const [baseURL, setBaseURL] = useState<string>("");
 
   useEffect(() => {
-    const url = `${window.location.hostname}${
+    const url = `${window.location.protocol}//${window.location.hostname}${
       window.location.port ? `:${window.location.port}` : ""
     }`;
     setBaseURL(url);

@@ -3,12 +3,14 @@ import { BiLoaderAlt, BiShareAlt, BiTrash, BiUser } from "react-icons/bi";
 import { getClient } from "@/lib/client";
 import toast from "react-hot-toast";
 import { montserrat } from "@/lib/fonts";
+import { Client } from "@/lib/types";
 
 interface AddGuestItemProps {
   value: string;
   index?: number;
   mode: "empty" | "exist";
   slug: string;
+  client: Client | null;
   mutate: () => void;
 }
 
@@ -17,15 +19,18 @@ const AddGuestItem = ({
   index,
   mode,
   slug,
+  client,
   mutate,
 }: AddGuestItemProps) => {
-  const baseURL = `${window.location.hostname}${
+  const baseURL = `${window.location.protocol}//${window.location.hostname}${
     window.location.port ? `:${window.location.port}` : ""
   }`;
-  const text = `Om Swastiastu,\n\nAtas asung kerta wara nugraha Ida Sang Hyang Widhi Wasa, tanpa mengurangi rasa hormat, izinkan kami mengundang Bapak/Ibu/Saudara/i dalam Upacara Manusa Yadnya Pawiwahan (Pernikahan).\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${value.replaceAll(
+  const text = `${client?.opening_title},\n\n${
+    client?.opening_description
+  }\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${value.replaceAll(
     " ",
     "+"
-  )}\n\nSuatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i dapat hadir pada acara kami dan memberikan doa restu🙏🏻\n\nTerima kasih.\nOm Shanti, Shanti, Shanti Om`;
+  )}\n\n${client?.closing_description}\n\n${client?.closing_title}`;
 
   const handleShare = async () => {
     if (navigator.share) {

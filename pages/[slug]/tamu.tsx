@@ -106,9 +106,10 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
               <Loader />
             ) : (
               <>
-                {client?.guests && client.guests?.length > 0
-                  ? client.guests.map((name, index) => (
+                  {client?.guests && client.guests?.length > 0
+                    ? client.guests.map((name, index) => (
                       <AddGuestItem
+                        client={client}
                         key={`Tamu Undangan ${name}`}
                         mutate={mutate}
                         slug={slug}
