@@ -161,12 +161,24 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
   const token = cookies.get("token") || null;
+  const role = cookies.get("role") || null;
 
   const { slug } = context.params as { slug: string };
 
   if (token) {
     const isExpired = isTokenExpired(token);
     if (isExpired) {
+      return {
+        redirect: {
+          destination: `/${slug}/login?redirect=tamu`,
+          permanent: false,
+        },
+      };
+    }
+    if (role !== "client") {
+      cookies.set("token", "", { maxAge: -1, path: "/" });
+      cookies.set("user", "", { maxAge: -1, path: "/" });
+      cookies.set("role", "", { maxAge: -1, path: "/" });
       return {
         redirect: {
           destination: `/${slug}/login?redirect=tamu`,

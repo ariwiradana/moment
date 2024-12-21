@@ -12,16 +12,29 @@ export default async function handler(
       .json({ success: false, message: "Method Not Allowed" });
   }
   try {
-    res.setHeader(
-      "Set-Cookie",
+    res.setHeader("Set-Cookie", [
       serialize("token", "", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         path: "/",
         maxAge: 0,
-      })
-    );
+      }),
+      serialize("user", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 0,
+      }),
+      serialize("role", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 0,
+      }),
+    ]);
 
     res.status(200).json({
       success: true,

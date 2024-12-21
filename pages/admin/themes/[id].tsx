@@ -217,6 +217,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
   const cookies = new Cookies(context.req, context.res);
   const token = cookies.get("token") || null;
+  const role = cookies.get("role") || null;
 
   if (token) {
     const isExpired = isTokenExpired(token);
@@ -227,6 +228,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           permanent: false,
         },
       };
+    }
+    if (role !== "admin") {
+      cookies.set("token", "", { maxAge: -1, path: "/" });
+      cookies.set("user", "", { maxAge: -1, path: "/" });
+      cookies.set("role", "", { maxAge: -1, path: "/" });
+       return {
+         redirect: {
+           destination: "/admin/login",
+           permanent: false,
+         },
+       };
     }
   } else {
     return {

@@ -31,16 +31,9 @@ export const useAdminLogin = () => {
       if (!result.success) {
         toast.error(result.message);
         setIsLoading(false);
-      }
-      if (result.user.role === "admin") {
-        router.push("/admin/clients");
       } else {
-        const responseClient = await fetcher(
-          `/api/_pb/_c/_u?slug=${formData.username}`
-        );
-        const client: Client | null = responseClient?.data ?? null;
-        if (client) {
-          router.push(`/clients/${client.slug}`);
+        if (result.user.role === "admin") {
+          router.push("/admin/clients");
         }
       }
     } catch (error: any) {
