@@ -11,6 +11,7 @@ interface AddGuestItemProps {
   mode: "empty" | "exist";
   slug: string;
   client: Client | null;
+  token: string | null;
   mutate: () => void;
 }
 
@@ -20,6 +21,7 @@ const AddGuestItem = ({
   mode,
   slug,
   client,
+  token,
   mutate,
 }: AddGuestItemProps) => {
   const baseURL = `${window.location.protocol}//${window.location.hostname}${
@@ -56,10 +58,14 @@ const AddGuestItem = ({
         slug,
         guest: value,
       };
-      const response = await getClient("/api/_pb/_c/_g", {
-        method: "DELETE",
-        body: JSON.stringify(payload),
-      });
+      const response = await getClient(
+        "/api/_c/_g",
+        {
+          method: "DELETE",
+          body: JSON.stringify(payload),
+        },
+        token
+      );
       const result = await response.json();
       if (result.success) {
         mutate();

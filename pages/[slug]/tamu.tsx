@@ -24,7 +24,7 @@ interface Props {
   token: string | null;
 }
 
-const DashboardTamu: FC<Props> = ({ slug }: Props) => {
+const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
   const { data, mutate, isLoading } = useSWR(
     `/api/_pb/_c?slug=${slug}`,
     fetcher
@@ -48,10 +48,14 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
         slug,
         guest: form.guest,
       };
-      const response = await getClient("/api/_pb/_c/_g", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
+      const response = await getClient(
+        "/api/_c/_g",
+        {
+          method: "POST",
+          body: JSON.stringify(payload),
+        },
+        token
+      );
       const result = await response.json();
       if (result.success) {
         resetForm();
@@ -112,6 +116,7 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
                 {client?.guests && client.guests?.length > 0
                   ? client.guests.map((name, index) => (
                       <AddGuestItem
+                        token={token}
                         client={client}
                         key={`Tamu Undangan ${name}`}
                         mutate={mutate}
@@ -156,6 +161,7 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
   const token = cookies.get("token") || null;
+
   const { slug } = context.params as { slug: string };
 
   if (token) {

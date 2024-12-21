@@ -1,6 +1,8 @@
 import handleError from "@/lib/errorHandling";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import { authenticateUser } from "@/lib/middleware";
+import { ApiHandler } from "@/lib/types";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   switch (request.method) {
@@ -53,4 +55,4 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   }
 };
 
-export default handler;
+export default authenticateUser(handler as ApiHandler);
