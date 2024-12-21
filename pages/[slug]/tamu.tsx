@@ -162,6 +162,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = new Cookies(context.req, context.res);
   const token = cookies.get("token") || null;
   const role = cookies.get("role") || null;
+  const user = cookies.get("user") || null;
 
   const { slug } = context.params as { slug: string };
 
@@ -175,7 +176,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       };
     }
-    if (role !== "client") {
+    if (role !== "client" || user !== slug) {
       cookies.set("token", "", { maxAge: -1, path: "/" });
       cookies.set("user", "", { maxAge: -1, path: "/" });
       cookies.set("role", "", { maxAge: -1, path: "/" });

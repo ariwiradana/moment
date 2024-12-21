@@ -25,7 +25,10 @@ export const useClientLogin = () => {
     try {
       const res = await getClient("/api/_a/_li", {
         method: "POST",
-        body: JSON.stringify({ ...formData, role: "client" }),
+        body: JSON.stringify({
+          ...formData,
+          role: "client",
+        }),
       });
       const result = await res.json();
       if (!result.success) {
