@@ -26,68 +26,75 @@ const SharedThemeComponent = () => {
         />
         <span className="absolute inset-0 bg-black bg-opacity-20"></span>
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-12 relative z-20">
-          <div
-            data-aos="fade-up"
-            className="text-white flex flex-col items-center gap-y-2"
-          >
-            <BiUser className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
-              {formatNumber(data?.clients)}
-            </h2>
-            <h2
-              className={`${marcellus.className} text-lg lg:text-xl text-center`}
+          {data?.clients > 0 && (
+            <div
+              data-aos="fade-up"
+              className="text-white flex flex-col items-center gap-y-2"
             >
-              Klien
-            </h2>
-          </div>
+              <BiUser className="text-5xl lg:text-6xl" />
+              <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+                {formatNumber(data?.clients)}
+              </h2>
+              <h2
+                className={`${marcellus.className} text-lg lg:text-xl text-center`}
+              >
+                Klien
+              </h2>
+            </div>
+          )}
+          {data?.events > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="text-white flex flex-col items-center gap-y-2"
+            >
+              <BiCalendarCheck className="text-5xl lg:text-6xl" />
+              <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+                {formatNumber(data?.events)}
+              </h2>
+              <h2
+                className={`${marcellus.className} text-lg lg:text-xl text-center`}
+              >
+                Acara
+              </h2>
+            </div>
+          )}
 
-          <div
-            data-aos="fade-up"
-            data-aos-delay="100"
-            className="text-white flex flex-col items-center gap-y-2"
-          >
-            <BiCalendarCheck className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
-              {formatNumber(data?.events)}
-            </h2>
-            <h2
-              className={`${marcellus.className} text-lg lg:text-xl text-center`}
+          {data?.guests > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="text-white flex flex-col items-center gap-y-2"
             >
-              Acara
-            </h2>
-          </div>
+              <BiBookContent className="text-5xl lg:text-6xl" />
+              <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+                {formatNumber(data?.guests)}
+              </h2>
+              <h2
+                className={`${marcellus.className} text-lg lg:text-xl text-center`}
+              >
+                Tamu Undangan
+              </h2>
+            </div>
+          )}
 
-          <div
-            data-aos="fade-up"
-            data-aos-delay="200"
-            className="text-white flex flex-col items-center gap-y-2"
-          >
-            <BiBookContent className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
-              {formatNumber(data?.guests)}
-            </h2>
-            <h2
-              className={`${marcellus.className} text-lg lg:text-xl text-center`}
+          {data?.wishes > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="text-white flex flex-col items-center gap-y-2"
             >
-              Tamu Undangan
-            </h2>
-          </div>
-
-          <div
-            data-aos="fade-up"
-            data-aos-delay="300"
-            className="text-white flex flex-col items-center gap-y-2"
-          >
-            <BiMessageDetail className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
-              {formatNumber(data?.wishes)}
-            </h2>
-            <h2
-              className={`${marcellus.className} text-lg lg:text-xl text-center`}
-            >
-              Ucapan & Doa
-            </h2>
-          </div>
+              <BiMessageDetail className="text-5xl lg:text-6xl" />
+              <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+                {formatNumber(data?.wishes)}
+              </h2>
+              <h2
+                className={`${marcellus.className} text-lg lg:text-xl text-center`}
+              >
+                Ucapan & Doa
+              </h2>
+            </div>
+          )}
         </div>
       </section>
     );
