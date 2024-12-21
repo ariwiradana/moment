@@ -119,8 +119,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
   useDisableInspect();
 
   if (!client) return <ClientNotFound />;
-  if (client.status !== "completed" || client.is_preview)
-    return <ClientNotFound />;
+  if (client?.status !== "completed") return <ClientNotFound />;
 
   return (
     <Layout>
