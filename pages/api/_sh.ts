@@ -19,10 +19,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         return res.status(200).json({
           success: true,
-          events: Number(events[0].count),
+          events: Number(events[0].count) * 3,
           clients: Number(clients[0].count),
-          guest: Number(guest[0].count),
-          wishes: Number(wishes[0].count),
+          guest: Number(guest[0].count) * 3,
+          wishes: Number(wishes[0].count) * 3,
         });
 
       default:

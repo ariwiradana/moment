@@ -5,16 +5,16 @@ import { dm, marcellus } from "@/lib/fonts";
 import { formatNumber } from "@/utils/formatNumberK";
 import {
   BiBookContent,
+  BiCalendarCheck,
   BiMessageDetail,
-  BiParty,
   BiUser,
 } from "react-icons/bi";
 import Image from "next/image";
 
 const SharedThemeComponent = () => {
-  const { data } = useSWR("/api/_sh", fetcher);
-
-  if (data && data.client > 20)
+  const { data: response } = useSWR("/api/_pb/_sh", fetcher);
+  const data = (response && response.data) || {};
+  if (data)
     return (
       <section className="py-16 lg:py-24 bg-zinc-50 relative select-none">
         <Image
@@ -25,56 +25,67 @@ const SharedThemeComponent = () => {
           className="object-cover w-full h-full"
         />
         <span className="absolute inset-0 bg-black bg-opacity-20"></span>
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-8 relative z-20">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-2 md:grid-cols-4 gap-12 relative z-20">
           <div
             data-aos="fade-up"
             className="text-white flex flex-col items-center gap-y-2"
           >
-            <BiParty className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-              {formatNumber(data?.events)}
+            <BiUser className="text-5xl lg:text-6xl" />
+            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+              {formatNumber(data?.clients)}
             </h2>
-            <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
-              Acara
+            <h2
+              className={`${marcellus.className} text-lg lg:text-xl text-center`}
+            >
+              Klien
             </h2>
           </div>
+
           <div
             data-aos="fade-up"
             data-aos-delay="100"
             className="text-white flex flex-col items-center gap-y-2"
           >
-            <BiUser className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-              {formatNumber(data?.clients)}
+            <BiCalendarCheck className="text-5xl lg:text-6xl" />
+            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+              {formatNumber(data?.events)}
             </h2>
-            <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
-              Klien
+            <h2
+              className={`${marcellus.className} text-lg lg:text-xl text-center`}
+            >
+              Acara
             </h2>
           </div>
+
           <div
             data-aos="fade-up"
             data-aos-delay="200"
             className="text-white flex flex-col items-center gap-y-2"
           >
-            <BiMessageDetail className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-              {formatNumber(data?.wishes)}
+            <BiBookContent className="text-5xl lg:text-6xl" />
+            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+              {formatNumber(data?.guests)}
             </h2>
-            <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
-              Ucapan & Doa
+            <h2
+              className={`${marcellus.className} text-lg lg:text-xl text-center`}
+            >
+              Tamu Undangan
             </h2>
           </div>
+
           <div
             data-aos="fade-up"
             data-aos-delay="300"
             className="text-white flex flex-col items-center gap-y-2"
           >
-            <BiBookContent className="text-5xl lg:text-6xl" />
-            <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-              {formatNumber(data?.guest)}
+            <BiMessageDetail className="text-5xl lg:text-6xl" />
+            <h2 className={`${dm.className} text-4xl lg:text-6xl`}>
+              {formatNumber(data?.wishes)}
             </h2>
-            <h2 className={`${marcellus.className} text-lg lg:text-xl`}>
-              Tamu Undangan
+            <h2
+              className={`${marcellus.className} text-lg lg:text-xl text-center`}
+            >
+              Ucapan & Doa
             </h2>
           </div>
         </div>
