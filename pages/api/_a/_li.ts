@@ -14,7 +14,7 @@ export default async function loginHandler(
       .json({ success: false, message: "Method Not Allowed" });
   }
 
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
 
   if (!username || !password) {
     return res
@@ -23,10 +23,13 @@ export default async function loginHandler(
   }
 
   try {
-    const result = await sql.query("SELECT * FROM users WHERE username = $1", [
-      username,
-    ]);
+    const result = await sql.query(
+      "SELECT * FROM users WHERE username = $1 AND role = $2",
+      [username, role]
+    );
     const user = result.rows[0];
+
+    console.log({ userrrr: user });
 
     if (!user) {
       return res
@@ -58,12 +61,19 @@ export default async function loginHandler(
         path: "/",
         maxAge: 60 * 60,
       }),
+      serialize("role", user.role, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 60 * 60, // 1 hour
+      }),
     ]);
 
     res.status(200).json({
       success: true,
       token,
-      user: { id: user.id },
+      user: { id: user.id, role: user.role },
     });
   } catch (error) {
     return handleError(res, error);

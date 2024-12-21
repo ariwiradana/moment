@@ -13,9 +13,9 @@ export default async function handler(
       .json({ success: false, message: "Method Not Allowed" });
   }
 
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
 
-  if (!username || !password) {
+  if (!username || !password || !role) {
     return res
       .status(400)
       .json({ success: false, message: "All fields are required" });
@@ -23,8 +23,8 @@ export default async function handler(
 
   try {
     const userResult = await sql.query(
-      "SELECT * FROM users WHERE username = $1",
-      [username]
+      "SELECT * FROM users WHERE username = $1 AND role = $2",
+      [username, role]
     );
     const user = userResult.rows[0];
 
@@ -34,10 +34,10 @@ export default async function handler(
 
     const hashedPassword = await hashPassword(password);
 
-    await sql.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
-      username,
-      hashedPassword,
-    ]);
+    await sql.query(
+      "INSERT INTO users (username, password, role) VALUES ($1, $2, $3)",
+      [username, hashedPassword, role]
+    );
     res
       .status(201)
       .json({ success: true, message: "User created successfully" });

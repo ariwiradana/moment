@@ -14,7 +14,7 @@ const initialFormData: FormData = {
   username: "",
   password: "",
 };
-export const useAdminLogin = () => {
+export const useClientLogin = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -25,22 +25,25 @@ export const useAdminLogin = () => {
     try {
       const res = await getClient("/api/_a/_li", {
         method: "POST",
-        body: JSON.stringify({ ...formData, role: "admin" }),
+        body: JSON.stringify({ ...formData, role: "client" }),
       });
       const result = await res.json();
       if (!result.success) {
         toast.error(result.message);
         setIsLoading(false);
-      }
-      if (result.user.role === "admin") {
-        router.push("/admin/clients");
       } else {
-        const responseClient = await fetcher(
-          `/api/_pb/_c/_u?slug=${formData.username}`
-        );
-        const client: Client | null = responseClient?.data ?? null;
-        if (client) {
-          router.push(`/clients/${client.slug}`);
+        if (result.user.role === "client") {
+          const responseClient = await fetcher(
+            `/api/_pb/_c/_u?slug=${formData.username}`
+          );
+          const client: Client | null = responseClient?.data ?? null;
+          if (client) {
+            router.push(`/${formData.username}/${router.query.redirect}`);
+          } else {
+            toast.error("Klien tidak ditemukan");
+          }
+        } else {
+          toast.error(result.message);
         }
       }
     } catch (error: any) {

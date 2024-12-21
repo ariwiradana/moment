@@ -16,9 +16,12 @@ import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BiPlus, BiUser } from "react-icons/bi";
 import useSWR from "swr";
+import Cookies from "cookies";
+import { isTokenExpired } from "@/lib/auth";
 
 interface Props {
   slug: string;
+  token: string | null;
 }
 
 const DashboardTamu: FC<Props> = ({ slug }: Props) => {
@@ -106,8 +109,8 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
               <Loader />
             ) : (
               <>
-                  {client?.guests && client.guests?.length > 0
-                    ? client.guests.map((name, index) => (
+                {client?.guests && client.guests?.length > 0
+                  ? client.guests.map((name, index) => (
                       <AddGuestItem
                         client={client}
                         key={`Tamu Undangan ${name}`}
@@ -151,11 +154,33 @@ const DashboardTamu: FC<Props> = ({ slug }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = new Cookies(context.req, context.res);
+  const token = cookies.get("token") || null;
   const { slug } = context.params as { slug: string };
+
+  if (token) {
+    const isExpired = isTokenExpired(token);
+    if (isExpired) {
+      return {
+        redirect: {
+          destination: `/${slug}/login?redirect=tamu`,
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    return {
+      redirect: {
+        destination: `/${slug}/login?redirect=tamu`,
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
       slug,
+      token,
     },
   };
 };
