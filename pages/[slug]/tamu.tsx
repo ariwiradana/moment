@@ -13,12 +13,13 @@ import useDashboardStore from "@/store/useDashboardStore";
 import { GetServerSideProps } from "next";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiLoaderAlt, BiPlus, BiSearch, BiUser } from "react-icons/bi";
+import { BiPlus, BiSearch, BiUser } from "react-icons/bi";
 import useSWR from "swr";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { useDebounce } from "use-debounce";
 import { Pagination } from "@mui/material";
+import useDisableInspect from "@/hooks/useDisableInspect";
 
 interface Props {
   slug: string;
@@ -116,7 +117,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
     }
   }, [searchQuery]);
 
-  // useDisableInspect();
+  useDisableInspect();
 
   return (
     <Layout>
@@ -149,21 +150,19 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
             ></p>
           </div>
           <div className="mt-8 max-w-screen-md flex flex-col gap-4">
-            <div className="md:mb-4 sticky top-16 md:top-20 lg:top-24 py-4 bg-gradient-to-b from-white via-white via-[95%] to-transparent">
-              <Input
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                }}
-                placeholder="Cari tamu undangan"
-              />
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-xl mt-[2px]">
-                {isLoading ? (
-                  <BiLoaderAlt className="animate-spin" />
-                ) : (
+            {guests.length > 0 && (
+              <div className="md:mb-4 sticky top-16 md:top-20 lg:top-24 py-4 bg-gradient-to-b from-white via-white via-[95%] to-transparent">
+                <Input
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                  placeholder="Cari tamu undangan"
+                />
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-xl mt-[2px]">
                   <BiSearch />
-                )}
+                </div>
               </div>
-            </div>
+            )}
             {isLoading || isLoadingClient ? (
               <Loader />
             ) : (
