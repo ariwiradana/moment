@@ -59,7 +59,7 @@ const Input: FC<InputProps> = ({
         } ${paddingStyles(inputSize ?? "large")}`}
       />
       {props.type === "password" && (
-        <div className="absolute right-4 bottom-2">
+        <div className={`absolute right-4 bottom-2`}>
           <button
             type="button"
             onClick={() => {

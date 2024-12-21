@@ -185,7 +185,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = cookies.get("token") || null;
   const role = cookies.get("role") || null;
 
-  if (token) {
+  if (token && role) {
     const isExpired = isTokenExpired(token);
     if (isExpired) {
       return {

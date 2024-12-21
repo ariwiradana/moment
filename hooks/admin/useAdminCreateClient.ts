@@ -45,7 +45,10 @@ const initialEvent: Event = {
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
 
-const initalFormData: Client & { coverVideo: FileList | null } = {
+const initalFormData: Client & {
+  coverVideo: FileList | null;
+  password: string;
+} = {
   name: "",
   slug: "",
   opening_title: "",
@@ -67,13 +70,14 @@ const initalFormData: Client & { coverVideo: FileList | null } = {
   music: null,
   coverVideo: null,
   theme_category_id: null,
+  password: "",
 };
 
 export const useAdminCreateClient = (token: string | null) => {
   const router = useRouter();
   const [errors, setErrors] = useState<ErrorState>(initialErrorState);
   const [formData, setFormData] = useState<
-    Client & { coverVideo: FileList | null }
+    Client & { coverVideo: FileList | null; password: string }
   >(initalFormData);
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -110,6 +114,8 @@ export const useAdminCreateClient = (token: string | null) => {
 
   const clientSchema = z.object({
     name: z.string().min(1, { message: "Client name is required." }),
+    slug: z.string().min(1, { message: "Client slug is required." }),
+    password: z.string().min(1, { message: "Client password is required." }),
   });
 
   useEffect(() => {
@@ -601,14 +607,49 @@ export const useAdminCreateClient = (token: string | null) => {
       toast.promise(createClient(), {
         loading: "Creating new client...",
         success: () => {
-          setFormData(initalFormData);
-          setLoading(false);
-          router.push("/admin/clients");
           return "Successfully created new client";
         },
         error: (error: any) => {
           setLoading(false);
           return error.message || "Failed to create new client";
+        },
+      });
+
+      const createAccount = async () => {
+        const response = await getClient(
+          "/api/d/a/f/t/a/r",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              username: formData.slug,
+              password: formData.password,
+              role: "client",
+            }),
+          },
+          token
+        );
+
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(
+            errorResult.message || "Failed to create new client."
+          );
+        }
+
+        return await response.json();
+      };
+
+      toast.promise(createAccount(), {
+        loading: "Creating account client...",
+        success: () => {
+          setFormData(initalFormData);
+          setLoading(false);
+          router.push("/admin/clients");
+          return "Successfully created account client";
+        },
+        error: (error: any) => {
+          setLoading(false);
+          return error.message || "Failed to create account client";
         },
       });
     } catch (error) {

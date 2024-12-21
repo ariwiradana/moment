@@ -92,7 +92,9 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                   state.packages.map((pk) => (
                     <InputCheckbox
                       key={`package-${pk.id}`}
-                      checked={state.formData.package_ids.includes(pk.id as number)}
+                      checked={state.formData.package_ids.includes(
+                        pk.id as number
+                      )}
                       onChange={(e) =>
                         actions.handleChange(
                           Number(e.target.value),
@@ -140,7 +142,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                           actions.handleDeleteThumbnail(
                             state.formData.thumbnail as string,
                             state.formData.id as number,
-                            'thumbnail'
+                            "thumbnail"
                           )
                         }
                         disabled={state.loading || state.isLoading}
@@ -184,7 +186,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                           actions.handleDeleteThumbnail(
                             state.formData.phone_thumbnail as string,
                             state.formData.id as number,
-                            'phone_thumbnail'
+                            "phone_thumbnail"
                           )
                         }
                         disabled={state.loading || state.isLoading}
@@ -219,7 +221,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = cookies.get("token") || null;
   const role = cookies.get("role") || null;
 
-  if (token) {
+  if (token && role) {
     const isExpired = isTokenExpired(token);
     if (isExpired) {
       return {
@@ -233,12 +235,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       cookies.set("token", "", { maxAge: -1, path: "/" });
       cookies.set("user", "", { maxAge: -1, path: "/" });
       cookies.set("role", "", { maxAge: -1, path: "/" });
-       return {
-         redirect: {
-           destination: "/admin/login",
-           permanent: false,
-         },
-       };
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        },
+      };
     }
   } else {
     return {

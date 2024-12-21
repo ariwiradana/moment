@@ -89,7 +89,9 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
               {state.packages.length > 0 &&
                 state.packages.map((pk: Package) => (
                   <InputCheckbox
-                    checked={state.formData?.package_ids?.includes(pk.id as number)}
+                    checked={state.formData?.package_ids?.includes(
+                      pk.id as number
+                    )}
                     key={`package-${pk.id}`}
                     onChange={actions.handleChange}
                     name="package_ids"
@@ -117,7 +119,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = cookies.get("token") || null;
   const role = cookies.get("role") || null;
 
-  if (token) {
+  if (token && role) {
     const isExpired = isTokenExpired(token);
     if (isExpired) {
       return {

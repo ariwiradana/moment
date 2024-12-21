@@ -12,6 +12,7 @@ import {
   BiLeftArrowAlt,
   BiSolidPlusCircle,
   BiSolidShow,
+  BiSolidUserCheck,
   BiTime,
   BiX,
 } from "react-icons/bi";
@@ -30,6 +31,8 @@ import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 interface UpdateClientProps {
   slug: string;
   token: string | null;
@@ -37,6 +40,7 @@ interface UpdateClientProps {
 
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
+  const { data: user } = useSWR(`/api/_c/_u?slug=${slug}`, fetcher);
 
   return (
     <AdminLayout>
@@ -78,6 +82,13 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               </div>
             </div>
           )}
+
+          {user && state.formData.slug === user ? (
+            <div className="text-gray-500 text-xl">
+              <BiSolidUserCheck />
+            </div>
+          ) : null}
+
           <Link
             target="_bank"
             href={`/${state.formData.slug}`}
@@ -907,7 +918,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = cookies.get("token") || null;
   const role = cookies.get("role") || null;
 
-  if (token) {
+  if (token && role) {
     const isExpired = isTokenExpired(token);
     if (isExpired) {
       return {

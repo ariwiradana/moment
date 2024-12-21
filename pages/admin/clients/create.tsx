@@ -44,22 +44,28 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
           className="mt-8 max-w-screen-md flex flex-col gap-y-4"
           onSubmit={actions.handleSubmit}
         >
+          <Input
+            error={state.errors.name}
+            value={state.formData.name}
+            onChange={(e) => actions.handleChangeClient(e.target.value, "name")}
+            label="Client Name"
+          />
           <div className="grid md:grid-cols-2 gap-4">
-            <Input
-              error={state.errors.name}
-              value={state.formData.name}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "name")
-              }
-              label="Client Name"
-            />
             <Input
               error={state.errors.slug}
               value={state.formData.slug}
               onChange={(e) =>
                 actions.handleChangeClient(e.target.value, "slug")
               }
-              label="Client Slug"
+              label="Slug"
+            />
+            <Input
+              error={state.errors.password}
+              value={state.formData.password}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "password")
+              }
+              label="Password"
             />
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -594,7 +600,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = cookies.get("token") || null;
   const role = cookies.get("role") || null;
 
-  if (token) {
+  if (token && role) {
     const isExpired = isTokenExpired(token);
     if (isExpired) {
       return {
