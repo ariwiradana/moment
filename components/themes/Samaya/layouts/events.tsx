@@ -14,6 +14,8 @@ interface Props {
 const EventsComponent: FC<Props> = ({ state, actions }) => {
   const { events = [] } = state.client || {};
 
+  console.log(state);
+
   if (events.length > 0) {
     return (
       <section className="relative overflow-hidden z-20">
@@ -47,32 +49,34 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                   <br />
                   {event.address}
                 </p>
-                <div className="grid grid-cols-4 text-white my-6 gap-3 md:gap-4">
-                  <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
-                    <h2 className="text-lg md:text-xl">
-                      {state.timeRemainings[index].days}
-                    </h2>
-                    <h4 className="text-sm">Hari</h4>
+                {state.timeRemainings.length > 0 && (
+                  <div className="grid grid-cols-4 text-white my-6 gap-3 md:gap-4">
+                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
+                      <h2 className="text-lg md:text-xl">
+                        {state.timeRemainings[index].days}
+                      </h2>
+                      <h4 className="text-sm">Hari</h4>
+                    </div>
+                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
+                      <h2 className="text-lg md:text-xl">
+                        {state.timeRemainings[index].hours}
+                      </h2>
+                      <h4 className="text-sm">Jam</h4>
+                    </div>
+                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
+                      <h2 className="text-lg md:text-xl">
+                        {state.timeRemainings[index].minutes}
+                      </h2>
+                      <h4 className="text-sm">Menit</h4>
+                    </div>
+                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
+                      <h2 className="text-lg md:text-xl">
+                        {state.timeRemainings[index].seconds}
+                      </h2>
+                      <h4 className="text-sm">Detik</h4>
+                    </div>
                   </div>
-                  <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
-                    <h2 className="text-lg md:text-xl">
-                      {state.timeRemainings[index].hours}
-                    </h2>
-                    <h4 className="text-sm">Jam</h4>
-                  </div>
-                  <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
-                    <h2 className="text-lg md:text-xl">
-                      {state.timeRemainings[index].minutes}
-                    </h2>
-                    <h4 className="text-sm">Menit</h4>
-                  </div>
-                  <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center rounded-xl md:rounded-2xl">
-                    <h2 className="text-lg md:text-xl">
-                      {state.timeRemainings[index].seconds}
-                    </h2>
-                    <h4 className="text-sm">Detik</h4>
-                  </div>
-                </div>
+                )}
                 <div className="inline-flex flex-wrap justify-center gap-4">
                   <Link target="_blank" href={event.address_url}>
                     <Button

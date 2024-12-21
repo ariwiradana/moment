@@ -101,8 +101,8 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
             >
               Tambahkan tamu undangan untuk acara Anda! Isi form nama tamu di
-              bawah ini untuk mengatur daftar tamu Anda. Klik bagikan untuk
-              menyebarkan undangan anda.
+              bawah ini untuk mengatur daftar tamu Anda. Setelah tamu
+              ditambahkan, klik bagikan untuk menyebarkan undangan anda.
             </p>
             <p
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
