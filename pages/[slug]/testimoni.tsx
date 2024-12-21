@@ -126,7 +126,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
     );
 
   if (!client) return <ClientNotFound />;
-  if (client.status !== "completed" && client.is_preview)
+  if (client.status !== "completed" || client.is_preview)
     return <ClientNotFound />;
 
   return (
