@@ -176,6 +176,7 @@ const PackageComponent = () => {
                 </ul>
                 <div className="mt-8">
                   <ButtonPrimary
+                    aria-label="Paket undangan digital Bali"
                     onClick={() => {
                       setSelectedPackageId(p.id as number);
                       toast.success(

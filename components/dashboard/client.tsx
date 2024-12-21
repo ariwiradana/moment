@@ -77,7 +77,7 @@ const ClientComponent = () => {
                         c.cover ||
                         `https://placehold.co/400/png?font=playfair-display`
                       }
-                      alt={`client-${c.id}`}
+                      alt={`Thumbnail undangan digital ${c.name}`}
                       fill
                       className="object-cover w-full h-full rounded"
                     />
@@ -85,9 +85,7 @@ const ClientComponent = () => {
                       <h2
                         className={`w-full flex gap-2 ${marcellus.className} text-xl`}
                       >
-                        <span className="line-clamp-1">
-                          {c.name}
-                        </span>
+                        <span className="line-clamp-1">{c.name}</span>
                       </h2>
                       <p
                         className={`font-light text-zinc-200 ${afacad.className}`}

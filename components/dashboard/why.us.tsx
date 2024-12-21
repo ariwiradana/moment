@@ -30,6 +30,7 @@ const WhyUsComponent = () => {
   return (
     <section className="py-16 lg:py-24 relative bg-zinc-50 select-none">
       <Image
+        aria-label="Background undangan digital Moment"
         sizes="100vw"
         src="/dashboard/card.jpg"
         alt="image-why-us"
@@ -84,7 +85,7 @@ const WhyUsComponent = () => {
             sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1080px, 1400px"
             src="/dashboard/why-us.jpg"
             fill
-            alt="image-why-us"
+            alt="Thumbnail undangan digital Moment"
             className="object-cover w-full rounded grayscale-[40%]"
           />
         </div>

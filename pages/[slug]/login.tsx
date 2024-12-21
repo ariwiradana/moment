@@ -22,7 +22,7 @@ const SlugLogin = ({ slug }: SlugLoginProps) => {
       <Seo
         url={`https://momentinvitations.com/${slug}/login`}
         title="Login | Moment"
-        description="Login akun undangan digital Moment"
+        description="Masuk ke akun Anda untuk mengelola tamu undangan digital. Halaman login Moment memudahkan Anda untuk mengakses tamu undangan yang telah Anda buat."
         keywords={`login, undangan digital, undangan online, undangan pernikahan, undangan metatah, moment invitation, moment, ${slug}`}
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />

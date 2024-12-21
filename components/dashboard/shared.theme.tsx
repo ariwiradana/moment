@@ -20,7 +20,7 @@ const SharedThemeComponent = () => {
         <Image
           sizes="100vw"
           src="/dashboard/shared.jpg"
-          alt="image-shred"
+          alt="Background undangan digital Moment"
           fill
           className="object-cover w-full h-full"
         />

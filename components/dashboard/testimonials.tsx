@@ -72,7 +72,7 @@ const TestimonialsComponent = () => {
                         <Image
                           sizes="100px"
                           src={t.client_cover}
-                          alt={`testimonial-${t.id}`}
+                          alt={`Testimoni undangan digital ${t.client_name}`}
                           fill
                           className="object-cover w-full h-full rounded-full"
                         />

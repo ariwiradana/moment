@@ -96,12 +96,12 @@ const Dashboard = () => {
       <Seo
         url="https://momentinvitations.com"
         title="Buat Undangan Digital Disini! | Moment"
-        description="Buat undangan digital dengan mudah menggunakan Moment. Dapatkan undangan dengan harga yang terjangkau, cepat, responsif, dan mudah dibagikan"
-        keywords="momentinvitations, undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis"
+        description="Moment Invitation menawarkan solusi undangan digital di Bali dengan desain elegan, mudah digunakan, dan praktis. Pilih dari berbagai tema kustom yang dapat disesuaikan, nikmati fitur seperti revisi tak terbatas, dan bagikan momen spesial Anda dengan cepat. Dengan paket harga terjangkau, proses pembuatan undangan yang cepat, serta tampilan yang responsif, Moment memberikan pengalaman undangan digital yang sempurna untuk acara Anda."
+        keywords="undangan pernikahan digital Bali, undangan mempandes digital Bali, undangan digital pernikahan Bali, undangan Bali, undangan online Bali, undangan kustom Bali, tema undangan pernikahan Bali, tema mempandes digital Bali, undangan digital untuk pernikahan, undangan pernikahan praktis, undangan pernikahan elegan Bali, undangan mempandes praktis, paket undangan Bali, undangan Bali harga terjangkau, undangan digital kustom Bali, undangan digital untuk mempandes, cara membuat undangan pernikahan Bali, undangan cepat dan mudah, undangan digital yang responsif, layanan undangan Bali, Moment undangan digital, undangan pernikahan modern Bali"
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
       <ButtonFloating
-        aria-label="button-whatsapp"
+        aria-label="Hubungi Kami melalui WhatsApp"
         onClick={() => window.open(sosmedURLs.whatsapp)}
         className="bg-green-500 text-white"
         icon={<BiLogoWhatsapp />}

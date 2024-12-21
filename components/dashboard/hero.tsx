@@ -56,7 +56,7 @@ const HeroComponent = () => {
                       priority
                       sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
                       src={theme.phone_thumbnail ?? ""}
-                      alt={`thumbnail-${index}`}
+                      alt={`Thumbnail tema undangan ${theme.name}`}
                       width={260}
                       height={80}
                     />
@@ -106,6 +106,7 @@ const HeroComponent = () => {
 
           <div data-aos="fade-right" data-aos-delay="600">
             <ButtonPrimary
+              aria-label="Buat undangan digital"
               onClick={() => {
                 toast.success("Silahkan pilih tema terlebih dahulu", {
                   icon: (

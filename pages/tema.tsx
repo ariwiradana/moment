@@ -151,8 +151,8 @@ const DashboardThemes = () => {
       <Seo
         url="https://momentinvitaions.com/tema"
         title="Koleksi Tema Kami | Moment"
-        description="Koleksi tema undangan digital Moment"
-        keywords="momentinvitations, tema, undangan online, undangan pernikahan, undangan metatah, momentinvitations, moment"
+        description="Temukan koleksi tema undangan digital yang elegan di Moment. Pilih tema yang sesuai dengan gaya dan keinginan Anda, mulai dari tema tradisional Bali hingga modern. Setiap tema dapat disesuaikan sepenuhnya untuk menciptakan undangan yang tak terlupakan."
+        keywords="tema undangan pernikahan Bali, tema mempandes digital Bali, tema undangan pernikahan elegan, tema undangan digital Bali, tema undangan kustom, tema pernikahan digital Bali, tema mempandes Bali, koleksi tema undangan digital, tema pernikahan tradisional Bali, tema modern undangan Bali, undangan pernikahan digital kustom, undangan Bali pilihan tema, tema undangan eksklusif Bali"
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
       <section className="md:pt-20 lg:pt-24">

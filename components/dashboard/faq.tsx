@@ -44,6 +44,7 @@ const FaqComponent = () => {
                   Klik tombol <span className="font-bold">Buat Undangan</span>{" "}
                   untuk melihat tema undangan terlebih dahulu{" "}
                   <Link
+                    aria-label="Buat undangan digital Bali"
                     className="text-dashboard-primary underline font-medium"
                     href={"/tema"}
                   >
@@ -80,21 +81,14 @@ const FaqComponent = () => {
                 <li className="md:text-lg">
                   Silahkan melakukan pembayaran sesuai dengan harga dan paket
                   tema yang dipilih melalui{" "}
-                  <span className="font-bold">Nomor Rekening</span> kami melalui
-                  halaman{" "}
-                  <Link
-                    target="_blank"
-                    href="/pembayaran"
-                    className="text-dashboard-primary underline font-medium"
-                  >
-                    Pembayaran.
-                  </Link>
+                  <span className="font-bold">Nomor Rekening</span> kami
                 </li>
                 <li className="md:text-lg">
                   Setelah melakukan pembayaran, silahkan mengirimkan bukti
                   pembayaran melalui{" "}
                   <span className="font-bold">Pesan WhatsApp</span> kami atau{" "}
                   <Link
+                    aria-label="WhatsApp Moment Invitation"
                     className="text-dashboard-primary underline font-medium"
                     href={sosmedURLs.whatsapp}
                   >
@@ -149,11 +143,13 @@ const FaqComponent = () => {
               <ul className="list-disc ml-5 md:ml-6 flex flex-col gap-4">
                 <li className="md:text-lg">
                   Setelah undangan berhasil dibuat, Admin Moment akan{" "}
-                  <span className="font-bold">memberikan link undangan.</span>{" "}
+                  <span className="font-bold">
+                    memberikan link tamu undangan.
+                  </span>{" "}
                 </li>
                 <li className="md:text-lg">
-                  Cukup <span className="font-bold">copy-paste</span> undangan
-                  kamu pada media sosial apapun dan undangan siap disebar.
+                  Cukup <span className="font-bold">bagikan</span> undangan kamu
+                  pada media sosial apapun dan undangan siap disebar.
                 </li>
               </ul>
             }

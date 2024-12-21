@@ -74,8 +74,8 @@ const DashboardFeatures = () => {
       <Seo
         url="https://momentinvitaions.com/fitur"
         title="Semua Fitur Kami | Moment"
-        description="Semua fitur undangan digital Moment"
-        keywords="momentinvitations, fitur, undangan online, undangan pernikahan, undangan metatah, momentinvitations, moment"
+        description="Pelajari berbagai fitur unggulan dari undangan digital Moment. Semua fitur dirancang untuk memberikan pengalaman undangan yang mudah, praktis, dan personal."
+        keywords="fitur undangan digital, fitur undangan pernikahan Bali, undangan kustomisasi kalimat, revisi tak terbatas undangan, fitur undangan pernikahan praktis, fitur undangan mempandes Bali, fitur undangan digital mudah dibagikan, undangan digital responsif, fitur undangan Bali, undangan tanpa batas nama tamu, undangan digital kustom Bali, fitur personalisasi undangan, fitur undangan mempandes digital"
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
       <section className="md:pt-20 lg:pt-24">

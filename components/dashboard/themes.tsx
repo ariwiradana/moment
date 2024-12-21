@@ -43,7 +43,7 @@ const ThemeComponent: FC = () => {
               </p>
             </div>
             {themes.length > maxShown && (
-              <Link href="/tema" aria-label="all-theme-link">
+              <Link href="/tema" aria-label="Semua tema undangan digital">
                 <div className="flex gap-x-2 items-center">
                   <p
                     className={`${afacad.className} text-lg whitespace-nowrap font-medium`}
@@ -79,8 +79,9 @@ const ThemeComponent: FC = () => {
               className="mt-8 flex justify-center md:hidden"
               data-aos="fade-up"
             >
-              <Link href="/tema" aria-label="all-theme-link">
+              <Link href="/tema" aria-label="Koleksi tema undangan digial">
                 <ButtonPrimary
+                  aria-label="Tema undangan digital moment"
                   icon={<BiGridHorizontal />}
                   title="Lihat Semua Tema"
                   size="medium"
