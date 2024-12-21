@@ -1,5 +1,4 @@
 import { afacad, montserrat } from "@/lib/fonts";
-import Link from "next/link";
 import React from "react";
 import { TbGiftCardFilled } from "react-icons/tb";
 
@@ -18,12 +17,6 @@ const ClientNotFound = () => {
         Undangan yang Anda cari tidak ditemukan atau telah dihapus. Pastikan
         Anda memeriksa kembali atau informasi link yang dimasukkan.
       </p>
-      <Link
-        href="/"
-        className={`text-dashboard-primary underline underline-offset-4 ${afacad.className}`}
-      >
-        Kembali ke Beranda
-      </Link>
     </div>
   );
 };

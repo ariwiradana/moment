@@ -44,6 +44,8 @@ const MainPage: FC<Props> = ({
   }, []);
 
   if (!clientData) return <ClientNotFound />;
+  if (!clientData.guests?.includes(untuk) && untuk !== "Tamu Undangan")
+    return <ClientNotFound />;
 
   const ThemeComponent = themes[themeName];
 
