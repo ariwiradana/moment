@@ -4,7 +4,6 @@ import AddGuestItem from "@/components/dashboard/elements/add.guest.item";
 import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
-import useDisableInspect from "@/hooks/useDisableInspect";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
 import { afacad, dm } from "@/lib/fonts";
@@ -14,10 +13,12 @@ import useDashboardStore from "@/store/useDashboardStore";
 import { GetServerSideProps } from "next";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiPlus, BiUser } from "react-icons/bi";
+import { BiLoaderAlt, BiPlus, BiSearch, BiUser } from "react-icons/bi";
 import useSWR from "swr";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
+import { useDebounce } from "use-debounce";
+import { Pagination } from "@mui/material";
 
 interface Props {
   slug: string;
@@ -25,16 +26,34 @@ interface Props {
 }
 
 const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
-  const { data, mutate, isLoading } = useSWR(
+  const { form, setForm, resetForm } = useAddGuestStore();
+  const { setActiveSection } = useDashboardStore();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [limit] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState("");
+  const [searchQuery] = useDebounce(search, 500);
+
+  const { data: clientResult, isLoading: isLoadingClient } = useSWR(
     `/api/_pb/_c?slug=${slug}`,
     fetcher
   );
-  const { form, setForm, resetForm } = useAddGuestStore();
-  const { setActiveSection } = useDashboardStore();
-  const client: Client | null =
-    data?.data && data?.data.length > 0 ? data?.data[0] : null;
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const { data, mutate, isLoading } = useSWR(
+    token
+      ? `/api/_c/_g?slug=${slug}&page=${page}&limit=${limit}&search=${searchQuery}`
+      : null,
+    (url: string) => fetcher(url, token)
+  );
+
+  const client: Client | null =
+    clientResult?.data && clientResult?.data.length > 0
+      ? clientResult?.data[0]
+      : null;
+  const guests: string[] = data?.data || [];
+  const totalRows: number = data?.totalRows || 0;
 
   useEffect(() => {
     setActiveSection("");
@@ -43,6 +62,10 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      if (form.guest.length > 30) {
+        setError("Nama yang dimasukkan terlalu panjang");
+        return;
+      }
       setLoading(true);
       const payload = {
         slug,
@@ -76,7 +99,24 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
     }
   };
 
-  useDisableInspect();
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+    window.scrollTo({
+      top: 300,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    if (searchQuery) {
+      setPage(1);
+    }
+  }, [searchQuery]);
+
+  // useDisableInspect();
 
   return (
     <Layout>
@@ -108,13 +148,28 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
               className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
             ></p>
           </div>
-          <div className="mt-16 max-w-screen-md flex flex-col gap-4">
-            {isLoading ? (
+          <div className="mt-8 max-w-screen-md flex flex-col gap-4">
+            <div className="md:mb-4 sticky top-16 md:top-20 lg:top-24 py-4 bg-gradient-to-b from-white via-white via-[95%] to-transparent">
+              <Input
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+                placeholder="Cari tamu undangan"
+              />
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-xl mt-[2px]">
+                {isLoading ? (
+                  <BiLoaderAlt className="animate-spin" />
+                ) : (
+                  <BiSearch />
+                )}
+              </div>
+            </div>
+            {isLoading || isLoadingClient ? (
               <Loader />
             ) : (
               <>
-                {client?.guests && client.guests?.length > 0
-                  ? client.guests.map((name, index) => (
+                {guests?.length > 0
+                  ? guests.map((name) => (
                       <AddGuestItem
                         token={token}
                         client={client}
@@ -123,10 +178,20 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
                         slug={slug}
                         mode="exist"
                         value={name}
-                        index={index + 1}
                       />
                     ))
                   : null}
+
+                {totalRows > limit && (
+                  <div className="mt-4 md:mt-6">
+                    <Pagination
+                      page={page}
+                      onChange={handleChangePagination}
+                      count={Math.ceil(totalRows / limit)}
+                      shape="rounded"
+                    />
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -137,14 +202,18 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
             onSubmit={handleSubmit}
           >
             <Input
+              error={error}
               className="w-full"
               label="Nama Tamu"
               placeholder="Masukkan nama tamu baru"
               value={form.guest}
-              onChange={(e) => setForm("guest", e.target.value)}
+              onChange={(e) => {
+                setForm("guest", e.target.value);
+                setError("");
+              }}
             />
             <ButtonPrimary
-              className="w-full md:w-auto"
+              className={`w-full md:w-auto ${error && "mb-6"}`}
               disabled={loading || form.guest.length < 3}
               isloading={loading}
               type="submit"

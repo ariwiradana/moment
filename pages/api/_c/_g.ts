@@ -6,6 +6,35 @@ import { ApiHandler } from "@/lib/types";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   switch (request.method) {
+    case "GET":
+      const { slug: getSlug, limit, page, search } = request.query;
+
+      try {
+        const query = `SELECT guests FROM clients WHERE slug = $1`;
+
+        const { rows } = await sql.query(query, [getSlug]);
+        const guests = rows[0].guests;
+
+        const filteredGuests = search
+          ? guests.filter((guest: string) =>
+              guest.toLowerCase().includes((search as string).toLowerCase())
+            )
+          : guests;
+
+        const startIndex = (Number(page) - 1) * Number(limit);
+        const endIndex = startIndex + Number(limit);
+
+        const paginatedGuests = filteredGuests.slice(startIndex, endIndex);
+        const totalRows = search ? filteredGuests.length : guests.length;
+
+        return response.status(200).json({
+          success: true,
+          data: paginatedGuests,
+          totalRows,
+        });
+      } catch (error) {
+        handleError(response, error);
+      }
     case "POST":
       const { guest, slug } = request.body;
 
@@ -15,6 +44,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           SET guests = array_cat(guests, $1::TEXT[])
           WHERE slug = $2
         `;
+
         const { rowCount } = await sql.query(query, [[guest], slug]);
 
         return response.status(200).json({

@@ -19,6 +19,7 @@ const initialForm: Form = {
 
 const useAddGuestStore = create<StoreState>((set) => ({
   form: initialForm,
+
   setForm: (name, value) =>
     set((state) => ({
       form: {

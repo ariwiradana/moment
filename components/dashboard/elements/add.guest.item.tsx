@@ -7,7 +7,6 @@ import { Client } from "@/lib/types";
 
 interface AddGuestItemProps {
   value: string;
-  index?: number;
   mode: "empty" | "exist";
   slug: string;
   client: Client | null;
@@ -17,7 +16,6 @@ interface AddGuestItemProps {
 
 const AddGuestItem = ({
   value = "",
-  index,
   mode,
   slug,
   client,
@@ -87,14 +85,16 @@ const AddGuestItem = ({
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full">
       <div className={`${montserrat.className} text-sm w-full`}>
-        <p className="block text-gray-700 mb-1">{`Tamu ${index}`}</p>
-        <div className="w-full rounded-lg border p-4 bg-zinc-50 text-dashboard-dark font-medium">
-          {value}
+        <div className="w-full rounded-lg border p-4 bg-zinc-50">
+          <p className="block text-dashboard-dark/50 mb-1 text-xs font-normal">
+            Nama Tamu
+          </p>
+          <p className="text-dashboard-dark font-semibold text-base">{value}</p>
         </div>
       </div>
 
       {mode === "exist" && (
-        <div className="flex justify-end gap-4 md:mt-5">
+        <div className="flex justify-end gap-4">
           <button
             onClick={handleShare}
             className="flex items-center gap-1 text-dashboard-dark"
