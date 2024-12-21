@@ -9,15 +9,24 @@ import { BiLogIn } from "react-icons/bi";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { useClientLogin } from "@/hooks/dashboard/useClientLogin";
+import Seo from "@/components/dashboard/elements/seo";
 
-const SlugLogin: FC = () => {
+interface SlugLoginProps {
+  slug: string;
+}
+
+const SlugLogin = ({ slug }: SlugLoginProps) => {
   const { state, actions } = useClientLogin();
 
   return (
     <>
-      <Head>
-        <title>Login | Moment</title>
-      </Head>
+      <Seo
+        url={`https://momentinvitations.com/${slug}/login`}
+        title="Login | Moment"
+        description="Login akun undangan digital Moment"
+        keywords={`login, undangan digital, undangan online, undangan pernikahan, undangan metatah, moment invitation, moment, ${slug}`}
+        image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
+      />
       <section className="min-h-dvh w-full flex justify-center items-center p-8 md:p-16 bg-white md:bg-gray-50">
         <div className="flex flex-col justify-center max-w-md w-full bg-white md:shadow-lg md:p-8 rounded-lg">
           <div className="flex justify-center">
@@ -90,7 +99,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      slug,
+    },
   };
 };
 
