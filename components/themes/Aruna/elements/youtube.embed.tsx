@@ -1,11 +1,13 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 
 interface YouTubeEmbedProps {
   youtubeId: string | null;
 }
+
 const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const loadVideo = () => {
     if (videoContainerRef.current && !iframeRef.current) {
@@ -22,13 +24,14 @@ const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
       );
       iframe.setAttribute("allowfullscreen", "");
       iframe.setAttribute("loading", "lazy");
+      iframe.onload = () => setVideoLoaded(true); // Mark the video as loaded
       iframeRef.current = iframe;
       videoContainerRef.current.appendChild(iframe);
     }
   };
 
   const controlVideo = (action: "playVideo" | "pauseVideo") => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
+    if (videoLoaded && iframeRef.current && iframeRef.current.contentWindow) {
       iframeRef.current.contentWindow.postMessage(
         JSON.stringify({ event: "command", func: action }),
         "*"
@@ -37,18 +40,23 @@ const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
   };
 
   useEffect(() => {
+    if (youtubeId) {
+      loadVideo();
+    }
+  }, [youtubeId]);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            loadVideo();
             controlVideo("playVideo");
           } else {
             controlVideo("pauseVideo");
           }
         });
       },
-      { rootMargin: "0px 0px 300px 0px" }
+      { rootMargin: "0px 0px 200px 0px" }
     );
 
     if (videoContainerRef.current) {
@@ -60,7 +68,7 @@ const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
         observer.unobserve(videoContainerRef.current);
       }
     };
-  }, []);
+  }, [videoLoaded]);
 
   return (
     <div
