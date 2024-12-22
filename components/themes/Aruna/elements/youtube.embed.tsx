@@ -1,4 +1,5 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import Script from "next/script";
+import React, { memo, useEffect, useRef, useState, useCallback } from "react";
 
 interface YouTubeEmbedProps {
   youtubeId: string | null;
@@ -9,8 +10,8 @@ const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
 
-  const loadVideo = () => {
-    if (videoContainerRef.current && !iframeRef.current) {
+  const loadVideo = useCallback(() => {
+    if (youtubeId && videoContainerRef.current && !iframeRef.current) {
       const iframe = document.createElement("iframe");
       iframe.setAttribute(
         "src",
@@ -28,22 +29,25 @@ const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
       iframeRef.current = iframe;
       videoContainerRef.current.appendChild(iframe);
     }
-  };
+  }, [youtubeId]);
 
-  const controlVideo = (action: "playVideo" | "pauseVideo") => {
-    if (videoLoaded && iframeRef.current && iframeRef.current.contentWindow) {
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({ event: "command", func: action }),
-        "*"
-      );
-    }
-  };
+  const controlVideo = useCallback(
+    (action: "playVideo" | "pauseVideo") => {
+      if (videoLoaded && iframeRef.current && iframeRef.current.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: "command", func: action }),
+          "*"
+        );
+      }
+    },
+    [videoLoaded]
+  );
 
   useEffect(() => {
     if (youtubeId) {
       loadVideo();
     }
-  }, [youtubeId]);
+  }, [youtubeId, loadVideo]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,13 +72,18 @@ const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
         observer.unobserve(videoContainerRef.current);
       }
     };
-  }, [videoLoaded]);
+  }, [videoLoaded, controlVideo]);
+
+  if (!youtubeId) return null;
 
   return (
-    <div
-      className="relative w-full aspect-video overflow-hidden"
-      ref={videoContainerRef}
-    ></div>
+    <div>
+      <Script src="https://www.youtube.com/iframe_api" strategy="lazyOnload" />
+      <div
+        className="relative w-full aspect-video overflow-hidden"
+        ref={videoContainerRef}
+      ></div>
+    </div>
   );
 };
 

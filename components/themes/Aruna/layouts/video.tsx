@@ -3,7 +3,11 @@ import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
-import YoutubeEmbed from "../elements/youtube.embed";
+import dynamic from "next/dynamic";
+
+const YoutubeEmbed = dynamic(() => import("../elements/youtube.embed"), {
+  ssr: false,
+});
 
 interface Props {
   state: useAruna["state"];
