@@ -26,9 +26,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           success: true,
           data: {
             clients: clients[0].count,
-            wishes: wishes[0].count * 2,
-            guests: totalGuests * 2,
-            events: events[0].count * 2,
+            wishes: wishes[0].count,
+            guests: totalGuests,
+            events: events[0].count,
           },
         });
       } catch (error) {
