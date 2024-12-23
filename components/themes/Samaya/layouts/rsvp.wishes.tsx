@@ -94,7 +94,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                 }
               />
             </div>
-            {props.state.client?.status === "completed" && (
+            {props.state.client?.status === "paid" && (
               <div className="mt-4">
                 <Button
                   isLoading={props.state.loading ? true : false}
