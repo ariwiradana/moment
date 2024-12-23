@@ -158,3 +158,5 @@ export type ApiHandler = (
   req: NextApiRequest,
   res: NextApiResponse
 ) => Promise<void>;
+
+export type Status = "unpaid" | "paid" | "completed";

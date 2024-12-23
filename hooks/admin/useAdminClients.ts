@@ -55,13 +55,13 @@ export const useAdminClients = (token: string | null) => {
       });
   };
 
-  const handleSetPaidStatus = async (id: number) => {
-    const setPaid = async () => {
+  const handleSetStatus = async (id: number, status: string) => {
+    const setStatus = async () => {
       const response = await getClient(
         `/api/_c/_ss`,
         {
           method: "POST",
-          body: JSON.stringify({ status: "paid", id }),
+          body: JSON.stringify({ status, id }),
         },
         token
       );
@@ -71,46 +71,18 @@ export const useAdminClients = (token: string | null) => {
       }
       return await response.json();
     };
-    toast.promise(setPaid(), {
-      loading: "Mark as paid...",
+    toast.promise(setStatus(), {
+      loading: `Set status as ${status}...`,
       success: () => {
         mutate();
-        return "Successfully mark as paid";
+        return `Successfully set status to ${status}`;
       },
       error: (error: any) => {
-        return error.message || "Failed to mark as paid";
-      },
-    });
-  };
-  const handleSetCompletedStatus = async (id: number) => {
-    const setCompleted = async () => {
-      const response = await getClient(
-        `/api/_c/_ss`,
-        {
-          method: "POST",
-          body: JSON.stringify({ status: "completed", id }),
-        },
-        token
-      );
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message);
-      }
-      return await response.json();
-    };
-    toast.promise(setCompleted(), {
-      loading: "Mark as completed...",
-      success: () => {
-        mutate();
-        return "Successfully mark as completed";
-      },
-      error: (error: any) => {
-        return error.message || "Failed to mark as completed";
+        return error.message || `Failed set status to ${status}`;
       },
     });
   };
 
-  
   const handleSetAsPreview = async (id: number) => {
     const setAsPreview = async () => {
       const response = await getClient(
@@ -153,9 +125,8 @@ export const useAdminClients = (token: string | null) => {
       handleChangePagination,
       handleDelete,
       handleCopyURL,
-      handleSetPaidStatus,
-      handleSetCompletedStatus,
       handleSetAsPreview,
+      handleSetStatus,
     },
   };
 };
