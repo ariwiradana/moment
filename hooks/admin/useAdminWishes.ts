@@ -11,7 +11,7 @@ export const useAdminWishes = (token: string | null) => {
   const [clientId, setClientId] = useState<number | null>(null);
   const [clientOptions, setClientOptions] = useState<Option[] | []>([]);
 
-  const { data: client } = useSWR<{
+  const { data: client, isLoading: isLoadingClient } = useSWR<{
     success: boolean;
     data: Client[];
     total_rows: number;
@@ -84,6 +84,7 @@ export const useAdminWishes = (token: string | null) => {
       toalRows: data?.total_rows || 0,
       clientOptions,
       clientId,
+      isLoadingClient
     },
     actions: {
       mutate,

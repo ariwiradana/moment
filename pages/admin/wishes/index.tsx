@@ -27,18 +27,24 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
         <h1 className="text-2xl font-bold mb-4">Wishes Dashboard</h1>
 
         <>
-          {state.clientOptions.length > 0 && (
-            <div className="md:flex">
-              <InputSelect
-                onChange={(e) =>
-                  actions.handleChangeClient(parseInt(e.target.value))
-                }
-                value={state.clientId ?? ""}
-                inputSize="medium"
-                label="Client"
-                options={state.clientOptions}
-              />
-            </div>
+          {state.isLoadingClient ? (
+            <Loader />
+          ) : (
+            <>
+              {state.clientOptions.length > 0 && (
+                <div className="md:flex">
+                  <InputSelect
+                    onChange={(e) =>
+                      actions.handleChangeClient(parseInt(e.target.value))
+                    }
+                    value={state.clientId ?? ""}
+                    inputSize="medium"
+                    label="Client"
+                    options={state.clientOptions}
+                  />
+                </div>
+              )}
+            </>
           )}
 
           {state.isLoading ? (
