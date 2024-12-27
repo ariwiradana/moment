@@ -57,12 +57,6 @@ export const featured: Feature[] = [
     description: "Fitur hitung mundur waktu berdasarkan tanggal acaramu.",
   },
   {
-    title: "Perjalanan Cinta",
-    icon: <BiHeart />,
-    description:
-      "Ceritakan perjalanan kisah cintamu hingga menuju hari bahagia.",
-  },
-  {
     title: "Galeri Foto",
     icon: <BiImage />,
     description: "Unggah hingga 20 foto untuk mempercantik undangan Anda.",
