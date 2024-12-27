@@ -191,15 +191,17 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             title="Detail"
                             icon={<BiEditAlt className="text-base" />}
                           />
-                          <ButtonText
-                            type="button"
-                            onClick={() =>
-                              client.id && actions.handleDelete(client.id)
-                            }
-                            size="small"
-                            title="Delete"
-                            icon={<BiTrash className="text-base" />}
-                          />
+                          {client.status === "unpaid" && (
+                            <ButtonText
+                              type="button"
+                              onClick={() =>
+                                client.id && actions.handleDelete(client.id)
+                              }
+                              size="small"
+                              title="Delete"
+                              icon={<BiTrash className="text-base" />}
+                            />
+                          )}
                         </ButtonActionDialog>
                       </div>
                     </div>
@@ -465,15 +467,17 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               title="Detail"
                               icon={<BiEditAlt className="text-base" />}
                             />
-                            <ButtonText
-                              type="button"
-                              onClick={() =>
-                                client.id && actions.handleDelete(client.id)
-                              }
-                              size="medium"
-                              title="Delete"
-                              icon={<BiTrash className="text-base" />}
-                            />
+                            {client?.status === "unpaid" && (
+                              <ButtonText
+                                type="button"
+                                onClick={() =>
+                                  client.id && actions.handleDelete(client.id)
+                                }
+                                size="medium"
+                                title="Delete"
+                                icon={<BiTrash className="text-base" />}
+                              />
+                            )}
                           </ButtonActionDialog>
                         </td>
                       </tr>

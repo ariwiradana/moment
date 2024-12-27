@@ -8,7 +8,6 @@ import {
   BiGlobe,
   BiGridHorizontal,
   BiGroup,
-  BiHeart,
   BiImage,
   BiImageAdd,
   BiMap,
