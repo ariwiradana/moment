@@ -9,9 +9,7 @@ const VideoPlayer = ({ videoUrl }: VideoPlayerProps) => {
 
   return (
     <video
-      autoPlay
       muted
-      loop
       playsInline
       src={videoUrl}
       className="w-full h-auto aspect-video"
