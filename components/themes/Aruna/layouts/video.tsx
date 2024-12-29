@@ -5,6 +5,7 @@ import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import dynamic from "next/dynamic";
 import VideoPlayer from "../elements/video.player";
+import { getParticipantNames } from "@/utils/getParticipantNames";
 
 const YoutubeEmbed = dynamic(() => import("../elements/youtube.embed"), {
   ssr: false,
@@ -16,7 +17,7 @@ interface Props {
 
 const VideoComponent = ({ state }: Props) => {
   const { client } = state;
-  const { videos = [] } = client || {};
+  const { videos = [], participants = [] } = client || {};
 
   if (videos.length > 0)
     return (
@@ -25,7 +26,13 @@ const VideoComponent = ({ state }: Props) => {
           {(videos as string[]).map((url) => {
             if (isYoutubeVideo(url)) {
               const youtubeId = getYouTubeVideoId(url);
-              return <YoutubeEmbed key={youtubeId} youtubeId={youtubeId} />;
+              return (
+                <YoutubeEmbed
+                  title={getParticipantNames(participants)}
+                  key={youtubeId}
+                  youtubeId={youtubeId}
+                />
+              );
             } else {
               return <VideoPlayer key={url} videoUrl={url} />;
             }

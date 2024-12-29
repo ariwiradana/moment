@@ -3,9 +3,10 @@ import React, { memo, useEffect, useRef, useState, useCallback } from "react";
 
 interface YouTubeEmbedProps {
   youtubeId: string | null;
+  title: string;
 }
 
-const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
+const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -15,17 +16,16 @@ const YoutubeEmbed = ({ youtubeId }: YouTubeEmbedProps) => {
       const iframe = document.createElement("iframe");
       iframe.setAttribute(
         "src",
-        `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&playlist=${youtubeId}&loop=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080&mute=1`
+        `https://www.youtube-nocookie.com/embed/${youtubeId}?enablejsapi=1&playlist=${youtubeId}&loop=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080&mute=1`
       );
+
       iframe.setAttribute("class", "absolute top-0 left-0 w-full h-full");
+      iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+      iframe.setAttribute("title", `${title} Video`);
       iframe.setAttribute("frameborder", "0");
-      iframe.setAttribute(
-        "allow",
-        "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      );
       iframe.setAttribute("allowfullscreen", "");
       iframe.setAttribute("loading", "lazy");
-      iframe.onload = () => setVideoLoaded(true); // Mark the video as loaded
+      iframe.onload = () => setVideoLoaded(true);
       iframeRef.current = iframe;
       videoContainerRef.current.appendChild(iframe);
     }
