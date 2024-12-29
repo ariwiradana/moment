@@ -12,6 +12,7 @@ const VideoPlayer = ({ videoUrl }: VideoPlayerProps) => {
       muted
       playsInline
       src={videoUrl}
+      controls
       className="w-full h-auto aspect-video"
     />
   );
