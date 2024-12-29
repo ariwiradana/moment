@@ -155,7 +155,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                 onChange={(value) =>
                   actions.handleChangeClient(value, "videos")
                 }
-                label="Youtube URL Video"
+                label="Video URL"
               />
             )}
             {state.selectedTheme?.cover_video && !state.formData.coverVideo ? (

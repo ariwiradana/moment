@@ -286,28 +286,24 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   ))
                 : null}
             </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              <InputChip
-                chips={state.videosForm}
-                onChange={(value) =>
-                  actions.handleChangeClient(value, "videos")
-                }
-                label="Youtube URL Video"
-              />
-              <Input
-                id="cover-video"
-                accept="video/*"
-                type="file"
-                onChange={(e) =>
-                  actions.handleChangeClient(
-                    e.target.files?.length ? (e.target.files[0] as File) : "",
-                    "cover-video"
-                  )
-                }
-                className="w-full"
-                label="Cover Video"
-              />
-            </div>
+            <InputChip
+              chips={state.videosForm}
+              onChange={(value) => actions.handleChangeClient(value, "videos")}
+              label="Video URL"
+            />
+            <Input
+              id="cover-video"
+              accept="video/*"
+              type="file"
+              onChange={(e) =>
+                actions.handleChangeClient(
+                  e.target.files?.length ? (e.target.files[0] as File) : "",
+                  "cover-video"
+                )
+              }
+              className="w-full"
+              label="Cover Video"
+            />
 
             {state.formData.videos && (
               <div className="grid gap-2 relative">
@@ -335,12 +331,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             </button>
                           </div>
 
-                          {!isYouTubeVideo && (
+                          {/* {!isYouTubeVideo && (
                             <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 absolute top-3 left-2 z-20 backdrop-blur text-white">
                               <BiImageAlt className="text-base font-medium" />
                               <span>Video Cover</span>
                             </div>
-                          )}
+                          )} */}
 
                           {isYouTubeVideo ? (
                             <div
