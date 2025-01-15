@@ -76,7 +76,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           hasCondition = true;
         }
 
-        query += ` ORDER BY updated_at DESC`;
+        query += ` ORDER BY id DESC`;
 
         const pageNumber = Number(page);
         const limitNumber = Number(limit);
