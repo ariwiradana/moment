@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
-import { montserrat } from "@/lib/fonts";
+import { raleway } from "@/lib/fonts";
 import useCoverStore from "@/store/Nirvaya/useCoverStore";
 
 interface Props {
@@ -24,7 +24,7 @@ const Cover = ({ to }: Props) => {
       className={`fixed h-svh transition-all ease-in-out duration-700 ${
         isOpen ? "-bottom-full opacity-0" : "bottom-0 opacity-100"
       } inset-x-0 bg-gradient-to-b from-nirvaya-light-brown/0 via-nirvaya-light-brown/50 to-nirvaya-light-brown/90 to-[80%] z-20 pb-16 ${
-        montserrat.className
+        raleway.className
       }`}
     >
       <div className="flex flex-col justify-end items-center h-full w-full">

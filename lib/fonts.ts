@@ -11,6 +11,7 @@ import {
   Balthazar,
   Lora,
   Roboto,
+  Raleway,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -68,4 +69,8 @@ export const balthazar = Balthazar({
 export const lora = Lora({
   subsets: ["latin"],
   weight: ["400"],
+});
+
+export const raleway = Raleway({
+  subsets: ["latin"],
 });
