@@ -85,6 +85,12 @@
     font-weight: normal;
     font-style: normal;
   }
+  @font-face {
+    font-family: "Edensor";
+    src: url("/fonts/edensor.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
 }
 
 .no-scroll {

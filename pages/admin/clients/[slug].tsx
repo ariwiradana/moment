@@ -10,6 +10,7 @@ import {
   BiImageAdd,
   BiImageAlt,
   BiLeftArrowAlt,
+  BiLockAlt,
   BiSolidPlusCircle,
   BiSolidShow,
   BiSolidUserCheck,
@@ -31,8 +32,6 @@ import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher";
 interface UpdateClientProps {
   slug: string;
   token: string | null;
@@ -40,7 +39,6 @@ interface UpdateClientProps {
 
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
-  const { data: user } = useSWR(`/api/_c/_u?slug=${slug}`, fetcher);
 
   return (
     <AdminLayout>
@@ -83,7 +81,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             </div>
           )}
 
-          {user && state.formData.slug === user ? (
+          {state.user && state.formData.slug === state.user ? (
             <div className="text-gray-500 text-xl">
               <BiSolidUserCheck />
             </div>
@@ -106,21 +104,43 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             className="mt-8 max-w-screen-md flex flex-col gap-y-4"
             onSubmit={actions.handleSubmit}
           >
-            <div className="grid md:grid-cols-2 gap-4">
+            <Input
+              value={state.formData.name}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "name")
+              }
+              label="Client Name"
+            />
+            <div className="flex gap-4">
               <Input
-                value={state.formData.name}
-                onChange={(e) =>
-                  actions.handleChangeClient(e.target.value, "name")
-                }
-                label="Client Name"
-              />
-              <Input
+                className="w-full"
                 value={state.formData.slug}
                 onChange={(e) =>
                   actions.handleChangeClient(e.target.value, "slug")
                 }
-                label="Client Slug"
+                label="Slug"
               />
+              <div className="flex gap-x-4 items-end w-full">
+                {state.showChangePassword && (
+                  <Input
+                    className="w-full"
+                    type="password"
+                    value={state.formData.password}
+                    onChange={(e) =>
+                      actions.handleChangeClient(e.target.value, "password")
+                    }
+                    label="Password"
+                  />
+                )}
+                <ButtonPrimary
+                  icon={<BiLockAlt />}
+                  onClick={actions.handleToggleShowPassword}
+                  type="button"
+                  size="small"
+                  title={state.showChangePassword ? "Save" : "Change Password"}
+                  className="mb-[10px]"
+                />
+              </div>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <InputSelect

@@ -1,84 +1,56 @@
-import React, { FC } from "react";
-import { balthazar, italiana } from "@/lib/fonts";
-import { useNirvaya } from "@/hooks/themes/useNirvaya";
-import { BiEnvelopeOpen } from "react-icons/bi";
+import React, { useEffect } from "react";
 import Button from "../elements/button";
+import { BiEnvelopeOpen } from "react-icons/bi";
+import { montserrat } from "@/lib/fonts";
+import useCoverStore from "@/store/Nirvaya/useCoverStore";
 
 interface Props {
-  state: useNirvaya["state"];
-  actions: useNirvaya["actions"];
-  untuk: string;
+  to: string;
 }
 
-const Cover: FC<Props> = (props) => {
+const Cover = ({ to }: Props) => {
+  const { toggleIsOpen, isOpen } = useCoverStore();
+
+  useEffect(() => {
+    if (!isOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [isOpen]);
+
   return (
-    <>
-      <div
-        className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
-          props.state.open
-            ? "-bottom-full invisible opacity-0"
-            : "bottom-0 visible"
-        }`}
-      >
-        <div
-          data-aos="zoom-out-up"
-          className="flex h-dvh flex-col items-center justify-end relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-transparent via-nirvaya-dark/50 via-[50%] md:via-[30%] to-[70%] md:to-[80%] to-nirvaya-dark"
+    <section
+      className={`fixed h-dvh transition-all ease-in-out duration-700 ${
+        isOpen ? "-bottom-full opacity-0" : "bottom-0 opacity-100"
+      } inset-x-0 bg-gradient-to-b from-nirvaya-light-brown/0 via-nirvaya-light-brown/50 to-nirvaya-light-brown/90 to-[80%] z-20 pb-16 ${
+        montserrat.className
+      }`}
+    >
+      <div className="flex flex-col justify-end items-center h-full w-full">
+        <p
+          data-aos="fade-down"
+          data-aos-delay="1000"
+          className="text-nirvaya-primary tracking-[1px] font-medium text-[10px] lg:text-xs uppercase text-center"
         >
-          <p
-            data-aos="fade-up"
-            data-aos-delay="400"
-            className={`${balthazar.className} text-white md:text-base text-sm mt-8 uppercase text-center`}
-          >
-            Undangan {props.state.client?.theme_category?.name}
-          </p>
-          <h1
-            data-aos="fade-up"
-            data-aos-delay="600"
-            className={`${italiana.className} text-white text-center text-[40px] md:text-5xl`}
-          >
-            {props.state.groom?.nickname} & {props.state.bride?.nickname}
-          </h1>
-          <div data-aos="fade-up" data-aos-delay="800">
-            <p
-              className={`${balthazar.className} text-white text-sm md:text-base mt-4 md:mt-6 text-center`}
-            >
-              Yth. Bapak/Ibu/Saudara/i
-            </p>
-            <p
-              className={`${balthazar.className} text-white text-xl md:text-2xl mt-1 md:mt-3 text-center`}
-            >
-              {props.untuk}
-            </p>
-          </div>
-          <p
-            data-aos="fade-up"
-            data-aos-delay="1000"
-            className={`${balthazar.className} text-white text-sm md:text-base mt-2 md:mt-4 max-w-sm mx-auto text-center`}
-          >
-            Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
-            acara{" "}
-            <span className="lowercase">
-              {props.state.client?.theme_category?.name}
-            </span>{" "}
-            kami
-          </p>
-          <div
-            className="mt-6 md:mt-8"
-            data-aos="fade-up"
-            data-aos-delay="1200"
-          >
-            <Button
-              onClick={() => {
-                props.actions.handleOpenCover();
-                props.actions.handlePlayPause();
-              }}
-              icon={<BiEnvelopeOpen />}
-              title="Buka Undangan"
-            />
-          </div>
+          YTH. BAPAK / IBU / SAUDARA / i
+        </p>
+        <h4
+          data-aos="fade-down"
+          data-aos-delay="800"
+          className="text-center mt-1 lg:mt-2 text-nirvaya-primary font-medium text-lg lg:text-xl mb-3 lg:mb-4"
+        >
+          {to}
+        </h4>
+        <div data-aos="fade-down" data-aos-delay="600">
+          <Button
+            onClick={toggleIsOpen}
+            title="Buka Undangan"
+            icon={<BiEnvelopeOpen />}
+          />
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

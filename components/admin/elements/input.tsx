@@ -42,39 +42,44 @@ const Input: FC<InputProps> = ({
           {optional && "(optional)"}
         </span>
       </label>
-      <input
-        {...props}
-        type={
-          props.type === "password" && showPassword
-            ? "text"
-            : props.type === "password" && !showPassword
-            ? "password"
-            : props.type
-        }
-        id={id}
-        className={`w-full border rounded-lg focus:ring-1 focus:outline-none ${
-          error
-            ? "border-admin-danger focus:ring-transparent"
-            : "focus:ring-admin-dark"
-        } ${paddingStyles(inputSize ?? "large")}`}
-      />
-      {props.type === "password" && (
-        <div className={`absolute right-4 bottom-2`}>
-          <button
-            type="button"
-            onClick={() => {
-              if (showPassword) {
-                setShowPassword(false);
-              } else {
-                setShowPassword(true);
-              }
-            }}
-            className="text-xl text-dashboard-dark"
+      <div className="relative">
+        <input
+          {...props}
+          type={
+            props.type === "password" && showPassword
+              ? "text"
+              : props.type === "password" && !showPassword
+              ? "password"
+              : props.type
+          }
+          id={id}
+          className={`w-full border rounded-lg focus:ring-1 focus:outline-none ${
+            error
+              ? "border-admin-danger focus:ring-transparent"
+              : "focus:ring-admin-dark"
+          } ${paddingStyles(inputSize ?? "large")}`}
+        />
+        {props.type === "password" && (
+          <div
+            className={`absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center`}
           >
-            {showPassword ? <IoEyeOff /> : <IoEye />}
-          </button>
-        </div>
-      )}
+            <button
+              type="button"
+              onClick={() => {
+                if (showPassword) {
+                  setShowPassword(false);
+                } else {
+                  setShowPassword(true);
+                }
+              }}
+              className="text-xl text-dashboard-dark"
+            >
+              {showPassword ? <IoEyeOff /> : <IoEye />}
+            </button>
+          </div>
+        )}
+      </div>
+
       {error && (
         <p className="text-admin-danger border-admin-danger text-sm mt-1">
           {error}

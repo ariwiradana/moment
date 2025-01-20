@@ -13,7 +13,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!slug) {
           return handleError(res, new Error("Slug is required"));
         }
-
         const { rows } = await sql.query(
           `SELECT username FROM users WHERE username = $1`,
           [slug]
@@ -23,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           res.status(200).json(null);
         }
 
-        return res.status(200).json(rows[0].username);
+        return res.status(200).json(rows[0]);
 
       default:
         res.setHeader("Allow", ["GET"]);

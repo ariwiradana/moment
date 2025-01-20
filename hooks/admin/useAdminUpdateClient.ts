@@ -43,7 +43,7 @@ const initialEvent: Event = {
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
 
-const initalFormData: Client = {
+const initalFormData: Client & { password: string } = {
   id: undefined,
   name: "",
   slug: "",
@@ -66,6 +66,7 @@ const initalFormData: Client = {
   is_preview: false,
   status: null,
   theme_category_id: null,
+  password: "",
 };
 
 export const useAdminUpdateClient = (slug: string, token: string | null) => {
@@ -80,6 +81,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     fetcher(url, token)
   );
 
+  const { data: user } = useSWR(`/api/_c/_u?slug=${slug}`, fetcher);
+
   const { data: themes } = useSWR<{
     success: boolean;
     data: Theme[];
@@ -93,9 +96,12 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
-  const [formData, setFormData] = useState<Client>(initalFormData);
+  const [formData, setFormData] = useState<Client & { password: string }>(
+    initalFormData
+  );
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showChangePassword, setShowChangePassword] = useState<boolean>(false);
   const [themeOptions, setThemeOptions] = useState<Option[]>([
     {
       label: "",
@@ -128,6 +134,12 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   >([]);
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      setFormData((state) => ({ ...state, password: user?.password }));
+    }
+  }, [user]);
 
   const clearFileInput = () => {
     const galleryInput = document.getElementById("gallery") as HTMLInputElement;
@@ -1058,7 +1070,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     }
   };
 
-  console.log({ formData });
+  const handleToggleShowPassword = () => {
+    setShowChangePassword(!showChangePassword);
+  };
 
   return {
     state: {
@@ -1075,6 +1089,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       themeCategoryOptions,
       selectedPackage,
       selectedTheme,
+      user,
+      showChangePassword,
     },
     actions: {
       handleChangeClient,
@@ -1093,6 +1109,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       handleDeleteParticipant,
       handleSetSeoImage,
       handleDeleteImageEvent,
+      handleToggleShowPassword,
     },
   };
 };

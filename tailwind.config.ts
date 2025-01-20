@@ -14,6 +14,7 @@ const config: Config = {
       fontFamily: {
         "tan-pearl": ["TanPearl", "sans-serif"],
         "high-summit": ["HighSummit", "sans-serif"],
+        edensor: ["Edensor", "sans-serif"],
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
@@ -49,8 +50,9 @@ const config: Config = {
           dark: "#252015",
         },
         nirvaya: {
-          dark: "#101010",
-          primary: "#40534C",
+          dark: "#0E0E0E",
+          primary: "#7E7670",
+          "light-brown": "#F8F0E8",
         },
         aruna: {
           dark: "#101010",

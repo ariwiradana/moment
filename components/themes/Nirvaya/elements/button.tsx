@@ -1,4 +1,4 @@
-import { balthazar } from "@/lib/fonts";
+import { montserrat } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
@@ -8,7 +8,6 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   className?: string;
   fullWidth?: boolean;
-  white?: boolean;
 }
 
 const Button: FC<Props> = ({
@@ -17,24 +16,21 @@ const Button: FC<Props> = ({
   isLoading,
   className = "",
   fullWidth = false,
-  white = false,
   ...props
 }) => {
   return (
     <button
       {...props}
-      className={`${balthazar.className} ${
+      className={`${montserrat.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} ${
-        !white
-          ? "text-white hover:text-nirvaya-dark hover:bg-white bg-white/10"
-          : "text-nirvaya-dark bg-white"
-      } rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex border-[0.7px] border-white transition-colors ease-in-out duration-700 ${
+      } ${className} bg-nirvaya-primary text-white font-medium hover:bg-nirvaya-primary/90 rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
-      } items-center gap-x-2 md:gap-x-4 relative overflow-hidden shadow-sm`}
+      } items-center gap-x-3 md:gap-x-5 relative overflow-hidden shadow-sm`}
     >
-      <span className="text-sm md:text-base whitespace-nowrap">{title}</span>
-      <div className="flex justify-center items-center">
+      <span className="text-[10px] md:text-xs uppercase tracking-[2px] whitespace-nowrap">
+        {title}
+      </span>
+      <div className="flex justify-center items-center text-xs md:text-base">
         <span>
           {isLoading ? <BiLoaderAlt className="animate-spin" /> : icon}
         </span>
