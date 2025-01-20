@@ -61,7 +61,7 @@ const Hero = () => {
         </Swiper>
       </div>
       <div
-        className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/50 via-nirvaya-dark/10 to-nirvaya-dark/60 to-[80%] z-10 flex flex-col justify-between items-center py-16 px-8`}
+        className={`absolute h-svh inset-0 bg-gradient-to-b from-nirvaya-dark/50 via-nirvaya-dark/10 to-nirvaya-dark/60 to-[80%] z-10 flex flex-col justify-between items-center py-16 px-8`}
       >
         <div>
           <p

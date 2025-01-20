@@ -21,7 +21,7 @@ const Cover = ({ to }: Props) => {
 
   return (
     <section
-      className={`fixed h-dvh transition-all ease-in-out duration-700 ${
+      className={`fixed h-svh transition-all ease-in-out duration-700 ${
         isOpen ? "-bottom-full opacity-0" : "bottom-0 opacity-100"
       } inset-x-0 bg-gradient-to-b from-nirvaya-light-brown/0 via-nirvaya-light-brown/50 to-nirvaya-light-brown/90 to-[80%] z-20 pb-16 ${
         montserrat.className
