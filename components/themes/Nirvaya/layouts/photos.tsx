@@ -1,6 +1,8 @@
 import useClientStore from "@/store/useClientStore";
 import Image from "next/image";
 import React from "react";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const Photos = () => {
   const { client } = useClientStore();
@@ -10,19 +12,39 @@ const Photos = () => {
       : [];
 
   return (
-    <section className="flex flex-col w-full bg-nirvaya-dark">
-      {images.map((image, index) => (
-        <div className="relative w-full overflow-hidden" key={index}>
-          <Image
-            alt={`Photo ${index + 1}`}
-            src={image}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto transform hover:scale-110 transition-transform ease-in-out duration-500"
-          />
-        </div>
-      ))}
+    <section className="p-1 bg-nirvaya-light-brown">
+      <Swiper
+        autoplay
+        speed={3000}
+        modules={[Autoplay]}
+        slidesPerView={2}
+        spaceBetween={4}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 4,
+          },
+          1440: {
+            slidesPerView: 5,
+          },
+        }}
+      >
+        {images?.map((image, index) => (
+          <SwiperSlide key={`Photo ${index + 1}`}>
+            <div className="w-full aspect-[4/6] relative">
+              <Image
+                sizes="50vw"
+                src={image}
+                alt={`Photo ${index + 1}`}
+                fill
+                className="object-cover bg-nirvaya-dark/5"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 };
