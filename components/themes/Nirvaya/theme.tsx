@@ -4,6 +4,7 @@ import Cover from "./layouts/cover";
 import Hero from "./layouts/hero";
 import Participants from "./layouts/participants";
 import useCoverStore from "@/store/Nirvaya/useCoverStore";
+import Photos from "./layouts/photos";
 
 interface Props {
   untuk: string;
@@ -18,6 +19,7 @@ const Nirvaya = ({ untuk }: Props) => {
       {isOpen && (
         <>
           <Participants />
+          <Photos />
         </>
       )}
     </Layout>
