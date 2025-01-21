@@ -20,7 +20,7 @@ const Participants = () => {
 
   return (
     <section
-      className={`bg-white py-16 px-8 max-w-screen-lg mx-auto ${raleway.className}`}
+      className={`bg-nirvaya-light-brown py-16 px-8 max-w-screen-lg mx-auto ${raleway.className}`}
     >
       <p
         data-aos="fade-up"
