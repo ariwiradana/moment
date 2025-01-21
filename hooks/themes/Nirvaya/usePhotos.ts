@@ -38,8 +38,10 @@ const usePhotos = () => {
   }, [imageIndex, images.length]);
 
   const handleToggleLightbox = useCallback(
-    (idx: number) => {
-      if (images.length > 0 && idx >= 0 && idx < images.length) {
+    (url: string) => {
+      const idx = images.findIndex((image) => image === url);
+
+      if (idx >= 0 && images.length > 0) {
         setImageIndex(idx);
         setIsOpen((prev) => !prev);
       }

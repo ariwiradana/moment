@@ -85,7 +85,7 @@ const Photos = () => {
             {state.images?.map((image, index) => (
               <SwiperSlide key={`Photo ${index + 1}`}>
                 <div
-                  onClick={() => actions.handleToggleLightbox(index)}
+                  onClick={() => actions.handleToggleLightbox(image)}
                   className="w-full aspect-[3/5] relative"
                 >
                   <Image
