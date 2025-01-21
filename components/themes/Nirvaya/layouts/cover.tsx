@@ -32,7 +32,7 @@ const Cover = ({ to }: Props) => {
         raleway.className
       }`}
     >
-      <div className="flex flex-col justify-end items-center h-full w-full">
+      <div className="flex flex-col justify-end items-center h-full w-full relative z-30">
         <p
           data-aos="fade-down"
           data-aos-delay="1200"
