@@ -33,7 +33,7 @@ const Cover = ({ to }: Props) => {
         <p
           data-aos="fade-down"
           data-aos-delay="1000"
-          className="text-nirvaya-primary tracking-[1px] font-medium text-[10px] lg:text-xs uppercase text-center"
+          className="text-nirvaya-primary tracking-[1px] font-medium text-[10px] lg:text-xs text-center"
         >
           YTH. BAPAK / IBU / SAUDARA / i
         </p>
