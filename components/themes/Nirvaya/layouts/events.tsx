@@ -19,12 +19,13 @@ const Events = () => {
           alt="Background Event"
           className="object-cover grayscale backdrop-blur-sm"
           src={
-            (eventState.events[0].image as string) || "/dashboard/why-us.jpg"
+            (eventState.events[0].image as string) ||
+            "https://res.cloudinary.com/dsbmvj2s3/image/upload/v1737459771/flower-bg_uz5uaf.jpg"
           }
         />
       )}
       <div className={`w-full relative ${raleway.className}`}>
-        <div className="bg-nirvaya-primary/70 z-10 backdrop-blur grid lg:grid-cols-2 py-4 lg:py-24 justify-center items-center divide-y lg:divide-x lg:divide-y-0 divide-white/15 w-full">
+        <div className="bg-nirvaya-primary/80 z-10 grid lg:grid-cols-2 py-4 lg:py-24 justify-center items-center divide-y lg:divide-x lg:divide-y-0 divide-white/15 w-full">
           {eventState.events?.length > 0 &&
             eventState?.events.map((event) => (
               <div
@@ -35,7 +36,7 @@ const Events = () => {
                   data-aos="fade-up"
                   className="text-white text-3xl lg:text-4xl leading-8 font-edensor"
                 >
-                  {event.name}
+                  {event.name?.replaceAll("&", "dan")}
                 </h4>
                 <div className="mt-2 lg:mt-3" data-aos="fade-up">
                   <h6 className="uppercase font-edensor text-xs lg:text-sm text-white tracking-[3px]">

@@ -92,7 +92,7 @@ const ParticipantItem = ({
           priority
           sizes="500px"
           alt={`Participant ${participant.nickname}`}
-          src={participant.image as string}
+          src={(participant.image as string) || ""}
           fill
           className={`object-cover bg-nirvaya-dark/5 ${
             order === "odd"
