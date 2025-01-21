@@ -3,6 +3,8 @@ import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { raleway } from "@/lib/fonts";
 import useCoverStore from "@/store/Nirvaya/useCoverStore";
+import { getEventNames } from "@/utils/getEventNames";
+import useEvents from "@/hooks/themes/Nirvaya/useEvents";
 
 interface Props {
   to: string;
@@ -10,6 +12,7 @@ interface Props {
 
 const Cover = ({ to }: Props) => {
   const { toggleIsOpen, isOpen } = useCoverStore();
+  const { state } = useEvents();
 
   useEffect(() => {
     if (isOpen) {
@@ -25,25 +28,33 @@ const Cover = ({ to }: Props) => {
     <section
       className={`fixed h-svh transition-all ease-in-out duration-700 ${
         isOpen ? "-bottom-full opacity-0" : "bottom-0 opacity-100"
-      } inset-x-0 bg-gradient-to-b from-nirvaya-dark/30 via-nirvaya-light-brown/10 to-nirvaya-light-brown/90 to-[80%] z-20 pb-16 ${
+      } inset-x-0 bg-gradient-to-b from-nirvaya-dark/30 via-nirvaya-dark/0 to-nirvaya-dark/70 to-[70%] z-20 pb-16 ${
         raleway.className
       }`}
     >
       <div className="flex flex-col justify-end items-center h-full w-full">
         <p
           data-aos="fade-down"
-          data-aos-delay="1000"
-          className="text-nirvaya-primary tracking-[1px] font-medium text-[10px] lg:text-xs text-center"
+          data-aos-delay="1200"
+          className="text-white text-[10px] lg:text-xs text-center"
         >
-          YTH. BAPAK / IBU / SAUDARA / i
+          Yth. Bapak / Ibu / Saudara / i
         </p>
         <h4
           data-aos="fade-down"
-          data-aos-delay="800"
-          className="text-center mt-1 lg:mt-2 text-nirvaya-primary font-medium text-lg lg:text-xl mb-3 lg:mb-4"
+          data-aos-delay="1000"
+          className="text-center mt-1 lg:mt-2 text-white font-medium text-lg lg:text-xl my-1 lg:my-2"
         >
           {to}
         </h4>
+        <p
+          data-aos="fade-down"
+          data-aos-delay="800"
+          className="text-white text-[10px] lg:text-xs text-center max-w-[193px] lg:max-w-lg mx-auto mb-4 lg:mb-6"
+        >
+          Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
+          acara {getEventNames(state.events || [])} kami.
+        </p>
         <div data-aos="fade-down" data-aos-delay="600">
           <Button
             onClick={toggleIsOpen}

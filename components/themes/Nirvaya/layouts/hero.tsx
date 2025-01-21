@@ -1,4 +1,3 @@
-import ImageShimmer from "@/components/image.shimmer";
 import useEvents from "@/hooks/themes/Nirvaya/useEvents";
 import useParticipants from "@/hooks/themes/Nirvaya/useParticipants";
 import { raleway } from "@/lib/fonts";
@@ -61,7 +60,7 @@ const Hero = () => {
         </Swiper>
       </div>
       <div
-        className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/50 via-nirvaya-dark/10 to-nirvaya-dark/60 to-[80%] z-10`}
+        className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-10`}
       >
         <div className="flex flex-col justify-between items-center py-16 px-8 h-svh">
           <div>

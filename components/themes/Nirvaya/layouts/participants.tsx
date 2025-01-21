@@ -82,7 +82,7 @@ const ParticipantItem = ({
     <div>
       <div
         data-aos="fade-up"
-        className={`w-full h-[430px] relative drop-shadow-xl overflow-hidden ${
+        className={`w-full h-[430px] relative drop-shadow-xl ${
           order === "odd"
             ? "rounded-tl-[150px] rounded-br-[150px]"
             : "rounded-tr-[150px] rounded-bl-[150px]"
@@ -94,7 +94,7 @@ const ParticipantItem = ({
           alt={`Participant ${participant.nickname}`}
           src={participant.image as string}
           fill
-          className={`object-cover bg-nirvaya-dark/5 transform hover:scale-125 transition-transform ease-in-out duration-500 ${
+          className={`object-cover bg-nirvaya-dark/5 ${
             order === "odd"
               ? "rounded-tl-[150px] rounded-br-[150px]"
               : "rounded-tr-[150px] rounded-bl-[150px]"

@@ -42,7 +42,7 @@ const Cover: FC<Props> = (props) => {
               <h1
                 data-aos="fade-up"
                 data-aos-delay="400"
-                className={`font-high-summit text-white text-4xl md:text-5xl leading-10 2xl:text-6xl`}
+                className={`font-high-summit text-white text-5xl md:text-5xl leading-10 2xl:text-6xl`}
               >
                 {props.state.client?.theme_category?.name === "Pernikahan" ? (
                   <>
