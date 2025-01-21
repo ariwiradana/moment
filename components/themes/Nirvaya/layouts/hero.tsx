@@ -1,6 +1,6 @@
 import ImageShimmer from "@/components/image.shimmer";
 import useEvents from "@/hooks/themes/Nirvaya/useEvents";
-import useHero from "@/hooks/themes/Nirvaya/useHero";
+import useParticipants from "@/hooks/themes/Nirvaya/useParticipants";
 import { raleway } from "@/lib/fonts";
 import { Client } from "@/lib/types";
 import useCoverStore from "@/store/Nirvaya/useCoverStore";
@@ -15,7 +15,7 @@ const Hero = () => {
   const { client } = useClientStore();
   const { isOpen } = useCoverStore();
   const { gallery } = (client as Client) || {};
-  const { state: heroState } = useHero();
+  const { state: participantsState } = useParticipants();
   const { state: eventState } = useEvents();
 
   return (
@@ -77,9 +77,9 @@ const Hero = () => {
               data-aos-delay="400"
               className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-3xl lg:text-5xl text-center"
             >
-              <span>{heroState.groom?.nickname}</span>
+              <span>{participantsState.groom?.nickname}</span>
               <span> dan </span>
-              <span>{heroState.bride?.nickname}</span>
+              <span>{participantsState.bride?.nickname}</span>
             </h2>
             {isOpen && (
               <p

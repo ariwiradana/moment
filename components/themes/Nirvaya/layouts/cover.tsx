@@ -12,12 +12,14 @@ const Cover = ({ to }: Props) => {
   const { toggleIsOpen, isOpen } = useCoverStore();
 
   useEffect(() => {
-    if (!isOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
+    if (isOpen) {
       document.body.classList.remove("no-scroll");
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+  }, []);
 
   return (
     <section

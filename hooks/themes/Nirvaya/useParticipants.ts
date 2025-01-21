@@ -2,7 +2,7 @@ import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import React from "react";
 
-const useHero = () => {
+const useParticipants = () => {
   const { client } = useClientStore();
 
   const groom: Participant | null =
@@ -18,4 +18,4 @@ const useHero = () => {
   };
 };
 
-export default useHero;
+export default useParticipants;
