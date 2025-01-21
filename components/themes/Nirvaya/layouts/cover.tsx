@@ -21,6 +21,7 @@ const Cover = ({ to }: Props) => {
   }, [isOpen]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     document.body.classList.add("no-scroll");
   }, []);
 

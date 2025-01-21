@@ -25,7 +25,7 @@ const Events = () => {
         />
       )}
       <div className={`w-full relative ${raleway.className}`}>
-        <div className="bg-nirvaya-primary/60 backdrop-blur-sm z-10 grid lg:grid-cols-2 py-4 lg:py-24 justify-center items-center divide-y lg:divide-x lg:divide-y-0 divide-white/15 w-full">
+        <div className="bg-nirvaya-primary/80 backdrop-blur-sm z-10 grid lg:grid-cols-2 py-4 lg:py-24 justify-center items-center divide-y lg:divide-x lg:divide-y-0 divide-white/15 w-full">
           {eventState.events?.length > 0 &&
             eventState?.events.map((event) => (
               <div
