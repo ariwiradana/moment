@@ -18,7 +18,9 @@ const Events = () => {
           fill
           alt="Background Event"
           className="object-cover grayscale backdrop-blur-sm"
-          src={(eventState.events[0].image as string) || ""}
+          src={
+            (eventState.events[0].image as string) || "/dashboard/why-us.jpg"
+          }
         />
       )}
       <div className={`w-full relative ${raleway.className}`}>
