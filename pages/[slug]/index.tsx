@@ -33,7 +33,7 @@ const MainPage: FC<Props> = ({
 }) => {
   const { setClient } = useClientStore();
 
-  // useDisableInspect();
+  useDisableInspect();
   useEffect(() => {
     AOS.init({
       duration: 1200,
