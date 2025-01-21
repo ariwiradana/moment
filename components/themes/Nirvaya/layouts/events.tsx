@@ -12,7 +12,7 @@ const Events = () => {
 
   return (
     <section className="relative">
-      {eventState.events.length > 0 && (
+      {eventState.events?.length > 0 && (
         <Image
           sizes="200px"
           fill
@@ -23,43 +23,44 @@ const Events = () => {
       )}
       <div className={`w-full relative ${raleway.className}`}>
         <div className="bg-nirvaya-primary/70 z-10 backdrop-blur grid lg:grid-cols-2 py-4 lg:py-24 justify-center items-center divide-y lg:divide-x lg:divide-y-0 divide-white/15 w-full">
-          {eventState?.events.map((event) => (
-            <div
-              key={`Event ${event.name}`}
-              className="text-center py-11 px-8 w-full relative z-20"
-            >
-              <h4
-                data-aos="fade-up"
-                className="text-white text-3xl lg:text-4xl leading-8 font-edensor"
-              >
-                {event.name}
-              </h4>
-              <div className="mt-2 lg:mt-3" data-aos="fade-up">
-                <h6 className="uppercase font-edensor text-xs lg:text-sm text-white tracking-[3px]">
-                  {moment(event.date).format("dddd, DD MMMM YYYY")}
-                </h6>
-                <h6 className="uppercase font-edensor text-xs lg:text-sm text-white tracking-[3px]">
-                  {event.start_time} Wita - {event.end_time}
-                </h6>
-              </div>
-              <p
-                data-aos="fade-up"
-                className="mt-4 lg:mt-5 text-[10px] lg:text-xs text-white"
-              >
-                Bertempat di <br />
-                {event.address}
-              </p>
+          {eventState.events?.length > 0 &&
+            eventState?.events.map((event) => (
               <div
-                data-aos="fade-up"
-                className="flex flex-col justify-center items-center gap-y-2 lg:gap-y-3 mt-6 lg:mt-7"
+                key={`Event ${event.name}`}
+                className="text-center py-11 px-8 w-full relative z-20"
               >
-                <Link href={event.address_url} target="_blank">
-                  <ButtonLight title="Petunjuk Lokasi" icon={<BiMap />} />
-                </Link>
-                <ButtonLight title="Simpan Tanggal" icon={<BiCalendar />} />
+                <h4
+                  data-aos="fade-up"
+                  className="text-white text-3xl lg:text-4xl leading-8 font-edensor"
+                >
+                  {event.name}
+                </h4>
+                <div className="mt-2 lg:mt-3" data-aos="fade-up">
+                  <h6 className="uppercase font-edensor text-xs lg:text-sm text-white tracking-[3px]">
+                    {moment(event.date).format("dddd, DD MMMM YYYY")}
+                  </h6>
+                  <h6 className="uppercase font-edensor text-xs lg:text-sm text-white tracking-[3px]">
+                    {event.start_time} Wita - {event.end_time}
+                  </h6>
+                </div>
+                <p
+                  data-aos="fade-up"
+                  className="mt-4 lg:mt-5 text-[10px] lg:text-xs text-white"
+                >
+                  Bertempat di <br />
+                  {event.address}
+                </p>
+                <div
+                  data-aos="fade-up"
+                  className="flex flex-col justify-center items-center gap-y-2 lg:gap-y-3 mt-6 lg:mt-7"
+                >
+                  <Link href={event.address_url} target="_blank">
+                    <ButtonLight title="Petunjuk Lokasi" icon={<BiMap />} />
+                  </Link>
+                  <ButtonLight title="Simpan Tanggal" icon={<BiCalendar />} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </section>
