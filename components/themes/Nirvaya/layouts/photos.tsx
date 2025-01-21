@@ -62,14 +62,13 @@ const Photos = () => {
           leave: { opacity: 0 },
         }}
       />
-      <section className="p-1 bg-nirvaya-light-brown">
-        <div data-aos="fade-up">
+      <section className="bg-nirvaya-light-brown">
+        <div>
           <Swiper
             autoplay
             speed={3000}
             modules={[Autoplay]}
             slidesPerView={2}
-            spaceBetween={4}
             breakpoints={{
               640: {
                 slidesPerView: 2,

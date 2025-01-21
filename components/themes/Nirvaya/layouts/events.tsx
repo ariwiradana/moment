@@ -1,33 +1,32 @@
 import useEvents from "@/hooks/themes/Nirvaya/useEvents";
-import usePhotos from "@/hooks/themes/Nirvaya/usePhotos";
 import { raleway } from "@/lib/fonts";
 import moment from "moment";
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 import ButtonLight from "../elements/button.light";
 import { BiCalendar, BiMap } from "react-icons/bi";
 import Link from "next/link";
 
 const Events = () => {
-  const { state } = usePhotos();
   const { state: eventState } = useEvents();
 
   return (
-    <section>
+    <section className="relative">
+      {eventState.events.length > 0 && (
+        <Image
+          sizes="200px"
+          fill
+          alt="Background Event"
+          className="object-cover grayscale backdrop-blur-sm"
+          src={eventState.events[0].image as string}
+        />
+      )}
       <div className={`w-full relative ${raleway.className}`}>
-        {eventState.events.length > 0 && (
-          <Image
-            fill
-            alt="Background Event"
-            className="object-cover grayscale backdrop-blur-sm"
-            src={state.images[0]}
-          />
-        )}
-        <div className="bg-nirvaya-primary/70 z-10 backdrop-blur grid lg:grid-cols-2 py-4 lg:py-11 justify-center items-center divide-y lg:divide-x lg:divide-y-0 divide-white/15 w-full">
+        <div className="bg-nirvaya-primary/70 z-10 backdrop-blur grid lg:grid-cols-2 py-4 lg:py-24 justify-center items-center divide-y lg:divide-x lg:divide-y-0 divide-white/15 w-full">
           {eventState?.events.map((event) => (
             <div
               key={`Event ${event.name}`}
-              className="text-center py-11 px-8 w-full"
+              className="text-center py-11 px-8 w-full relative z-20"
             >
               <h4
                 data-aos="fade-up"
@@ -67,4 +66,4 @@ const Events = () => {
   );
 };
 
-export default Events;
+export default memo(Events);

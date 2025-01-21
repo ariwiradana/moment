@@ -60,7 +60,6 @@ const Hero = () => {
         </Swiper>
       </div>
       <div
-        data-aos="fade-in"
         className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-10`}
       >
         <div className="flex flex-col justify-between items-center py-16 px-8 h-svh relative z-20">
