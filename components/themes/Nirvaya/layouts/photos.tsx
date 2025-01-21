@@ -24,10 +24,10 @@ const Photos = () => {
             slidesPerView: 2,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 3,
           },
           1440: {
-            slidesPerView: 5,
+            slidesPerView: 4,
           },
         }}
       >
