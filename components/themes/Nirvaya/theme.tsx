@@ -5,6 +5,7 @@ import Hero from "./layouts/hero";
 import Participants from "./layouts/participants";
 import useCoverStore from "@/store/Nirvaya/useCoverStore";
 import Photos from "./layouts/photos";
+import Events from "./layouts/events";
 
 interface Props {
   untuk: string;
@@ -19,6 +20,7 @@ const Nirvaya = ({ untuk }: Props) => {
       {isOpen && (
         <>
           <Participants />
+          <Events />
           <Photos />
         </>
       )}

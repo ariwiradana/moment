@@ -10,7 +10,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const Button: FC<Props> = ({
+const ButtonLight: FC<Props> = ({
   title,
   icon,
   isLoading,
@@ -23,7 +23,7 @@ const Button: FC<Props> = ({
       {...props}
       className={`${montserrat.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} bg-nirvaya-primary text-white hover:bg-nirvaya-primary/40 rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
+      } ${className} bg-nirvaya-light-brown text-nirvaya-dark hover:bg-nirvaya-dark hover:text-white rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-3 relative overflow-hidden shadow-sm`}
     >
@@ -39,4 +39,4 @@ const Button: FC<Props> = ({
   );
 };
 
-export default Button;
+export default ButtonLight;

@@ -26,6 +26,7 @@ const Cover = ({ to }: Props) => {
 
   return (
     <section
+      data-aos="fade-in"
       className={`fixed h-svh transition-all ease-in-out duration-700 ${
         isOpen ? "-bottom-full opacity-0" : "bottom-0 opacity-100"
       } inset-x-0 bg-gradient-to-b from-nirvaya-dark/30 via-nirvaya-dark/0 to-nirvaya-dark/70 to-[70%] z-20 pb-16 ${
