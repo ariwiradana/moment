@@ -50,7 +50,7 @@ const Cover = ({ to }: Props) => {
         <p
           data-aos="fade-down"
           data-aos-delay="800"
-          className="text-white text-[10px] lg:text-xs text-center max-w-[193px] lg:max-w-lg mx-auto mb-4 lg:mb-6"
+          className="text-white text-[10px] lg:text-xs text-center max-w-[200px] lg:max-w-lg mx-auto mb-4 lg:mb-6"
         >
           Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
           acara {getEventNames(state.events || [])} kami.
