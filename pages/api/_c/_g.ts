@@ -24,8 +24,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const startIndex = (Number(page) - 1) * Number(limit);
         const endIndex = startIndex + Number(limit);
 
-        const paginatedGuests = filteredGuests.slice(startIndex, endIndex);
-        const totalRows = search ? filteredGuests.length : guests.length;
+        const paginatedGuests = filteredGuests?.slice(startIndex, endIndex);
+        const totalRows = search ? filteredGuests?.length : guests.length;
 
         return response.status(200).json({
           success: true,

@@ -94,7 +94,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <Seo
-        url="https://momentinvitations.com"
+        url="https://momentinvitation.com"
         title="Buat Undangan Digital Disini! | Moment"
         description="Moment Invitation menawarkan solusi undangan digital di Bali dengan desain elegan, mudah digunakan, dan praktis. Pilih dari berbagai tema kustom yang dapat disesuaikan, nikmati fitur seperti revisi tak terbatas, dan bagikan momen spesial Anda dengan cepat. Dengan paket harga terjangkau, proses pembuatan undangan yang cepat, serta tampilan yang responsif, Moment memberikan pengalaman undangan digital yang sempurna untuk acara Anda."
         keywords="undangan pernikahan digital Bali, undangan mempandes digital Bali, undangan digital pernikahan Bali, undangan Bali, undangan online Bali, undangan kustom Bali, tema undangan pernikahan Bali, tema mempandes digital Bali, undangan digital untuk pernikahan, undangan pernikahan praktis, undangan pernikahan elegan Bali, undangan mempandes praktis, paket undangan Bali, undangan Bali harga terjangkau, undangan digital kustom Bali, undangan digital untuk mempandes, cara membuat undangan pernikahan Bali, undangan cepat dan mudah, undangan digital yang responsif, layanan undangan Bali, Moment undangan digital, undangan pernikahan modern Bali, undangan digital, undangan digital murah, undangan digital terjangkau, undangan online murah, undangan online terjangkau"

@@ -121,7 +121,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
   return (
     <>
       <Seo
-        url={`https://momentinvitations.com/${props.slug}/testimoni`}
+        url={`https://momentinvitation.com/${props.slug}/testimoni`}
         title="Testimoni | Moment"
         description="Bagikan pengalaman Anda menggunakan layanan undangan digital Moment dengan mengisi form testimoni kami. Ceritakan bagaimana Moment membantu membuat acara Anda lebih istimewa dengan undangan digital yang elegan dan mudah digunakan."
         keywords={`form testimoni undangan digital, testimoni undangan pernikahan Bali, testimoni undangan mempandes Bali, pengalaman menggunakan Moment, kirim testimoni undangan Bali, testimoni layanan undangan, testimoni klien Moment, feedback undangan digital Bali, ulasan undangan pernikahan, kirim pengalaman undangan digital`}

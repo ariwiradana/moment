@@ -124,7 +124,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
   return (
     <Layout>
       <Seo
-        url={`https://momentinvitations.com/${slug}/tamu`}
+        url={`https://momentinvitation.com/${slug}/tamu`}
         title="Tamu Undangan | Moment"
         description="Kelola daftar tamu undangan Anda dengan mudah melalui halaman Tamu di Moment. Tambahkan nama tamu, kirimkan undangan digital, dan pastikan tidak ada tamu yang terlewat. Proses yang mudah dan praktis untuk setiap acara pernikahan dan mempandes."
         keywords={`daftar tamu undangan digital, kelola tamu undangan pernikahan, tamu undangan Bali, daftar tamu pernikahan Bali, undangan tamu pernikahan digital, kelola tamu mempandes Bali, undangan tamu mudah, tamu undangan praktis, undangan digital Bali tamu, manajemen tamu undangan digital`}

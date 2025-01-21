@@ -33,7 +33,7 @@ const MainPage: FC<Props> = ({
 }) => {
   const { setClient } = useClientStore();
 
-  useDisableInspect();
+  // useDisableInspect();
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -77,6 +77,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   );
 
+  console.log({ untuk });
+
   const client: Client | null = response?.data ?? null;
   const themeName = client?.theme?.name || "";
   const participantNames =
@@ -85,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     client?.opening_description || ""
   }`;
   const seoImage = client?.seo || "";
-  const url = `https://momentinvitations.com/${encodeURIComponent(slug)}`;
+  const url = `https://momentinvitation.com/${encodeURIComponent(slug)}`;
   const pageTitle = client
     ? client.status === "unpaid"
       ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
