@@ -5,7 +5,7 @@ import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { memo } from "react";
 import {
   BiLogoFacebook,
   BiLogoInstagram,
@@ -19,52 +19,53 @@ const Participants = () => {
   const { state: participantState } = useHero();
 
   return (
-    <section
-      className={`bg-nirvaya-light-brown py-16 px-8 max-w-screen-lg mx-auto ${raleway.className}`}
-    >
-      <p
-        data-aos="fade-up"
-        className="text-nirvaya-dark/50 text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
-      >
-        {client?.opening_title}
-      </p>
-      <h2
-        data-aos="fade-up"
-        className="text-nirvaya-dark text-center leading-8 text-4xl font-edensor mt-4"
-      >
-        Selamat Datang di Acara{" "}
-        {eventState.events.length > 0 && (
-          <span
-            className={`transition-all ease-in-out duration-300 transform ${
-              eventState.fade
-                ? "opacity-100 translate-y-0"
-                : "opacity-10 -translate-y-1"
-            }`}
-          >
-            {eventState.events[eventState.currentIndex].name}
-          </span>
-        )}
-      </h2>
-      <p
-        data-aos="fade-up"
-        className="text-nirvaya-dark/50 my-6 text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
-      >
-        {participantState.groom?.nickname} & {participantState.bride?.nickname}
-      </p>
-      <p
-        data-aos="fade-up"
-        className="text-nirvaya-dark/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto lg:text-xs text-[10px]"
-      >
-        {client?.opening_description}
-      </p>
-      <div className="flex flex-col lg:flex-row mt-16 gap-16">
-        {client?.participants.map((participant, index) => (
-          <ParticipantItem
-            key={`Participant ${participant.name}`}
-            participant={participant}
-            order={index % 2 !== 0 ? "odd" : "even"}
-          />
-        ))}
+    <section className={`bg-nirvaya-light-brown ${raleway.className}`}>
+      <div className="py-16 px-8 max-w-screen-lg mx-auto">
+        <p
+          data-aos="fade-up"
+          className="text-nirvaya-dark/50 text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+        >
+          {client?.opening_title}
+        </p>
+        <h2
+          data-aos="fade-up"
+          className="text-nirvaya-dark text-center leading-8 text-4xl font-edensor mt-4"
+        >
+          Selamat Datang di Acara{" "}
+          {eventState.events.length > 0 && (
+            <span
+              className={`transition-all ease-in-out duration-300 transform italic ${
+                eventState.fade
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-10 -translate-y-1"
+              }`}
+            >
+              {eventState.events[eventState.currentIndex].name}
+            </span>
+          )}
+        </h2>
+        <p
+          data-aos="fade-up"
+          className="text-nirvaya-dark/50 my-6 text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+        >
+          {participantState.groom?.nickname} &{" "}
+          {participantState.bride?.nickname}
+        </p>
+        <p
+          data-aos="fade-up"
+          className="text-nirvaya-dark/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto lg:text-xs text-[10px]"
+        >
+          {client?.opening_description}
+        </p>
+        <div className="flex flex-col lg:flex-row mt-16 gap-16">
+          {client?.participants.map((participant, index) => (
+            <ParticipantItem
+              key={`Participant ${participant.name}`}
+              participant={participant}
+              order={index % 2 !== 0 ? "odd" : "even"}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -81,17 +82,19 @@ const ParticipantItem = ({
     <div>
       <div
         data-aos="fade-up"
-        className={`w-full h-[430px] relative drop-shadow-xl ${
+        className={`w-full h-[430px] relative drop-shadow-xl overflow-hidden ${
           order === "odd"
             ? "rounded-tl-[150px] rounded-br-[150px]"
             : "rounded-tr-[150px] rounded-bl-[150px]"
         }`}
       >
         <Image
+          priority
+          sizes="500px"
           alt={`Participant ${participant.nickname}`}
           src={participant.image as string}
           fill
-          className={`object-cover ${
+          className={`object-cover bg-nirvaya-dark/5 transform hover:scale-125 transition-transform ease-in-out duration-500 ${
             order === "odd"
               ? "rounded-tl-[150px] rounded-br-[150px]"
               : "rounded-tr-[150px] rounded-bl-[150px]"
@@ -175,4 +178,4 @@ const ParticipantItem = ({
   );
 };
 
-export default Participants;
+export default memo(Participants);

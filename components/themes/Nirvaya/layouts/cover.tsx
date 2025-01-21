@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { raleway } from "@/lib/fonts";
@@ -56,4 +56,4 @@ const Cover = ({ to }: Props) => {
   );
 };
 
-export default Cover;
+export default memo(Cover);

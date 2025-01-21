@@ -7,7 +7,8 @@ import useCoverStore from "@/store/Nirvaya/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import { getEventNames } from "@/utils/getEventNames";
 import moment from "moment";
-import React from "react";
+import Image from "next/image";
+import React, { memo } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -18,47 +19,60 @@ const Hero = () => {
   const { state: participantsState } = useParticipants();
   const { state: eventState } = useEvents();
 
+  const images =
+    (gallery &&
+      (gallery as string[]).filter((image) => client?.seo !== image)) ||
+    [];
+
   return (
     <section className={`relative ${raleway.className}`}>
       <div data-aos="zoom-out">
-        <Swiper
-          loop
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false,
-          }}
-          effect="fade"
-          speed={2000}
-          className={`w-full transition-transform min-h-[600px] h-lvh`}
-          spaceBetween={0}
-          slidesPerView={1}
-          modules={[Autoplay, EffectFade]}
-        >
-          {gallery && (gallery as string[])?.length > 0
-            ? (gallery as string[])
-                .filter(
-                  (image) => image !== client?.seo && image !== client?.cover
-                )
-                .map((image, index) => (
-                  <SwiperSlide
-                    className="relative w-full h-full"
-                    key={`Hero Image ${index + 1}`}
-                  >
-                    <div className="absolute inset-0 z-0">
-                      <ImageShimmer
-                        fill
-                        quality={100}
-                        alt={`Hero Image ${index + 1}`}
-                        priority
-                        sizes="100vw"
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                        src={image}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))
-            : null}
-        </Swiper>
+        {!isOpen && client?.cover ? (
+          <div className={`w-full transition-transform min-h-[600px] h-lvh`}>
+            <ImageShimmer
+              fill
+              quality={100}
+              alt={`Cover Image`}
+              priority
+              sizes="100vw"
+              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+              src={client?.cover}
+            />
+          </div>
+        ) : (
+          <Swiper
+            loop
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            effect="fade"
+            speed={2000}
+            className={`w-full transition-transform min-h-[600px] h-lvh`}
+            spaceBetween={0}
+            slidesPerView={1}
+            modules={[Autoplay, EffectFade]}
+          >
+            {images.map((image, index) => (
+              <SwiperSlide
+                className="relative w-full h-full"
+                key={`Hero Image ${index + 1}`}
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    fill
+                    quality={100}
+                    alt={`Hero Image ${index + 1}`}
+                    priority
+                    sizes="100vw"
+                    className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
+                    src={image}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
       <div
         className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/50 via-nirvaya-dark/10 to-nirvaya-dark/60 to-[80%] z-10`}
@@ -75,10 +89,10 @@ const Hero = () => {
             <h2
               data-aos="fade-up"
               data-aos-delay="400"
-              className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-3xl lg:text-5xl text-center"
+              className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-4xl lg:text-5xl text-center"
             >
               <span>{participantsState.groom?.nickname}</span>
-              <span> dan </span>
+              <span className="italic"> dan </span>
               <span>{participantsState.bride?.nickname}</span>
             </h2>
             {isOpen && (
@@ -180,4 +194,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default memo(Hero);
