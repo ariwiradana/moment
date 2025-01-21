@@ -67,12 +67,15 @@ const useEvents = () => {
     };
   }, [events]);
 
+  const images: string[] = events?.map((event) => event.image as string) || [];
+
   return {
     state: {
       events,
       currentIndex,
       fade,
       timeRemainings,
+      images,
     },
   };
 };
