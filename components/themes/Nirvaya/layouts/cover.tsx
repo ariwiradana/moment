@@ -2,9 +2,9 @@ import React, { memo } from "react";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { raleway } from "@/lib/fonts";
-import useCoverStore from "@/store/Nirvaya/useCoverStore";
+import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
-import useEvents from "@/hooks/themes/Nirvaya/useEvents";
+import useEvents from "@/hooks/themes/useEvents";
 
 interface Props {
   to: string;

@@ -1,8 +1,5 @@
-import React, { FC, useState } from "react";
-import { useSamaya } from "@/hooks/themes/useSamaya";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import { marcellus } from "@/lib/fonts";
+import React from "react";
+import { afacad, marcellus } from "@/lib/fonts";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import {
   ImageList,
@@ -12,27 +9,20 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
+import usePhotos from "@/hooks/themes/usePhotos";
+import useParticipants from "@/hooks/themes/useParticipants";
+import useClientStore from "@/store/useClientStore";
+import Lightbox from "react-spring-lightbox";
+import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
 
-interface Props {
-  state: useSamaya["state"];
-}
-
-const GalleryComponent: FC<Props> = (props) => {
-  const [open, setOpen] = useState(false);
-  const [imageIndex, setImageIndex] = useState(0);
-
-  const images =
-    Array.isArray(props.state.client?.gallery) &&
-    props.state.client?.gallery.length > 0
-      ? props.state.client?.gallery
-      : [];
-
-  const lightboxImage = images.map((img) => ({ src: img }));
+const GalleryComponent = () => {
+  const { state: photoState, actions: photoActions } = usePhotos();
+  const { state: participantState } = useParticipants();
+  const { client } = useClientStore();
 
   const videos =
-    Array.isArray(props.state.client?.videos) &&
-    props.state.client.videos.length > 0
-      ? props.state.client.videos
+    Array.isArray(client?.videos) && client.videos.length > 0
+      ? client.videos
       : [];
 
   const theme = useTheme();
@@ -55,15 +45,55 @@ const GalleryComponent: FC<Props> = (props) => {
   return (
     <section className="relative bg-gradient-to-b from-samaya-dark to-samaya-dark/80 overflow-hidden z-20">
       <Lightbox
-        styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .9)" } }}
-        close={() => setOpen(false)}
-        slides={lightboxImage}
-        index={imageIndex}
-        open={open}
-        on={{
-          view(props: { index: number }) {
-            setImageIndex(props.index);
-          },
+        isOpen={photoState.isOpen}
+        onPrev={photoActions.gotoPrevious}
+        onNext={photoActions.gotoNext}
+        images={photoState.lightboxImage}
+        currentIndex={photoState.imageIndex}
+        onClose={() => photoActions.setIsOpen(false)}
+        className="bg-black/80"
+        renderHeader={() => (
+          <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
+            <p
+              className={`text-white text-sm relative z-10 p-2 ${afacad.className}`}
+            >
+              {photoState.imageIndex + 1} / {photoState.lightboxImage.length}
+            </p>
+            <button
+              onClick={() => {
+                photoActions.setIsOpen(false);
+                photoActions.setImageIndex(0);
+              }}
+              className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
+            >
+              <HiOutlineXMark />
+            </button>
+          </div>
+        )}
+        renderPrevButton={() => (
+          <button
+            disabled={photoState.imageIndex === 0}
+            onClick={photoActions.gotoPrevious}
+            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
+          >
+            <HiChevronLeft />
+          </button>
+        )}
+        renderNextButton={() => (
+          <button
+            disabled={
+              photoState.imageIndex === photoState.lightboxImage.length - 1
+            }
+            onClick={photoActions.gotoNext}
+            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex items-center justify-center md:mr-2 transition-colors ease-in-out"
+          >
+            <HiChevronRight />
+          </button>
+        )}
+        pageTransitionConfig={{
+          from: { opacity: 0 },
+          enter: { opacity: 1 },
+          leave: { opacity: 0 },
         }}
       />
 
@@ -82,7 +112,8 @@ const GalleryComponent: FC<Props> = (props) => {
           className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-2 mb-8 max-w-screen-md mx-auto`}
         >
           Foto {videos.length > 0 && "& Video "} dari{" "}
-          {props.state.groom?.nickname} & {props.state.bride?.nickname}
+          {participantState.groom?.nickname} &{" "}
+          {participantState.bride?.nickname}
         </p>
         <div
           className="mt-10 flex flex-col gap-4 md:gap-8"
@@ -94,12 +125,12 @@ const GalleryComponent: FC<Props> = (props) => {
             gap={getGap()}
             className="overflow-hidden"
           >
-            {images.map((img, index) => (
+            {photoState.images.map((img, index) => (
               <ImageListItem key={img}>
                 <Image
                   onClick={() => {
-                    setOpen(() => true);
-                    setImageIndex(() => index);
+                    photoActions.setIsOpen(true);
+                    photoActions.setImageIndex(index);
                   }}
                   className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500"
                   src={img}

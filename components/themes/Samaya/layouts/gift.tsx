@@ -1,21 +1,28 @@
-import React, { FC } from "react";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import React, { memo } from "react";
 import "yet-another-react-lightbox/styles.css";
 import { afacad, marcellus } from "@/lib/fonts";
-import { BiSolidChevronRightCircle, BiSolidCopy } from "react-icons/bi";
+import {
+  BiCheck,
+  BiSolidChevronRightCircle,
+  BiSolidCopy,
+} from "react-icons/bi";
 import Image from "next/image";
 import Button from "../elements/button";
+import useClientStore from "@/store/useClientStore";
+import useGift from "@/hooks/themes/useGift";
 
-interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
-}
-
-const GiftComponent: FC<Props> = (props) => {
+const GiftComponent = () => {
+  const { client } = useClientStore();
+  const { state: giftState, actions: giftActions } = useGift(
+    <div className="p-1 rounded bg-samaya-primary">
+      <BiCheck />
+    </div>
+  );
   if (
-    props.state.client?.gift_bank_name &&
-    props.state.client?.gift_account_name &&
-    props.state.client?.gift_account_number
+    client?.gift_bank_name &&
+    client?.gift_account_name &&
+    client?.gift_account_number &&
+    client?.status === "paid"
   )
     return (
       <section className="relative bg-samaya-dark/80 overflow-hidden z-20">
@@ -37,20 +44,20 @@ const GiftComponent: FC<Props> = (props) => {
             <div data-aos="fade-up" className="flex justify-center mt-6">
               <Button
                 onClick={() =>
-                  props.actions.setIsGiftShown(!props.state.isGiftShown)
+                  giftActions.setIsGiftShown(!giftState.isGiftShown)
                 }
                 type="button"
                 title="Klik Disini"
                 icon={
                   <BiSolidChevronRightCircle
                     className={`transition-transform duration-500 delay-100 ease-in-out ${
-                      props.state.isGiftShown ? "rotate-90" : "rotate-0"
+                      giftState.isGiftShown ? "rotate-90" : "rotate-0"
                     }`}
                   />
                 }
               />
             </div>
-            {props.state.isGiftShown && (
+            {giftState.isGiftShown && (
               <div
                 data-aos="zoom-out-up"
                 data-aos-delay="200"
@@ -74,7 +81,7 @@ const GiftComponent: FC<Props> = (props) => {
                     <h1
                       className={`text-3xl font-bold text-white ${afacad.className}`}
                     >
-                      {props.state.client?.gift_bank_name}
+                      {client?.gift_bank_name}
                     </h1>
                   </div>
                   <div className="relative z-10">
@@ -82,19 +89,19 @@ const GiftComponent: FC<Props> = (props) => {
                       <p
                         className={`text-lg md:text-xl leading-5 text-white ${marcellus.className}`}
                       >
-                        {props.state.client?.gift_account_name}
+                        {client?.gift_account_name}
                       </p>
                       <p
                         className={`text-lg md:text-xl font-medium text-white ${afacad.className}`}
                       >
-                        {props.state.client?.gift_account_number}
+                        {client?.gift_account_number}
                       </p>
                     </div>
                     <button
                       type="button"
                       onClick={() =>
-                        props.actions.handleCopyRekening(
-                          props.state.client?.gift_account_number as string
+                        giftActions.handleCopyRekening(
+                          client?.gift_account_number as string
                         )
                       }
                       className="bg-samaya-primary outline-none text-samaya-dark px-3 py-1 rounded-lg text-sm flex items-center gap-x-1 mt-3 relative z-10"
@@ -112,4 +119,4 @@ const GiftComponent: FC<Props> = (props) => {
     );
 };
 
-export default GiftComponent;
+export default memo(GiftComponent);

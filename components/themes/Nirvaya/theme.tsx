@@ -3,7 +3,7 @@ import Layout from "../layout";
 import Cover from "./layouts/cover";
 import Hero from "./layouts/hero";
 import Participants from "./layouts/participants";
-import useCoverStore from "@/store/Nirvaya/useCoverStore";
+import useCoverStore from "@/store/useCoverStore";
 // import Photos from "./layouts/photos";
 import Events from "./layouts/events";
 

@@ -1,40 +1,26 @@
 import ImageShimmer from "@/components/image.shimmer";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import useEvents from "@/hooks/themes/useEvents";
+import useParticipants from "@/hooks/themes/useParticipants";
 import { marcellus } from "@/lib/fonts";
+import useCoverStore from "@/store/useCoverStore";
+import useClientStore from "@/store/useClientStore";
 import moment from "moment";
 import Image from "next/image";
-import React, { FC, useEffect, useState } from "react";
+import React, { memo } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-interface Props {
-  state: useSamaya["state"];
-}
+const HeroComponent = () => {
+  const { state: eventState } = useEvents();
+  const { client } = useClientStore();
+  const { isOpen } = useCoverStore();
+  const { state: participantState } = useParticipants();
 
-const HeroComponent: FC<Props> = (props) => {
-  const events = props.state.client?.events || [];
-  const gallery: string[] = (props.state.client?.gallery || []) as string[];
+  const gallery: string[] = (client?.gallery || []) as string[];
 
   const images = gallery.filter(
-    (g) => g !== props.state.client?.cover && g !== props.state.client?.seo
+    (g) => g !== client?.cover && g !== client?.seo
   );
-
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [fade, setFade] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (events.length > 1) {
-      const interval = setInterval(() => {
-        setFade(false);
-        setTimeout(() => {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
-          setFade(true);
-        }, 500);
-      }, 5000);
-
-      return () => clearInterval(interval);
-    }
-  }, [events.length]);
 
   return (
     <section className="h-svh">
@@ -74,7 +60,7 @@ const HeroComponent: FC<Props> = (props) => {
           </Swiper>
         </div>
       )}
-      {props.state.open && (
+      {isOpen && (
         <div
           className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark to-[90%] h-svh flex flex-col justify-end items-center py-8"
           data-aos="fade-up"
@@ -85,7 +71,8 @@ const HeroComponent: FC<Props> = (props) => {
             data-aos-delay="1000"
             className={`font-tan-pearl text-white text-[28px] md:text-4xl my-2 lg:mb-6 text-center`}
           >
-            {props.state.groom?.nickname} & {props.state.bride?.nickname}
+            {participantState.groom?.nickname} &{" "}
+            {participantState.bride?.nickname}
           </h1>
           <div
             className="w-full flex justify-center"
@@ -94,19 +81,23 @@ const HeroComponent: FC<Props> = (props) => {
           >
             <div
               className={`w-full justify-center flex items-center gap-x-3 transform transition-all duration-500 ease-in-out ${
-                fade ? "opacity-100 translate-y-0" : "opacity-10 translate-y-1"
+                eventState.fade
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-10 translate-y-1"
               }`}
             >
               <p
                 className={`${marcellus.className} text-white text-sm md:text-base`}
               >
-                {events[currentIndex].name}
+                {eventState.events[eventState.currentIndex].name}
               </p>
               <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
               <p
                 className={`${marcellus.className} text-white text-sm md:text-base`}
               >
-                {moment(events[currentIndex].date).format("DD / MMMM / YYYY")}
+                {moment(eventState.events[eventState.currentIndex].date).format(
+                  "DD / MMMM / YYYY"
+                )}
               </p>
             </div>
           </div>
@@ -128,4 +119,4 @@ const HeroComponent: FC<Props> = (props) => {
   );
 };
 
-export default HeroComponent;
+export default memo(HeroComponent);

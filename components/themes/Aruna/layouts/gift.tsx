@@ -18,7 +18,8 @@ const GiftComponent: FC<Props> = (props) => {
   if (
     props.state.client?.gift_bank_name &&
     props.state.client?.gift_account_name &&
-    props.state.client?.gift_account_number
+    props.state.client?.gift_account_number &&
+    props.state.client?.status === "paid"
   )
     return (
       <section className="relative bg-aruna-dark overflow-hidden py-[60px] md:py-[100px]">

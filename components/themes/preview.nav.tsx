@@ -1,15 +1,12 @@
-import React, { FC } from "react";
+import React from "react";
 import { dm } from "@/lib/fonts";
 import ButtonPrimary from "../dashboard/elements/button.primary";
 import { BiMobile } from "react-icons/bi";
 import { sosmedURLs } from "@/constants/sosmed";
-import { useAruna } from "@/hooks/themes/useAruna";
+import useClientStore from "@/store/useClientStore";
 
-interface Props {
-  state: useAruna["state"];
-}
-
-const PreviewNav: FC<Props> = ({ state }) => {
+const PreviewNav = () => {
+  const { client } = useClientStore();
   const handleChooseTheme = (name: string, category: string) => {
     const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Kategori: ${category}\n- Tema: ${name}`;
     const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
@@ -18,7 +15,7 @@ const PreviewNav: FC<Props> = ({ state }) => {
     window.open(whatsappLink);
   };
 
-  if (state.client?.status === "unpaid" || state.client?.is_preview)
+  if (client?.status === "unpaid" || client?.is_preview)
     return (
       <>
         <nav className="fixed inset-x-0 z-[999]" data-aos="fade-down">
@@ -27,20 +24,20 @@ const PreviewNav: FC<Props> = ({ state }) => {
               <h1
                 className={`${dm.className} text-base md:text-xl lg:text-2xl text-white`}
               >
-                {state.client.is_preview
-                  ? `Preview Tema ${state.client.theme?.name}`
-                  : `Preview Undangan ${state.client.theme_category?.name}`}
+                {client.is_preview
+                  ? `Preview Tema ${client.theme?.name}`
+                  : `Preview Undangan ${client.theme_category?.name}`}
               </h1>
             </li>
-            {state.client.is_preview && (
+            {client.is_preview && (
               <li>
                 <div className="md:hidden">
                   <ButtonPrimary
                     size="extrasmall"
                     onClick={() =>
                       handleChooseTheme(
-                        state.client?.theme?.name as string,
-                        state.client?.theme?.category as string
+                        client?.theme?.name as string,
+                        client?.theme?.category as string
                       )
                     }
                     icon={<BiMobile />}
@@ -52,8 +49,8 @@ const PreviewNav: FC<Props> = ({ state }) => {
                     size="medium"
                     onClick={() =>
                       handleChooseTheme(
-                        state.client?.theme?.name as string,
-                        state.client?.theme?.category as string
+                        client?.theme?.name as string,
+                        client?.theme?.category as string
                       )
                     }
                     icon={<BiMobile />}
@@ -65,8 +62,8 @@ const PreviewNav: FC<Props> = ({ state }) => {
                     size="medium"
                     onClick={() =>
                       handleChooseTheme(
-                        state.client?.theme?.name as string,
-                        state.client?.theme?.category as string
+                        client?.theme?.name as string,
+                        client?.theme?.category as string
                       )
                     }
                     icon={<BiMobile />}

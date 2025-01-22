@@ -1,8 +1,8 @@
-import useEvents from "@/hooks/themes/Nirvaya/useEvents";
-import useParticipants from "@/hooks/themes/Nirvaya/useParticipants";
+import useEvents from "@/hooks/themes/useEvents";
+import useParticipants from "@/hooks/themes/useParticipants";
 import { raleway } from "@/lib/fonts";
 import { Client } from "@/lib/types";
-import useCoverStore from "@/store/Nirvaya/useCoverStore";
+import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import { getEventNames } from "@/utils/getEventNames";
 import moment from "moment";

@@ -1,23 +1,29 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { marcellus } from "@/lib/fonts";
 import Button from "../elements/button";
-import { useSamaya } from "@/hooks/themes/useSamaya";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import Image from "next/image";
+import useCoverStore from "@/store/useCoverStore";
+import useClientStore from "@/store/useClientStore";
+import useParticipants from "@/hooks/themes/useParticipants";
+import { UseMusic } from "@/hooks/themes/useMusic";
 
 interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
   untuk: string;
+  state: UseMusic["state"];
+  actions: UseMusic["actions"];
 }
 
 const Cover: FC<Props> = (props) => {
-  console.log(props.state);
+  const { isOpen, toggleIsOpen } = useCoverStore();
+  const { client } = useClientStore();
+  const { state: participantsState } = useParticipants();
+
   return (
     <>
       <div
         className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
-          props.state.open ? "invisible opacity-0 scale-105" : "visible"
+          isOpen ? "invisible opacity-0 scale-105" : "visible"
         }`}
       >
         <div
@@ -30,17 +36,18 @@ const Cover: FC<Props> = (props) => {
               data-aos-delay="400"
               className={`${marcellus.className} text-white md:text-base text-sm uppercase text-center`}
             >
-              Undangan {props.state.client?.theme_category?.name}
+              Undangan {client?.theme_category?.name}
             </p>
             <h1
               data-aos="fade-up"
               data-aos-delay="600"
               className={`font-tan-pearl text-white text-center text-[28px] md:text-4xl mt-3`}
             >
-              {props.state.groom?.nickname} & {props.state.bride?.nickname}
+              {participantsState.groom?.nickname} &{" "}
+              {participantsState.bride?.nickname}
             </h1>
           </div>
-          {props.state.client?.cover && (
+          {client?.cover && (
             <div
               data-aos="zoom-out-up"
               data-aos-delay="800"
@@ -50,7 +57,7 @@ const Cover: FC<Props> = (props) => {
                 sizes="360px"
                 priority
                 fill
-                src={props.state.client?.cover as string}
+                src={client?.cover as string}
                 alt="cover"
                 className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
               />
@@ -83,9 +90,7 @@ const Cover: FC<Props> = (props) => {
             >
               Tanpa mengurangi rasa hormat, kami mengundang anda untuk
               menghadiri acara{" "}
-              <span className="lowercase">
-                {props.state.client?.theme_category?.name}
-              </span>{" "}
+              <span className="lowercase">{client?.theme_category?.name}</span>{" "}
               kami
             </p>
             <div
@@ -95,7 +100,7 @@ const Cover: FC<Props> = (props) => {
             >
               <Button
                 onClick={() => {
-                  props.actions.handleOpenCover();
+                  toggleIsOpen();
                   props.actions.handlePlayPause();
                 }}
                 icon={<BiEnvelopeOpen />}
@@ -109,4 +114,4 @@ const Cover: FC<Props> = (props) => {
   );
 };
 
-export default Cover;
+export default memo(Cover);

@@ -1,4 +1,4 @@
-import usePhotos from "@/hooks/themes/Nirvaya/usePhotos";
+import usePhotos from "@/hooks/themes/usePhotos";
 import { raleway } from "@/lib/fonts";
 import Image from "next/image";
 import React from "react";

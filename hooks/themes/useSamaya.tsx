@@ -22,12 +22,6 @@ interface FormData {
   attendant: string;
 }
 
-interface TimeRemaining {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
 
 export interface useSamaya {
   refs: {
@@ -44,7 +38,6 @@ export interface useSamaya {
     formData: FormData;
     wishes: Review[] | null;
     errors: Record<string, string | undefined>;
-    timeRemainings: TimeRemaining[];
     isGiftShown: boolean;
     page: number;
     limit: number;
@@ -73,7 +66,7 @@ const initialReviewForm = {
 };
 
 const useSamaya = (): useSamaya => {
-  const {client} = useClientStore()
+  const { client } = useClientStore();
   const [bride, setBride] = useState<Participant | null>(null);
   const [groom, setGroom] = useState<Participant | null>(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -88,53 +81,7 @@ const useSamaya = (): useSamaya => {
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
-    client?.events
-      ? client?.events.map(() => ({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        }))
-      : []
-  );
-
-  useEffect(() => {
-    if (!client?.events) return;
-
-    const updateCountdowns = () => {
-      const newTimeRemaining = client.events!.map((event) => {
-        const targetDateTime = moment(
-          `${event.date} ${event.start_time}`,
-          "YYYY-MM-DD HH:mm"
-        );
-        const now = moment();
-        const diffDuration = moment.duration(targetDateTime.diff(now));
-
-        if (diffDuration.asMilliseconds() > 0) {
-          return {
-            days: Math.floor(diffDuration.asDays()),
-            hours: diffDuration.hours(),
-            minutes: diffDuration.minutes(),
-            seconds: diffDuration.seconds(),
-          };
-        } else {
-          return {
-            days: 0,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-          };
-        }
-      });
-
-      setTimeRemainings(newTimeRemaining);
-    };
-
-    const intervalId = setInterval(updateCountdowns, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -401,7 +348,6 @@ const useSamaya = (): useSamaya => {
       wishes,
       errors,
       isPlaying,
-      timeRemainings,
       isGiftShown,
       page,
       limit,

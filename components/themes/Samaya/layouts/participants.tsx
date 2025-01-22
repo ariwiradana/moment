@@ -9,20 +9,16 @@ import {
   BiLogoTwitter,
 } from "react-icons/bi";
 import Image from "next/image";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import useParticipants from "@/hooks/themes/useParticipants";
+import useClientStore from "@/store/useClientStore";
 
-interface Props {
-  state: useSamaya["state"];
-}
+const ParticipantsComponent = () => {
+  const { client } = useClientStore();
+  const { state } = useParticipants();
 
-const ParticipantsComponent: FC<Props> = (props) => {
-  const bothHasImg =
-    props.state.groom?.image && props.state.bride?.image ? true : false;
+  const bothHasImg = state.groom?.image && state.bride?.image ? true : false;
 
-  if (
-    props.state.client?.participants &&
-    props.state.client?.participants.length > 0
-  )
+  if (client?.participants && client?.participants.length > 0)
     return (
       <section className="relative bg-samaya-dark z-20 py-16 lg:py-24 overflow-hidden">
         <div
@@ -37,21 +33,21 @@ const ParticipantsComponent: FC<Props> = (props) => {
             data-aos="fade-up"
             className={`font-tan-pearl text-2xl md:text-3xl text-center text-samaya-primary`}
           >
-            {props.state.client.opening_title}
+            {client?.opening_title}
           </h1>
           <p
             data-aos="fade-up"
             data-aos-delay="100"
             className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto`}
           >
-            {props.state.client?.opening_description}
+            {client?.opening_description}
           </p>
 
           {!bothHasImg && (
             <div
               className={`w-full gap-20 place-items-center flex justify-center my-16`}
             >
-              {props.state.groom?.image && (
+              {state.groom?.image && (
                 <div
                   data-aos="zoom-out-up"
                   className="w-[180px] md:w-[200px] relative aspect-square"
@@ -61,8 +57,8 @@ const ParticipantsComponent: FC<Props> = (props) => {
                     priority
                     fill
                     className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
-                    src={props.state.groom?.image as string}
-                    alt={props.state.groom?.name}
+                    src={state.groom?.image as string}
+                    alt={state.groom?.name}
                   />
                   <Image
                     sizes="400px"
@@ -73,7 +69,7 @@ const ParticipantsComponent: FC<Props> = (props) => {
                   />
                 </div>
               )}
-              {props.state.bride?.image && (
+              {state.bride?.image && (
                 <div
                   data-aos="zoom-out-up"
                   className="w-[180px] md:w-[200px] relative aspect-square"
@@ -83,8 +79,8 @@ const ParticipantsComponent: FC<Props> = (props) => {
                     priority
                     fill
                     className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
-                    src={props.state.bride?.image as string}
-                    alt={props.state.bride?.name}
+                    src={state.bride?.image as string}
+                    alt={state.bride?.name}
                   />
                   <Image
                     sizes="400px"
@@ -99,16 +95,16 @@ const ParticipantsComponent: FC<Props> = (props) => {
           )}
 
           <div className="grid md:grid-cols-2 w-full gap-16">
-            {props.state.groom && (
+            {state.groom && (
               <ParticipantComponent
                 bothHasImg={bothHasImg}
-                data={props.state?.groom as Participant}
+                data={state?.groom as Participant}
               />
             )}
-            {props.state.bride && (
+            {state.bride && (
               <ParticipantComponent
                 bothHasImg={bothHasImg}
-                data={props.state?.bride as Participant}
+                data={state?.bride as Participant}
               />
             )}
           </div>

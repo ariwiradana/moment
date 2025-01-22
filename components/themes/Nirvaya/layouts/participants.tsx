@@ -1,5 +1,5 @@
-import useEvents from "@/hooks/themes/Nirvaya/useEvents";
-import useHero from "@/hooks/themes/Nirvaya/useParticipants";
+import useEvents from "@/hooks/themes/useEvents";
+import useHero from "@/hooks/themes/useParticipants";
 import { raleway } from "@/lib/fonts";
 import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";

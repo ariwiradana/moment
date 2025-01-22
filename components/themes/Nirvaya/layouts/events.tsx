@@ -1,4 +1,4 @@
-import useEvents from "@/hooks/themes/Nirvaya/useEvents";
+import useEvents from "@/hooks/themes/useEvents";
 import { raleway } from "@/lib/fonts";
 import moment from "moment";
 import Image from "next/image";

@@ -1,7 +1,6 @@
-import React, { FC } from "react";
+import React from "react";
 import Button from "../elements/button";
-import { BiSolidSend, BiTime, BiUser } from "react-icons/bi";
-import { useSamaya } from "@/hooks/themes/useSamaya";
+import { BiCheck, BiSolidSend, BiTime, BiUser } from "react-icons/bi";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
@@ -9,18 +8,17 @@ import { afacad, marcellus } from "@/lib/fonts";
 import { getInitial } from "@/utils/getInitial";
 import moment from "moment";
 import { Pagination } from "@mui/material";
+import useRSVPWishes from "@/hooks/themes/useRSVPWishes";
+import useClientStore from "@/store/useClientStore";
 
-interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
-}
+const RSVPWishesComponent = () => {
+  const { client } = useClientStore();
+  const { state, actions } = useRSVPWishes(
+    <div className="p-1 rounded bg-samaya-primary">
+      <BiCheck />
+    </div>
+  );
 
-const RSVPWishesComponent: FC<Props> = (props) => {
-  const attendantText: Record<string, string> = {
-    Hadir: "Saya akan hadir",
-    "Tidak Hadir": "Maaf saya tidak bisa hadir",
-    "Masih Ragu": "Maaf saya masih ragu",
-  };
   return (
     <section className="relative bg-samaya-dark w-full overflow-hidden z-20">
       <div
@@ -46,58 +44,59 @@ const RSVPWishesComponent: FC<Props> = (props) => {
             dan kebahagiaan.
           </p>
           <form
-            onSubmit={props.actions.handleSubmit}
+            onSubmit={actions.handleSubmit}
             className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto px-4"
           >
             <Input
-              error={props.state.errors.name}
+              disabled={client?.status === "completed"}
+              error={state.errors.name}
               placeholder="Masukkan nama kamu"
-              value={props.state.formData.name}
+              value={state.formData.name}
               id="name"
-              onChange={(e) =>
-                props.actions.handleChange("name", e.target.value)
-              }
+              onChange={(e) => actions.handleChange("name", e.target.value)}
             />
             <InputTextarea
-              error={props.state.errors.wishes}
+              disabled={client?.status === "completed"}
+              error={state.errors.wishes}
               placeholder="Masukkan ucapan kamu"
-              value={props.state.formData.wishes}
+              value={state.formData.wishes}
               id="wishes"
               rows={6}
-              onChange={(e) =>
-                props.actions.handleChange("wishes", e.target.value)
-              }
+              onChange={(e) => actions.handleChange("wishes", e.target.value)}
             />
             <div className="flex gap-x-4 justify-between lg:justify-start">
               <InputCheckbox
+                disabled={client?.status === "completed"}
                 value="Hadir"
-                checked={props.state.formData.attendant === "Hadir"}
+                checked={state.formData.attendant === "Hadir"}
                 label="Hadir"
                 onChange={(e) =>
-                  props.actions.handleChange("attendant", e.target.value)
+                  actions.handleChange("attendant", e.target.value)
                 }
               />
               <InputCheckbox
+                disabled={client?.status === "completed"}
                 value="Tidak Hadir"
-                checked={props.state.formData.attendant === "Tidak Hadir"}
+                checked={state.formData.attendant === "Tidak Hadir"}
                 label="Tidak Hadir"
                 onChange={(e) =>
-                  props.actions.handleChange("attendant", e.target.value)
+                  actions.handleChange("attendant", e.target.value)
                 }
               />
               <InputCheckbox
-                checked={props.state.formData.attendant === "Masih Ragu"}
+                disabled={client?.status === "completed"}
+                checked={state.formData.attendant === "Masih Ragu"}
                 value="Masih Ragu"
                 label="Masih Ragu"
                 onChange={(e) =>
-                  props.actions.handleChange("attendant", e.target.value)
+                  actions.handleChange("attendant", e.target.value)
                 }
               />
             </div>
-            {props.state.client?.status === "paid" && (
+            {client?.status === "paid" && (
               <div className="mt-4">
                 <Button
-                  isLoading={props.state.loading ? true : false}
+                  isLoading={state.loading ? true : false}
                   type="submit"
                   title="Kirim"
                   icon={<BiSolidSend />}
@@ -105,15 +104,15 @@ const RSVPWishesComponent: FC<Props> = (props) => {
               </div>
             )}
           </form>
-          {props.state.wishes && props.state.wishes?.length > 0 ? (
+          {state.wishes && state.wishes?.length > 0 ? (
             <div className="flex flex-col w-full gap-4 px-4 mt-8" id="wishes">
               <div className="md:max-w-screen-sm mx-auto w-full flex flex-col gap-7 border-t border-t-samaya-primary/50 py-4">
                 <p
                   className={`${marcellus.className} text-sm md:text-base leading-5 text-white`}
                 >
-                  {props.state.totalRows} Ucapan
+                  {state.totalRows} Ucapan
                 </p>
-                {props.state.wishes?.map((r) => (
+                {state.wishes?.map((r) => (
                   <div key={r.id} className="flex">
                     <div className="flex-shrink-0">
                       <div className="w-10 h-10 bg-samaya-primary/20 rounded-full flex justify-center items-center text-base font-medium text-samaya-primary">
@@ -153,7 +152,7 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                         </div>
                         <div className="flex gap-1 text-sm text-samaya-primary pl-2">
                           <BiUser className="mt-[3px]" />
-                          <p>{attendantText[r.attendant]}</p>
+                          <p>{state.attendantText[r.attendant]}</p>
                         </div>
                       </div>
                     </div>
@@ -161,11 +160,11 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                 ))}
               </div>
 
-              {props.state.totalRows > props.state.limit && (
+              {state.totalRows > state.limit && (
                 <div className="md:max-w-screen-sm mx-auto w-full border-t border-t-samaya-primary/50 pt-4">
                   <div className="-ml-4">
                     <Pagination
-                      page={props.state.page}
+                      page={state.page}
                       sx={{
                         "& .MuiPaginationItem-root": {
                           color: "#D1CAA1",
@@ -183,10 +182,8 @@ const RSVPWishesComponent: FC<Props> = (props) => {
                           },
                         },
                       }}
-                      onChange={props.actions.handleChangePagination}
-                      count={Math.ceil(
-                        props.state.totalRows / props.state.limit
-                      )}
+                      onChange={actions.handleChangePagination}
+                      count={Math.ceil(state.totalRows / state.limit)}
                     />
                   </div>
                 </div>

@@ -1,32 +1,25 @@
-import React, { FC } from "react";
+import React, {  memo } from "react";
 import { marcellus } from "@/lib/fonts";
 import moment from "moment";
 import Button from "../elements/button";
 import { BiSolidCalendar, BiSolidMap } from "react-icons/bi";
-import { useSamaya } from "@/hooks/themes/useSamaya";
 import Link from "next/link";
+import useEvents from "@/hooks/themes/useEvents";
 
-interface Props {
-  state: useSamaya["state"];
-  actions: useSamaya["actions"];
-}
+const EventsComponent = () => {
+  const { state, actions } = useEvents();
 
-const EventsComponent: FC<Props> = ({ state, actions }) => {
-  const { events = [] } = state.client || {};
-
-  console.log(state);
-
-  if (events.length > 0) {
+  if (state.events.length > 0) {
     return (
       <section className="relative overflow-hidden z-20">
         <div className="absolute bg-samaya-dark/70 inset-0"></div>
         <div className="flex flex-col z-10 items-center justify-center px-8 py-20 md:py-28 lg:py-40">
           <div
             className={`grid lg:${
-              events.length > 1 ? "grid-cols-2" : "grid-cols-1"
+              state.events.length > 1 ? "grid-cols-2" : "grid-cols-1"
             } gap-20 lg:gap-40 relative z-20`}
           >
-            {events.map((event, index) => (
+            {state.events.map((event, index) => (
               <div
                 key={`event-${event.id}`}
                 data-aos="fade-up"
@@ -77,7 +70,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     </div>
                   </div>
                 )}
-                <div className="inline-flex flex-wrap justify-center gap-4">
+                <div className="inline-flex flex-wrap justify-center gap-3 mt-3">
                   <Link target="_blank" href={event.address_url}>
                     <Button
                       icon={<BiSolidMap className="lg:text-lg" />}
@@ -103,4 +96,4 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
   return null;
 };
 
-export default EventsComponent;
+export default memo(EventsComponent);

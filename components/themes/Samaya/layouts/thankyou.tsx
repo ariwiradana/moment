@@ -1,7 +1,6 @@
-import React, { FC } from "react";
+import React from "react";
 import { balthazar, marcellus } from "@/lib/fonts";
 import Image from "next/image";
-import { useSamaya } from "@/hooks/themes/useSamaya";
 import Link from "next/link";
 import { sosmedURLs } from "@/constants/sosmed";
 import {
@@ -10,21 +9,22 @@ import {
   AiOutlineWhatsApp,
   AiOutlineYoutube,
 } from "react-icons/ai";
+import useClientStore from "@/store/useClientStore";
+import useParticipants from "@/hooks/themes/useParticipants";
 
-interface Props {
-  state: useSamaya["state"];
-}
+const ThankyouComponent = () => {
+  const { client } = useClientStore();
+  const { state } = useParticipants();
 
-const ThankyouComponent: FC<Props> = (props) => {
   return (
     <section className="relative bg-gradient-to-b from-samaya-dark/80 to-samaya-dark to-[90%] z-20">
       <div className="max-w-screen-sm mx-auto px-4 py-16">
         <div className="flex justify-center w-full">
           <div className="w-96 h-[500px] md:h-[550px] relative">
-            {props.state.client?.cover && (
+            {client?.cover && (
               <Image
                 className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500 object-cover"
-                src={props.state.client?.cover as string}
+                src={client?.cover as string}
                 alt={`thankyou-img`}
                 fill
                 priority
@@ -37,14 +37,14 @@ const ThankyouComponent: FC<Props> = (props) => {
           data-aos="fade-up"
           className={`${marcellus.className} mt-12 text-sm md:text-base text-center leading-5 text-white max-w-screen-md mx-auto`}
         >
-          {props.state.client?.closing_description}
+          {client?.closing_description}
         </p>
 
         <h1
           data-aos="fade-up"
           className={`font-tan-pearl text-2xl md:text-3xl text-center text-samaya-primary mt-12`}
         >
-          {props.state.client?.closing_title}
+          {client?.closing_title}
         </h1>
 
         <p
@@ -57,7 +57,7 @@ const ThankyouComponent: FC<Props> = (props) => {
           data-aos="fade-up"
           className={`font-tan-pearl text-2xl md:text-3xl text-center mt-8 leading-7 text-white font-medium mb-24`}
         >
-          {props.state.groom?.nickname} & {props.state.bride?.nickname}
+          {state.groom?.nickname} & {state.bride?.nickname}
         </h1>
       </div>
       <ul

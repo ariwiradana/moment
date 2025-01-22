@@ -42,38 +42,34 @@ const SharedThemeComponent = () => {
               </h2>
             </div>
           )} */}
-          {data?.events > 0 && (
-            <div
-              data-aos="fade-up"
-              data-aos-delay="100"
-              className="text-white flex flex-col items-center gap-y-3"
-            >
-              <BiCalendarCheck className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-                {formatNumber(data?.events)}
-              </h2>
-              <h2
-                className={`${marcellus.className} text-xl text-center`}
-              >
-                Acara
-              </h2>
-            </div>
-          )}
-
           {data?.guests > 0 && (
             <div
               data-aos="fade-up"
-              data-aos-delay="200"
+              data-aos-delay="100"
               className="text-white flex flex-col items-center gap-y-3"
             >
               <BiBookContent className="text-6xl" />
               <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
                 {formatNumber(data?.guests)}
               </h2>
-              <h2
-                className={`${marcellus.className} text-xl text-center`}
-              >
+              <h2 className={`${marcellus.className} text-xl text-center`}>
                 Tamu Undangan
+              </h2>
+            </div>
+          )}
+
+          {data?.events > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="text-white flex flex-col items-center gap-y-3"
+            >
+              <BiCalendarCheck className="text-6xl" />
+              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
+                {formatNumber(data?.events)}
+              </h2>
+              <h2 className={`${marcellus.className} text-xl text-center`}>
+                Acara
               </h2>
             </div>
           )}
@@ -88,9 +84,7 @@ const SharedThemeComponent = () => {
               <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
                 {formatNumber(data?.wishes)}
               </h2>
-              <h2
-                className={`${marcellus.className} text-xl text-center`}
-              >
+              <h2 className={`${marcellus.className} text-xl text-center`}>
                 Ucapan & Doa
               </h2>
             </div>
