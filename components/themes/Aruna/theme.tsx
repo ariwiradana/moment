@@ -43,7 +43,7 @@ const Aruna: FC<Props> = (props) => {
           refs={refs}
           state={state}
         />
-        {state.open && <PreviewNav state={state} />}
+        {state.open && <PreviewNav />}
         <Cover actions={actions} state={state} untuk={props.untuk} />
         {state.open && (
           <div className="flex justify-between">

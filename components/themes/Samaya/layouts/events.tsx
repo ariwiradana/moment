@@ -70,7 +70,7 @@ const EventsComponent = () => {
                     </div>
                   </div>
                 )}
-                <div className="inline-flex flex-wrap justify-center gap-3 mt-3">
+                <div className="inline-flex flex-wrap justify-center gap-3">
                   <Link target="_blank" href={event.address_url}>
                     <Button
                       icon={<BiSolidMap className="lg:text-lg" />}
