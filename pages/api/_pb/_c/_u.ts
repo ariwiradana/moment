@@ -39,7 +39,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             SELECT *
             FROM events
             WHERE client_id = $1
-            ORDER BY start_time::time ASC`,
+            ORDER BY date ASC, start_time::time ASC`,
             [client.id]
           );
 

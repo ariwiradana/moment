@@ -126,7 +126,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             FROM events e
             JOIN clients c ON e.client_id = c.id
             WHERE c.id = ANY($1::int[])
-            ORDER BY e.start_time::time ASC
+            ORDER BY e.date ASC, e.start_time::time ASC
         `,
           [clientIds]
         );

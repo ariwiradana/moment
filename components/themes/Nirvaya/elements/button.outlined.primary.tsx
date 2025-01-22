@@ -10,7 +10,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const ButtonLight: FC<Props> = ({
+const ButtonOutlinedPrimary: FC<Props> = ({
   title,
   icon,
   isLoading,
@@ -23,7 +23,7 @@ const ButtonLight: FC<Props> = ({
       {...props}
       className={`${montserrat.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} bg-nirvaya-light-brown text-nirvaya-dark hover:bg-nirvaya-dark hover:text-white rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
+      } ${className} border border-nirvaya-primary text-nirvaya-primary hover:bg-nirvaya-primary hover:text-white rounded-full min-w-24 backdrop-blur-sm px-5 py-3 flex transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-3 relative overflow-hidden shadow-sm`}
     >
@@ -39,4 +39,4 @@ const ButtonLight: FC<Props> = ({
   );
 };
 
-export default ButtonLight;
+export default ButtonOutlinedPrimary;
