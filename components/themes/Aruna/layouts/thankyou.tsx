@@ -1,6 +1,5 @@
-import React, { FC } from "react";
+import React from "react";
 import { roboto } from "@/lib/fonts";
-import { useAruna } from "@/hooks/themes/useAruna";
 import Link from "next/link";
 import { sosmedURLs } from "@/constants/sosmed";
 import {
@@ -9,12 +8,12 @@ import {
   AiOutlineWhatsApp,
   AiOutlineYoutube,
 } from "react-icons/ai";
+import useClientStore from "@/store/useClientStore";
+import useParticipants from "@/hooks/themes/useParticipants";
 
-interface Props {
-  state: useAruna["state"];
-}
-
-const ThankyouComponent: FC<Props> = (props) => {
+const ThankyouComponent = () => {
+  const { client } = useClientStore();
+  const { state: participantState } = useParticipants();
   return (
     <section className="relative flex flex-col justify-center bg-gradient-to-b from-aruna-dark via-[20%] via-aruna-dark/50 to-[80%] to-aruna-dark/90">
       <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center">
@@ -22,16 +21,16 @@ const ThankyouComponent: FC<Props> = (props) => {
           data-aos="fade-up"
           className={`font-high-summit text-4xl md:text-5xl text-white mb-8 text-center`}
         >
-          {props.state.client?.closing_title}
+          {client?.closing_title}
         </h1>
         <p
           data-aos="fade-up"
           className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm my-8`}
         >
-          {props.state.client?.closing_description}
+          {client?.closing_description}
         </p>
 
-        {props.state.client?.theme_category?.name === "Pernikahan" && (
+        {client?.theme_category?.name === "Pernikahan" && (
           <>
             <p
               data-aos="fade-up"
@@ -43,7 +42,8 @@ const ThankyouComponent: FC<Props> = (props) => {
               data-aos="fade-up"
               className={`font-high-summit text-white text-center text-4xl md:text-4xl mt-4`}
             >
-              {props.state.groom?.nickname} & {props.state.bride?.nickname}
+              {participantState.groom?.nickname} &{" "}
+              {participantState.bride?.nickname}
             </h1>
           </>
         )}

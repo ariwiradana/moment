@@ -1,42 +1,26 @@
 import ImageShimmer from "@/components/image.shimmer";
-import { useAruna } from "@/hooks/themes/useAruna";
+import useEvents from "@/hooks/themes/useEvents";
+import useParticipants from "@/hooks/themes/useParticipants";
 import { roboto } from "@/lib/fonts";
+import useClientStore from "@/store/useClientStore";
+import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
-import React, { FC, useEffect, useState } from "react";
+import React from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-interface Props {
-  state: useAruna["state"];
-}
+const HeroComponent = () => {
+  const { client } = useClientStore();
+  const { isOpen } = useCoverStore();
+  const { state: eventState } = useEvents();
+  const { state: participantState } = useParticipants();
 
-const HeroComponent: FC<Props> = (props) => {
   const video =
-    Array.isArray(props.state.client?.videos) &&
-    props.state.client.videos.length > 0
-      ? props.state.client.videos.filter((v) => !isYoutubeVideo(v))
+    Array.isArray(client?.videos) && client.videos.length > 0
+      ? client.videos.filter((v) => !isYoutubeVideo(v))
       : [];
-
-  const events = props.state.client?.events || [];
-
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [fade, setFade] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (events.length > 1) {
-      const interval = setInterval(() => {
-        setFade(false);
-        setTimeout(() => {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
-          setFade(true);
-        }, 500);
-      }, 5000);
-
-      return () => clearInterval(interval);
-    }
-  }, [events.length]);
 
   return (
     <section className="relative min-h-[600px] h-lvh overflow-hidden">
@@ -73,13 +57,11 @@ const HeroComponent: FC<Props> = (props) => {
             modules={[Autoplay, EffectFade]}
           >
             <>
-              {Array.isArray(props.state.client?.gallery) &&
-              props.state.client?.gallery.length > 0
-                ? props.state.client.gallery
+              {Array.isArray(client?.gallery) && client?.gallery.length > 0
+                ? client.gallery
                     .filter(
                       (image) =>
-                        image !== props.state.client?.cover &&
-                        image !== props.state.client?.seo
+                        image !== client?.cover && image !== client?.seo
                     )
                     .map((image, index) => (
                       <SwiperSlide
@@ -106,10 +88,10 @@ const HeroComponent: FC<Props> = (props) => {
       </div>
       <div
         className={`absolute inset-0 z-10 bg-gradient-to-b from-[5%] from-aruna-dark/70 via-aruna-dark/10 to-[95%] to-aruna-dark/70 transition-opacity ease-in-out duration-1000 delay-500 ${
-          props.state.open ? "visible opacity-100" : "invisible opacity-0"
+          isOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        {props.state.open && (
+        {isOpen && (
           <div className="min-h-[600px] h-svh flex flex-col max-w-screen-sm lg:max-w-screen-lg mx-auto py-[60px] md:py-[100px] px-8 md:px-12 w-full">
             <div>
               <h1
@@ -117,15 +99,13 @@ const HeroComponent: FC<Props> = (props) => {
                 data-aos-delay="200"
                 className={`font-high-summit text-white text-5xl md:text-5xl leading-10 2xl:text-6xl mb-2`}
               >
-                {props.state.client?.theme_category?.name === "Pernikahan" ? (
+                {client?.theme_category?.name === "Pernikahan" ? (
                   <>
-                    {props.state.groom?.nickname}
-                    <br />& {props.state.bride?.nickname}
+                    {participantState.groom?.nickname}
+                    <br />& {participantState.bride?.nickname}
                   </>
                 ) : (
-                  <>
-                    Undangan {getEventNames(props.state.client?.events || [])}
-                  </>
+                  <>Undangan {getEventNames(client?.events || [])}</>
                 )}
               </h1>
             </div>
@@ -138,7 +118,7 @@ const HeroComponent: FC<Props> = (props) => {
               <div data-aos="fade-down" data-aos-delay="800">
                 <div
                   className={`w-full flex items-center gap-x-5 md:gap-x-6 transform transition-all duration-500 ease-in-out ${
-                    fade
+                    eventState.fade
                       ? "opacity-100 translate-y-0"
                       : "opacity-10 translate-y-1"
                   }`}
@@ -146,15 +126,15 @@ const HeroComponent: FC<Props> = (props) => {
                   <p
                     className={`${roboto.className} text-white text-xs md:text-sm tracking-[3px] uppercase`}
                   >
-                    {events[currentIndex].name}
+                    {eventState.events[eventState.currentIndex].name}
                   </p>
                   <div className="h-[2px] w-[2px] min-h-[2px] min-w-[2px] rounded-full bg-white"></div>
                   <p
                     className={`${roboto.className} text-white text-xs md:text-sm tracking-[3px] uppercase`}
                   >
-                    {moment(events[currentIndex].date).format(
-                      "DD / MMM / YYYY"
-                    )}
+                    {moment(
+                      eventState.events[eventState.currentIndex].date
+                    ).format("DD / MMM / YYYY")}
                   </p>
                 </div>
               </div>
@@ -163,7 +143,7 @@ const HeroComponent: FC<Props> = (props) => {
                 data-aos-delay="600"
                 className={`${roboto.className} text-white text-xs md:text-sm mt-8 max-w-screen-sm`}
               >
-                {props.state.client?.theme_category?.name === "Pernikahan" ? (
+                {client?.theme_category?.name === "Pernikahan" ? (
                   <>
                     Wahai pasangan suami-isteri, semoga kalian tetap bersatu dan
                     tidak pernah terpisahkan. Semoga kalian mencapai hidup penuh
@@ -175,13 +155,13 @@ const HeroComponent: FC<Props> = (props) => {
                     Tanpa mengurangi rasa hormat, kami mengundang anda untuk
                     menghadiri acara{" "}
                     <span className="lowercase">
-                      {getEventNames(props.state.client?.events || [])}
+                      {getEventNames(client?.events || [])}
                     </span>{" "}
                     kami.
                   </>
                 )}
               </p>
-              {props.state.client?.theme_category?.name === "Pernikahan" && (
+              {client?.theme_category?.name === "Pernikahan" && (
                 <div
                   className="flex items-center gap-x-3 md:gap-x-5 mt-8"
                   data-aos="fade-down"

@@ -1,5 +1,4 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
-import { useAruna } from "@/hooks/themes/useAruna";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
@@ -7,16 +6,13 @@ import Image from "next/image";
 import Lightbox from "react-spring-lightbox";
 import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
 import CustomImageSlides from "../elements/custom.slides";
+import useClientStore from "@/store/useClientStore";
 
-interface Props {
-  state: useAruna["state"];
-}
-
-const Component = ({ state }: Props) => {
+const Component = () => {
   const [open, setOpen] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
-  const { client } = state;
+  const { client } = useClientStore();
   const { gallery = [], cover, seo, participants = [] } = client || {};
 
   const images = useMemo(
@@ -49,7 +45,6 @@ const Component = ({ state }: Props) => {
     [images]
   );
 
-  // Grid span logic for image layout
   const gridSpan = (index: number) => {
     switch (index) {
       case 0:

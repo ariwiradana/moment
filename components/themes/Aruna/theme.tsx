@@ -1,12 +1,15 @@
 import React, { FC } from "react";
 import Layout from "../layout";
 import PreviewNav from "../preview.nav";
-import useAruna from "@/hooks/themes/useAruna";
 import Image from "next/image";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import { getEventNames } from "@/utils/getEventNames";
 import dynamic from "next/dynamic";
+import useMusic from "@/hooks/themes/useMusic";
+import useCoverStore from "@/store/useCoverStore";
+import useClientStore from "@/store/useClientStore";
+import useParticipants from "@/hooks/themes/useParticipants";
 
 const Cover = dynamic(() => import("./layouts/cover"));
 const HeroComponent = dynamic(() => import("./layouts/hero"), {
@@ -32,20 +35,18 @@ interface Props {
 }
 
 const Aruna: FC<Props> = (props) => {
-  const { state, actions, refs } = useAruna();
+  const { state, actions, refs } = useMusic();
+  const { isOpen } = useCoverStore();
+  const { client } = useClientStore();
+  const { state: participantState } = useParticipants();
 
   return (
     <Layout>
       <>
-        <MusicComponent
-          className={!state.open ? "invisible" : "visible"}
-          actions={actions}
-          refs={refs}
-          state={state}
-        />
-        {state.open && <PreviewNav />}
-        <Cover actions={actions} state={state} untuk={props.untuk} />
-        {state.open && (
+        <MusicComponent actions={actions} refs={refs} state={state} />
+        {isOpen && <PreviewNav />}
+        <Cover actions={actions} untuk={props.untuk} />
+        {isOpen && (
           <div className="flex justify-between">
             <div className="fixed inset-0 hidden xl:block">
               <div className="relative xl:w-[60vw] 2xl:w-[70vw] h-dvh">
@@ -55,31 +56,29 @@ const Aruna: FC<Props> = (props) => {
                     data-aos-delay="600"
                     className={`${roboto.className} text-white/80 md:text-xs text-[10px] tracking-[4px] mb-3 uppercase`}
                   >
-                    Undangan {getEventNames(state.client?.events || [])}
+                    Undangan {getEventNames(client?.events || [])}
                   </p>
                   <h1
                     data-aos="fade-up"
                     data-aos-delay="800"
                     className={`font-high-summit text-white text-4xl md:text-5xl leading-10 2xl:text-6xl mb-2`}
                   >
-                    {state.client?.theme_category?.name === "Pernikahan" ? (
+                    {client?.theme_category?.name === "Pernikahan" ? (
                       <>
-                        {state.groom?.nickname}
-                        <br />& {state.bride?.nickname}
+                        {participantState.groom?.nickname}
+                        <br />& {participantState.bride?.nickname}
                       </>
                     ) : (
-                      <>
-                        {getParticipantNames(state.client?.participants || [])}
-                      </>
+                      <>{getParticipantNames(client?.participants || [])}</>
                     )}
                   </h1>
                 </div>
-                {state.client?.cover && (
+                {client?.cover && (
                   <Image
                     priority
                     quality={100}
                     sizes="100vw"
-                    src={state.client?.cover as string}
+                    src={client?.cover as string}
                     fill
                     className="object-cover"
                     alt="cover"
@@ -90,14 +89,14 @@ const Aruna: FC<Props> = (props) => {
             <div
               className={`relative w-full xl:max-w-[40vw] 2xl:max-w-[30vw] ml-auto`}
             >
-              <HeroComponent state={state} />
-              <ParticipantsComponent state={state} />
-              <EventsComponent actions={actions} state={state} />
-              <VideoComponent state={state} />
-              <FotoComponent state={state} />
-              <GiftComponent actions={actions} state={state} />
+              <HeroComponent />
+              <ParticipantsComponent  />
+              <EventsComponent />
+              <VideoComponent />
+              <FotoComponent />
+              <GiftComponent />
               <RSVPWishes />
-              <ThankyouComponent state={state} />
+              <ThankyouComponent />
             </div>
           </div>
         )}

@@ -1,25 +1,28 @@
-import React, { FC, memo, useState } from "react";
-import { useAruna } from "@/hooks/themes/useAruna";
+import React, { memo, useState } from "react";
 import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
-import { BiChevronRightCircle, BiCopy } from "react-icons/bi";
+import { BiCheck, BiChevronRightCircle, BiCopy } from "react-icons/bi";
 import Image from "next/image";
 import Button from "../elements/button";
 import ButtonDark from "../elements/button.dark";
 import { formatBankNumber } from "@/utils/formatBankNumber";
+import useGift from "@/hooks/themes/useGift";
+import useClientStore from "@/store/useClientStore";
 
-interface Props {
-  state: useAruna["state"];
-  actions: useAruna["actions"];
-}
+const GiftComponent = () => {
+  const { actions } = useGift(
+    <div className="p-1 text-sm bg-aruna-dark text-white">
+      <BiCheck />
+    </div>
+  );
+  const { client } = useClientStore();
 
-const GiftComponent: FC<Props> = (props) => {
   const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
   if (
-    props.state.client?.gift_bank_name &&
-    props.state.client?.gift_account_name &&
-    props.state.client?.gift_account_number &&
-    props.state.client?.status === "paid"
+    client?.gift_bank_name &&
+    client?.gift_account_name &&
+    client?.gift_account_number &&
+    client?.status === "paid"
   )
     return (
       <section className="relative bg-aruna-dark overflow-hidden py-[60px] md:py-[100px]">
@@ -77,31 +80,29 @@ const GiftComponent: FC<Props> = (props) => {
                 <h1
                   className={`text-xl md:text-2xl font-semibold text-aruna-dark ${roboto.className}`}
                 >
-                  {props.state.client?.gift_bank_name}
+                  {client?.gift_bank_name}
                 </h1>
               </div>
 
               <h3
                 className={`text-lg tracking-[2px] text-aruna-dark ${roboto.className}`}
               >
-                {formatBankNumber(
-                  props.state.client?.gift_account_number as number
-                )}
+                {formatBankNumber(client?.gift_account_number as number)}
               </h3>
 
               <div className="flex justify-between items-end gap-x-3">
                 <p
                   className={`text-sm leading-5 text-aruna-dark/60 ${roboto.className}`}
                 >
-                  {props.state.client?.gift_account_name}
+                  {client?.gift_account_name}
                 </p>
                 <ButtonDark
                   title="Salin"
                   icon={<BiCopy />}
                   type="button"
                   onClick={() =>
-                    props.actions.handleCopyRekening(
-                      props.state.client?.gift_account_number as string
+                    actions.handleCopyRekening(
+                      client?.gift_account_number as string
                     )
                   }
                 ></ButtonDark>

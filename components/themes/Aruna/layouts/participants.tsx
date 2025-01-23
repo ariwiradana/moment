@@ -9,15 +9,14 @@ import {
   BiLogoTiktok,
   BiLogoTwitter,
 } from "react-icons/bi";
-import { useAruna } from "@/hooks/themes/useAruna";
 import { getEventNames } from "@/utils/getEventNames";
+import useClientStore from "@/store/useClientStore";
+import useParticipants from "@/hooks/themes/useParticipants";
 
-interface Props {
-  state: useAruna["state"];
-}
 
-const ParticipantsComponent: FC<Props> = (props) => {
-  const { client } = props.state || null;
+const ParticipantsComponent = () => {
+  const { client} = useClientStore()
+  const { state: participantState} = useParticipants()
 
   return (
     <section className="relative z-10 overflow-hidden bg-white py-[100px] px-8 md:px-16">
@@ -36,16 +35,16 @@ const ParticipantsComponent: FC<Props> = (props) => {
 
       <div className="bg-white relative overflow-hidden grid gap-[60px] mt-[72px]">
         <>
-          {props.state.groom && (
+          {participantState.groom && (
             <ParticipantComponent
               role="mempelai"
-              data={props.state?.groom as Participant}
+              data={participantState?.groom as Participant}
             />
           )}
-          {props.state.bride && (
+          {participantState.bride && (
             <ParticipantComponent
               role="mempelai"
-              data={props.state?.bride as Participant}
+              data={participantState?.bride as Participant}
             />
           )}
           {client?.participants

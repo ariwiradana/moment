@@ -1,33 +1,36 @@
 import React, { FC } from "react";
 import { roboto } from "@/lib/fonts";
 import Button from "../elements/button";
-import { useAruna } from "@/hooks/themes/useAruna";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import Image from "next/image";
 import { getEventNames } from "@/utils/getEventNames";
+import { UseMusic } from "@/hooks/themes/useMusic";
+import useCoverStore from "@/store/useCoverStore";
+import useClientStore from "@/store/useClientStore";
+import useParticipants from "@/hooks/themes/useParticipants";
 
 interface Props {
-  state: useAruna["state"];
-  actions: useAruna["actions"];
+  actions: UseMusic["actions"];
   untuk: string;
 }
 
 const Cover: FC<Props> = (props) => {
+  const { isOpen, toggleIsOpen } = useCoverStore();
+  const { client } = useClientStore();
+  const { state: participantState } = useParticipants();
   return (
     <>
       <div
         className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
-          props.state.open
-            ? "-bottom-full invisible opacity-0"
-            : "bottom-0 visible"
+          isOpen ? "-bottom-full invisible opacity-0" : "bottom-0 visible"
         }`}
       >
-        {props.state.client?.cover && (
+        {client?.cover && (
           <Image
             quality={100}
             priority
             sizes="100vw"
-            src={props.state.client?.cover as string}
+            src={client?.cover as string}
             fill
             className="object-cover"
             alt="cover"
@@ -44,16 +47,16 @@ const Cover: FC<Props> = (props) => {
                 data-aos-delay="400"
                 className={`font-high-summit text-white text-5xl md:text-5xl leading-10 2xl:text-6xl`}
               >
-                {props.state.client?.theme_category?.name === "Pernikahan" ? (
+                {client?.theme_category?.name === "Pernikahan" ? (
                   <>
-                    {props.state.groom?.nickname}
-                    <br />& {props.state.bride?.nickname}
+                    {participantState.groom?.nickname}
+                    <br />& {participantState.bride?.nickname}
                   </>
                 ) : (
                   <>
                     Undangan
                     <br />
-                    {getEventNames(props.state.client?.events || [])}
+                    {getEventNames(client?.events || [])}
                   </>
                 )}
               </h1>
@@ -83,7 +86,7 @@ const Cover: FC<Props> = (props) => {
               >
                 <Button
                   onClick={() => {
-                    props.actions.handleOpenCover();
+                    toggleIsOpen();
                     props.actions.handlePlayPause();
                   }}
                   icon={<BiEnvelopeOpen />}

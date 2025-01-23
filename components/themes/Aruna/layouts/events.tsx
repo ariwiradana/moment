@@ -1,24 +1,16 @@
-import React, { FC, memo } from "react";
+import React, { memo } from "react";
 import { roboto } from "@/lib/fonts";
 import moment from "moment";
 import { BiCalendar, BiMap } from "react-icons/bi";
-import { useAruna } from "@/hooks/themes/useAruna";
 import Link from "next/link";
 import ImageShimmer from "@/components/image.shimmer";
 import ButtonDark from "../elements/button.dark";
-import useEvents from "@/hooks/themes/Aruna/useEvents";
-import { Client } from "@/lib/types";
+import useEvents from "@/hooks/themes/useEvents";
 
-interface Props {
-  state: useAruna["state"];
-  actions: useAruna["actions"];
-}
+const EventsComponent = () => {
+  const { state: eventState, actions: eventActions } = useEvents();
 
-const EventsComponent: FC<Props> = ({ state, actions }) => {
-  const { events = [] } = state.client || {};
-  const { state: eventState } = useEvents(state.client as Client);
-
-  if (events.length > 0) {
+  if (eventState.events.length > 0) {
     return (
       <section className="relative overflow-hidden z-0">
         <div className="absolute bg-gradient-to-b from-aruna-dark/40 via-aruna-dark/70 to-aruna-dark to-[90%] inset-0"></div>
@@ -26,7 +18,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
           <div
             className={`flex flex-wrap justify-center gap-[60px] relative z-20`}
           >
-            {events.map((event, index) => (
+            {eventState.events.map((event, index) => (
               <div
                 data-aos="zoom-out-up"
                 className="rounded-t-[100px] overflow-hidden"
@@ -119,7 +111,7 @@ const EventsComponent: FC<Props> = ({ state, actions }) => {
                     </Link>
                     <div>
                       <ButtonDark
-                        onClick={() => actions.handleAddToCalendar(event)}
+                        onClick={() => eventActions.handleAddToCalendar(event)}
                         icon={<BiCalendar />}
                         title="Simpan Tanggal"
                       />
