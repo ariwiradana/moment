@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { roboto } from "@/lib/fonts";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
@@ -8,6 +8,7 @@ import { UseMusic } from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
+import { Participant } from "@/lib/types";
 
 interface Props {
   actions: UseMusic["actions"];
@@ -17,7 +18,7 @@ interface Props {
 const Cover: FC<Props> = (props) => {
   const { isOpen, toggleIsOpen } = useCoverStore();
   const { client } = useClientStore();
-  const { state: participantState } = useParticipants();
+  const { state: participant } = useParticipants();
   return (
     <>
       <div
@@ -45,12 +46,19 @@ const Cover: FC<Props> = (props) => {
               <h1
                 data-aos="fade-up"
                 data-aos-delay="400"
-                className={`font-high-summit text-white text-5xl md:text-5xl leading-10 2xl:text-6xl`}
+                className={`font-high-summit text-white ${
+                  (participant.groom as Participant)?.nickname.split(" ")
+                    .length > 1 ||
+                  (participant.bride as Participant)?.nickname.split(" ")
+                    .length > 1
+                    ? "text-4xl"
+                    : "text-5xl"
+                } md:text-5xl leading-10 2xl:text-6xl`}
               >
                 {client?.theme_category?.name === "Pernikahan" ? (
                   <>
-                    {participantState.groom?.nickname}
-                    <br />& {participantState.bride?.nickname}
+                    {participant.groom?.nickname}
+                    <br />& {participant.bride?.nickname}
                   </>
                 ) : (
                   <>
@@ -101,4 +109,4 @@ const Cover: FC<Props> = (props) => {
   );
 };
 
-export default Cover;
+export default memo(Cover);

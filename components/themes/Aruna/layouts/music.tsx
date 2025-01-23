@@ -2,7 +2,7 @@ import { UseMusic } from "@/hooks/themes/useMusic";
 import useClientStore from "@/store/useClientStore";
 import useCoverStore from "@/store/useCoverStore";
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 import toast from "react-hot-toast";
 import { BiPause, BiPlay } from "react-icons/bi";
 
@@ -64,4 +64,4 @@ const MusicComponent = ({ state, actions, refs }: UseMusic) => {
   return null;
 };
 
-export default MusicComponent;
+export default memo(MusicComponent);

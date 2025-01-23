@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { roboto } from "@/lib/fonts";
 import ImageShimmer from "../../../image.shimmer";
 import { Participant } from "@/lib/types";
@@ -165,4 +165,4 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
   );
 };
 
-export default ParticipantsComponent;
+export default memo(ParticipantsComponent);

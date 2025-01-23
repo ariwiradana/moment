@@ -1,6 +1,5 @@
 import React, { ReactNode, useState } from "react";
 import toast from "react-hot-toast";
-import { BiCheck } from "react-icons/bi";
 
 const useGift = (icon: ReactNode) => {
   const [isGiftShown, setIsGiftShown] = useState<boolean>(false);

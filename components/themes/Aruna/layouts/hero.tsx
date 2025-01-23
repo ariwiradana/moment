@@ -7,7 +7,7 @@ import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
-import React from "react";
+import React, { memo } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -183,4 +183,4 @@ const HeroComponent = () => {
   );
 };
 
-export default HeroComponent;
+export default memo(HeroComponent);

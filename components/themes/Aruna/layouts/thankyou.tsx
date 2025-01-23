@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { roboto } from "@/lib/fonts";
 import Link from "next/link";
 import { sosmedURLs } from "@/constants/sosmed";
@@ -98,4 +98,4 @@ const ThankyouComponent = () => {
   );
 };
 
-export default ThankyouComponent;
+export default memo(ThankyouComponent);

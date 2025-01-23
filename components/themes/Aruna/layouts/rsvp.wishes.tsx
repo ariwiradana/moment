@@ -1,5 +1,6 @@
 import React, { FC, memo, useCallback } from "react";
 import {
+  BiCheck,
   BiSend,
   BiTime,
   BiUserCheck,
@@ -13,10 +14,10 @@ import { roboto } from "@/lib/fonts";
 import moment from "moment";
 import ButtonDark from "../elements/button.dark";
 import { Pagination } from "@mui/material";
-import useWishes from "@/hooks/themes/Aruna/useWishes";
 import { Review } from "@/lib/types";
+import useRSVPWishes from "@/hooks/themes/useRSVPWishes";
+import useClientStore from "@/store/useClientStore";
 
-// Memoized Child Component for individual wish rendering
 const WishItem = memo(
   ({
     wish,
@@ -69,9 +70,12 @@ const WishItem = memo(
 WishItem.displayName = "WishItem";
 
 const RSVPWishesComponent: FC = () => {
-  const { state, actions } = useWishes();
-
-  // Memoized handlers to avoid re-creating them on every render
+  const {client} = useClientStore()
+  const { state, actions } = useRSVPWishes(
+    <div className="p-1 text-sm bg-aruna-dark text-white">
+      <BiCheck />
+    </div>
+  );
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       actions.handleChange("name", e.target.value);
@@ -125,7 +129,7 @@ const RSVPWishesComponent: FC = () => {
           data-aos="fade-up"
         >
           <Input
-            disabled={state.client?.status === "completed"}
+            disabled={client?.status === "completed"}
             error={state.errors.name}
             placeholder="Masukkan nama kamu"
             value={state.formData.name}
@@ -133,7 +137,7 @@ const RSVPWishesComponent: FC = () => {
             onChange={handleNameChange}
           />
           <InputTextarea
-            disabled={state.client?.status === "completed"}
+            disabled={client?.status === "completed"}
             error={state.errors.wishes}
             placeholder="Masukkan ucapan kamu"
             value={state.formData.wishes}
@@ -143,28 +147,28 @@ const RSVPWishesComponent: FC = () => {
           />
           <div className="flex gap-x-8 justify-between lg:justify-start">
             <InputCheckbox
-              disabled={state.client?.status === "completed"}
+              disabled={client?.status === "completed"}
               value="Hadir"
               checked={state.formData.attendant === "Hadir"}
               label="Hadir"
               onChange={handleAttendantChange}
             />
             <InputCheckbox
-              disabled={state.client?.status === "completed"}
+              disabled={client?.status === "completed"}
               value="Tidak Hadir"
               checked={state.formData.attendant === "Tidak Hadir"}
               label="Tidak Hadir"
               onChange={handleAttendantChange}
             />
             <InputCheckbox
-              disabled={state.client?.status === "completed"}
+              disabled={client?.status === "completed"}
               checked={state.formData.attendant === "Masih Ragu"}
               value="Masih Ragu"
               label="Masih Ragu"
               onChange={handleAttendantChange}
             />
           </div>
-          {state.client?.status === "paid" && (
+          {client?.status === "paid" && (
             <div className="mt-4">
               <ButtonDark
                 isLoading={state.loading}
