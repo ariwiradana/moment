@@ -47,7 +47,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                 onChange={(e) => actions.handleChange(e.target.value, "name")}
                 label="Name"
               />
-              <div className="mt-5">
+              <div className="mt-5 flex justify-center gap-4">
                 <InputCheckbox
                   onChange={() =>
                     actions.handleChange(
@@ -58,6 +58,17 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                   checked={state.formData.cover_video as boolean}
                   name="cover_video"
                   label="Cover Video"
+                />
+                <InputCheckbox
+                  onChange={() =>
+                    actions.handleChange(
+                      !state.formData.active,
+                      "active"
+                    )
+                  }
+                  checked={state.formData.active as boolean}
+                  name="active"
+                  label="Active"
                 />
               </div>
             </div>

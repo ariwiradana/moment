@@ -13,6 +13,7 @@ interface Form {
   package_ids: Number[];
   theme_category_ids: Number[];
   cover_video: boolean;
+  active: boolean;
 }
 
 const initalFormData: Form = {
@@ -22,6 +23,7 @@ const initalFormData: Form = {
   package_ids: [],
   theme_category_ids: [],
   cover_video: false,
+  active: true,
 };
 
 export const useAdminCreateTheme = (token: string | null) => {

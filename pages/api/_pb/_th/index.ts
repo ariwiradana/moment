@@ -31,11 +31,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         let query = `SELECT * FROM themes`;
         let countQuery = `SELECT COUNT(*) FROM themes`;
 
-        const values: (number | string)[] = [];
-        const countValues: (number | string)[] = [];
+        const values: (number | string | boolean)[] = [true];
+        const countValues: (number | string | boolean)[] = [true];
 
-        const conditions = [];
-        const countConditions = [];
+        const conditions = [`active = $${values.length}`];
+        const countConditions = [`active = $${values.length}`];
 
         if (id) {
           const valueIndex = values.length + 1;

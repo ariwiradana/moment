@@ -152,14 +152,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           package_ids,
           theme_category_ids,
           cover_video,
+          active,
         } = req.body;
 
         const slug = createSlug(name);
 
         const { rows } = await sql.query(
           `
-            INSERT INTO themes (name, slug, thumbnail, phone_thumbnail, package_ids, theme_category_ids, cover_video) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7) 
+            INSERT INTO themes (name, slug, thumbnail, phone_thumbnail, package_ids, theme_category_ids, cover_video, active) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
             RETURNING *;`,
           [
             name,
@@ -169,6 +170,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             package_ids,
             theme_category_ids,
             cover_video,
+            active,
           ]
         );
 
@@ -189,6 +191,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           package_ids,
           theme_category_ids,
           cover_video,
+          active,
         } = req.body;
 
         if (!id && !name && !thumbnail && !phone_thumbnail) {
@@ -227,8 +230,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const text = `
           UPDATE themes
-          SET name = $1, slug = $2, thumbnail = $3, theme_category_ids = $4, package_ids = $5, cover_video = $6, phone_thumbnail = $7
-          WHERE id = $8
+          SET name = $1, slug = $2, thumbnail = $3, theme_category_ids = $4, package_ids = $5, cover_video = $6, phone_thumbnail = $7, active = $8
+          WHERE id = $9
           RETURNING *;`;
 
         const slug = createSlug(name);
@@ -243,6 +246,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             package_ids,
             cover_video,
             phone_thumbnail,
+            active,
             id,
           ],
         });

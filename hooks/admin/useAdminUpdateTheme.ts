@@ -15,6 +15,7 @@ const initalFormData: Theme = {
   package_ids: [],
   theme_category_ids: [],
   cover_video: false,
+  active: false,
 };
 
 export const useAdminUpdateTheme = (id: number, token: string | null) => {
@@ -64,6 +65,7 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
         package_ids: currentTheme.package_ids ?? [],
         theme_category_ids: currentTheme.theme_category_ids ?? [],
         cover_video: currentTheme.cover_video,
+        active: currentTheme.active,
       }));
     }
   }, [themes]);

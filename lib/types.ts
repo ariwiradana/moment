@@ -15,6 +15,7 @@ export interface Theme {
   theme_category_ids: number[];
   theme_categories?: ThemeCategory[];
   cover_video?: boolean;
+  active: boolean;
 }
 
 export interface Option {
