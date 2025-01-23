@@ -2,6 +2,7 @@ import ImageShimmer from "@/components/image.shimmer";
 import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
 import { roboto } from "@/lib/fonts";
+import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
@@ -14,8 +15,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const HeroComponent = () => {
   const { client } = useClientStore();
   const { isOpen } = useCoverStore();
-  const { state: eventState } = useEvents();
-  const { state: participantState } = useParticipants();
+  const { state: event } = useEvents();
+  const { state: participant } = useParticipants();
 
   const video =
     Array.isArray(client?.videos) && client.videos.length > 0
@@ -97,12 +98,19 @@ const HeroComponent = () => {
               <h1
                 data-aos="fade-up"
                 data-aos-delay="200"
-                className={`font-high-summit text-white text-5xl md:text-5xl leading-10 2xl:text-6xl mb-2`}
+                className={`font-high-summit text-white ${
+                  (participant.groom as Participant)?.nickname.split(" ")
+                    .length > 1 ||
+                  (participant.bride as Participant)?.nickname.split(" ")
+                    .length > 1
+                    ? "text-4xl"
+                    : "text-5xl"
+                } md:text-5xl leading-10 2xl:text-6xl mb-2`}
               >
                 {client?.theme_category?.name === "Pernikahan" ? (
                   <>
-                    {participantState.groom?.nickname}
-                    <br />& {participantState.bride?.nickname}
+                    {participant.groom?.nickname}
+                    <br />& {participant.bride?.nickname}
                   </>
                 ) : (
                   <>Undangan {getEventNames(client?.events || [])}</>
@@ -118,7 +126,7 @@ const HeroComponent = () => {
               <div data-aos="fade-down" data-aos-delay="800">
                 <div
                   className={`w-full flex items-center gap-x-5 md:gap-x-6 transform transition-all duration-500 ease-in-out ${
-                    eventState.fade
+                    event.fade
                       ? "opacity-100 translate-y-0"
                       : "opacity-10 translate-y-1"
                   }`}
@@ -126,15 +134,15 @@ const HeroComponent = () => {
                   <p
                     className={`${roboto.className} text-white text-xs md:text-sm tracking-[3px] uppercase`}
                   >
-                    {eventState.events[eventState.currentIndex].name}
+                    {event.events[event.currentIndex].name}
                   </p>
                   <div className="h-[2px] w-[2px] min-h-[2px] min-w-[2px] rounded-full bg-white"></div>
                   <p
                     className={`${roboto.className} text-white text-xs md:text-sm tracking-[3px] uppercase`}
                   >
-                    {moment(
-                      eventState.events[eventState.currentIndex].date
-                    ).format("DD / MMM / YYYY")}
+                    {moment(event.events[event.currentIndex].date).format(
+                      "DD / MMM / YYYY"
+                    )}
                   </p>
                 </div>
               </div>
