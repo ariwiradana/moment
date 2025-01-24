@@ -1074,6 +1074,46 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     setShowChangePassword(!showChangePassword);
   };
 
+  const handleChangePassword = async () => {
+    const changePassword = async () => {
+      const response = await getClient(
+        "/api/_a/_up",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            username: formData.slug,
+            password: formData.password,
+            role: 'client'
+          }),
+        },
+        token
+      );
+
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(
+          errorResult.message || "Failed to change client password"
+        );
+      }
+
+      return await response.json();
+    };
+
+    toast.promise(changePassword(), {
+      loading: "Changing client password...",
+      success: () => {
+        setLoading(false);
+        setFormData((state) => ({ ...state, password: "" }));
+        setShowChangePassword(false);
+        return "Client password successfully changed";
+      },
+      error: (error: any) => {
+        setLoading(false);
+        return error.message || "Failed to change client password";
+      },
+    });
+  };
+
   return {
     state: {
       formData,
@@ -1110,6 +1150,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       handleSetSeoImage,
       handleDeleteImageEvent,
       handleToggleShowPassword,
+      handleChangePassword,
     },
   };
 };

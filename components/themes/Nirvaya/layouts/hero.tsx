@@ -20,7 +20,9 @@ const Hero = () => {
 
   const images =
     (gallery &&
-      (gallery as string[]).filter((image) => client?.seo !== image)) ||
+      (gallery as string[]).filter(
+        (image) => client?.seo !== image && client?.cover !== image
+      )) ||
     [];
 
   return (
@@ -39,6 +41,21 @@ const Hero = () => {
           slidesPerView={1}
           modules={[Autoplay, EffectFade]}
         >
+          {client?.cover && (
+            <SwiperSlide className="relative w-full h-full" key={`Hero Cover`}>
+              <div className="absolute inset-0 z-0">
+                <Image
+                  fill
+                  quality={100}
+                  alt={`Hero Cover`}
+                  priority
+                  sizes="100vw"
+                  className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
+                  src={client?.cover}
+                />
+              </div>
+            </SwiperSlide>
+          )}
           {images.map((image, index) => (
             <SwiperSlide
               className="relative w-full h-full"

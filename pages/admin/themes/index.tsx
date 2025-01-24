@@ -57,7 +57,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         {theme.name}
                       </h1>
                       {theme.cover_video && (
-                        <p className="bg-admin-dark text-white text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1">
+                        <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg flex items-center gap-x-1">
                           <BiVideoRecording />
                           <span>Cover Video</span>
                         </p>
@@ -67,7 +67,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                           theme.active
                             ? "bg-dashboard-primary text-admin-dark"
                             : "bg-admin-dark/10 text-admin-dark/50"
-                        } text-xs font-medium pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
+                        } text-xs font-semibold pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
                       >
                         {theme.active ? <BiCheck /> : <BiX />}
                         <span>{theme.active ? "Enabled" : "Disabled"}</span>
@@ -158,7 +158,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                           <div className="flex items-center gap-x-2">
                             <h6>{theme.name}</h6>
                             {theme.cover_video && (
-                              <p className="bg-admin-dark text-white text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1">
+                              <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg flex items-center gap-x-1">
                                 <BiVideoRecording />
                                 <span>Cover Video</span>
                               </p>
@@ -168,7 +168,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                                 theme.active
                                   ? "bg-dashboard-primary text-admin-dark"
                                   : "bg-admin-dark/10 text-admin-dark/50"
-                              } text-xs font-medium pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
+                              } text-xs font-semibold pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
                             >
                               {theme.active ? <BiCheck /> : <BiX />}
                               <span>
@@ -185,7 +185,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                                 (tc: ThemeCategory) => (
                                   <p
                                     key={`theme-category-${tc.id}`}
-                                    className={`bg-admin-dark/10 text-admin-dark text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1`}
+                                    className={`text-admin-dark  bg-gray-200 rounded-lg font-semibold px-3 py-1 text-sm`}
                                   >
                                     {tc.name}
                                   </p>
@@ -202,7 +202,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                               {theme.packages?.map((pk: Package) => (
                                 <p
                                   key={`package-${pk.id}`}
-                                  className={`bg-admin-dark/10 text-admin-dark text-xs font-medium px-2 py-[2px] rounded-lg`}
+                                  className={`text-admin-dark  bg-gray-200 rounded-lg font-semibold px-3 py-1 text-sm`}
                                 >
                                   {pk.name}
                                 </p>
