@@ -12,15 +12,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import {
-  BiCheck,
-  BiDetail,
-  BiEdit,
-  BiPlus,
-  BiTrash,
-  BiVideoRecording,
-  BiX,
-} from "react-icons/bi";
+import { BiDetail, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
 import Cookies from "cookies";
 
 interface PageProps {
@@ -57,9 +49,8 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         {theme.name}
                       </h1>
                       {theme.cover_video && (
-                        <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg flex items-center gap-x-1">
-                          <BiVideoRecording />
-                          <span>Cover Video</span>
+                        <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg">
+                          Cover Video
                         </p>
                       )}
                       <p
@@ -67,10 +58,9 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                           theme.active
                             ? "bg-dashboard-primary text-admin-dark"
                             : "bg-admin-dark/10 text-admin-dark/50"
-                        } text-xs font-semibold pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
+                        } text-xs font-semibold px-2 py-[2px] rounded-lg`}
                       >
-                        {theme.active ? <BiCheck /> : <BiX />}
-                        <span>{theme.active ? "Enabled" : "Disabled"}</span>
+                        {theme.active ? "Enabled" : "Disabled"}
                       </p>
                     </div>
                     <ButtonActionDialog>
@@ -158,9 +148,8 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                           <div className="flex items-center gap-x-2">
                             <h6>{theme.name}</h6>
                             {theme.cover_video && (
-                              <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg flex items-center gap-x-1">
-                                <BiVideoRecording />
-                                <span>Cover Video</span>
+                              <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg">
+                                Cover Video
                               </p>
                             )}
                             <p
@@ -168,12 +157,9 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                                 theme.active
                                   ? "bg-dashboard-primary text-admin-dark"
                                   : "bg-admin-dark/10 text-admin-dark/50"
-                              } text-xs font-semibold pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
+                              } text-xs font-semibold px-2 py-[2px] rounded-lg`}
                             >
-                              {theme.active ? <BiCheck /> : <BiX />}
-                              <span>
-                                {theme.active ? "Enabled" : "Disabled"}
-                              </span>
+                              {theme.active ? "Enabled" : "Disabled"}
                             </p>
                           </div>
                         </td>
