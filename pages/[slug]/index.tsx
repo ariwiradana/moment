@@ -76,7 +76,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return null;
     }
   );
-  console.log({ url: `${baseUrl}/api/_pb/_c/_u?slug=${slug}` });
 
   const client: Client | null = response?.data ?? null;
 
