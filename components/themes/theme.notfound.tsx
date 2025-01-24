@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 const ThemeNotFound: FC = () => {
   const router = useRouter();
   return (
-    <div className="text-center min-h-screen flex flex-col lg:flex-row items-center justify-center gap-20 p-6">
+    <div className="text-center min-h-dvh flex flex-col lg:flex-row items-center justify-center gap-20 p-6">
       <Image
         alt="Not Found"
         src="/images/404.svg"
