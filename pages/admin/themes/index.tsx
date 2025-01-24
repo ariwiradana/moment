@@ -12,7 +12,15 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { BiDetail, BiEdit, BiPlus, BiTrash } from "react-icons/bi";
+import {
+  BiCheck,
+  BiDetail,
+  BiEdit,
+  BiPlus,
+  BiTrash,
+  BiVideoRecording,
+  BiX,
+} from "react-icons/bi";
 import Cookies from "cookies";
 
 interface PageProps {
@@ -44,9 +52,27 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
               {state.themes.map((theme) => (
                 <div key={theme.id} className="border rounded-lg p-3">
                   <div className="flex justify-between items-center pb-3 border-b">
-                    <h1 className="text-gray-800 font-semibold text-sm">
-                      {theme.name}
-                    </h1>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h1 className="text-gray-800 font-semibold text-sm">
+                        {theme.name}
+                      </h1>
+                      {theme.cover_video && (
+                        <p className="bg-admin-dark text-white text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1">
+                          <BiVideoRecording />
+                          <span>Cover Video</span>
+                        </p>
+                      )}
+                      <p
+                        className={`${
+                          theme.active
+                            ? "bg-dashboard-primary text-admin-dark"
+                            : "bg-admin-dark/10 text-admin-dark/50"
+                        } text-xs font-medium pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
+                      >
+                        {theme.active ? <BiCheck /> : <BiX />}
+                        <span>{theme.active ? "Enabled" : "Disabled"}</span>
+                      </p>
+                    </div>
                     <ButtonActionDialog>
                       <ButtonText
                         onClick={() => router.push(`/admin/themes/${theme.id}`)}
@@ -72,7 +98,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         {theme.theme_categories?.map((tc: ThemeCategory) => (
                           <p
                             key={`theme-category-${tc.id}`}
-                            className={`text-admin-dark  bg-admin-dark/10 rounded-md font-semibold px-3 py-1 text-xs`}
+                            className={`bg-admin-dark/10 text-admin-dark text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1`}
                           >
                             {tc.name}
                           </p>
@@ -87,7 +113,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         {theme.packages?.map((pk: Package) => (
                           <p
                             key={`package-${pk.id}`}
-                            className={`text-admin-dark  bg-admin-dark/10 rounded-md font-semibold px-3 py-1 text-xs`}
+                            className={`bg-admin-dark/10 text-admin-dark text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1`}
                           >
                             {pk.name}
                           </p>
@@ -129,7 +155,27 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         }`}
                       >
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {theme.name}
+                          <div className="flex items-center gap-x-2">
+                            <h6>{theme.name}</h6>
+                            {theme.cover_video && (
+                              <p className="bg-admin-dark text-white text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1">
+                                <BiVideoRecording />
+                                <span>Cover Video</span>
+                              </p>
+                            )}
+                            <p
+                              className={`${
+                                theme.active
+                                  ? "bg-dashboard-primary text-admin-dark"
+                                  : "bg-admin-dark/10 text-admin-dark/50"
+                              } text-xs font-medium pl-1 pr-2 py-[2px] rounded-lg flex items-center gap-x-1`}
+                            >
+                              {theme.active ? <BiCheck /> : <BiX />}
+                              <span>
+                                {theme.active ? "Enabled" : "Disabled"}
+                              </span>
+                            </p>
+                          </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           {theme.theme_categories &&
@@ -139,7 +185,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                                 (tc: ThemeCategory) => (
                                   <p
                                     key={`theme-category-${tc.id}`}
-                                    className={`text-admin-dark bg-admin-dark/10 rounded-lg font-semibold px-3 py-1 text-sm`}
+                                    className={`bg-admin-dark/10 text-admin-dark text-xs font-medium px-2 py-[2px] rounded-lg flex items-center gap-x-1`}
                                   >
                                     {tc.name}
                                   </p>
@@ -156,7 +202,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                               {theme.packages?.map((pk: Package) => (
                                 <p
                                   key={`package-${pk.id}`}
-                                  className={`text-admin-dark bg-admin-dark/10 rounded-lg font-semibold px-3 py-1 text-sm`}
+                                  className={`bg-admin-dark/10 text-admin-dark text-xs font-medium px-2 py-[2px] rounded-lg`}
                                 >
                                   {pk.name}
                                 </p>

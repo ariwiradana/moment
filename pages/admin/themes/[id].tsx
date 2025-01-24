@@ -12,6 +12,7 @@ import ImageShimmer from "@/components/image.shimmer";
 import InputCheckbox from "@/components/admin/elements/input.checkbox";
 import { isTokenExpired } from "@/lib/auth";
 import Cookies from "cookies";
+import InputSwitch from "@/components/admin/elements/input.switch";
 
 interface DetailThemeProps {
   id: number;
@@ -40,38 +41,12 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
             className="mt-8 max-w-screen-md flex flex-col gap-y-4"
             onSubmit={actions.handleSubmit}
           >
-            <div className="flex gap-4 items-center">
-              <Input
-                className="w-full"
-                value={state.formData.name}
-                onChange={(e) => actions.handleChange(e.target.value, "name")}
-                label="Name"
-              />
-              <div className="mt-5 flex justify-center gap-4">
-                <InputCheckbox
-                  onChange={() =>
-                    actions.handleChange(
-                      !state.formData.cover_video,
-                      "cover_video"
-                    )
-                  }
-                  checked={state.formData.cover_video as boolean}
-                  name="cover_video"
-                  label="Cover Video"
-                />
-                <InputCheckbox
-                  onChange={() =>
-                    actions.handleChange(
-                      !state.formData.active,
-                      "active"
-                    )
-                  }
-                  checked={state.formData.active as boolean}
-                  name="active"
-                  label="Active"
-                />
-              </div>
-            </div>
+            <Input
+              className="w-full"
+              value={state.formData.name}
+              onChange={(e) => actions.handleChange(e.target.value, "name")}
+              label="Name"
+            />
             <div>
               <p className="text-sm text-gray-700 mb-2">Theme Categories</p>
               <div className="flex gap-x-4">
@@ -209,6 +184,31 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                   </div>
                 )}
               </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <InputSwitch
+                onChange={() =>
+                  actions.handleChange(
+                    !state.formData.cover_video,
+                    "cover_video"
+                  )
+                }
+                checked={state.formData.cover_video as boolean}
+                name="cover_video"
+                label="Cover Video"
+                description="Enable or disable the cover video"
+              />
+
+              <InputSwitch
+                label="Activate theme"
+                description="Enable or disable this theme."
+                onChange={() =>
+                  actions.handleChange(!state.formData.active, "active")
+                }
+                checked={state.formData.active as boolean}
+                name="active"
+              />
             </div>
 
             <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
