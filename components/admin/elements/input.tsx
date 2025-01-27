@@ -39,7 +39,7 @@ const Input: FC<InputProps> = ({
       <label htmlFor={id} className="block text-gray-700 mb-1">
         {label}{" "}
         <span className="text-xs text-gray-400">
-          {optional && "(optional)"}
+          {optional && "(opsional)"}
         </span>
       </label>
       <div className="relative">

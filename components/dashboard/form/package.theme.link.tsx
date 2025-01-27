@@ -1,0 +1,176 @@
+import Input from "@/components/admin/elements/input";
+import Loader from "@/components/admin/elements/loader";
+import { fetcher } from "@/lib/fetcher";
+import { afacad, dm, marcellus, montserrat } from "@/lib/fonts";
+import { Package, Theme } from "@/lib/types";
+import useClientFormStore from "@/store/useClientFormStore";
+import { calculateDiscountPercentage } from "@/utils/calculateDiscount";
+import { formatToRupiah } from "@/utils/formatToRupiah";
+import Image from "next/image";
+import React, { useEffect } from "react";
+import { BiCheck } from "react-icons/bi";
+import { RiDiscountPercentFill } from "react-icons/ri";
+import useSWR from "swr";
+import ButtonPrimary from "../elements/button.primary";
+import {IoArrowForward } from "react-icons/io5";
+import toast from "react-hot-toast";
+
+interface Props {
+  category: string;
+}
+
+const categoryIds: Record<string, number> = {
+  pernikahan: 1,
+  mepandes: 2,
+};
+
+const PackageThemeLinkForm = ({ category }: Props) => {
+  const { setForm, form, activeStep, setActiveStep } = useClientFormStore();
+
+  useEffect(() => {
+    const id = categoryIds[category];
+    if (id) {
+      setForm("theme_category_id", id);
+    }
+  }, []);
+
+  const { data: packagesData, isLoading: isLoadingePackages } = useSWR(
+    "/api/_pb/_p",
+    fetcher
+  );
+  const { data: themeData, isLoading: isLoadingThemes } = useSWR(
+    form.theme_category_id
+      ? `/api/_pb/_th?order=DESC&theme_category_id=${form.theme_category_id}`
+      : null,
+    fetcher
+  );
+
+  const themes: Theme[] = themeData?.data || [];
+  const pacakages: Package[] = packagesData?.data || [];
+
+  if (isLoadingThemes || isLoadingePackages) return <Loader />;
+
+  return (
+    <div className={`${montserrat.className} flex flex-col gap-6`}>
+      <Input
+        onChange={(e) => setForm("slug", e.target.value)}
+        label="Link Undangan"
+        placeholder="Contoh: /nama-undangan"
+      />
+      <div>
+        <label className="block text-gray-700 mb-1 text-sm">Pilih Paket</label>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+          {pacakages.map((p) => {
+            const selected = p.id === form?.package_id;
+            return (
+              <div
+                onClick={() => setForm("package_id", p.id as number)}
+                className={`${
+                  selected
+                    ? " border-2 border-dashboard-primary"
+                    : "bg-white border"
+                } p-6 rounded cursor-pointer relative text-dashboard-dark`}
+                key={p.id}
+              >
+                {selected && (
+                  <div className="absolute text-dashboard-dark -top-3 -right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-1 text-xl">
+                    <BiCheck />
+                  </div>
+                )}
+                <h2 className={`${dm.className} text-2xl font-bold`}>
+                  Paket {p.name}
+                </h2>
+                <div className="flex items-center gap-2 mt-1">
+                  <h2 className={`${afacad.className} font-medium text-xl`}>
+                    {formatToRupiah(p.price - p.discount)}
+                  </h2>
+                  {p.discount > 0 && (
+                    <div
+                      className={`${afacad.className} font-medium flex items-center gap-1 bg-dashboard-primary rounded-full px-2 py-1 text-sm text-dashboard-dark`}
+                    >
+                      <RiDiscountPercentFill className="text-lg" />-{" "}
+                      {calculateDiscountPercentage(p.price, p.discount)}%
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div>
+        <label className="block text-gray-700 mb-1 text-sm">Pilih Tema</label>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
+          {themes.map((theme) => {
+            const selected = theme.id === form.theme_id;
+            return (
+              <div
+                key={`Form Tema ${theme.name}`}
+                onClick={() => setForm("theme_id", theme.id as number)}
+                className={`aspect-square rounded-md relative border-2 cursor-pointer ${
+                  selected ? "border-dashboard-primary" : "border-transparent"
+                }`}
+              >
+                {selected && (
+                  <div className="z-10 absolute text-dashboard-dark -top-3 -right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-1 text-xl">
+                    <BiCheck />
+                  </div>
+                )}
+                <div className="absolute inset-0 flex flex-col justify-end px-4 lg:px-6 py-4 lg:py-6 bg-gradient-to-b from-transparent via-transparent to-dashboard-dark/70 via-[70%] z-10">
+                  <p
+                    className={`text-sm lg:text-base text-white/70 mb-[2px] lg:mb-0 ${afacad.className}`}
+                  >
+                    Tema Undangan
+                  </p>
+                  <h1
+                    className={`${marcellus.className} leading-4 lg:leading-6 text-xl lg:text-2xl text-white font-medium`}
+                  >
+                    {theme.name}
+                  </h1>
+                </div>
+                <div className="relative aspect-square rounded overflow-hidden">
+                  <Image
+                    fill
+                    className="object-cover rounded"
+                    alt={`Tema Form ${theme.name}`}
+                    src={
+                      (theme.thumbnail as string) ||
+                      `https://placehold.co/600/png?font=afacad`
+                    }
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex justify-end p-6 bg-zinc-50 mt-4 rounded-lg">
+        <ButtonPrimary
+          size="medium"
+          type="button"
+          icon={<IoArrowForward />}
+          iconPosition="right"
+          title="Berikutnya"
+          onClick={() => {
+            if (!form.slug) {
+              toast.error("Link undangan wajib diisi.");
+              return;
+            }
+            if (!form.package_id) {
+              toast.error("Pilih paket undangan.");
+              return;
+            }
+            if (!form.theme_id) {
+              toast.error("Pilih tema undangan.");
+              return;
+            }
+            setActiveStep(activeStep + 1);
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default PackageThemeLinkForm;

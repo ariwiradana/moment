@@ -96,3 +96,11 @@
 .no-scroll {
   @apply overflow-hidden;
 }
+
+@font-face {
+  font-family: "Afacad";
+  src: url("/path/to/afacad.woff2") format("woff2"),
+    url("/path/to/afacad.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

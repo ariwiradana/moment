@@ -12,7 +12,9 @@ const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
 
   return (
     <div
-      className={`overflow-hidden ${montserrat.className} border rounded-lg p-4`}
+      className={`overflow-hidden ${
+        montserrat.className
+      } border rounded-lg p-4 ${!isOpen && "h-[60px]"}`}
     >
       <button
         type="button"
