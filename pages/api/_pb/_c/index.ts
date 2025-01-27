@@ -1,5 +1,5 @@
 import handleError from "@/lib/errorHandling";
-import { Client, Package, Review, Theme, ThemeCategory } from "@/lib/types";
+import { Client, ThemeCategory } from "@/lib/types";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -25,7 +25,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           is_preview,
         }: Query = request.query;
 
-        let query = `SELECT * FROM clients`;
+        let query = `SELECT id, slug, name, cover, theme_category_id FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
 
         const values: (number | string | boolean)[] = [];
@@ -88,62 +88,19 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const { rows } = await sql.query(query, values);
         const { rows: total } = await sql.query(countQuery, countValues);
 
-        const clientIds = rows.map((client) => client.id);
-
-        const { rows: participants } = await sql.query(
-          `
-            SELECT p.*
-            FROM participants p
-            JOIN clients c ON p.client_id = c.id
-            WHERE c.id = ANY($1::int[])
-            ORDER BY p.id ASC
-        `,
-          [clientIds]
-        );
-
-        const { rows: events } = await sql.query(
-          `
-            SELECT e.*
-            FROM events e
-            JOIN clients c ON e.client_id = c.id
-            WHERE c.id = ANY($1::int[])
-            ORDER BY e.date ASC, e.start_time::time ASC
-        `,
-          [clientIds]
-        );
-
-        const { rows: themes } = await sql.query(`SELECT * FROM themes`);
-        const { rows: wishes } = await sql.query(`SELECT * FROM wishes`);
-        const { rows: packages } = await sql.query(`SELECT * FROM packages`);
         const { rows: themeCategories } = await sql.query(
           `SELECT * FROM theme_categories`
         );
 
         const clients = rows.map((client: Client) => {
-          const clientParticipants = participants.filter(
-            (p) => p.client_id === client.id
-          );
-          const clientEvents = events.filter((e) => e.client_id === client.id);
-          const clientTheme: Theme[] = themes.find(
-            (th) => th.id === client.theme_id
-          );
-          const clientPackages: Package[] = packages.find(
-            (pk) => pk.id === client.package_id
-          );
-          const clientThemeCategories: ThemeCategory[] = themeCategories.find(
+          const clientThemeCategory: ThemeCategory = themeCategories.find(
             (tc) => tc.id === client.theme_category_id
-          );
-          const clientwishes: Review[] = wishes.filter(
-            (r) => r.client_id === client.id
           );
           return {
             ...client,
-            participants: clientParticipants,
-            events: clientEvents,
-            theme: clientTheme,
-            wishes: clientwishes,
-            package: clientPackages,
-            theme_category: clientThemeCategories,
+            theme_category: {
+              name: clientThemeCategory.name,
+            },
           };
         });
 

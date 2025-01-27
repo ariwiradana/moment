@@ -83,6 +83,7 @@ export interface Client {
   cover: null | string;
   seo: null | string;
   is_preview?: boolean;
+  is_detail?: boolean,
   guests?: string[];
   created_at?: Date | string;
   updated_at?: Date | string;
