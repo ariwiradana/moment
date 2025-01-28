@@ -10,7 +10,6 @@ import { fetcher } from "@/lib/fetcher";
 import { Package, Theme } from "@/lib/types";
 import useClientFormStore from "@/store/useClientFormStore";
 import { capitalizeWords } from "@/utils/capitalizeWords";
-import { createSlug } from "@/utils/createSlug";
 import { useRouter } from "next/router";
 import React, { ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -170,7 +169,7 @@ const useClientForm = (category: string) => {
     try {
       const response = await getClient("/api/_pb/_f/_cs", {
         method: "POST",
-        body: JSON.stringify({ slug: createSlug(form.slug as string) }),
+        body: JSON.stringify({ slug: form.slug }),
       });
 
       if (!response.ok) {

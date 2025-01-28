@@ -1,6 +1,7 @@
 import handleError from "@/lib/errorHandling";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import { createSlug } from "@/utils/createSlug";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -17,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (slug) {
           const checkSlug = await sql.query(
             `SELECT EXISTS (SELECT 1 FROM clients WHERE slug = $1);`,
-            [slug]
+            [createSlug(slug)]
           );
           if (checkSlug.rows.length > 0 && checkSlug.rows[0].exists) {
             return handleError(
