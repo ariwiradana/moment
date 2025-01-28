@@ -7,6 +7,7 @@ interface StoreState {
   activeStep: number;
   toggleEndTimes: boolean[];
   toggleExpanded: boolean[];
+  isLoading: boolean;
   setForm: (
     name: string,
     value: string | number | Event[] | Participant[] | string[]
@@ -14,6 +15,7 @@ interface StoreState {
   setActiveStep: (step: number) => void;
   setToggleEndTimes: (index: number) => void;
   setAddEndTimes: (value: boolean) => void;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 export const initialEvent: Event = {
@@ -30,6 +32,7 @@ const useClientFormStore = create<StoreState>((set) => ({
   activeStep: 0,
   toggleEndTimes: [false],
   toggleExpanded: [true],
+  isLoading: false,
   form: {
     slug: "",
     opening_title: "",
@@ -81,6 +84,7 @@ const useClientFormStore = create<StoreState>((set) => ({
     videos: [],
     gallery: [],
     music: null,
+    status: "unpaid",
   },
   setForm: (
     name: string,
@@ -108,6 +112,10 @@ const useClientFormStore = create<StoreState>((set) => ({
         toggleEndTimes: updatedToggleEndTimes,
       };
     }),
+  setIsLoading: (isLoading: boolean) =>
+    set(() => ({
+      isLoading,
+    })),
 }));
 
 export default useClientFormStore;

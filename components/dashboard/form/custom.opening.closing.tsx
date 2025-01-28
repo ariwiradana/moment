@@ -9,7 +9,8 @@ import InputTextarea from "@/components/admin/elements/textarea";
 import Accordion from "@/components/admin/elements/accordion.button";
 
 const CustomOpeningClosingForm = () => {
-  const { activeStep, setActiveStep, form, setForm } = useClientFormStore();
+  const { activeStep, setActiveStep, form, setForm, isLoading } =
+    useClientFormStore();
 
   return (
     <div className={`${afacad.className} flex flex-col gap-4`}>
@@ -101,6 +102,7 @@ const CustomOpeningClosingForm = () => {
           }}
         />
         <ButtonPrimary
+          isloading={isLoading}
           size="medium"
           type="submit"
           icon={<BiSolidSave />}
