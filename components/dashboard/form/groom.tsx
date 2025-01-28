@@ -124,7 +124,7 @@ const GroomForm = () => {
           size="medium"
           icon={<IoArrowForward />}
           iconPosition="right"
-          title="Berikutnya"
+          title="Selanjutnya"
           onClick={() => {
             const groom = form.participants[0];
 

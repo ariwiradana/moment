@@ -6,6 +6,8 @@ import GiftForm from "@/components/dashboard/form/gift";
 import GroomForm from "@/components/dashboard/form/groom";
 import PackageThemeLinkForm from "@/components/dashboard/form/package.theme.link";
 import { getClient } from "@/lib/client";
+import { fetcher } from "@/lib/fetcher";
+import { Package, Theme } from "@/lib/types";
 import useClientFormStore from "@/store/useClientFormStore";
 import { capitalizeWords } from "@/utils/capitalizeWords";
 import { useRouter } from "next/router";
@@ -19,9 +21,16 @@ import {
   BiParty,
   BiText,
 } from "react-icons/bi";
+import useSWR from "swr";
+
+const categoryIds: Record<string, number> = {
+  pernikahan: 1,
+  mepandes: 2,
+};
 
 const useClientForm = (category: string) => {
-  const { activeStep, form, setIsLoading } = useClientFormStore();
+  const { activeStep, form, setIsLoading, setForm, setActiveStep, resetForm } =
+    useClientFormStore();
 
   const [formComponents] = useState<Record<number, ReactNode>>({
     0: <PackageThemeLinkForm category={category} />,
@@ -53,10 +62,14 @@ const useClientForm = (category: string) => {
     <BiText key="Step Icon 7" />,
   ]);
 
+  const [isUnloadProtected, setIsUnloadProtected] = useState(true);
+
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "sadasdadsad"; // This is required for most browsers to show the dialog.
+      if (!isUnloadProtected) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -72,6 +85,27 @@ const useClientForm = (category: string) => {
       behavior: "smooth",
     });
   }, [activeStep]);
+
+  useEffect(() => {
+    const id = categoryIds[category];
+    if (id) {
+      setForm("theme_category_id", id);
+    }
+  }, []);
+
+  const { data: packagesData, isLoading: isLoadingePackages } = useSWR(
+    "/api/_pb/_p",
+    fetcher
+  );
+  const { data: themeData, isLoading: isLoadingThemes } = useSWR(
+    form.theme_category_id
+      ? `/api/_pb/_th?order=DESC&theme_category_id=${form.theme_category_id}`
+      : null,
+    fetcher
+  );
+
+  const themes: Theme[] = themeData?.data || [];
+  const pacakages: Package[] = packagesData?.data || [];
 
   const router = useRouter();
 
@@ -113,8 +147,10 @@ const useClientForm = (category: string) => {
         toast.promise(createClient(), {
           loading: "Membuat informasi undangan...",
           success: () => {
-            // router.push("/admin/themes");
+            setIsUnloadProtected(true);
+            router.push("/");
             setIsLoading(false);
+            resetForm();
             return "Berhasil membuat informasi undangan.";
           },
           error: (error: any) => {
@@ -128,14 +164,37 @@ const useClientForm = (category: string) => {
     }
   };
 
+  const handleCheckSlug = async () => {
+    try {
+      const response = await getClient("/api/_pb/_f/_cs", {
+        method: "POST",
+        body: JSON.stringify({ slug: form.slug }),
+      });
+
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      await response.json();
+      setActiveStep(activeStep + 1);
+    } catch (error: any) {
+      toast.error(error.message || "Gagal mengecek link undangan.");
+    }
+  };
+
   return {
     state: {
       steps,
       formComponents,
       stepIcons,
+      themes,
+      pacakages,
+      isLoadingThemes,
+      isLoadingePackages,
     },
     actions: {
       handleSubmit,
+      handleCheckSlug,
     },
   };
 };

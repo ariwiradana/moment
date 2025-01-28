@@ -16,6 +16,7 @@ interface StoreState {
   setToggleEndTimes: (index: number) => void;
   setAddEndTimes: (value: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
+  resetForm: () => void;
 }
 
 export const initialEvent: Event = {
@@ -28,64 +29,66 @@ export const initialEvent: Event = {
   image: "",
 };
 
+const initialForm: Client = {
+  slug: "",
+  opening_title: "",
+  opening_description: "",
+  closing_title: "",
+  closing_description: "",
+  cover: null,
+  seo: null,
+  gift_account_name: "",
+  gift_account_number: "",
+  gift_bank_name: "",
+  name: "",
+  package_id: null,
+  events: [initialEvent],
+  participants: [
+    {
+      name: "",
+      nickname: "",
+      gender: "male",
+      child: "",
+      image: "",
+      address: "",
+      parents_female: "",
+      parents_male: "",
+      role: "groom",
+      facebook: "",
+      instagram: "",
+      tiktok: "",
+      twitter: "",
+    },
+    {
+      name: "",
+      nickname: "",
+      gender: "female",
+      child: "",
+      image: "",
+      address: "",
+      parents_female: "",
+      parents_male: "",
+      role: "bride",
+      facebook: "",
+      instagram: "",
+      tiktok: "",
+      twitter: "",
+    },
+  ],
+  theme_category_id: null,
+  theme_id: null,
+  videos: [],
+  gallery: [],
+  music: null,
+  status: "unpaid",
+};
+
 const useClientFormStore = create<StoreState>((set) => ({
   activeStep: 0,
   toggleEndTimes: [false],
   toggleExpanded: [true],
   isLoading: false,
-  form: {
-    slug: "",
-    opening_title: "",
-    opening_description: "",
-    closing_title: "",
-    closing_description: "",
-    cover: null,
-    seo: null,
-    gift_account_name: "",
-    gift_account_number: "",
-    gift_bank_name: "",
-    name: "",
-    package_id: null,
-    events: [initialEvent],
-    participants: [
-      {
-        name: "",
-        nickname: "",
-        gender: "male",
-        child: "",
-        image: "",
-        address: "",
-        parents_female: "",
-        parents_male: "",
-        role: "groom",
-        facebook: "",
-        instagram: "",
-        tiktok: "",
-        twitter: "",
-      },
-      {
-        name: "",
-        nickname: "",
-        gender: "female",
-        child: "",
-        image: "",
-        address: "",
-        parents_female: "",
-        parents_male: "",
-        role: "bride",
-        facebook: "",
-        instagram: "",
-        tiktok: "",
-        twitter: "",
-      },
-    ],
-    theme_category_id: null,
-    theme_id: null,
-    videos: [],
-    gallery: [],
-    music: null,
-    status: "unpaid",
-  },
+  form: initialForm,
   setForm: (
     name: string,
     value: string | number | Event[] | Participant[] | string[]
@@ -115,6 +118,10 @@ const useClientFormStore = create<StoreState>((set) => ({
   setIsLoading: (isLoading: boolean) =>
     set(() => ({
       isLoading,
+    })),
+  resetForm: () =>
+    set(() => ({
+      form: initialForm,
     })),
 }));
 

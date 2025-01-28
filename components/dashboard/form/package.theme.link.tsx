@@ -14,45 +14,22 @@ import useSWR from "swr";
 import ButtonPrimary from "../elements/button.primary";
 import { IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
+import useClientForm from "@/hooks/form/useClientForm";
 
 interface Props {
   category: string;
 }
 
-const categoryIds: Record<string, number> = {
-  pernikahan: 1,
-  mepandes: 2,
-};
-
 const PackageThemeLinkForm = ({ category }: Props) => {
-  const { setForm, form, activeStep, setActiveStep } = useClientFormStore();
+  const { setForm, form } = useClientFormStore();
+  const { state, actions } = useClientForm(category);
 
-  useEffect(() => {
-    const id = categoryIds[category];
-    if (id) {
-      setForm("theme_category_id", id);
-    }
-  }, []);
-
-  const { data: packagesData, isLoading: isLoadingePackages } = useSWR(
-    "/api/_pb/_p",
-    fetcher
-  );
-  const { data: themeData, isLoading: isLoadingThemes } = useSWR(
-    form.theme_category_id
-      ? `/api/_pb/_th?order=DESC&theme_category_id=${form.theme_category_id}`
-      : null,
-    fetcher
-  );
-
-  const themes: Theme[] = themeData?.data || [];
-  const pacakages: Package[] = packagesData?.data || [];
-
-  if (isLoadingThemes || isLoadingePackages) return <Loader />;
+  if (state.isLoadingThemes || state.isLoadingePackages) return <Loader />;
 
   return (
     <div className={`${montserrat.className} flex flex-col gap-6`}>
       <Input
+        value={form.slug}
         onChange={(e) => setForm("slug", e.target.value)}
         label="Link Undangan"
         placeholder="Contoh: /nama-undangan"
@@ -60,7 +37,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
       <div>
         <label className="block text-gray-700 mb-1 text-sm">Pilih Paket</label>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
-          {pacakages.map((p) => {
+          {state.pacakages.map((p) => {
             const selected = p.id === form?.package_id;
             return (
               <div
@@ -101,7 +78,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
       <div>
         <label className="block text-gray-700 mb-1 text-sm">Pilih Tema</label>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
-          {themes.map((theme) => {
+          {state.themes.map((theme) => {
             const selected = theme.id === form.theme_id;
             return (
               <div className="relative" key={`Form Tema ${theme.name}`}>
@@ -152,7 +129,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
           type="button"
           icon={<IoArrowForward />}
           iconPosition="right"
-          title="Berikutnya"
+          title="Selanjutnya"
           onClick={() => {
             if (!form.slug) {
               toast.error("Link undangan wajib diisi.");
@@ -166,7 +143,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
               toast.error("Pilih tema undangan.");
               return;
             }
-            setActiveStep(activeStep + 1);
+            actions.handleCheckSlug();
           }}
         />
       </div>

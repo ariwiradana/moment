@@ -51,7 +51,7 @@ const FilesForm = () => {
           type="button"
           icon={<IoArrowForward />}
           iconPosition="right"
-          title="Berikutnya"
+          title="Selanjutnya"
           onClick={() => {
             if (!form.gallery?.[0]) {
               toast.error("Link foto wajib diisi");

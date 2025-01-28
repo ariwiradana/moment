@@ -51,7 +51,7 @@ const GiftForm = () => {
           type="button"
           icon={<IoArrowForward />}
           iconPosition="right"
-          title="Berikutnya"
+          title="Selanjutnya"
           onClick={() => {
             setActiveStep(activeStep + 1);
           }}

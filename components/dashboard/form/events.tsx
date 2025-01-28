@@ -164,7 +164,7 @@ const EventForm = () => {
           size="medium"
           icon={<IoArrowForward />}
           iconPosition="right"
-          title="Berikutnya"
+          title="Selanjutnya"
           onClick={() => {
             const isValid = form.events.every((item) => {
               return Object.keys(item).every((key: string) => {

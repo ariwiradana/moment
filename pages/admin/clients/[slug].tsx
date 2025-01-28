@@ -33,6 +33,7 @@ import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
+import { isValidUrl } from "@/utils/checkIsValidURL";
 interface UpdateClientProps {
   slug: string;
   token: string | null;
@@ -237,108 +238,166 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               label="Closing Description"
             />
             <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
-            <Input
-              id="gallery"
-              accept="image/*"
-              type="file"
-              multiple
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.files as FileList, "images")
-              }
-              className="w-full"
-              label="Gallery"
-            />
+            <div>
+              <Input
+                id="gallery"
+                accept="image/*"
+                type="file"
+                multiple
+                onChange={(e) =>
+                  actions.handleChangeClient(
+                    e.target.files as FileList,
+                    "images"
+                  )
+                }
+                className="w-full"
+                label="Gallery"
+              />
+              <div className="flex gap-x-1">
+                {Array.isArray(state.formData.gallery) &&
+                state.formData.gallery.length > 0
+                  ? state.formData.gallery.map((img: string, index: number) => {
+                      return (
+                        <Link
+                          key={img}
+                          target="_blank"
+                          href={img}
+                          className="text-sm underline mt-2"
+                        >
+                          <p>
+                            <span>{img}</span>
+                            {index !==
+                              (state.formData.videos as string[])?.length -
+                                1 && <span>,</span>}
+                          </p>
+                        </Link>
+                      );
+                    })
+                  : null}
+              </div>
+            </div>
 
             <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-2">
               {Array.isArray(state.formData.gallery) &&
               state.formData.gallery.length > 0
-                ? state.formData.gallery.map((img: string, index: number) => (
-                    <div
-                      className="relative w-full aspect-square group overflow-hidden"
-                      key={index}
-                    >
-                      <div className="absolute top-2 right-2 z-10">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            actions.handleDeleteImageGallery(
-                              img,
-                              state.formData.id as number
-                            )
-                          }
-                          disabled={state.loading || state.isLoading}
-                          className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                ? state.formData.gallery.map((img: string, index: number) => {
+                    const validImage = isValidUrl(img) ? img : "";
+
+                    if (validImage)
+                      return (
+                        <div
+                          className="relative w-full aspect-square group overflow-hidden"
+                          key={index}
                         >
-                          <BiX />
-                        </button>
-                      </div>
-
-                      <div className="absolute top-2 left-2 z-20 flex gap-2">
-                        {state.formData.cover === img && (
-                          <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 backdrop-blur bg-admin-dark/30 text-white">
-                            <BiImageAlt className="text-base font-medium" />
-                            <span>Cover</span>
+                          <div className="absolute top-2 right-2 z-10">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                actions.handleDeleteImageGallery(
+                                  img,
+                                  state.formData.id as number
+                                )
+                              }
+                              disabled={state.loading || state.isLoading}
+                              className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                            >
+                              <BiX />
+                            </button>
                           </div>
-                        )}
-                        {state.formData.seo === img && (
-                          <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 backdrop-blur bg-admin-dark/30 text-white">
-                            <BiImageAlt className="text-base font-medium" />
-                            <span>Seo</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="absolute -bottom-4 invisible inset-x-0 w-full bg-admin-dark/80 rounded-b-lg overflow-hidden z-10 opacity-0 group-hover:bottom-0 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500 flex flex-col justify-center">
-                        {state.formData.cover !== img && (
-                          <button
-                            onClick={() =>
-                              actions.handleSetCover(
-                                img,
-                                state.formData.id as number
-                              )
-                            }
-                            type="button"
-                            disabled={state.loading || state.isLoading}
-                            className="px-2 w-full font-medium hover:bg-admin-dark p-4 transition-colors ease-in-out duration-500 text-white flex justify-center items-center text-center text-xs gap-x-1"
-                          >
-                            <BiImageAdd className="text-base" />
-                            <span>Set Cover Image</span>
-                          </button>
-                        )}
-                        {state.formData.seo !== img && (
-                          <button
-                            onClick={() =>
-                              actions.handleSetSeoImage(
-                                img,
-                                state.formData.id as number
-                              )
-                            }
-                            type="button"
-                            disabled={state.loading || state.isLoading}
-                            className="px-2 w-full font-medium hover:bg-admin-dark p-4 transition-colors ease-in-out duration-500 text-white flex justify-center items-center text-center text-xs gap-x-1"
-                          >
-                            <BiImageAdd className="text-base" />
-                            <span>Set Seo Image</span>
-                          </button>
-                        )}
-                      </div>
 
-                      <ImageShimmer
-                        sizes="400px"
-                        priority
-                        alt={`gallery-${index + 1}`}
-                        src={img}
-                        fill
-                        className="object-cover w-full rounded-lg"
-                      />
-                    </div>
-                  ))
+                          <div className="absolute top-2 left-2 z-20 flex gap-2">
+                            {state.formData.cover === img && (
+                              <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 backdrop-blur bg-admin-dark/30 text-white">
+                                <BiImageAlt className="text-base font-medium" />
+                                <span>Cover</span>
+                              </div>
+                            )}
+                            {state.formData.seo === img && (
+                              <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 backdrop-blur bg-admin-dark/30 text-white">
+                                <BiImageAlt className="text-base font-medium" />
+                                <span>Seo</span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="absolute -bottom-4 invisible inset-x-0 w-full bg-admin-dark/80 rounded-b-lg overflow-hidden z-10 opacity-0 group-hover:bottom-0 group-hover:visible group-hover:opacity-100 transition-all ease-in-out duration-500 flex flex-col justify-center">
+                            {state.formData.cover !== img && (
+                              <button
+                                onClick={() =>
+                                  actions.handleSetCover(
+                                    img,
+                                    state.formData.id as number
+                                  )
+                                }
+                                type="button"
+                                disabled={state.loading || state.isLoading}
+                                className="px-2 w-full font-medium hover:bg-admin-dark p-4 transition-colors ease-in-out duration-500 text-white flex justify-center items-center text-center text-xs gap-x-1"
+                              >
+                                <BiImageAdd className="text-base" />
+                                <span>Set Cover Image</span>
+                              </button>
+                            )}
+                            {state.formData.seo !== img && (
+                              <button
+                                onClick={() =>
+                                  actions.handleSetSeoImage(
+                                    img,
+                                    state.formData.id as number
+                                  )
+                                }
+                                type="button"
+                                disabled={state.loading || state.isLoading}
+                                className="px-2 w-full font-medium hover:bg-admin-dark p-4 transition-colors ease-in-out duration-500 text-white flex justify-center items-center text-center text-xs gap-x-1"
+                              >
+                                <BiImageAdd className="text-base" />
+                                <span>Set Seo Image</span>
+                              </button>
+                            )}
+                          </div>
+
+                          <ImageShimmer
+                            sizes="400px"
+                            priority
+                            alt={`gallery-${index + 1}`}
+                            src={img}
+                            fill
+                            className="object-cover w-full rounded-lg"
+                          />
+                        </div>
+                      );
+                  })
                 : null}
             </div>
-            <InputChip
-              chips={state.videosForm}
-              onChange={(value) => actions.handleChangeClient(value, "videos")}
-              label="Video URL"
-            />
+            <div>
+              <InputChip
+                chips={state.videosForm}
+                onChange={(value) =>
+                  actions.handleChangeClient(value, "videos")
+                }
+                label="Video URL"
+              />
+              <div className="flex gap-x-1">
+                {Array.isArray(state.formData.videos) &&
+                state.formData.videos.length > 0
+                  ? state.formData.videos.map((img: string, index: number) => {
+                      return (
+                        <Link
+                          key={img}
+                          target="_blank"
+                          href={img}
+                          className="text-sm underline mt-2"
+                        >
+                          <p>
+                            <span>{img}</span>
+                            {index !==
+                              (state.formData.videos as string[])?.length -
+                                1 && <span>,</span>}
+                          </p>
+                        </Link>
+                      );
+                    })
+                  : null}
+              </div>
+            </div>
             <Input
               id="cover-video"
               accept="video/*"
