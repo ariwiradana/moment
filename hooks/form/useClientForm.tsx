@@ -166,6 +166,7 @@ const useClientForm = (category: string) => {
   };
 
   const handleCheckSlug = async () => {
+    const toastId = toast.loading("Cek link undangan...");
     try {
       const response = await getClient("/api/_pb/_f/_cs", {
         method: "POST",
@@ -179,7 +180,9 @@ const useClientForm = (category: string) => {
       await response.json();
       setActiveStep(activeStep + 1);
     } catch (error: any) {
-      toast.error(error.message || "Gagal mengecek link undangan.");
+      toast.error(error.message || "Gagal mengecek link undangan.", {
+        id: toastId,
+      });
     }
   };
 
