@@ -1,16 +1,13 @@
 import Input from "@/components/admin/elements/input";
 import Loader from "@/components/admin/elements/loader";
-import { fetcher } from "@/lib/fetcher";
 import { afacad, dm, marcellus, montserrat } from "@/lib/fonts";
-import { Package, Theme } from "@/lib/types";
 import useClientFormStore from "@/store/useClientFormStore";
 import { calculateDiscountPercentage } from "@/utils/calculateDiscount";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 import { BiCheck } from "react-icons/bi";
 import { RiDiscountPercentFill } from "react-icons/ri";
-import useSWR from "swr";
 import ButtonPrimary from "../elements/button.primary";
 import { IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
