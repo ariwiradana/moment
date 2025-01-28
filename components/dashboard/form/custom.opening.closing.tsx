@@ -27,7 +27,7 @@ const CustomOpeningClosingForm = () => {
                 tamu. <br />
                 <br />
                 <span className="font-semibold text-dashboard-dark">
-                  Contoh Judul dan Kalimat Pembuka:
+                  Contoh Kalimat Pembuka:
                 </span>
                 <br />
                 <br /> Om Swastiastu, <br /> Dengan Asung Kertha Wara Nugraha
@@ -64,6 +64,7 @@ const CustomOpeningClosingForm = () => {
           label="Judul Pembuka Undangan"
         />
         <InputTextarea
+          rows={8}
           optional
           onChange={(e) => setForm("opening_description", e.target.value)}
           value={form.opening_description}
@@ -81,6 +82,7 @@ const CustomOpeningClosingForm = () => {
         />
         <InputTextarea
           optional
+          rows={8}
           onChange={(e) => setForm("closing_description", e.target.value)}
           value={form.closing_description}
           placeholder="Contoh: Merupakan suatu kebahagiaan dan kehormatan bagi kami jika Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu. Atas kehadiran dan doa restunya, kami sampaikan terima kasih."

@@ -120,7 +120,7 @@ const EventForm = () => {
                     type="button"
                     className="text-sm whitespace-nowrap"
                   />
-                  {form.events.length > 1 && (
+                  {index > 0 && (
                     <ButtonSecondaryDashboard
                       onClick={() => {
                         const newEvents = [...form.events];

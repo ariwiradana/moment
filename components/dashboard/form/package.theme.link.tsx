@@ -104,40 +104,41 @@ const PackageThemeLinkForm = ({ category }: Props) => {
           {themes.map((theme) => {
             const selected = theme.id === form.theme_id;
             return (
-              <div
-                key={`Form Tema ${theme.name}`}
-                onClick={() => setForm("theme_id", theme.id as number)}
-                className={`aspect-square rounded-md w-full h-full relative border-2 cursor-pointer ${
-                  selected ? "border-dashboard-primary" : "border-transparent"
-                }`}
-              >
+              <div className="relative" key={`Form Tema ${theme.name}`}>
                 {selected && (
                   <div className="z-10 absolute text-dashboard-dark -top-2 lg:-top-3 -right-2 lg:-right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-[2px] lg:p-1 text-lg lg:text-xl">
                     <BiCheck />
                   </div>
                 )}
-                <div className="absolute inset-0 flex flex-col justify-end px-4 lg:px-6 py-4 lg:py-6 bg-gradient-to-b from-transparent via-dashboard-dark/30 to-dashboard-dark/70 via-[70%] z-10">
-                  <p
-                    className={`text-sm lg:text-base text-white/70 lg:mb-0 ${afacad.className}`}
-                  >
-                    Tema Undangan
-                  </p>
-                  <h1
-                    className={`${marcellus.className} leading-4 text-xl lg:text-2xl lg:leading-6 text-white font-medium`}
-                  >
-                    {theme.name}
-                  </h1>
-                </div>
-                <div className="relative aspect-square rounded overflow-hidden w-full h-full">
-                  <Image
-                    fill
-                    className="object-cover rounded w-full h-full"
-                    alt={`Tema Form ${theme.name}`}
-                    src={
-                      (theme.thumbnail as string) ||
-                      `https://placehold.co/600/png?font=afacad`
-                    }
-                  />
+                <div
+                  onClick={() => setForm("theme_id", theme.id as number)}
+                  className={`aspect-square rounded-md w-full h-full relative border-2 cursor-pointer overflow-hidden ${
+                    selected ? "border-dashboard-primary" : "border-transparent"
+                  }`}
+                >
+                  <div className="absolute inset-0 flex flex-col justify-end px-4 lg:px-6 py-4 lg:py-6 bg-gradient-to-b from-transparent via-dashboard-dark/30 to-dashboard-dark/70 via-[70%] z-10">
+                    <p
+                      className={`text-sm lg:text-base text-white/70 lg:mb-0 ${afacad.className}`}
+                    >
+                      Tema Undangan
+                    </p>
+                    <h1
+                      className={`${marcellus.className} leading-4 text-xl lg:text-2xl lg:leading-6 text-white font-medium`}
+                    >
+                      {theme.name}
+                    </h1>
+                  </div>
+                  <div className="relative aspect-square rounded overflow-hidden w-full h-full">
+                    <Image
+                      fill
+                      className="object-cover rounded w-full h-full"
+                      alt={`Tema Form ${theme.name}`}
+                      src={
+                        (theme.thumbnail as string) ||
+                        `https://placehold.co/600/png?font=afacad`
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             );

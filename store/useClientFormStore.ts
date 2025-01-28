@@ -21,8 +21,8 @@ export const initialEvent: Event = {
   date: moment().format("YYYY-MM-DD"),
   address: "",
   address_url: "",
-  start_time: "",
-  end_time: "",
+  start_time: moment().minutes(0).format("HH:mm"),
+  end_time: moment().add(1, "hour").minutes(0).format("HH:mm"),
   image: "",
 };
 
