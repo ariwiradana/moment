@@ -15,7 +15,7 @@ const VideoComponent = () => {
   const { client } = useClientStore();
   const { videos = [], participants = [] } = client || {};
 
-  if (videos.length > 0)
+  if (videos?.length > 0)
     return (
       <section className="relative bg-aruna-dark overflow-hidden">
         <div className="grid gap-2">

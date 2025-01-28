@@ -16,24 +16,24 @@ const Component = () => {
   const { gallery = [], cover, seo, participants = [] } = client || {};
 
   const images = useMemo(
-    () => (gallery as string[]).filter((g) => g !== cover && g !== seo),
+    () => (gallery as string[])?.filter((g) => g !== cover && g !== seo),
     [gallery, cover, seo]
   );
   const lightboxImage = useMemo(
     () =>
-      images.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
+      images?.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
     [images]
   );
-  const gridImages = useMemo(() => images.slice(0, 11), [images]);
-  const slideImages = useMemo(() => images.slice(11), [images]);
+  const gridImages = useMemo(() => images?.slice(0, 11), [images]);
+  const slideImages = useMemo(() => images?.slice(11), [images]);
 
   const gotoPrevious = useCallback(() => {
     if (imageIndex > 0) setImageIndex((prev) => prev - 1);
   }, [imageIndex]);
 
   const gotoNext = useCallback(() => {
-    if (imageIndex < images.length - 1) setImageIndex((prev) => prev + 1);
-  }, [imageIndex, images.length]);
+    if (imageIndex < images?.length - 1) setImageIndex((prev) => prev + 1);
+  }, [imageIndex, images?.length]);
 
   const handleToggleLightbox = useCallback(
     (idx: number) => {
@@ -71,7 +71,7 @@ const Component = () => {
         renderHeader={() => (
           <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
             <p className={`text-white relative z-10 p-2 ${roboto.className}`}>
-              {imageIndex + 1} / {lightboxImage.length}
+              {imageIndex + 1} / {lightboxImage?.length}
             </p>
             <button
               onClick={() => {
@@ -132,11 +132,11 @@ const Component = () => {
           </p>
           <div
             className={`mt-10 grid grid-cols-4 ${
-              slideImages.length > 0 ? "grid-rows-8" : "grid-rows-6"
+              slideImages?.length > 0 ? "grid-rows-8" : "grid-rows-6"
             } gap-2`}
             data-aos="zoom-out-up"
           >
-            {gridImages.map((img, index) => (
+            {gridImages?.map((img, index) => (
               <div
                 key={`gallery-${index + 1}`}
                 onClick={() => handleToggleLightbox(index)}
@@ -153,7 +153,7 @@ const Component = () => {
               </div>
             ))}
 
-            {slideImages.length > 0 && (
+            {slideImages?.length > 0 && (
               <div className="col-span-4 row-span-3 w-full h-full relative overflow-hidden">
                 <CustomImageSlides
                   handleToggleLightbox={handleToggleLightbox}
