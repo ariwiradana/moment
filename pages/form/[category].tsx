@@ -72,7 +72,6 @@ const DashboardForm = ({ category }: Props) => {
                     fontSize: "16px",
                     fontWeight: "500",
                     color: "grey.400",
-                    fontFamily: "Afacad, serif",
                     marginTop: "8px",
                   },
                   "& .MuiStepLabel-label.Mui-active": {
