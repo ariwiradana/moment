@@ -178,6 +178,7 @@ const useClientForm = (category: string) => {
       }
       await response.json();
       setActiveStep(activeStep + 1);
+      toast.success("Link undangan dapat digunakan.", { id: toastId });
     } catch (error: any) {
       toast.error(error.message || "Gagal mengecek link undangan.", {
         id: toastId,
