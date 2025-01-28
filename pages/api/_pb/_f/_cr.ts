@@ -2,7 +2,6 @@ import handleError from "@/lib/errorHandling";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Client, Event, Participant } from "@/lib/types";
-import { createSlug } from "@/utils/createSlug";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
