@@ -3,17 +3,8 @@ import Layout from "@/components/dashboard/layout";
 import useClientForm from "@/hooks/form/useClientForm";
 import { afacad } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
-import { Step, StepConnector, StepLabel, Stepper, styled } from "@mui/material";
 import { GetServerSideProps } from "next";
 import React from "react";
-import { BiCheck } from "react-icons/bi";
-
-const CustomConnector = styled(StepConnector)(({ theme }) => ({
-  [`& .MuiStepConnector-line`]: {
-    borderColor: theme.palette.grey[400],
-    marginTop: "8px", // Default connector color
-  },
-}));
 
 interface Props {
   category: string;
@@ -64,8 +55,61 @@ const DashboardForm = ({ category }: Props) => {
                 ></div>
               </div>
             </div>
-            <div className="hidden lg:block">
-              <Stepper
+            <div className="hidden lg:grid grid-cols-7 relative">
+              {state.steps.map((step, index) => (
+                <div key={`Desktop Step ${index + 1}`}>
+                  <div className="flex items-center flex-col relative">
+                    {index > 0 && (
+                      <div
+                        className={`top-1/2 transform -translate-y-1/2 left-0 w-1/2 absolute h-[2px] ${
+                          index <= activeStep
+                            ? "bg-dashboard-primary"
+                            : "bg-zinc-200"
+                        }`}
+                      ></div>
+                    )}
+                    {index < state.steps.length - 1 && (
+                      <div
+                        className={`top-1/2 transform -translate-y-1/2 right-0 w-1/2 absolute h-[2px] ${
+                          index < activeStep
+                            ? "bg-dashboard-primary"
+                            : "bg-zinc-200"
+                        }`}
+                      ></div>
+                    )}
+                    <div
+                      onClick={() => setActiveStep(index)}
+                      className={`${
+                        index < activeStep
+                          ? "bg-dashboard-primary text-dashboard-dark cursor-pointer"
+                          : activeStep === index
+                          ? "bg-dashboard-primary text-dashboard-dark"
+                          : "bg-zinc-300 text-white"
+                      } aspect-square min-w-10 min-h-10 rounded-full flex items-center justify-center text-2xl relative z-10 ${
+                        afacad.className
+                      }`}
+                    >
+                      {index <= activeStep ? (
+                        state.stepIcons[index]
+                      ) : (
+                        <p className="text-xl font-medium">{index + 1}</p>
+                      )}
+                    </div>
+                  </div>
+                  <h4
+                    className={`text-center ${
+                      afacad.className
+                    } font-medium mt-2 ${
+                      index > activeStep
+                        ? "text-zinc-300"
+                        : "text-dashboard-dark"
+                    }`}
+                  >
+                    {step}
+                  </h4>
+                </div>
+              ))}
+              {/* <Stepper
                 connector={<CustomConnector />}
                 sx={{
                   "& .MuiStepLabel-label": {
@@ -139,7 +183,7 @@ const DashboardForm = ({ category }: Props) => {
                     </StepLabel>
                   </Step>
                 ))}
-              </Stepper>
+              </Stepper> */}
             </div>
           </div>
           <form
