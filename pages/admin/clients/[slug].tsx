@@ -11,6 +11,7 @@ import {
   BiImageAlt,
   BiLeftArrowAlt,
   BiLockAlt,
+  BiSave,
   BiSolidPlusCircle,
   BiSolidShow,
   BiSolidUserCheck,
@@ -133,11 +134,38 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   />
                 )}
                 <ButtonPrimary
-                  icon={<BiLockAlt />}
-                  onClick={actions.handleToggleShowPassword}
+                  icon={
+                    state.showChangePassword &&
+                    state.formData.password?.length > 0 ? (
+                      <BiSave />
+                    ) : state.showChangePassword &&
+                      state.formData.password?.length === 0 ? (
+                      <BiX />
+                    ) : (
+                      <BiLockAlt />
+                    )
+                  }
+                  onClick={() => {
+                    if (
+                      state.showChangePassword &&
+                      state.formData.password?.length > 0
+                    ) {
+                      actions.handleChangePassword();
+                    } else {
+                      actions.handleToggleShowPassword();
+                    }
+                  }}
                   type="button"
                   size="small"
-                  title={state.showChangePassword ? "Save" : "Change Password"}
+                  title={
+                    state.showChangePassword &&
+                    state.formData.password?.length > 0
+                      ? "Save"
+                      : state.showChangePassword &&
+                        state.formData.password?.length === 0
+                      ? "Cancel"
+                      : "Change Password"
+                  }
                   className="mb-[10px]"
                 />
               </div>

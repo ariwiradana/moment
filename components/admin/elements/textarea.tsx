@@ -9,6 +9,7 @@ interface InputTextareaProps
   error?: string;
   rows?: number;
   inputSize?: "small" | "medium" | "large";
+  optional?: boolean;
 }
 
 const InputTextarea: FC<InputTextareaProps> = (props) => {
@@ -25,7 +26,10 @@ const InputTextarea: FC<InputTextareaProps> = (props) => {
   return (
     <div className={`${montserrat.className} text-sm`}>
       <label htmlFor={props.id} className="block text-gray-700 mb-1">
-        {props.label}
+        {props.label}{" "}
+        <span className="text-xs text-gray-400">
+          {props.optional && "(opsional)"}
+        </span>
       </label>
       <textarea
         rows={props.rows ?? 4}

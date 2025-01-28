@@ -206,23 +206,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="pt-3 flex flex-col gap-y-2">
-                    {client.status && (
-                      <div className="flex">
-                        <InputSelect
-                          onChange={(e) =>
-                            actions.handleSetStatus(
-                              client.id as number,
-                              e.target.value
-                            )
-                          }
-                          value={client.status}
-                          inputSize="small"
-                          options={clientStatus}
-                        />
-                      </div>
-                    )}
-
+                  <div className="pt-3 flex flex-col gap-y-2 w-full">
                     <div className="grid grid-cols-2 gap-2">
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
@@ -257,6 +241,24 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           {client.theme_category?.name ?? "-"}
                         </p>
                       </div>
+                      {client.status && (
+                        <div>
+                          <p className="text-gray-500 font-medium text-xs mb-1">
+                            Status
+                          </p>
+                          <InputSelect
+                            onChange={(e) =>
+                              actions.handleSetStatus(
+                                client.id as number,
+                                e.target.value
+                              )
+                            }
+                            value={client.status}
+                            inputSize="small"
+                            options={clientStatus}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -7,6 +7,7 @@ interface ButtonPrimaryProps
   title?: string | undefined;
   className?: string | "";
   icon?: ReactNode;
+  iconPosition?: "left" | "right";
   size?: "extrasmall" | "small" | "medium" | "large";
   isloading?: boolean;
 }
@@ -17,6 +18,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
   icon,
   size = "large",
   isloading = false,
+  iconPosition = "left",
   ...props
 }) => {
   const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
@@ -58,12 +60,17 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
           : "opacity-100"
       }`}
     >
-      {icon && (
+      {icon && iconPosition === "left" ? (
         <span className={iconStyles(size)}>
           {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
         </span>
-      )}
+      ) : null}
       {title && <span>{title}</span>}
+      {icon && iconPosition === "right" ? (
+        <span className={iconStyles(size)}>
+          {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
+        </span>
+      ) : null}
     </button>
   );
 };

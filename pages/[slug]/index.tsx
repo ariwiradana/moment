@@ -78,6 +78,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 
   const client: Client | null = response?.data ?? null;
+
   const themeName = client?.theme?.name || "";
   const participantNames =
     getParticipantNames(client?.participants || []) || "";

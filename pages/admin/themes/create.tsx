@@ -11,6 +11,7 @@ import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
 import { Package } from "@/lib/types";
+import InputSwitch from "@/components/admin/elements/input.switch";
 
 interface CreateThemeProps {
   token: string | null;
@@ -33,24 +34,13 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
           onSubmit={actions.handleSubmit}
           className="mt-8 max-w-screen-md flex flex-col gap-y-4"
         >
-          <div className="flex items-center gap-4">
-            <Input
-              className="w-full"
-              onChange={actions.handleChange}
-              name="name"
-              label="Theme Name"
-              value={state.formData.name}
-            />
-            <div className="mt-5">
-              <InputCheckbox
-                onChange={actions.handleChange}
-                checked={state.formData.cover_video as boolean}
-                name="cover_video"
-                label="Cover Video"
-                value={String(state.formData.cover_video)}
-              />
-            </div>
-          </div>
+          <Input
+            className="w-full"
+            onChange={actions.handleChange}
+            name="name"
+            label="Theme Name"
+            value={state.formData.name}
+          />
           <div className="grid md:grid-cols-2 gap-4">
             <Input
               onChange={actions.handleChange}
@@ -101,6 +91,14 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
                 ))}
             </div>
           </div>
+          <InputSwitch
+            onChange={actions.handleChange}
+            checked={state.formData.cover_video as boolean}
+            name="cover_video"
+            label="Cover Video"
+            description="Enable or disable the cover video"
+            value={String(state.formData.cover_video)}
+          />
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
               isloading={state.loading}

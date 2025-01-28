@@ -17,7 +17,7 @@ const PackageComponent = () => {
   const { data } = useSWR("/api/_pb/_p", fetcher);
   const { setSelectedPackageId } = useDashboardStore();
   const router = useRouter();
-
+  
   const pacakages: Package[] = data?.data || [];
 
   if (pacakages.length > 0)

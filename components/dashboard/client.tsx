@@ -70,28 +70,35 @@ const ClientComponent = () => {
                     key={`client-${c.id}`}
                     className="bg-dashboard-dark p-8 rounded aspect-square text-white relative mb-8"
                   >
-                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#000000ca]"></div>
-                    <Image
-                      sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
-                      src={
-                        c.cover ||
-                        `https://placehold.co/400/png?font=playfair-display`
-                      }
-                      alt={`Thumbnail undangan digital ${c.name}`}
-                      fill
-                      className="object-cover w-full h-full rounded"
-                    />
-                    <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
-                      <h2
-                        className={`w-full flex gap-2 ${marcellus.className} text-xl`}
-                      >
-                        <span className="line-clamp-1">{c.name}</span>
-                      </h2>
-                      <p
-                        className={`font-light text-zinc-200 ${afacad.className}`}
-                      >
-                        Undangan {c.theme_category?.name}
-                      </p>
+                    <div
+                      // target="_blank"
+                      // aria-label="Preview Undangan"
+                      // href={`/${c.slug}`}
+                      className="w-full h-full"
+                    >
+                      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#000000ca]"></div>
+                      <Image
+                        sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
+                        src={
+                          c.cover ||
+                          `https://placehold.co/400/png?font=playfair-display`
+                        }
+                        alt={`Thumbnail undangan digital ${c.name}`}
+                        fill
+                        className="object-cover w-full h-full rounded"
+                      />
+                      <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
+                        <h2
+                          className={`w-full flex gap-2 ${marcellus.className} text-xl`}
+                        >
+                          <span className="line-clamp-1">{c.name}</span>
+                        </h2>
+                        <p
+                          className={`font-light text-zinc-200 ${afacad.className}`}
+                        >
+                          Undangan {c.theme_category?.name}
+                        </p>
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
