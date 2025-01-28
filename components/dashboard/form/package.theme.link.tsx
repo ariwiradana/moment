@@ -12,7 +12,7 @@ import { BiCheck } from "react-icons/bi";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import useSWR from "swr";
 import ButtonPrimary from "../elements/button.primary";
-import {IoArrowForward } from "react-icons/io5";
+import { IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -73,7 +73,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
                 key={p.id}
               >
                 {selected && (
-                  <div className="absolute text-dashboard-dark -top-3 -right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-1 text-xl">
+                  <div className="absolute text-dashboard-dark -top-2 lg:-top-3 -right-2 lg:-right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-[2px] lg:p-1 text-lg lg:text-xl">
                     <BiCheck />
                   </div>
                 )}
@@ -100,7 +100,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
       </div>
       <div>
         <label className="block text-gray-700 mb-1 text-sm">Pilih Tema</label>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
           {themes.map((theme) => {
             const selected = theme.id === form.theme_id;
             return (
@@ -112,18 +112,18 @@ const PackageThemeLinkForm = ({ category }: Props) => {
                 }`}
               >
                 {selected && (
-                  <div className="z-10 absolute text-dashboard-dark -top-3 -right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-1 text-xl">
+                  <div className="z-10 absolute text-dashboard-dark -top-2 lg:-top-3 -right-2 lg:-right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-[2px] lg:p-1 text-lg lg:text-xl">
                     <BiCheck />
                   </div>
                 )}
-                <div className="absolute inset-0 flex flex-col justify-end px-4 lg:px-6 py-4 lg:py-6 bg-gradient-to-b from-transparent via-transparent to-dashboard-dark/70 via-[70%] z-10">
+                <div className="absolute inset-0 flex flex-col justify-end px-4 lg:px-6 py-4 lg:py-6 bg-gradient-to-b from-transparent via-dashboard-dark/30 to-dashboard-dark/70 via-[70%] z-10">
                   <p
-                    className={`text-sm lg:text-base text-white/70 mb-[2px] lg:mb-0 ${afacad.className}`}
+                    className={`text-sm lg:text-base text-white/70 lg:mb-0 ${afacad.className}`}
                   >
                     Tema Undangan
                   </p>
                   <h1
-                    className={`${marcellus.className} leading-4 lg:leading-6 text-xl lg:text-2xl text-white font-medium`}
+                    className={`${marcellus.className} leading-4 text-xl lg:text-2xl lg:leading-6 text-white font-medium`}
                   >
                     {theme.name}
                   </h1>

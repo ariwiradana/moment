@@ -137,7 +137,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
             <ClientNotFound />
           ) : (
             <Layout>
-              <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
+              <div className="max-w-screen-2xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
                 <div className="py-16">
                   <div>
                     <h1

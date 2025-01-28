@@ -96,9 +96,9 @@ const DashboardForm = ({ category }: Props) => {
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
 
-      <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-0">
+      <div className="max-w-screen-2xl mx-auto pt-16 md:pt-20 lg:pt-24">
         <div className="pb-16 pt-8">
-          <div className="sticky bg-white z-20 top-16 md:top-20 lg:top-24 py-6">
+          <div className="sticky bg-white z-20 top-16 md:top-20 lg:top-24 py-6 px-6 md:px-12 lg:px-24">
             <div className="lg:hidden">
               <div className="flex items-center gap-x-3">
                 <div className="w-10 h-10 aspect-square rounded flex justify-center items-center bg-dashboard-primary text-dashboard-dark text-2xl">
@@ -128,7 +128,7 @@ const DashboardForm = ({ category }: Props) => {
               </div>
             </div>
             <Stepper
-              className="invisible lg:visible"
+              className="hidden lg:flex"
               connector={<CustomConnector />}
               sx={{
                 "& .MuiStepLabel-label": {
@@ -136,6 +136,7 @@ const DashboardForm = ({ category }: Props) => {
                   fontWeight: "500",
                   color: "grey.400",
                   fontFamily: "Afacad, sans-serif",
+                  marginTop: "8px",
                 },
                 "& .MuiStepLabel-label.Mui-active": {
                   color: "#212224",
@@ -201,7 +202,9 @@ const DashboardForm = ({ category }: Props) => {
               ))}
             </Stepper>
           </div>
-          <form className="lg:mt-8 mt-4">{Form[activeStep]}</form>
+          <form className="lg:mt-8 mt-4 px-6 md:px-12 lg:px-24">
+            {Form[activeStep]}
+          </form>
         </div>
       </div>
     </Layout>

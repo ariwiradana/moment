@@ -51,7 +51,7 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
 
-      <div className="max-w-screen-xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
+      <div className="max-w-screen-2xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
         <div className="py-16">
           <div data-aos="fade-up">
             <h1
