@@ -44,12 +44,6 @@ const initialEvent: Event = {
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
 
-const initialClientForm: ClientForm = {
-  image_link: "",
-  music_title: "",
-  video_link: "",
-};
-
 const initalFormData: Client & { password: string } = {
   id: undefined,
   name: "",
@@ -74,7 +68,7 @@ const initalFormData: Client & { password: string } = {
   status: null,
   theme_category_id: null,
   password: "",
-  client_form: initialClientForm,
+  client_form: null,
 };
 
 export const useAdminUpdateClient = (slug: string, token: string | null) => {
@@ -185,6 +179,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       setThemeOptions(options);
     }
   }, [themes]);
+
+  console.log({ formData });
 
   useEffect(() => {
     if (client && client.data.length > 0) {

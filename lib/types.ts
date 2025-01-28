@@ -85,7 +85,7 @@ export interface Client {
   is_preview?: boolean;
   is_detail?: boolean;
   guests?: string[];
-  client_form?: ClientForm;
+  client_form?: ClientForm | null;
   created_at?: Date | string;
   updated_at?: Date | string;
 }

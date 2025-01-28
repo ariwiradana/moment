@@ -113,11 +113,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           `SELECT cf.*
           FROM client_form cf
           JOIN clients c ON cf.client_id = c.id
-          WHERE c.id = $1
+          WHERE c.id = ANY($1::int[])
           ORDER BY cf.id ASC
           `,
           [clientIds]
         );
+
+        console.log({ clientForms });
+
         const { rows: participants } = await sql.query(
           `
             SELECT p.*
