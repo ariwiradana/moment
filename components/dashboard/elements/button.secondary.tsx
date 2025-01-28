@@ -51,7 +51,7 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = ({
       className={`${afacad.className} ${
         className ?? ""
       } flex items-center text-white rounded whitespace-nowrap font-medium bg-dashboard-dark bg-opacity-95 transition duration-500 hover:bg-opacity-100 justify-start ${
-        !title ? "p-2 md:p-2 lg:p-2" : buttonStyles(size)
+        !title ? "p-2 md:p-2 lg:p-2 aspect-square min-w-10 justify-center" : buttonStyles(size)
       } ${isloading && "pointer-events-none bg-opacity-10 cursor-not-allowed"}`}
     >
       {icon && (

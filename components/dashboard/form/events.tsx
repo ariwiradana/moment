@@ -3,8 +3,9 @@ import { montserrat } from "@/lib/fonts";
 import { Event } from "@/lib/types";
 import useClientFormStore, { initialEvent } from "@/store/useClientFormStore";
 import React from "react";
-import { BiSolidPlusCircle, BiTime } from "react-icons/bi";
+import { BiSolidPlusCircle, BiTime, BiTrash } from "react-icons/bi";
 import ButtonPrimary from "../elements/button.primary";
+import ButtonSecondaryDashboard from "../elements/button.secondary";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
 import InputTextarea from "@/components/admin/elements/textarea";
@@ -36,6 +37,7 @@ const EventForm = () => {
       <div className="max-w-screen-md flex flex-col gap-3">
         {form.events.map((_, index) => (
           <Accordion
+            isExpanded={index === 0}
             key={`Form Event ${index + 1}`}
             title={`Acara ${index + 1}`}
             content={
@@ -77,16 +79,16 @@ const EventForm = () => {
                     handleChangeEvent(index, "date", e.target.value)
                   }
                 />
-                <Input
-                  value={form.events[index].start_time}
-                  className="w-full"
-                  type="time"
-                  label="Jam Mulai Acara"
-                  onChange={(e) =>
-                    handleChangeEvent(index, "start_time", e.target.value)
-                  }
-                />
-                <div className="flex justify-between gap-4 items-end">
+                <div className="grid lg:grid-cols-2 gap-4 w-full">
+                  <Input
+                    value={form.events[index].start_time}
+                    className="w-full"
+                    type="time"
+                    label="Jam Mulai Acara"
+                    onChange={(e) =>
+                      handleChangeEvent(index, "start_time", e.target.value)
+                    }
+                  />
                   <Input
                     type={!toggleEndTimes[index] ? "time" : "text"}
                     disabled={toggleEndTimes[index]}
@@ -97,27 +99,39 @@ const EventForm = () => {
                       handleChangeEvent(index, "end_time", e.target.value)
                     }
                   />
-                  <div className="mb-[10px]">
-                    <ButtonPrimary
-                      icon={<BiTime />}
-                      size="small"
-                      title={
-                        toggleEndTimes[index]
-                          ? "Atur Jam Selesai Acara"
-                          : "Atur Acara Sampai Selesai"
-                      }
+                </div>
+                <div className="flex justify-between w-full">
+                  <ButtonPrimary
+                    icon={<BiTime />}
+                    size="small"
+                    title={
+                      toggleEndTimes[index]
+                        ? "Atur Jam Selesai Acara"
+                        : "Atur Sampai Selesai"
+                    }
+                    onClick={() => {
+                      setToggleEndTimes(index);
+                      handleChangeEvent(
+                        index,
+                        "end_time",
+                        !toggleEndTimes[index] ? "Selesai" : ""
+                      );
+                    }}
+                    type="button"
+                    className="text-sm whitespace-nowrap"
+                  />
+                  {form.events.length > 1 && (
+                    <ButtonSecondaryDashboard
                       onClick={() => {
-                        setToggleEndTimes(index);
-                        handleChangeEvent(
-                          index,
-                          "end_time",
-                          !toggleEndTimes[index] ? "Selesai" : ""
-                        );
+                        const newEvents = [...form.events];
+                        newEvents.splice(index, 1);
+                        setForm("events", newEvents);
                       }}
+                      icon={<BiTrash />}
                       type="button"
-                      className="text-sm whitespace-nowrap"
+                      size="small"
                     />
-                  </div>
+                  )}
                 </div>
               </div>
             }

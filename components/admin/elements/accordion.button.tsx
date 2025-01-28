@@ -5,16 +5,19 @@ import { BiChevronDown } from "react-icons/bi";
 interface AccordionProps {
   title: string;
   content?: ReactNode;
+  isExpanded?: boolean;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const Accordion: React.FC<AccordionProps> = ({
+  title,
+  content,
+  isExpanded = false,
+}) => {
+  const [isOpen, setIsOpen] = useState<boolean>(isExpanded);
 
   return (
     <div
-      className={`overflow-hidden ${
-        montserrat.className
-      } border rounded-lg p-4 ${!isOpen && "h-[60px]"}`}
+      className={`overflow-hidden ${montserrat.className} border rounded-lg p-4`}
     >
       <button
         type="button"

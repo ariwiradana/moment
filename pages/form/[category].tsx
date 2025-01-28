@@ -11,7 +11,9 @@ import { afacad } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
 import { Step, StepConnector, StepLabel, Stepper, styled } from "@mui/material";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import React, { ReactNode, useEffect } from "react";
+import toast from "react-hot-toast";
 import {
   BiCheck,
   BiGift,
@@ -34,7 +36,7 @@ interface Props {
 }
 
 const DashboardForm = ({ category }: Props) => {
-  const { activeStep, setActiveStep } = useClientFormStore();
+  const { activeStep, setActiveStep, form } = useClientFormStore();
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -85,6 +87,21 @@ const DashboardForm = ({ category }: Props) => {
     <BiGift key="Step Icon 6" />,
     <BiText key="Step Icon 7" />,
   ];
+
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (activeStep === 6) {
+      try {
+        alert(JSON.stringify(form));
+        toast.success("Informasi Undangan berhasil ditambahkan.");
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <Layout>
@@ -202,7 +219,10 @@ const DashboardForm = ({ category }: Props) => {
               ))}
             </Stepper>
           </div>
-          <form className="lg:mt-8 mt-4 px-6 md:px-12 lg:px-24">
+          <form
+            onSubmit={handleSubmit}
+            className="lg:mt-8 mt-4 px-6 md:px-12 lg:px-24"
+          >
             {Form[activeStep]}
           </form>
         </div>

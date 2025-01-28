@@ -107,7 +107,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
               <div
                 key={`Form Tema ${theme.name}`}
                 onClick={() => setForm("theme_id", theme.id as number)}
-                className={`aspect-square rounded-md relative border-2 cursor-pointer ${
+                className={`aspect-square rounded-md w-full h-full relative border-2 cursor-pointer ${
                   selected ? "border-dashboard-primary" : "border-transparent"
                 }`}
               >
@@ -128,10 +128,10 @@ const PackageThemeLinkForm = ({ category }: Props) => {
                     {theme.name}
                   </h1>
                 </div>
-                <div className="relative aspect-square rounded overflow-hidden">
+                <div className="relative aspect-square rounded overflow-hidden w-full h-full">
                   <Image
                     fill
-                    className="object-cover rounded"
+                    className="object-cover rounded w-full h-full"
                     alt={`Tema Form ${theme.name}`}
                     src={
                       (theme.thumbnail as string) ||

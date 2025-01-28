@@ -9,7 +9,7 @@ interface StoreState {
   toggleExpanded: boolean[];
   setForm: (
     name: string,
-    value: string | number | Event[] | Participant[]
+    value: string | number | Event[] | Participant[] | string[]
   ) => void;
   setActiveStep: (step: number) => void;
   setToggleEndTimes: (index: number) => void;
@@ -82,7 +82,10 @@ const useClientFormStore = create<StoreState>((set) => ({
     gallery: [],
     music: null,
   },
-  setForm: (name: string, value: string | number | Event[] | Participant[]) =>
+  setForm: (
+    name: string,
+    value: string | number | Event[] | Participant[] | string[]
+  ) =>
     set((state) => ({
       form: {
         ...state.form,
