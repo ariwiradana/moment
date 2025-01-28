@@ -43,7 +43,7 @@ const useClientForm = (category: string) => {
   });
 
   const [steps] = useState<string[]>([
-    "Paket, Tema & Link Undangan",
+    "Link, Paket & Tema Undangan",
     "Acara Undangan",
     "Mempelai Pria",
     "Mempelai Wanita",

@@ -43,10 +43,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             closing_description,
             gift_bank_name,
             gift_account_name,
-            gift_account_number,
-            gallery,
-            videos
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *`,
+            gift_account_number
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
           [
             createSlug(client.slug),
             client.name,
@@ -61,8 +59,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             client.gift_bank_name,
             client.gift_account_name,
             client.gift_account_number,
-            client.gallery,
-            client.videos,
           ]
         );
 
@@ -71,6 +67,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (!clientId) {
           return handleError(res, new Error("Gagal menambahkan klien."));
         }
+
+        const { rows: clientFormResult } = await sql.query(
+          `INSERT INTO client_form (
+            client_id,
+            image_link,
+            video_link,
+            music_title
+          ) VALUES ($1, $2, $3, $4)
+          RETURNING *;`,
+          [
+            clientId,
+            Array.isArray(client.gallery) && client.gallery.length > 0
+              ? client.gallery[0]
+              : null, // Safely get first image or null
+            Array.isArray(client.videos) && client.videos.length > 0
+              ? client.videos[0]
+              : null, // Safely get first video or null
+            client.music || null, // Ensure valid value or set null
+          ]
+        );
 
         const participants: Participant[] = client.participants;
         const participantPromises = participants.map(async (p: Participant) => {
@@ -136,6 +152,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         await Promise.all(eventPromises);
 
         const newClient = clientResult[0];
+
+        newClient["client_form"] = clientFormResult;
 
         newClient["participants"] = participants.map((participant) => ({
           ...participant,

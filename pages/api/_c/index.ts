@@ -109,6 +109,15 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
         const clientIds = rows.map((client) => client.id);
 
+        const { rows: clientForms } = await sql.query(
+          `SELECT cf.*
+          FROM client_form cf
+          JOIN clients c ON cf.client_id = c.id
+          WHERE c.id = $1
+          ORDER BY cf.id ASC
+          `,
+          [clientIds]
+        );
         const { rows: participants } = await sql.query(
           `
             SELECT p.*
@@ -139,6 +148,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         );
 
         const clients = rows.map((client: Client) => {
+          const clientForm = clientForms.filter(
+            (cf) => cf.client_id === client.id
+          );
           const clientParticipants = participants.filter(
             (p) => p.client_id === client.id
           );
@@ -163,6 +175,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             wishes: clientwishes,
             package: clientPackages,
             theme_category: clientThemeCategories,
+            client_form: clientForm.length > 0 ? clientForm[0] : null,
           };
         });
 

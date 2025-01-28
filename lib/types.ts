@@ -83,8 +83,9 @@ export interface Client {
   cover: null | string;
   seo: null | string;
   is_preview?: boolean;
-  is_detail?: boolean,
+  is_detail?: boolean;
   guests?: string[];
+  client_form?: ClientForm;
   created_at?: Date | string;
   updated_at?: Date | string;
 }
@@ -154,6 +155,16 @@ export interface ThemeCategory {
   name: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface ClientForm {
+  id?: number;
+  client_id?: number;
+  image_link: string;
+  video_link: string;
+  music_title: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export type ApiHandler = (

@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
 import {
   Client,
+  ClientForm,
   Event,
   Option,
   Package,
@@ -43,6 +44,12 @@ const initialEvent: Event = {
   end_time: moment("06:00", "HH:mm").format("HH:mm"),
 };
 
+const initialClientForm: ClientForm = {
+  image_link: "",
+  music_title: "",
+  video_link: "",
+};
+
 const initalFormData: Client & { password: string } = {
   id: undefined,
   name: "",
@@ -67,6 +74,7 @@ const initalFormData: Client & { password: string } = {
   status: null,
   theme_category_id: null,
   password: "",
+  client_form: initialClientForm,
 };
 
 export const useAdminUpdateClient = (slug: string, token: string | null) => {
@@ -249,6 +257,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         gift_account_name: currentClient.gift_account_name,
         is_preview: currentClient.is_preview,
         status: currentClient.status,
+        client_form: currentClient.client_form,
         theme_category_id: !currentClient.theme_category_id
           ? (themeCategoryOptions[0].value as number)
           : currentClient.theme_category_id,
@@ -1083,7 +1092,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           body: JSON.stringify({
             username: formData.slug,
             password: formData.password,
-            role: 'client'
+            role: "client",
           }),
         },
         token

@@ -200,6 +200,22 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               }
               label="Theme"
             />
+            <h1 className="text-2xl font-bold mb-4 mt-8">Client Asset(s)</h1>
+            <Input
+              disabled
+              defaultValue={state.formData.client_form?.image_link || "-"}
+              label="Photos Link"
+            />
+            <Input
+              disabled
+              defaultValue={state.formData.client_form?.video_link || "-"}
+              label="Video Link"
+            />
+            <Input
+              disabled
+              defaultValue={state.formData.client_form?.music_title || "-"}
+              label="Music Title"
+            />
             <h1 className="text-2xl font-bold mb-4 mt-8">Greeting(s)</h1>
             <Input
               value={state.formData.opening_title}

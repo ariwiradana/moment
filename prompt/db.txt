@@ -132,6 +132,17 @@ CREATE TABLE users(
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE client_form (
+  id SERIAL PRIMARY KEY,
+  client_id INT REFERENCES clients(id) ON DELETE SET NULL,
+  image_link VARCHAR(255),
+  video_link VARCHAR(255),
+  music_title VARCHAR(255),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+
 INSERT INTO packages (
     name, custom_opening_closing, unlimited_revisions, unlimited_guest_names, 
     max_events, max_gallery_photos, contact_social_media, background_sound, max_videos, 

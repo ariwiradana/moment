@@ -29,7 +29,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
         value={form.slug}
         onChange={(e) => setForm("slug", e.target.value)}
         label="Link Undangan"
-        placeholder="Contoh: /nama-undangan"
+        placeholder="Contoh: rama-shinta"
       />
       <div>
         <label className="block text-gray-700 mb-1 text-sm">Pilih Paket</label>
