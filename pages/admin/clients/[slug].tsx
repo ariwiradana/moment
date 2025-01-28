@@ -238,44 +238,18 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               label="Closing Description"
             />
             <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
-            <div>
-              <Input
-                id="gallery"
-                accept="image/*"
-                type="file"
-                multiple
-                onChange={(e) =>
-                  actions.handleChangeClient(
-                    e.target.files as FileList,
-                    "images"
-                  )
-                }
-                className="w-full"
-                label="Gallery"
-              />
-              <div className="flex gap-x-1">
-                {Array.isArray(state.formData.gallery) &&
-                state.formData.gallery.length > 0
-                  ? state.formData.gallery.map((img: string, index: number) => {
-                      return (
-                        <Link
-                          key={img}
-                          target="_blank"
-                          href={img}
-                          className="text-sm underline mt-2"
-                        >
-                          <p>
-                            <span>{img}</span>
-                            {index !==
-                              (state.formData.videos as string[])?.length -
-                                1 && <span>,</span>}
-                          </p>
-                        </Link>
-                      );
-                    })
-                  : null}
-              </div>
-            </div>
+
+            <Input
+              id="gallery"
+              accept="image/*"
+              type="file"
+              multiple
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.files as FileList, "images")
+              }
+              className="w-full"
+              label="Gallery"
+            />
 
             <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-2">
               {Array.isArray(state.formData.gallery) &&
@@ -367,37 +341,11 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   })
                 : null}
             </div>
-            <div>
-              <InputChip
-                chips={state.videosForm}
-                onChange={(value) =>
-                  actions.handleChangeClient(value, "videos")
-                }
-                label="Video URL"
-              />
-              <div className="flex gap-x-1">
-                {Array.isArray(state.formData.videos) &&
-                state.formData.videos.length > 0
-                  ? state.formData.videos.map((img: string, index: number) => {
-                      return (
-                        <Link
-                          key={img}
-                          target="_blank"
-                          href={img}
-                          className="text-sm underline mt-2"
-                        >
-                          <p>
-                            <span>{img}</span>
-                            {index !==
-                              (state.formData.videos as string[])?.length -
-                                1 && <span>,</span>}
-                          </p>
-                        </Link>
-                      );
-                    })
-                  : null}
-              </div>
-            </div>
+            <InputChip
+              chips={state.videosForm}
+              onChange={(value) => actions.handleChangeClient(value, "videos")}
+              label="Video URL"
+            />
             <Input
               id="cover-video"
               accept="video/*"

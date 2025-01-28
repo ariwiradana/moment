@@ -2,6 +2,7 @@ import handleError from "@/lib/errorHandling";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Client, Event, Participant } from "@/lib/types";
+import { createSlug } from "@/utils/createSlug";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -18,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (client.slug) {
           const checkSlug = await sql.query(
             `SELECT EXISTS (SELECT 1 FROM clients WHERE slug = $1);`,
-            [client.slug]
+            [createSlug(client.slug)]
           );
           if (checkSlug.rows.length > 0 && checkSlug.rows[0].exists) {
             return handleError(
@@ -47,7 +48,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             videos
           ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *`,
           [
-            client.slug,
+            createSlug(client.slug),
             client.name,
             client.theme_id,
             client.theme_category_id,
