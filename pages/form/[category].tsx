@@ -5,6 +5,7 @@ import { afacad } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { BiCheck } from "react-icons/bi";
 
 interface Props {
   category: string;
@@ -89,10 +90,12 @@ const DashboardForm = ({ category }: Props) => {
                         afacad.className
                       }`}
                     >
-                      {index <= activeStep ? (
+                      {index === activeStep ? (
                         state.stepIcons[index]
+                      ) : index < activeStep ? (
+                        <BiCheck />
                       ) : (
-                        <p className="text-xl font-medium">{index + 1}</p>
+                        <p className="text-lg font-medium">{index + 1}</p>
                       )}
                     </div>
                   </div>
