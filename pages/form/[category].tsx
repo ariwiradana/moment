@@ -116,7 +116,9 @@ const DashboardForm = ({ category }: Props) => {
                                 : activeStep === index
                                 ? "bg-dashboard-primary text-dashboard-dark"
                                 : "bg-zinc-300 text-white"
-                            } aspect-square min-w-10 min-h-10 rounded-full flex items-center justify-center text-2xl`}
+                            } aspect-square min-w-10 min-h-10 rounded-full flex items-center justify-center text-2xl ${
+                              afacad.className
+                            }`}
                           >
                             {index < activeStep ? (
                               <BiCheck />
