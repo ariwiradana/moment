@@ -66,7 +66,7 @@ const useClientForm = (category: string) => {
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (!isUnloadProtected) {
+      if (isUnloadProtected) {
         event.preventDefault();
         event.returnValue = "";
       }
