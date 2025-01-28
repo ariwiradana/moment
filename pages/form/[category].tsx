@@ -1,6 +1,7 @@
 import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
 import useClientForm from "@/hooks/form/useClientForm";
+import useDisableInspect from "@/hooks/useDisableInspect";
 import { afacad } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
 import { GetServerSideProps } from "next";
@@ -14,6 +15,7 @@ interface Props {
 const DashboardForm = ({ category }: Props) => {
   const { state, actions } = useClientForm(category);
   const { activeStep, setActiveStep } = useClientFormStore();
+  useDisableInspect();
 
   return (
     <Layout>
