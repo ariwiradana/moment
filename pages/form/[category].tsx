@@ -81,7 +81,9 @@ const DashboardForm = ({ category }: Props) => {
                       ></div>
                     )}
                     <div
-                      onClick={() => setActiveStep(index)}
+                      onClick={() =>
+                        index < activeStep ? setActiveStep(index) : undefined
+                      }
                       className={`${
                         index < activeStep
                           ? "bg-dashboard-primary text-dashboard-dark cursor-pointer"
@@ -114,81 +116,6 @@ const DashboardForm = ({ category }: Props) => {
                   </h4>
                 </div>
               ))}
-              {/* <Stepper
-                connector={<CustomConnector />}
-                sx={{
-                  "& .MuiStepLabel-label": {
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    color: "grey.400",
-                    fontFamily: "Afacad, sans-serif",
-                    marginTop: "8px",
-                  },
-                  "& .MuiStepLabel-label.Mui-active": {
-                    color: "#212224",
-                    fontWeight: "600",
-                  },
-                  "& .MuiStepLabel-label.Mui-completed": {
-                    color: "#212224",
-                    fontWeight: "600",
-                  },
-                  "& .MuiStepIcon-root": {
-                    color: "grey.300",
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "50%",
-                  },
-                  "& .MuiStepIcon-root.Mui-active": {
-                    color: "#ffbd59",
-                  },
-                  "& .MuiStepIcon-root.Mui-completed": {
-                    color: "#33B747",
-                  },
-                }}
-                activeStep={activeStep}
-                alternativeLabel
-              >
-                {state.steps.map((label, index) => (
-                  <Step key={label}>
-                    <StepLabel
-                      StepIconComponent={() => {
-                        return (
-                          <div
-                            onClick={() => {
-                              if (index < activeStep) {
-                                setActiveStep(index);
-                              }
-                            }}
-                            className={`${
-                              index < activeStep
-                                ? "bg-admin-success text-white cursor-pointer"
-                                : activeStep === index
-                                ? "bg-dashboard-primary text-dashboard-dark"
-                                : "bg-zinc-300 text-white"
-                            } aspect-square min-w-10 min-h-10 rounded-full flex items-center justify-center text-2xl ${
-                              afacad.className
-                            }`}
-                          >
-                            {index < activeStep ? (
-                              <BiCheck />
-                            ) : activeStep === index ? (
-                              state.stepIcons[index]
-                            ) : (
-                              <p
-                                className={`${afacad.className} font-medium text-lg`}
-                              >
-                                {index + 1}
-                              </p>
-                            )}
-                          </div>
-                        );
-                      }}
-                    >
-                      {label}
-                    </StepLabel>
-                  </Step>
-                ))}
-              </Stepper> */}
             </div>
           </div>
           <form
