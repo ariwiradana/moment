@@ -38,7 +38,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
       >
         <div className="absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-[70vw] lg:w-auto lg:min-w-[20vw] p-6 lg:p-0">
           <div
-            className={`text-dashboard-dark bg-white border p-12 rounded overflow-y-auto relative w-full lg:w-auto`}
+            className={`text-dashboard-dark bg-white border p-8 lg:p-12 rounded relative w-full lg:w-auto`}
           >
             <button
               onClick={() => setActiveModal((state) => !state)}
@@ -80,121 +80,124 @@ const PackageThemeLinkForm = ({ category }: Props) => {
                 </div>
               ) : null}
             </div>
-            <ul
-              className={`${afacad.className} mt-6 ml-4 text-lg capitalize leading-8`}
-            >
-              <li
-                className={`list-disc ${
-                  !detailPackage?.unlimited_revisions &&
-                  "line-through text-gray-300"
-                }`}
+
+            <div className="overflow-y-auto max-h-[40svh] mt-6 relative">
+              <ul
+                className={`${afacad.className} ml-4 text-lg capitalize leading-8`}
               >
-                Revisi tidak terbatas
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.unlimited_guest_names &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                Nama tamu tidak terbatas
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.custom_opening_closing &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                Kustomisasi kalimat pembuka & penutup
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.countdown && "line-through text-gray-300"
-                }`}
-              >
-                Hitung Mundur Waktu
-              </li>
-              <li className="list-disc">
-                {Number(detailPackage?.max_events) === 0
-                  ? "Acara tak terbatas per undangan"
-                  : `Maksimal ${detailPackage?.max_events} acara per undangan`}
-              </li>
-              <li
-                className={`list-disc ${
-                  Number(detailPackage?.max_gallery_photos) === 0 &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                {Number(detailPackage?.max_gallery_photos) !== 0
-                  ? `Galeri Foto (maksimal ${detailPackage?.max_gallery_photos} foto)`
-                  : "Galeri Foto"}
-              </li>
-              <li
-                className={`list-disc ${
-                  Number(detailPackage?.max_videos) === 0 &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                {Number(detailPackage?.max_videos) !== 0
-                  ? `Rekaman video (maksimal ${detailPackage?.max_videos} video)`
-                  : "Rekaman video"}
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.contact_social_media &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                Kontak Media Sosial
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.background_sound &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                Musik Latar
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.rsvp_and_greetings &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                RSVP & Ucapan
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.google_maps_integration &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                Lokasi terintegrasi dengan Google Maps
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.add_to_calendar &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                Fitur Tambahkan ke Kalender
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.custom_cover && "line-through text-gray-300"
-                }`}
-              >
-                Pilih cover foto / video cover
-              </li>
-              <li
-                className={`list-disc ${
-                  !detailPackage?.digital_envelope &&
-                  "line-through text-gray-300"
-                }`}
-              >
-                Amplop digital
-              </li>
-            </ul>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.unlimited_revisions &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Revisi tidak terbatas
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.unlimited_guest_names &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Nama tamu tidak terbatas
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.custom_opening_closing &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Kustomisasi kalimat pembuka & penutup
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.countdown && "line-through text-gray-300"
+                  }`}
+                >
+                  Hitung Mundur Waktu
+                </li>
+                <li className="list-disc">
+                  {Number(detailPackage?.max_events) === 0
+                    ? "Acara tak terbatas per undangan"
+                    : `Maksimal ${detailPackage?.max_events} acara per undangan`}
+                </li>
+                <li
+                  className={`list-disc ${
+                    Number(detailPackage?.max_gallery_photos) === 0 &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  {Number(detailPackage?.max_gallery_photos) !== 0
+                    ? `Galeri Foto (maksimal ${detailPackage?.max_gallery_photos} foto)`
+                    : "Galeri Foto"}
+                </li>
+                <li
+                  className={`list-disc ${
+                    Number(detailPackage?.max_videos) === 0 &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  {Number(detailPackage?.max_videos) !== 0
+                    ? `Rekaman video (maksimal ${detailPackage?.max_videos} video)`
+                    : "Rekaman video"}
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.contact_social_media &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Kontak Media Sosial
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.background_sound &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Musik Latar
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.rsvp_and_greetings &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  RSVP & Ucapan
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.google_maps_integration &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Lokasi terintegrasi dengan Google Maps
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.add_to_calendar &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Fitur Tambahkan ke Kalender
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.custom_cover && "line-through text-gray-300"
+                  }`}
+                >
+                  Pilih cover foto / video cover
+                </li>
+                <li
+                  className={`list-disc ${
+                    !detailPackage?.digital_envelope &&
+                    "line-through text-gray-300"
+                  }`}
+                >
+                  Amplop digital
+                </li>
+              </ul>
+            </div>
             <div className="mt-8">
               <ButtonPrimary
                 aria-label="Paket undangan digital Bali"
