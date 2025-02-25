@@ -230,7 +230,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
                     selected
                       ? " border-2 border-dashboard-primary"
                       : "bg-white border"
-                  } p-6 rounded cursor-pointer relative text-dashboard-dark flex justify-between items-center`}
+                  } p-6 rounded cursor-pointer relative text-dashboard-dark flex flex-wrap gap-4 lg:gap-6 justify-between items-center`}
                   key={p.id}
                 >
                   {selected && (
