@@ -267,7 +267,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
                         setDetailPackage(p);
                       }}
                       size="small"
-                      title="Detail Paket"
+                      title="Detail"
                       icon={<BiDetail />}
                     />
                   </div>
