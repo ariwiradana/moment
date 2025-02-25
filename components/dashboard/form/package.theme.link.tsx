@@ -6,7 +6,7 @@ import { calculateDiscountPercentage } from "@/utils/calculateDiscount";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import Image from "next/image";
 import React, { useState } from "react";
-import { BiCheck, BiDetail } from "react-icons/bi";
+import { BiCheck, BiDetail, BiX } from "react-icons/bi";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import ButtonPrimary from "../elements/button.primary";
 import { IoArrowForward } from "react-icons/io5";
@@ -36,8 +36,16 @@ const PackageThemeLinkForm = ({ category }: Props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className={`text-dashboard-dark bg-white border p-12 rounded`}>
+        <div className="absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-[70vw] lg:w-auto lg:min-w-[20vw] p-6 lg:p-0">
+          <div
+            className={`text-dashboard-dark bg-white border p-12 rounded overflow-y-auto relative w-full lg:w-auto`}
+          >
+            <button
+              onClick={() => setActiveModal((state) => !state)}
+              className="absolute right-4 top-4 text-xl outline-none"
+            >
+              <BiX />
+            </button>
             <h2 className={`${dm.className} text-3xl lg:text-[40px] font-bold`}>
               Paket {detailPackage?.name}
             </h2>
