@@ -5,12 +5,14 @@ import { raleway } from "@/lib/fonts";
 import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
 import useEvents from "@/hooks/themes/useEvents";
+import { UseMusic } from "@/hooks/themes/useMusic";
 
 interface Props {
   to: string;
+  actions: UseMusic["actions"];
 }
 
-const Cover = ({ to }: Props) => {
+const Cover = ({ to, actions }: Props) => {
   const { toggleIsOpen, isOpen } = useCoverStore();
   const { state } = useEvents();
 
@@ -48,7 +50,10 @@ const Cover = ({ to }: Props) => {
         </p>
         <div data-aos="fade-down" data-aos-delay="600">
           <Button
-            onClick={toggleIsOpen}
+            onClick={() => {
+              toggleIsOpen();
+              actions.handlePlayPause();
+            }}
             title="Buka Undangan"
             icon={<BiEnvelopeOpen />}
           />

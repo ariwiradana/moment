@@ -12,7 +12,7 @@ import { ChildOrderOptions } from "@/constants/childOrder";
 const GroomForm = () => {
   const { setForm, form, activeStep, setActiveStep } = useClientFormStore();
 
-  const handleChangeEvent = (name: string, value: string) => {
+  const handleChangeGroom = (name: string, value: string) => {
     const participants = [...form.participants];
     participants[0] = {
       ...participants[0],
@@ -27,14 +27,14 @@ const GroomForm = () => {
         <div className="grid md:grid-cols-2 gap-4">
           <Input
             value={form.participants[0].name}
-            onChange={(e) => handleChangeEvent("name", e.target.value)}
+            onChange={(e) => handleChangeGroom("name", e.target.value)}
             placeholder="Contoh: I Putu Rama Putra"
             className="w-full"
             label="Nama Lengkap"
           />
           <Input
             value={form.participants[0].nickname}
-            onChange={(e) => handleChangeEvent("nickname", e.target.value)}
+            onChange={(e) => handleChangeGroom("nickname", e.target.value)}
             placeholder="Contoh: Rama"
             className="w-full"
             label="Nama Panggilan"
@@ -43,7 +43,7 @@ const GroomForm = () => {
         <div className="grid md:grid-cols-2 gap-4">
           <Input
             value={form.participants[0].parents_male as string}
-            onChange={(e) => handleChangeEvent("parents_male", e.target.value)}
+            onChange={(e) => handleChangeGroom("parents_male", e.target.value)}
             placeholder="Contoh: I Wayan Putrawan"
             className="w-full"
             label="Nama Ayah"
@@ -51,7 +51,7 @@ const GroomForm = () => {
           <Input
             value={form.participants[0].parents_female as string}
             onChange={(e) =>
-              handleChangeEvent("parents_female", e.target.value)
+              handleChangeGroom("parents_female", e.target.value)
             }
             placeholder="Contoh: Ni Made Putri"
             className="w-full"
@@ -62,11 +62,11 @@ const GroomForm = () => {
           value={form.participants[0].child as string}
           options={ChildOrderOptions}
           label="Anak Ke"
-          onChange={(e) => handleChangeEvent("child", e.target.value)}
+          onChange={(e) => handleChangeGroom("child", e.target.value)}
         />
         <InputTextarea
           value={form.participants[0].address}
-          onChange={(e) => handleChangeEvent("address", e.target.value)}
+          onChange={(e) => handleChangeGroom("address", e.target.value)}
           placeholder="Contoh: JL. Raya Kerobokan, Kuta Utara, Badung"
           rows={6}
           label="Alamat"
@@ -75,7 +75,7 @@ const GroomForm = () => {
           <Input
             optional
             value={form.participants[0].facebook as string}
-            onChange={(e) => handleChangeEvent("facebook", e.target.value)}
+            onChange={(e) => handleChangeGroom("facebook", e.target.value)}
             placeholder="Contoh: facebook.com/ramaputra"
             className="w-full"
             label="Facebook"
@@ -83,7 +83,7 @@ const GroomForm = () => {
           <Input
             optional
             value={form.participants[0].twitter as string}
-            onChange={(e) => handleChangeEvent("twitter", e.target.value)}
+            onChange={(e) => handleChangeGroom("twitter", e.target.value)}
             placeholder="Contoh: x.com/ramaputra"
             className="w-full"
             label="Twitter/X"
@@ -93,7 +93,7 @@ const GroomForm = () => {
           <Input
             optional
             value={form.participants[0].instagram as string}
-            onChange={(e) => handleChangeEvent("instagram", e.target.value)}
+            onChange={(e) => handleChangeGroom("instagram", e.target.value)}
             placeholder="Contoh: instagram.com/ramaputra"
             className="w-full"
             label="Instagram"
@@ -101,7 +101,7 @@ const GroomForm = () => {
           <Input
             optional
             value={form.participants[0].tiktok as string}
-            onChange={(e) => handleChangeEvent("tiktok", e.target.value)}
+            onChange={(e) => handleChangeGroom("tiktok", e.target.value)}
             placeholder="Contoh: tiktok.com/@ramaputra"
             className="w-full"
             label="TikTok"

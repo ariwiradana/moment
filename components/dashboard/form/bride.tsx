@@ -12,7 +12,7 @@ import { ChildOrderOptions } from "@/constants/childOrder";
 const BrideForm = () => {
   const { setForm, form, activeStep, setActiveStep } = useClientFormStore();
 
-  const handleChangeEvent = (name: string, value: string) => {
+  const handleChangeBride = (name: string, value: string) => {
     const participants = [...form.participants];
     participants[1] = {
       ...participants[1],
@@ -27,14 +27,14 @@ const BrideForm = () => {
         <div className="grid md:grid-cols-2 gap-4">
           <Input
             value={form.participants[1].name}
-            onChange={(e) => handleChangeEvent("name", e.target.value)}
+            onChange={(e) => handleChangeBride("name", e.target.value)}
             placeholder="Contoh: Ni Made Shinta Dewi"
             className="w-full"
             label="Nama Lengkap"
           />
           <Input
             value={form.participants[1].nickname}
-            onChange={(e) => handleChangeEvent("nickname", e.target.value)}
+            onChange={(e) => handleChangeBride("nickname", e.target.value)}
             placeholder="Contoh: Shinta"
             className="w-full"
             label="Nama Panggilan"
@@ -43,7 +43,7 @@ const BrideForm = () => {
         <div className="grid md:grid-cols-2 gap-4">
           <Input
             value={form.participants[1].parents_male as string}
-            onChange={(e) => handleChangeEvent("parents_male", e.target.value)}
+            onChange={(e) => handleChangeBride("parents_male", e.target.value)}
             placeholder="Contoh: I Wayan Putrawan"
             className="w-full"
             label="Nama Ayah"
@@ -51,7 +51,7 @@ const BrideForm = () => {
           <Input
             value={form.participants[1].parents_female as string}
             onChange={(e) =>
-              handleChangeEvent("parents_female", e.target.value)
+              handleChangeBride("parents_female", e.target.value)
             }
             placeholder="Contoh: Ni Made Putri"
             className="w-full"
@@ -62,11 +62,11 @@ const BrideForm = () => {
           value={form.participants[1].child as string}
           options={ChildOrderOptions}
           label="Anak Ke"
-          onChange={(e) => handleChangeEvent("child", e.target.value)}
+          onChange={(e) => handleChangeBride("child", e.target.value)}
         />
         <InputTextarea
           value={form.participants[1].address}
-          onChange={(e) => handleChangeEvent("address", e.target.value)}
+          onChange={(e) => handleChangeBride("address", e.target.value)}
           placeholder="Contoh: JL. Raya Petitenget, Kuta Utara, Badung"
           rows={6}
           label="Alamat"
@@ -75,7 +75,7 @@ const BrideForm = () => {
           <Input
             optional
             value={form.participants[1].facebook as string}
-            onChange={(e) => handleChangeEvent("facebook", e.target.value)}
+            onChange={(e) => handleChangeBride("facebook", e.target.value)}
             placeholder="Contoh: facebook.com/shintadewi"
             className="w-full"
             label="Facebook"
@@ -83,7 +83,7 @@ const BrideForm = () => {
           <Input
             optional
             value={form.participants[1].twitter as string}
-            onChange={(e) => handleChangeEvent("twitter", e.target.value)}
+            onChange={(e) => handleChangeBride("twitter", e.target.value)}
             placeholder="Contoh: x.com/shintadewi"
             className="w-full"
             label="Twitter/X"
@@ -93,7 +93,7 @@ const BrideForm = () => {
           <Input
             optional
             value={form.participants[1].instagram as string}
-            onChange={(e) => handleChangeEvent("instagram", e.target.value)}
+            onChange={(e) => handleChangeBride("instagram", e.target.value)}
             placeholder="Contoh: instagram.com/shintadewi"
             className="w-full"
             label="Instagram"
@@ -101,7 +101,7 @@ const BrideForm = () => {
           <Input
             optional
             value={form.participants[1].tiktok as string}
-            onChange={(e) => handleChangeEvent("tiktok", e.target.value)}
+            onChange={(e) => handleChangeBride("tiktok", e.target.value)}
             placeholder="Contoh: tiktok.com/@shintadewi"
             className="w-full"
             label="TikTok"

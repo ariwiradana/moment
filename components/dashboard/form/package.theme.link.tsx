@@ -11,7 +11,7 @@ import { RiDiscountPercentFill } from "react-icons/ri";
 import ButtonPrimary from "../elements/button.primary";
 import { IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
-import useClientForm from "@/hooks/form/useClientForm";
+import useClientForm from "@/hooks/client/useClientForm";
 import ButtonSecondary from "../elements/button.secondary";
 import { Modal } from "@mui/material";
 import { Package } from "@/lib/types";
@@ -26,6 +26,8 @@ const PackageThemeLinkForm = ({ category }: Props) => {
   const [activeModal, setActiveModal] = useState(false);
   const [detailPackage, setDetailPackage] = useState<Package | null>(null);
 
+  console.log(form);
+
   if (state.isLoadingThemes || state.isLoadingePackages) return <Loader />;
 
   return (
@@ -36,7 +38,11 @@ const PackageThemeLinkForm = ({ category }: Props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="absolute top-1/2 transform left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-[70vw] lg:w-auto lg:min-w-[20vw] p-6 lg:p-0">
+        <div
+          className={`absolute ${
+            activeModal ? "bottom-0" : "-bottom-full"
+          } lg:bottom-auto lg:top-1/2 transform left-1/2 -translate-x-1/2 lg:-translate-y-1/2 w-full md:w-[80vw] lg:w-auto lg:min-w-[20vw]`}
+        >
           <div
             className={`text-dashboard-dark bg-white border p-8 lg:p-12 rounded relative w-full lg:w-auto`}
           >
@@ -81,9 +87,9 @@ const PackageThemeLinkForm = ({ category }: Props) => {
               ) : null}
             </div>
 
-            <div className="overflow-y-auto max-h-[40svh] mt-6 relative">
-              <ul
-                className={`${afacad.className} ml-4 text-lg capitalize leading-8`}
+            <div className="overflow-y-auto max-h-[80svh] mt-6 relative">
+              <div
+                className={`${afacad.className} text-lg capitalize leading-8 grid grid-cols-1 md:grid-cols-2 gap-x-12 whitespace-nowrap`}
               >
                 <li
                   className={`list-disc ${
@@ -196,7 +202,7 @@ const PackageThemeLinkForm = ({ category }: Props) => {
                 >
                   Amplop digital
                 </li>
-              </ul>
+              </div>
             </div>
             <div className="mt-8">
               <ButtonPrimary

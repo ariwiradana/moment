@@ -6,6 +6,8 @@ import Participants from "./layouts/participants";
 import useCoverStore from "@/store/useCoverStore";
 // import Photos from "./layouts/photos";
 import Events from "./layouts/events";
+import MusicComponent from "./layouts/music";
+import useMusic from "@/hooks/themes/useMusic";
 
 interface Props {
   untuk: string;
@@ -13,9 +15,11 @@ interface Props {
 
 const Nirvaya = ({ untuk }: Props) => {
   const { isOpen } = useCoverStore();
+  const { state, actions, refs } = useMusic();
   return (
     <Layout>
-      <Cover to={untuk} />
+      <MusicComponent actions={actions} refs={refs} state={state} />
+      <Cover actions={actions} to={untuk} />
       <Hero />
       {isOpen && (
         <>
