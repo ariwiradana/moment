@@ -99,7 +99,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           return {
             ...client,
             theme_category: {
-              name: clientThemeCategory.name,
+              name: clientThemeCategory?.name,
             },
           };
         });

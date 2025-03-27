@@ -1,11 +1,15 @@
 import React from "react";
-import { afacad, dm, marcellus } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import Image from "next/image";
+import {
+  HiOutlineArrowLongLeft,
+  HiOutlineArrowLongRight,
+} from "react-icons/hi2";
 
 const ClientComponent = () => {
   const { data } = useSWR(
@@ -17,92 +21,85 @@ const ClientComponent = () => {
 
   if (clients.length > 0)
     return (
-      <section
-        data-aos="fade-up"
-        className="py-16 lg:py-24 relative select-none"
-        id="section5"
-      >
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative">
-          <div data-aos="fade-up">
-            <h2
-              className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
-            >
-              Klien Yang Telah
-              <br />
-              Menggunakan Jasa Kami
-            </h2>
-            <p
-              className={`${afacad.className} text-lg md:text-xl mt-3 text-gray-500`}
-            >
-              Beberapa klien yang mempercayakan momen penting mereka kepada kami
-            </p>
-          </div>
-          <div className="my-6 w-full" data-aos="fade-up">
-            <Swiper
-              modules={[Autoplay, Pagination]}
-              autoplay={{
-                delay: 4000,
-              }}
-              pagination={{
-                dynamicBullets: true,
-                clickable: true,
-              }}
-              speed={1000}
-              breakpoints={{
-                0: {
-                  slidesPerView: 1,
-                },
-                640: {
-                  slidesPerView: 1,
-                },
-                768: {
-                  slidesPerView: 3,
-                },
-                1024: {
-                  slidesPerView: 4,
-                },
-              }}
-              spaceBetween={16}
-            >
-              {clients.length > 0 &&
-                clients.map((c) => (
-                  <SwiperSlide
-                    key={`client-${c.id}`}
-                    className="bg-dashboard-dark p-8 rounded aspect-square text-white relative mb-8"
-                  >
-                    <div
-                      // target="_blank"
-                      // aria-label="Preview Undangan"
-                      // href={`/${c.slug}`}
-                      className="w-full h-full"
-                    >
-                      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#000000ca]"></div>
-                      <Image
-                        sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
-                        src={
-                          c.cover ||
-                          `https://placehold.co/400/png?font=playfair-display`
-                        }
-                        alt={`Thumbnail undangan digital ${c.name}`}
-                        fill
-                        className="object-cover w-full h-full rounded"
-                      />
-                      <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
-                        <h2
-                          className={`w-full flex gap-2 ${marcellus.className} text-xl`}
-                        >
-                          <span className="line-clamp-1">{c.name}</span>
-                        </h2>
-                        <p
-                          className={`font-light text-zinc-200 ${afacad.className}`}
-                        >
-                          Undangan {c.theme_category?.name}
-                        </p>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
+      <section className="relative select-none bg-white pb-8 lg:pb-16">
+        <div data-aos="zoom-out-up">
+          <Swiper
+            modules={[Autoplay, Navigation]}
+            loop
+            autoplay={{
+              delay: 4000,
+            }}
+            navigation={{
+              nextEl: ".action-next",
+              prevEl: ".action-prev",
+            }}
+            speed={1000}
+            breakpoints={{
+              0: {
+                slidesPerView: 2,
+              },
+              640: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 4,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+            }}
+            spaceBetween={0}
+          >
+            {clients.length > 0 &&
+              clients.map((c) => (
+                <SwiperSlide key={`client-${c.id}`}>
+                  <div className="aspect-square text-white  relative">
+                    <Image
+                      sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
+                      src={
+                        c.cover ||
+                        `https://placehold.co/400/png?font=red-hat-display&text=${c.name.replaceAll(
+                          " ",
+                          "-"
+                        )}`
+                      }
+                      alt={`Thumbnail undangan digital ${c.name}`}
+                      fill
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+          </Swiper>
+        </div>
+        <div className="mt-4 md:mt-8 lg:mt-10 flex-col px-4 md:px-12 lg:px-0 lg:flex-row flex justify-between gap-2 max-w-screen-xl mx-auto">
+          <h3
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className={`${redhat.className} text-3xl md:text-4xl lg:text-5xl font-semibold text-dashboard-dark`}
+          >
+            Klien Yang Telah
+            <br />
+            Menggunakan Jasa Kami
+          </h3>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="400"
+            className={`${redhat.className} text-sm text-dashboard-dark/70`}
+          >
+            Beberapa klien yang mempercayakan momen penting mereka kepada kami
+          </p>
+          <div
+            data-aos="fade-up"
+            data-aos-delay="600"
+            className="flex gap-3 mt-2 lg:mt-0"
+          >
+            <button className="w-10 h-10 action-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center">
+              <HiOutlineArrowLongLeft />
+            </button>
+            <button className="w-10 h-10 action-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center">
+              <HiOutlineArrowLongRight />
+            </button>
           </div>
         </div>
       </section>

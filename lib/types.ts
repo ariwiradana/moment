@@ -5,6 +5,7 @@ export interface Theme {
   slug: string;
   name: string;
   category?: string;
+  description?: string;
   is_preview?: boolean;
   created_at?: Date | string;
   updated_at?: Date | string;

@@ -34,7 +34,7 @@ const config: Config = {
         dashboard: {
           primary: "#ffbd59",
           secondary: "#0b282c",
-          dark: "#212224",
+          dark: "#101010",
         },
         aakarshana: {
           primary: "#604A32",

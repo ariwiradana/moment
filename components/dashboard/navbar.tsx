@@ -1,14 +1,11 @@
-import { afacad } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useCallback, useState } from "react";
-import { BiCalendarEvent, BiEdit, BiMenu } from "react-icons/bi";
+import React, { useCallback, useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import { NavData, navData } from "@/constants/dashboardNavbar";
-import ButtonPrimary from "./elements/button.primary";
-import toast from "react-hot-toast";
 
 const NavbarComponent = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false);
@@ -21,6 +18,7 @@ const NavbarComponent = () => {
   } = useDashboardStore();
 
   const router = useRouter();
+  const [isOnTop, setIsOnTop] = useState<boolean>(true);
 
   const scrollTo = useCallback((section: string) => {
     const element = document.getElementById(section);
@@ -39,23 +37,56 @@ const NavbarComponent = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log(window.scrollY);
+      setIsOnTop(window.scrollY === 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <section className="bg-white fixed top-0 inset-x-0 z-30 shadow shadow-slate-100">
+    <section
+      className={`fixed top-0 inset-x-0 z-30 border-b ${
+        !isOnTop ? "bg-white" : "border-b-transparent"
+      } transition-all ease-in-out duration-500`}
+    >
       <Sidebar
         navData={navData}
         open={isOpenSidebar}
         toggle={() => setIsOpenSidebar((state) => !state)}
       />
-      <nav className={`${afacad.className} max-w-screen-2xl mx-auto`}>
-        <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 h-16 md:h-20 lg:h-24">
+      <nav className={`max-w-screen-xl mx-auto px-4 md:px-12 lg:px-0`}>
+        <ul className="flex items-center justify-between gap-8 h-12 md:h-16 lg:h-20">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
-            <Link href="/">
-              <div className="relative w-16 md:w-20 aspect-video">
+            <Link href="/" className="flex items-center">
+              <div className="relative w-6 aspect-square">
                 <Image
                   alt="logo"
                   fill
-                  className="object-cover"
-                  src="/logo.png"
+                  className="object-contain"
+                  src="/favicon-180x180.png"
+                  sizes="100px"
+                />
+              </div>
+              <div className="relative w-6 aspect-square">
+                <Image
+                  alt="logo"
+                  fill
+                  className="object-contain"
+                  src="/favicon-180x180.png"
+                  sizes="100px"
+                />
+              </div>
+              <div className="relative w-6 aspect-square">
+                <Image
+                  alt="logo"
+                  fill
+                  className="object-contain"
+                  src="/favicon-180x180.png"
                   sizes="100px"
                 />
               </div>
@@ -75,7 +106,7 @@ const NavbarComponent = () => {
                       router.push(path);
                     }
                   }}
-                  className={`text-lg cursor-pointer outline-none relative text-dashboard-secondary duration-500 font-medium ease-in-out capitalize`}
+                  className={`${redhat.className} text-xs cursor-pointer outline-none relative text-dashboard-dark duration-500 uppercase ease-in-out`}
                 >
                   {title}
                   <div
@@ -83,41 +114,25 @@ const NavbarComponent = () => {
                       activeSection === `section${index + 1}`
                         ? "opacity-100 -bottom-2"
                         : "opacity-0 -bottom-1"
-                    }  left-1/2 transform -translate-x-1/2 w-3 h-[2px] bg-dashboard-primary rounded-full transition-all ease-in-out duration-500`}
+                    }  left-1/2 transform -translate-x-1/2 w-[2px] h-[2px] bg-dashboard-dark rounded-full transition-all ease-in-out duration-500`}
                   ></div>
                 </button>
               </div>
             ))}
-            <ButtonPrimary
-              onClick={() => {
-                router.push("/tema");
-                toast.success("Silahkan pilih tema terlebih dahulu", {
-                  icon: (
-                    <div className="p-1 rounded bg-dashboard-primary">
-                      <BiCalendarEvent />
-                    </div>
-                  ),
-                });
-              }}
-              title="Buat Undangan"
-              size="medium"
-              icon={<BiEdit />}
-            />
           </li>
           <li className="flex items-center gap-x-4 lg:hidden">
-            <div className="flex items-center">
-              <button
-                aria-label="btn-nav-menu"
-                type="button"
-                onClick={() => {
-                  setIsOpenSidebar((state) => !state);
-                  setDisableScroll(!disableScroll);
-                }}
-                className="text-dashboard-primary border-dashboard-primary"
-              >
-                <BiMenu className="text-2xl" />
-              </button>
-            </div>
+            <button
+              className="flex flex-col items-end gap-[6px]"
+              aria-label="btn-nav-menu"
+              type="button"
+              onClick={() => {
+                setIsOpenSidebar((state) => !state);
+                setDisableScroll(!disableScroll);
+              }}
+            >
+              <div className="w-5 h-[1px] bg-dashboard-dark"></div>
+              <div className="w-6 h-[1px] bg-dashboard-dark"></div>
+            </button>
           </li>
         </ul>
       </nav>

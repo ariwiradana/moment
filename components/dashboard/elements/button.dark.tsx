@@ -2,7 +2,7 @@ import { afacad } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
-interface ButtonPrimaryProps
+interface ButtonDarkProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title?: string | undefined;
   className?: string | "";
@@ -12,7 +12,7 @@ interface ButtonPrimaryProps
   isloading?: boolean;
 }
 
-const ButtonPrimary: FC<ButtonPrimaryProps> = ({
+const ButtonDark: FC<ButtonDarkProps> = ({
   title = undefined,
   className = "",
   icon,
@@ -52,7 +52,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
       disabled={isloading ? true : false}
       className={`${afacad.className} ${
         className ?? ""
-      } flex items-center text-dashboard-dark justify-center whitespace-nowrap font-light bg-opacity-95 hover:bg-opacity-100 bg-dashboard-primary transition duration-500 ${
+      } flex items-center text-white justify-center whitespace-nowrap hover:bg-opacity-90 bg-dashboard-dark transition duration-500 ${
         !title ? "p-2 md:p-2 lg:p-2" : buttonStyles(size)
       } ${
         isloading || props.disabled
@@ -75,4 +75,4 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
   );
 };
 
-export default ButtonPrimary;
+export default ButtonDark;

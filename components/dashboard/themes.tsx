@@ -1,96 +1,122 @@
-import React, { FC } from "react";
-import { HiArrowLongRight } from "react-icons/hi2";
+import React, { FC, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { afacad, dm } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import Link from "next/link";
-import ThemeCard from "./partials/theme.card";
 import { Theme } from "@/lib/types";
-import ButtonPrimary from "./elements/button.primary";
-import { BiGridHorizontal } from "react-icons/bi";
+import Image from "next/image";
+import { BsChevronDown, BsEye } from "react-icons/bs";
 
 const ThemeComponent: FC = () => {
   const { data } = useSWR("/api/_pb/_th?order=DESC", fetcher);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const themes: Theme[] = data?.data || [];
-  const maxShown = 4;
-  const slideThemes =
-    themes && themes.length > maxShown ? themes.slice(0, maxShown) : themes;
 
-  if (slideThemes.length > 0)
+  if (themes.length > 0)
     return (
-      <section
-        data-aos="fade-up"
-        className="py-16 lg:py-24 bg-zinc-50 select-none"
-        id="section3"
-      >
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24">
-          <div
-            className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
-            data-aos="fade-up"
-          >
-            <div>
-              <h2
-                className={`${dm.className} text-3xl md:text-4xl lg:text-5xl text-dashboard-dark font-semibold`}
-              >
-                Koleksi Tema Undangan
-              </h2>
-              <p
-                className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
-              >
-                Jelajahi berbagai tema undangan yang dirancang khusus untuk
-                menyesuaikan dengan konsep acara Anda.
-              </p>
-            </div>
-            {themes.length > maxShown && (
-              <Link href="/tema" aria-label="Semua tema undangan digital">
-                <div className="flex gap-x-2 items-center">
-                  <p
-                    className={`${afacad.className} text-lg whitespace-nowrap font-medium`}
-                  >
-                    Lihat Semua Tema
-                  </p>
-                  <HiArrowLongRight className="mt-1 text-xl" />
-                </div>
-              </Link>
-            )}
-          </div>
-
-          <div
-            data-aos="fade-up"
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6"
-          >
-            {slideThemes.map((t, index) => {
-              return (
-                <div
-                  key={t.id}
-                  className={`${
-                    index === slideThemes.length - 1 && "md:hidden lg:block"
-                  }`}
-                >
-                  <ThemeCard index={index} theme={t} />
-                </div>
-              );
-            })}
-          </div>
-
-          {themes.length > maxShown && (
+      <>
+        <section
+          className={`${
+            themes.length > 8 ? "py-10" : "pt-10 md:pb-10"
+          } lg:py-16 bg-dashboard-dark select-none`}
+          id="section3"
+        >
+          <div className="max-w-screen-xl mx-auto">
             <div
-              className="mt-8 flex justify-center md:hidden"
+              className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center px-4 md:px-12 lg:px-0"
               data-aos="fade-up"
             >
-              <Link href="/tema" aria-label="Koleksi tema undangan digial">
-                <ButtonPrimary
-                  aria-label="Tema undangan digital moment"
-                  icon={<BiGridHorizontal />}
-                  title="Lihat Semua Tema"
-                  size="medium"
-                />
-              </Link>
+              <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
+                <h2
+                  className={`${redhat.className} min-w-[30vw] text-3xl md:text-4xl lg:text-5xl font-semibold text-white`}
+                >
+                  Koleksi Tema Undangan Kami
+                </h2>
+                <div className="h-[1px] w-full bg-white/10 hidden lg:block"></div>
+                <p
+                  className={`${redhat.className} text-sm text-white/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
+                >
+                  Jelajahi berbagai tema undangan yang dirancang khusus untuk
+                  menyesuaikan dengan konsep acara Anda.
+                </p>
+              </div>
             </div>
-          )}
-        </div>
-      </section>
+
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="grid md:grid-cols-3 lg:grid-cols-4 gap-2 mt-8 lg:mt-10"
+            >
+              {(isExpanded
+                ? [...themes, ...themes, ...themes]
+                : themes.slice(0, 8)
+              ).map((t) => {
+                return (
+                  <div
+                    key={`Tema Undangan ${t.name}`}
+                    className="bg-white/[0.01] px-4 lg:px-8 py-10 lg:py-12 group"
+                  >
+                    <div
+                      key={t.id}
+                      className="aspect-[3/4] relative overflow-hidden"
+                    >
+                      <Image
+                        sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
+                        priority
+                        fill
+                        src={t.phone_thumbnail || ""}
+                        alt={`Tema Undangan ${t.name}`}
+                        className="object-contain shimmer"
+                      />
+                    </div>
+                    <div className="flex flex-col items-center mt-6">
+                      <div className="flex text-white/70 divide-x divide-white/20">
+                        {t.packages?.map((p) => (
+                          <p
+                            key={`Paket Undangan ${p.name}`}
+                            className={`${redhat.className} text-sm px-3 first:pl-0`}
+                          >
+                            {p.name}
+                          </p>
+                        ))}
+                      </div>
+                      <h5
+                        className={`${redhat.className} text-2xl text-white font-medium my-1`}
+                      >
+                        {t.name}
+                      </h5>
+                      <Link href={`/${t.slug}`} target="_blank">
+                        <button
+                          className={`${redhat.className} text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-2 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                        >
+                          Preview
+                          <BsEye />
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {!isExpanded && themes.length > 8 ? (
+              <div
+                className="flex justify-center mt-12"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <button
+                  onClick={() => setIsExpanded((state) => !state)}
+                  className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 text-white rounded-full px-4 py-2`}
+                >
+                  Tampilkan Semua Tema
+                  <BsChevronDown />
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      </>
     );
 };
 

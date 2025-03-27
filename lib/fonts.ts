@@ -12,6 +12,8 @@ import {
   Lora,
   Roboto,
   Raleway,
+  Red_Hat_Display,
+  Nanum_Gothic,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -72,5 +74,13 @@ export const lora = Lora({
 });
 
 export const raleway = Raleway({
+  subsets: ["latin"],
+});
+
+export const nanum = Nanum_Gothic({
+  weight: ["400", "700", "800"],
+  subsets: ["latin"],
+});
+export const redhat = Red_Hat_Display({
   subsets: ["latin"],
 });

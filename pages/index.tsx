@@ -9,7 +9,6 @@ import PackageComponent from "@/components/dashboard/packages";
 import SharedThemeComponent from "@/components/dashboard/shared.theme";
 import TestimonialsComponent from "@/components/dashboard/testimonials";
 import ThemeComponent from "@/components/dashboard/themes";
-import WhyUsComponent from "@/components/dashboard/why.us";
 import { sosmedURLs } from "@/constants/sosmed";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import useDashboardStore from "@/store/useDashboardStore";
@@ -107,12 +106,11 @@ const Dashboard = () => {
         icon={<BiLogoWhatsapp />}
       />
       <HeroComponent />
-      <WhyUsComponent />
+      <ClientComponent />
       <FeaturesComponent />
       <ThemeComponent />
       <PackageComponent />
       <SharedThemeComponent />
-      <ClientComponent />
       <TestimonialsComponent />
       <FaqComponent />
     </Layout>
