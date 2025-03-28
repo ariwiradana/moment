@@ -64,7 +64,7 @@ const ThemeComponent: FC = () => {
             </div>
 
             <div
-              className="flex mt-6 lg:mt-8 gap-2 overflow-x-auto max-w-screen-xl mx-auto px-4 md:px-12 lg:px-0"
+              className="flex mt-4 gap-2 overflow-x-auto max-w-screen-xl mx-auto px-4 md:px-12 lg:px-0"
               data-aos="fade-up"
               data-aos-delay="200"
             >
@@ -74,7 +74,7 @@ const ThemeComponent: FC = () => {
                   activeCategoryId === null
                     ? "bg-white text-dashboard-dark border-white"
                     : "text-white bg-white/[0.01] border-white/50"
-                }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark   ${
+                }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark ${
                   redhat.className
                 } text-xs lg:text-sm font-medium`}
               >
@@ -101,7 +101,7 @@ const ThemeComponent: FC = () => {
             <div
               data-aos="fade-up"
               data-aos-delay="400"
-              className="grid md:grid-cols-3 lg:grid-cols-4 gap-2 mt-8 lg:mt-11"
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-8 lg:mt-11"
             >
               {(isExpanded ? themes : themes.slice(0, 8)).map((t) => {
                 const message = `Halo, saya tertarik untuk memilih tema undangan ${name}`;
@@ -127,25 +127,20 @@ const ThemeComponent: FC = () => {
                         className="object-contain shimmer"
                       />
                     </div>
-                    <div className="flex flex-col items-center mt-6">
-                      <div className="flex text-white/70 divide-x divide-white/20">
-                        {t.packages?.map((p) => (
-                          <p
-                            key={`Paket Undangan ${p.name}`}
-                            className={`${redhat.className} text-sm px-3 first:pl-0`}
-                          >
-                            {p.name}
-                          </p>
-                        ))}
-                      </div>
+                    <div className="flex flex-col items-center">
+                      <p
+                        className={`${redhat.className} text-sm text-white/70 mt-4`}
+                      >
+                        Tema
+                      </p>
                       <h5
-                        className={`${redhat.className} text-2xl text-white font-medium mt-1 mb-3`}
+                        className={`${redhat.className} text-xl text-white font-medium mb-2`}
                       >
                         {t.name}
                       </h5>
                       <Link href={`/${t.slug}`} target="_blank">
                         <button
-                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-2 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
                         >
                           Preview
                           <BsEye />
