@@ -7,8 +7,8 @@ import useClientStore from "@/store/useClientStore";
 
 const PreviewNav = () => {
   const { client } = useClientStore();
-  const handleChooseTheme = (name: string, category: string) => {
-    const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Kategori: ${category}\n- Tema: ${name}`;
+  const handleChooseTheme = (name: string) => {
+    const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Tema: ${name}`;
     const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
       message
     )}`;
@@ -35,10 +35,7 @@ const PreviewNav = () => {
                   <ButtonPrimary
                     size="extrasmall"
                     onClick={() =>
-                      handleChooseTheme(
-                        client?.theme?.name as string,
-                        client?.theme?.category as string
-                      )
+                      handleChooseTheme(client?.theme?.name as string)
                     }
                     icon={<BiMobile />}
                     title="Pilih Tema"
@@ -48,10 +45,7 @@ const PreviewNav = () => {
                   <ButtonPrimary
                     size="medium"
                     onClick={() =>
-                      handleChooseTheme(
-                        client?.theme?.name as string,
-                        client?.theme?.category as string
-                      )
+                      handleChooseTheme(client?.theme?.name as string)
                     }
                     icon={<BiMobile />}
                     title="Pilih Tema"
@@ -61,10 +55,7 @@ const PreviewNav = () => {
                   <ButtonPrimary
                     size="medium"
                     onClick={() =>
-                      handleChooseTheme(
-                        client?.theme?.name as string,
-                        client?.theme?.category as string
-                      )
+                      handleChooseTheme(client?.theme?.name as string)
                     }
                     icon={<BiMobile />}
                     title="Pilih Tema"

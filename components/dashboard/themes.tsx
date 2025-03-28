@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Theme, ThemeCategory } from "@/lib/types";
 import Image from "next/image";
 import { BsCart, BsChevronDown, BsEye } from "react-icons/bs";
+import { sosmedURLs } from "@/constants/sosmed";
 
 const ThemeComponent: FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -30,6 +31,14 @@ const ThemeComponent: FC = () => {
   );
 
   const themeCategories: ThemeCategory[] = themeCategoriesResponse?.data || [];
+
+  const handleChooseTheme = (name: string) => {
+    const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Tema: ${name}`;
+    const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappLink);
+  };
 
   if (themes.length > 0)
     return (
@@ -144,14 +153,13 @@ const ThemeComponent: FC = () => {
                           <BsEye />
                         </button>
                       </Link>
-                      <Link href={`/${t.slug}`} target="_blank">
-                        <button
-                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
-                        >
-                          Pesan Sekarang
-                          <BsCart />
-                        </button>
-                      </Link>
+                      <button
+                        onClick={() => handleChooseTheme(t.name)}
+                        className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                      >
+                        Pesan Sekarang
+                        <BsCart />
+                      </button>
                     </div>
                   </div>
                 );
