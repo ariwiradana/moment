@@ -136,25 +136,17 @@ const ThemeComponent: FC = () => {
                       >
                         {t.name}
                       </h5>
-                      <Link
-                        href={`/${t.slug}`}
-                        target="_blank"
-                        className="w-full"
-                      >
+                      <Link href={`/${t.slug}`} target="_blank">
                         <button
-                          className={`${redhat.className} justify-center text-sm w-full hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-2 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-3`}
+                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-2 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
                         >
                           Preview
                           <BsEye />
                         </button>
                       </Link>
-                      <Link
-                        href={`/${t.slug}`}
-                        target="_blank"
-                        className="w-full"
-                      >
+                      <Link href={`/${t.slug}`} target="_blank">
                         <button
-                          className={`${redhat.className} justify-center text-sm w-full hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-3`}
+                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
                         >
                           Pesan Sekarang
                           <BsCart />
