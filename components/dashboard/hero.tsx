@@ -53,7 +53,7 @@ const HeroComponent = () => {
       <div
         data-aos="zoom-out-up"
         data-aos-delay="400"
-        className="w-full h-40 md:h-52 lg:h-72 bg-zinc-50 relative"
+        className="w-full h-40 md:h-52 lg:h-72 bg-zinc-50 relative overflow-x-hidden"
       >
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <video
