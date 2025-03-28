@@ -1,7 +1,7 @@
 import React from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { dm, marcellus } from "@/lib/fonts";
+import { dm, marcellus, redhat } from "@/lib/fonts";
 import { formatNumber } from "@/utils/formatNumberK";
 import {
   BiBookContent,
@@ -26,38 +26,6 @@ const SharedThemeComponent = () => {
         />
         <span className="absolute inset-0 bg-black bg-opacity-20"></span>
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-3 gap-16 relative z-20">
-          {/* {data?.clients > 0 && (
-            <div
-              data-aos="fade-up"
-              className="text-white flex flex-col items-center gap-y-3"
-            >
-              <BiUser className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-                {formatNumber(data?.clients)}
-              </h2>
-              <h2
-                className={`${marcellus.className} text-xl text-center`}
-              >
-                Klien
-              </h2>
-            </div>
-          )} */}
-          {data?.guests > 0 && (
-            <div
-              data-aos="fade-up"
-              data-aos-delay="100"
-              className="text-white flex flex-col items-center gap-y-3"
-            >
-              <BiBookContent className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-                {formatNumber(data?.guests)}
-              </h2>
-              <h2 className={`${marcellus.className} text-xl text-center`}>
-                Tamu Undangan
-              </h2>
-            </div>
-          )}
-
           {data?.events > 0 && (
             <div
               data-aos="fade-up"
@@ -74,17 +42,33 @@ const SharedThemeComponent = () => {
             </div>
           )}
 
+          {data?.guests > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="text-white flex flex-col items-center gap-y-3"
+            >
+              <BiBookContent className="text-5xl" />
+              <h2 className={`${redhat.className} text-3xl lg:text-4xl`}>
+                {formatNumber(data?.guests)}
+              </h2>
+              <h2 className={`${redhat.className} text-lg text-center`}>
+                Tamu Undangan
+              </h2>
+            </div>
+          )}
+
           {data?.wishes > 0 && (
             <div
               data-aos="fade-up"
               data-aos-delay="300"
               className="text-white flex flex-col items-center gap-y-3"
             >
-              <BiMessageDetail className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
+              <BiMessageDetail className="text-5xl" />
+              <h2 className={`${redhat.className} text-3xl lg:text-4xl`}>
                 {formatNumber(data?.wishes)}
               </h2>
-              <h2 className={`${marcellus.className} text-xl text-center`}>
+              <h2 className={`${redhat.className} text-lg text-center`}>
                 Ucapan & Doa
               </h2>
             </div>
