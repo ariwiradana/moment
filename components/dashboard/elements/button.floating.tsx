@@ -18,12 +18,12 @@ const ButtonFloating: FC<ButtonFloatingProps> = (props) => {
         disabled={props.isloading ? true : false}
         className={`${afacad.className} ${
           props.className ?? ""
-        }  flex items-center p-3 shadow-md rounded-full text-dashboard-dark font-medium transition duration-500 hover:bg-opacity-100 justify-center ${
+        }  flex items-center p-2 shadow-md rounded-full text-dashboard-dark font-medium transition duration-500 hover:bg-opacity-100 justify-center ${
           props.isloading &&
           "pointer-events-none bg-opacity-10 cursor-not-allowed"
         }`}
       >
-        <span className="text-4xl lg:text-5xl">
+        <span className="text-3xl lg:text-4xl">
           {props.isloading ? <Loader /> : props.icon}
         </span>
       </button>
