@@ -23,7 +23,7 @@ const PackageComponent = () => {
           >
             <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
               <h2
-                className={`${redhat.className} min-w-[30vw] text-3xl md:text-4xl lg:text-5xl font-semibold text-dashboard-dark`}
+                className={`${redhat.className} min-w-[30vw] text-3xl md:text-4xl font-semibold text-dashboard-dark`}
               >
                 Paket Undangan Yang Tersedia
               </h2>
@@ -51,9 +51,7 @@ const PackageComponent = () => {
                   } border border-dashboard-dark/10 p-8 lg:p-10`}
                   key={p.id}
                 >
-                  <h2
-                    className={`${redhat.className} text-2xl lg:text-3xl font-medium`}
-                  >
+                  <h2 className={`${redhat.className} text-2xl font-semibold`}>
                     Paket {p.name}
                   </h2>
                   {p.discount > 0 && (

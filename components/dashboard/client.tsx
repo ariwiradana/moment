@@ -22,7 +22,7 @@ const ClientComponent = () => {
   if (clients.length > 0)
     return (
       <section className="relative select-none bg-white pb-8 lg:pb-16">
-        <div data-aos="zoom-out-up">
+        <div data-aos="fade-up">
           <Swiper
             modules={[Autoplay, Navigation]}
             loop
@@ -53,7 +53,7 @@ const ClientComponent = () => {
             {clients.length > 0 &&
               clients.map((c) => (
                 <SwiperSlide key={`client-${c.id}`}>
-                  <div className="aspect-square text-white  relative">
+                  <div className="aspect-square text-white relative">
                     <Image
                       sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
                       src={

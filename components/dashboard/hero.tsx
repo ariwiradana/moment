@@ -72,8 +72,7 @@ const HeroComponent = () => {
         className="flex justify-end items-center gap-4 lg:gap-40"
       >
         <p className={`${redhat.className} text-sm text-dashboard-dark/70`}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-          error?
+          Buat undangan digital Anda dengan cepat dan mudah.
         </p>
         <button
           onClick={() => {

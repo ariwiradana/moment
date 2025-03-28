@@ -48,7 +48,7 @@ const ThemeComponent: FC = () => {
             >
               <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
                 <h2
-                  className={`${redhat.className} min-w-[30vw] text-3xl md:text-4xl lg:text-5xl font-semibold text-white`}
+                  className={`${redhat.className} min-w-[30vw] text-3xl md:text-4xl font-semibold text-white`}
                 >
                   Koleksi Tema Undangan Kami
                 </h2>
@@ -69,13 +69,13 @@ const ThemeComponent: FC = () => {
             >
               <button
                 onClick={() => setActiveCategoryId(null)}
-                className={`py-3 px-6 ${
+                className={`py-2 lg:py-3 px-4 lg:px-6 ${
                   activeCategoryId === null
                     ? "bg-white text-dashboard-dark border-white"
                     : "text-white bg-white/[0.01] border-white/50"
                 }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark   ${
                   redhat.className
-                } text-sm font-medium`}
+                } text-xs lg:text-sm font-medium`}
               >
                 Semua
               </button>
@@ -83,13 +83,13 @@ const ThemeComponent: FC = () => {
                 return (
                   <button
                     onClick={() => setActiveCategoryId(tc.id)}
-                    className={`py-3 px-6 ${
+                    className={`py-2 lg:py-3 px-4 lg:px-6 ${
                       activeCategoryId === tc.id
                         ? "bg-white text-dashboard-dark border-white"
                         : "text-white border-white/50"
                     }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark ${
                       redhat.className
-                    } text-sm font-medium`}
+                    } text-xs lg:text-sm font-medium`}
                   >
                     {tc.name}
                   </button>
