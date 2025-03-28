@@ -1,5 +1,5 @@
 import React from "react";
-import { dm, redhat } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -10,6 +10,7 @@ import {
   HiOutlineArrowLongLeft,
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
+import { BiSolidQuoteAltLeft } from "react-icons/bi";
 
 const TestimonialsComponent = () => {
   const { data } = useSWR("/api/_pb/_ts", fetcher);
@@ -26,9 +27,10 @@ const TestimonialsComponent = () => {
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-2 px-4 md:px-12 lg:px-0">
           <div>
             <h2
-              className={`${redhat.className} text-3xl lg:text-4xl font-semibold text-dashboard-dark`}
+              className={`${redhat.className} text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
             >
-              Apa Yang Mereka Katakan?
+              Apa Yang <br />
+              Mereka Katakan?
             </h2>
             <p
               className={`${redhat.className} text-sm text-dashboard-dark/70 mt-2`}
@@ -57,11 +59,9 @@ const TestimonialsComponent = () => {
               {testimonials?.map((t) => (
                 <SwiperSlide key={`Testimoni Undangan ${t.name}`}>
                   <div className="flex flex-col justify-center">
-                    <p className={`${dm.className} text-5xl lg:text-6xl`}>
-                      &quot;
-                    </p>
+                    <BiSolidQuoteAltLeft className="text-dashboard-dark text-xl" />
                     <p
-                      className={`${redhat.className} text-xl font-medium text-dashboard-dark -mt-4 lg:-mt-6`}
+                      className={`${redhat.className} text-xl font-medium text-dashboard-dark mt-1`}
                     >
                       {t.comments}
                     </p>

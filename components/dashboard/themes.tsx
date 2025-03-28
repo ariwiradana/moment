@@ -48,9 +48,10 @@ const ThemeComponent: FC = () => {
             >
               <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
                 <h2
-                  className={`${redhat.className} min-w-[30vw] text-3xl lg:text-4xl font-semibold text-white`}
+                  className={`${redhat.className} text-3xl lg:text-4xl whitespace-nowrap font-semibold text-white`}
                 >
-                  Koleksi Tema Undangan Kami
+                  Koleksi Tema <br />
+                  Undangan Kami
                 </h2>
                 <div className="h-[1px] w-full bg-white/10 hidden lg:block"></div>
                 <p

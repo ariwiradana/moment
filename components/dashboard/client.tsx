@@ -76,7 +76,7 @@ const ClientComponent = () => {
           <h3
             data-aos="fade-up"
             data-aos-delay="200"
-            className={`${redhat.className} text-3xl md:text-4xl lg:text-5xl font-semibold text-dashboard-dark`}
+            className={`${redhat.className} text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
           >
             Klien Yang Telah
             <br />
