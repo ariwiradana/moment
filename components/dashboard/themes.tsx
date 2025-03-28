@@ -3,15 +3,33 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { redhat } from "@/lib/fonts";
 import Link from "next/link";
-import { Theme } from "@/lib/types";
+import { Theme, ThemeCategory } from "@/lib/types";
 import Image from "next/image";
 import { BsChevronDown, BsEye } from "react-icons/bs";
 
 const ThemeComponent: FC = () => {
-  const { data } = useSWR("/api/_pb/_th?order=DESC", fetcher);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
+  const [themes, setThemes] = useState<Theme[]>([]);
 
-  const themes: Theme[] = data?.data || [];
+  const { data: themeCategoriesResponse } = useSWR<{ data: ThemeCategory[] }>(
+    `/api/_pb/_tc`,
+    fetcher
+  );
+
+  useSWR<{ data: Theme[] }>(
+    activeCategoryId
+      ? `/api/_pb/_th?order=DESC&theme_category_id=${activeCategoryId}`
+      : "/api/_pb/_th?order=DESC",
+    fetcher,
+    {
+      onSuccess: (data) => {
+        setThemes(data.data);
+      },
+    }
+  );
+
+  const themeCategories: ThemeCategory[] = themeCategoriesResponse?.data || [];
 
   if (themes.length > 0)
     return (
@@ -44,14 +62,46 @@ const ThemeComponent: FC = () => {
             </div>
 
             <div
+              className="flex mt-6 lg:mt-8 gap-2 overflow-x-auto max-w-screen-xl mx-auto px-4 md:px-12 lg:px-0"
               data-aos="fade-up"
               data-aos-delay="200"
-              className="grid md:grid-cols-3 lg:grid-cols-4 gap-2 mt-8 lg:mt-10"
             >
-              {(isExpanded
-                ? [...themes, ...themes, ...themes]
-                : themes.slice(0, 8)
-              ).map((t) => {
+              <button
+                onClick={() => setActiveCategoryId(null)}
+                className={`py-3 px-6 ${
+                  activeCategoryId === null
+                    ? "bg-white text-dashboard-dark border-white"
+                    : "text-white bg-white/[0.01] border-white/50"
+                }  rounded-full border  ${
+                  redhat.className
+                } text-sm font-medium`}
+              >
+                Semua
+              </button>
+              {themeCategories.flatMap((tc) => {
+                return (
+                  <button
+                    onClick={() => setActiveCategoryId(tc.id)}
+                    className={`py-3 px-6 ${
+                      activeCategoryId === tc.id
+                        ? "bg-white text-dashboard-dark border-white"
+                        : "text-white bg-white/[0.01] border-white/50"
+                    }  rounded-full border  ${
+                      redhat.className
+                    } text-sm font-medium`}
+                  >
+                    {tc.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="grid md:grid-cols-3 lg:grid-cols-4 gap-2 mt-8 lg:mt-11"
+            >
+              {(isExpanded ? themes : themes.slice(0, 8)).map((t) => {
                 return (
                   <div
                     key={`Tema Undangan ${t.name}`}

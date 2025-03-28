@@ -7,13 +7,11 @@ const FeaturesComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <section
+      data-aos="fade-up"
       id="section2"
       className="py-8 lg:py-16 px-4 md:px-12 lg:px-0 relative select-none"
     >
-      <div
-        data-aos="fade-up"
-        className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6"
-      >
+      <div className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6">
         {(isExpanded ? features : features.slice(0, 4)).map((f) => (
           <div
             className="flex flex-col lg:flex-row gap-2 lg:gap-4"
@@ -38,11 +36,7 @@ const FeaturesComponent = () => {
         ))}
       </div>
       {!isExpanded && (
-        <div
-          className="flex justify-center mt-12"
-          data-aos="fade-up"
-          data-aos-delay="200"
-        >
+        <div className="flex justify-center mt-12">
           <button
             onClick={() => setIsExpanded((state) => !state)}
             className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2`}
