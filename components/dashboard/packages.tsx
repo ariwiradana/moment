@@ -52,7 +52,7 @@ const PackageComponent = () => {
                   key={p.id}
                 >
                   <h2
-                    className={`${redhat.className} text-xl lg:text-2xl font-medium`}
+                    className={`${redhat.className} text-2xl lg:text-3xl font-medium`}
                   >
                     Paket {p.name}
                   </h2>

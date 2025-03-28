@@ -12,13 +12,13 @@ interface ButtonFloatingProps
 
 const ButtonFloating: FC<ButtonFloatingProps> = (props) => {
   return (
-    <div className="fixed bottom-6 right-6 md:right-12 md:bottom-12 z-[999]">
+    <div className="fixed bottom-6 left-6 md:left-12 md:bottom-12 z-[999]">
       <button
         {...props}
         disabled={props.isloading ? true : false}
         className={`${afacad.className} ${
           props.className ?? ""
-        }  flex items-center p-2 shadow-md rounded-full text-dashboard-dark font-medium transition duration-500 hover:bg-opacity-100 justify-center ${
+        }  flex items-center p-2 lg:p-3 shadow-md rounded-full text-dashboard-dark font-medium transition duration-500 hover:bg-opacity-100 justify-center ${
           props.isloading &&
           "pointer-events-none bg-opacity-10 cursor-not-allowed"
         }`}
