@@ -13,8 +13,11 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Toaster
+        containerStyle={{
+          top: 4,
+        }}
         toastOptions={{
-          duration: 3000,
+          duration: 4000,
         }}
       />
       <Component {...pageProps} />

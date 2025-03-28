@@ -1,14 +1,14 @@
 import React from "react";
-import { dm } from "@/lib/fonts";
-import ButtonPrimary from "../dashboard/elements/button.primary";
-import { BiMobile } from "react-icons/bi";
+import { redhat } from "@/lib/fonts";
 import { sosmedURLs } from "@/constants/sosmed";
 import useClientStore from "@/store/useClientStore";
+import { BsCart } from "react-icons/bs";
+import Image from "next/image";
 
 const PreviewNav = () => {
   const { client } = useClientStore();
   const handleChooseTheme = (name: string) => {
-    const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Tema: ${name}`;
+    const message = `Halo, saya tertarik untuk memilih tema undangan ${name}`;
     const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
       message
     )}`;
@@ -20,9 +20,18 @@ const PreviewNav = () => {
       <>
         <nav className="fixed inset-x-0 z-[999]" data-aos="fade-down">
           <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 py-4 bg-dashboard-dark/50 backdrop-blur-sm">
-            <li>
+            <li className="flex items-center gap-x-3">
+              <div className="relative w-5 md:w-6 aspect-square">
+                <Image
+                  alt="logo"
+                  fill
+                  className="object-contain"
+                  src="/favicon-180x180.png"
+                  sizes="100px"
+                />
+              </div>
               <h1
-                className={`${dm.className} text-base md:text-xl lg:text-2xl text-white`}
+                className={`${redhat.className} font-medium text-base md:text-lg lg:text-xl text-white`}
               >
                 {client.is_preview
                   ? `Preview Tema ${client.theme?.name}`
@@ -31,36 +40,15 @@ const PreviewNav = () => {
             </li>
             {client.is_preview && (
               <li>
-                <div className="md:hidden">
-                  <ButtonPrimary
-                    size="extrasmall"
-                    onClick={() =>
-                      handleChooseTheme(client?.theme?.name as string)
-                    }
-                    icon={<BiMobile />}
-                    title="Pilih Tema"
-                  />
-                </div>
-                <div className="hidden md:block lg:hidden">
-                  <ButtonPrimary
-                    size="medium"
-                    onClick={() =>
-                      handleChooseTheme(client?.theme?.name as string)
-                    }
-                    icon={<BiMobile />}
-                    title="Pilih Tema"
-                  />
-                </div>
-                <div className="hidden lg:block">
-                  <ButtonPrimary
-                    size="medium"
-                    onClick={() =>
-                      handleChooseTheme(client?.theme?.name as string)
-                    }
-                    icon={<BiMobile />}
-                    title="Pilih Tema"
-                  />
-                </div>
+                <button
+                  onClick={() =>
+                    handleChooseTheme(client?.theme?.name as string)
+                  }
+                  className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                >
+                  Pesan
+                  <BsCart />
+                </button>
               </li>
             )}
           </ul>

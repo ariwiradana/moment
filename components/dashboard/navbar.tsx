@@ -63,7 +63,7 @@ const NavbarComponent = () => {
         <ul className="flex items-center justify-between gap-8 h-12 md:h-16 lg:h-20">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
             <Link href="/" className="flex items-center">
-              <div className="relative w-6 aspect-square">
+              <div className="relative w-5 md:w-6 aspect-square">
                 <Image
                   alt="logo"
                   fill
@@ -72,7 +72,7 @@ const NavbarComponent = () => {
                   sizes="100px"
                 />
               </div>
-              <div className="relative w-6 aspect-square">
+              <div className="relative w-5 md:w-6 aspect-square">
                 <Image
                   alt="logo"
                   fill
@@ -81,7 +81,7 @@ const NavbarComponent = () => {
                   sizes="100px"
                 />
               </div>
-              <div className="relative w-6 aspect-square">
+              <div className="relative w-5 md:w-6 aspect-square">
                 <Image
                   alt="logo"
                   fill

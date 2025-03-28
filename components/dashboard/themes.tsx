@@ -32,14 +32,6 @@ const ThemeComponent: FC = () => {
 
   const themeCategories: ThemeCategory[] = themeCategoriesResponse?.data || [];
 
-  const handleChooseTheme = (name: string) => {
-    const message = `Halo, saya tertarik untuk memilih tema undangan ini:\n\n- Tema: ${name}`;
-    const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(whatsappLink);
-  };
-
   if (themes.length > 0)
     return (
       <>
@@ -111,6 +103,11 @@ const ThemeComponent: FC = () => {
               className="grid md:grid-cols-3 lg:grid-cols-4 gap-2 mt-8 lg:mt-11"
             >
               {(isExpanded ? themes : themes.slice(0, 8)).map((t) => {
+                const message = `Halo, saya tertarik untuk memilih tema undangan ${name}`;
+                const whatsappLink = `${
+                  sosmedURLs.whatsapp
+                }?text=${encodeURIComponent(message)}`;
+
                 return (
                   <div
                     key={`Tema Undangan ${t.name}`}
@@ -153,13 +150,14 @@ const ThemeComponent: FC = () => {
                           <BsEye />
                         </button>
                       </Link>
-                      <button
-                        onClick={() => handleChooseTheme(t.name)}
-                        className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
-                      >
-                        Pesan Sekarang
-                        <BsCart />
-                      </button>
+                      <Link href={whatsappLink} target="_blank">
+                        <button
+                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                        >
+                          Pesan Sekarang
+                          <BsCart />
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 );

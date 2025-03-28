@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 import { redhat } from "@/lib/fonts";
 import useDashboardStore from "@/store/useDashboardStore";
 import { BsChevronRight } from "react-icons/bs";
+import toast from "react-hot-toast";
+import { RiErrorWarningFill } from "react-icons/ri";
 
 const HeroComponent = () => {
   const scrollTo = useCallback((section: string) => {
@@ -75,6 +77,20 @@ const HeroComponent = () => {
         </p>
         <button
           onClick={() => {
+            toast.success("Silahkan pilih tema terlebih dahulu!", {
+              icon: (
+                <RiErrorWarningFill className="text-dashboard-primary text-lg" />
+              ),
+              className: `${redhat.className} text-sm`,
+              style: {
+                boxShadow: "none",
+                bottom: 0,
+                backgroundColor: "#101010",
+                color: "white",
+                border: "1px white",
+                borderRadius: 0,
+              },
+            });
             setActiveSection(`section3`);
             scrollTo(`section3`);
           }}
