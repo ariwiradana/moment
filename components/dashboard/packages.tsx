@@ -31,8 +31,8 @@ const PackageComponent = () => {
               <p
                 className={`${redhat.className} text-sm text-dashbbg-dashboard-dark/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
               >
-                Jelajahi berbagai tema undangan yang dirancang khusus untuk
-                menyesuaikan dengan konsep acara Anda.
+                Pilih dari berbagai paket undangan yang sesuai dengan kebutuhan
+                Anda.
               </p>
             </div>
           </div>
@@ -48,7 +48,7 @@ const PackageComponent = () => {
                     isLast
                       ? "bg-dashboard-dark text-white"
                       : "text-dashboard-dark bg-white"
-                  } border p-8 lg:p-10`}
+                  } border border-dashboard-dark/10 p-8 lg:p-10`}
                   key={p.id}
                 >
                   <h2
@@ -90,7 +90,7 @@ const PackageComponent = () => {
                     )}
                   </div>
                   <ul
-                    className={`${redhat.className} mt-4 ml-4 text-sm capitalize leading-7`}
+                    className={`${redhat.className} mt-4 list-inside text-sm capitalize leading-7 marker:text-xs`}
                   >
                     <li
                       className={`list-disc ${

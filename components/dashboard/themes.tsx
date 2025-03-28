@@ -5,7 +5,7 @@ import { redhat } from "@/lib/fonts";
 import Link from "next/link";
 import { Theme, ThemeCategory } from "@/lib/types";
 import Image from "next/image";
-import { BsChevronDown, BsEye } from "react-icons/bs";
+import { BsCart, BsChevronDown, BsEye } from "react-icons/bs";
 
 const ThemeComponent: FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -55,8 +55,8 @@ const ThemeComponent: FC = () => {
                 <p
                   className={`${redhat.className} text-sm text-white/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
                 >
-                  Jelajahi berbagai tema undangan yang dirancang khusus untuk
-                  menyesuaikan dengan konsep acara Anda.
+                  Jelajahi pilihan tema undangan yang beragam dan dirancang
+                  untuk momen spesial Anda.
                 </p>
               </div>
             </div>
@@ -72,7 +72,7 @@ const ThemeComponent: FC = () => {
                   activeCategoryId === null
                     ? "bg-white text-dashboard-dark border-white"
                     : "text-white bg-white/[0.01] border-white/50"
-                }  rounded-full border  ${
+                }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark   ${
                   redhat.className
                 } text-sm font-medium`}
               >
@@ -85,8 +85,8 @@ const ThemeComponent: FC = () => {
                     className={`py-3 px-6 ${
                       activeCategoryId === tc.id
                         ? "bg-white text-dashboard-dark border-white"
-                        : "text-white bg-white/[0.01] border-white/50"
-                    }  rounded-full border  ${
+                        : "text-white border-white/50"
+                    }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark ${
                       redhat.className
                     } text-sm font-medium`}
                   >
@@ -105,7 +105,7 @@ const ThemeComponent: FC = () => {
                 return (
                   <div
                     key={`Tema Undangan ${t.name}`}
-                    className="bg-white/[0.01] px-4 lg:px-8 py-10 lg:py-12 group"
+                    className="bg-white/[0.02] px-4 lg:px-8 py-8 md:py-10 lg:py-12 group"
                   >
                     <div
                       key={t.id}
@@ -132,16 +132,32 @@ const ThemeComponent: FC = () => {
                         ))}
                       </div>
                       <h5
-                        className={`${redhat.className} text-2xl text-white font-medium my-1`}
+                        className={`${redhat.className} text-2xl text-white font-medium mt-1 mb-3`}
                       >
                         {t.name}
                       </h5>
-                      <Link href={`/${t.slug}`} target="_blank">
+                      <Link
+                        href={`/${t.slug}`}
+                        target="_blank"
+                        className="w-full"
+                      >
                         <button
-                          className={`${redhat.className} text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-2 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                          className={`${redhat.className} justify-center text-sm w-full hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-2 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-3`}
                         >
                           Preview
                           <BsEye />
+                        </button>
+                      </Link>
+                      <Link
+                        href={`/${t.slug}`}
+                        target="_blank"
+                        className="w-full"
+                      >
+                        <button
+                          className={`${redhat.className} justify-center text-sm w-full hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-3`}
+                        >
+                          Pesan Sekarang
+                          <BsCart />
                         </button>
                       </Link>
                     </div>
