@@ -18,7 +18,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
         type="button"
         aria-label={`btn-${title.replace(" ", "-").toLowerCase()}`}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-xs lg:text-sm font-medium flex justify-between text-left"
+        className="w-full text-sm font-medium flex justify-between text-left"
       >
         <span>{title}</span>
         <span>
