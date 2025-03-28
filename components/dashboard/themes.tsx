@@ -37,8 +37,8 @@ const ThemeComponent: FC = () => {
       <>
         <section
           className={`${
-            themes.length > 8 ? "py-10" : "pt-10 md:pb-10"
-          } lg:py-16 bg-dashboard-dark select-none`}
+            themes.length > 8 ? "py-8" : "pt-8"
+          } lg:py-16 md:py-10 bg-dashboard-dark select-none`}
           id="section3"
         >
           <div className="max-w-screen-xl mx-auto">
@@ -48,7 +48,7 @@ const ThemeComponent: FC = () => {
             >
               <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
                 <h2
-                  className={`${redhat.className} min-w-[30vw] text-3xl md:text-4xl font-semibold text-white`}
+                  className={`${redhat.className} min-w-[30vw] text-3xl lg:text-4xl font-semibold text-white`}
                 >
                   Koleksi Tema Undangan Kami
                 </h2>

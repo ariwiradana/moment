@@ -15,10 +15,7 @@ const SharedThemeComponent = () => {
   const data = (response && response.data) || {};
   if (data)
     return (
-      <section
-        data-aos="fade-up"
-        className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden"
-      >
+      <section className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
           <video
             className="min-w-full min-h-full absolute top-1/2 left-1/2 bg-zinc-50 transform -translate-y-1/2 -translate-x-1/2 object-cover"
@@ -29,7 +26,7 @@ const SharedThemeComponent = () => {
             playsInline
           ></video>
         </div>
-        <span className="absolute inset-0 bg-dashboard-dark/10"></span>
+        <span className="absolute inset-0 bg-dashboard-dark/5"></span>
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-4 gap-8 lg:gap-16 relative z-20">
           {data?.events > 0 && (
             <div
@@ -61,9 +58,7 @@ const SharedThemeComponent = () => {
               >
                 {formatNumber(data?.events * 3)}
               </h2>
-              <h2 className={`${redhat.className} text-center`}>
-                Acara
-              </h2>
+              <h2 className={`${redhat.className} text-center`}>Acara</h2>
             </div>
           )}
 

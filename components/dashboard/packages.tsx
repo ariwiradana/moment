@@ -15,7 +15,7 @@ const PackageComponent = () => {
 
   if (pacakages.length > 0)
     return (
-      <section className="py-10 lg:py-16 select-none" id="section4">
+      <section className="py-8 md:py-10 lg:py-16 select-none" id="section4">
         <div className="max-w-screen-xl mx-auto">
           <div
             className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center px-4 md:px-12 lg:px-0"
@@ -23,7 +23,7 @@ const PackageComponent = () => {
           >
             <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
               <h2
-                className={`${redhat.className} min-w-[30vw] text-3xl md:text-4xl font-semibold text-dashboard-dark`}
+                className={`${redhat.className} min-w-[30vw] text-3xl lg:text-4xl font-semibold text-dashboard-dark`}
               >
                 Paket Undangan Yang Tersedia
               </h2>
@@ -38,7 +38,7 @@ const PackageComponent = () => {
           </div>
           <div
             data-aos="fade-up"
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 lg:mt-8 px-4 md:px-12 lg:px-0"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mt-6 lg:mt-8 px-4 md:px-12 lg:px-0"
           >
             {pacakages.map((p, index) => {
               const isLast = index === pacakages.length - 1;
