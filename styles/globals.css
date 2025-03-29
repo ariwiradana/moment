@@ -32,6 +32,34 @@
   }
 }
 
+.shine-dark {
+  background: #151515; /* Dark background */
+  background-image: linear-gradient(
+    to right,
+    #151515 0%,
+    /* Dark shade */ #191919 20%,
+    /* Lighter dark shade for the shimmer */ #161616 40%,
+    /* Return to the dark base */ #151515 100%
+  );
+  background-repeat: no-repeat;
+  position: relative;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmerDark;
+  animation-timing-function: linear;
+}
+
+@keyframes placeholderShimmerDark {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
 @keyframes scaleAnimation {
   0% {
     transform: scale(1);
