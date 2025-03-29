@@ -24,10 +24,10 @@ const TestimonialsComponent = () => {
         className="py-8 md:py-10 lg:py-16 relative bg-zinc-50"
         id="section5"
       >
-        <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-2 px-4 md:px-12 lg:px-0">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-2 px-4 md:px-12 lg:px-4">
           <div>
             <h2
-              className={`${redhat.className} text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
+              className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
             >
               Apa Yang <br />
               Mereka Katakan?

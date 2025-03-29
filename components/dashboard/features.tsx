@@ -9,9 +9,9 @@ const FeaturesComponent = () => {
     <section
       data-aos="fade-up"
       id="section2"
-      className="py-8 md:py-10 lg:py-16 px-4 md:px-12 lg:px-0 relative select-none"
+      className="py-8 md:py-10 lg:py-16 relative select-none"
     >
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6">
+      <div className="px-4 md:px-12 lg:px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6">
         {(isExpanded ? features : features.slice(0, 4)).map((f) => (
           <div
             className="flex flex-col lg:flex-row gap-2 lg:gap-4"

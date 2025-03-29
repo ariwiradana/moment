@@ -39,7 +39,6 @@ const NavbarComponent = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log(window.scrollY);
       setIsOnTop(window.scrollY === 0);
     };
     window.addEventListener("scroll", handleScroll);
@@ -59,7 +58,7 @@ const NavbarComponent = () => {
         open={isOpenSidebar}
         toggle={() => setIsOpenSidebar((state) => !state)}
       />
-      <nav className={`max-w-screen-xl mx-auto px-4 md:px-12 lg:px-0`}>
+      <nav className={`max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4`}>
         <ul className="flex items-center justify-between gap-8 h-12 md:h-16 lg:h-20">
           <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
             <Link href="/" className="flex items-center">

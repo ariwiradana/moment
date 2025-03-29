@@ -72,11 +72,11 @@ const ClientComponent = () => {
               ))}
           </Swiper>
         </div>
-        <div className="mt-4 md:mt-8 lg:mt-10 flex-col px-4 md:px-12 lg:px-0 lg:flex-row flex justify-between gap-2 max-w-screen-xl mx-auto">
+        <div className="mt-4 md:mt-8 lg:mt-10 flex-col px-4 md:px-12 lg:px-4 lg:flex-row flex justify-between gap-2 max-w-screen-xl mx-auto">
           <h3
             data-aos="fade-up"
             data-aos-delay="200"
-            className={`${redhat.className} text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
+            className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
           >
             Klien Yang Telah
             <br />

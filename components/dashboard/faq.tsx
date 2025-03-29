@@ -22,7 +22,7 @@ const FaqComponent = () => {
       className="py-8 md:py-10 lg:py-16 relative select-none"
       id="section6"
     >
-      <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-0 relative ">
+      <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4 relative ">
         <div
           className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
           data-aos="fade-up"

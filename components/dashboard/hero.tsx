@@ -28,7 +28,7 @@ const HeroComponent = () => {
   return (
     <section
       id="section1"
-      className="min-h-svh md:h-full md:min-h-[70vh] lg:h-dvh w-full mt-10 bg-white flex flex-col justify-center max-w-screen-xl mx-auto gap-10 p-4 md:p-12 lg:p-0"
+      className="min-h-svh md:h-full md:min-h-[70vh] lg:h-dvh w-full mt-10 bg-white flex flex-col justify-center max-w-screen-xl mx-auto gap-10 px-4 md:px-12 lg:px-4"
     >
       <div className="flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-40">
         <h2

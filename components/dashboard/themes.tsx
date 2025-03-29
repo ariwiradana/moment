@@ -1,54 +1,63 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { redhat } from "@/lib/fonts";
 import Link from "next/link";
 import { Theme, ThemeCategory } from "@/lib/types";
 import Image from "next/image";
-import { BsCart, BsChevronDown, BsEye } from "react-icons/bs";
+import { BsCart, BsChevronDown, BsEye, BsPlayCircleFill } from "react-icons/bs";
 import { sosmedURLs } from "@/constants/sosmed";
+import { formatToRupiah } from "@/utils/formatToRupiah";
 
 const ThemeComponent: FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
+  const [activeCategoryIds, setActiveCategoryIds] = useState<number[]>([]);
   const [themes, setThemes] = useState<Theme[]>([]);
+  const [filteredThemes, setFilteredThemes] = useState<Theme[]>([]);
 
   const { data: themeCategoriesResponse } = useSWR<{ data: ThemeCategory[] }>(
     `/api/_pb/_tc`,
     fetcher
   );
 
-  useSWR<{ data: Theme[] }>(
-    activeCategoryId
-      ? `/api/_pb/_th?order=DESC&theme_category_id=${activeCategoryId}`
-      : "/api/_pb/_th?order=DESC",
-    fetcher,
-    {
-      onSuccess: (data) => {
-        setThemes(data.data);
-      },
-    }
-  );
+  useSWR<{ data: Theme[] }>("/api/_pb/_th?order=DESC", fetcher, {
+    onSuccess: (data) => {
+      setThemes(data.data);
+      setFilteredThemes(data.data);
+    },
+  });
 
   const themeCategories: ThemeCategory[] = themeCategoriesResponse?.data || [];
+
+  useEffect(() => {
+    if (activeCategoryIds.length > 0) {
+      const themesFiltered = themes.filter((item) =>
+        item.theme_categories?.some((theme) =>
+          activeCategoryIds.includes(theme.id)
+        )
+      );
+      setFilteredThemes(themesFiltered);
+    } else {
+      setFilteredThemes(themes);
+    }
+  }, [themes, activeCategoryIds]);
 
   if (themes.length > 0)
     return (
       <>
         <section
-          className={`${
-            themes.length > 8 ? "py-8" : "pt-8"
-          } lg:py-16 md:py-10 bg-dashboard-dark select-none`}
+          data-aos="fade-up"
+          className={`py-8 lg:py-16 md:py-10 bg-dashboard-dark select-none`}
           id="section3"
         >
-          <div className="max-w-screen-xl mx-auto">
+          <div className="px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto ">
             <div
-              className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center px-4 md:px-12 lg:px-0"
               data-aos="fade-up"
+              className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
             >
               <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
                 <h2
-                  className={`${redhat.className} text-3xl lg:text-4xl whitespace-nowrap font-semibold text-white`}
+                  className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-white`}
                 >
                   Koleksi Tema <br />
                   Undangan Kami
@@ -64,14 +73,14 @@ const ThemeComponent: FC = () => {
             </div>
 
             <div
-              className="flex mt-4 gap-2 overflow-x-auto max-w-screen-xl mx-auto px-4 md:px-12 lg:px-0"
+              className="flex mt-4 gap-2"
               data-aos="fade-up"
               data-aos-delay="200"
             >
               <button
-                onClick={() => setActiveCategoryId(null)}
+                onClick={() => setActiveCategoryIds([])}
                 className={`py-2 lg:py-3 px-4 lg:px-6 ${
-                  activeCategoryId === null
+                  activeCategoryIds.length === 0
                     ? "bg-white text-dashboard-dark border-white"
                     : "text-white bg-white/[0.01] border-white/50"
                 }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark ${
@@ -83,9 +92,19 @@ const ThemeComponent: FC = () => {
               {themeCategories.flatMap((tc) => {
                 return (
                   <button
-                    onClick={() => setActiveCategoryId(tc.id)}
+                    onClick={() => {
+                      let newCategories = [...activeCategoryIds];
+                      if (activeCategoryIds.includes(tc.id)) {
+                        newCategories = newCategories.filter(
+                          (c) => c !== tc.id
+                        );
+                      } else {
+                        newCategories.push(tc.id);
+                      }
+                      setActiveCategoryIds(newCategories);
+                    }}
                     className={`py-2 lg:py-3 px-4 lg:px-6 ${
-                      activeCategoryId === tc.id
+                      activeCategoryIds.includes(tc.id)
                         ? "bg-white text-dashboard-dark border-white"
                         : "text-white border-white/50"
                     }  rounded-full border transition-all ease-in-out duration-500 hover:bg-white hover:border-white hover:text-dashboard-dark ${
@@ -101,63 +120,89 @@ const ThemeComponent: FC = () => {
             <div
               data-aos="fade-up"
               data-aos-delay="400"
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-8 lg:mt-11"
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-8 lg:mt-11"
             >
-              {(isExpanded ? themes : themes.slice(0, 8)).map((t) => {
-                const message = `Halo, saya tertarik untuk memilih tema undangan ${name}`;
-                const whatsappLink = `${
-                  sosmedURLs.whatsapp
-                }?text=${encodeURIComponent(message)}`;
+              {(isExpanded ? filteredThemes : filteredThemes.slice(0, 8)).map(
+                (t) => {
+                  const message = `Halo, saya tertarik untuk memilih tema undangan ${t.name}`;
+                  const whatsappLink = `${
+                    sosmedURLs.whatsapp
+                  }?text=${encodeURIComponent(message)}`;
 
-                return (
-                  <div
-                    key={`Tema Undangan ${t.name}`}
-                    className="bg-white/[0.02] px-4 lg:px-8 py-8 md:py-10 lg:py-12 group"
-                  >
-                    <div
-                      key={t.id}
-                      className="aspect-[3/4] relative overflow-hidden"
-                    >
-                      <Image
-                        sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
-                        priority
-                        fill
-                        src={t.phone_thumbnail || ""}
-                        alt={`Tema Undangan ${t.name}`}
-                        className="object-contain shimmer"
-                      />
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <p
-                        className={`${redhat.className} text-sm text-white/70 mt-4`}
+                  return (
+                    <div key={`Tema Undangan ${t.name}`}>
+                      <div
+                        key={t.id}
+                        className="aspect-square relative overflow-hidden"
                       >
-                        Tema
-                      </p>
-                      <h5
-                        className={`${redhat.className} text-xl text-white font-medium mb-2`}
-                      >
-                        {t.name}
-                      </h5>
-                      <Link href={`/${t.slug}`} target="_blank">
-                        <button
-                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                        <Image
+                          sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
+                          priority
+                          fill
+                          src={t.thumbnail || ""}
+                          alt={`Tema Undangan ${t.name}`}
+                          className="object-contain shimmer"
+                        />
+                        <div className="flex gap-2 absolute top-3 md:top-6 left-3 md:left-6">
+                          {t.cover_video && (
+                            <div className="flex bg-white shadow-sm items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark">
+                              <p className={`text-xs ${redhat.className}`}>
+                                Video Cover
+                              </p>
+                              <BsPlayCircleFill className="text-xs" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-col p-3 md:p-6 bg-white">
+                        <h5
+                          className={`${redhat.className} text-lg text-dashboard-dark font-semibold mb-2`}
                         >
-                          Preview
-                          <BsEye />
-                        </button>
-                      </Link>
-                      <Link href={whatsappLink} target="_blank">
-                        <button
-                          className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center mt-3 gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                          {t.name}
+                        </h5>
+                        <p
+                          className={`${redhat.className} text-xs text-dashboard-dark/70`}
                         >
-                          Pesan Sekarang
-                          <BsCart />
-                        </button>
-                      </Link>
+                          Mulai dari
+                        </p>
+                        {t.packages && (
+                          <h6
+                            className={`${redhat.className} text-lg text-dashboard-dark font-medium mb-2 md:mb-4 leading-6`}
+                          >
+                            {formatToRupiah(t.packages[0].price)}
+                          </h6>
+                        )}
+                        <div className="flex gap-2 flex-wrap">
+                          <Link
+                            href={`/${t.slug}`}
+                            className="w-full md:w-auto"
+                            target="_blank"
+                          >
+                            <button
+                              className={`${redhat.className} w-full md:w-auto justify-center text-xs transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-dashboard-dark hover:bg-dashboard-dark hover:border-dashboard-dark hover:text-white py-2`}
+                            >
+                              Preview
+                              <BsEye />
+                            </button>
+                          </Link>
+                          <Link
+                            href={whatsappLink}
+                            className="w-full md:w-auto"
+                            target="_blank"
+                          >
+                            <button
+                              className={`${redhat.className} w-full md:w-auto justify-center text-xs transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-dashboard-dark rounded-full px-4 text-white bg-dashboard-dark py-2`}
+                            >
+                              Pesan Sekarang
+                              <BsCart />
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
             </div>
             {!isExpanded && themes.length > 8 ? (
               <div
