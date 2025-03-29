@@ -87,63 +87,67 @@ const NavbarComponent = () => {
                 </div>
               </Link>
             </li>
-            <li className="hidden lg:flex justify-center items-center gap-x-8">
-              {navData.map(({ title, path }: NavData, index: number) => (
-                <div className="flex group" key={title}>
+
+            {router.pathname === "/" && (
+              <>
+                <li className="hidden lg:flex justify-center items-center gap-x-8">
+                  {navData.map(({ title, path }: NavData, index: number) => (
+                    <div className="flex group" key={title}>
+                      <button
+                        onClick={() => {
+                          if (router.pathname === "/") {
+                            setActiveSection(`section${index + 1}`);
+                            scrollTo(`section${index + 1}`);
+                          } else {
+                            setActiveSection(`section${index + 1}`);
+                            setManualScroll(false);
+                            router.push(path);
+                          }
+                        }}
+                        className={`${redhat.className} text-xs cursor-pointer outline-none relative text-dashboard-dark duration-500 uppercase ease-in-out`}
+                      >
+                        {title}
+                        <div
+                          className={`absolute group-hover:opacity-100 group-hover:-bottom-2 ${
+                            activeSection === `section${index + 1}`
+                              ? "opacity-100 -bottom-2"
+                              : "opacity-0 -bottom-1"
+                          }  left-1/2 transform -translate-x-1/2 w-[2px] h-[2px] bg-dashboard-dark rounded-full transition-all ease-in-out duration-500`}
+                        ></div>
+                      </button>
+                    </div>
+                  ))}
+                </li>
+                <li>
                   <button
                     onClick={() => {
-                      if (router.pathname === "/") {
-                        setActiveSection(`section${index + 1}`);
-                        scrollTo(`section${index + 1}`);
-                      } else {
-                        setActiveSection(`section${index + 1}`);
-                        setManualScroll(false);
-                        router.push(path);
-                      }
+                      setActiveSection(`section3`);
+                      scrollTo(`section3`);
+                      toast.success(
+                        "Silahkan pilih tema undangan terlebih dahulu!",
+                        {
+                          icon: (
+                            <RiErrorWarningFill className="text-dashboard-primary text-lg" />
+                          ),
+                          className: `${redhat.className} text-sm border border-white/20`,
+                          style: {
+                            boxShadow: "none",
+                            bottom: 0,
+                            backgroundColor: "#101010",
+                            color: "white",
+                            borderRadius: 100,
+                          },
+                        }
+                      );
                     }}
-                    className={`${redhat.className} text-xs cursor-pointer outline-none relative text-dashboard-dark duration-500 uppercase ease-in-out`}
+                    className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none whitespace-nowrap bg-dashboard-primary rounded-full px-4 py-2`}
                   >
-                    {title}
-                    <div
-                      className={`absolute group-hover:opacity-100 group-hover:-bottom-2 ${
-                        activeSection === `section${index + 1}`
-                          ? "opacity-100 -bottom-2"
-                          : "opacity-0 -bottom-1"
-                      }  left-1/2 transform -translate-x-1/2 w-[2px] h-[2px] bg-dashboard-dark rounded-full transition-all ease-in-out duration-500`}
-                    ></div>
+                    Buat Sekarang
+                    <BsChevronRight />
                   </button>
-                </div>
-              ))}
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setActiveSection(`section3`);
-                  scrollTo(`section3`);
-                  toast.success(
-                    "Silahkan pilih tema undangan terlebih dahulu!",
-                    {
-                      icon: (
-                        <RiErrorWarningFill className="text-dashboard-primary text-lg" />
-                      ),
-                      className: `${redhat.className} text-sm`,
-                      style: {
-                        boxShadow: "none",
-                        bottom: 0,
-                        backgroundColor: "#101010",
-                        color: "white",
-                        border: "1px white",
-                        borderRadius: 0,
-                      },
-                    }
-                  );
-                }}
-                className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none whitespace-nowrap bg-dashboard-primary rounded-full px-4 py-2`}
-              >
-                Buat Sekarang
-                <BsChevronRight />
-              </button>
-            </li>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </section>

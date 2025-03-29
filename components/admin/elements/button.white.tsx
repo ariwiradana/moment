@@ -2,7 +2,7 @@ import { redhat } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
-interface ButtonPrimaryProps
+interface ButtonWhiteProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   className?: string | "";
@@ -11,7 +11,7 @@ interface ButtonPrimaryProps
   isloading?: boolean;
 }
 
-const ButtonPrimary: FC<ButtonPrimaryProps> = ({
+const ButtonWhite: FC<ButtonWhiteProps> = ({
   title,
   className = "",
   icon,
@@ -37,7 +37,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
       {...props}
       className={`${redhat.className} ${
         className ?? ""
-      } flex items-center text-white font-medium bg-dashboard-dark transition duration-200 whitespace-nowrap hover:bg-admin-hover-dark justify-start ${buttonStyles(
+      } flex items-center text-dashboard-dark font-medium bg-white transition duration-200 whitespace-nowrap justify-start ${buttonStyles(
         size
       )} ${
         isloading || props.disabled
@@ -53,4 +53,4 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
   );
 };
 
-export default ButtonPrimary;
+export default ButtonWhite;

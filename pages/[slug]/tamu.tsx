@@ -1,25 +1,25 @@
 import Input from "@/components/admin/elements/input";
 import Loader from "@/components/admin/elements/loader";
 import AddGuestItem from "@/components/dashboard/elements/add.guest.item";
-import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
-import { afacad, dm } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import { Client } from "@/lib/types";
 import useAddGuestStore from "@/store/useAddGuestStore";
 import useDashboardStore from "@/store/useDashboardStore";
 import { GetServerSideProps } from "next";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiPlus, BiSearch, BiUser } from "react-icons/bi";
+import { BiPlus, BiSearch } from "react-icons/bi";
 import useSWR from "swr";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { useDebounce } from "use-debounce";
 import { Pagination } from "@mui/material";
 import useDisableInspect from "@/hooks/useDisableInspect";
+import ButtonPrimary from "@/components/admin/elements/button.primary";
 
 interface Props {
   slug: string;
@@ -85,11 +85,14 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
         resetForm();
         if (mutate) mutate();
         toast.success("Tamu berhasil ditambahkan!", {
-          icon: (
-            <div className="p-1 rounded bg-dashboard-primary">
-              <BiUser />
-            </div>
-          ),
+          className: `${redhat.className} text-sm border border-white/20`,
+          style: {
+            boxShadow: "none",
+            bottom: 0,
+            backgroundColor: "#101010",
+            color: "white",
+            borderRadius: 100,
+          },
         });
       }
       console.log(result);
@@ -131,28 +134,25 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
 
-      <div className="max-w-screen-2xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
-        <div className="py-16">
+      <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4 py-8 md:py-10 lg:py-16 mt-12 md:mt-16 lg:mt-20">
+        <div>
           <div>
             <h1
-              className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
+              className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
             >
               Tambah Tamu <br />
               Undangan
             </h1>
             <p
-              className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
+              className={`${redhat.className} text-sm text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
             >
               Tambahkan tamu undangan untuk acara Anda! Isi form nama tamu di
               bawah ini untuk mengatur daftar tamu Anda. Setelah tamu
               ditambahkan, klik bagikan untuk menyebarkan undangan anda.
             </p>
-            <p
-              className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
-            ></p>
           </div>
-          <div className="mt-8 max-w-screen-md flex flex-col gap-4">
-            <div className="md:mb-4 sticky top-16 md:top-20 lg:top-24 py-4 bg-gradient-to-b from-white via-white via-[95%] to-transparent z-10">
+          <div className="mt-4 max-w-screen-md flex flex-col gap-4">
+            <div className="md:mb-4 sticky top-12 md:top-16 lg:top-20 pt-4 pb-5 bg-gradient-to-b from-white via-white via-[95%] to-transparent z-10">
               <Input
                 onChange={(e) => {
                   setSearch(e.target.value);
@@ -167,19 +167,21 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
               <Loader />
             ) : (
               <>
-                {guests?.length > 0
-                  ? guests.map((name) => (
-                      <AddGuestItem
-                        token={token}
-                        client={client}
-                        key={`Tamu Undangan ${name}`}
-                        mutate={mutate}
-                        slug={slug}
-                        mode="exist"
-                        value={name}
-                      />
-                    ))
-                  : null}
+                <div className="flex flex-col divide-y divide-dashboard-dark/10 border border-dashboard-dark/10">
+                  {guests?.length > 0
+                    ? guests.map((name) => (
+                        <AddGuestItem
+                          token={token}
+                          client={client}
+                          key={`Tamu Undangan ${name}`}
+                          mutate={mutate}
+                          slug={slug}
+                          mode="exist"
+                          value={name}
+                        />
+                      ))
+                    : null}
+                </div>
 
                 {totalRows > limit && (
                   <div className="mt-4 md:mt-6">
@@ -197,7 +199,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
           <form
             className={`${
               client?.guests && client.guests?.length > 0 ? "mt-8 md:mt-12" : ""
-            } pt-10 w-full flex flex-col md:flex-row gap-4 items-end max-w-screen-md`}
+            } pt-10 w-full flex flex-col gap-4 items-start max-w-screen-md`}
             onSubmit={handleSubmit}
           >
             <Input
@@ -212,7 +214,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
               }}
             />
             <ButtonPrimary
-              className={`w-full md:w-auto ${error && "mb-6"}`}
+              className={`w-full justify-center md:w-auto ${error && "mb-6"}`}
               disabled={loading || form.guest.length < 3}
               isloading={loading}
               type="submit"
