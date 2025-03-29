@@ -5,9 +5,10 @@ import { redhat } from "@/lib/fonts";
 import Link from "next/link";
 import { Theme, ThemeCategory } from "@/lib/types";
 import Image from "next/image";
-import { BsCart, BsChevronDown } from "react-icons/bs";
+import { BsCart, BsChevronDown, BsEye } from "react-icons/bs";
 import { sosmedURLs } from "@/constants/sosmed";
 import { formatToRupiah } from "@/utils/formatToRupiah";
+import ThemeShimmer from "./elements/theme.shimmer";
 
 const ThemeComponent: FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -110,74 +111,79 @@ const ThemeComponent: FC = () => {
               data-aos="fade-up"
               className="grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-4 mt-8 lg:mt-11"
             >
-              {isLoading
-                ? Array(4)
-                    .fill(0)
-                    .map((_) => (
-                      <div key={`Shimmer Tema Undangan ${_}`}>
-                        <div className="w-full aspect-square bg-white/5 shine-dark"></div>
-                        <div className="h-3 w-32 bg-white/5 mt-6 shine-dark"></div>
-                        <div className="h-3 w-16 bg-white/5 mt-4 shine-dark"></div>
-                        <div className="h-3 w-28 bg-white/5 mt-4 shine-dark"></div>
-                        <div className="w-36 bg-white/5 mt-4 py-4 rounded-full shine-dark"></div>
-                      </div>
-                    ))
-                : (isExpanded ? themes : themes.slice(0, 8)).map((t) => {
-                    const message = `Halo, saya tertarik untuk memilih tema undangan ${t.name}`;
-                    const whatsappLink = `${
-                      sosmedURLs.whatsapp
-                    }?text=${encodeURIComponent(message)}`;
+              {isLoading ? (
+                <>
+                  <ThemeShimmer />
+                  <ThemeShimmer />
+                  <ThemeShimmer className="hidden md:block" />
+                  <ThemeShimmer className="hidden md:block" />
+                </>
+              ) : (
+                (isExpanded ? themes : themes.slice(0, 8)).map((t) => {
+                  const message = `Halo, saya tertarik untuk memilih tema undangan ${t.name}`;
+                  const whatsappLink = `${
+                    sosmedURLs.whatsapp
+                  }?text=${encodeURIComponent(message)}`;
 
-                    return (
-                      <Link
-                        href={`/${t.slug}`}
-                        target="_blank"
-                        aria-label={`Link Preview Undangan ${t.name}`}
-                        key={`Tema Undangan ${t.name}`}
+                  return (
+                    <div key={`Tema Undangan ${t.name}`}>
+                      <div
+                        key={t.id}
+                        className="aspect-square relative overflow-hidden group"
                       >
-                        <div
-                          key={t.id}
-                          className="aspect-square relative overflow-hidden"
+                        <Link
+                          target="_blank"
+                          aria-label={`Link Preview Undangan ${t.name}`}
+                          href={`/${t.slug}`}
+                          className="absolute inset-0 z-10 transition-all ease-in-out duration-500 group-hover:bg-dashboard-dark/50 group-hover:backdrop-blur-sm flex justify-center items-center"
                         >
-                          <Image
-                            sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
-                            priority
-                            fill
-                            src={t.thumbnail || ""}
-                            alt={`Tema Undangan ${t.name}`}
-                            className="object-contain shimmer"
-                          />
-                        </div>
-                        <div className="flex flex-col mt-4">
-                          <h5
-                            className={`${redhat.className} text-lg text-white font-semibold mb-2`}
+                          <button
+                            className={`${redhat.className} opacity-0 group-hover:opacity-100 justify-center flex text-xs transition-all ease-in-out duration-500 items-center gap-x-2 outline-none whitespace-nowrap rounded-full px-4 text-white py-2 border border-white/50 hover:bg-white hover:border-white hover:text-dashboard-dark`}
                           >
-                            {t.name}
-                          </h5>
-                          <p
-                            className={`${redhat.className} text-xs text-white/70`}
+                            Preview
+                            <BsEye />
+                          </button>
+                        </Link>
+                        <Image
+                          sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
+                          priority
+                          fill
+                          src={t.thumbnail || ""}
+                          alt={`Tema Undangan ${t.name}`}
+                          className="object-contain shine-dark group-hover:grayscale transition-all ease-in-out duration-500"
+                        />
+                      </div>
+                      <div className="flex flex-col mt-2 md:mt-4">
+                        <h5
+                          className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
+                        >
+                          {t.name}
+                        </h5>
+                        <p
+                          className={`${redhat.className} text-xs text-white/70`}
+                        >
+                          Mulai dari
+                        </p>
+                        {t.packages && (
+                          <h6
+                            className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
                           >
-                            Mulai dari
-                          </p>
-                          {t.packages && (
-                            <h6
-                              className={`${redhat.className} text-lg text-white font-medium mb-3 md:mb-4 leading-6`}
-                            >
-                              {formatToRupiah(t.packages[0].price)}
-                            </h6>
-                          )}
-                          <Link href={whatsappLink} target="_blank">
-                            <button
-                              className={`${redhat.className} justify-center text-xs transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none whitespace-nowrap rounded-full px-4 text-white bg-dashboard-dark py-2 border border-white/50 hover:bg-white hover:border-white hover:text-dashboard-dark`}
-                            >
-                              Pesan Sekarang
-                              <BsCart />
-                            </button>
-                          </Link>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                            {formatToRupiah(t.packages[0].price)}
+                          </h6>
+                        )}
+                        <Link href={whatsappLink} target="_blank">
+                          <button
+                            className={`${redhat.className} justify-center text-xs transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none whitespace-nowrap rounded-full px-4 text-white bg-dashboard-dark py-2 border border-white/50 hover:bg-white hover:border-white hover:text-dashboard-dark`}
+                          >
+                            Pesan Sekarang
+                            <BsCart />
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
 
             {!isExpanded && themes.length > 8 ? (

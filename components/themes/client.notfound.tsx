@@ -1,4 +1,4 @@
-import { afacad, montserrat } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import Image from "next/image";
 import React from "react";
 import ButtonPrimary from "../dashboard/elements/button.primary";
@@ -18,12 +18,12 @@ const ClientNotFound = () => {
       />
       <div>
         <h1
-          className={`mb-4 text-admin-hover-dark text-center lg:text-left text-3xl md:text-4xl gap-x-4 font-semibold ${montserrat.className}`}
+          className={`mb-4 text-admin-hover-dark text-center lg:text-left text-3xl md:text-4xl gap-x-4 font-semibold ${redhat.className}`}
         >
           Undangan Tidak Ditemukan
         </h1>
         <p
-          className={`text-lg mb-8 text-admin-hover-dark/50 ${afacad.className} lg:max-w-md lg:text-left`}
+          className={`text-sm mb-8 text-admin-hover-dark/50 ${redhat.className} lg:max-w-md lg:text-left`}
         >
           Undangan yang Anda cari tidak ditemukan atau telah dihapus. Pastikan
           Anda memeriksa kembali atau informasi link yang dimasukkan.

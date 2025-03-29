@@ -15,17 +15,17 @@ module.exports = {
   },
   additionalPaths: async (config) => {
     const dynamicRoutes = [
-      "/samaya/index",
+      "/samaya",
       "/samaya/login",
       "/samaya/pembayaran",
       "/samaya/tamu",
       "/samaya/testimoni",
-      "/aruna/index",
+      "/aruna",
       "/aruna/login",
       "/aruna/pembayaran",
       "/aruna/tamu",
       "/aruna/testimoni",
-      "/nirvaya/index",
+      "/nirvaya",
       "/nirvaya/login",
       "/nirvaya/pembayaran",
       "/nirvaya/tamu",
@@ -33,8 +33,6 @@ module.exports = {
       "/form/pernikahan",
       "/form/mepandes",
       "/form/pernikahan-mepandes",
-      "/tema",
-      "/fitur",
     ];
 
     return dynamicRoutes.map((route) => ({

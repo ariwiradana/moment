@@ -1,4 +1,4 @@
-import { afacad } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
@@ -24,25 +24,25 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
   const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
-        return "px-2 py-1 text-sm gap-x-1";
+        return "px-2 py-1 text-xs gap-x-1";
       case "small":
-        return "px-3 py-2 text-sm gap-x-2";
+        return "px-3 py-2 text-xs gap-x-2";
       case "medium":
-        return "px-4 py-3 text-base gap-x-3";
+        return "px-4 py-3 text-sm gap-x-3";
       case "large":
-        return "px-6 py-3 text-lg gap-x-3";
+        return "px-6 py-3 text-base gap-x-3";
     }
   };
   const iconStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
-        return "text-sm";
+        return "text-xs";
       case "small":
-        return "text-base";
+        return "text-sm";
       case "medium":
-        return "text-lg";
+        return "text-sm";
       case "large":
-        return "text-xl";
+        return "text-base";
     }
   };
 
@@ -50,9 +50,9 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
     <button
       {...props}
       disabled={isloading ? true : false}
-      className={`${afacad.className} ${
+      className={`${redhat.className} ${
         className ?? ""
-      } flex items-center text-dashboard-dark justify-center whitespace-nowrap font-light bg-opacity-95 hover:bg-opacity-100 bg-dashboard-primary transition duration-500 ${
+      } rounded-full flex items-center text-dashboard-dark justify-center whitespace-nowrap bg-opacity-95 hover:bg-opacity-100 bg-dashboard-primary transition duration-500 ${
         !title ? "p-2 md:p-2 lg:p-2" : buttonStyles(size)
       } ${
         isloading || props.disabled

@@ -26,12 +26,12 @@ export const features: Feature[] = [
   {
     title: "Revisi Tidak Terbatas",
     icon: <TbPencilPlus />,
-    description: "Bebas melakukan revisi tanpa batasan pada undangan Anda.",
+    description: "Bebas melakukan revisi tanpa batasan pada undangan kamu.",
   },
   {
     title: "Tamu Tidak Terbatas",
     icon: <TbUsersGroup />,
-    description: "Tambahkan tamu sebanyak yang Anda inginkan tanpa batasan.",
+    description: "Bebas menambahkan tamu sebanyak yang kamu inginkan.",
   },
   {
     title: "Kalimat Pembuka & Penutup",
@@ -42,8 +42,7 @@ export const features: Feature[] = [
   {
     title: "Acara Tak Terbatas",
     icon: <TbTimelineEventText />,
-    description:
-      "Buat dan kelola berbagai acara dalam satu undangan tanpa batas.",
+    description: "Kelola hinga 3 acara dalam satu undangan tanpa batas.",
   },
   {
     title: "Hitung Mundur Waktu",
@@ -53,17 +52,17 @@ export const features: Feature[] = [
   {
     title: "Galeri Foto",
     icon: <TbGraph />,
-    description: "Unggah hingga 20 foto untuk mempercantik undangan Anda.",
+    description: "Unggah hingga 20 foto untuk menambah estetika undangan kamu.",
   },
   {
     title: "Rekaman Video",
     icon: <TbVideo />,
-    description: "Sertakan hingga 2 video untuk menambahkan elemen multimedia.",
+    description: "Sertakan hingga 2 video untuk menambahkan momen undanganmu.",
   },
   {
     title: "Kontak Media Sosial",
     icon: <TbSocial />,
-    description: "Integrasikan akun media sosial Anda untuk kemudahan akses.",
+    description: "Integrasikan akun media sosial pada undanganmu.",
   },
   {
     title: "Musik Latar",
@@ -73,7 +72,7 @@ export const features: Feature[] = [
   {
     title: "RSVP & Ucapan",
     icon: <TbCalendar />,
-    description: "Fasilitasi tamu untuk memberikan tanggapan dan ucapan.",
+    description: "Fasilitasi tamu untuk memberikan kehadiran dan ucapan.",
   },
   {
     title: "Terintegrasi Google Maps",
@@ -88,11 +87,11 @@ export const features: Feature[] = [
   {
     title: "Pilih Cover Foto Undangan",
     icon: <TbPictureInPictureTop />,
-    description: "Pilih gambar penutup undangan yang sesuai dengan tema.",
+    description: "Pilih foto cover yang sesuai dengan tema undanganmu.",
   },
   {
     title: "Amplop Digital",
     icon: <TbGift />,
-    description: "Kirim undangan dalam bentuk amplop digital yang menarik.",
+    description: "Tambahkan fitur hadiah digital dalam undanganmu.",
   },
 ];
