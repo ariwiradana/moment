@@ -24,7 +24,7 @@ const NavbarComponent = () => {
     const element = document.getElementById(section);
     if (element) {
       const isMobile = window.innerWidth < 768;
-      const offset = isMobile ? 50 : 100;
+      const offset = isMobile ? 50 : 80;
 
       const elementPosition =
         element.getBoundingClientRect().top + window.scrollY;
