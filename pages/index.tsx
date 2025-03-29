@@ -110,8 +110,8 @@ const Dashboard = () => {
       <FeaturesComponent />
       <ThemeComponent />
       <PackageComponent />
-      <SharedThemeComponent />
       <TestimonialsComponent />
+      <SharedThemeComponent />
       <FaqComponent />
     </Layout>
   );
