@@ -1,18 +1,18 @@
 import React from "react";
-import { afacad } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
 import { navData } from "@/constants/dashboardNavbar";
 import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
-import {
-  AiOutlineInstagram,
-  AiOutlineMail,
-  AiOutlineWhatsApp,
-  AiOutlineYoutube,
-} from "react-icons/ai";
 import { HiArrowLongUp } from "react-icons/hi2";
 import { sosmedURLs } from "@/constants/sosmed";
+import {
+  TbBrandInstagram,
+  TbBrandWhatsapp,
+  TbBrandYoutube,
+  TbMail,
+} from "react-icons/tb";
 
 const FooterComponent = () => {
   const setActiveSection = useDashboardStore((state) => state.setActiveSection);
@@ -20,13 +20,13 @@ const FooterComponent = () => {
   const router = useRouter();
 
   return (
-    <section className="bg-admin-hover-dark">
+    <section className="bg-dashboard-dark">
       <div className="relative pt-16 pb-8 md:py-16">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative">
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <Link href="/">
-                <div className="relative w-20 md:w-24 aspect-video -ml-[6px]">
+                <div className="relative w-16 md:w-20 aspect-video -ml-[6px]">
                   <Image
                     alt="logo"
                     fill
@@ -36,9 +36,7 @@ const FooterComponent = () => {
                   />
                 </div>
               </Link>
-              <p
-                className={`${afacad.className} text-zinc-400 mt-4 md:text-lg`}
-              >
+              <p className={`${redhat.className} text-zinc-400 mt-4 text-sm`}>
                 Moment adalah penyedia undangan digital yang memudahkan Anda
                 membuat undangan untuk momen spesial.
               </p>
@@ -56,46 +54,46 @@ const FooterComponent = () => {
                         router.push(path);
                       }
                     }}
-                    className={`text-zinc-200 ${afacad.className} capitalize md:text-lg hover:text-dashboard-primary`}
+                    className={`text-zinc-200 ${redhat.className} capitalize text-xs md:text-sm hover:text-dashboard-primary`}
                   >
                     {title}
                   </button>
                 ))}
               </div>
               <div
-                className={`flex items-center gap-3 text-2xl mt-4 text-dashboard-primary`}
+                className={`flex items-center gap-3 text-xl mt-4 text-white`}
               >
                 <Link
                   aria-label="footer-whatsapp-link"
-                  className="bg-dashboard-dark p-2 rounded"
+                  className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
                   href={sosmedURLs.whatsapp}
                 >
-                  <AiOutlineWhatsApp />
+                  <TbBrandWhatsapp />
                 </Link>
                 <Link
                   aria-label="footer-instagram-link"
-                  className="bg-dashboard-dark p-2 rounded"
+                  className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
                   href={sosmedURLs.instagram}
                 >
-                  <AiOutlineInstagram />
+                  <TbBrandInstagram />
                 </Link>
                 <Link
                   aria-label="footer-email-link"
-                  className="bg-dashboard-dark p-2 rounded"
+                  className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
                   href={sosmedURLs.email}
                 >
-                  <AiOutlineMail />
+                  <TbMail />
                 </Link>
                 <Link
                   aria-label="footer-youtube-link"
-                  className="bg-dashboard-dark p-2 rounded"
+                  className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
                   href={sosmedURLs.youtube}
                 >
-                  <AiOutlineYoutube />
+                  <TbBrandYoutube />
                 </Link>
               </div>
               <div className="mt-10 md:mt-12">
@@ -117,7 +115,7 @@ const FooterComponent = () => {
         </div>
       </div>
       <p
-        className={`${afacad.className} text-zinc-400 text-center bg-dashboard-dark p-2 text-xs md:text-sm`}
+        className={`${redhat.className} text-zinc-400 text-center bg-dashboard-dark p-3 border-t border-t-white/10 text-xs`}
       >
         © 2024 Moment | Designed with ❤️ by Moment
       </p>
