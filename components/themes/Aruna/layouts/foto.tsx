@@ -124,12 +124,14 @@ const Component = () => {
             sini, kami mengabadikan momen cinta dan janji yang akan dikenang
             selamanya.
           </p>
-          <p
-            data-aos="fade-up"
-            className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
-          >
-            {getParticipantNames(participants)}
-          </p>
+          {client?.theme_category?.slug === "pernikahan" && (
+            <p
+              data-aos="fade-up"
+              className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
+            >
+              {getParticipantNames(participants)}
+            </p>
+          )}
           <div
             className={`mt-10 grid grid-cols-4 ${
               slideImages?.length > 0 ? "grid-rows-8" : "grid-rows-6"

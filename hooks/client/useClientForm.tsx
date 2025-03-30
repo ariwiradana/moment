@@ -8,7 +8,7 @@ import PackageThemeLinkForm from "@/components/dashboard/form/package.theme.link
 import ParticipantForm from "@/components/dashboard/form/participants";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
-import { Package, Participant, Theme } from "@/lib/types";
+import { Package, Participant, Theme, ThemeCategory } from "@/lib/types";
 import useClientFormStore from "@/store/useClientFormStore";
 import { capitalizeWords } from "@/utils/capitalizeWords";
 import { useRouter } from "next/router";
@@ -24,11 +24,11 @@ import {
 } from "react-icons/bi";
 import useSWR from "swr";
 
-const categoryIds: Record<string, number | null> = {
-  pernikahan: 1,
-  mepandes: 2,
-  "pernikahan-mepandes": 3,
-};
+// const categoryIds: Record<string, number> = {
+//   pernikahan: 1,
+//   mepandes: 2,
+//   "pernikahan-mepandes": 3,
+// };
 
 export const initialGroomBride: Participant[] = [
   {
@@ -91,6 +91,19 @@ const useClientForm = (category: string) => {
     setCategory,
   } = useClientFormStore();
 
+  const [categoryIds, setCategoryIds] = useState<Record<string, number> | null>(
+    null
+  );
+
+  useSWR<{ data: ThemeCategory[] }>(`/api/_pb/_tc`, fetcher, {
+    onSuccess: (data) => {
+      const formattedCategory = data.data.reduce((acc, category) => {
+        acc[category.slug] = category.id;
+        return acc;
+      }, {} as Record<string, number>);
+      setCategoryIds(formattedCategory);
+    },
+  });
   const [formComponents] = useState<{
     components: Record<number, ReactNode>;
     steps: string[];
@@ -105,7 +118,7 @@ const useClientForm = (category: string) => {
             3: <BrideForm />,
             4: <FilesForm />,
             5: <GiftForm />,
-            6: <CustomOpeningClosingForm />,
+            6: <CustomOpeningClosingForm category={category} />,
           },
           steps: [
             "Link, Paket & Tema Undangan",
@@ -134,7 +147,7 @@ const useClientForm = (category: string) => {
             2: <ParticipantForm />,
             3: <FilesForm />,
             4: <GiftForm />,
-            5: <CustomOpeningClosingForm />,
+            5: <CustomOpeningClosingForm category={category} />,
           },
           steps: [
             "Link, Paket & Tema Undangan",
@@ -163,7 +176,7 @@ const useClientForm = (category: string) => {
             4: <ParticipantForm />,
             5: <FilesForm />,
             6: <GiftForm />,
-            7: <CustomOpeningClosingForm />,
+            7: <CustomOpeningClosingForm category={category} />,
           },
           steps: [
             "Link, Paket & Tema Undangan",
@@ -211,45 +224,52 @@ const useClientForm = (category: string) => {
     });
   }, [activeStep]);
 
-  console.log(form);
-
   useEffect(() => {
-    const id = categoryIds[category];
-    setForm("theme_category_id", id);
-    switch (category) {
-      case "pernikahan":
-        setForm("participants", initialGroomBride);
-        break;
-      case "mepandes":
-        setForm("participants", initialParticipant);
-        break;
-      case "pernikahan-mepandes":
-        setForm("participants", [...initialGroomBride, ...initialParticipant]);
-        break;
-      default:
-        break;
-    }
+    if (categoryIds) {
+      const id = categoryIds[category];
 
-    setCategory(category);
-  }, []);
+      if (id) setForm("theme_category_id", id);
+
+      switch (category) {
+        case "pernikahan":
+          setForm("participants", initialGroomBride);
+          break;
+        case "mepandes":
+          setForm("participants", initialParticipant);
+          break;
+        case "pernikahan-mepandes":
+          setForm("participants", [
+            ...initialGroomBride,
+            ...initialParticipant,
+          ]);
+          break;
+        default:
+          break;
+      }
+      setCategory(category);
+    }
+  }, [categoryIds]);
 
   const { data: packagesData, isLoading: isLoadingePackages } = useSWR(
     "/api/_pb/_p",
     fetcher
   );
 
-  let url = `/api/_pb/_th?order=DESC`;
-  if (form.theme_category_id)
-    url += `&theme_category_id=${JSON.stringify([form.theme_category_id])}`;
-  const { data: themeData, isLoading: isLoadingThemes } = useSWR(url, fetcher);
+  const { data: themeData, isLoading: isLoadingThemes } = useSWR(
+    form.theme_category_id
+      ? `/api/_pb/_th?order=DESC&theme_category_id=${JSON.stringify([
+          form.theme_category_id,
+        ])}`
+      : `/api/_pb/_th?order=DESC`,
+    fetcher
+  );
 
   const themes: Theme[] = themeData?.data || [];
   const pacakages: Package[] = packagesData?.data || [];
 
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
       const createClient = async () => {
         setIsLoading(true);

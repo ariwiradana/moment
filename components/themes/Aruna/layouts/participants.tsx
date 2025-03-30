@@ -13,10 +13,9 @@ import { getEventNames } from "@/utils/getEventNames";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
 
-
 const ParticipantsComponent = () => {
-  const { client} = useClientStore()
-  const { state: participantState} = useParticipants()
+  const { client } = useClientStore();
+  const { state: participantState } = useParticipants();
 
   return (
     <section className="relative z-10 overflow-hidden bg-white py-[100px] px-8 md:px-16">
@@ -90,15 +89,17 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         className="flex items-center mt-12 md:mt-14 gap-x-3"
         data-aos="fade-up"
       >
-        <p
-          className={`text-aruna-dark/60 text-[8px] md:text-[10px] uppercase tracking-[6px] ${roboto.className}`}
-        >
-          {props.data.role === "groom"
-            ? "Mempelai Pria"
-            : props.data.role === "bride"
-            ? "Mempelai Wanita"
-            : `${props.role}`}
-        </p>
+        {props.data.role !== "participant" && (
+          <p
+            className={`text-aruna-dark/60 text-[8px] md:text-[10px] uppercase tracking-[6px] ${roboto.className}`}
+          >
+            {props.data.role === "groom"
+              ? "Mempelai Pria"
+              : props.data.role === "bride"
+              ? "Mempelai Wanita"
+              : null}
+          </p>
+        )}
       </div>
       <h1
         data-aos="fade-up"

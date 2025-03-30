@@ -202,15 +202,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               icon={<BiTrash className="text-base" />}
                             />
                           )}
-
-                          <ButtonText
-                            onClick={() =>
-                              actions.handleDelete(client.id as number)
-                            }
-                            size="small"
-                            title="Hapus"
-                            icon={<BiTrash className="text-base" />}
-                          />
                         </ButtonActionDialog>
                       </div>
                     </div>
@@ -489,14 +480,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 icon={<BiTrash className="text-base" />}
                               />
                             )}
-                            <ButtonText
-                              onClick={() =>
-                                actions.handleDelete(client.id as number)
-                              }
-                              size="medium"
-                              title="Hapus"
-                              icon={<BiTrash className="text-base" />}
-                            />
                           </ButtonActionDialog>
                         </td>
                       </tr>

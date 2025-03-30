@@ -7,10 +7,17 @@ import { BiSolidSave } from "react-icons/bi";
 import Input from "@/components/admin/elements/input";
 import InputTextarea from "@/components/admin/elements/textarea";
 import Accordion from "@/components/admin/elements/accordion.button";
+import useClientForm from "@/hooks/client/useClientForm";
 
-const CustomOpeningClosingForm = () => {
+interface Props {
+  category: string;
+}
+
+const CustomOpeningClosingForm = ({ category }: Props) => {
   const { activeStep, setActiveStep, form, setForm, isLoading } =
     useClientFormStore();
+
+  const { actions } = useClientForm(category);
 
   return (
     <div className={`${redhat.className} flex flex-col gap-4`}>
@@ -103,6 +110,7 @@ const CustomOpeningClosingForm = () => {
           }}
         />
         <ButtonPrimary
+          onClick={() => actions.handleSubmit()}
           isloading={isLoading}
           size="medium"
           type="submit"

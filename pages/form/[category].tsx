@@ -13,7 +13,7 @@ interface Props {
 }
 
 const DashboardForm = ({ category }: Props) => {
-  const { state, actions } = useClientForm(category);
+  const { state } = useClientForm(category);
   const { activeStep } = useClientFormStore();
   useDisableInspect();
 
@@ -127,12 +127,9 @@ const DashboardForm = ({ category }: Props) => {
               ))}
             </div>
           </div>
-          <form
-            onSubmit={actions.handleSubmit}
-            className="lg:mt-8 mt-4 px-6 md:px-12 lg:px-24"
-          >
+          <div className="lg:mt-8 mt-4 px-6 md:px-12 lg:px-24">
             {state.formComponents?.components[activeStep]}
-          </form>
+          </div>
         </div>
       </div>
     </Layout>

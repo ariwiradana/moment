@@ -84,8 +84,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           query += ` theme_category_id = $${valueIndex}`;
           countQuery += hasCondition ? ` AND` : ` WHERE`;
           countQuery += ` theme_category_id = $${valueIndex}`;
-          values.push(theme_category_id);
-          countValues.push(theme_category_id);
+          values.push(theme_category_id as number);
+          countValues.push(theme_category_id as number);
           hasCondition = true;
         }
 
