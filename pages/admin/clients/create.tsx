@@ -79,7 +79,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             />
             <InputSelect
               options={state.themeCategoryOptions}
-              value={state.formData.theme_category_id ?? ""}
+              value={(state.formData.theme_category_id as number) ?? ""}
               onChange={(e) =>
                 actions.handleChangeClient(
                   Number(e.target.value),
