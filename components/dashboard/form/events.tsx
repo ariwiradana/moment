@@ -178,7 +178,11 @@ const EventForm = () => {
               toast.error("Lengkapi semua informasi acara.");
               return;
             }
-            setActiveStep(activeStep + 1);
+            if (form.theme_category_id === 1) {
+              setActiveStep(activeStep + 1);
+            } else {
+              setActiveStep(activeStep + 3);
+            }
           }}
         />
       </div>

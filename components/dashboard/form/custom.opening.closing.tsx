@@ -9,15 +9,11 @@ import InputTextarea from "@/components/admin/elements/textarea";
 import Accordion from "@/components/admin/elements/accordion.button";
 import useClientForm from "@/hooks/client/useClientForm";
 
-interface Props {
-  category: string;
-}
-
-const CustomOpeningClosingForm = ({ category }: Props) => {
+const CustomOpeningClosingForm = () => {
   const { activeStep, setActiveStep, form, setForm, isLoading } =
     useClientFormStore();
 
-  const { actions } = useClientForm(category);
+  const { actions } = useClientForm();
 
   return (
     <div className={`${redhat.className} flex flex-col gap-4`}>

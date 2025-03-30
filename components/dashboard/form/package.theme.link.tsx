@@ -14,19 +14,14 @@ import ButtonSecondary from "../elements/button.secondary";
 import { Modal } from "@mui/material";
 import { Package } from "@/lib/types";
 
-interface Props {
-  category: string;
-}
-
-const PackageThemeLinkForm = ({ category }: Props) => {
+const PackageThemeLinkForm = () => {
   const { setForm, form } = useClientFormStore();
-  const { state, actions } = useClientForm(category);
+  const { state, actions } = useClientForm();
   const [activeModal, setActiveModal] = useState(false);
   const [detailPackage, setDetailPackage] = useState<Package | null>(null);
 
-  console.log(form);
-
-  if (state.isLoadingThemes || state.isLoadingePackages) return <Loader />;
+  if (state.isLoadingThemeCategories || state.isLoadingePackages)
+    return <Loader />;
 
   return (
     <>
@@ -193,6 +188,37 @@ const PackageThemeLinkForm = ({ category }: Props) => {
         />
         <div>
           <label className="block text-dashboard-dark/60 mb-1 text-xs">
+            Pilih Kategori Undangan
+          </label>
+          <div className="flex gap-4 whitespace-nowrap">
+            {state.themeCategories.flatMap((tc) => {
+              return (
+                <button
+                  onClick={() => {
+                    setForm("theme_category_id", tc.id);
+                  }}
+                  className={`py-6 px-12 md:py-8 md:px-16 ${
+                    form.theme_category_id === tc.id
+                      ? "border-2 border-dashboard-primary"
+                      : "border border-dashboard-dark/10"
+                  } transition-all ease-in-out duration-500 text-dashboard-dark relative ${
+                    redhat.className
+                  } text-xs lg:text-sm font-medium`}
+                >
+                  {form.theme_category_id === tc.id && (
+                    <div className="absolute text-dashboard-dark -top-2 lg:-top-3 -right-2 lg:-right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-[2px] lg:p-1 text-lg lg:text-xl">
+                      <BiCheck />
+                    </div>
+                  )}
+                  {tc.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-dashboard-dark/60 mb-1 text-xs">
             Pilih Paket
           </label>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
@@ -255,58 +281,59 @@ const PackageThemeLinkForm = ({ category }: Props) => {
             })}
           </div>
         </div>
-        <div>
-          <label className="block text-dashboard-dark/60 mb-1 text-xs">
-            Pilih Tema
-          </label>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
-            {state.themes.map((theme) => {
-              const selected = theme.id === form.theme_id;
-              return (
-                <div className="relative" key={`Form Tema ${theme.name}`}>
-                  {selected && (
-                    <div className="z-10 absolute text-dashboard-dark -top-2 lg:-top-3 -right-2 lg:-right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-[2px] lg:p-1 text-lg lg:text-xl">
-                      <BiCheck />
-                    </div>
-                  )}
-                  <div
-                    onClick={() => setForm("theme_id", theme.id as number)}
-                    className={`aspect-square w-full h-full relative border-2 cursor-pointer overflow-hidden ${
-                      selected
-                        ? "border-dashboard-primary"
-                        : "border-transparent"
-                    }`}
-                  >
-                    <div className="absolute inset-0 flex flex-col justify-end px-4 lg:px-6 py-4 lg:py-6 bg-gradient-to-b from-transparent via-dashboard-dark/30 to-dashboard-dark/70 via-[70%] z-10">
-                      <p
-                        className={`text-sm lg:text-base text-white/70 lg:mb-0 ${redhat.className}`}
-                      >
-                        Tema
-                      </p>
-                      <h1
-                        className={`${redhat.className} leading-4 text-lg lg:text-xl lg:leading-6 text-white font-medium`}
-                      >
-                        {theme.name}
-                      </h1>
-                    </div>
-                    <div className="relative aspect-square overflow-hidden w-full h-full">
-                      <Image
-                        fill
-                        className="object-cover w-full h-full"
-                        alt={`Tema Form ${theme.name}`}
-                        src={
-                          (theme.thumbnail as string) ||
-                          `https://placehold.co/600/png?font=afacad`
-                        }
-                      />
+        {state.themes.length > 0 && (
+          <div>
+            <label className="block text-dashboard-dark/60 mb-1 text-xs">
+              Pilih Tema
+            </label>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
+              {state.themes.map((theme) => {
+                const selected = theme.id === form.theme_id;
+                return (
+                  <div className="relative" key={`Form Tema ${theme.name}`}>
+                    {selected && (
+                      <div className="z-10 absolute text-dashboard-dark -top-2 lg:-top-3 -right-2 lg:-right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-[2px] lg:p-1 text-lg lg:text-xl">
+                        <BiCheck />
+                      </div>
+                    )}
+                    <div
+                      onClick={() => setForm("theme_id", theme.id as number)}
+                      className={`aspect-square w-full h-full relative border-2 cursor-pointer overflow-hidden ${
+                        selected
+                          ? "border-dashboard-primary"
+                          : "border-transparent"
+                      }`}
+                    >
+                      <div className="absolute inset-0 flex flex-col justify-end px-4 lg:px-6 py-4 lg:py-6 bg-gradient-to-b from-transparent via-dashboard-dark/30 to-dashboard-dark/70 via-[70%] z-10">
+                        <p
+                          className={`text-sm lg:text-base text-white/70 lg:mb-0 ${redhat.className}`}
+                        >
+                          Tema
+                        </p>
+                        <h1
+                          className={`${redhat.className} leading-4 text-lg lg:text-xl lg:leading-6 text-white font-medium`}
+                        >
+                          {theme.name}
+                        </h1>
+                      </div>
+                      <div className="relative aspect-square overflow-hidden w-full h-full">
+                        <Image
+                          fill
+                          className="object-cover w-full h-full"
+                          alt={`Tema Form ${theme.name}`}
+                          src={
+                            (theme.thumbnail as string) ||
+                            `https://placehold.co/600/png?font=afacad`
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-
+        )}
         <div className="flex justify-end p-6 bg-zinc-50 mt-4 rounded-lg">
           <ButtonPrimary
             size="medium"
@@ -316,6 +343,10 @@ const PackageThemeLinkForm = ({ category }: Props) => {
             onClick={() => {
               if (!form.slug) {
                 toast.error("Link undangan wajib diisi.");
+                return;
+              }
+              if (!form.theme_category_id) {
+                toast.error("Pilih kategori undangan.");
                 return;
               }
               if (!form.package_id) {

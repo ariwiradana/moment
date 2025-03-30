@@ -90,6 +90,7 @@ const Dashboard = () => {
     }
   }, [activeSection, manualScroll]);
   useDisableInspect();
+  
   return (
     <Layout>
       <Seo

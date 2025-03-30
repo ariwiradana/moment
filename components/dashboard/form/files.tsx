@@ -44,7 +44,11 @@ const FilesForm = () => {
           title="Sebelumnya"
           iconPosition="left"
           onClick={() => {
-            setActiveStep(activeStep - 1);
+            if (form.theme_category_id === 1) {
+              setActiveStep(activeStep - 2);
+            } else {
+              setActiveStep(activeStep - 1);
+            }
           }}
         />
         <ButtonPrimary

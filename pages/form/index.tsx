@@ -4,23 +4,18 @@ import useClientForm from "@/hooks/client/useClientForm";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import { redhat } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
-import { GetServerSideProps } from "next";
 import React from "react";
 import { BiCheck } from "react-icons/bi";
 
-interface Props {
-  category: string;
-}
-
-const DashboardForm = ({ category }: Props) => {
-  const { state } = useClientForm(category);
+const DashboardForm = () => {
+  const { state } = useClientForm();
   const { activeStep } = useClientFormStore();
   useDisableInspect();
 
   return (
     <Layout>
       <Seo
-        url={`https://momentinvitation.com/form/${category}`}
+        url={`https://momentinvitation.com/form/`}
         title="Form Klien | Moment"
         description="Masukkan informasi klien dengan mudah di halaman Form Klien Moment. Kelola data klien, tambahkan detail undangan, dan buat pengalaman pernikahan atau mempandes yang disesuaikan dengan kebutuhan."
         keywords={`form klien undangan, masukkan data klien pernikahan, form klien mempandes, kelola informasi klien, undangan digital klien, form klien Bali, kelola data klien undangan`}
@@ -134,15 +129,6 @@ const DashboardForm = ({ category }: Props) => {
       </div>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { category } = context.params as { category: string };
-  return {
-    props: {
-      category,
-    },
-  };
 };
 
 export default DashboardForm;

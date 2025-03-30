@@ -110,7 +110,10 @@ const ThemeComponent: FC = () => {
             ) : (
               clients &&
               clients
-                .filter((c) => c.theme_category_id === activeCategoryId)
+                .filter(
+                  (c) =>
+                    c.theme_category_id === activeCategoryId && c.theme?.active
+                )
                 .map((c) => {
                   const message = `Halo, saya tertarik untuk memilih tema undangan ${c.theme_category?.name} ${c.theme_category?.name}`;
                   const whatsappLink = `${

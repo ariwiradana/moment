@@ -2,27 +2,26 @@ import Input from "@/components/admin/elements/input";
 import { montserrat } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
 import React from "react";
-import { BiSolidPlusCircle } from "react-icons/bi";
+import { BiSolidPlusCircle, BiTrash } from "react-icons/bi";
 import ButtonPrimary from "../elements/button.primary";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
 import InputTextarea from "@/components/admin/elements/textarea";
 import Accordion from "@/components/admin/elements/accordion.button";
-import ButtonSecondary from "@/components/admin/elements/button.secondary";
 import InputSelect from "@/components/admin/elements/select";
 import { ChildOrderOptions } from "@/constants/childOrder";
 import { initialParticipant } from "@/hooks/client/useClientForm";
 import { capitalizeWords } from "@/utils/capitalizeWords";
 import { areValidParticipants } from "@/utils/areValidParticipants";
+import ButtonSecondary from "../elements/button.secondary";
 
 const ParticipantForm = () => {
   const { setForm, form, activeStep, setActiveStep, category } =
     useClientFormStore();
 
-  const participants =
-    category === "pernikahan-mepandes"
-      ? form.participants.filter((p) => p.role === "participant")
-      : form.participants;
+  const participants = form.participants.filter(
+    (p) => p.role === "participant"
+  );
 
   const handleChangeParticipant = (
     index: number,
@@ -36,6 +35,8 @@ const ParticipantForm = () => {
     };
     setForm("participants", newParticipant);
   };
+
+  console.log({ participants });
 
   return (
     <div className={`${montserrat.className}`}>
@@ -164,6 +165,21 @@ const ParticipantForm = () => {
                       label="TikTok"
                     />
                   </div>
+                  {index > 0 && (
+                    <div className="flex justify-end">
+                      <ButtonSecondary
+                        title="Hapus"
+                        onClick={() => {
+                          const newParticipant = [...form.participants];
+                          newParticipant.splice(idx, 1);
+                          setForm("participants", newParticipant);
+                        }}
+                        icon={<BiTrash />}
+                        type="button"
+                        size="small"
+                      />
+                    </div>
+                  )}
                 </div>
               }
             />
@@ -173,10 +189,9 @@ const ParticipantForm = () => {
       <div className="mt-4">
         <ButtonSecondary
           onClick={() => {
-            setForm("participants", [
-              ...form.participants,
-              ...initialParticipant,
-            ]);
+            const newParticipants = [...form.participants];
+            newParticipants.push(initialParticipant);
+            setForm("participants", newParticipants);
           }}
           type="button"
           title="Tambah Peserta Lainnya"
@@ -192,7 +207,11 @@ const ParticipantForm = () => {
           title="Sebelumnya"
           iconPosition="left"
           onClick={() => {
-            setActiveStep(activeStep - 1);
+            if (form.theme_category_id === 1) {
+              setActiveStep(activeStep - 1);
+            } else {
+              setActiveStep(activeStep - 3);
+            }
           }}
         />
         <ButtonPrimary
