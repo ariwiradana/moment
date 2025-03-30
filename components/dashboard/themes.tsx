@@ -3,143 +3,127 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { redhat } from "@/lib/fonts";
 import Link from "next/link";
-import { Theme, ThemeCategory } from "@/lib/types";
+import { Client, ThemeCategory } from "@/lib/types";
 import Image from "next/image";
-import { BsCart, BsChevronDown, BsEye } from "react-icons/bs";
+import { BsCart, BsEye } from "react-icons/bs";
 import { sosmedURLs } from "@/constants/sosmed";
 import { formatToRupiah } from "@/utils/formatToRupiah";
-import ThemeShimmer from "./elements/theme.shimmer";
 import ButtonLight from "./elements/button.light";
 import ButtonOutlinedLight from "./elements/button.outlined.white";
+import ThemeShimmer from "./elements/theme.shimmer";
 
 const ThemeComponent: FC = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [activeCategoryIds, setActiveCategoryIds] = useState<number[]>([]);
-  const [themes, setThemes] = useState<Theme[]>([]);
+  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
+  const [clients, setClients] = useState<Client[] | null>(null);
+  const [themeCategories, setThemeCategories] = useState<ThemeCategory[]>([]);
 
-  const { data: themeCategoriesResponse } = useSWR<{ data: ThemeCategory[] }>(
-    `/api/_pb/_tc`,
-    fetcher
-  );
+  useSWR<{ data: ThemeCategory[] }>(`/api/_pb/_tc`, fetcher, {
+    onSuccess: (data) => {
+      if (data.data) {
+        if (!activeCategoryId) {
+          setActiveCategoryId(data.data[0].id);
+        }
+        setThemeCategories(data.data);
+      }
+    },
+  });
 
-  const { isLoading } = useSWR<{ data: Theme[] }>(
-    activeCategoryIds.length > 0
-      ? `/api/_pb/_th?order=DESC&theme_category_id=${JSON.stringify(
-          activeCategoryIds
-        )}`
-      : "/api/_pb/_th?order=DESC",
+  const { isLoading } = useSWR<{ data: Client[] }>(
+    activeCategoryId ? `/api/_pb/_c?is_preview=true` : null,
     fetcher,
     {
       onSuccess: (data) => {
-        setThemes(data.data);
+        if (data.data) {
+          setClients(data.data);
+        }
+      },
+      onError: () => {
+        setClients([]);
       },
     }
   );
 
-  const themeCategories: ThemeCategory[] = themeCategoriesResponse?.data || [];
-
-  if (themes.length > 0)
-    return (
-      <>
-        <section
-          data-aos="fade-up"
-          className={`py-8 lg:py-16 md:py-10 bg-dashboard-dark select-none`}
-          id="section3"
-        >
-          <div className="px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto ">
-            <div
-              data-aos="fade-up"
-              className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
-            >
-              <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
-                <h2
-                  className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-white`}
-                >
-                  Koleksi Tema <br />
-                  Undangan Kami
-                </h2>
-                <div className="h-[1px] w-full bg-white/10 hidden lg:block"></div>
-                <p
-                  className={`${redhat.className} text-sm text-white/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
-                >
-                  Jelajahi pilihan tema undangan yang beragam dan dirancang
-                  untuk momen spesial Anda.
-                </p>
-              </div>
-            </div>
-
-            <div
-              className="flex mt-4 gap-2 whitespace-nowrap overflow-x-auto"
-              data-aos="fade-up"
-            >
-              <button
-                onClick={() => setActiveCategoryIds([])}
-                className={`py-2 lg:py-3 px-4 lg:px-6 ${
-                  activeCategoryIds.length === 0
-                    ? "bg-white text-dashboard-dark border-white"
-                    : "text-white border-white/50"
-                } border transition-all ease-in-out duration-500 ${
-                  redhat.className
-                } text-xs lg:text-sm font-medium`}
+  return (
+    <>
+      <section
+        data-aos="fade-up"
+        className={`py-8 lg:py-16 md:py-10 bg-dashboard-dark select-none`}
+        id="section3"
+      >
+        <div className="px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto ">
+          <div
+            data-aos="fade-up"
+            className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
+          >
+            <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
+              <h2
+                className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-white`}
               >
-                Semua
-              </button>
-              {themeCategories.flatMap((tc) => {
-                return (
-                  <button
-                    onClick={() => {
-                      let newCategories = [...activeCategoryIds];
-                      if (activeCategoryIds.includes(tc.id)) {
-                        newCategories = newCategories.filter(
-                          (c) => c !== tc.id
-                        );
-                      } else {
-                        newCategories.push(tc.id);
-                      }
-                      setActiveCategoryIds(newCategories);
-                    }}
-                    className={`py-2 lg:py-3 px-4 lg:px-6 ${
-                      activeCategoryIds.includes(tc.id)
-                        ? "bg-white text-dashboard-dark border-white"
-                        : "text-white border-white/50"
-                    }  border transition-all ease-in-out duration-500 ${
-                      redhat.className
-                    } text-xs lg:text-sm font-medium`}
-                  >
-                    {tc.name}
-                  </button>
-                );
-              })}
+                Koleksi Tema <br />
+                Undangan Kami
+              </h2>
+              <div className="h-[1px] w-full bg-white/10 hidden lg:block"></div>
+              <p
+                className={`${redhat.className} text-sm text-white/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
+              >
+                Jelajahi pilihan tema undangan yang beragam dan dirancang untuk
+                momen spesial Anda.
+              </p>
             </div>
+          </div>
 
-            <div
-              data-aos="fade-up"
-              className="grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-4 mt-8 lg:mt-11"
-            >
-              {isLoading ? (
-                <>
-                  <ThemeShimmer />
-                  <ThemeShimmer />
-                  <ThemeShimmer className="hidden md:block" />
-                  <ThemeShimmer className="hidden md:block" />
-                </>
-              ) : (
-                (isExpanded ? themes : themes.slice(0, 8)).map((t) => {
-                  const message = `Halo, saya tertarik untuk memilih tema undangan ${t.name}`;
+          <div
+            className="flex mt-4 gap-2 whitespace-nowrap overflow-x-auto"
+            data-aos="fade-up"
+          >
+            {themeCategories.flatMap((tc) => {
+              return (
+                <button
+                  onClick={() => {
+                    setActiveCategoryId(tc.id);
+                  }}
+                  className={`py-2 lg:py-3 px-4 lg:px-6 ${
+                    activeCategoryId === tc.id
+                      ? "bg-white text-dashboard-dark border-white"
+                      : "text-white border-white/50"
+                  }  border transition-all ease-in-out duration-500 ${
+                    redhat.className
+                  } text-xs lg:text-sm font-medium`}
+                >
+                  {tc.name}
+                </button>
+              );
+            })}
+          </div>
+
+          <div
+            data-aos="fade-up"
+            className="grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-4 mt-8 lg:mt-11"
+          >
+            {isLoading ? (
+              <>
+                <ThemeShimmer />
+                <ThemeShimmer />
+                <ThemeShimmer />
+                <ThemeShimmer />
+              </>
+            ) : (
+              clients &&
+              clients
+                .filter((c) => c.theme_category_id === activeCategoryId)
+                .map((c) => {
+                  const message = `Halo, saya tertarik untuk memilih tema undangan ${c.theme_category?.name} ${c.theme_category?.name}`;
                   const whatsappLink = `${
                     sosmedURLs.whatsapp
                   }?text=${encodeURIComponent(message)}`;
 
                   return (
-                    <div key={`Tema Undangan ${t.name}`}>
-                      <div
-                        key={t.id}
-                        className="aspect-square relative overflow-hidden group"
-                      >
+                    <div key={`Tema Undangan ${c.slug}`}>
+                      <div className="aspect-square relative overflow-hidden group">
                         <Link
                           target="_blank"
-                          aria-label={`Link Preview Undangan ${t.name}`}
-                          href={`/${t.slug}`}
+                          aria-label={`Link Preview Undangan ${c.name}`}
+                          href={`/${c.slug}`}
                           className="absolute inset-0 z-10 transition-all ease-in-out duration-500 group-hover:bg-dashboard-dark/80 flex justify-center items-center"
                         >
                           <ButtonLight
@@ -153,8 +137,8 @@ const ThemeComponent: FC = () => {
                           sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
                           priority
                           fill
-                          src={t.thumbnail || ""}
-                          alt={`Tema Undangan ${t.name}`}
+                          src={c.theme?.thumbnail || ""}
+                          alt={`Tema Undangan ${c.name}`}
                           className="object-contain shine-dark group-hover:grayscale transition-all ease-in-out duration-500"
                         />
                       </div>
@@ -162,18 +146,18 @@ const ThemeComponent: FC = () => {
                         <h5
                           className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
                         >
-                          {t.name}
+                          {c.name}
                         </h5>
                         <p
                           className={`${redhat.className} text-xs text-white/70`}
                         >
                           Mulai dari
                         </p>
-                        {t.packages && (
+                        {c.package && (
                           <h6
                             className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
                           >
-                            {formatToRupiah(t.packages[0].price)}
+                            {formatToRupiah(c.package.price)}
                           </h6>
                         )}
                         <Link href={whatsappLink} target="_blank">
@@ -187,28 +171,12 @@ const ThemeComponent: FC = () => {
                     </div>
                   );
                 })
-              )}
-            </div>
-
-            {!isExpanded && themes.length > 8 ? (
-              <div
-                className="flex justify-center mt-12"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <button
-                  onClick={() => setIsExpanded((state) => !state)}
-                  className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 text-white rounded-full px-4 py-2`}
-                >
-                  Tampilkan Semua Tema
-                  <BsChevronDown />
-                </button>
-              </div>
-            ) : null}
+            )}
           </div>
-        </section>
-      </>
-    );
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default ThemeComponent;

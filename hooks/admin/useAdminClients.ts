@@ -25,14 +25,14 @@ export const useAdminClients = (token: string | null) => {
   };
 
   const handleDelete = (id: number) => {
-    const deleteTheme = getClient(
+    const deleteClient = getClient(
       `/api/_c?id=${id}`,
       {
         method: "DELETE",
       },
       token
     );
-    toast.promise(deleteTheme, {
+    toast.promise(deleteClient, {
       loading: "Deleting client...",
       success: () => {
         mutate();

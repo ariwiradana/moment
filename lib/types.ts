@@ -79,7 +79,7 @@ export interface Client {
   theme_category_id: number | null;
   package_id: number | null;
   package?: Package;
-  theme_category?: Package;
+  theme_category?: ThemeCategory;
   theme?: Theme | null;
   cover: null | string;
   seo: null | string;
