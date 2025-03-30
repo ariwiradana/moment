@@ -23,7 +23,7 @@ const GroomForm = () => {
 
   return (
     <div className={`${montserrat.className}`}>
-      <div className="max-w-screen-md flex flex-col gap-3 border p-4 rounded-lg">
+      <div className="max-w-screen-md flex flex-col gap-3 border p-4">
         <div className="grid md:grid-cols-2 gap-4">
           <Input
             value={form.participants[0].name}
@@ -109,12 +109,13 @@ const GroomForm = () => {
         </div>
       </div>
 
-      <div className="flex justify-between p-6 bg-zinc-50 mt-5 rounded-lg">
+      <div className="flex justify-between p-6 bg-zinc-50 mt-5">
         <ButtonPrimary
           type="button"
           size="medium"
           icon={<IoArrowBack />}
           title="Sebelumnya"
+          iconPosition="left"
           onClick={() => {
             setActiveStep(activeStep - 1);
           }}

@@ -5,13 +5,12 @@ import useClientFormStore, { initialEvent } from "@/store/useClientFormStore";
 import React from "react";
 import { BiSolidPlusCircle, BiTime, BiTrash } from "react-icons/bi";
 import ButtonPrimary from "../elements/button.primary";
-import ButtonSecondaryDashboard from "../elements/button.secondary";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
 import InputTextarea from "@/components/admin/elements/textarea";
 import Accordion from "@/components/admin/elements/accordion.button";
-import ButtonSecondary from "@/components/admin/elements/button.secondary";
 import moment from "moment";
+import ButtonSecondary from "../elements/button.secondary";
 
 const EventForm = () => {
   const {
@@ -121,7 +120,8 @@ const EventForm = () => {
                     className="text-sm whitespace-nowrap"
                   />
                   {index > 0 && (
-                    <ButtonSecondaryDashboard
+                    <ButtonSecondary
+                      title="Hapus"
                       onClick={() => {
                         const newEvents = [...form.events];
                         newEvents.splice(index, 1);
@@ -149,10 +149,11 @@ const EventForm = () => {
           icon={<BiSolidPlusCircle />}
         />
       </div>
-      <div className="flex justify-between p-6 bg-zinc-50 mt-5 rounded-lg">
+      <div className="flex justify-between p-6 bg-zinc-50 mt-5">
         <ButtonPrimary
           size="medium"
           type="button"
+          iconPosition="left"
           icon={<IoArrowBack />}
           title="Sebelumnya"
           onClick={() => {
@@ -163,7 +164,6 @@ const EventForm = () => {
           type="button"
           size="medium"
           icon={<IoArrowForward />}
-          iconPosition="right"
           title="Selanjutnya"
           onClick={() => {
             const isValid = form.events.every((item) => {

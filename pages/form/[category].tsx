@@ -2,7 +2,7 @@ import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
 import useClientForm from "@/hooks/client/useClientForm";
 import useDisableInspect from "@/hooks/useDisableInspect";
-import { afacad } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
 import { GetServerSideProps } from "next";
 import React from "react";
@@ -14,7 +14,7 @@ interface Props {
 
 const DashboardForm = ({ category }: Props) => {
   const { state, actions } = useClientForm(category);
-  const { activeStep, setActiveStep } = useClientFormStore();
+  const { activeStep } = useClientFormStore();
   useDisableInspect();
 
   return (
@@ -29,10 +29,10 @@ const DashboardForm = ({ category }: Props) => {
 
       <div className="max-w-screen-2xl mx-auto pt-16 md:pt-20 lg:pt-24">
         <div className="pb-16 pt-8">
-          <div className="sticky bg-white z-20 top-16 md:top-20 lg:top-24 py-6 px-6 md:px-12 lg:px-24">
+          <div className="sticky bg-white z-20 top-12 md:top-16 lg:top-20 py-6 px-6 md:px-12 lg:px-24">
             <div className="lg:hidden">
               <div className="flex items-center gap-x-3">
-                <div className="w-10 h-10 aspect-square rounded flex justify-center items-center bg-dashboard-primary text-dashboard-dark text-2xl">
+                <div className="w-10 h-10 aspect-square rounded flex justify-center items-center bg-dashboard-dark text-white text-xl">
                   {state.formComponents?.icons[activeStep]}
                 </div>
                 <div>
@@ -40,14 +40,14 @@ const DashboardForm = ({ category }: Props) => {
                     Step {activeStep + 1}
                   </h6>
                   <h4
-                    className={`text-dashboard-dark text-lg font-semibold ${afacad.className}`}
+                    className={`text-dashboard-dark text-base font-semibold ${redhat.className}`}
                   >
                     {state.formComponents?.steps[activeStep]}
                   </h4>
                 </div>
               </div>
 
-              <div className="w-full relative h-[3px] bg-zinc-100 mt-4 rounded-full">
+              <div className="w-full relative h-[2px] bg-zinc-100 mt-4">
                 {state.formComponents && (
                   <div
                     style={{
@@ -75,33 +75,32 @@ const DashboardForm = ({ category }: Props) => {
                   <div className="flex items-center flex-col relative">
                     {index > 0 && (
                       <div
-                        className={`top-1/2 transform -translate-y-1/2 left-0 w-1/2 absolute h-[2px] ${
+                        className={`top-1/2 transform -translate-y-1/2 left-0 w-1/2 absolute h-[1px] ${
                           index <= activeStep
                             ? "bg-dashboard-primary"
-                            : "bg-zinc-200"
+                            : "bg-dashboard-dark/20"
                         }`}
                       ></div>
                     )}
                     {state.formComponents &&
                     index < state.formComponents?.steps.length - 1 ? (
                       <div
-                        className={`top-1/2 transform -translate-y-1/2 right-0 w-1/2 absolute h-[2px] ${
+                        className={`top-1/2 transform -translate-y-1/2 right-0 w-1/2 absolute h-[1px] ${
                           index < activeStep
                             ? "bg-dashboard-primary"
-                            : "bg-zinc-200"
+                            : "bg-dashboard-dark/20"
                         }`}
                       ></div>
                     ) : null}
                     <div
-                      onClick={() => setActiveStep(index)}
                       className={`${
                         index < activeStep
-                          ? "bg-dashboard-primary text-dashboard-dark cursor-pointer"
+                          ? "bg-dashboard-dark text-white"
                           : activeStep === index
-                          ? "bg-dashboard-primary text-dashboard-dark"
-                          : "bg-zinc-300 text-white"
-                      } aspect-square min-w-10 min-h-10 rounded-full flex items-center justify-center text-2xl relative z-10 ${
-                        afacad.className
+                          ? "bg-dashboard-dark text-white"
+                          : "border border-dashboard-dark/20 bg-white text-dashboard-dark"
+                      } aspect-square min-w-10 min-h-10 flex items-center justify-center text-xl relative z-10 ${
+                        redhat.className
                       }`}
                     >
                       {index === activeStep ? (
@@ -109,16 +108,16 @@ const DashboardForm = ({ category }: Props) => {
                       ) : index < activeStep ? (
                         <BiCheck />
                       ) : (
-                        <p className="text-lg font-medium">{index + 1}</p>
+                        <p className="font-medium text-xs text-dashboard-dark/40">
+                          {index + 1}
+                        </p>
                       )}
                     </div>
                   </div>
                   <h4
-                    className={`text-center ${
-                      afacad.className
-                    } font-medium mt-2 ${
+                    className={`text-center ${redhat.className} text-xs mt-2 ${
                       index > activeStep
-                        ? "text-zinc-300"
+                        ? "text-dashboard-dark/40"
                         : "text-dashboard-dark"
                     }`}
                   >

@@ -43,7 +43,7 @@ const InputSelect: FC<InputSelectProps> = (props) => {
       )}
       <select
         {...props}
-        className={`w-full border focus:ring-1 focus:outline-none ${
+        className={`w-full border focus:ring-1 focus:outline-none text-sm ${
           props.error
             ? "border-admin-danger focus:ring-transparent"
             : "focus:ring-black"

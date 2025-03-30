@@ -240,7 +240,7 @@ const useClientForm = (category: string) => {
 
   let url = `/api/_pb/_th?order=DESC`;
   if (form.theme_category_id)
-    url += `&theme_category_id=${form.theme_category_id}`;
+    url += `&theme_category_id=${JSON.stringify([form.theme_category_id])}`;
   const { data: themeData, isLoading: isLoadingThemes } = useSWR(url, fetcher);
 
   const themes: Theme[] = themeData?.data || [];

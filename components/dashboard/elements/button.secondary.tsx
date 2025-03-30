@@ -41,7 +41,6 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = ({
     }
   };
 
-  
   return (
     <button
       {...props}

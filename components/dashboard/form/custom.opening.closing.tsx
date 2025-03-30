@@ -1,4 +1,4 @@
-import { afacad } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
 import React from "react";
 import ButtonPrimary from "../elements/button.primary";
@@ -13,15 +13,15 @@ const CustomOpeningClosingForm = () => {
     useClientFormStore();
 
   return (
-    <div className={`${afacad.className} flex flex-col gap-4`}>
+    <div className={`${redhat.className} flex flex-col gap-4`}>
       <div className="max-w-screen-md rounded-lg relative">
         <Accordion
           isExpanded
           title="Kalimat Pembuka dan Penutup"
           content={
-            <div className={afacad.className}>
+            <div className={redhat.className}>
               <div className="w-3 h-3 rounded-full aspect-square absolute -top-1 -right-1 animate-ping bg-red-500"></div>
-              <p className="text-dashboard-dark/80">
+              <p className="text-dashboard-dark/80 text-sm">
                 Anda dapat menyesuaikan kalimat pembuka dan penutup undangan
                 sesuai keinginan Anda. Bagian ini memungkinkan Anda untuk
                 menyampaikan pesan pribadi dengan ringkas dan jelas kepada para
@@ -47,7 +47,7 @@ const CustomOpeningClosingForm = () => {
                 Atas kehadiran dan doa restunya, kami sampaikan terima kasih.
               </p>
               <br />
-              <span className="font-semibold text-dashboard-dark italic">
+              <span className="font-semibold text-dashboard-dark text-sm italic">
                 *Catatan: Jika Anda tidak menyesuaikan kalimat pembuka dan
                 penutup, maka akan menggunakan kalimat pembuka dan penutup ini.
               </span>
@@ -55,7 +55,7 @@ const CustomOpeningClosingForm = () => {
           }
         />
       </div>
-      <div className="max-w-screen-md flex flex-col gap-3 border p-4 rounded-lg">
+      <div className="max-w-screen-md flex flex-col gap-3 border p-4">
         <Input
           optional
           onChange={(e) => setForm("opening_title", e.target.value)}
@@ -91,8 +91,9 @@ const CustomOpeningClosingForm = () => {
           label="Kalimat Penutup Undangan"
         />
       </div>
-      <div className="flex justify-between p-6 bg-zinc-50 mt-5 rounded-lg">
+      <div className="flex justify-between p-6 bg-zinc-50 mt-5">
         <ButtonPrimary
+          iconPosition="left"
           size="medium"
           type="button"
           icon={<IoArrowBack />}

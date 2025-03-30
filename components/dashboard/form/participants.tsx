@@ -184,12 +184,13 @@ const ParticipantForm = () => {
           icon={<BiSolidPlusCircle />}
         />
       </div>
-      <div className="flex justify-between p-6 bg-zinc-50 mt-5 rounded-lg">
+      <div className="flex justify-between p-6 bg-zinc-50 mt-5">
         <ButtonPrimary
           size="medium"
           type="button"
           icon={<IoArrowBack />}
           title="Sebelumnya"
+          iconPosition="left"
           onClick={() => {
             setActiveStep(activeStep - 1);
           }}

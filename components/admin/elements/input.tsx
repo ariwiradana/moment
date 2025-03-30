@@ -36,7 +36,7 @@ const Input: FC<InputProps> = ({
     <div className={`${className ?? ""} ${redhat.className} text-sm relative`}>
       <label htmlFor={id} className="block text-dashboard-dark/60 mb-1 text-xs">
         {label}{" "}
-        <span className="text-sm text-gray-400">
+        <span className="text-xs text-gray-400">
           {optional && "(opsional)"}
         </span>
       </label>

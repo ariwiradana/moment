@@ -1,4 +1,4 @@
-import { montserrat } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import React, { ReactNode, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 
@@ -17,13 +17,13 @@ const Accordion: React.FC<AccordionProps> = ({
 
   return (
     <div
-      className={`overflow-hidden ${montserrat.className} border p-4`}
+      className={`overflow-hidden ${redhat.className} border p-4`}
     >
       <button
         type="button"
         aria-label={`btn-${title.replace(" ", "-").toLowerCase()}`}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-base font-bold flex justify-between items-center"
+        className="w-full text-base font-semibold flex justify-between items-center"
       >
         <span>{title}</span>
         <span>
