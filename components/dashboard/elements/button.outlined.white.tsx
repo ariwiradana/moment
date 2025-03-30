@@ -2,7 +2,7 @@ import { redhat } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
-interface ButtonPrimaryProps
+interface ButtonOutlinedLightProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   className?: string | "";
@@ -11,7 +11,7 @@ interface ButtonPrimaryProps
   isloading?: boolean;
 }
 
-const ButtonPrimary: FC<ButtonPrimaryProps> = ({
+const ButtonOutlinedLight: FC<ButtonOutlinedLightProps> = ({
   title,
   className = "",
   icon,
@@ -33,7 +33,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
   const iconStyles = (size: "small" | "medium" | "large") => {
     switch (size) {
       case "small":
-        return "text-xs";
+        return "text-sm";
       case "medium":
         return "text-xs";
       case "large":
@@ -46,7 +46,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
       {...props}
       className={`${redhat.className} ${
         className ?? ""
-      } flex items-center text-white font-medium rounded-full bg-dashboard-dark transition duration-200 whitespace-nowrap hover:bg-admin-hover-dark justify-start ${buttonStyles(
+      } flex items-center text-white font-medium rounded-full hover:bg-white hover:text-dashboard-dark hover:border-white transition duration-200 border border-zinc-400 whitespace-nowrap justify-start ${buttonStyles(
         size
       )} ${
         isloading || props.disabled
@@ -62,4 +62,4 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
   );
 };
 
-export default ButtonPrimary;
+export default ButtonOutlinedLight;

@@ -29,7 +29,7 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
       {...props}
       className={`${
         props.className ?? ""
-      } flex items-center text-admin-hover-dark font-semibold whitespace-nowrap bg-white border transition duration-200 hover:bg-gray-100 justify-start ${buttonStyles(
+      } flex items-center text-admin-hover-dark rounded-lg font-semibold whitespace-nowrap bg-white border transition duration-200 hover:bg-gray-100 justify-start ${buttonStyles(
         props.size ?? "large"
       )} ${
         props.isloading &&

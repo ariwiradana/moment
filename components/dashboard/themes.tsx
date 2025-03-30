@@ -9,6 +9,8 @@ import { BsCart, BsChevronDown, BsEye } from "react-icons/bs";
 import { sosmedURLs } from "@/constants/sosmed";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import ThemeShimmer from "./elements/theme.shimmer";
+import ButtonLight from "./elements/button.light";
+import ButtonOutlinedLight from "./elements/button.outlined.white";
 
 const ThemeComponent: FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -66,14 +68,17 @@ const ThemeComponent: FC = () => {
               </div>
             </div>
 
-            <div className="flex mt-4 gap-2" data-aos="fade-up">
+            <div
+              className="flex mt-4 gap-2 whitespace-nowrap overflow-x-auto"
+              data-aos="fade-up"
+            >
               <button
                 onClick={() => setActiveCategoryIds([])}
                 className={`py-2 lg:py-3 px-4 lg:px-6 ${
                   activeCategoryIds.length === 0
                     ? "bg-white text-dashboard-dark border-white"
                     : "text-white border-white/50"
-                } rounded-full border transition-all ease-in-out duration-500 ${
+                } border transition-all ease-in-out duration-500 ${
                   redhat.className
                 } text-xs lg:text-sm font-medium`}
               >
@@ -97,7 +102,7 @@ const ThemeComponent: FC = () => {
                       activeCategoryIds.includes(tc.id)
                         ? "bg-white text-dashboard-dark border-white"
                         : "text-white border-white/50"
-                    }  rounded-full border transition-all ease-in-out duration-500 ${
+                    }  border transition-all ease-in-out duration-500 ${
                       redhat.className
                     } text-xs lg:text-sm font-medium`}
                   >
@@ -135,14 +140,14 @@ const ThemeComponent: FC = () => {
                           target="_blank"
                           aria-label={`Link Preview Undangan ${t.name}`}
                           href={`/${t.slug}`}
-                          className="absolute inset-0 z-10 transition-all ease-in-out duration-500 group-hover:bg-dashboard-dark/50 group-hover:backdrop-blur-sm flex justify-center items-center"
+                          className="absolute inset-0 z-10 transition-all ease-in-out duration-500 group-hover:bg-dashboard-dark/80 flex justify-center items-center"
                         >
-                          <button
-                            className={`${redhat.className} opacity-0 group-hover:opacity-100 justify-center flex text-xs transition-all ease-in-out duration-500 items-center gap-x-2 outline-none whitespace-nowrap rounded-full px-4 text-white py-2 border border-white/50 hover:bg-white hover:border-white hover:text-dashboard-dark`}
-                          >
-                            Preview
-                            <BsEye />
-                          </button>
+                          <ButtonLight
+                            className="opacity-0 group-hover:opacity-100"
+                            size="small"
+                            title="Preview"
+                            icon={<BsEye />}
+                          />
                         </Link>
                         <Image
                           sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
@@ -172,12 +177,11 @@ const ThemeComponent: FC = () => {
                           </h6>
                         )}
                         <Link href={whatsappLink} target="_blank">
-                          <button
-                            className={`${redhat.className} justify-center text-xs transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none whitespace-nowrap rounded-full px-4 text-white bg-dashboard-dark py-2 border border-white/50 hover:bg-white hover:border-white hover:text-dashboard-dark`}
-                          >
-                            Pesan Sekarang
-                            <BsCart />
-                          </button>
+                          <ButtonOutlinedLight
+                            size="small"
+                            title="Pesan Sekarang"
+                            icon={<BsCart />}
+                          />
                         </Link>
                       </div>
                     </div>

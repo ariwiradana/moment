@@ -8,6 +8,7 @@ import { NavData, navData } from "@/constants/dashboardNavbar";
 import { BsChevronRight } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { RiErrorWarningFill } from "react-icons/ri";
+import ButtonPrimary from "./elements/button.primary";
 
 const NavbarComponent = () => {
   const { activeSection, setActiveSection, setManualScroll } =
@@ -119,7 +120,32 @@ const NavbarComponent = () => {
                   ))}
                 </li>
                 <li>
-                  <button
+                  <ButtonPrimary
+                    size="small"
+                    title="Pesan Sekarang"
+                    icon={<BsChevronRight />}
+                    onClick={() => {
+                      setActiveSection(`section3`);
+                      scrollTo(`section3`);
+                      toast.success(
+                        "Silahkan pilih tema undangan terlebih dahulu!",
+                        {
+                          icon: (
+                            <RiErrorWarningFill className="text-dashboard-primary text-lg" />
+                          ),
+                          className: `${redhat.className} text-sm border border-white/20`,
+                          style: {
+                            boxShadow: "none",
+                            bottom: 0,
+                            backgroundColor: "#101010",
+                            color: "white",
+                            borderRadius: 100,
+                          },
+                        }
+                      );
+                    }}
+                  />
+                  {/* <button
                     onClick={() => {
                       setActiveSection(`section3`);
                       scrollTo(`section3`);
@@ -144,7 +170,7 @@ const NavbarComponent = () => {
                   >
                     Buat Sekarang
                     <BsChevronRight />
-                  </button>
+                  </button> */}
                 </li>
               </>
             )}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { redhat } from "@/lib/fonts";
 import { BsChevronDown } from "react-icons/bs";
 import { features } from "@/constants/features";
+import ButtonSecondary from "./elements/button.secondary";
 
 const FeaturesComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -37,13 +38,12 @@ const FeaturesComponent = () => {
       </div>
       {!isExpanded && (
         <div className="flex justify-center mt-12">
-          <button
+          <ButtonSecondary
+            size="small"
             onClick={() => setIsExpanded((state) => !state)}
-            className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2`}
-          >
-            Tampilkan Semua Fitur
-            <BsChevronDown />
-          </button>
+            title="Tampilkan Semua Fitur"
+            icon={<BsChevronDown />}
+          />
         </div>
       )}
     </section>

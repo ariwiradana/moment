@@ -1,5 +1,5 @@
 import handleError from "@/lib/errorHandling";
-import { Client, ThemeCategory } from "@/lib/types";
+import { Client, Package, ThemeCategory } from "@/lib/types";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -25,7 +25,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           is_preview,
         }: Query = request.query;
 
-        let query = `SELECT id, slug, opening_title, opening_description, closing_title, closing_description, name, cover, theme_category_id, status FROM clients`;
+        let query = `SELECT id, slug, opening_title, opening_description, closing_title, closing_description, name, cover, theme_category_id, package_id, status FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
 
         const values: (number | string | boolean)[] = [];
@@ -92,15 +92,23 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           `SELECT * FROM theme_categories`
         );
 
+        const { rows: packageCategories } = await sql.query(
+          `SELECT * FROM packages`
+        );
+
         const clients = rows.map((client: Client) => {
           const clientThemeCategory: ThemeCategory = themeCategories.find(
             (tc) => tc.id === client.theme_category_id
+          );
+          const clientPackage: Package = packageCategories.find(
+            (p) => p.id === client.package_id
           );
           return {
             ...client,
             theme_category: {
               name: clientThemeCategory?.name,
             },
+            package: clientPackage,
           };
         });
 

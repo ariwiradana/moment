@@ -1,4 +1,3 @@
-import ButtonPrimary from "@/components/admin/elements/button.primary";
 import Input from "@/components/admin/elements/input";
 import { afacad } from "@/lib/fonts";
 import { GetServerSideProps } from "next";
@@ -9,6 +8,7 @@ import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { useClientLogin } from "@/hooks/dashboard/useClientLogin";
 import Seo from "@/components/dashboard/elements/seo";
+import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 
 interface SlugLoginProps {
   slug: string;

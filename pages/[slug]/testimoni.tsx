@@ -17,7 +17,7 @@ import useSWR from "swr";
 import { z } from "zod";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import ClientNotFound from "@/components/themes/client.notfound";
-import ButtonPrimary from "@/components/admin/elements/button.primary";
+import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 
 interface Props {
   slug: string;
@@ -190,6 +190,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
 
                     <div>
                       <ButtonPrimary
+                        className="w-full justify-center md:w-auto"
                         isloading={loading}
                         type="submit"
                         title="Berikan Testimoni"

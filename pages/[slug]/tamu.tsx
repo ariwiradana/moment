@@ -19,7 +19,7 @@ import { isTokenExpired } from "@/lib/auth";
 import { useDebounce } from "use-debounce";
 import { Pagination } from "@mui/material";
 import useDisableInspect from "@/hooks/useDisableInspect";
-import ButtonPrimary from "@/components/admin/elements/button.primary";
+import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 
 interface Props {
   slug: string;
@@ -167,21 +167,21 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
               <Loader />
             ) : (
               <>
-                <div className="flex flex-col divide-y divide-dashboard-dark/10 border border-dashboard-dark/10">
-                  {guests?.length > 0
-                    ? guests.map((name) => (
-                        <AddGuestItem
-                          token={token}
-                          client={client}
-                          key={`Tamu Undangan ${name}`}
-                          mutate={mutate}
-                          slug={slug}
-                          mode="exist"
-                          value={name}
-                        />
-                      ))
-                    : null}
-                </div>
+                {guests.length > 0 && (
+                  <div className="flex flex-col divide-y divide-dashboard-dark/10 border border-dashboard-dark/10">
+                    {guests.map((name) => (
+                      <AddGuestItem
+                        token={token}
+                        client={client}
+                        key={`Tamu Undangan ${name}`}
+                        mutate={mutate}
+                        slug={slug}
+                        mode="exist"
+                        value={name}
+                      />
+                    ))}
+                  </div>
+                )}
 
                 {totalRows > limit && (
                   <div className="mt-4 md:mt-6">

@@ -18,7 +18,8 @@ import { Client } from "@/lib/types";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { getDiscountPrice } from "@/utils/getDiscountPrice";
 import { BsCopy } from "react-icons/bs";
-import ButtonWhite from "@/components/admin/elements/button.white";
+import ButtonLight from "@/components/dashboard/elements/button.light";
+import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 
 interface DashboardPaymentProps {
   slug: string;
@@ -120,10 +121,9 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
             melalui WhatsApp untuk proses verifikasi yang lebih cepat!.
           </p>
           <Link target="_blank" href={sosmedURLs.whatsapp}>
-            <ButtonWhite
-              className="bg-white text-dashboard-dark"
+            <ButtonLight
               type="submit"
-              title=" Konfirmasi Pembayaran"
+              title="Konfirmasi Pembayaran"
               icon={<BiLogoWhatsapp />}
             />
           </Link>
@@ -186,15 +186,14 @@ const BankCard: FC<PaymentMethod> = ({
             </p>
           </div>
         </div>
-        <button
+        <ButtonPrimary
           onClick={() =>
             handleCopyPayment(parseInt(accountNumber.replaceAll("-", "")))
           }
-          className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none border whitespace-nowrap bg-dashboard-dark text-white rounded-full px-4 py-2`}
-        >
-          Salin
-          <BsCopy />
-        </button>
+          size="small"
+          title="Salin"
+          icon={<BsCopy />}
+        />
       </div>
     </div>
   );
