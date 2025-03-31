@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { raleway } from "@/lib/fonts";
@@ -15,6 +15,14 @@ interface Props {
 const Cover = ({ to, actions }: Props) => {
   const { toggleIsOpen, isOpen } = useCoverStore();
   const { state } = useEvents();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [open]);
 
   return (
     <section
