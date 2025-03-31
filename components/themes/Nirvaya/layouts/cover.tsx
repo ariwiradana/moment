@@ -6,8 +6,6 @@ import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
 import useEvents from "@/hooks/themes/useEvents";
 import { UseMusic } from "@/hooks/themes/useMusic";
-import Image from "next/image";
-import useClientStore from "@/store/useClientStore";
 
 interface Props {
   to: string;
@@ -17,7 +15,6 @@ interface Props {
 const Cover = ({ to, actions }: Props) => {
   const { toggleIsOpen, isOpen } = useCoverStore();
   const { state } = useEvents();
-  const { client } = useClientStore();
 
   useEffect(() => {
     if (!isOpen) {
