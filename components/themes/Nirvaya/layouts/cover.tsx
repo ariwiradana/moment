@@ -22,7 +22,7 @@ const Cover = ({ to, actions }: Props) => {
     } else {
       document.body.classList.remove("no-scroll");
     }
-  }, [open]);
+  }, [isOpen]);
 
   return (
     <section
