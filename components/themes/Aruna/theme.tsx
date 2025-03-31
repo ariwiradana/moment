@@ -90,7 +90,7 @@ const Aruna: FC<Props> = (props) => {
               className={`relative w-full xl:max-w-[40vw] 2xl:max-w-[30vw] ml-auto`}
             >
               <HeroComponent />
-              <ParticipantsComponent  />
+              <ParticipantsComponent />
               <EventsComponent />
               <VideoComponent />
               <FotoComponent />

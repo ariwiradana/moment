@@ -43,6 +43,13 @@ const Cover: FC<Props> = (props) => {
         >
           <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
             <div>
+              <p
+                data-aos="fade-up"
+                data-aos-delay="200"
+                className={`${roboto.className} text-white text-[10px] md:text-xs uppercase tracking-[2px] mb-4`}
+              >
+                Undangan {getEventNames(client?.events || [])}
+              </p>
               <h1
                 data-aos="fade-up"
                 data-aos-delay="400"
