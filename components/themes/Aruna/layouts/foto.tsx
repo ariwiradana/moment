@@ -169,7 +169,7 @@ const Component = () => {
               modules={[Autoplay]}
               speed={2000}
               autoplay={{
-                delay: 4000,
+                delay: 2000,
               }}
             >
               {slideImages.map((img, index) => (

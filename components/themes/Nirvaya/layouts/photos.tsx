@@ -10,6 +10,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const Photos = () => {
   const { state, actions } = usePhotos();
 
+  const divide = Math.floor(state.images.length / 3);
+
+  console.log(0, divide, divide, divide * 2, divide * 2, state.images.length);
+
   return (
     <>
       <Lightbox
@@ -63,41 +67,103 @@ const Photos = () => {
         }}
       />
       <section className="bg-nirvaya-light-brown">
-        <div>
-          <Swiper
-            autoplay
-            speed={3000}
-            modules={[Autoplay]}
-            slidesPerView={2}
-            breakpoints={{
-              640: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-              1440: {
-                slidesPerView: 4,
-              },
-            }}
+        <div className="max-w-screen-lg mx-auto py-16 md:px-8">
+          <div
+            data-aos="fade-up"
+            className="flex flex-col md:flex-row justify-between md:items-center gap-y-4 gap-x-12 mb-8 md:mb-16 px-8 md:px-0"
           >
-            {state.images?.map((image, index) => (
-              <SwiperSlide key={`Photo ${index + 1}`}>
-                <div
-                  onClick={() => actions.handleToggleLightbox(image)}
-                  className="w-full aspect-[3/5] relative"
-                >
-                  <Image
-                    sizes="50vw"
-                    src={image}
-                    alt={`Photo ${index + 1}`}
-                    fill
-                    className="object-cover bg-nirvaya-dark/5"
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+            <h2 className="text-nirvaya-dark md:text-center text-4xl md:text-6xl font-edensor whitespace-nowrap">
+              Galeri <span className="italic">Kami</span>
+            </h2>
+            <div className="h-[1px] w-[25vw] md:min-w-[20vw] bg-nirvaya-dark/10"></div>
+            <p className="text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs text-[10px]">
+              Momen menjadi awal dari kisah yang akan dikenang selamanya
+            </p>
+          </div>
+          <div className="grid grid-cols-4 row-span-3 gap-2 md:gap-6">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="col-span-4 md:col-span-2 row-span-4 aspect-square md:aspect-auto bg-nirvaya-dark/5"
+            >
+              <Swiper
+                speed={1000}
+                modules={[Autoplay]}
+                autoplay={{
+                  delay: 5000,
+                }}
+                className="w-full h-full"
+              >
+                {state.images.slice(0, divide).map((img) => (
+                  <SwiperSlide key={`Image Part 1 ${img}`}>
+                    <Image
+                      onClick={() => actions.handleToggleLightbox(img)}
+                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                      src={img}
+                      alt={`Image Part 1 ${img}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="col-span-4 md:col-span-2 row-span-2 bg-nirvaya-dark/5 aspect-[4/2] md:aspect-[2/1]"
+            >
+              <Swiper
+                speed={1000}
+                modules={[Autoplay]}
+                autoplay={{
+                  delay: 6000,
+                }}
+                className="w-full h-full"
+              >
+                {state.images.slice(divide, divide * 2).map((img) => (
+                  <SwiperSlide key={`Image Part 2 ${img}`}>
+                    <Image
+                      onClick={() => actions.handleToggleLightbox(img)}
+                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                      alt={`Image Part 2 ${img}`}
+                      src={img}
+                      fill
+                      className="object-cover"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="col-span-4 md:col-span-2 row-span-2 bg-nirvaya-dark/5 aspect-[4/2] md:aspect-[2/1]"
+            >
+              <Swiper
+                speed={1000}
+                modules={[Autoplay]}
+                autoplay={{
+                  delay: 7000,
+                }}
+                className="w-full h-full"
+                slidesPerView={2}
+              >
+                {state.images.slice(divide * 2).map((img) => (
+                  <SwiperSlide key={`Image Part 3 ${img}`}>
+                    <Image
+                      onClick={() => actions.handleToggleLightbox(img)}
+                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                      src={img}
+                      alt={`Image Part 3 ${img}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </div>
         </div>
       </section>
     </>
