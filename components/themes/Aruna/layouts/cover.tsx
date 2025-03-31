@@ -39,7 +39,7 @@ const Cover: FC<Props> = (props) => {
         )}
         <div
           data-aos="fade-in"
-          className="relative z-40 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark"
+          className="relative z-40 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/0 to-[95%] to-aruna-dark"
         >
           <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
             <div>
