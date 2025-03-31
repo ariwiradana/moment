@@ -7,6 +7,7 @@ import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
 import { UseMusic } from "@/hooks/themes/useMusic";
+import { getEventNames } from "@/utils/getEventNames";
 
 interface Props {
   untuk: string;
@@ -28,7 +29,7 @@ const Cover: FC<Props> = (props) => {
       >
         <div
           data-aos="fade-in"
-          className="flex h-dvh flex-col items-center justify-between md:justify-center gap-8 md:gap-[60px] 2xl:gap-[100px] relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-samaya-dark/95 via-samaya-dark/90 to-samaya-dark to-[90%] backdrop-blur-sm"
+          className="flex h-dvh flex-col items-center justify-between md:justify-center gap-8 md:gap-[60px] 2xl:gap-[100px] relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-samaya-dark/95 via-samaya-dark/95 to-samaya-dark/95 to-[90%]"
         >
           <div>
             <p
@@ -36,7 +37,7 @@ const Cover: FC<Props> = (props) => {
               data-aos-delay="400"
               className={`${marcellus.className} text-white md:text-base text-sm uppercase text-center`}
             >
-              Undangan {client?.theme_category?.name}
+              Undangan {getEventNames(client?.events || [])}
             </p>
             <h1
               data-aos="fade-up"
@@ -90,8 +91,7 @@ const Cover: FC<Props> = (props) => {
             >
               Tanpa mengurangi rasa hormat, kami mengundang anda untuk
               menghadiri acara{" "}
-              <span className="lowercase">{client?.theme_category?.name}</span>{" "}
-              kami
+              <span>{getEventNames(client?.events || [])}</span> kami
             </p>
             <div
               className="flex justify-center mt-6 md:mt-8"

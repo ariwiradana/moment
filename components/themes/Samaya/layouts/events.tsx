@@ -1,4 +1,4 @@
-import React, {  memo } from "react";
+import React, { memo } from "react";
 import { marcellus } from "@/lib/fonts";
 import moment from "moment";
 import Button from "../elements/button";
