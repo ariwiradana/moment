@@ -53,11 +53,13 @@ const useEvents = () => {
     };
 
     const switchEventInterval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
-        setFade(true);
-      }, 500);
+      if (events.length > 1) {
+        setFade(false);
+        setTimeout(() => {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
+          setFade(true);
+        }, 500);
+      }
     }, 8000);
 
     const countdownInterval = setInterval(updateCountdowns, 1000);
