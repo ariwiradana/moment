@@ -17,7 +17,7 @@ const Cover = ({ to, actions }: Props) => {
   const { state } = useEvents();
 
   useEffect(() => {
-    if (isOpen) {
+    if (!isOpen) {
       document.body.classList.add("no-scroll");
     } else {
       document.body.classList.remove("no-scroll");
