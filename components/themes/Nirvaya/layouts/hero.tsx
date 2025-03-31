@@ -28,7 +28,69 @@ const Hero = () => {
   return (
     <section className={`relative ${raleway.className}`}>
       <div data-aos="zoom-out">
-        <Swiper
+        {!isOpen && client?.cover ? (
+          <Swiper
+            loop
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            effect="fade"
+            speed={2000}
+            className={`w-full transition-transform min-h-[600px] h-lvh`}
+            spaceBetween={0}
+            slidesPerView={1}
+            modules={[Autoplay, EffectFade]}
+          >
+            <SwiperSlide className="relative w-full h-full" key={`Hero Cover`}>
+              <div className="absolute inset-0 z-0">
+                <Image
+                  fill
+                  quality={100}
+                  alt={`Hero Cover`}
+                  priority
+                  sizes="100vw"
+                  className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
+                  src={client?.cover}
+                />
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        ) : (
+          <Swiper
+            loop
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            effect="fade"
+            speed={2000}
+            className={`w-full transition-transform min-h-[600px] h-lvh`}
+            spaceBetween={0}
+            slidesPerView={1}
+            modules={[Autoplay, EffectFade]}
+          >
+            {images.map((image, index) => (
+              <SwiperSlide
+                className="relative w-full h-full"
+                key={`Hero Image ${index + 1}`}
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    fill
+                    quality={100}
+                    alt={`Hero Image ${index + 1}`}
+                    priority
+                    sizes="100vw"
+                    className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
+                    src={image}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
+        {/* <Swiper
           loop
           autoplay={{
             delay: 2000,
@@ -74,7 +136,7 @@ const Hero = () => {
               </div>
             </SwiperSlide>
           ))}
-        </Swiper>
+        </Swiper> */}
       </div>
       <div
         className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-10`}
