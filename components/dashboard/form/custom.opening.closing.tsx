@@ -1,19 +1,95 @@
 import { redhat } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ButtonPrimary from "../elements/button.primary";
 import { IoArrowBack } from "react-icons/io5";
 import { BiSolidSave } from "react-icons/bi";
 import Input from "@/components/admin/elements/input";
 import InputTextarea from "@/components/admin/elements/textarea";
 import Accordion from "@/components/admin/elements/accordion.button";
-import useClientForm from "@/hooks/client/useClientForm";
+import { capitalizeWords } from "@/utils/capitalizeWords";
+import { getClient } from "@/lib/client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const CustomOpeningClosingForm = () => {
-  const { activeStep, setActiveStep, form, setForm, isLoading } =
-    useClientFormStore();
+  const {
+    activeStep,
+    setActiveStep,
+    form,
+    setForm,
+    isLoading,
+    setIsLoading,
+    resetForm,
+  } = useClientFormStore();
 
-  const { actions } = useClientForm();
+  const [isUnloadProtected, setIsUnloadProtected] = useState(true);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isUnloadProtected) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    try {
+      const createClient = async () => {
+        setIsLoading(true);
+
+        const payload = form;
+        payload["name"] = capitalizeWords(
+          (form.slug as string).replaceAll("-", " ")
+        );
+        payload["opening_title"] = form.opening_title || "Om Swastiastu";
+        payload["opening_description"] =
+          form.opening_description ||
+          "Dengan Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.";
+        payload["closing_title"] =
+          form.closing_title || "Om Shanti Shanti Shanti Om";
+        payload["closing_description"] =
+          form.closing_description ||
+          "Merupakan suatu kebahagiaan dan kehormatan bagi kami jika Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu. Atas kehadiran dan doa restunya, kami sampaikan terima kasih.";
+
+        const response = await getClient("/api/_pb/_f/_cr", {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
+        const result = await response.json();
+        return result;
+      };
+
+      toast.promise(createClient(), {
+        loading: "Membuat informasi undangan...",
+        success: () => {
+          setIsUnloadProtected(true);
+          router.push("/");
+          setIsLoading(false);
+          resetForm();
+          return "Berhasil membuat informasi undangan.";
+        },
+        error: (error) => {
+          setIsLoading(false);
+          return error.message || "Gagal membuat informasi undangan.";
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={`${redhat.className} flex flex-col gap-4`}>
@@ -106,7 +182,7 @@ const CustomOpeningClosingForm = () => {
           }}
         />
         <ButtonPrimary
-          onClick={() => actions.handleSubmit()}
+          onClick={() => handleSubmit()}
           isloading={isLoading}
           size="medium"
           type="submit"

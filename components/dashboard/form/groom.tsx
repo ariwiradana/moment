@@ -10,7 +10,8 @@ import InputSelect from "@/components/admin/elements/select";
 import { ChildOrderOptions } from "@/constants/childOrder";
 
 const GroomForm = () => {
-  const { setForm, form, activeStep, setActiveStep } = useClientFormStore();
+  const { setForm, form, activeStep, setActiveStep, category } =
+    useClientFormStore();
 
   const handleChangeGroom = (name: string, value: string) => {
     const participants = [...form.participants];
@@ -20,6 +21,8 @@ const GroomForm = () => {
     };
     setForm("participants", participants);
   };
+
+  console.log(form, category);
 
   if (form.participants.length > 0)
     return (

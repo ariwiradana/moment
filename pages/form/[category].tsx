@@ -4,11 +4,16 @@ import useClientForm from "@/hooks/client/useClientForm";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import { redhat } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
+import { GetServerSideProps } from "next";
 import React from "react";
 import { BiCheck } from "react-icons/bi";
 
-const DashboardForm = () => {
-  const { state } = useClientForm();
+interface Props {
+  category: string;
+}
+
+const DashboardForm = ({ category }: Props) => {
+  const { state } = useClientForm(category);
   const { activeStep } = useClientFormStore();
   useDisableInspect();
 
@@ -28,7 +33,7 @@ const DashboardForm = () => {
             <div className="lg:hidden">
               <div className="flex items-center gap-x-3">
                 <div className="w-10 h-10 aspect-square rounded flex justify-center items-center bg-dashboard-dark text-white text-xl">
-                  {state.formComponents?.icons[activeStep]}
+                  {state.formComponents[category]?.icons[activeStep]}
                 </div>
                 <div>
                   <h6 className="text-xs uppercase tracking-widest text-dashboard-dark/60">
@@ -37,20 +42,22 @@ const DashboardForm = () => {
                   <h4
                     className={`text-dashboard-dark text-base font-semibold ${redhat.className}`}
                   >
-                    {state.formComponents?.steps[activeStep]}
+                    {state.formComponents[category]?.steps[activeStep]}
                   </h4>
                 </div>
               </div>
 
               <div className="w-full relative h-[2px] bg-zinc-100 mt-4">
-                {state.formComponents && (
+                {state.formComponents[category] && (
                   <div
                     style={{
                       width:
                         activeStep === 0
                           ? "5%"
                           : `${
-                              (100 / (state.formComponents?.steps.length - 1)) *
+                              (100 /
+                                (state.formComponents[category]?.steps.length -
+                                  1)) *
                               activeStep
                             }%`,
                     }}
@@ -61,11 +68,11 @@ const DashboardForm = () => {
             </div>
             <div
               style={{
-                gridTemplateColumns: `repeat(${state.formComponents?.steps.length}, minmax(0, 1fr))`,
+                gridTemplateColumns: `repeat(${state.formComponents[category]?.steps.length}, minmax(0, 1fr))`,
               }}
               className={`hidden lg:grid relative`}
             >
-              {state.formComponents?.steps.map((step, index) => (
+              {state.formComponents[category]?.steps.map((step, index) => (
                 <div key={`Desktop Step ${index + 1}`}>
                   <div className="flex items-center flex-col relative">
                     {index > 0 && (
@@ -78,7 +85,7 @@ const DashboardForm = () => {
                       ></div>
                     )}
                     {state.formComponents &&
-                    index < state.formComponents?.steps.length - 1 ? (
+                    index < state.formComponents[category]?.steps.length - 1 ? (
                       <div
                         className={`top-1/2 transform -translate-y-1/2 right-0 w-1/2 absolute h-[1px] ${
                           index < activeStep
@@ -99,7 +106,7 @@ const DashboardForm = () => {
                       }`}
                     >
                       {index === activeStep ? (
-                        state.formComponents?.icons[index]
+                        state.formComponents[category]?.icons[index]
                       ) : index < activeStep ? (
                         <BiCheck />
                       ) : (
@@ -123,12 +130,22 @@ const DashboardForm = () => {
             </div>
           </div>
           <div className="lg:mt-8 mt-4 px-6 md:px-12 lg:px-24">
-            {state.formComponents?.components[activeStep]}
+            {state.formComponents[category]?.components[activeStep]}
           </div>
         </div>
       </div>
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { category } = context.params!;
+
+  return {
+    props: {
+      category,
+    },
+  };
 };
 
 export default DashboardForm;

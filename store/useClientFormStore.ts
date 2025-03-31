@@ -1,4 +1,11 @@
-import { Client, Event, Participant } from "@/lib/types";
+import {
+  Client,
+  Event,
+  Package,
+  Participant,
+  Theme,
+  ThemeCategory,
+} from "@/lib/types";
 import moment from "moment";
 import { create } from "zustand";
 
@@ -8,6 +15,9 @@ interface StoreState {
   activeStep: number;
   toggleEndTimes: boolean[];
   toggleExpanded: boolean[];
+  themeCategories: ThemeCategory[];
+  packages: Package[];
+  themes: Theme[];
   isLoading: boolean;
   setForm: (
     name: string,
@@ -19,6 +29,9 @@ interface StoreState {
   setIsLoading: (isLoading: boolean) => void;
   resetForm: () => void;
   setCategory: (category: string) => void;
+  setThemeCategories: (themeCategories: ThemeCategory[]) => void;
+  setPackages: (packages: Package[]) => void;
+  setThemes: (themes: Theme[]) => void;
 }
 
 export const initialEvent: Event = {
@@ -61,6 +74,9 @@ const useClientFormStore = create<StoreState>((set) => ({
   toggleExpanded: [true],
   isLoading: false,
   form: initialForm,
+  themeCategories: [],
+  packages: [],
+  themes: [],
   setForm: (
     name: string,
     value: string | number | Event[] | Participant[] | string[] | null
@@ -98,6 +114,18 @@ const useClientFormStore = create<StoreState>((set) => ({
   setCategory: (category: string) =>
     set(() => ({
       category,
+    })),
+  setThemeCategories: (themeCategories: ThemeCategory[]) =>
+    set(() => ({
+      themeCategories,
+    })),
+  setPackages: (packages: Package[]) =>
+    set(() => ({
+      packages,
+    })),
+  setThemes: (themes: Theme[]) =>
+    set(() => ({
+      themes,
     })),
 }));
 

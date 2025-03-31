@@ -154,11 +154,7 @@ const BrideForm = () => {
               return;
             }
 
-            if (form.theme_category_id === 1) {
-              setActiveStep(activeStep + 2);
-            } else {
-              setActiveStep(activeStep + 1);
-            }
+            setActiveStep(activeStep + 1);
           }}
         />
       </div>

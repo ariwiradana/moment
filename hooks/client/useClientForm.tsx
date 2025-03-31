@@ -56,86 +56,124 @@ export const initialGroomBride: Participant[] = [
     twitter: "",
   },
 ];
-export const initialParticipant: Participant = {
-  name: "",
-  nickname: "",
-  gender: "male",
-  child: "pertama",
-  image: "",
-  address: "",
-  parents_female: "",
-  parents_male: "",
-  role: "participant",
-  facebook: "",
-  instagram: "",
-  tiktok: "",
-  twitter: "",
-};
+export const initialParticipant: Participant[] = [
+  {
+    name: "",
+    nickname: "",
+    gender: "male",
+    child: "pertama",
+    image: "",
+    address: "",
+    parents_female: "",
+    parents_male: "",
+    role: "participant",
+    facebook: "",
+    instagram: "",
+    tiktok: "",
+    twitter: "",
+  },
+];
 
-const useClientForm = () => {
-  const { activeStep, form, setIsLoading, setForm, setActiveStep, resetForm } =
-    useClientFormStore();
-
-  const [themeCategories, setThemeCategories] = useState<ThemeCategory[]>([]);
+const useClientForm = (category: string) => {
+  const {
+    activeStep,
+    form,
+    setForm,
+    setThemeCategories,
+    setCategory,
+    setPackages,
+    setThemes,
+  } = useClientFormStore();
 
   const { isLoading: isLoadingThemeCategories } = useSWR<{
     data: ThemeCategory[];
   }>(`/api/_pb/_tc`, fetcher, {
     onSuccess: (data) => {
-      setThemeCategories(data.data);
-    },
-  });
-  const [formComponents] = useState<{
-    components: Record<number, ReactNode>;
-    steps: string[];
-    icons: ReactNode[];
-  } | null>({
-    components: {
-      0: <PackageThemeLinkForm />,
-      1: <EventForm />,
-      2: <GroomForm />,
-      3: <BrideForm />,
-      4: <ParticipantForm />,
-      5: <FilesForm />,
-      6: <GiftForm />,
-      7: <CustomOpeningClosingForm />,
-    },
-    steps: [
-      "Link, Paket & Tema Undangan",
-      "Acara Undangan",
-      "Mempelai Pria",
-      "Mempelai Wanita",
-      `Peserta Undangan Mepandes`,
-      "File Pendukung Undangan",
-      "Hadiah Digital",
-      "Kalimat Pembuka & Penutup Undangan",
-    ],
-    icons: [
-      <BiNote key="Step Icon 1" />,
-      <BiParty key="Step Icon 2" />,
-      <BiGroup key="Step Icon 3" />,
-      <BiGroup key="Step Icon 4" />,
-      <BiGroup key="Step Icon 5" />,
-      <BiImages key="Step Icon 6" />,
-      <BiGift key="Step Icon 7" />,
-      <BiText key="Step Icon 8" />,
-    ],
-  });
+      if (data.data.length > 0) {
+        const categoryData = data.data.find((tc) => tc.slug === category);
 
-  const [isUnloadProtected, setIsUnloadProtected] = useState(true);
-
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (isUnloadProtected) {
-        event.preventDefault();
-        event.returnValue = "";
+        if (categoryData) {
+          setForm("theme_category_id", categoryData?.id as number);
+          setCategory(categoryData.slug);
+        } else {
+          const allCategories = data.data.map((tc) => tc.slug);
+          toast.error(
+            `Kategori undangan tidak ditemukan. Kategori yang tersedia : ${allCategories.join(
+              ", "
+            )}`
+          );
+        }
+        setThemeCategories(data.data);
       }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
+    },
+  });
+
+  const [formComponents] = useState<
+    Record<
+      string,
+      {
+        components: Record<number, ReactNode>;
+        steps: string[];
+        icons: ReactNode[];
+      }
+    >
+  >({
+    pernikahan: {
+      components: {
+        0: <PackageThemeLinkForm />,
+        1: <EventForm />,
+        2: <GroomForm />,
+        3: <BrideForm />,
+        4: <FilesForm />,
+        5: <GiftForm />,
+        6: <CustomOpeningClosingForm />,
+      },
+      steps: [
+        "Link, Paket & Tema Undangan",
+        "Acara Undangan",
+        "Mempelai Pria",
+        "Mempelai Wanita",
+        "File Pendukung Undangan",
+        "Hadiah Digital",
+        "Kalimat Pembuka & Penutup Undangan",
+      ],
+      icons: [
+        <BiNote key="Step Icon 1" />,
+        <BiParty key="Step Icon 2" />,
+        <BiGroup key="Step Icon 3" />,
+        <BiGroup key="Step Icon 4" />,
+        <BiImages key="Step Icon 5" />,
+        <BiGift key="Step Icon 6" />,
+        <BiText key="Step Icon 7" />,
+      ],
+    },
+    mepandes: {
+      components: {
+        0: <PackageThemeLinkForm />,
+        1: <EventForm />,
+        2: <ParticipantForm />,
+        3: <FilesForm />,
+        4: <GiftForm />,
+        5: <CustomOpeningClosingForm />,
+      },
+      steps: [
+        "Link, Paket & Tema Undangan",
+        "Acara Undangan",
+        "Peserta Undangan Mepandes",
+        "File Pendukung Undangan",
+        "Hadiah Digital",
+        "Kalimat Pembuka & Penutup Undangan",
+      ],
+      icons: [
+        <BiNote key="Step Icon 1" />,
+        <BiParty key="Step Icon 2" />,
+        <BiGroup key="Step Icon 3" />,
+        <BiImages key="Step Icon 4" />,
+        <BiGift key="Step Icon 5" />,
+        <BiText key="Step Icon 6" />,
+      ],
+    },
+  });
 
   useEffect(() => {
     window.scrollTo({
@@ -144,122 +182,53 @@ const useClientForm = () => {
     });
   }, [activeStep]);
 
-  const { data: packagesData, isLoading: isLoadingePackages } = useSWR(
-    "/api/_pb/_p",
-    fetcher
-  );
+  const { isLoading: isLoadingePackages } = useSWR<{
+    data: Package[];
+  }>("/api/_pb/_p", fetcher, {
+    onSuccess: (data) => {
+      if (data.data) {
+        setPackages(data.data);
+      }
+    },
+  });
 
-  const { data: themeData, isLoading: isLoadingThemes } = useSWR(
+  const { isLoading: isLoadingThemes } = useSWR(
     form.theme_category_id
       ? `/api/_pb/_th?order=DESC&theme_category_id=${JSON.stringify([
           form.theme_category_id,
         ])}`
       : null,
-    fetcher
+    fetcher,
+    {
+      onSuccess: (data) => {
+        if (data.data) {
+          setThemes(data.data);
+        }
+      },
+    }
   );
 
   useEffect(() => {
-    if (activeStep === 2) {
-      setForm("participants", initialGroomBride);
-    }
-    if (activeStep === 4) {
-      const newParticipants = [...form.participants];
-      newParticipants.push(initialParticipant);
-      setForm("participants", newParticipants);
-    }
-  }, [activeStep]);
-
-  const themes: Theme[] = themeData?.data || [];
-  const pacakages: Package[] = packagesData?.data || [];
-
-  const router = useRouter();
-
-  const handleSubmit = async () => {
-    try {
-      const createClient = async () => {
-        setIsLoading(true);
-
-        const payload = form;
-        payload["name"] = capitalizeWords(
-          (form.slug as string).replaceAll("-", " ")
-        );
-        payload["opening_title"] = form.opening_title || "Om Swastiastu";
-        payload["opening_description"] =
-          form.opening_description ||
-          "Dengan Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.";
-        payload["closing_title"] =
-          form.closing_title || "Om Shanti Shanti Shanti Om";
-        payload["closing_description"] =
-          form.closing_description ||
-          "Merupakan suatu kebahagiaan dan kehormatan bagi kami jika Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu. Atas kehadiran dan doa restunya, kami sampaikan terima kasih.";
-
-        const response = await getClient("/api/_pb/_f/_cr", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          const errorResult = await response.json();
-          throw new Error(errorResult.message);
-        }
-        const result = await response.json();
-        return result;
-      };
-
-      toast.promise(createClient(), {
-        loading: "Membuat informasi undangan...",
-        success: () => {
-          setIsUnloadProtected(true);
-          router.push("/");
-          setIsLoading(false);
-          resetForm();
-          return "Berhasil membuat informasi undangan.";
-        },
-        error: (error: any) => {
-          setIsLoading(false);
-          return error.message || "Gagal membuat informasi undangan.";
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleCheckSlug = async () => {
-    const toastId = toast.loading("Cek link undangan...");
-    try {
-      const response = await getClient("/api/_pb/_f/_cs", {
-        method: "POST",
-        body: JSON.stringify({ slug: form.slug }),
-      });
-
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message);
+    if (category && form.participants.length === 0) {
+      switch (category) {
+        case "pernikahan":
+          setForm("participants", initialGroomBride);
+          break;
+        case "mepandes":
+          setForm("participants", initialParticipant);
+          break;
+        default:
+          break;
       }
-      await response.json();
-      setActiveStep(activeStep + 1);
-      toast.success("Link undangan dapat digunakan.", { id: toastId });
-    } catch (error: any) {
-      toast.error(error.message || "Gagal mengecek link undangan.", {
-        id: toastId,
-      });
     }
-  };
+  }, [category, form.participants]);
 
   return {
     state: {
       formComponents,
-      themes,
-      pacakages,
+      isLoadingThemeCategories,
       isLoadingThemes,
       isLoadingePackages,
-      isLoadingThemeCategories,
-      themeCategories,
-    },
-    actions: {
-      handleSubmit,
-      handleCheckSlug,
     },
   };
 };

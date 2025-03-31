@@ -1,5 +1,4 @@
 import Input from "@/components/admin/elements/input";
-import Loader from "@/components/admin/elements/loader";
 import { redhat } from "@/lib/fonts";
 import useClientFormStore from "@/store/useClientFormStore";
 import { formatToRupiah } from "@/utils/formatToRupiah";
@@ -9,19 +8,40 @@ import { BiCheck, BiDetail } from "react-icons/bi";
 import ButtonPrimary from "../elements/button.primary";
 import { IoArrowForward } from "react-icons/io5";
 import toast from "react-hot-toast";
-import useClientForm from "@/hooks/client/useClientForm";
 import ButtonSecondary from "../elements/button.secondary";
 import { Modal } from "@mui/material";
 import { Package } from "@/lib/types";
+import { getClient } from "@/lib/client";
 
 const PackageThemeLinkForm = () => {
-  const { setForm, form } = useClientFormStore();
-  const { state, actions } = useClientForm();
+  const { setForm, form, packages, themes, activeStep, setActiveStep } =
+    useClientFormStore();
+
   const [activeModal, setActiveModal] = useState(false);
   const [detailPackage, setDetailPackage] = useState<Package | null>(null);
 
-  if (state.isLoadingThemeCategories || state.isLoadingePackages)
-    return <Loader />;
+  const handleCheckSlug = async () => {
+    const toastId = toast.loading("Cek link undangan...");
+    try {
+      const response = await getClient("/api/_pb/_f/_cs", {
+        method: "POST",
+        body: JSON.stringify({ slug: form.slug }),
+      });
+
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
+      }
+      await response.json();
+      setActiveStep(activeStep + 1);
+      toast.success("Link undangan dapat digunakan.", { id: toastId });
+    } catch (error) {
+      console.log(error);
+      toast.error("Gagal mengecek link undangan.", {
+        id: toastId,
+      });
+    }
+  };
 
   return (
     <>
@@ -186,43 +206,13 @@ const PackageThemeLinkForm = () => {
           label="Link Undangan"
           placeholder="Contoh: rama-shinta"
         />
-        <div>
-          <label className="block text-dashboard-dark/60 mb-1 text-xs">
-            Pilih Kategori Undangan
-          </label>
-          <div className="flex gap-4 whitespace-nowrap">
-            {state.themeCategories.flatMap((tc) => {
-              return (
-                <button
-                  onClick={() => {
-                    setForm("theme_category_id", tc.id);
-                  }}
-                  className={`py-6 px-12 md:py-8 md:px-16 ${
-                    form.theme_category_id === tc.id
-                      ? "border-2 border-dashboard-primary"
-                      : "border border-dashboard-dark/10"
-                  } transition-all ease-in-out duration-500 text-dashboard-dark relative ${
-                    redhat.className
-                  } text-xs lg:text-sm font-medium`}
-                >
-                  {form.theme_category_id === tc.id && (
-                    <div className="absolute text-dashboard-dark -top-2 lg:-top-3 -right-2 lg:-right-3 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-[2px] lg:p-1 text-lg lg:text-xl">
-                      <BiCheck />
-                    </div>
-                  )}
-                  {tc.name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
         <div>
           <label className="block text-dashboard-dark/60 mb-1 text-xs">
             Pilih Paket
           </label>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
-            {state.pacakages.map((p) => {
+            {packages.map((p) => {
               const selected = p.id === form?.package_id;
               return (
                 <div
@@ -281,13 +271,13 @@ const PackageThemeLinkForm = () => {
             })}
           </div>
         </div>
-        {state.themes.length > 0 && (
+        {themes.length > 0 && (
           <div>
             <label className="block text-dashboard-dark/60 mb-1 text-xs">
               Pilih Tema
             </label>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4">
-              {state.themes.map((theme) => {
+              {themes.map((theme) => {
                 const selected = theme.id === form.theme_id;
                 return (
                   <div className="relative" key={`Form Tema ${theme.name}`}>
@@ -357,7 +347,7 @@ const PackageThemeLinkForm = () => {
                 toast.error("Pilih tema undangan.");
                 return;
               }
-              actions.handleCheckSlug();
+              handleCheckSlug();
             }}
           />
         </div>

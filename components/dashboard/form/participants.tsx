@@ -19,10 +19,6 @@ const ParticipantForm = () => {
   const { setForm, form, activeStep, setActiveStep, category } =
     useClientFormStore();
 
-  const participants = form.participants.filter(
-    (p) => p.role === "participant"
-  );
-
   const handleChangeParticipant = (
     index: number,
     name: string,
@@ -36,13 +32,10 @@ const ParticipantForm = () => {
     setForm("participants", newParticipant);
   };
 
-  console.log({ participants });
-
   return (
     <div className={`${montserrat.className}`}>
       <div className="max-w-screen-md flex flex-col gap-3">
-        {participants.map((_, index) => {
-          const idx = category === "pernikahan-mepandes" ? index + 2 : index;
+        {form.participants.map((_, index) => {
           return (
             <Accordion
               isExpanded={index === 0}
@@ -54,18 +47,22 @@ const ParticipantForm = () => {
                 <div className="flex flex-col gap-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <Input
-                      value={form.participants[idx].name}
+                      value={form.participants[index].name}
                       onChange={(e) =>
-                        handleChangeParticipant(idx, "name", e.target.value)
+                        handleChangeParticipant(index, "name", e.target.value)
                       }
                       placeholder="Contoh: I Made Adi Putra"
                       className="w-full"
                       label="Nama Lengkap"
                     />
                     <Input
-                      value={form.participants[idx].nickname}
+                      value={form.participants[index].nickname}
                       onChange={(e) =>
-                        handleChangeParticipant(idx, "nickname", e.target.value)
+                        handleChangeParticipant(
+                          index,
+                          "nickname",
+                          e.target.value
+                        )
                       }
                       placeholder="Contoh: Adi"
                       className="w-full"
@@ -74,10 +71,10 @@ const ParticipantForm = () => {
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
                     <Input
-                      value={form.participants[idx].parents_male as string}
+                      value={form.participants[index].parents_male as string}
                       onChange={(e) =>
                         handleChangeParticipant(
-                          idx,
+                          index,
                           "parents_male",
                           e.target.value
                         )
@@ -87,10 +84,10 @@ const ParticipantForm = () => {
                       label="Nama Ayah"
                     />
                     <Input
-                      value={form.participants[idx].parents_female as string}
+                      value={form.participants[index].parents_female as string}
                       onChange={(e) =>
                         handleChangeParticipant(
-                          idx,
+                          index,
                           "parents_female",
                           e.target.value
                         )
@@ -101,17 +98,17 @@ const ParticipantForm = () => {
                     />
                   </div>
                   <InputSelect
-                    value={form.participants[idx].child as string}
+                    value={form.participants[index].child as string}
                     options={ChildOrderOptions}
                     label="Anak Ke"
                     onChange={(e) =>
-                      handleChangeParticipant(idx, "child", e.target.value)
+                      handleChangeParticipant(index, "child", e.target.value)
                     }
                   />
                   <InputTextarea
-                    value={form.participants[idx].address}
+                    value={form.participants[index].address}
                     onChange={(e) =>
-                      handleChangeParticipant(idx, "address", e.target.value)
+                      handleChangeParticipant(index, "address", e.target.value)
                     }
                     placeholder="Contoh: JL. Raya Petitenget, Kuta Utara, Badung"
                     rows={6}
@@ -120,9 +117,13 @@ const ParticipantForm = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <Input
                       optional
-                      value={form.participants[idx].facebook as string}
+                      value={form.participants[index].facebook as string}
                       onChange={(e) =>
-                        handleChangeParticipant(idx, "facebook", e.target.value)
+                        handleChangeParticipant(
+                          index,
+                          "facebook",
+                          e.target.value
+                        )
                       }
                       placeholder="Contoh: facebook.com/adiputra"
                       className="w-full"
@@ -130,9 +131,13 @@ const ParticipantForm = () => {
                     />
                     <Input
                       optional
-                      value={form.participants[idx].twitter as string}
+                      value={form.participants[index].twitter as string}
                       onChange={(e) =>
-                        handleChangeParticipant(idx, "twitter", e.target.value)
+                        handleChangeParticipant(
+                          index,
+                          "twitter",
+                          e.target.value
+                        )
                       }
                       placeholder="Contoh: x.com/adiputra"
                       className="w-full"
@@ -142,10 +147,10 @@ const ParticipantForm = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <Input
                       optional
-                      value={form.participants[idx].instagram as string}
+                      value={form.participants[index].instagram as string}
                       onChange={(e) =>
                         handleChangeParticipant(
-                          idx,
+                          index,
                           "instagram",
                           e.target.value
                         )
@@ -156,9 +161,9 @@ const ParticipantForm = () => {
                     />
                     <Input
                       optional
-                      value={form.participants[idx].tiktok as string}
+                      value={form.participants[index].tiktok as string}
                       onChange={(e) =>
-                        handleChangeParticipant(idx, "tiktok", e.target.value)
+                        handleChangeParticipant(index, "tiktok", e.target.value)
                       }
                       placeholder="Contoh: tiktok.com/@adiputra"
                       className="w-full"
@@ -171,7 +176,7 @@ const ParticipantForm = () => {
                         title="Hapus"
                         onClick={() => {
                           const newParticipant = [...form.participants];
-                          newParticipant.splice(idx, 1);
+                          newParticipant.splice(index, 1);
                           setForm("participants", newParticipant);
                         }}
                         icon={<BiTrash />}
@@ -189,8 +194,10 @@ const ParticipantForm = () => {
       <div className="mt-4">
         <ButtonSecondary
           onClick={() => {
-            const newParticipants = [...form.participants];
-            newParticipants.push(initialParticipant);
+            const newParticipants = [
+              ...form.participants,
+              ...initialParticipant,
+            ];
             setForm("participants", newParticipants);
           }}
           type="button"
@@ -206,13 +213,7 @@ const ParticipantForm = () => {
           icon={<IoArrowBack />}
           title="Sebelumnya"
           iconPosition="left"
-          onClick={() => {
-            if (form.theme_category_id === 1) {
-              setActiveStep(activeStep - 1);
-            } else {
-              setActiveStep(activeStep - 3);
-            }
-          }}
+          onClick={() => setActiveStep(activeStep - 1)}
         />
         <ButtonPrimary
           type="button"
@@ -221,8 +222,8 @@ const ParticipantForm = () => {
           iconPosition="right"
           title="Selanjutnya"
           onClick={() => {
-            const isValid: boolean = participants.every(areValidParticipants);
-            console.log(isValid);
+            const isValid: boolean =
+              form.participants.every(areValidParticipants);
             if (!isValid) {
               toast.error("Lengkapi semua informasi peserta.");
               return;
