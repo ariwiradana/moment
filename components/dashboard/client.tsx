@@ -27,7 +27,7 @@ const ClientComponent = () => {
             modules={[Autoplay, Navigation]}
             loop
             autoplay={{
-              delay: 4000,
+              delay: 3000,
             }}
             navigation={{
               nextEl: ".action-next",
@@ -46,6 +46,9 @@ const ClientComponent = () => {
               },
               1024: {
                 slidesPerView: 4,
+              },
+              1280: {
+                slidesPerView: 8,
               },
             }}
             spaceBetween={0}

@@ -17,6 +17,12 @@ const Cover = ({ to, actions }: Props) => {
   const { state } = useEvents();
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) {
       document.body.classList.add("no-scroll");
     } else {

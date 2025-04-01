@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 const useGift = (icon: ReactNode) => {
   const [isGiftShown, setIsGiftShown] = useState<boolean>(false);
+  const [isRekeniigShown, setIsRekeningShown] = useState<boolean>(false);
 
   const handleCopyRekening = (rekening: string) => {
     navigator.clipboard
@@ -20,10 +21,12 @@ const useGift = (icon: ReactNode) => {
   return {
     state: {
       isGiftShown,
+      isRekeniigShown,
     },
     actions: {
       setIsGiftShown,
-      handleCopyRekening
+      handleCopyRekening,
+      setIsRekeningShown,
     },
   };
 };

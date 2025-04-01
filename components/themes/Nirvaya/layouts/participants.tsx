@@ -1,5 +1,5 @@
 import useEvents from "@/hooks/themes/useEvents";
-import useHero from "@/hooks/themes/useParticipants";
+import useParticipants from "@/hooks/themes/useParticipants";
 import { raleway } from "@/lib/fonts";
 import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
@@ -16,7 +16,7 @@ import {
 const Participants = () => {
   const { client } = useClientStore();
   const { state: eventState } = useEvents();
-  const { state: participantState } = useHero();
+  const { state: participantState } = useParticipants();
 
   return (
     <section className={`bg-nirvaya-light-brown ${raleway.className}`}>

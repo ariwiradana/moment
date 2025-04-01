@@ -4,11 +4,11 @@ import Cover from "./layouts/cover";
 import Hero from "./layouts/hero";
 import Participants from "./layouts/participants";
 import useCoverStore from "@/store/useCoverStore";
-// import Photos from "./layouts/photos";
 import Events from "./layouts/events";
 import MusicComponent from "./layouts/music";
 import useMusic from "@/hooks/themes/useMusic";
 import Photos from "./layouts/photos";
+import Gift from "./layouts/gift";
 
 interface Props {
   untuk: string;
@@ -27,6 +27,7 @@ const Nirvaya = ({ untuk }: Props) => {
           <Participants />
           <Events />
           <Photos />
+          <Gift />
         </>
       )}
     </Layout>

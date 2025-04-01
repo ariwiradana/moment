@@ -67,24 +67,26 @@ const Photos = () => {
         }}
       />
       <section className="bg-nirvaya-light-brown">
-        <div className="max-w-screen-lg mx-auto py-16 md:px-8">
+        <div className="max-w-screen-lg mx-auto pt-16 md:px-8">
           <div
             data-aos="fade-up"
-            className="flex flex-col md:flex-row justify-between md:items-center gap-y-4 gap-x-12 mb-8 md:mb-16 px-8 md:px-0"
+            className="flex flex-col md:flex-row items-center gap-x-6 pl-8 md:pl-0"
           >
-            <h2 className="text-nirvaya-dark md:text-center text-4xl md:text-6xl font-edensor whitespace-nowrap">
-              Galeri <span className="italic">Kami</span>
-            </h2>
-            <div className="h-[1px] w-[25vw] md:min-w-[20vw] bg-nirvaya-dark/10"></div>
-            <p className="text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs text-[10px]">
-              Momen menjadi awal dari kisah yang akan dikenang selamanya
+            <div className="flex justify-between items-center gap-x-6 md:gap-x-12 w-full">
+              <h2 className="text-nirvaya-dark text-4xl md:text-5xl font-edensor whitespace-nowrap leading-8">
+                Galeri <span className="italic">Kami</span>
+              </h2>
+              <div className="h-[1px] bg-nirvaya-dark/10 w-full"></div>
+            </div>
+            <p className="text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px]">
+              Momen menjadi awal kisah yang akan dikenang selamanya
             </p>
           </div>
-          <div className="grid grid-cols-4 row-span-3 gap-2 md:gap-6">
+          <div className="grid grid-cols-4 row-span-3 gap-1 md:gap-6 mt-8 md:mt-16">
             <div
               data-aos="fade-up"
               data-aos-delay="100"
-              className="col-span-4 md:col-span-2 row-span-4 aspect-square md:aspect-auto bg-nirvaya-dark/5"
+              className="col-span-4 md:col-span-2 row-span-4 aspect-square md:aspect-auto"
             >
               <Swiper
                 speed={1000}
@@ -102,7 +104,7 @@ const Photos = () => {
                       src={img}
                       alt={`Image Part 1 ${img}`}
                       fill
-                      className="object-cover"
+                      className="object-cover bg-nirvaya-dark/5"
                     />
                   </SwiperSlide>
                 ))}
@@ -111,7 +113,7 @@ const Photos = () => {
             <div
               data-aos="fade-up"
               data-aos-delay="200"
-              className="col-span-4 md:col-span-2 row-span-2 bg-nirvaya-dark/5 aspect-[4/2] md:aspect-[2/1]"
+              className="col-span-4 md:col-span-2 row-span-2 aspect-[4/2] md:aspect-[2/1]"
             >
               <Swiper
                 speed={1000}
@@ -129,7 +131,7 @@ const Photos = () => {
                       alt={`Image Part 2 ${img}`}
                       src={img}
                       fill
-                      className="object-cover"
+                      className="object-cover bg-nirvaya-dark/5"
                     />
                   </SwiperSlide>
                 ))}
@@ -138,7 +140,7 @@ const Photos = () => {
             <div
               data-aos="fade-up"
               data-aos-delay="300"
-              className="col-span-4 md:col-span-2 row-span-2 bg-nirvaya-dark/5 aspect-[4/2] md:aspect-[2/1]"
+              className="col-span-4 md:col-span-2 row-span-2 aspect-[4/2] md:aspect-[2/1]"
             >
               <Swiper
                 speed={1000}
@@ -157,7 +159,7 @@ const Photos = () => {
                       src={img}
                       alt={`Image Part 3 ${img}`}
                       fill
-                      className="object-cover"
+                      className="object-cover bg-nirvaya-dark/5"
                     />
                   </SwiperSlide>
                 ))}
