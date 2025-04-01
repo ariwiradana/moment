@@ -6,7 +6,7 @@ import HeroComponent from "./layouts/hero";
 // import RSVPWishes from "./layouts/rsvp.wishes";
 import MusicComponent from "./layouts/music";
 // import EventsComponent from "./layouts/events";
-// import ParticipantsComponent from "./layouts/participants";
+import ParticipantsComponent from "./layouts/participants";
 import PreviewNav from "../preview.nav";
 import useCoverStore from "@/store/useCoverStore";
 import useMusic from "@/hooks/themes/useMusic";
@@ -29,8 +29,8 @@ const Samaya: FC<Props> = (props) => {
         <HeroComponent />
         {isOpen && (
           <div className="relative">
-            {/* <ParticipantsComponent />
-            <EventsComponent />
+            <ParticipantsComponent />
+            {/* <EventsComponent />
             <Photos />
             <Gift />
             <RSVPWishes />
