@@ -21,12 +21,9 @@ const ThankyouComponent = () => {
   } = usePhotos();
   return (
     <section className="relative flex flex-col justify-center">
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-nirvaya-dark via-nirvaya-dark/80 to-nirvaya-dark/80 z-10"
-        data-aos="fade-up"
-      ></div>
-      <div className="absolute inset-0" data-aos="fade-up">
-        {images.slice(10).map((image, index) => (
+      <div className="absolute inset-0 bg-gradient-to-b from-nirvaya-dark via-nirvaya-dark/80 to-nirvaya-dark/80 z-10"></div>
+      <div className="absolute inset-0" data-aos="zoom-out">
+        {images.slice(0, 10).map((image, index) => (
           <div
             className="w-full h-[20vh] bg-white/5"
             key={`Foto Thankyou ${index + 1}`}
