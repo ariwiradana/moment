@@ -81,10 +81,10 @@ const RSVPWishesComponent: FC = () => {
 
   return (
     <section className="relative bg-nirvaya-dark w-full overflow-hidden">
-      <div className="relative w-full flex flex-col justify-center items-center z-20 pt-16 max-w-screen-lg mx-auto">
+      <div className="relative w-full flex flex-col justify-center items-center z-20 py-16">
         <div
           data-aos="fade-up"
-          className={`flex flex-col md:flex-row items-center gap-x-6 w-full px-8 ${raleway.className}`}
+          className={`flex flex-col md:flex-row items-center gap-x-6 w-full px-8 max-w-screen-lg mx-auto ${raleway.className}`}
         >
           <div className="flex justify-between items-center gap-x-6 md:gap-x-12 w-full">
             <h2 className="text-white text-4xl md:text-5xl font-edensor whitespace-nowrap leading-8">
@@ -101,7 +101,7 @@ const RSVPWishesComponent: FC = () => {
         {/* Form */}
         <form
           onSubmit={actions.handleSubmit}
-          className="flex flex-col gap-4 w-full mt-8 md:mt-16 px-8"
+          className="flex flex-col gap-4 w-full mt-8 md:mt-16 px-8 max-w-screen-lg mx-auto"
           data-aos="fade-up"
         >
           <Input
@@ -158,57 +158,56 @@ const RSVPWishesComponent: FC = () => {
 
         {/* Wishes List */}
         {state.wishes?.length > 0 && (
-          <div
-            className="w-full bg-nirvaya-primary p-6 md:px-8 md:py-4 mt-16"
-            data-aos="fade-up"
-          >
-            <div className="max-w-screen-lg mx-auto w-full grid items-start md:grid-cols-2 gap-x-3 md:gap-x-12 divide-y md:divide-y-0 divide-white/10">
-              {state.wishes.map((wish, index) => (
-                <WishItem
-                  key={`ucapan-${index + 1}`}
-                  wish={wish}
-                  attendantText={state.attendantText}
-                />
-              ))}
-            </div>
-
-            {/* Pagination */}
-            {state.totalRows > state.limit && (
-              <div className="max-w-screen-sm w-full mt-6 pl-4">
-                <div className="-ml-2">
-                  <Pagination
-                    shape="rounded"
-                    page={state.page}
-                    sx={{
-                      "& .MuiPaginationItem-root": {
-                        color: "white",
-                        fontSize: 12,
-                        maxWidth: 24,
-                        maxHeight: 24,
-                        minHeight: 24,
-                        minWidth: 24,
-                        borderRadius: 0,
-                        "&:hover": {
-                          backgroundColor: "#FFFFFF0D",
-                          color: "white",
-                        },
-                      },
-                      "& .MuiPaginationItem-page.Mui-selected": {
-                        backgroundColor: "#FFFFFF0D",
-                        color: "white",
-                        "&:hover": {
-                          backgroundColor: "#FFFFFF0D",
-                          color: "white",
-                          cursor: "default",
-                        },
-                      },
-                    }}
-                    onChange={actions.handleChangePagination}
-                    count={Math.ceil(state.totalRows / state.limit)}
+          <div data-aos="fade-up">
+            <div className="w-full bg-nirvaya-primary p-6 md:px-8 md:py-4 mt-16">
+              <div className="w-full grid items-start md:grid-cols-2 gap-x-3 md:gap-x-12 divide-y md:divide-y-0 divide-white/10">
+                {state.wishes.map((wish, index) => (
+                  <WishItem
+                    key={`ucapan-${index + 1}`}
+                    wish={wish}
+                    attendantText={state.attendantText}
                   />
-                </div>
+                ))}
               </div>
-            )}
+
+              {/* Pagination */}
+              {state.totalRows > state.limit && (
+                <div className="w-full mt-6 pl-4">
+                  <div className="-ml-2">
+                    <Pagination
+                      shape="rounded"
+                      page={state.page}
+                      sx={{
+                        "& .MuiPaginationItem-root": {
+                          color: "white",
+                          fontSize: 12,
+                          maxWidth: 24,
+                          maxHeight: 24,
+                          minHeight: 24,
+                          minWidth: 24,
+                          borderRadius: 0,
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF0D",
+                            color: "white",
+                          },
+                        },
+                        "& .MuiPaginationItem-page.Mui-selected": {
+                          backgroundColor: "#FFFFFF0D",
+                          color: "white",
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF0D",
+                            color: "white",
+                            cursor: "default",
+                          },
+                        },
+                      }}
+                      onChange={actions.handleChangePagination}
+                      count={Math.ceil(state.totalRows / state.limit)}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

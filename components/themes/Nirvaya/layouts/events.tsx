@@ -32,7 +32,7 @@ const Events = () => {
           <div
             className={`${
               eventState.events.length > 1 ? "grid lg:grid-cols-2" : "flex"
-            }  justify-center items-center p-8 lg:py-16 max-w-screen-lg mx-auto`}
+            }  justify-center items-center p-8 lg:py-20 max-w-screen-lg mx-auto`}
           >
             {eventState.events?.length > 0 &&
               eventState?.events.map((event, index) => {

@@ -10,6 +10,7 @@ import useMusic from "@/hooks/themes/useMusic";
 import Photos from "./layouts/photos";
 import Gift from "./layouts/gift";
 import RsvpWishes from "./layouts/rsvp.wishes";
+import Thankyou from "./layouts/thankyou";
 
 interface Props {
   untuk: string;
@@ -30,6 +31,7 @@ const Nirvaya = ({ untuk }: Props) => {
           <Photos />
           <Gift />
           <RsvpWishes />
+          <Thankyou />
         </>
       )}
     </Layout>
