@@ -29,7 +29,7 @@ const Hero = () => {
     <section className={`relative ${raleway.className}`}>
       <div data-aos="zoom-out">
         {!isOpen && client?.cover ? (
-          <div className={`w-full transition-transform min-h-[600px] h-lvh`}>
+          <div className={`w-full transition-transform min-h-[600px] h-dvh`}>
             <div className="absolute inset-0 z-0">
               <Image
                 fill
