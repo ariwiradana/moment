@@ -119,8 +119,6 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           [clientIds]
         );
 
-        console.log({ clientForms });
-
         const { rows: participants } = await sql.query(
           `
             SELECT p.*
