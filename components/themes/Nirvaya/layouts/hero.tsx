@@ -1,7 +1,6 @@
 import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
 import { raleway } from "@/lib/fonts";
-import { Client } from "@/lib/types";
 import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import { getEventNames } from "@/utils/getEventNames";
@@ -10,20 +9,16 @@ import Image from "next/image";
 import React, { memo } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import usePhotos from "@/hooks/themes/usePhotos";
 
 const Hero = () => {
   const { client } = useClientStore();
   const { isOpen } = useCoverStore();
-  const { gallery } = (client as Client) || {};
   const { state: participantsState } = useParticipants();
   const { state: eventState } = useEvents();
-
-  const images =
-    (gallery &&
-      (gallery as string[]).filter(
-        (image) => client?.seo !== image && client?.cover !== image
-      )) ||
-    [];
+  const {
+    state: { images },
+  } = usePhotos();
 
   return (
     <section className={`relative ${raleway.className}`}>
