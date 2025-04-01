@@ -23,7 +23,7 @@ const ButtonPrimary: FC<Props> = ({
       {...props}
       className={`${raleway.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} text-samaya-dark rounded-full min-w-24 bg-samaya-primary backdrop-blur px-5 py-3 text-base flex hover:bg-samaya-primary transition-colors ease-in-out duration-500 hover:text-samaya-dark ${
+      } ${className} text-samaya-dark rounded-full min-w-24 bg-samaya-primary backdrop-blur px-5 py-2 md:py-3 text-sm md:text-base flex hover:bg-samaya-primary transition-colors ease-in-out duration-500 hover:text-samaya-dark ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-2 lg:gap-x-4 relative overflow-hidden`}
     >

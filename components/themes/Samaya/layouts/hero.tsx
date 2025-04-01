@@ -63,14 +63,14 @@ const HeroComponent = () => {
         )}
         {isOpen && (
           <div
-            className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-samaya-dark to-[90%] h-svh flex flex-col justify-end items-center py-8"
+            className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%] h-svh flex flex-col justify-end items-center py-8"
             data-aos="fade-up"
             data-aos-delay="800"
           >
             <h1
               data-aos="fade-up"
               data-aos-delay="1000"
-              className={`font-tan-pearl text-white text-[28px] md:text-4xl my-2 lg:mb-4 text-center`}
+              className={`font-tan-pearl text-white text-2xl md:text-4xl mb-2 lg:mb-4 text-center`}
             >
               {participantState.groom?.nickname} &{" "}
               {participantState.bride?.nickname}
@@ -88,13 +88,13 @@ const HeroComponent = () => {
                 }`}
               >
                 <p
-                  className={`${raleway.className} text-white text-xs md:text-sm tracking-[1px] uppercase`}
+                  className={`${raleway.className} text-white text-xs md:text-sm tracking-[1px]`}
                 >
                   {eventState.events[eventState.currentIndex].name}
                 </p>
                 <div className="h-1 w-1 min-h-1 min-w-1 rounded-full bg-white"></div>
                 <p
-                  className={`${raleway.className} text-white text-xs md:text-sm tracking-[1px] uppercase`}
+                  className={`${raleway.className} text-white text-xs md:text-sm tracking-[1px]`}
                 >
                   {moment(
                     eventState.events[eventState.currentIndex].date
@@ -103,7 +103,7 @@ const HeroComponent = () => {
               </div>
             </div>
             <div
-              className="h-12 lg:h-16 aspect-video relative m-4"
+              className="h-12 lg:h-16 aspect-video relative m-2"
               data-aos="zoom-in-up"
               data-aos-delay="1400"
             >

@@ -46,40 +46,38 @@ const Cover: FC<Props> = (props) => {
               />
             </div>
           )}
-          <div className="bg-gradient-to-b from-transparent to-samaya-dark to-[90%] relative z-10 h-dvh w-full py-[60px] md:py-[100px] px-8 flex flex-col justify-end">
-            <div className="mb-14">
-              <p
-                data-aos="fade-up"
-                data-aos-delay="400"
-                className={`${raleway.className} text-white md:text-sm tracking-[1px] text-xs uppercase text-center mb-2`}
-              >
-                Undangan {getEventNames(client?.events || [])}
-              </p>
+          <div className="bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%] relative z-10 h-dvh w-full py-[60px] md:py-[100px] px-8 flex flex-col justify-end">
+            <div className="md:mb-8 mb-3">
               <h1
                 data-aos="fade-up"
                 data-aos-delay="600"
-                className={`font-tan-pearl text-white text-center text-[28px] md:text-4xl mt-2`}
+                className={`font-tan-pearl text-white text-center text-2xl md:text-4xl mt-2`}
               >
                 {participantsState.groom?.nickname} &{" "}
                 {participantsState.bride?.nickname}
               </h1>
             </div>
-            <div data-aos="fade-up" data-aos-delay="1000">
+            <div data-aos="fade-up" data-aos-delay="800">
               <p
-                className={`${raleway.className} text-white text-[10px] md:text-xs tracking-[1px] text-center`}
+                className={`${raleway.className} text-white text-[10px] md:text-xs tracking-[1px] max-w-lg mx-auto text-center`}
               >
-                Yth. Bapak/Ibu/Saudara/i
+                Tanpa mengurangi rasa hormat, kami mengundang anda untuk
+                menghadiri acara{" "}
+                <span className="lowercase">
+                  {getEventNames(client?.events || [])}
+                </span>{" "}
+                kami.
               </p>
               <p
-                className={`${marcellus.className} text-samaya-primary text-xl md:text-2xl text-center`}
+                className={`${marcellus.className} text-samaya-primary text-xl md:text-2xl text-center mt-3`}
               >
                 {props.untuk}
               </p>
             </div>
             <div
-              className="flex justify-center mt-6 md:mt-8"
+              className="flex justify-center mt-4 md:mt-8"
               data-aos="fade-up"
-              data-aos-delay="1400"
+              data-aos-delay="1000"
             >
               <Button
                 onClick={() => {
