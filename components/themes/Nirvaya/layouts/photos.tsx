@@ -113,7 +113,7 @@ const Photos = () => {
             <div
               data-aos="fade-up"
               data-aos-delay="200"
-              className="col-span-4 md:col-span-2 row-span-2 aspect-[4/2] md:aspect-[2/1]"
+              className="col-span-4 row-span-4 md:col-span-2 md:row-span-2 aspect-square md:aspect-[2/1]"
             >
               <Swiper
                 speed={1000}
