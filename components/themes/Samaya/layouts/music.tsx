@@ -33,7 +33,7 @@ const MusicComponent = ({ state, actions, refs }: UseMusic) => {
             className={`object-cover w-full rounded-full transition-all ease-in-out delay-200 grayscale-[60%] p-2 ${
               state.isPlaying ? "animate-spin-slow" : "animate-none"
             }`}
-            src={client?.cover as string}
+            src={(client?.cover as string) || ""}
           />
           <div className="relative z-20 w-full h-full rounded-full flex justify-center items-center">
             {state.isPlaying ? <BiPause /> : <BiPlay />}

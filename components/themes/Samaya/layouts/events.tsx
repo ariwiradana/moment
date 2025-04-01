@@ -39,11 +39,11 @@ const EventsComponent = () => {
                   <ImageShimmer
                     fill
                     quality={100}
-                    alt={`hero-img-${index}`}
+                    alt={`Foto Card ${event.name} ${index + 1}`}
                     priority
                     sizes="100vw"
-                    className="object-cover grayscale transform translate-y-0 lg:translate-y-0 transition-transform"
-                    src={event.image as string}
+                    className="object-cover grayscale transform translate-y-0 lg:translate-y-0 transition-transform bg-white/5"
+                    src={(event.image as string) || ""}
                   />
                 </div>
               </SwiperSlide>
@@ -62,10 +62,10 @@ const EventsComponent = () => {
               >
                 <div className="w-full h-full aspect-square md:aspect-auto relative">
                   <Image
-                    src={event.image as string}
-                    alt={`Foto Acara ${event.name}`}
+                    src={(event.image as string) || ""}
+                    alt={`Foto Acara ${event.name} ${index + 1}`}
                     fill
-                    className="object-cover"
+                    className="object-cover bg-white/5"
                   />
                 </div>
                 <div

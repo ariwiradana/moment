@@ -25,45 +25,45 @@ const ThankyouComponent = () => {
   return (
     <section className="relative bg-samaya-dark z-20">
       <div className="max-w-screen-sm mx-auto px-6 md:px-12 lg:px-4 py-[60px] md:py-[100px]">
-        <div className="flex justify-center w-full" data-aos="zoom-out">
-          <Swiper
-            loop
-            effect="cube"
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            speed={2000}
-            className="w-96 h-[500px] md:h-[550px]"
-            spaceBetween={0}
-            slidesPerView={1}
-            modules={[Autoplay, EffectCube]}
-            cubeEffect={{
-              shadow: true,
-              slideShadows: true,
-              shadowOffset: 20,
-              shadowScale: 0.94,
-            }}
-          >
-            {images.map((image, index) => (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`thankyou-img-${index}`}
-              >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    fill
-                    alt={`hero-img-${index}`}
-                    priority
-                    sizes="600px"
-                    className="object-cover transform bg-white/5 translate-y-0 lg:translate-y-0 transition-transform"
-                    src={image as string}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+        {images.length > 0 && (
+          <div className="flex justify-center w-full" data-aos="zoom-out">
+            <Swiper
+              loop
+              effect="cube"
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              speed={2000}
+              className="w-96 h-[500px] md:h-[550px]"
+              spaceBetween={0}
+              slidesPerView={1}
+              modules={[Autoplay, EffectCube]}
+              cubeEffect={{
+                shadow: false,
+                slideShadows: false,
+              }}
+            >
+              {images.map((image, index) => (
+                <SwiperSlide
+                  className="relative w-full h-full"
+                  key={`thankyou-img-${index}`}
+                >
+                  <div className="absolute inset-0 z-0">
+                    <Image
+                      fill
+                      alt={`hero-img-${index}`}
+                      priority
+                      sizes="600px"
+                      className="object-cover transform bg-white/5 translate-y-0 lg:translate-y-0 transition-transform"
+                      src={image as string}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        )}
 
         <p
           data-aos="fade-up"
@@ -74,7 +74,7 @@ const ThankyouComponent = () => {
 
         <h1
           data-aos="fade-up"
-          className={`text-white text-center leading-8 text-xl md:text-2xl font-tan-pearl mt-6`}
+          className={`${raleway.className} text-[10px] md:text-xs text-center mt-8 tracking-[2px] uppercase leading-5 text-white/80`}
         >
           {client?.closing_title}
         </h1>

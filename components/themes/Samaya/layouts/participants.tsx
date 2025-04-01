@@ -23,7 +23,7 @@ const ParticipantsComponent = () => {
     >
       <h2
         data-aos="fade-up"
-        className={`text-white text-center leading-8 text-xl md:text-2xl font-tan-pearl`}
+        className={`text-white text-center leading-8 text-xl md:text-2xl 2xl:text-3xl font-tan-pearl`}
       >
         {client?.opening_title}
       </h2>
@@ -35,11 +35,11 @@ const ParticipantsComponent = () => {
       </p>
       <div className="flex md:grid md:grid-cols-2 flex-col gap-8 md:gap-4 lg:gap-12 mt-20 max-w-screen-lg mx-auto">
         <ParticipantComponent
-          data={participantState.groom as Participant}
+          data={participantState?.groom as Participant}
           index={0}
         />
         <ParticipantComponent
-          data={participantState.bride as Participant}
+          data={participantState?.bride as Participant}
           index={1}
         />
       </div>
@@ -67,7 +67,7 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
           }`}
         >
           <CircularText
-            text={`the ${data.role} the ${data.role} `}
+            text={`the ${data?.role} the ${data?.role} `}
             onHover="slowDown"
             spinDuration={20}
             className={raleway.className}
@@ -75,7 +75,7 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
         </div>
         <Image
           alt={`Foto Partisipan ${index + 1}`}
-          src={data.image as string}
+          src={(data?.image as string) || ""}
           fill
           className={`object-cover border-[4px] border-samaya-dark ${
             odd
@@ -87,10 +87,10 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
           <p
             className={`${raleway.className} text-[10px] md:text-xs tracking-[2px] uppercase leading-5 text-white/80`}
           >
-            Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
+            Mempelai {data?.gender === "male" ? "Pria" : "Wanita"}
           </p>
           <h2 className={`font-tan-pearl text-white text-xl md:text-2xl mt-4`}>
-            {data.name}
+            {data?.name}
           </h2>
         </div>
       </div>
@@ -98,45 +98,45 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
         data-aos="fade-up"
         className={`${raleway.className} ml-1 tracking-[1px] text-[10px] md:text-xs leading-4 text-white/50 mt-8`}
       >
-        {data.gender === "male" ? "Putra" : "Putri"} {data.child} dari pasangan
-        Bapak {data.parents_male} dan Ibu {data.parents_female}
+        {data?.gender === "male" ? "Putra" : "Putri"} {data?.child} dari
+        pasangan Bapak {data?.parents_male} dan Ibu {data?.parents_female}
       </p>
       <div
         data-aos="fade-up"
         className="flex mt-6 ml-1 gap-x-4 text-samaya-primary text-base md:text-lg text-center"
       >
-        {data.facebook && (
+        {data?.facebook && (
           <Link
             aria-label="sosmed-facebook-link"
             target="_blank"
-            href={data.facebook}
+            href={data?.facebook}
           >
             <BiLogoFacebook />
           </Link>
         )}
-        {data.twitter && (
+        {data?.twitter && (
           <Link
             aria-label="sosmed-twitter-link"
             target="_blank"
-            href={data.twitter}
+            href={data?.twitter}
           >
             <BiLogoTwitter />
           </Link>
         )}
-        {data.instagram && (
+        {data?.instagram && (
           <Link
             aria-label="sosmed-instagram-link"
             target="_blank"
-            href={data.instagram}
+            href={data?.instagram}
           >
             <BiLogoInstagram />
           </Link>
         )}
-        {data.tiktok && (
+        {data?.tiktok && (
           <Link
             aria-label="sosmed-tiktok-link"
             target="_blank"
-            href={data.tiktok}
+            href={data?.tiktok}
           >
             <BiLogoTiktok />
           </Link>

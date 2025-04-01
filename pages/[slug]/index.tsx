@@ -38,7 +38,7 @@ const MainPage: FC<Props> = ({
   useEffect(() => {
     AOS.init({
       duration: 1200,
-      offset: 0,
+      offset: 50,
       once: true,
     });
     setClient(clientData);

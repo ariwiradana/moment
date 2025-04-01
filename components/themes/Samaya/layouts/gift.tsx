@@ -16,7 +16,7 @@ const GiftComponent = () => {
         <div className={raleway.className}>
           <h2
             data-aos="fade-up"
-            className={`text-samaya-dark text-center leading-8 text-xl md:text-2xl font-tan-pearl`}
+            className={`text-samaya-dark text-center leading-8 text-xl md:text-2xl 2xl:text-3xl font-tan-pearl`}
           >
             Mohon Doa Restu
           </h2>
