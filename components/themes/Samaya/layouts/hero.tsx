@@ -9,18 +9,15 @@ import Image from "next/image";
 import React, { memo } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import usePhotos from "@/hooks/themes/usePhotos";
 
 const HeroComponent = () => {
   const { state: eventState } = useEvents();
-  const { client } = useClientStore();
+  const {
+    state: { images },
+  } = usePhotos();
   const { isOpen } = useCoverStore();
   const { state: participantState } = useParticipants();
-
-  const gallery: string[] = (client?.gallery || []) as string[];
-
-  const images = gallery.filter(
-    (g) => g !== client?.cover && g !== client?.seo
-  );
 
   if (isOpen)
     return (
