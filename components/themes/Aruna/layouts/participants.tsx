@@ -72,7 +72,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col justify-center items-center overflow-hidden">
       <div className="relative" data-aos="zoom-out-up">
-        <div className="w-[260px] h-[378px] relative rounded-tl-[24px] rounded-br-[100px] overflow-hidden shadow-lg shadow-aruna-dark/30">
+        <div className="w-[300px] h-[440px] relative rounded-tl-[24px] rounded-br-[100px] overflow-hidden shadow-lg shadow-aruna-dark/30">
           {props.data.image && (
             <ImageShimmer
               priority
