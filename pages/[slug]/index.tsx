@@ -11,6 +11,7 @@ import Seo from "@/components/dashboard/elements/seo";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import useClientStore from "@/store/useClientStore";
+import { getEventNames } from "@/utils/getEventNames";
 
 interface Props {
   url: string;
@@ -92,7 +93,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
       : client.is_preview
       ? `Preview Undangan Tema ${client.theme?.name} | Moment`
-      : `${participantNames} | Undangan ${client.theme_category?.name}`
+      : `${participantNames} | Undangan ${getEventNames(client.events)}`
     : "Moment";
 
   return {

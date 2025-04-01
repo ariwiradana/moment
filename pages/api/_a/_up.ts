@@ -2,7 +2,6 @@ import { hashPassword } from "@/lib/auth";
 import sql from "@/lib/db";
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
-import { capitalizeWords } from "@/utils/capitalizeWords";
 import type { NextApiResponse, NextApiRequest } from "next";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -22,23 +21,41 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     );
 
     if (rowCount === 0) {
-      return handleError(
-        response,
-        new Error(`${capitalizeWords(role)} does not exists`)
+      const userResult = await sql.query(
+        "SELECT * FROM users WHERE username = $1 AND role = $2",
+        [username, role]
       );
+      const user = userResult.rows[0];
+
+      if (user) {
+        return response
+          .status(401)
+          .json({ success: false, message: "User exists" });
+      }
+
+      const hashedPassword = await hashPassword(password);
+
+      await sql.query(
+        "INSERT INTO users (username, password, role) VALUES ($1, $2, $3)",
+        [username, hashedPassword, role]
+      );
+      return response.status(200).json({
+        success: true,
+        message: "Account created successfully",
+      });
+    } else {
+      const hashedPassword = await hashPassword(password);
+
+      const query = `UPDATE users SET password = $1 WHERE username = $2`;
+      const values = [hashedPassword, username];
+
+      await sql.query(query, values);
+
+      return response.status(200).json({
+        success: true,
+        message: "Password updated successfully",
+      });
     }
-
-    const hashedPassword = await hashPassword(password);
-
-    const query = `UPDATE users SET password = $1 WHERE username = $2`;
-    const values = [hashedPassword, username];
-
-    await sql.query(query, values);
-
-    return response.status(200).json({
-      success: true,
-      message: "Password updated successfully",
-    });
   } catch (error) {
     handleError(response, error);
   }
