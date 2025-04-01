@@ -68,7 +68,7 @@ const ThankyouComponent = () => {
       <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center relative z-30">
         <h1
           data-aos="fade-up"
-          className={`font-high-summit text-4xl md:text-5xl text-white mb-8 text-center`}
+          className={`font-high-summit text-3xl md:text-4xl text-white mb-8 text-center`}
         >
           {client?.closing_title}
         </h1>
