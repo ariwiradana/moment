@@ -3,7 +3,6 @@ import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
 import { raleway } from "@/lib/fonts";
 import useCoverStore from "@/store/useCoverStore";
-import useClientStore from "@/store/useClientStore";
 import moment from "moment";
 import Image from "next/image";
 import React, { memo } from "react";
