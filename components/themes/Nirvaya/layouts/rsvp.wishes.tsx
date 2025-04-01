@@ -81,7 +81,7 @@ const RSVPWishesComponent: FC = () => {
 
   return (
     <section className="relative bg-nirvaya-dark w-full overflow-hidden">
-      <div className="relative w-full flex flex-col justify-center items-center z-20 pt-16">
+      <div className="relative w-full flex flex-col justify-center items-center z-20 pt-16 md:pb-16">
         <div
           data-aos="fade-up"
           className={`flex flex-col md:flex-row items-center gap-x-6 w-full px-8 max-w-screen-lg mx-auto ${raleway.className}`}
