@@ -1,4 +1,4 @@
-import {  marcellus } from "@/lib/fonts";
+import { marcellus, raleway } from "@/lib/fonts";
 import React, { FC, InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -12,10 +12,10 @@ const InputCheckbox: FC<Props> = (props) => {
         {...props}
         type="checkbox"
         id={props.id}
-        className={`bg-samaya-primary bg-opacity-5 w-4 h-4 outline-none accent-samaya-primary focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${marcellus.className}`}
+        className={`bg-samaya-dark bg-opacity-5 w-4 h-4 outline-none accent-samaya-dark focus:border focus:border-gray-200 text-sm font-medium text-admin-dark rounded-xl ${marcellus.className}`}
       />
       <p
-        className={`text-base ${marcellus.className} text-samaya-primary text-sm mt-[2px]`}
+        className={`${raleway.className} text-samaya-dark text-[10px] md:text-xs tracking-[1px] mt-[2px]`}
       >
         {props.label}
       </p>

@@ -1,122 +1,89 @@
 import React, { memo } from "react";
 import "yet-another-react-lightbox/styles.css";
-import { afacad, marcellus } from "@/lib/fonts";
-import {
-  BiCheck,
-  BiSolidChevronRightCircle,
-  BiSolidCopy,
-} from "react-icons/bi";
+import { afacad, raleway } from "@/lib/fonts";
+import { BiGift, BiSolidCopy } from "react-icons/bi";
 import Image from "next/image";
-import Button from "../elements/button";
 import useClientStore from "@/store/useClientStore";
 import useGift from "@/hooks/themes/useGift";
 
 const GiftComponent = () => {
+  const { actions } = useGift(<BiGift />);
   const { client } = useClientStore();
-  const { state: giftState, actions: giftActions } = useGift(
-    <div className="p-1 rounded bg-samaya-primary">
-      <BiCheck />
-    </div>
-  );
-  if (
-    client?.gift_bank_name &&
-    client?.gift_account_name &&
-    client?.gift_account_number &&
-    client?.status === "paid"
-  )
-    return (
-      <section className="relative bg-samaya-dark/80 overflow-hidden z-20">
-        <div>
-          <div className="relative h-full w-full px-4 py-16 lg:py-24 z-30">
-            <h1
-              data-aos="fade-up"
-              className={`font-tan-pearl text-2xl md:text-3xl text-center text-samaya-primary`}
-            >
-              Kado Digital
-            </h1>
-            <p
-              data-aos="fade-up"
-              className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-2 mb-8 max-w-screen-sm mx-auto`}
-            >
-              Tanpa mengurangi rasa hormat kami bagi tamu yang ingin mengirimkan
-              hadiah kepada kedua mempelai dapat mengirimkannya melalui :
-            </p>
-            <div data-aos="fade-up" className="flex justify-center mt-6">
-              <Button
-                onClick={() =>
-                  giftActions.setIsGiftShown(!giftState.isGiftShown)
-                }
-                type="button"
-                title="Klik Disini"
-                icon={
-                  <BiSolidChevronRightCircle
-                    className={`transition-transform duration-500 delay-100 ease-in-out ${
-                      giftState.isGiftShown ? "rotate-90" : "rotate-0"
-                    }`}
-                  />
-                }
-              />
-            </div>
-            {giftState.isGiftShown && (
-              <div
-                data-aos="zoom-out-up"
-                data-aos-delay="200"
-                className="flex justify-center relative z-20 mt-12"
-              >
-                <div
-                  className={`max-w-96 w-full aspect-[1.5/1] p-8 rounded-2xl flex flex-col justify-between shadow-lg relative bg-samaya-dark overflow-hidden ${afacad.className}`}
-                >
-                  <div className="w-44 h-44 rounded-full border border-white/10 absolute -right-20 -top-20"></div>
-                  <div className="w-64 h-64 rounded-full border border-white/10 absolute -left-20 -bottom-20"></div>
-                  <div className="w-64 h-64 rounded-full border border-white/10 absolute -left-10 -bottom-40"></div>
-                  <div className="flex justify-between relative z-10">
-                    <div className="relative w-14">
-                      <Image
-                        fill
-                        alt="card-chip"
-                        src="/images/nirvaya/card-chip.svg"
-                        className="object-contain"
-                      />
-                    </div>
-                    <h1
-                      className={`text-3xl font-bold text-white ${afacad.className}`}
-                    >
-                      {client?.gift_bank_name}
-                    </h1>
-                  </div>
-                  <div className="relative z-10">
-                    <div>
-                      <p
-                        className={`text-lg md:text-xl leading-5 text-white ${marcellus.className}`}
-                      >
-                        {client?.gift_account_name}
-                      </p>
-                      <p
-                        className={`text-lg md:text-xl font-medium text-white ${afacad.className}`}
-                      >
-                        {client?.gift_account_number}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        giftActions.handleCopyRekening(
-                          client?.gift_account_number as string
-                        )
-                      }
-                      className="bg-samaya-primary outline-none text-samaya-dark px-3 py-1 rounded-lg text-sm flex items-center gap-x-1 mt-3 relative z-10"
-                    >
-                      <span>Salin No Rekening</span>
-                      <BiSolidCopy className="text-xs" />
-                    </button>
-                  </div>
-                </div>
+
+  return (
+    <section className="relative bg-white overflow-hidden z-20">
+      <div className="relative h-full w-full px-6 md:px-12 lg:px-4 py-[60px] md:py-[100px] z-30">
+        <div className={raleway.className}>
+          <h2
+            data-aos="fade-up"
+            className={`text-samaya-dark text-center leading-8 text-xl md:text-2xl font-tan-pearl`}
+          >
+            Mohon Doa Restu
+          </h2>
+          <p
+            data-aos="fade-up"
+            className="text-samaya-dark/50 text-center tracking-[1px] text-[10px] lg:text-xs mt-4 max-w-lg mx-auto"
+          >
+            Konfirmasi kehadiran melalui RSVP, sampaikan doa dan ucapan terbaik
+            untuk pengantin, dan hadirkan kado digital sebagai ungkapan kasih di
+            hari bahagia mereka.
+          </p>
+        </div>
+
+        <div
+          data-aos="zoom-out-up"
+          data-aos-delay="200"
+          className="flex justify-center relative z-20 mt-12"
+        >
+          <div
+            className={`max-w-96 w-full p-8 flex gap-16 flex-col justify-between relative bg-samaya-dark overflow-hidden ${afacad.className}`}
+          >
+            <div className="w-44 h-44 rounded-full border border-white/10 absolute -right-20 -top-20"></div>
+            <div className="w-64 h-64 rounded-full border border-white/10 absolute -left-20 -bottom-20"></div>
+            <div className="w-64 h-64 rounded-full border border-white/10 absolute -left-10 -bottom-40"></div>
+            <div className="flex justify-between relative z-10">
+              <div className="relative w-14">
+                <Image
+                  fill
+                  alt="card-chip"
+                  src="/images/nirvaya/card-chip.svg"
+                  className="object-contain"
+                />
               </div>
-            )}
+              <h1 className={`text-2xl font-semibold text-white`}>
+                {client?.gift_bank_name}
+              </h1>
+            </div>
+            <div className="relative flex justify-between items-end z-10">
+              <div>
+                <p
+                  className={`text-xs md:text-sm leading-5 text-white ${raleway.className}`}
+                >
+                  {client?.gift_account_name}
+                </p>
+                <p
+                  className={`text-sm md:text-base font-medium text-white ${raleway.className}`}
+                >
+                  {client?.gift_account_number}
+                </p>
+              </div>
+
+              <button
+                onClick={() =>
+                  actions.handleCopyRekening(
+                    client?.gift_account_number as string
+                  )
+                }
+                className="p-2 rounded-full aspect-square bg-white flex justify-center items-center text-samaya-dark text-xs md:text-sm"
+              >
+                <BiSolidCopy />
+              </button>
+            </div>
           </div>
         </div>
-      </section>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default memo(GiftComponent);

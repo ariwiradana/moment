@@ -1,4 +1,4 @@
-import { afacad, marcellus } from "@/lib/fonts";
+import { afacad, raleway } from "@/lib/fonts";
 import React, { FC } from "react";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,7 +11,7 @@ const Input: FC<Props> = (props) => {
     <div>
       {props.label && (
         <label
-          className={`text-sm mb-3 ml-2 ${afacad.className} text-gray-500 font-semibold`}
+          className={`text-[10px] md:text-xs tracking-[1px] uppercase mb-3 ${raleway.className} text-samaya-dark/50`}
           htmlFor={props.id}
         >
           {props.label}
@@ -20,7 +20,7 @@ const Input: FC<Props> = (props) => {
       <input
         {...props}
         id={props.id}
-        className={`p-4 w-full outline-none placeholder:text-white/50 text-sm md:text-base text-samaya-primary bg-samaya-primary/20 border-b border-b-samaya-primary ${marcellus.className}`}
+        className={`p-4 w-full outline-none placeholder:text-dashboard-dark/40 placeholder:text-xs text-sm text-dashboard-dark border border-b-2 border-b-samaya-dark ${raleway.className}`}
       />
       {props.error && (
         <p className={`text-admin-danger text-sm mt-1 ${afacad.className}`}>

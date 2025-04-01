@@ -23,7 +23,7 @@ const ParticipantsComponent = () => {
     >
       <h2
         data-aos="fade-up"
-        className={`text-white text-center leading-8 text-xl md:text-2xl mt-4 font-tan-pearl`}
+        className={`text-white text-center leading-8 text-xl md:text-2xl font-tan-pearl`}
       >
         {client?.opening_title}
       </h2>
@@ -74,7 +74,7 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
           />
         </div>
         <Image
-          alt="Foto Mempelai Pria"
+          alt={`Foto Partisipan ${index + 1}`}
           src={data.image as string}
           fill
           className={`object-cover border-[4px] border-samaya-dark ${
@@ -83,7 +83,7 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
               : "rounded-tl-[100px] lg:rounded-tl-[200px]"
           }`}
         />
-        <div data-aos="fade-up" className="absolute bottom-0 left-0 p-8 z-20">
+        <div className="absolute bottom-0 left-0 p-8 z-20">
           <p
             className={`${raleway.className} text-[10px] md:text-xs tracking-[2px] uppercase leading-5 text-white/80`}
           >
@@ -95,12 +95,16 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
         </div>
       </div>
       <p
+        data-aos="fade-up"
         className={`${raleway.className} ml-1 tracking-[1px] text-[10px] md:text-xs leading-4 text-white/50 mt-8`}
       >
         {data.gender === "male" ? "Putra" : "Putri"} {data.child} dari pasangan
         Bapak {data.parents_male} dan Ibu {data.parents_female}
       </p>
-      <div className="flex mt-6 ml-1 gap-x-4 text-samaya-primary text-base md:text-lg text-center">
+      <div
+        data-aos="fade-up"
+        className="flex mt-6 ml-1 gap-x-4 text-samaya-primary text-base md:text-lg text-center"
+      >
         {data.facebook && (
           <Link
             aria-label="sosmed-facebook-link"

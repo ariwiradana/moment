@@ -18,7 +18,9 @@ const usePhotos = () => {
 
   const images: string[] =
     client?.gallery && (client?.gallery as string[]).length > 0
-      ? (client.gallery as string[])
+      ? (client.gallery as string[]).filter(
+          (g) => g !== client?.cover && g !== client?.seo
+        )
       : [];
 
   const lightboxImage = useMemo(
