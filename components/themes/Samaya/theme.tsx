@@ -11,7 +11,7 @@ import PreviewNav from "../preview.nav";
 import useCoverStore from "@/store/useCoverStore";
 import useMusic from "@/hooks/themes/useMusic";
 import Photos from "./layouts/photos";
-// import Gift from "./layouts/gift";
+import Gift from "./layouts/gift";
 interface Props {
   untuk: string;
 }
@@ -32,9 +32,9 @@ const Samaya: FC<Props> = (props) => {
             <ParticipantsComponent />
             <EventsComponent />
             <Photos />
-            {/* <Gift /> */}
+            <Gift />
             {/* <RSVPWishes /> */}
-            <ThankyouComponent /> 
+            <ThankyouComponent />
           </div>
         )}
       </>
