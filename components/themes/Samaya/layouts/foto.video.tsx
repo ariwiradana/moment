@@ -1,5 +1,5 @@
 import React from "react";
-import { afacad, marcellus } from "@/lib/fonts";
+import { afacad, raleway } from "@/lib/fonts";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import {
   ImageList,
@@ -38,8 +38,8 @@ const GalleryComponent = () => {
 
   const getGap = () => {
     if (isDesktop) return 32;
-    if (isTablet) return 32;
-    if (isMobile) return 16;
+    if (isTablet) return 28;
+    if (isMobile) return 12;
   };
 
   return (
@@ -109,13 +109,13 @@ const GalleryComponent = () => {
         </h1>
         <p
           data-aos="fade-up"
-          className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-2 mb-8 max-w-screen-md mx-auto`}
+          className={`${raleway.className} text-[10px] md:text-xs tracking-[2px] uppercase text-center leading-5 text-white/80 mt-2 mb-8 max-w-screen-md mx-auto`}
         >
           {participantState.groom?.nickname} &{" "}
           {participantState.bride?.nickname}
         </p>
         <div
-          className="mt-10 flex flex-col gap-4 md:gap-8"
+          className="mt-10 flex flex-col gap-2 md:gap-4"
           data-aos="zoom-in-up"
         >
           <ImageList
@@ -131,7 +131,7 @@ const GalleryComponent = () => {
                     photoActions.setIsOpen(true);
                     photoActions.setImageIndex(index);
                   }}
-                  className="rounded-3xl hover:scale-[0.99] transition-transform ease-in-out duration-500"
+                  className=" hover:scale-[0.99] transition-transform ease-in-out duration-500"
                   src={img}
                   alt={`gallery-img-${index + 1}`}
                   width={360}
@@ -144,7 +144,7 @@ const GalleryComponent = () => {
             ))}
           </ImageList>
           {videos.length > 0 && (
-            <div className="grid gap-4 -mt-4 md:mt-0" data-aos="zoom-in-up">
+            <div className="grid gap-2 md:gap-4 -mt-4 md:mt-0" data-aos="zoom-in-up">
               {videos.map((v) => {
                 const youtubeId = getYouTubeVideoId(v);
                 const youtubeVideo = isYoutubeVideo(v);
@@ -152,7 +152,7 @@ const GalleryComponent = () => {
                   return (
                     <div
                       key={youtubeId}
-                      className="relative w-full aspect-video rounded-3xl overflow-hidden"
+                      className="relative w-full aspect-video  overflow-hidden"
                     >
                       <iframe
                         className="absolute top-0 left-0 w-full h-full"

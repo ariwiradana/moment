@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { marcellus } from "@/lib/fonts";
+import { marcellus, raleway } from "@/lib/fonts";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
 import {
@@ -38,7 +38,7 @@ const ParticipantsComponent = () => {
           <p
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-8 mb-12 max-w-screen-md mx-auto`}
+            className={`${raleway.className} tracking-[1px] text-[10px] md:text-xs text-center leading-5 text-white mt-8 mb-12 md:mb-16 max-w-screen-md mx-auto`}
           >
             {client?.opening_description}
           </p>
@@ -148,7 +148,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       >
         <div className="h-[0.5px] w-16 bg-samaya-primary"></div>
         <p
-          className={`text-samaya-primary text-xs md:text-sm capitalize ${marcellus.className}`}
+          className={`text-samaya-primary uppercase tracking-[1px] text-[10px] md:text-xs ${raleway.className}`}
         >
           {props.data.role === "groom"
             ? "Mempelai Pria"
@@ -164,14 +164,14 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
       >
         {props.data.name}
       </h1>
-      <div className={`${marcellus.className} text-center`} data-aos="fade-up">
+      <div className={`${raleway.className} text-center`} data-aos="fade-up">
         {props.data.role !== "participant" && (
           <>
-            <p className="text-gray-300 text-sm md:text-base mt-4 capitalize font-italic">
+            <p className="text-gray-300 text-xs md:text-sm mt-4 capitalize font-italic">
               {props.data.gender === "female" ? "Putri" : "Putra"}{" "}
               {props.data.child} dari pasangan
             </p>
-            <h2 className="text-sm md:text-base text-white mt-2">
+            <h2 className="text-xs md:text-sm text-white mt-2">
               Bapak {props.data.parents_male} & Ibu {props.data.parents_female}
             </h2>
           </>

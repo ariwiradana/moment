@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { marcellus } from "@/lib/fonts";
+import { marcellus, raleway } from "@/lib/fonts";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import Image from "next/image";
@@ -29,70 +29,53 @@ const Cover: FC<Props> = (props) => {
       >
         <div
           data-aos="fade-in"
-          className="flex h-dvh flex-col items-center justify-between md:justify-center gap-8 md:gap-[60px] 2xl:gap-[100px] relative z-30 py-[60px] md:py-[100px] px-8 bg-gradient-to-b from-samaya-dark/95 via-samaya-dark/95 to-samaya-dark/95 to-[90%]"
+          className="flex h-dvh flex-col items-center justify-between md:justify-center gap-8 relative bg-gradient-to-b from-samaya-dark/95 via-samaya-dark/95 to-samaya-dark/95 to-[90%]"
         >
-          <div>
-            <p
-              data-aos="fade-up"
-              data-aos-delay="400"
-              className={`${marcellus.className} text-white md:text-base text-sm uppercase text-center`}
-            >
-              Undangan {getEventNames(client?.events || [])}
-            </p>
-            <h1
-              data-aos="fade-up"
-              data-aos-delay="600"
-              className={`font-tan-pearl text-white text-center text-[28px] md:text-4xl mt-3`}
-            >
-              {participantsState.groom?.nickname} &{" "}
-              {participantsState.bride?.nickname}
-            </h1>
-          </div>
           {client?.cover && (
             <div
-              data-aos="zoom-out-up"
-              data-aos-delay="800"
-              className="w-[160px] md:w-[180px] lg:w-[200px] 2xl:w-[240px] relative aspect-square rounded-full"
+              data-aos="zoom-out"
+              className="h-dvh w-full absolute inset-0 z-10"
             >
               <Image
-                sizes="360px"
+                sizes="100vw"
                 priority
                 fill
                 src={client?.cover as string}
                 alt="cover"
-                className="object-cover rounded-full overflow-hidden bg-samaya-dark/40"
-              />
-              <Image
-                sizes="360px"
-                fill
-                src="/images/samaya/frame-circle.svg"
-                alt="cover-frame"
-                className="object-contain w-full h-full transform scale-[1.4]"
+                className="object-cover"
               />
             </div>
           )}
-          <div>
+          <div className="bg-gradient-to-b from-transparent to-samaya-dark to-[90%] relative z-10 h-dvh w-full py-[60px] md:py-[100px] px-8 flex flex-col justify-end">
+            <div className="mb-14">
+              <p
+                data-aos="fade-up"
+                data-aos-delay="400"
+                className={`${raleway.className} text-white md:text-sm tracking-[1px] text-xs uppercase text-center mb-2`}
+              >
+                Undangan {getEventNames(client?.events || [])}
+              </p>
+              <h1
+                data-aos="fade-up"
+                data-aos-delay="600"
+                className={`font-tan-pearl text-white text-center text-[28px] md:text-4xl mt-2`}
+              >
+                {participantsState.groom?.nickname} &{" "}
+                {participantsState.bride?.nickname}
+              </h1>
+            </div>
             <div data-aos="fade-up" data-aos-delay="1000">
               <p
-                className={`${marcellus.className} text-white text-sm md:text-base text-center`}
+                className={`${raleway.className} text-white text-[10px] md:text-xs tracking-[1px] text-center`}
               >
                 Yth. Bapak/Ibu/Saudara/i
               </p>
               <p
-                className={`${marcellus.className} text-samaya-primary text-2xl md:text-3xl mt-1 md:mt-3 text-center`}
+                className={`${marcellus.className} text-samaya-primary text-xl md:text-2xl text-center`}
               >
                 {props.untuk}
               </p>
             </div>
-            <p
-              data-aos="fade-up"
-              data-aos-delay="1200"
-              className={`${marcellus.className} text-white text-sm md:text-base mt-4 md:mt-6 max-w-sm mx-auto text-center`}
-            >
-              Tanpa mengurangi rasa hormat, kami mengundang anda untuk
-              menghadiri acara{" "}
-              <span>{getEventNames(client?.events || [])}</span> kami
-            </p>
             <div
               className="flex justify-center mt-6 md:mt-8"
               data-aos="fade-up"

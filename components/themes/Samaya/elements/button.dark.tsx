@@ -10,7 +10,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const Button: FC<Props> = ({
+const ButtonDark: FC<Props> = ({
   title,
   icon,
   isLoading,
@@ -23,9 +23,9 @@ const Button: FC<Props> = ({
       {...props}
       className={`${raleway.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} text-samaya-primary rounded-full min-w-24 bg-samaya-primary/20 backdrop-blur px-5 py-3 text-base flex hover:bg-samaya-primary transition-colors ease-in-out duration-500 hover:text-samaya-dark ${
+      } ${className} text-white rounded-full min-w-24 bg-samaya-dark backdrop-blur px-5 py-3 text-base flex hover:bg-samaya-primary transition-colors ease-in-out duration-500 hover:text-samaya-dark ${
         fullWidth ? "w-full justify-center" : "justify-between"
-      } items-center gap-x-2 lg:gap-x-4 relative overflow-hidden shadow-sm`}
+      } items-center gap-x-2 lg:gap-x-4 relative overflow-hidden`}
     >
       <span className="text-[10px] lg:text-xs tracking-[1px] whitespace-nowrap font-medium">
         {title}
@@ -39,4 +39,4 @@ const Button: FC<Props> = ({
   );
 };
 
-export default Button;
+export default ButtonDark;
