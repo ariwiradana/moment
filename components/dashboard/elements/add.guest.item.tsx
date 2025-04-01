@@ -30,9 +30,8 @@ const AddGuestItem = ({
     if (navigator.share && client) {
       const text = `${client?.opening_title},\n\n${
         client?.opening_description
-      }\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${value.replaceAll(
-        " ",
-        "+"
+      }\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${encodeURIComponent(
+        value
       )}\n\n${client?.closing_description}\n\n${client?.closing_title}`;
       try {
         await navigator.share({
