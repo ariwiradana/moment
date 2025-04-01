@@ -24,7 +24,7 @@ const Photos = () => {
     if (isLargeScreen) return 5;
     if (isDesktop) return 4;
     if (isTablet) return 2;
-    if (isMobile) return 1;
+    if (isMobile) return 2;
   };
 
   const getGap = () => {
