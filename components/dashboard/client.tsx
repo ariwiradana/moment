@@ -36,19 +36,19 @@ const ClientComponent = () => {
             speed={1000}
             breakpoints={{
               0: {
-                slidesPerView: 2,
+                slidesPerView: 1, // Mobile (small screens)
               },
-              640: {
-                slidesPerView: 2,
+              480: {
+                slidesPerView: 2, // Small mobile screens (e.g., older phones)
               },
               768: {
-                slidesPerView: 4,
+                slidesPerView: 3, // Tablets
               },
-              1024: {
-                slidesPerView: 4,
+              1440: {
+                slidesPerView: 4, // Large screens (e.g., desktops)
               },
-              1280: {
-                slidesPerView: 8,
+              1920: {
+                slidesPerView: 6, // Extra-large screens (e.g., large TVs)
               },
             }}
             spaceBetween={0}
