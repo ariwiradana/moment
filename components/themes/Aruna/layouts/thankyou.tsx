@@ -10,13 +10,59 @@ import {
 } from "react-icons/ai";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade } from "swiper/modules";
+import ImageShimmer from "@/components/image.shimmer";
 
 const ThankyouComponent = () => {
   const { client } = useClientStore();
   const { state: participantState } = useParticipants();
   return (
-    <section className="relative flex flex-col justify-center bg-gradient-to-b from-aruna-dark/10 via-aruna-dark/50 to-aruna-dark/90">
-      <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center">
+    <section className="relative flex flex-col justify-center">
+      <div className="absolute inset-0 bg-aruna-dark/70 z-10"></div>
+      <div className="absolute inset-0">
+        <Swiper
+          loop
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          effect="fade"
+          speed={2000}
+          className="w-full transition-transform min-h-[600px] h-lvh"
+          spaceBetween={0}
+          slidesPerView={1}
+          modules={[Autoplay, EffectFade]}
+        >
+          <>
+            {Array.isArray(client?.gallery) && client?.gallery.length > 0
+              ? client.gallery
+                  .filter(
+                    (image) => image !== client?.cover && image !== client?.seo
+                  )
+                  .map((image, index) => (
+                    <SwiperSlide
+                      className="relative w-full h-full"
+                      key={`thankyou-img-${index}`}
+                    >
+                      <div className="absolute inset-0 z-0">
+                        <ImageShimmer
+                          fill
+                          quality={100}
+                          alt={`thankyou-img-${index}`}
+                          priority
+                          sizes="100vw"
+                          className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform grayscale"
+                          src={image}
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))
+              : null}
+          </>
+        </Swiper>
+      </div>
+      <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center relative z-30">
         <h1
           data-aos="fade-up"
           className={`font-high-summit text-4xl md:text-5xl text-white mb-8 text-center`}

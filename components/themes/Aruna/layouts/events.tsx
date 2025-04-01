@@ -6,6 +6,8 @@ import Link from "next/link";
 import ImageShimmer from "@/components/image.shimmer";
 import ButtonDark from "../elements/button.dark";
 import useEvents from "@/hooks/themes/useEvents";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade } from "swiper/modules";
 
 const EventsComponent = () => {
   const { state: eventState, actions: eventActions } = useEvents();
@@ -13,8 +15,44 @@ const EventsComponent = () => {
   if (eventState.events.length > 0) {
     return (
       <section className="relative overflow-hidden z-0">
-        <div className="absolute bg-gradient-to-b from-aruna-dark/40 via-aruna-dark/70 to-aruna-dark to-[90%] inset-0"></div>
-        <div className="flex flex-col z-10 items-center justify-center px-8 py-[60px] md:p-[100px] max-w-screen-xl mx-auto">
+        <div className="absolute bg-gradient-to-b from-aruna-dark/40 via-aruna-dark/70 to-aruna-dark to-[90%] inset-0 z-10"></div>
+        <div className="absolute inset-0 h-full">
+          <Swiper
+            loop
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            effect="fade"
+            speed={2000}
+            className="w-full h-full"
+            spaceBetween={0}
+            slidesPerView={1}
+            modules={[Autoplay, EffectFade]}
+          >
+            <>
+              {eventState.images.reverse().map((image, index) => (
+                <SwiperSlide
+                  className="relative w-full h-full"
+                  key={`event-img-${index}`}
+                >
+                  <div className="absolute inset-0 z-0">
+                    <ImageShimmer
+                      fill
+                      quality={100}
+                      alt={`event-img-${index}`}
+                      priority
+                      sizes="100vw"
+                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform grayscale"
+                      src={image}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </>
+          </Swiper>
+        </div>
+        <div className="flex flex-col z-10 items-center justify-center px-8 py-[60px] md:p-[100px]">
           <div
             className={`flex flex-wrap justify-center gap-[60px] relative z-20`}
           >

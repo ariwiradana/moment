@@ -25,7 +25,7 @@ const HeroComponent = () => {
 
   return (
     <section className="relative min-h-[600px] h-lvh overflow-hidden">
-      <div className="fixed top-0 right-0 w-full xl:w-[40vw] 2xl:w-[30vw] overflow-hidden">
+      <div className="top-0 right-0 w-full xl:w-[40vw] 2xl:w-[30vw] overflow-hidden">
         {video && video?.length > 0 ? (
           <div
             className="min-h-[600px] h-lvh w-full"
@@ -95,6 +95,12 @@ const HeroComponent = () => {
         {isOpen && (
           <div className="min-h-[600px] h-svh flex flex-col max-w-screen-sm lg:max-w-screen-lg mx-auto py-[60px] md:py-[100px] px-8 md:px-12 w-full">
             <div>
+              <p
+                data-aos="fade-up"
+                className={`${roboto.className} text-white text-[10px] md:text-xs uppercase tracking-[2px] mb-4`}
+              >
+                Undangan {getEventNames(client?.events || [])}
+              </p>
               <h1
                 data-aos="fade-up"
                 data-aos-delay="200"
