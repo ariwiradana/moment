@@ -1,6 +1,5 @@
 import { Event } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import useParticipants from "./useParticipants";
 
@@ -20,12 +19,7 @@ const useEvents = () => {
   const [fade, setFade] = useState<boolean>(true);
   const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
     events.length > 0
-      ? events.map(() => ({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        }))
+      ? events.map(() => ({ days: 0, hours: 0, minutes: 0, seconds: 0 }))
       : []
   );
 
@@ -34,19 +28,16 @@ const useEvents = () => {
 
     const updateCountdowns = () => {
       const newTimeRemaining = events.map((event) => {
-        const targetDateTime = moment(
-          `${event.date} ${event.start_time}`,
-          "YYYY-MM-DD HH:mm"
-        );
-        const now = moment();
-        const diffDuration = moment.duration(targetDateTime.diff(now));
+        const targetDateTime = new Date(`${event.date}T${event.start_time}`);
+        const now = new Date();
+        const diffMs = targetDateTime.getTime() - now.getTime();
 
-        return {
-          days: Math.max(0, Math.floor(diffDuration.asDays())),
-          hours: Math.max(0, diffDuration.hours()),
-          minutes: Math.max(0, diffDuration.minutes()),
-          seconds: Math.max(0, diffDuration.seconds()),
-        };
+        const days = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+        const hours = Math.max(0, Math.floor((diffMs / (1000 * 60 * 60)) % 24));
+        const minutes = Math.max(0, Math.floor((diffMs / (1000 * 60)) % 60));
+        const seconds = Math.max(0, Math.floor((diffMs / 1000) % 60));
+
+        return { days, hours, minutes, seconds };
       });
 
       setTimeRemainings(newTimeRemaining);
@@ -74,9 +65,8 @@ const useEvents = () => {
   const images: string[] = events?.map((event) => event.image as string) || [];
 
   const formatDateTime = (date: string, time: string) => {
-    return moment(`${date} ${time}`, "YYYY-MM-DD HH:mm")
-      .utc()
-      .format("YYYYMMDDTHHmmss[Z]");
+    const d = new Date(`${date}T${time}Z`);
+    return d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   };
 
   const handleAddToCalendar = (event: Event) => {
@@ -88,9 +78,14 @@ const useEvents = () => {
     const participants = `${state.groom?.nickname} & ${state.bride?.nickname}`;
     const description = `${client?.opening_title},\n\n${
       client?.opening_description
-    }\n\nAcara: ${event.name}\nTanggal: ${moment(event.date).format(
-      "dddd, DD MMMM YYYY"
-    )}\nWaktu: ${event.start_time} - ${event.end_time}\nTempat: ${
+    }\n\nAcara: ${event.name}\nTanggal: ${new Date(
+      event.date
+    ).toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })}\nWaktu: ${event.start_time} - ${event.end_time}\nTempat: ${
       event.address
     }\n\n${client?.closing_description}\n\nSalam hangat,\n${participants}`;
 

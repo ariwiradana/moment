@@ -5,7 +5,7 @@ import HeroComponent from "./layouts/hero";
 // import ThankyouComponent from "./layouts/thankyou";
 // import RSVPWishes from "./layouts/rsvp.wishes";
 import MusicComponent from "./layouts/music";
-// import EventsComponent from "./layouts/events";
+import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
 import PreviewNav from "../preview.nav";
 import useCoverStore from "@/store/useCoverStore";
@@ -30,11 +30,11 @@ const Samaya: FC<Props> = (props) => {
         {isOpen && (
           <div className="relative">
             <ParticipantsComponent />
-            {/* <EventsComponent />
-            <Photos />
-            <Gift />
-            <RSVPWishes />
-            <ThankyouComponent /> */}
+            <EventsComponent />
+            {/* <Photos /> */}
+            {/* <Gift /> */}
+            {/* <RSVPWishes /> */}
+            {/* <ThankyouComponent />  */}
           </div>
         )}
       </>
