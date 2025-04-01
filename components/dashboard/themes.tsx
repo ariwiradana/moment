@@ -3,18 +3,16 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { redhat } from "@/lib/fonts";
 import Link from "next/link";
-import { Client, ThemeCategory } from "@/lib/types";
-import Image from "next/image";
-import { BsCart, BsEye } from "react-icons/bs";
+import { Theme, ThemeCategory } from "@/lib/types";
+import { BsCart } from "react-icons/bs";
 import { sosmedURLs } from "@/constants/sosmed";
 import { formatToRupiah } from "@/utils/formatToRupiah";
-import ButtonLight from "./elements/button.light";
-import ButtonOutlinedLight from "./elements/button.outlined.white";
 import ThemeShimmer from "./elements/theme.shimmer";
+import ButtonPrimary from "./elements/button.primary";
 
 const ThemeComponent: FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
-  const [clients, setClients] = useState<Client[] | null>(null);
+  const [themes, setThemes] = useState<Theme[]>([]);
   const [themeCategories, setThemeCategories] = useState<ThemeCategory[]>([]);
 
   useSWR<{ data: ThemeCategory[] }>(`/api/_pb/_tc`, fetcher, {
@@ -28,17 +26,19 @@ const ThemeComponent: FC = () => {
     },
   });
 
-  const { isLoading } = useSWR<{ data: Client[] }>(
-    activeCategoryId ? `/api/_pb/_c?is_preview=true` : null,
+  const { isLoading } = useSWR<{ data: Theme[] }>(
+    activeCategoryId
+      ? `/api/_pb/_th?is_preview=true&theme_category_id=${activeCategoryId}&order=DESC`
+      : null,
     fetcher,
     {
       onSuccess: (data) => {
         if (data.data) {
-          setClients(data.data);
+          setThemes(data.data);
         }
       },
       onError: () => {
-        setClients([]);
+        setThemes([]);
       },
     }
   );
@@ -98,7 +98,7 @@ const ThemeComponent: FC = () => {
 
           <div
             data-aos="fade-up"
-            className="grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-4 mt-8 lg:mt-11"
+            className="grid grid-cols-2 md:grid-cols-5 gap-x-3 gap-y-4 mt-8 lg:mt-11"
           >
             {isLoading ? (
               <>
@@ -108,72 +108,57 @@ const ThemeComponent: FC = () => {
                 <ThemeShimmer />
               </>
             ) : (
-              clients &&
-              clients
-                .filter(
-                  (c) =>
-                    c.theme_category_id === activeCategoryId && c.theme?.active
-                )
-                .map((c) => {
-                  const message = `Halo, saya tertarik untuk memilih tema undangan ${c.theme_category?.name} ${c.theme_category?.name}`;
-                  const whatsappLink = `${
-                    sosmedURLs.whatsapp
-                  }?text=${encodeURIComponent(message)}`;
+              themes.map((t) => {
+                const message = `Halo, saya tertarik untuk memilih tema undangan ${t?.name}`;
+                const whatsappLink = `${
+                  sosmedURLs.whatsapp
+                }?text=${encodeURIComponent(message)}`;
 
-                  return (
-                    <div key={`Tema Undangan ${c.slug}`}>
-                      <div className="aspect-square relative overflow-hidden group">
-                        <Link
-                          target="_blank"
-                          aria-label={`Link Preview Undangan ${c.name}`}
-                          href={`/${c.slug}`}
-                          className="absolute inset-0 z-10 transition-all ease-in-out duration-500 group-hover:bg-dashboard-dark/80 flex justify-center items-center"
-                        >
-                          <ButtonLight
-                            className="opacity-0 group-hover:opacity-100"
-                            size="small"
-                            title="Preview"
-                            icon={<BsEye />}
-                          />
-                        </Link>
-                        <Image
-                          sizes="(max-width: 640px) 360px, (max-width: 768px) 480px, (max-width: 1024px) 720px, 720px"
-                          priority
-                          fill
-                          src={c.theme?.thumbnail || ""}
-                          alt={`Tema Undangan ${c.name}`}
-                          className="object-contain shine-dark group-hover:grayscale transition-all ease-in-out duration-500"
-                        />
-                      </div>
-                      <div className="flex flex-col mt-2 md:mt-4">
-                        <h5
-                          className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
-                        >
-                          {c.name}
-                        </h5>
-                        <p
-                          className={`${redhat.className} text-xs text-white/70`}
-                        >
-                          Mulai dari
-                        </p>
-                        {c.package && (
-                          <h6
-                            className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
-                          >
-                            {formatToRupiah(c.package.price)}
-                          </h6>
-                        )}
-                        <Link href={whatsappLink} target="_blank">
-                          <ButtonOutlinedLight
-                            size="small"
-                            title="Pesan Sekarang"
-                            icon={<BsCart />}
-                          />
-                        </Link>
-                      </div>
+                return (
+                  <div
+                    className="bg-white p-6"
+                    key={`Tema Undangan ${t?.name}`}
+                  >
+                    <div className="relative">
+                      <video
+                        poster={`/images/${t.slug}/thumbnail.png`}
+                        className="min-w-full min-h-full"
+                        src={`/video/themes/${t?.slug}.webm`}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      ></video>
                     </div>
-                  );
-                })
+                    <div className="flex flex-col items-center mt-2 md:mt-4">
+                      <h5
+                        className={`${redhat.className} text-lg text-dashboard-dark font-semibold mb-1 md:mb-2`}
+                      >
+                        {t.name}
+                      </h5>
+                      <p
+                        className={`${redhat.className} text-xs text-dashboard-dark/70`}
+                      >
+                        Mulai dari
+                      </p>
+                      {t.packages && (
+                        <h6
+                          className={`${redhat.className} text-lg text-dashboard-dark font-medium mb-2 md:mb-4 leading-6`}
+                        >
+                          {formatToRupiah(t.packages[0].price)}
+                        </h6>
+                      )}
+                      <Link href={whatsappLink} target="_blank">
+                        <ButtonPrimary
+                          size="small"
+                          title="Pesan Sekarang"
+                          icon={<BsCart />}
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })
             )}
           </div>
         </div>

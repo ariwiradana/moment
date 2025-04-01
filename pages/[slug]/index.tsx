@@ -80,8 +80,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   );
 
-  console.log(untuk);
-
   const client: Client | null = response?.data ?? null;
 
   const themeName = client?.theme?.name || "";

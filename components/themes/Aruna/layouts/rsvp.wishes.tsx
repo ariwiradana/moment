@@ -70,7 +70,7 @@ const WishItem = memo(
 WishItem.displayName = "WishItem";
 
 const RSVPWishesComponent: FC = () => {
-  const {client} = useClientStore()
+  const { client } = useClientStore();
   const { state, actions } = useRSVPWishes(
     <div className="p-1 text-sm bg-aruna-dark text-white">
       <BiCheck />
@@ -100,15 +100,9 @@ const RSVPWishesComponent: FC = () => {
   return (
     <section className="relative bg-white w-full overflow-hidden">
       <div className="relative w-full flex flex-col justify-center items-center z-20 pt-[60px] md:pt-[100px]">
-        <div className="px-8">
-          <h2
-            className="font-high-summit text-4xl md:text-5xl text-aruna-dark text-center whitespace-nowrap"
-            data-aos="fade-up"
-          >
-            Mohon Doa Restu
-          </h2>
+        <div className="px-6">
           <p
-            className={`${roboto.className} text-xs md:text-sm text-center text-aruna-dark/80 max-w-screen-sm my-8`}
+            className={`${roboto.className} text-[10px] md:text-xs tracking-[1px] text-center text-aruna-dark/80 max-w-screen-sm mb-8`}
             data-aos="fade-up"
           >
             Konfirmasi kehadiran Anda melalui RSVP, dan jangan lupa sampaikan
@@ -125,7 +119,7 @@ const RSVPWishesComponent: FC = () => {
         {/* Form */}
         <form
           onSubmit={actions.handleSubmit}
-          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto p-8"
+          className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto p-6"
           data-aos="fade-up"
         >
           <Input
@@ -183,7 +177,7 @@ const RSVPWishesComponent: FC = () => {
         {/* Wishes List */}
         {state.wishes?.length > 0 && (
           <div className="w-full bg-aruna-dark py-8" data-aos="fade-up">
-            <div className="max-w-screen-sm mx-auto w-full px-8">
+            <div className="max-w-screen-sm mx-auto w-full px-6">
               {state.wishes.map((wish, index) => (
                 <WishItem
                   key={`ucapan-${index + 1}`}
@@ -195,7 +189,7 @@ const RSVPWishesComponent: FC = () => {
 
             {/* Pagination */}
             {state.totalRows > state.limit && (
-              <div className="max-w-screen-sm w-full py-6 px-8">
+              <div className="max-w-screen-sm w-full py-6 px-6">
                 <div className="-ml-2">
                   <Pagination
                     shape="rounded"

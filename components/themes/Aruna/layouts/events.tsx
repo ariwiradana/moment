@@ -6,63 +6,24 @@ import Link from "next/link";
 import ImageShimmer from "@/components/image.shimmer";
 import ButtonDark from "../elements/button.dark";
 import useEvents from "@/hooks/themes/useEvents";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade } from "swiper/modules";
 
 const EventsComponent = () => {
   const { state: eventState, actions: eventActions } = useEvents();
 
   if (eventState.events.length > 0) {
     return (
-      <section className="relative overflow-hidden z-0">
-        <div className="absolute bg-gradient-to-b from-aruna-dark/40 via-aruna-dark/70 to-aruna-dark to-[90%] inset-0 z-10"></div>
-        <div className="absolute inset-0 h-full">
-          <Swiper
-            loop
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            effect="fade"
-            speed={2000}
-            className="w-full h-full"
-            spaceBetween={0}
-            slidesPerView={1}
-            modules={[Autoplay, EffectFade]}
-          >
-            <>
-              {eventState.images.reverse().map((image, index) => (
-                <SwiperSlide
-                  className="relative w-full h-full"
-                  key={`event-img-${index}`}
-                >
-                  <div className="absolute inset-0 z-0">
-                    <ImageShimmer
-                      fill
-                      quality={100}
-                      alt={`event-img-${index}`}
-                      priority
-                      sizes="100vw"
-                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform grayscale"
-                      src={image}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </>
-          </Swiper>
-        </div>
-        <div className="flex flex-col z-10 items-center justify-center px-8 py-[60px] md:p-[100px]">
+      <section className="relative overflow-hidden z-0 bg-aruna-dark">
+        <div className="flex flex-col z-10 items-center justify-center">
           <div
-            className={`flex flex-wrap justify-center gap-[60px] relative z-20`}
+            className={`flex flex-wrap justify-center relative z-20 gap-6`}
           >
             {eventState.events.map((event, index) => (
               <div
                 data-aos="zoom-out-up"
-                className="rounded-t-[100px] overflow-hidden"
+                className="px-6"
                 key={`event-${event.id}`}
               >
-                <div className="w-full h-[228px] md:h-[280px] relative">
+                <div className="w-full aspect-square relative">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/0 from-[50%] to-white z-10"></div>
                   {event.image && (
                     <ImageShimmer
@@ -74,7 +35,7 @@ const EventsComponent = () => {
                     />
                   )}
                 </div>
-                <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 rounded-b-3xl text-center">
+                <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 text-center">
                   <h2
                     data-aos="fade-up"
                     className={`font-high-summit text-4xl  text-aruna-dark`}

@@ -8,7 +8,7 @@ import { UseMusic } from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
-import { Participant } from "@/lib/types";
+import useEvents from "@/hooks/themes/useEvents";
 
 interface Props {
   actions: UseMusic["actions"];
@@ -19,9 +19,13 @@ const Cover: FC<Props> = (props) => {
   const { isOpen, toggleIsOpen } = useCoverStore();
   const { client } = useClientStore();
   const { state: participant } = useParticipants();
+  const {
+    state: { events },
+  } = useEvents();
   return (
     <>
       <div
+        data-aos="zoom-out"
         className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
           isOpen ? "-bottom-full invisible opacity-0" : "bottom-0 visible"
         }`}
@@ -37,35 +41,69 @@ const Cover: FC<Props> = (props) => {
             alt="cover"
           />
         )}
-        <div
+        <div className="relative z-40 bg-gradient-to-b from-aruna-dark/50 px-6 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark h-screen flex flex-col py-[60px] md:py-[100px] justify-between items-center">
+          <div className="text-center">
+            <p
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[4px] ${roboto.className}`}
+            >
+              Undangan {getEventNames(events)}
+            </p>
+            <h1
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className={`font-high-summit text-white text-4xl md:text-5xl 2xl:text-6xl leading-10 mt-4`}
+            >
+              {participant.groom?.nickname} & {participant.bride?.nickname}
+            </h1>
+          </div>
+          <div className="text-center">
+            <p
+              data-aos="fade-down"
+              data-aos-delay="1000"
+              className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[4px] ${roboto.className}`}
+            >
+              YTH. Bapak / Ibu / Saudara / i
+            </p>
+            <p
+              data-aos="fade-down"
+              data-aos-delay="800"
+              className={`${roboto.className} text-white text-2xl md:text-3xl my-2`}
+            >
+              {props.untuk}
+            </p>
+            <div
+              className="flex justify-center mt-12"
+              data-aos="fade-down"
+              data-aos-delay="600"
+            >
+              <Button
+                onClick={() => {
+                  toggleIsOpen();
+                  props.actions.handlePlayPause();
+                }}
+                icon={<BiEnvelopeOpen />}
+                title="Buka Undangan"
+              />
+            </div>
+          </div>
+        </div>
+        {/* <div
           data-aos="fade-in"
           className="relative z-40 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark"
         >
-          <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-8 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
+          <div className="flex h-dvh flex-col justify-between md:justify-center py-[60px] md:py-[100px] px-6 max-w-screen-sm lg:max-w-screen-lg mx-auto z-30">
             <div>
-              <p
-                data-aos="fade-up"
-                data-aos-delay="200"
-                className={`${roboto.className} text-white text-[10px] md:text-xs uppercase tracking-[2px] mb-4`}
-              >
-                Undangan {getEventNames(client?.events || [])}
-              </p>
               <h1
                 data-aos="fade-up"
                 data-aos-delay="400"
-                className={`font-high-summit text-white ${
-                  (participant.groom as Participant)?.nickname.split(" ")
-                    .length > 1 ||
-                  (participant.bride as Participant)?.nickname.split(" ")
-                    .length > 1
-                    ? "text-4xl"
-                    : "text-5xl"
-                } md:text-5xl leading-10 2xl:text-6xl`}
+                className={`font-high-summit text-white text-4xl md:text-5xl 2xl:text-6xl leading-10`}
               >
                 {client?.theme_category?.name === "Pernikahan" ? (
                   <>
-                    {participant.groom?.nickname}
-                    <br />& {participant.bride?.nickname}
+                    {participant.groom?.nickname} &{" "}
+                    {participant.bride?.nickname}
                   </>
                 ) : (
                   <>
@@ -84,9 +122,9 @@ const Cover: FC<Props> = (props) => {
             <div>
               <div data-aos="fade-down" data-aos-delay="800">
                 <p
-                  className={`${roboto.className} text-white text-[10px] md:text-xs uppercase tracking-[2px] mb-1`}
+                  className={`${roboto.className} text-white text-[10px] md:text-xs tracking-[2px] mb-4`}
                 >
-                  Yth. Bapak/Ibu/Saudara/i
+                  YTH. Bapak / Ibu / Saudara / i
                 </p>
                 <p
                   className={`${roboto.className} text-white text-2xl md:text-3xl`}
@@ -110,7 +148,7 @@ const Cover: FC<Props> = (props) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

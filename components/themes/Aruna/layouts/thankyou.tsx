@@ -19,11 +19,8 @@ const ThankyouComponent = () => {
   const { state: participantState } = useParticipants();
   return (
     <section className="relative flex flex-col justify-center">
-      <div
-        className="absolute inset-0 bg-aruna-dark/80 z-10"
-        data-aos="fade-up"
-      ></div>
-      <div className="absolute inset-0" data-aos="fade-up">
+      <div className="absolute inset-0 bg-aruna-dark/80 z-10"></div>
+      <div className="absolute inset-0">
         <Swiper
           loop
           autoplay={{
@@ -65,7 +62,7 @@ const ThankyouComponent = () => {
           </>
         </Swiper>
       </div>
-      <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center relative z-30">
+      <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-6 flex flex-col justify-center relative z-30">
         <h1
           data-aos="fade-up"
           className={`font-high-summit text-3xl md:text-4xl text-white mb-8 text-center`}
@@ -74,7 +71,7 @@ const ThankyouComponent = () => {
         </h1>
         <p
           data-aos="fade-up"
-          className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm my-8`}
+          className={`${roboto.className} text-[10px] md:text-xs tracking-[1px] text-center text-white/80 max-w-screen-sm my-8`}
         >
           {client?.closing_description}
         </p>

@@ -117,16 +117,10 @@ const Component = () => {
         }}
       />
       <section className="relative bg-aruna-dark overflow-hidden">
-        <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-8 px-8">
-          <h2
-            data-aos="fade-up"
-            className="font-high-summit text-4xl md:text-5xl text-white text-center"
-          >
-            Galeri Kami
-          </h2>
+        <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-2">
           <p
             data-aos="fade-up"
-            className={`${roboto.className} text-xs md:text-sm text-center text-white/80 max-w-screen-sm mx-auto my-8`}
+            className={`${roboto.className} text-[10px] md:text-xs tracking-[1px] text-center text-white/80 max-w-screen-sm mx-auto mb-8 px-6`}
           >
             Setiap langkah adalah kebahagiaan, setiap senyum adalah kenangan. Di
             sini, kami mengabadikan momen cinta dan janji yang akan dikenang
@@ -137,11 +131,11 @@ const Component = () => {
               data-aos="fade-up"
               className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
             >
-              {getParticipantNames(participants)}
+              Galeri {getParticipantNames(participants)}
             </p>
           )}
           <div
-            className={`mt-10 grid grid-cols-4 ${
+            className={`mt-10 grid grid-cols-4 px-2 ${
               slideImages?.length > 0 ? "grid-rows-8" : "grid-rows-6"
             } gap-2`}
             data-aos="zoom-out-up"
@@ -163,7 +157,7 @@ const Component = () => {
               </div>
             ))}
           </div>
-          <div className="mt-2" data-aos="zoom-out-up">
+          <div className="mt-2 px-2" data-aos="zoom-out-up">
             <Swiper
               spaceBetween={8}
               modules={[Autoplay]}

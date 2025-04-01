@@ -62,12 +62,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         if (theme_category_id) {
-          const ids = JSON.parse(theme_category_id as string);
           const valueIndex = values.length + 1;
           conditions.push(`theme_category_ids && $${valueIndex}`);
           countConditions.push(`theme_category_ids && $${valueIndex}`);
-          values.push(ids);
-          countValues.push(ids);
+          values.push([theme_category_id as number]);
+          countValues.push([theme_category_id as number]);
         }
 
         if (conditions.length > 0) {
