@@ -7,14 +7,15 @@ import useEvents from "@/hooks/themes/useEvents";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import ImageShimmer from "@/components/image.shimmer";
-import ButtonPrimary from "../elements/button.primary";
+import Image from "next/image";
+import ButtonDark from "../elements/button.dark";
 
 const EventsComponent = () => {
   const { state, actions } = useEvents();
 
   if (state.events.length > 0) {
     return (
-      <section className="relative overflow-hidden z-20">
+      <section className="relative overflow-hidden bg-samaya-dark z-20">
         <div className="inset-0 absolute" data-aos="zoom-out">
           <Swiper
             loop
@@ -29,7 +30,7 @@ const EventsComponent = () => {
             slidesPerView={1}
             modules={[Autoplay, EffectFade]}
           >
-            {state.events.map((event, index) => (
+            {state.events.reverse().map((event, index) => (
               <SwiperSlide
                 className="relative w-full h-full"
                 key={`hero-img-${index}`}
@@ -49,77 +50,91 @@ const EventsComponent = () => {
             ))}
           </Swiper>
         </div>
-        <div className="absolute bg-samaya-dark/60 inset-0"></div>
-        <div className="flex flex-col z-10 items-center justify-center px-8 py-20 md:py-28 lg:py-40">
-          <div
-            className={`grid lg:${
-              state.events.length > 1 ? "grid-cols-2" : "grid-cols-1"
-            } gap-20 lg:gap-40 relative z-20`}
-          >
+        <div className="absolute backdrop-blur-sm inset-0"></div>
+        <div className="flex flex-col z-10 items-center justify-center px-6 md:px-12 lg:px-4 py-20 lg:py-40">
+          <div className={`grid gap-20`}>
             {state.events.map((event, index) => (
               <div
-                key={`event-${event.id}`}
                 data-aos="fade-up"
-                className={`text-center md:min-w-[400px] border-[0.7px] border-white p-8 md:p-16 ${raleway.className}`}
+                data-aos-delay="200"
+                className="grid md:grid-cols-2"
+                key={`event-${event.id}`}
               >
-                <h1
-                  className={`font-tan-pearl text-2xl md:text-3xl text-white uppercase`}
+                <div className="w-full h-full aspect-square md:aspect-auto relative">
+                  <Image
+                    src={event.image as string}
+                    alt={`Foto Acara ${event.name}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div
+                  className={` bg-white text-samaya-dark backdrop-blur-lg p-8 md:p-16 ${raleway.className}`}
                 >
-                  {event.name}
-                </h1>
-                <p className="text-sm md:text-base mt-6 text-white">
-                  {moment(event.date).format("DD / MMMM / YYYY")}
-                </p>
-                <p className="text-sm md:text-base text-white">
-                  {event.start_time} - {event.end_time}
-                </p>
+                  <h1 className={`font-tan-pearl text-2xl md:text-3xl`}>
+                    {event.name}
+                  </h1>
+                  <p className="text-xs md:text-sm mt-6">
+                    {moment(event.date).format("DD / MMMM / YYYY")}
+                  </p>
+                  <p className="text-xs md:text-sm">
+                    {event.start_time} - {event.end_time}
+                  </p>
 
-                <p className="text-sm md:text-base text-white mt-4">
-                  Bertempat di
-                  <br />
-                  {event.address}
-                </p>
-                {state.timeRemainings.length > 0 && (
-                  <div className="grid grid-cols-4 text-white my-6 gap-3 md:gap-4">
-                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center">
-                      <h2 className="text-base md:text-lg">
-                        {state.timeRemainings[index].days}
-                      </h2>
-                      <h4 className="text-[10px] md:text-xs uppercase tracking-[1px]">Hari</h4>
+                  <p className="text-xs md:text-sm mt-4 font-medium max-w-sm">
+                    {event.address} Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Praesentium, unde?
+                  </p>
+                  {state.timeRemainings.length > 0 && (
+                    <div className="grid grid-cols-4 text-samaya-dark my-6 divide-x divide-samaya-dark/10 border-x border-x-samaya-dark/10">
+                      <div className="flex px-2 flex-col justify-center">
+                        <h2 className="text-base md:text-lg font-medium">
+                          {state.timeRemainings[index].days}
+                        </h2>
+                        <h4 className="text-[10px] md:text-xs uppercase tracking-[1px] text-samaya-dark/50">
+                          Hari
+                        </h4>
+                      </div>
+                      <div className="flex px-2 flex-col justify-center">
+                        <h2 className="text-base md:text-lg font-medium">
+                          {state.timeRemainings[index].hours}
+                        </h2>
+                        <h4 className="text-[10px] md:text-xs uppercase tracking-[1px] text-samaya-dark/50">
+                          Jam
+                        </h4>
+                      </div>
+                      <div className="flex px-2 flex-col justify-center">
+                        <h2 className="text-base md:text-lg font-medium">
+                          {state.timeRemainings[index].minutes}
+                        </h2>
+                        <h4 className="text-[10px] md:text-xs uppercase tracking-[1px] text-samaya-dark/50">
+                          Menit
+                        </h4>
+                      </div>
+                      <div className="flex px-2 flex-col justify-center">
+                        <h2 className="text-base md:text-lg font-medium">
+                          {state.timeRemainings[index].seconds}
+                        </h2>
+                        <h4 className="text-[10px] md:text-xs uppercase tracking-[1px] text-samaya-dark/50">
+                          Detik
+                        </h4>
+                      </div>
                     </div>
-                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center">
-                      <h2 className="text-base md:text-lg">
-                        {state.timeRemainings[index].hours}
-                      </h2>
-                      <h4 className="text-[10px] md:text-xs uppercase tracking-[1px]">Jam</h4>
+                  )}
+                  <div className="inline-flex flex-wrap gap-3">
+                    <Link target="_blank" href={event.address_url}>
+                      <ButtonDark
+                        icon={<BiSolidMap className="lg:text-lg" />}
+                        title="Petunjuk Lokasi"
+                      />
+                    </Link>
+                    <div>
+                      <ButtonDark
+                        onClick={() => actions.handleAddToCalendar(event)}
+                        icon={<BiSolidCalendar className="lg:text-lg" />}
+                        title="Simpan Tanggal"
+                      />
                     </div>
-                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center">
-                      <h2 className="text-base md:text-lg">
-                        {state.timeRemainings[index].minutes}
-                      </h2>
-                      <h4 className="text-[10px] md:text-xs uppercase tracking-[1px]">Menit</h4>
-                    </div>
-                    <div className="flex flex-col border-[0.7px] border-white aspect-square justify-center">
-                      <h2 className="text-base md:text-lg">
-                        {state.timeRemainings[index].seconds}
-                      </h2>
-                      <h4 className="text-[10px] md:text-xs uppercase tracking-[1px]">Detik</h4>
-                    </div>
-                  </div>
-                )}
-                <div className="inline-flex flex-wrap justify-center gap-3">
-                  <Link target="_blank" href={event.address_url}>
-                    <ButtonPrimary
-                      icon={<BiSolidMap className="lg:text-lg" />}
-                      title="Petunjuk Lokasi"
-                    />
-                  </Link>
-                  <div>
-                    <ButtonPrimary
-                      onClick={() => actions.handleAddToCalendar(event)}
-                      icon={<BiSolidCalendar className="lg:text-lg" />}
-                      title="Simpan Tanggal"
-                    />
                   </div>
                 </div>
               </div>

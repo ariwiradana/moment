@@ -19,11 +19,11 @@ const ParticipantsComponent = () => {
 
   return (
     <section
-      className={`py-16 lg:py-24 bg-samaya-dark px-6 md:px-12 lg:px-4 ${raleway.className}`}
+      className={`py-[60px] md:py-[100px] bg-samaya-dark px-6 md:px-12 lg:px-4 ${raleway.className}`}
     >
       <h2
         data-aos="fade-up"
-        className={`text-white text-center leading-8 text-xl mt-4 font-tan-pearl`}
+        className={`text-white text-center leading-8 text-xl md:text-2xl mt-4 font-tan-pearl`}
       >
         {client?.opening_title}
       </h2>
@@ -33,7 +33,7 @@ const ParticipantsComponent = () => {
       >
         {client?.opening_description}
       </p>
-      <div className="flex md:grid md:grid-cols-2 flex-col gap-8 md:gap-4 lg:gap-16 mt-20 max-w-screen-lg mx-auto">
+      <div className="flex md:grid md:grid-cols-2 flex-col gap-8 md:gap-4 lg:gap-12 mt-20 max-w-screen-lg mx-auto">
         <ParticipantComponent
           data={participantState.groom as Participant}
           index={0}
@@ -55,9 +55,13 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
   const odd = index % 2 !== 0;
   return (
     <div>
-      <div className="w-full aspect-[2/3] relative bg-white/5">
+      <div
+        className="w-full aspect-[3/4] relative bg-white/5"
+        data-aos="zoom-in"
+      >
         <div className="absolute inset-0 bg-gradient-to-b from-samaya-dark/30 via-transparent to-samaya-dark/80 z-10"></div>
         <div
+          data-aos={odd ? "fade-up-right" : "fade-up-left"}
           className={`absolute top-0 w-10 h-10 flex justify-center items-center z-20 ${
             odd ? "right-2" : "left-2"
           }`}
@@ -79,7 +83,7 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
               : "rounded-tl-[100px] lg:rounded-tl-[200px]"
           }`}
         />
-        <div className="absolute bottom-0 left-0 p-8 z-20">
+        <div data-aos="fade-up" className="absolute bottom-0 left-0 p-8 z-20">
           <p
             className={`${raleway.className} text-[10px] md:text-xs tracking-[2px] uppercase leading-5 text-white/80`}
           >

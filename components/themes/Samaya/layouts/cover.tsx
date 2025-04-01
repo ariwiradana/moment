@@ -29,7 +29,7 @@ const Cover: FC<Props> = (props) => {
       >
         <div
           data-aos="fade-in"
-          className="flex h-dvh flex-col items-center justify-between md:justify-center gap-8 relative bg-gradient-to-b from-samaya-dark/95 via-samaya-dark/95 to-samaya-dark/95 to-[90%]"
+          className="flex h-dvh flex-col items-center justify-between md:justify-center gap-8 relative bg-gradient-to-b from-transparent to-samaya-dark to-[90%]"
         >
           {client?.cover && (
             <div
@@ -46,12 +46,12 @@ const Cover: FC<Props> = (props) => {
               />
             </div>
           )}
-          <div className="bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%] relative z-10 h-dvh w-full py-[60px] md:py-[100px] px-8 flex flex-col justify-end">
-            <div className="md:mb-8 mb-3">
+          <div className="bg-gradient-to-b relative z-10 h-dvh w-full py-[60px] md:py-[100px] px-8 flex flex-col justify-end">
+            <div className="md:mb-6 mb-3">
               <h1
                 data-aos="fade-up"
                 data-aos-delay="600"
-                className={`font-tan-pearl text-white text-center text-2xl md:text-4xl mt-2`}
+                className={`font-tan-pearl text-white text-center text-2xl md:text-3xl 2xl:text-4xl mt-2`}
               >
                 {participantsState.groom?.nickname} &{" "}
                 {participantsState.bride?.nickname}
@@ -59,7 +59,7 @@ const Cover: FC<Props> = (props) => {
             </div>
             <div data-aos="fade-up" data-aos-delay="800">
               <p
-                className={`${raleway.className} text-white text-[10px] md:text-xs tracking-[1px] max-w-lg mx-auto text-center`}
+                className={`${raleway.className} text-white text-[10px] md:text-xs tracking-[1px] max-w-md mx-auto text-center`}
               >
                 Tanpa mengurangi rasa hormat, kami mengundang anda untuk
                 menghadiri acara{" "}
@@ -75,7 +75,7 @@ const Cover: FC<Props> = (props) => {
               </p>
             </div>
             <div
-              className="flex justify-center mt-4 md:mt-8"
+              className="flex justify-center mt-4 md:mt-6"
               data-aos="fade-up"
               data-aos-delay="1000"
             >

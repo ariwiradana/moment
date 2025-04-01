@@ -70,7 +70,7 @@ const HeroComponent = () => {
             <h1
               data-aos="fade-up"
               data-aos-delay="1000"
-              className={`font-tan-pearl text-white text-2xl md:text-4xl mb-2 lg:mb-4 text-center`}
+              className={`font-tan-pearl text-white text-2xl md:text-3xl 2xl:text-4xl mb-2 lg:mb-4 text-center`}
             >
               {participantState.groom?.nickname} &{" "}
               {participantState.bride?.nickname}
