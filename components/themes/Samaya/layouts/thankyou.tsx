@@ -10,58 +10,27 @@ import {
 } from "react-icons/ai";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
-import { Swiper, SwiperSlide } from "swiper/react";
-import usePhotos from "@/hooks/themes/usePhotos";
-import { Autoplay, EffectCube } from "swiper/modules";
 import Image from "next/image";
 
 const ThankyouComponent = () => {
   const { client } = useClientStore();
   const { state } = useParticipants();
-  const {
-    state: { images },
-  } = usePhotos();
-
   return (
     <section className="relative bg-samaya-dark z-20">
       <div className="max-w-screen-sm mx-auto px-6 md:px-12 lg:px-4 py-[60px] md:py-[100px]">
-        {images.length > 0 && (
-          <div className="flex justify-center w-full" data-aos="zoom-out">
-            <Swiper
-              loop
-              effect="cube"
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              speed={2000}
-              className="w-96 h-[500px] md:h-[550px]"
-              spaceBetween={0}
-              slidesPerView={1}
-              modules={[Autoplay, EffectCube]}
-              cubeEffect={{
-                shadow: false,
-                slideShadows: false,
-              }}
-            >
-              {images.map((image, index) => (
-                <SwiperSlide
-                  className="relative w-full h-full"
-                  key={`thankyou-img-${index}`}
-                >
-                  <div className="absolute inset-0 z-0">
-                    <Image
-                      fill
-                      alt={`hero-img-${index}`}
-                      priority
-                      sizes="600px"
-                      className="object-cover transform bg-white/5 translate-y-0 lg:translate-y-0 transition-transform"
-                      src={image as string}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+        {client?.cover && (
+          <div data-aos="fade-up" className="flex justify-center">
+            <div className="relative w-[80vw] md:w-[400px] aspect-[3/4]">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-samaya-dark z-10 to-[90%]"></div>
+              <Image
+                alt="Foto Cover Last"
+                fill
+                priority
+                sizes="600px"
+                className="object-cover transform bg-white/5 translate-y-0 lg:translate-y-0 transition-transform"
+                src={client?.cover as string}
+              />
+            </div>
           </div>
         )}
 

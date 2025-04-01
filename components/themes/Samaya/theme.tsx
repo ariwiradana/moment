@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
-// import ThankyouComponent from "./layouts/thankyou";
+import ThankyouComponent from "./layouts/thankyou";
 // import RSVPWishes from "./layouts/rsvp.wishes";
 import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
@@ -10,7 +10,7 @@ import ParticipantsComponent from "./layouts/participants";
 import PreviewNav from "../preview.nav";
 import useCoverStore from "@/store/useCoverStore";
 import useMusic from "@/hooks/themes/useMusic";
-// import Photos from "./layouts/photos";
+import Photos from "./layouts/photos";
 // import Gift from "./layouts/gift";
 interface Props {
   untuk: string;
@@ -31,10 +31,10 @@ const Samaya: FC<Props> = (props) => {
           <div className="relative">
             <ParticipantsComponent />
             <EventsComponent />
-            {/* <Photos /> */}
+            <Photos />
             {/* <Gift /> */}
             {/* <RSVPWishes /> */}
-            {/* <ThankyouComponent />  */}
+            <ThankyouComponent /> 
           </div>
         )}
       </>
