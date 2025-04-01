@@ -69,7 +69,7 @@ const GiftComponent = () => {
               className={`w-full max-w-sm aspect-[1.5/1] p-6 flex flex-col justify-between rounded-2xl bg-white`}
             >
               <div className="flex justify-between">
-                <div className="relative w-14">
+                <div className="relative w-14 -ml-3">
                   <Image
                     fill
                     alt="card-chip"
