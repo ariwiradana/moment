@@ -46,6 +46,7 @@ const MusicComponent = ({ state, actions, refs }: UseMusic) => {
         </button>
 
         <audio
+          loop
           ref={refs.audioRef}
           controls={false}
           onPlay={() => actions.setIsPlaying(true)}
