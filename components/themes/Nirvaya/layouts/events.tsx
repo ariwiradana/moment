@@ -58,7 +58,7 @@ const Events = () => {
                         {moment(event.date).format("dddd, DD MMMM YYYY")}
                       </h6>
                       <h6 className="uppercase font-edensor text-xs lg:text-sm tracking-[3px]">
-                        {event.start_time} Wita - {event.end_time}
+                        {event.start_time} Wita - {event.end_time} Wita
                       </h6>
                     </div>
                     <p className="mt-6 lg:mt-7 text-[8px] lg:text-[10px] tracking-[3px] lg:text-xs uppercase">
