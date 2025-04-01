@@ -120,97 +120,13 @@ const Photos = () => {
                         height={360}
                         layout="responsive"
                         objectFit="cover"
-                        priority
+                        loading="lazy"
                       />
                     </div>
                   </ImageListItem>
                 ))}
               </ImageList>
             </div>
-            {/* <div className="grid grid-cols-4 row-span-3 gap-1 md:gap-6 mt-8 md:mt-16">
-            <div
-              data-aos="fade-up"
-              data-aos-delay="100"
-              className="col-span-4 md:col-span-2 row-span-4 aspect-square md:aspect-auto"
-            >
-              <Swiper
-                speed={1000}
-                modules={[Autoplay]}
-                autoplay={{
-                  delay: 5000,
-                }}
-                className="w-full h-full"
-              >
-                {state.images.slice(0, divide).map((img) => (
-                  <SwiperSlide key={`Image Part 1 ${img}`}>
-                    <Image
-                      onClick={() => actions.handleToggleLightbox(img)}
-                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                      src={img}
-                      alt={`Image Part 1 ${img}`}
-                      fill
-                      className="object-cover bg-nirvaya-dark/5"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-delay="200"
-              className="col-span-4 md:col-span-2 row-span-2 aspect-[4/2] md:aspect-[2/1]"
-            >
-              <Swiper
-                speed={1000}
-                modules={[Autoplay]}
-                autoplay={{
-                  delay: 6000,
-                }}
-                className="w-full h-full"
-              >
-                {state.images.slice(divide, divide * 2).map((img) => (
-                  <SwiperSlide key={`Image Part 2 ${img}`}>
-                    <Image
-                      onClick={() => actions.handleToggleLightbox(img)}
-                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                      alt={`Image Part 2 ${img}`}
-                      src={img}
-                      fill
-                      className="object-cover bg-nirvaya-dark/5"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-delay="300"
-              className="col-span-4 md:col-span-2 row-span-2 aspect-[4/2] md:aspect-[2/1]"
-            >
-              <Swiper
-                speed={1000}
-                modules={[Autoplay]}
-                autoplay={{
-                  delay: 7000,
-                }}
-                className="w-full h-full"
-                slidesPerView={2}
-              >
-                {state.images.slice(divide * 2).map((img) => (
-                  <SwiperSlide key={`Image Part 3 ${img}`}>
-                    <Image
-                      onClick={() => actions.handleToggleLightbox(img)}
-                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                      src={img}
-                      alt={`Image Part 3 ${img}`}
-                      fill
-                      className="object-cover bg-nirvaya-dark/5"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          </div> */}
           </div>
         </section>
       </>
