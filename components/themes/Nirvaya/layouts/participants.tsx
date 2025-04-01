@@ -82,7 +82,7 @@ const ParticipantItem = ({
     <div>
       <div
         data-aos="zoom-out-up"
-        className={`w-full h-[430px] relative drop-shadow-xl ${
+        className={`w-full h-[430px] lg:h-[500px] relative drop-shadow-xl ${
           order === "odd"
             ? "rounded-tl-[150px] rounded-br-[150px]"
             : "rounded-tr-[150px] rounded-bl-[150px]"

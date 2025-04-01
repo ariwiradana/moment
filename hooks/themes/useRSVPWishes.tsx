@@ -31,7 +31,7 @@ const useRSVPWishes = (icon: ReactNode) => {
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const [limit] = useState<number>(4);
+  const [limit] = useState<number>(8);
   const [page, setPage] = useState(1);
   const [wishes, setWishes] = useState<Review[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0);

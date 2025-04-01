@@ -1,4 +1,5 @@
 import useGift from "@/hooks/themes/useGift";
+import { raleway } from "@/lib/fonts";
 import useClientStore from "@/store/useClientStore";
 import { formatBankNumber } from "@/utils/formatBankNumber";
 import { NextPage } from "next";
@@ -20,7 +21,9 @@ const Gift: NextPage = () => {
             </h2>
             <div className="h-[1px] bg-nirvaya-dark/10 w-full"></div>
           </div>
-          <p className="text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px]">
+          <p
+            className={`text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px] ${raleway.className}`}
+          >
             Tanpa mengurangi rasa hormat kami bagi tamu yang ingin mengirimkan
             hadiah kepada kedua mempelai dapat mengirimkannya melalui
           </p>

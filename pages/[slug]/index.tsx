@@ -44,6 +44,8 @@ const MainPage: FC<Props> = ({
     setClient(clientData);
   }, []);
 
+  console.log(clientData?.guests, untuk);
+
   if (!clientData) return <ClientNotFound />;
   if (!clientData.guests?.includes(untuk) && untuk !== "Tamu Undangan")
     return <ClientNotFound />;
@@ -77,6 +79,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return null;
     }
   );
+
+  console.log(untuk);
 
   const client: Client | null = response?.data ?? null;
 

@@ -29,7 +29,11 @@ const Events = () => {
       )}
       <div className={`w-full relative ${raleway.className}`}>
         <div className="bg-nirvaya-primary/40 backdrop-blur z-10">
-          <div className="grid lg:grid-cols-2 justify-center items-center w-full p-8 lg:py-16 max-w-screen-lg mx-auto">
+          <div
+            className={`${
+              eventState.events.length > 1 ? "grid lg:grid-cols-2" : "flex"
+            }  justify-center items-center p-8 lg:py-16 max-w-screen-lg mx-auto`}
+          >
             {eventState.events?.length > 0 &&
               eventState?.events.map((event, index) => {
                 const isPrimary = isDesktop
@@ -40,7 +44,7 @@ const Events = () => {
                   <div
                     data-aos="fade-up"
                     key={`Event ${event.name}`}
-                    className={`p-8 lg:p-16 w-full relative z-20 ${
+                    className={`p-8 lg:p-16 relative z-20 ${
                       isPrimary
                         ? "bg-nirvaya-primary/90 text-white"
                         : "bg-nirvaya-light-brown/90 text-nirvaya-dark"

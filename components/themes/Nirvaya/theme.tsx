@@ -9,6 +9,7 @@ import MusicComponent from "./layouts/music";
 import useMusic from "@/hooks/themes/useMusic";
 import Photos from "./layouts/photos";
 import Gift from "./layouts/gift";
+import RsvpWishes from "./layouts/rsvp.wishes";
 
 interface Props {
   untuk: string;
@@ -28,6 +29,7 @@ const Nirvaya = ({ untuk }: Props) => {
           <Events />
           <Photos />
           <Gift />
+          <RsvpWishes />
         </>
       )}
     </Layout>
