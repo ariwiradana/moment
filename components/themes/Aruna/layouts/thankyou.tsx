@@ -19,8 +19,11 @@ const ThankyouComponent = () => {
   const { state: participantState } = useParticipants();
   return (
     <section className="relative flex flex-col justify-center">
-      <div className="absolute inset-0 bg-aruna-dark/70 z-10"></div>
-      <div className="absolute inset-0">
+      <div
+        className="absolute inset-0 bg-aruna-dark/70 z-10"
+        data-aos="fade-up"
+      ></div>
+      <div className="absolute inset-0" data-aos="fade-up">
         <Swiper
           loop
           autoplay={{

@@ -163,7 +163,7 @@ const Component = () => {
               </div>
             ))}
           </div>
-          <div className="mt-2">
+          <div className="mt-2" data-aos="zoom-out-up">
             <Swiper
               spaceBetween={8}
               modules={[Autoplay]}
