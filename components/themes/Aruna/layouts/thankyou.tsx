@@ -20,7 +20,7 @@ const ThankyouComponent = () => {
   return (
     <section className="relative flex flex-col justify-center">
       <div
-        className="absolute inset-0 bg-aruna-dark/70 z-10"
+        className="absolute inset-0 bg-aruna-dark/80 z-10"
         data-aos="fade-up"
       ></div>
       <div className="absolute inset-0" data-aos="fade-up">
