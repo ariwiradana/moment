@@ -1,22 +1,37 @@
-import { Client, Event, Participant } from "@/lib/types";
+import {
+  Client,
+  Event,
+  Package,
+  Participant,
+  Theme,
+  ThemeCategory,
+} from "@/lib/types";
 import moment from "moment";
 import { create } from "zustand";
 
 interface StoreState {
+  category: string;
   form: Client;
   activeStep: number;
   toggleEndTimes: boolean[];
   toggleExpanded: boolean[];
+  themeCategories: ThemeCategory[];
+  packages: Package[];
+  themes: Theme[];
   isLoading: boolean;
   setForm: (
     name: string,
-    value: string | number | Event[] | Participant[] | string[]
+    value: string | number | Event[] | Participant[] | string[] | null
   ) => void;
   setActiveStep: (step: number) => void;
   setToggleEndTimes: (index: number) => void;
   setAddEndTimes: (value: boolean) => void;
   setIsLoading: (isLoading: boolean) => void;
   resetForm: () => void;
+  setCategory: (category: string) => void;
+  setThemeCategories: (themeCategories: ThemeCategory[]) => void;
+  setPackages: (packages: Package[]) => void;
+  setThemes: (themes: Theme[]) => void;
 }
 
 export const initialEvent: Event = {
@@ -43,38 +58,7 @@ const initialForm: Client = {
   name: "",
   package_id: null,
   events: [initialEvent],
-  participants: [
-    {
-      name: "",
-      nickname: "",
-      gender: "male",
-      child: "",
-      image: "",
-      address: "",
-      parents_female: "",
-      parents_male: "",
-      role: "groom",
-      facebook: "",
-      instagram: "",
-      tiktok: "",
-      twitter: "",
-    },
-    {
-      name: "",
-      nickname: "",
-      gender: "female",
-      child: "",
-      image: "",
-      address: "",
-      parents_female: "",
-      parents_male: "",
-      role: "bride",
-      facebook: "",
-      instagram: "",
-      tiktok: "",
-      twitter: "",
-    },
-  ],
+  participants: [],
   theme_category_id: null,
   theme_id: null,
   videos: [],
@@ -84,14 +68,18 @@ const initialForm: Client = {
 };
 
 const useClientFormStore = create<StoreState>((set) => ({
+  category: "",
   activeStep: 0,
   toggleEndTimes: [false],
   toggleExpanded: [true],
   isLoading: false,
   form: initialForm,
+  themeCategories: [],
+  packages: [],
+  themes: [],
   setForm: (
     name: string,
-    value: string | number | Event[] | Participant[] | string[]
+    value: string | number | Event[] | Participant[] | string[] | null
   ) =>
     set((state) => ({
       form: {
@@ -122,6 +110,22 @@ const useClientFormStore = create<StoreState>((set) => ({
   resetForm: () =>
     set(() => ({
       form: initialForm,
+    })),
+  setCategory: (category: string) =>
+    set(() => ({
+      category,
+    })),
+  setThemeCategories: (themeCategories: ThemeCategory[]) =>
+    set(() => ({
+      themeCategories,
+    })),
+  setPackages: (packages: Package[]) =>
+    set(() => ({
+      packages,
+    })),
+  setThemes: (themes: Theme[]) =>
+    set(() => ({
+      themes,
     })),
 }));
 

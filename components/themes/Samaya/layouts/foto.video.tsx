@@ -111,7 +111,6 @@ const GalleryComponent = () => {
           data-aos="fade-up"
           className={`${marcellus.className} text-sm md:text-base text-center leading-5 text-white mt-2 mb-8 max-w-screen-md mx-auto`}
         >
-          Foto {videos.length > 0 && "& Video "} dari{" "}
           {participantState.groom?.nickname} &{" "}
           {participantState.bride?.nickname}
         </p>

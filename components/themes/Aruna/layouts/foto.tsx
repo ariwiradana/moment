@@ -5,8 +5,9 @@ import { getParticipantNames } from "@/utils/getParticipantNames";
 import Image from "next/image";
 import Lightbox from "react-spring-lightbox";
 import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
-import CustomImageSlides from "../elements/custom.slides";
 import useClientStore from "@/store/useClientStore";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 const Component = () => {
   const [open, setOpen] = useState(false);
@@ -24,8 +25,8 @@ const Component = () => {
       images?.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
     [images]
   );
-  const gridImages = useMemo(() => images?.slice(0, 11), [images]);
-  const slideImages = useMemo(() => images?.slice(11), [images]);
+  const gridImages = useMemo(() => images.slice(0, 12), [images]);
+  const slideImages = useMemo(() => images?.slice(12), [images]);
 
   const gotoPrevious = useCallback(() => {
     if (imageIndex > 0) setImageIndex((prev) => prev - 1);
@@ -36,8 +37,9 @@ const Component = () => {
   }, [imageIndex, images?.length]);
 
   const handleToggleLightbox = useCallback(
-    (idx: number) => {
-      if (images.length > 0 && idx >= 0 && idx < images.length) {
+    (img: string) => {
+      if (images.length > 0) {
+        const idx = images.indexOf(img);
         setImageIndex(idx);
         setOpen((prev) => !prev);
       }
@@ -53,6 +55,12 @@ const Component = () => {
         return "col-span-2 row-span-4";
       case 6:
         return "col-span-2 row-span-2 aspect-square";
+      case 7:
+        return "col-span-2 row-span-2 aspect-square";
+      case 9:
+        return "col-span-2 row-span-2 aspect-square";
+      case 10:
+        return "col-span-1 row-span-2";
       default:
         return "col-span-1 row-span-1 aspect-square";
     }
@@ -124,12 +132,14 @@ const Component = () => {
             sini, kami mengabadikan momen cinta dan janji yang akan dikenang
             selamanya.
           </p>
-          <p
-            data-aos="fade-up"
-            className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
-          >
-            {getParticipantNames(participants)}
-          </p>
+          {client?.theme_category?.slug === "pernikahan" && (
+            <p
+              data-aos="fade-up"
+              className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
+            >
+              {getParticipantNames(participants)}
+            </p>
+          )}
           <div
             className={`mt-10 grid grid-cols-4 ${
               slideImages?.length > 0 ? "grid-rows-8" : "grid-rows-6"
@@ -139,7 +149,7 @@ const Component = () => {
             {gridImages?.map((img, index) => (
               <div
                 key={`gallery-${index + 1}`}
-                onClick={() => handleToggleLightbox(index)}
+                onClick={() => handleToggleLightbox(img)}
                 className={`${gridSpan(index)} w-full relative overflow-hidden`}
               >
                 <Image
@@ -152,15 +162,33 @@ const Component = () => {
                 />
               </div>
             ))}
-
-            {slideImages?.length > 0 && (
-              <div className="col-span-4 row-span-3 w-full h-full relative overflow-hidden">
-                <CustomImageSlides
-                  handleToggleLightbox={handleToggleLightbox}
-                  images={slideImages}
-                />
-              </div>
-            )}
+          </div>
+          <div className="mt-2">
+            <Swiper
+              spaceBetween={8}
+              modules={[Autoplay]}
+              speed={2000}
+              autoplay={{
+                delay: 2000,
+              }}
+            >
+              {slideImages.map((img, index) => (
+                <SwiperSlide
+                  onClick={() => handleToggleLightbox(img)}
+                  key={`Slide Image ${index}`}
+                >
+                  <div className="w-full relative aspect-[4/2] overflow-hidden">
+                    <Image
+                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                      src={img}
+                      fill
+                      alt={`slide-${index + 1}`}
+                      className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </section>

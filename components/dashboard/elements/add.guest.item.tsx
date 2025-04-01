@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { BiLoaderAlt, BiShareAlt, BiTrash, BiUser } from "react-icons/bi";
+import { BiLoaderAlt, BiShareAlt, BiTrash } from "react-icons/bi";
 import { getClient } from "@/lib/client";
 import toast from "react-hot-toast";
-import { montserrat } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import { Client } from "@/lib/types";
 
 interface AddGuestItemProps {
@@ -25,15 +25,15 @@ const AddGuestItem = ({
   const baseURL = `${window.location.protocol}//${window.location.hostname}${
     window.location.port ? `:${window.location.port}` : ""
   }`;
-  const text = `${client?.opening_title},\n\n${
-    client?.opening_description
-  }\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${value.replaceAll(
-    " ",
-    "+"
-  )}\n\n${client?.closing_description}\n\n${client?.closing_title}`;
 
   const handleShare = async () => {
-    if (navigator.share) {
+    if (navigator.share && client) {
+      const text = `${client?.opening_title},\n\n${
+        client?.opening_description
+      }\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${value.replaceAll(
+        " ",
+        "+"
+      )}\n\n${client?.closing_description}\n\n${client?.closing_title}`;
       try {
         await navigator.share({
           title: text,
@@ -68,11 +68,14 @@ const AddGuestItem = ({
       if (result.success) {
         mutate();
         toast.success("Tamu berhasil dihapus!", {
-          icon: (
-            <div className="p-1 rounded bg-dashboard-primary">
-              <BiUser />
-            </div>
-          ),
+          className: `${redhat.className} text-sm border border-white/20`,
+          style: {
+            boxShadow: "none",
+            bottom: 0,
+            backgroundColor: "#101010",
+            color: "white",
+            borderRadius: 100,
+          },
         });
       }
     } catch (error) {
@@ -83,18 +86,20 @@ const AddGuestItem = ({
   };
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full">
-      <div className={`${montserrat.className} text-sm w-full`}>
-        <div className="w-full rounded-lg border p-4 bg-zinc-50">
-          <p className="block text-dashboard-dark/50 mb-1 text-xs font-normal">
+    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full p-4">
+      <div className={`${redhat.className} text-sm w-full`}>
+        <div className="w-full">
+          <p className="block text-dashboard-dark/50 text-xs font-normal">
             Nama Tamu
           </p>
-          <p className="text-dashboard-dark font-semibold text-base">{value}</p>
+          <p className="text-dashboard-dark font-medium text-base leading-6">
+            {value}
+          </p>
         </div>
       </div>
 
       {mode === "exist" && (
-        <div className="flex justify-end gap-4">
+        <div className={`flex gap-4 ${redhat.className}`}>
           <button
             onClick={handleShare}
             className="flex items-center gap-1 text-dashboard-dark"

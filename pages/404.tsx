@@ -1,4 +1,4 @@
-import { afacad, montserrat } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import Image from "next/image";
 import React, { FC } from "react";
 import { IoArrowBack } from "react-icons/io5";
@@ -18,12 +18,12 @@ const NotFound: FC = () => {
       />
       <div>
         <h1
-          className={`mb-4 text-admin-hover-dark text-center lg:text-left text-3xl md:text-4xl gap-x-4 font-semibold ${montserrat.className}`}
+          className={`mb-4 text-admin-hover-dark text-center lg:text-left text-3xl md:text-4xl gap-x-4 font-semibold ${redhat.className}`}
         >
           Halaman Tidak Ditemukan
         </h1>
         <p
-          className={`text-lg mb-8 text-admin-hover-dark/50 ${afacad.className} lg:max-w-md lg:text-left`}
+          className={`text-sm mb-8 text-admin-hover-dark/50 ${redhat.className} lg:max-w-md lg:text-left`}
         >
           Halaman yang Anda cari tidak ditemukan atau telah dihapus. Pastikan
           Anda memeriksa kembali atau informasi link yang dimasukkan.

@@ -1,6 +1,6 @@
-import { afacad } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import React, { ReactNode, useState } from "react";
-import { BiChevronRight } from "react-icons/bi";
+import { BsChevronRight } from "react-icons/bs";
 
 interface AccordionProps {
   title: string;
@@ -12,24 +12,20 @@ const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
 
   return (
     <div
-      className={`overflow-hidden ${
-        afacad.className
-      } border rounded-lg p-4 transition-colors ease-in-out duration-500 ${
-        isOpen && "border-transparent bg-dashboard-dark"
-      }`}
+      className={`overflow-hidden ${redhat.className} border border-zinc-200 p-4 transition-colors ease-in-out duration-500`}
     >
       <button
         type="button"
         aria-label={`btn-${title.replace(" ", "-").toLowerCase()}`}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-lg lg:text-xl font-medium flex justify-between text-left"
+        className="w-full text-sm font-medium flex justify-between text-left"
       >
-        <span className={isOpen ? "text-white" : ""}>{title}</span>
+        <span>{title}</span>
         <span>
-          <BiChevronRight
+          <BsChevronRight
             className={`${
-              isOpen ? "rotate-90 text-white" : "rotate-0 text-dashboard-dark"
-            } transform transition-all ease-in-out duration-300 text-2xl mt-1`}
+              isOpen ? "rotate-90" : "rotate-0"
+            } transform transition-all ease-in-out duration-300 text-sm mt-1`}
           />
         </span>
       </button>
@@ -38,11 +34,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
           isOpen ? "max-h-[200vh] mt-2" : "max-h-0"
         }`}
       >
-        {content ? (
-          <div className={`mt-4 ${isOpen && "text-white"}`}>{content}</div>
-        ) : (
-          <></>
-        )}
+        {content ? <div className={`mt-4`}>{content}</div> : <></>}
       </div>
     </div>
   );

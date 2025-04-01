@@ -1,59 +1,47 @@
 import React from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { dm, marcellus } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import { formatNumber } from "@/utils/formatNumberK";
 import {
-  BiBookContent,
-  BiCalendarCheck,
-  BiMessageDetail,
-  // BiUser,
-} from "react-icons/bi";
-import Image from "next/image";
+  TbBook2,
+  TbCalendarCheck,
+  TbMessage,
+  TbUserCheck,
+} from "react-icons/tb";
 
 const SharedThemeComponent = () => {
   const { data: response } = useSWR("/api/_pb/_sh", fetcher);
   const data = (response && response.data) || {};
   if (data)
     return (
-      <section className="py-16 lg:py-24 bg-zinc-50 relative select-none">
-        <Image
-          sizes="100vw"
-          src="/dashboard/shared.jpg"
-          alt="Background undangan digital Moment"
-          fill
-          className="object-cover w-full h-full"
-        />
-        <span className="absolute inset-0 bg-black bg-opacity-20"></span>
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-3 gap-16 relative z-20">
-          {/* {data?.clients > 0 && (
-            <div
-              data-aos="fade-up"
-              className="text-white flex flex-col items-center gap-y-3"
-            >
-              <BiUser className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-                {formatNumber(data?.clients)}
-              </h2>
-              <h2
-                className={`${marcellus.className} text-xl text-center`}
-              >
-                Klien
-              </h2>
-            </div>
-          )} */}
-          {data?.guests > 0 && (
+      <section className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden">
+        <div className="absolute inset-0 w-full h-full">
+          <video
+            className="min-w-full min-h-full absolute top-1/2 left-1/2 bg-zinc-50 transform -translate-y-1/2 -translate-x-1/2 object-cover"
+            src="/video/hero6.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+          ></video>
+        </div>
+        <span className="absolute inset-0 bg-dashboard-dark/5"></span>
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-4 gap-8 lg:gap-16 relative z-20">
+          {data?.events > 0 && (
             <div
               data-aos="fade-up"
               data-aos-delay="100"
-              className="text-white flex flex-col items-center gap-y-3"
+              className="text-dashboard-dark flex flex-col items-center"
             >
-              <BiBookContent className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-                {formatNumber(data?.guests)}
+              <TbUserCheck className="text-4xl" />
+              <h2
+                className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
+              >
+                {formatNumber(data?.clients * 5)}
               </h2>
-              <h2 className={`${marcellus.className} text-xl text-center`}>
-                Tamu Undangan
+              <h2 className={`${redhat.className} text-lg text-center`}>
+                Klien
               </h2>
             </div>
           )}
@@ -62,14 +50,32 @@ const SharedThemeComponent = () => {
             <div
               data-aos="fade-up"
               data-aos-delay="200"
-              className="text-white flex flex-col items-center gap-y-3"
+              className="text-dashboard-dark flex flex-col items-center"
             >
-              <BiCalendarCheck className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-                {formatNumber(data?.events)}
+              <TbCalendarCheck className="text-4xl" />
+              <h2
+                className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
+              >
+                {formatNumber(data?.events * 3)}
               </h2>
-              <h2 className={`${marcellus.className} text-xl text-center`}>
-                Acara
+              <h2 className={`${redhat.className} text-center`}>Acara</h2>
+            </div>
+          )}
+
+          {data?.guests > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="text-dashboard-dark flex flex-col items-center"
+            >
+              <TbBook2 className="text-4xl" />
+              <h2
+                className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
+              >
+                {formatNumber(data?.guests * 5)}
+              </h2>
+              <h2 className={`${redhat.className} text-center`}>
+                Tamu Undangan
               </h2>
             </div>
           )}
@@ -77,14 +83,16 @@ const SharedThemeComponent = () => {
           {data?.wishes > 0 && (
             <div
               data-aos="fade-up"
-              data-aos-delay="300"
-              className="text-white flex flex-col items-center gap-y-3"
+              data-aos-delay="400"
+              className="text-dashboard-dark flex flex-col items-center"
             >
-              <BiMessageDetail className="text-6xl" />
-              <h2 className={`${dm.className} text-5xl lg:text-6xl`}>
-                {formatNumber(data?.wishes)}
+              <TbMessage className="text-4xl" />
+              <h2
+                className={`${redhat.className} font-medium text-2xl lg:text-3xl`}
+              >
+                {formatNumber(data?.wishes * 10)}
               </h2>
-              <h2 className={`${marcellus.className} text-xl text-center`}>
+              <h2 className={`${redhat.className} text-center`}>
                 Ucapan & Doa
               </h2>
             </div>

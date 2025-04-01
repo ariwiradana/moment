@@ -3,6 +3,7 @@ export interface PaymentMethod {
   accountName: string;
   accountNumber: string;
   iconSrc: string;
+  color: string;
 }
 
 export const paymentMethods: PaymentMethod[] = [
@@ -11,12 +12,14 @@ export const paymentMethods: PaymentMethod[] = [
     accountName: "I Made Ari Wiradana",
     accountNumber: "146-241-4093",
     iconSrc: "/dashboard/payment/bca.png",
+    color: "#0048BA",
   },
   {
     paymentProvider: "BNI",
     accountName: "I Made Ari Wiradana",
     accountNumber: "637-256-007",
     iconSrc: "/dashboard/payment/bni.png",
+    color: "#005F6B1A",
   },
   // {
   //   paymentProvider: "GoPay",

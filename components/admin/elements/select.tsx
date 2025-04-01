@@ -9,6 +9,7 @@ interface InputSelectProps
   full?: boolean;
   options: Option[];
   inputSize?: "small" | "medium" | "large";
+  optional?: boolean;
 }
 
 const InputSelect: FC<InputSelectProps> = (props) => {
@@ -32,14 +33,17 @@ const InputSelect: FC<InputSelectProps> = (props) => {
       {props.label && (
         <label
           htmlFor={props.id}
-          className="block text-gray-700 mb-1 font-montserrat"
+          className="block text-dashboard-dark/60 mb-1 text-xs"
         >
-          {props.label}
+          {props.label}{" "}
+          <span className="text-sm text-gray-400">
+            {props.optional && "(opsional)"}
+          </span>
         </label>
       )}
       <select
         {...props}
-        className={`w-full border rounded-lg focus:ring-1 focus:outline-none ${
+        className={`w-full border focus:ring-1 focus:outline-none text-sm ${
           props.error
             ? "border-admin-danger focus:ring-transparent"
             : "focus:ring-black"

@@ -10,6 +10,7 @@ interface InputChipProps {
   onChange: (newChips: string[]) => void; // Function to update chips
   error?: string;
   inputSize?: "small" | "medium" | "large";
+  optional?: boolean;
 }
 
 const InputChip: React.FC<InputChipProps> = ({
@@ -21,6 +22,7 @@ const InputChip: React.FC<InputChipProps> = ({
   onChange,
   error,
   inputSize,
+  optional,
 }) => {
   const [inputValue, setInputValue] = React.useState<string>("");
 
@@ -51,23 +53,26 @@ const InputChip: React.FC<InputChipProps> = ({
 
   return (
     <div className={`${montserrat.className} text-sm`}>
-      <label htmlFor={id} className="block text-gray-700 mb-1">
-        {label}
+      <label htmlFor={id} className="block text-dashboard-dark/60 mb-1 text-xs">
+        {label}{" "}
+        <span className="text-sm text-gray-400">
+          {optional && "(opsional)"}
+        </span>
       </label>
       <div
-        className={`flex flex-wrap items-center border rounded-lg gap-2 ${paddingStyles(
+        className={`flex flex-wrap items-center border gap-2 ${paddingStyles(
           inputSize ?? "large"
         )}`}
       >
         {chips.map((chip, index) => (
           <div
             key={index}
-            className="flex items-start bg-gray-200 rounded px-2"
+            className="flex items-center bg-gray-100 text-sm px-2"
           >
             <span>{chip}</span>
             <button
               type="button"
-              className="ml-3 text-sm text-gray-600 hover:text-gray-800"
+              className="ml-3 text-sm text-admin-dark hover:text-gray-800"
               onClick={() => handleDeleteChip(index)}
             >
               <span className="text-base"> &times;</span>

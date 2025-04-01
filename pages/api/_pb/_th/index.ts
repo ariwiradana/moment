@@ -11,7 +11,7 @@ interface Query {
   slug?: string;
   category?: string;
   package_id?: number;
-  theme_category_id?: number;
+  theme_category_id?: number | string;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -31,8 +31,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         let query = `SELECT * FROM themes`;
         let countQuery = `SELECT COUNT(*) FROM themes`;
 
-        const values: (number | string | boolean)[] = [true];
-        const countValues: (number | string | boolean)[] = [true];
+        const values: (number | string | boolean | number[])[] = [true];
+        const countValues: (number | string | boolean | number[])[] = [true];
 
         const conditions = [`active = $${values.length}`];
         const countConditions = [`active = $${values.length}`];
@@ -62,11 +62,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         if (theme_category_id) {
+          const ids = JSON.parse(theme_category_id as string);
           const valueIndex = values.length + 1;
-          conditions.push(`$${valueIndex} = ANY(theme_category_ids)`);
-          countConditions.push(`$${valueIndex} = ANY(theme_category_ids)`);
-          values.push(theme_category_id);
-          countValues.push(theme_category_id);
+          conditions.push(`theme_category_ids && $${valueIndex}`);
+          countConditions.push(`theme_category_ids && $${valueIndex}`);
+          values.push(ids);
+          countValues.push(ids);
         }
 
         if (conditions.length > 0) {
@@ -86,6 +87,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         const { rows } = await sql.query(query, values);
+
+        console.log(console.log(query));
+
         const { rows: packages } = await sql.query(
           `SELECT * FROM packages ORDER BY id ASC`
         );

@@ -70,7 +70,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
             ))}
           </p>
           <h1
-            className={`${marcellus.className} text-xl lg:text-2xl text-dashboard-dark leading-8 font-medium`}
+            className={`${marcellus.className} text-2xl lg:text-3xl text-dashboard-dark leading-8 font-medium`}
           >
             {theme.name}
           </h1>
@@ -80,9 +80,7 @@ const ThemeCard: FC<Props> = ({ theme, showActions = true, index = 0 }) => {
                 key={`theme-category-${tc.name}`}
                 className="flex bg-dashboard-dark/5 items-center gap-x-2 rounded-full font-medium px-3 py-2 text-dashboard-dark"
               >
-                <p className={`text-xs md:text-sm ${afacad.className}`}>
-                  {tc.name}
-                </p>
+                <p className={`text-sm ${afacad.className}`}>{tc.name}</p>
               </div>
             ))}
           </div>

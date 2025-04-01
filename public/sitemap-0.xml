@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://www.momentinvitation.com</loc><lastmod>2024-12-22T05:05:10.162Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.momentinvitation.com/fitur</loc><lastmod>2024-12-22T05:05:10.163Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.momentinvitation.com/tema</loc><lastmod>2024-12-22T05:05:10.163Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.momentinvitation.com/aruna</loc><lastmod>2024-12-22T05:05:10.163Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.momentinvitation.com/samaya</loc><lastmod>2024-12-22T05:05:10.163Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com</loc><lastmod>2025-03-29T15:30:24.721Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/samaya</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/samaya/login</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/samaya/pembayaran</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/samaya/tamu</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/samaya/testimoni</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/aruna</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/aruna/login</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/aruna/pembayaran</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/aruna/tamu</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/aruna/testimoni</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/nirvaya</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/nirvaya/login</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/nirvaya/pembayaran</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/nirvaya/tamu</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/nirvaya/testimoni</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/form/pernikahan</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/form/mepandes</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.momentinvitation.com/form/pernikahan-mepandes</loc><lastmod>2025-03-29T15:30:24.722Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

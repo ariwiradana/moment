@@ -1,23 +1,23 @@
 import Input from "@/components/admin/elements/input";
 import Loader from "@/components/admin/elements/loader";
 import InputTextarea from "@/components/admin/elements/textarea";
-import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 import Seo from "@/components/dashboard/elements/seo";
 import Layout from "@/components/dashboard/layout";
 import { getClient } from "@/lib/client";
 import useDashboardStore from "@/store/useDashboardStore";
 import { fetcher } from "@/lib/fetcher";
-import { afacad, dm } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import { Client } from "@/lib/types";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiCheck, BiEdit } from "react-icons/bi";
+import { BiCheck, BiPencil } from "react-icons/bi";
 import useSWR from "swr";
 import { z } from "zod";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import ClientNotFound from "@/components/themes/client.notfound";
+import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 
 interface Props {
   slug: string;
@@ -137,31 +137,30 @@ const DashboardTestimoni: FC<Props> = (props) => {
             <ClientNotFound />
           ) : (
             <Layout>
-              <div className="max-w-screen-2xl mx-auto pt-16 md:pt-20 lg:pt-24 px-6 md:px-12 lg:px-24">
-                <div className="py-16">
+              <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4 py-8 md:py-10 lg:py-16 mt-12 md:mt-16 lg:mt-20">
+                <div>
                   <div>
                     <h1
-                      className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
+                      className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
                     >
                       Tulis Kesan Anda <br />
                       Memakai Jasa Kami
                     </h1>
+
                     <p
-                      className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
+                      className={`${redhat.className} text-sm text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
                     >
                       Kami ingin mendengar pengalaman Anda! Isi form di bawah
                       ini untuk berbagi pendapat dan membantu orang lain
                       menemukan layanan undangan yang sempurna.
                     </p>
-                    <p
-                      className={`${afacad.className} text-gray-500 text-lg md:text-xl mt-3 lg:max-w-[70%]`}
-                    ></p>
                   </div>
                   <form
                     onSubmit={handleSubmit}
-                    className="max-w-screen-md flex flex-col gap-6 mt-16"
+                    className="max-w-screen-md flex flex-col gap-6 mt-8"
                   >
                     <Input
+                      inputSize="medium"
                       name="name"
                       error={errors.name}
                       onChange={(e) =>
@@ -188,12 +187,14 @@ const DashboardTestimoni: FC<Props> = (props) => {
                       label="Testimoni"
                       rows={8}
                     />
+
                     <div>
                       <ButtonPrimary
+                        className="w-full justify-center md:w-auto"
                         isloading={loading}
                         type="submit"
                         title="Berikan Testimoni"
-                        icon={<BiEdit />}
+                        icon={<BiPencil />}
                       />
                     </div>
                   </form>

@@ -1,24 +1,34 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { raleway } from "@/lib/fonts";
 import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
 import useEvents from "@/hooks/themes/useEvents";
+import { UseMusic } from "@/hooks/themes/useMusic";
 
 interface Props {
   to: string;
+  actions: UseMusic["actions"];
 }
 
-const Cover = ({ to }: Props) => {
+const Cover = ({ to, actions }: Props) => {
   const { toggleIsOpen, isOpen } = useCoverStore();
   const { state } = useEvents();
+
+  useEffect(() => {
+    if (!isOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [isOpen]);
 
   return (
     <section
       data-aos="fade-in"
-      className={`fixed h-dvh transition-all ease-in-out duration-700 ${
-        isOpen ? "-bottom-full opacity-0" : "bottom-0 opacity-100"
+      className={`fixed transition-all ease-in-out duration-700 ${
+        isOpen ? "-bottom-full opacity-0 h-dvh" : "bottom-0 opacity-100 h-svh"
       } inset-x-0 bg-gradient-to-b from-nirvaya-dark/30 via-nirvaya-dark/0 to-nirvaya-dark/70 to-[70%] z-20 pb-16 ${
         raleway.className
       }`}
@@ -48,7 +58,10 @@ const Cover = ({ to }: Props) => {
         </p>
         <div data-aos="fade-down" data-aos-delay="600">
           <Button
-            onClick={toggleIsOpen}
+            onClick={() => {
+              toggleIsOpen();
+              actions.handlePlayPause();
+            }}
             title="Buka Undangan"
             icon={<BiEnvelopeOpen />}
           />

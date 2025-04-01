@@ -1,128 +1,87 @@
-import React from "react";
-import ButtonPrimary from "./elements/button.primary";
-import Image from "next/image";
-import { BiCalendarEvent, BiEdit } from "react-icons/bi";
-import { Swiper, SwiperSlide } from "swiper/react";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher";
-import { Theme } from "@/lib/types";
-import { Autoplay, EffectCards } from "swiper/modules";
-import { dm, marcellus } from "@/lib/fonts";
-import toast from "react-hot-toast";
-import { useRouter } from "next/router";
+import React, { useCallback } from "react";
+import { redhat } from "@/lib/fonts";
 import useDashboardStore from "@/store/useDashboardStore";
+import { BsChevronRight } from "react-icons/bs";
 
 const HeroComponent = () => {
-  const { data } = useSWR(`/api/_pb/_th?order=DESC`, fetcher);
+  const scrollTo = useCallback((section: string) => {
+    const element = document.getElementById(section);
+    if (element) {
+      const isMobile = window.innerWidth < 768;
+      const offset = isMobile ? 50 : 100;
 
-  const themes: Theme[] = data?.data || [];
-  const slideThemes = themes.filter((th) => th.phone_thumbnail !== null) || [];
-  const router = useRouter();
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
 
-  const { setSelectedPackageId } = useDashboardStore();
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
+  const { setActiveSection } = useDashboardStore();
 
   return (
     <section
       id="section1"
-      className={`w-full select-none pt-16 md:pt-20 lg:pt-24 bg-zinc-50 overflow-x-hidden`}
+      className="min-h-svh md:h-full md:min-h-[70vh] lg:h-dvh w-full mt-10 bg-white flex flex-col justify-center max-w-screen-xl mx-auto gap-10 px-4 md:px-12 lg:px-4"
     >
-      <div className="max-w-screen-2xl mx-auto flex flex-col md:grid md:grid-cols-5 gap-16 lg:gap-36 pt-16 pb-24 lg:pb-32 relative px-6 md:px-12 lg:px-24">
-        <div className="h-full flex justify-center md:col-span-2">
-          {slideThemes.length > 0 && (
-            <div className="w-[180px] lg:w-[260px]" data-aos="zoom-out-up">
-              <Swiper
-                speed={2000}
-                autoplay
-                effect="cards"
-                grabCursor={false}
-                modules={[Autoplay, EffectCards]}
-                spaceBetween={0}
-                slidesPerView={1}
-                allowTouchMove={false}
-                preventInteractionOnTransition={false}
-                preventClicks={false}
-                cardsEffect={{
-                  slideShadows: false,
-                  perSlideOffset: 15,
-                  perSlideRotate: 4,
-                }}
-              >
-                {slideThemes.map((theme, index) => (
-                  <SwiperSlide
-                    className="select-none"
-                    key={`thumbnail-${index}`}
-                  >
-                    <Image
-                      priority
-                      sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 260px"
-                      src={theme.phone_thumbnail ?? ""}
-                      alt={`Thumbnail tema undangan ${theme.name}`}
-                      width={260}
-                      height={80}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          )}
+      <div className="flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-40">
+        <h2
+          data-aos="fade-up"
+          style={{ lineHeight: "1.2" }}
+          className={`font-tan-pearl uppercase text-5xl md:text-6xl lg:text-7xl font-bold text-dashboard-dark`}
+        >
+          Moment <br />
+          Invitation
+        </h2>
+        <p
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className={`${redhat.className} text-sm text-dashboard-dark/70 max-w-lg`}
+        >
+          Buat momen spesial lebih berkesan dengan undangan digital yang
+          minimalis, praktis, cepat, dan mudah dibagikan. Kami memastikan
+          undangan dapat dikirim dalam hitungan menit, membuat acara Anda tak
+          terlupakan!
+        </p>
+      </div>
+      <div
+        data-aos="zoom-out-up"
+        data-aos-delay="400"
+        className="w-full h-40 md:h-52 lg:h-72 bg-zinc-50 relative overflow-x-hidden"
+      >
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <video
+            className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 object-cover"
+            src="/video/hero5.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+          ></video>
         </div>
-        <div className="h-full flex flex-col justify-center col-span-3">
-          <div
-            data-aos="fade-right"
-            data-aos-delay="200"
-            className={`mb-4 text-dashboard-dark uppercase flex items-center gap-x-2 ${marcellus.className}`}
-          >
-            <span className="pr-2">Praktis</span>
-            <span>
-              <div className="w-1 h-1 bg-dashboard-dark rounded"></div>
-            </span>
-            <span className="px-2">Mudah</span>
-            <span>
-              <div className="w-1 h-1 bg-dashboard-dark rounded"></div>
-            </span>
-            <span className="pl-2">Cepat</span>
-          </div>
-          <h1
-            data-aos="fade-right"
-            data-aos-delay="400"
-            className={`mb-8 text-dashboard-dark text-4xl md:text-5xl lg:text-7xl flex flex-wrap gap-x-2 ${dm.className}`}
-          >
-            Bagikan{" "}
-            <span className="flex items-center">
-              m
-              <span className="relative w-10 md:w-12 lg:w-16 aspect-square">
-                <Image
-                  fill
-                  sizes="52px"
-                  className="animate-spin-slow md:mt-1 lg:mt-2 object-contain"
-                  src="/icon.png"
-                  alt="font-moment"
-                />
-              </span>
-              men
-            </span>{" "}
-            <span>tak terlupakan bersama kami!</span>
-          </h1>
-
-          <div data-aos="fade-right" data-aos-delay="600">
-            <ButtonPrimary
-              aria-label="Buat undangan digital"
-              onClick={() => {
-                toast.success("Silahkan pilih tema terlebih dahulu", {
-                  icon: (
-                    <div className="p-1 rounded bg-dashboard-primary">
-                      <BiCalendarEvent />
-                    </div>
-                  ),
-                });
-                setSelectedPackageId(1);
-                router.push("/tema");
-              }}
-              icon={<BiEdit />}
-              title="Buat Undangan"
-            />
-          </div>
-        </div>
+      </div>
+      <div
+        data-aos="fade-up"
+        data-aos-delay="600"
+        className="flex justify-end items-center gap-4 lg:gap-40"
+      >
+        <p className={`${redhat.className} text-sm text-dashboard-dark/70`}>
+          Buat undangan digital Anda dengan cepat dan mudah.
+        </p>
+        <button
+          onClick={() => {
+            setActiveSection(`section3`);
+            scrollTo(`section3`);
+          }}
+          className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2`}
+        >
+          Lihat Undangan
+          <BsChevronRight />
+        </button>
       </div>
     </section>
   );

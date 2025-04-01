@@ -10,7 +10,7 @@ const GiftForm = () => {
 
   return (
     <div className={`${montserrat.className}`}>
-      <div className="max-w-screen-md flex flex-col gap-3 border p-4 rounded-lg">
+      <div className="max-w-screen-md flex flex-col gap-3 border p-4">
         <Input
           optional
           onChange={(e) => setForm("gift_bank_name", e.target.value)}
@@ -36,12 +36,13 @@ const GiftForm = () => {
           label="Nomor Rekening / Platform"
         />
       </div>
-      <div className="flex justify-between p-6 bg-zinc-50 mt-5 rounded-lg">
+      <div className="flex justify-between p-6 bg-zinc-50 mt-5">
         <ButtonPrimary
           size="medium"
           type="button"
           icon={<IoArrowBack />}
           title="Sebelumnya"
+          iconPosition="left"
           onClick={() => {
             setActiveStep(activeStep - 1);
           }}

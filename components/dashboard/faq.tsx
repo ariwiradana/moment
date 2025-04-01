@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { dm } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import Accordion from "./elements/accordion.button";
 import Link from "next/link";
 import useDashboardStore from "@/store/useDashboardStore";
@@ -19,56 +19,58 @@ const FaqComponent = () => {
   return (
     <section
       data-aos="fade-up"
-      className="py-16 lg:py-24 relative select-none"
+      className="py-8 md:py-10 lg:py-16 relative select-none"
       id="section6"
     >
-      <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 relative ">
-        <div data-aos="fade-up">
-          <h2
-            className={`${dm.className} text-4xl md:text-5xl lg:text-6xl font-bold`}
-          >
-            Pertanyaan yang
-            <br /> Sering Diajukan?
-          </h2>
+      <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4 relative ">
+        <div
+          className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center"
+          data-aos="fade-up"
+        >
+          <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
+            <h2
+              className={`${redhat.className} text-3xl lg:text-4xl whitespace-nowrap font-semibold text-dashboard-dark`}
+            >
+              Pertanyaan Yang <br />
+              Sering Diajukan
+            </h2>
+            <div className="h-[1px] w-full bg-dashboard-dark/10 hidden lg:block"></div>
+            <p
+              className={`${redhat.className} text-sm text-dashbbg-dashboard-dark/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
+            >
+              Pertanyaan yang sering diajukan oleh pelanggan kami
+            </p>
+          </div>
         </div>
         <div
-          className="mt-8 flex flex-col gap-4"
+          className="mt-8 flex flex-col gap-2"
           data-aos="fade-up"
           data-aos-delay="200"
         >
           <Accordion
             title="Bagaimana cara memesan undangan melalui website Moment?"
             content={
-              <ul className="list-disc ml-5 md:ml-6 flex flex-col gap-4">
-                <li className="md:text-lg">
-                  Klik tombol <span className="font-bold">Buat Undangan</span>{" "}
-                  untuk melihat tema undangan terlebih dahulu{" "}
-                  <Link
-                    aria-label="Buat undangan digital Bali"
-                    className="text-dashboard-primary underline font-medium"
-                    href={"/tema"}
-                  >
-                    Klik Disini.
-                  </Link>
+              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+                <li>
+                  Lihat <span className="font-bold">tema undangan</span> yang
+                  tersedia terlebih dahulu.
                 </li>
-                <li className="md:text-lg">
-                  Pilih tema yang sesuai dengan selera kamu.
-                </li>
-                <li className="md:text-lg">
+                <li>Pilih tema yang sesuai dengan selera kamu.</li>
+                <li>
                   Klik tombol <span className="font-bold">Preview</span> untuk
                   melihat preview tema secara langsung.
                 </li>
-                <li className="md:text-lg">
-                  Klik <span className="font-bold">Pilih Tema</span> untuk
-                  memilih tema undangan yang diinginkan.
+                <li>
+                  Klik <span className="font-bold">Pesan Sekarang</span> untuk
+                  memesan tema undangan yang diinginkan.
                 </li>
-                <li className="md:text-lg">
-                  Undangan yang dipilih akan masuk melalui{" "}
+                <li>
+                  Undangan yang dipesan akan masuk melalui{" "}
                   <span className="font-bold">Pesan WhatsApp</span> secara
                   otomatis.
                 </li>
-                <li className="md:text-lg">
-                  Menunggu <span className="font-bold">Balasan</span> dari Admin
+                <li>
+                  Menunggu <span className="font-bold">balasan</span> dari Admin
                   Moment.
                 </li>
               </ul>
@@ -77,13 +79,13 @@ const FaqComponent = () => {
           <Accordion
             title="Bagaimana cara melakukan pembayaran dan konfirmasi pembayaran?"
             content={
-              <ul className="list-disc ml-5 md:ml-6 flex flex-col gap-4">
-                <li className="md:text-lg">
+              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+                <li>
                   Silahkan melakukan pembayaran sesuai dengan harga dan paket
                   tema yang dipilih melalui{" "}
-                  <span className="font-bold">Nomor Rekening</span> kami
+                  <span className="font-bold">Nomor Rekening</span> kami.
                 </li>
-                <li className="md:text-lg">
+                <li>
                   Setelah melakukan pembayaran, silahkan mengirimkan bukti
                   pembayaran melalui{" "}
                   <span className="font-bold">Pesan WhatsApp</span> kami atau{" "}
@@ -101,8 +103,8 @@ const FaqComponent = () => {
           <Accordion
             title="Berapa lama estimasi pengerjaan undangan?"
             content={
-              <ul className="list-disc ml-5 md:ml-6 flex flex-col gap-4">
-                <li className="md:text-lg">
+              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+                <li>
                   Undangan akan dibuat dengan estimasi{" "}
                   <span className="font-bold">1 - 2 jam</span> setelah melakukan
                   konfirmasi pembayaran dan mengisi data yang diperlukan.
@@ -113,8 +115,8 @@ const FaqComponent = () => {
           <Accordion
             title="Bagaimana cara mengirim foto dan video dengan kualitas yang baik?"
             content={
-              <ul className="list-disc ml-5 md:ml-6 flex flex-col gap-4">
-                <li className="md:text-lg">
+              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+                <li>
                   Pengiriman Foto dan Video dikirimkan melalui{" "}
                   <span className="font-bold">
                     Google Drive atau WhatsApp Document.
@@ -126,8 +128,8 @@ const FaqComponent = () => {
           <Accordion
             title="Apakah undangan dapat direvisi?"
             content={
-              <ul className="list-disc ml-5 md:ml-6 flex flex-col gap-4">
-                <li className="md:text-lg">
+              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+                <li>
                   Kami siap untuk membantu revisi undangan kamu apabila terdapat
                   kesalahan data{" "}
                   <span className="font-bold">
@@ -140,14 +142,14 @@ const FaqComponent = () => {
           <Accordion
             title="Bagaimana cara menyebarkan undangan?"
             content={
-              <ul className="list-disc ml-5 md:ml-6 flex flex-col gap-4">
-                <li className="md:text-lg">
+              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+                <li>
                   Setelah undangan berhasil dibuat, Admin Moment akan{" "}
                   <span className="font-bold">
                     memberikan link tamu undangan.
                   </span>{" "}
                 </li>
-                <li className="md:text-lg">
+                <li>
                   Cukup <span className="font-bold">bagikan</span> undangan kamu
                   pada media sosial apapun dan undangan siap disebar.
                 </li>

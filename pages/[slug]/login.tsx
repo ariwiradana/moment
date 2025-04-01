@@ -1,14 +1,14 @@
-import ButtonPrimary from "@/components/admin/elements/button.primary";
 import Input from "@/components/admin/elements/input";
 import { afacad } from "@/lib/fonts";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import React from "react";
-import { BiLogIn } from "react-icons/bi";
+import { BiSolidLogIn } from "react-icons/bi";
 import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { useClientLogin } from "@/hooks/dashboard/useClientLogin";
 import Seo from "@/components/dashboard/elements/seo";
+import ButtonPrimary from "@/components/dashboard/elements/button.primary";
 
 interface SlugLoginProps {
   slug: string;
@@ -27,7 +27,7 @@ const SlugLogin = ({ slug }: SlugLoginProps) => {
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
       <section className="min-h-dvh w-full flex justify-center items-center p-8 md:p-16 bg-white md:bg-gray-50">
-        <div className="flex flex-col justify-center max-w-md w-full bg-white md:shadow-lg md:p-8 rounded-lg">
+        <div className="flex flex-col justify-center max-w-md w-full bg-white md:shadow-sm md:p-8">
           <div className="flex justify-center">
             <div className="relative w-20 md:w-24 aspect-video -ml-[6px]">
               <Image
@@ -63,13 +63,13 @@ const SlugLogin = ({ slug }: SlugLoginProps) => {
               label="Password"
               inputSize="medium"
             />
-            <div className="mt-2 w-full">
+            <div className="mt-2">
               <ButtonPrimary
                 isloading={state.isLoading}
                 type="submit"
-                className="flex justify-center w-full"
                 title="Login"
-                icon={<BiLogIn />}
+                className="w-full justify-center"
+                icon={<BiSolidLogIn />}
               />
             </div>
           </form>

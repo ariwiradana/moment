@@ -5,6 +5,7 @@ export interface Theme {
   slug: string;
   name: string;
   category?: string;
+  description?: string;
   is_preview?: boolean;
   created_at?: Date | string;
   updated_at?: Date | string;
@@ -75,10 +76,10 @@ export interface Client {
   music?: string | File | null;
   status?: "paid" | "unpaid" | "completed" | null;
   theme_id: number | null;
-  theme_category_id: number | null;
+  theme_category_id: number | null | number[];
   package_id: number | null;
   package?: Package;
-  theme_category?: Package;
+  theme_category?: ThemeCategory;
   theme?: Theme | null;
   cover: null | string;
   seo: null | string;

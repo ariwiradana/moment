@@ -1,76 +1,72 @@
-import { afacad } from "@/lib/fonts";
+import { redhat } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
 interface ButtonPrimaryProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  title?: string | undefined;
+  title: string;
   className?: string | "";
   icon?: ReactNode;
+  size?: "small" | "medium" | "large";
   iconPosition?: "left" | "right";
-  size?: "extrasmall" | "small" | "medium" | "large";
   isloading?: boolean;
 }
 
 const ButtonPrimary: FC<ButtonPrimaryProps> = ({
-  title = undefined,
+  title,
   className = "",
   icon,
   size = "large",
   isloading = false,
-  iconPosition = "left",
+  iconPosition = "right",
   ...props
 }) => {
-  const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
+  const buttonStyles = (size: "small" | "medium" | "large") => {
     switch (size) {
-      case "extrasmall":
-        return "px-2 py-1 text-sm gap-x-1";
       case "small":
-        return "px-3 py-2 text-sm gap-x-2";
+        return "px-4 py-2 text-xs gap-x-2";
       case "medium":
-        return "px-4 py-3 text-base gap-x-3";
+        return "px-4 py-3 text-xs gap-x-3";
       case "large":
-        return "px-6 py-3 text-lg gap-x-3";
+        return "px-6 py-4 text-sm gap-x-4";
     }
   };
-  const iconStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
+
+  const iconStyles = (size: "small" | "medium" | "large") => {
     switch (size) {
-      case "extrasmall":
-        return "text-sm";
       case "small":
-        return "text-base";
+        return "text-xs";
       case "medium":
-        return "text-lg";
+        return "text-xs";
       case "large":
-        return "text-xl";
+        return "text-lg";
     }
   };
 
   return (
     <button
       {...props}
-      disabled={isloading ? true : false}
-      className={`${afacad.className} ${
+      className={`${redhat.className} ${
         className ?? ""
-      } flex items-center text-dashboard-dark justify-center rounded whitespace-nowrap font-medium bg-opacity-95 hover:bg-opacity-100 bg-dashboard-primary transition duration-500 ${
-        !title ? "p-2 md:p-2 lg:p-2" : buttonStyles(size)
-      } ${
+      } flex items-center text-white font-medium rounded-full bg-dashboard-dark transition duration-200 whitespace-nowrap hover:bg-admin-hover-dark justify-start ${buttonStyles(
+        size
+      )} ${
         isloading || props.disabled
-          ? "pointer-events-none opacity-40 cursor-not-allowed"
-          : "opacity-100"
+          ? "pointer-events-none bg-opacity-50 cursor-not-allowed"
+          : ""
       }`}
     >
-      {icon && iconPosition === "left" ? (
-        <span className={iconStyles(size)}>
+      {iconPosition === "left" && (
+        <span className={`${iconStyles(size)}`}>
           {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
         </span>
-      ) : null}
-      {title && <span>{title}</span>}
-      {icon && iconPosition === "right" ? (
-        <span className={iconStyles(size)}>
+      )}
+      <span>{title}</span>
+      {iconPosition === "right" && (
+        <span className={`${iconStyles(size)}`}>
           {isloading ? <BiLoaderAlt className="animate-spin" /> : icon}
         </span>
-      ) : null}
+      )}
     </button>
   );
 };
