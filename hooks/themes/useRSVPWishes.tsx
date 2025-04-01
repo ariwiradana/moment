@@ -47,19 +47,21 @@ const useRSVPWishes = (icon: ReactNode) => {
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
 
-  const { data: fetchedWishes, mutate } = useSWR(
+  const { mutate } = useSWR<{
+    data: Review[];
+    total_rows: number;
+  }>(
     client?.id
       ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
       : null,
-    fetcher
-  );
-
-  useEffect(() => {
-    if (fetchedWishes && fetchedWishes.data.length > 0) {
-      setWishes(fetchedWishes.data);
-      setTotalRows(fetchedWishes?.total_rows);
+    fetcher,
+    {
+      onSuccess: (data) => {
+        setWishes(data.data);
+        setTotalRows(data?.total_rows);
+      },
     }
-  }, [fetchedWishes]);
+  );
 
   const handleChange = (name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));

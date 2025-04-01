@@ -3,7 +3,7 @@ import Layout from "../layout";
 import Cover from "./layouts/cover";
 import HeroComponent from "./layouts/hero";
 import ThankyouComponent from "./layouts/thankyou";
-// import RSVPWishes from "./layouts/rsvp.wishes";
+import RSVPWishes from "./layouts/rsvp.wishes";
 import MusicComponent from "./layouts/music";
 import EventsComponent from "./layouts/events";
 import ParticipantsComponent from "./layouts/participants";
@@ -33,7 +33,7 @@ const Samaya: FC<Props> = (props) => {
             <EventsComponent />
             <Photos />
             <Gift />
-            {/* <RSVPWishes /> */}
+            <RSVPWishes />
             <ThankyouComponent />
           </div>
         )}

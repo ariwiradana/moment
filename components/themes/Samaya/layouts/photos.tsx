@@ -113,7 +113,7 @@ const Photos = () => {
                           actions.setIsOpen(true);
                           actions.setImageIndex(index);
                         }}
-                        className="hover:scale-[0.99] transition-transform ease-in-out duration-500"
+                        className="hover:scale-[0.99] transition-transform ease-in-out duration-500 bg-white/5"
                         src={img}
                         alt={`gallery-img-${index + 1}`}
                         width={360}
