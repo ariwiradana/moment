@@ -82,8 +82,7 @@ const EventsComponent = () => {
                   </p>
 
                   <p className="text-xs md:text-sm mt-4 font-medium max-w-sm">
-                    {event.address} Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Praesentium, unde?
+                    {event.address}
                   </p>
                   {state.timeRemainings.length > 0 && (
                     <div className="grid grid-cols-4 text-samaya-dark my-6 divide-x divide-samaya-dark/10 border-x border-x-samaya-dark/10">
