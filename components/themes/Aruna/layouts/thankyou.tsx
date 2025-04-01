@@ -15,7 +15,7 @@ const ThankyouComponent = () => {
   const { client } = useClientStore();
   const { state: participantState } = useParticipants();
   return (
-    <section className="relative flex flex-col justify-center bg-gradient-to-b from-aruna-dark via-[20%] via-aruna-dark/50 to-[80%] to-aruna-dark/90">
+    <section className="relative flex flex-col justify-center bg-gradient-to-b from-aruna-dark/10 via-aruna-dark/50 to-aruna-dark/90">
       <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center">
         <h1
           data-aos="fade-up"
