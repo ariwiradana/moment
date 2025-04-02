@@ -2,7 +2,7 @@ import { redhat } from "@/lib/fonts";
 import { Client } from "@/lib/types";
 import { NextPage } from "next";
 import Link from "next/link";
-import { BsCart } from "react-icons/bs";
+import { BsCart, BsEye } from "react-icons/bs";
 import { sosmedURLs } from "@/constants/sosmed";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { useRef } from "react";
@@ -13,11 +13,6 @@ interface Props {
 }
 
 const ThemeCard: NextPage<Props> = ({ client }) => {
-  const message = `Halo, saya tertarik untuk memilih tema undangan ${client.theme?.name}`;
-  const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
-    message
-  )}`;
-
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = () => {
@@ -34,11 +29,7 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
   };
 
   return (
-    <Link
-      href={`/${client.slug}`}
-      target="_blank"
-      aria-label={`Link Preview Tema ${client.theme?.name}`}
-    >
+    <div>
       <div
         className="relative"
         onMouseEnter={handleMouseEnter}
@@ -71,15 +62,19 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
           </h6>
         )}
 
-        <Link href={whatsappLink} target="_blank">
+        <Link
+          href={`/${client.slug}`}
+          aria-label={`Link Preview ${client.theme?.name}`}
+          target="_blank"
+        >
           <ButtonOutlinedLight
             size="small"
-            title="Pesan Sekarang"
-            icon={<BsCart />}
+            title="Live Preview"
+            icon={<BsEye />}
           />
         </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

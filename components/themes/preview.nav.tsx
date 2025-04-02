@@ -34,7 +34,7 @@ const PreviewNav = () => {
                 className={`${redhat.className} font-medium text-sm lg:text-base text-white`}
               >
                 {client.is_preview
-                  ? `Preview Tema ${client.theme?.name}`
+                  ? `Tema ${client.theme?.name}`
                   : `Preview Undangan ${client.theme_category?.name}`}
               </h1>
             </li>
@@ -46,7 +46,7 @@ const PreviewNav = () => {
                   }
                   className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
                 >
-                  Pesan
+                  Pesan Sekarang
                   <BsCart />
                 </button>
               </li>
