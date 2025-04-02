@@ -23,10 +23,10 @@ const ThankyouComponent = () => {
             <div className="relative w-[80vw] md:w-[400px] aspect-[3/4]">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-samaya-dark z-10 to-[90%]"></div>
               <Image
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                 alt="Foto Cover Last"
                 fill
                 priority
-                sizes="600px"
                 className="object-cover transform bg-white/5 translate-y-0 lg:translate-y-0 transition-transform"
                 src={client?.cover as string}
               />

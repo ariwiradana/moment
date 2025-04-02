@@ -12,10 +12,7 @@ import {
 } from "react-icons/hi2";
 
 const ClientComponent = () => {
-  const { data } = useSWR(
-    "/api/_pb/_c?status=completed&is_preview=false",
-    fetcher
-  );
+  const { data } = useSWR("/api/_pb/_c", fetcher);
 
   const clients: Client[] = data?.data || [];
 

@@ -3,7 +3,6 @@ import Layout from "../layout";
 import PreviewNav from "../preview.nav";
 import Image from "next/image";
 import { roboto } from "@/lib/fonts";
-import { getParticipantNames } from "@/utils/getParticipantNames";
 import { getEventNames } from "@/utils/getEventNames";
 import dynamic from "next/dynamic";
 import useMusic from "@/hooks/themes/useMusic";
@@ -61,16 +60,10 @@ const Aruna: FC<Props> = (props) => {
                   <h1
                     data-aos="fade-up"
                     data-aos-delay="800"
-                    className={`font-high-summit text-white text-4xl md:text-5xl leading-10 2xl:text-6xl mb-2`}
+                    className={`font-high-summit text-white text-4xl md:text-5xl 2xl:text-6xl leading-10 mb-2`}
                   >
-                    {client?.theme_category?.name === "Pernikahan" ? (
-                      <>
-                        {participantState.groom?.nickname}
-                        <br />& {participantState.bride?.nickname}
-                      </>
-                    ) : (
-                      <>{getParticipantNames(client?.participants || [])}</>
-                    )}
+                    {participantState.groom?.nickname} &{" "}
+                    {participantState.bride?.nickname}
                   </h1>
                 </div>
                 {client?.cover && (

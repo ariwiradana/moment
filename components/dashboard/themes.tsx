@@ -2,17 +2,13 @@ import React, { FC, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { redhat } from "@/lib/fonts";
-import Link from "next/link";
-import { Theme, ThemeCategory } from "@/lib/types";
-import { BsCart } from "react-icons/bs";
-import { sosmedURLs } from "@/constants/sosmed";
-import { formatToRupiah } from "@/utils/formatToRupiah";
+import { Client, ThemeCategory } from "@/lib/types";
 import ThemeShimmer from "./elements/theme.shimmer";
-import ButtonPrimary from "./elements/button.primary";
+import ThemeCard from "./partials/theme.card";
 
 const ThemeComponent: FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
-  const [themes, setThemes] = useState<Theme[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [themeCategories, setThemeCategories] = useState<ThemeCategory[]>([]);
 
   useSWR<{ data: ThemeCategory[] }>(`/api/_pb/_tc`, fetcher, {
@@ -26,19 +22,19 @@ const ThemeComponent: FC = () => {
     },
   });
 
-  const { isLoading } = useSWR<{ data: Theme[] }>(
+  const { isLoading } = useSWR<{ data: Client[] }>(
     activeCategoryId
-      ? `/api/_pb/_th?is_preview=true&theme_category_id=${activeCategoryId}&order=DESC`
+      ? `/api/_pb/_c?is_preview=true&theme_category_id=${activeCategoryId}&order=DESC`
       : null,
     fetcher,
     {
       onSuccess: (data) => {
         if (data.data) {
-          setThemes(data.data);
+          setClients(data.data);
         }
       },
       onError: () => {
-        setThemes([]);
+        setClients([]);
       },
     }
   );
@@ -108,55 +104,12 @@ const ThemeComponent: FC = () => {
                 <ThemeShimmer />
               </>
             ) : (
-              themes.map((t) => {
-                const message = `Halo, saya tertarik untuk memilih tema undangan ${t?.name}`;
-                const whatsappLink = `${
-                  sosmedURLs.whatsapp
-                }?text=${encodeURIComponent(message)}`;
-
+              clients.map((client) => {
                 return (
-                  <div
-                    className="bg-white p-6"
-                    key={`Tema Undangan ${t?.name}`}
-                  >
-                    <div className="relative">
-                      <video
-                        poster={`/images/${t.slug}/thumbnail.png`}
-                        className="min-w-full min-h-full"
-                        src={`/video/themes/${t?.slug}.webm`}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                      ></video>
-                    </div>
-                    <div className="flex flex-col items-center mt-2 md:mt-4">
-                      <h5
-                        className={`${redhat.className} text-lg text-dashboard-dark font-semibold mb-1 md:mb-2`}
-                      >
-                        {t.name}
-                      </h5>
-                      <p
-                        className={`${redhat.className} text-xs text-dashboard-dark/70`}
-                      >
-                        Mulai dari
-                      </p>
-                      {t.packages && (
-                        <h6
-                          className={`${redhat.className} text-lg text-dashboard-dark font-medium mb-2 md:mb-4 leading-6`}
-                        >
-                          {formatToRupiah(t.packages[0].price)}
-                        </h6>
-                      )}
-                      <Link href={whatsappLink} target="_blank">
-                        <ButtonPrimary
-                          size="small"
-                          title="Pesan Sekarang"
-                          icon={<BsCart />}
-                        />
-                      </Link>
-                    </div>
-                  </div>
+                  <ThemeCard
+                    client={client}
+                    key={`Tema Undangan ${client?.theme?.name}`}
+                  />
                 );
               })
             )}

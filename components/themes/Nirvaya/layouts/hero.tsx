@@ -28,10 +28,10 @@ const Hero = () => {
             <div className="absolute inset-0 z-0">
               <Image
                 fill
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                 quality={100}
                 alt={`Hero Cover`}
                 priority
-                sizes="100vw"
                 className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
                 src={client?.cover}
               />
@@ -58,11 +58,11 @@ const Hero = () => {
               >
                 <div className="absolute inset-0 z-0">
                   <Image
+                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                     fill
                     quality={100}
                     alt={`Hero Image ${index + 1}`}
                     priority
-                    sizes="100vw"
                     className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
                     src={image}
                   />

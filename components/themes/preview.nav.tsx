@@ -18,8 +18,8 @@ const PreviewNav = () => {
   if (client?.status === "unpaid" || client?.is_preview)
     return (
       <>
-        <nav className="fixed inset-x-0 z-[999]" data-aos="fade-down">
-          <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 py-4 bg-dashboard-dark/50 backdrop-blur-sm">
+        <nav className="fixed inset-x-0 bottom-0 z-[999]" data-aos="fade-up">
+          <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 py-4 bg-dashboard-dark/80 backdrop-blur-sm">
             <li className="flex items-center gap-x-3">
               <div className="relative w-5 md:w-6 aspect-square">
                 <Image
@@ -31,7 +31,7 @@ const PreviewNav = () => {
                 />
               </div>
               <h1
-                className={`${redhat.className} font-medium text-base md:text-lg lg:text-xl text-white`}
+                className={`${redhat.className} font-medium text-sm lg:text-base text-white`}
               >
                 {client.is_preview
                   ? `Preview Tema ${client.theme?.name}`

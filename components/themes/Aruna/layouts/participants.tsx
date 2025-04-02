@@ -67,6 +67,8 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
         <div className="w-[100vw] h-svh lg:w-[400px] md:h-auto md:aspect-[2/3] relative rounded-tl-[140px]">
           {props.data.image && (
             <ImageShimmer
+              quality={100}
+              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
               priority
               src={props.data.image as string}
               fill

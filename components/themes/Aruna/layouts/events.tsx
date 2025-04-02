@@ -14,9 +14,7 @@ const EventsComponent = () => {
     return (
       <section className="relative overflow-hidden z-0 bg-aruna-dark">
         <div className="flex flex-col z-10 items-center justify-center">
-          <div
-            className={`flex flex-wrap justify-center relative z-20 gap-6`}
-          >
+          <div className={`flex flex-wrap justify-center relative z-20 gap-6`}>
             {eventState.events.map((event, index) => (
               <div
                 data-aos="zoom-out-up"
@@ -27,6 +25,8 @@ const EventsComponent = () => {
                   <div className="absolute inset-0 bg-gradient-to-b from-white/0 from-[50%] to-white z-10"></div>
                   {event.image && (
                     <ImageShimmer
+                      quality={100}
+                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                       priority
                       alt={`Acara ${event.name}`}
                       fill

@@ -90,7 +90,7 @@ const ParticipantItem = ({
       >
         <Image
           priority
-          sizes="500px"
+          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
           alt={`Participant ${participant.nickname}`}
           src={(participant.image as string) || ""}
           fill

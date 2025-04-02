@@ -42,11 +42,11 @@ const HeroComponent = () => {
               >
                 <div className="absolute inset-0 z-0">
                   <ImageShimmer
+                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                     fill
                     quality={100}
                     alt={`hero-img-${index}`}
                     priority
-                    sizes="100vw"
                     className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
                     src={image as string}
                   />

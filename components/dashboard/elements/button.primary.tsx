@@ -48,7 +48,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
       {...props}
       className={`${redhat.className} ${
         className ?? ""
-      } flex items-center text-white font-medium rounded-full bg-dashboard-dark transition duration-200 whitespace-nowrap hover:bg-admin-hover-dark justify-start ${buttonStyles(
+      } flex items-center text-white font-medium border border-dashboard-dark rounded-full bg-dashboard-dark transition duration-200 whitespace-nowrap hover:bg-admin-hover-dark justify-start ${buttonStyles(
         size
       )} ${
         isloading || props.disabled

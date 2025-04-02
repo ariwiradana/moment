@@ -37,7 +37,8 @@ const Cover: FC<Props> = (props) => {
               className="h-dvh w-full absolute inset-0 z-10"
             >
               <Image
-                sizes="100vw"
+                quality={100}
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                 priority
                 fill
                 src={client?.cover as string}
