@@ -10,7 +10,7 @@ import ButtonOutlinedPrimary from "../elements/button.outlined.primary";
 import useScreenSize from "@/hooks/useScreenSize";
 
 const Events = () => {
-  const { state: eventState } = useEvents();
+  const { state: eventState, actions } = useEvents();
   const { isDesktop } = useScreenSize();
 
   return (
@@ -83,11 +83,13 @@ const Events = () => {
                       </Link>
                       {isPrimary ? (
                         <ButtonOutlinedLight
+                          onClick={() => actions.handleAddToCalendar(event)}
                           title="Simpan Tanggal"
                           icon={<BiCalendar />}
                         />
                       ) : (
                         <ButtonOutlinedPrimary
+                          onClick={() => actions.handleAddToCalendar(event)}
                           title="Simpan Tanggal"
                           icon={<BiCalendar />}
                         />

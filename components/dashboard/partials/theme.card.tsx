@@ -2,12 +2,11 @@ import { redhat } from "@/lib/fonts";
 import { Client } from "@/lib/types";
 import { NextPage } from "next";
 import Link from "next/link";
-import ButtonPrimary from "../elements/button.primary";
-import { BsCart, BsEye } from "react-icons/bs";
+import { BsCart } from "react-icons/bs";
 import { sosmedURLs } from "@/constants/sosmed";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { useRef } from "react";
-import ButtonSecondary from "../elements/button.secondary";
+import ButtonOutlinedLight from "../elements/button.outlined.white";
 
 interface Props {
   client: Client;
@@ -35,7 +34,11 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
   };
 
   return (
-    <div className="bg-white px-3 pt-3 pb-4 md:p-6">
+    <Link
+      href={`/${client.slug}`}
+      target="_blank"
+      aria-label={`Link Preview Tema ${client.theme?.name}`}
+    >
       <div
         className="relative"
         onMouseEnter={handleMouseEnter}
@@ -53,38 +56,30 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
       </div>
       <div className="flex flex-col items-center mt-2 md:mt-4">
         <h5
-          className={`${redhat.className} text-lg text-dashboard-dark font-semibold mb-1 md:mb-2`}
+          className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
         >
           {client.theme?.name}
         </h5>
-        <p className={`${redhat.className} text-xs text-dashboard-dark/70`}>
+        <p className={`${redhat.className} text-xs text-white/70`}>
           Mulai dari
         </p>
         {client.package && (
           <h6
-            className={`${redhat.className} text-lg text-dashboard-dark font-medium mb-2 md:mb-4 leading-6`}
+            className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
           >
             {formatToRupiah(client.package.price)}
           </h6>
         )}
-        <Link href={`/${client.slug}`} target="_blank" className="w-full">
-          <ButtonSecondary
-            size="small"
-            title="Live Preview"
-            className="w-full justify-center"
-            icon={<BsEye />}
-          />
-        </Link>
-        <Link href={whatsappLink} className="w-full mt-2" target="_blank">
-          <ButtonPrimary
-            className="w-full justify-center"
+
+        <Link href={whatsappLink} target="_blank">
+          <ButtonOutlinedLight
             size="small"
             title="Pesan Sekarang"
             icon={<BsCart />}
           />
         </Link>
       </div>
-    </div>
+    </Link>
   );
 };
 
