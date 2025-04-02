@@ -33,7 +33,7 @@ const ClientComponent = () => {
             speed={1000}
             breakpoints={{
               0: {
-                slidesPerView: 1, // Mobile (small screens)
+                slidesPerView: 2, // Mobile (small screens)
               },
               480: {
                 slidesPerView: 2, // Small mobile screens (e.g., older phones)

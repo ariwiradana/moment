@@ -35,7 +35,7 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
   };
 
   return (
-    <div className="bg-white p-6">
+    <div className="bg-white px-3 pt-3 pb-4 md:p-6">
       <div
         className="relative"
         onMouseEnter={handleMouseEnter}
