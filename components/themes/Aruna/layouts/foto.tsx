@@ -25,8 +25,8 @@ const Component = () => {
       images?.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
     [images]
   );
-  const gridImages = useMemo(() => images.slice(0, 12), [images]);
-  const slideImages = useMemo(() => images?.slice(12), [images]);
+  const gridImages = useMemo(() => images.slice(0, 6), [images]);
+  const slideImages = useMemo(() => images?.slice(6), [images]);
 
   const gotoPrevious = useCallback(() => {
     if (imageIndex > 0) setImageIndex((prev) => prev - 1);
@@ -57,10 +57,6 @@ const Component = () => {
         return "col-span-2 row-span-2 aspect-square";
       case 7:
         return "col-span-2 row-span-2 aspect-square";
-      case 9:
-        return "col-span-2 row-span-2 aspect-square";
-      case 10:
-        return "col-span-1 row-span-2";
       default:
         return "col-span-1 row-span-1 aspect-square";
     }
@@ -134,55 +130,59 @@ const Component = () => {
               Galeri {getParticipantNames(participants)}
             </p>
           )}
-          <div
-            className={`mt-10 grid grid-cols-4 px-2 ${
-              slideImages?.length > 0 ? "grid-rows-8" : "grid-rows-6"
-            } gap-2`}
-            data-aos="zoom-out-up"
-          >
-            {gridImages?.map((img, index) => (
-              <div
-                key={`gallery-${index + 1}`}
-                onClick={() => handleToggleLightbox(img)}
-                className={`${gridSpan(index)} w-full relative overflow-hidden`}
-              >
-                <Image
-                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                  priority={index < 2}
-                  src={img}
-                  fill
-                  alt={`gallery-${index + 1}`}
-                  className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-2 px-2" data-aos="zoom-out-up">
-            <Swiper
-              spaceBetween={8}
-              modules={[Autoplay]}
-              speed={2000}
-              autoplay={{
-                delay: 2000,
-              }}
+          <div data-aos="zoom-out-up">
+            <div
+              className={`mt-10 grid grid-cols-4 px-2 ${
+                slideImages?.length > 0 ? "grid-rows-4" : "grid-rows-4"
+              } gap-2`}
             >
-              {slideImages.map((img, index) => (
-                <SwiperSlide
+              {gridImages?.map((img, index) => (
+                <div
+                  key={`gallery-${index + 1}`}
                   onClick={() => handleToggleLightbox(img)}
-                  key={`Slide Image ${index}`}
+                  className={`${gridSpan(
+                    index
+                  )} w-full relative overflow-hidden`}
                 >
-                  <div className="w-full relative aspect-[4/2] overflow-hidden">
-                    <Image
-                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                      src={img}
-                      fill
-                      alt={`slide-${index + 1}`}
-                      className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
-                    />
-                  </div>
-                </SwiperSlide>
+                  <Image
+                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                    priority={index < 2}
+                    src={img}
+                    fill
+                    alt={`gallery-${index + 1}`}
+                    className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
+                  />
+                </div>
               ))}
-            </Swiper>
+            </div>
+            <div className="mt-2 px-2">
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={8}
+                modules={[Autoplay]}
+                speed={2000}
+                autoplay={{
+                  delay: 2000,
+                }}
+              >
+                {slideImages.map((img, index) => (
+                  <SwiperSlide
+                    onClick={() => handleToggleLightbox(img)}
+                    key={`Slide Image ${index}`}
+                  >
+                    <div className="w-full relative aspect-square overflow-hidden">
+                      <Image
+                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                        src={img}
+                        fill
+                        alt={`slide-${index + 1}`}
+                        className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </div>
         </div>
       </section>
