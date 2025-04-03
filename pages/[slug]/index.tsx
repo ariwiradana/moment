@@ -56,7 +56,7 @@ const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
         <div data-aos="fade-up">
           <SplitText
             text={seo.name}
-            className={`text-3xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
+            className={`text-3xl tracking-[1px] lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
             delay={150}
             animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
             animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}

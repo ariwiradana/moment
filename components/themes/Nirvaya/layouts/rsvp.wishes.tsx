@@ -1,5 +1,5 @@
 import React, { FC, memo, useCallback } from "react";
-import { BiCheck, BiSend } from "react-icons/bi";
+import { BiCheck, BiSend, BiTime } from "react-icons/bi";
 import { raleway } from "@/lib/fonts";
 import { Pagination } from "@mui/material";
 import { Review } from "@/lib/types";
@@ -10,6 +10,7 @@ import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
 import Button from "../elements/button";
 import { getInitial } from "@/utils/getInitial";
+import moment from "moment";
 
 const WishItem = memo(
   ({
@@ -45,6 +46,14 @@ const WishItem = memo(
       <p className="text-white tracking-[1px] md:text-xs text-[10px] mt-2">
         {wish.wishes}
       </p>
+      <div className="flex items-center gap-x-1 text-white/80 mt-1">
+        <BiTime className="text-xs md:text-sm" />
+        <p
+          className={`${raleway.className} text-[10px] md:text-xs tracking-[1px]`}
+        >
+          {moment(wish.created_at).fromNow()}
+        </p>
+      </div>
     </div>
   )
 );
