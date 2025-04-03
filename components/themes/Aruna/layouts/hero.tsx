@@ -95,58 +95,60 @@ const HeroComponent = () => {
           isOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        {isOpen && (
-          <div className="relative z-40 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark h-screen flex flex-col py-[60px] md:py-[100px] px-6 justify-between items-center">
-            <div className="text-center">
-              <p
-                data-aos="fade-up"
-                data-aos-delay="200"
-                className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[4px] ${roboto.className}`}
-              >
-                Undangan {getEventNames(events)}
-              </p>
-              <h1
-                data-aos="fade-up"
-                data-aos-delay="400"
-                className={`font-high-summit text-white text-4xl md:text-5xl 2xl:text-6xl leading-10 mt-4`}
-              >
-                {participant.groom?.nickname} & {participant.bride?.nickname}
-              </h1>
-            </div>
-            <div className="text-center flex flex-col items-center">
-              <div data-aos="fade-down" data-aos-delay="800">
-                <div
-                  className={`w-full flex items-center gap-x-5 md:gap-x-6 transform transition-all duration-500 ease-in-out ${
-                    fade
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-10 translate-y-1"
-                  }`}
+        <div className="h-svh w-full">
+          {isOpen && (
+            <div className="relative z-40 bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark h-screen flex flex-col py-[60px] md:py-[100px] px-6 justify-between items-center">
+              <div className="text-center">
+                <p
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                  className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[4px] ${roboto.className}`}
                 >
-                  <p
-                    className={`${roboto.className} text-white text-[10px] md:text-xs tracking-[4px] uppercase`}
-                  >
-                    {events[currentIndex].name}
-                  </p>
-                  <div className="h-[2px] w-[2px] min-h-[2px] min-w-[2px] rounded-full bg-white"></div>
-                  <p
-                    className={`${roboto.className} text-white text-[10px] md:text-xs tracking-[4px] uppercase`}
-                  >
-                    {moment(events[currentIndex].date).format(
-                      "DD / MMM / YYYY"
-                    )}
-                  </p>
-                </div>
+                  Undangan {getEventNames(events)}
+                </p>
+                <h1
+                  data-aos="fade-up"
+                  data-aos-delay="400"
+                  className={`font-high-summit text-white text-4xl md:text-5xl 2xl:text-6xl leading-10 mt-4`}
+                >
+                  {participant.groom?.nickname} & {participant.bride?.nickname}
+                </h1>
               </div>
-              <p
-                data-aos="fade-down"
-                data-aos-delay="1000"
-                className={`text-white/70 text-[10px] md:text-xs text-center mt-4 max-w-sm mx-auto ${roboto.className}`}
-              >
-                {client?.opening_title}, {client?.opening_description}
-              </p>
+              <div className="text-center flex flex-col items-center">
+                <div data-aos="fade-down" data-aos-delay="800">
+                  <div
+                    className={`w-full flex items-center gap-x-5 md:gap-x-6 transform transition-all duration-500 ease-in-out ${
+                      fade
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-10 translate-y-1"
+                    }`}
+                  >
+                    <p
+                      className={`${roboto.className} text-white text-[10px] md:text-xs tracking-[4px] uppercase`}
+                    >
+                      {events[currentIndex].name}
+                    </p>
+                    <div className="h-[2px] w-[2px] min-h-[2px] min-w-[2px] rounded-full bg-white"></div>
+                    <p
+                      className={`${roboto.className} text-white text-[10px] md:text-xs tracking-[4px] uppercase`}
+                    >
+                      {moment(events[currentIndex].date).format(
+                        "DD / MMM / YYYY"
+                      )}
+                    </p>
+                  </div>
+                </div>
+                <p
+                  data-aos="fade-down"
+                  data-aos-delay="1000"
+                  className={`text-white/70 text-[10px] md:text-xs text-center mt-4 max-w-sm mx-auto ${roboto.className}`}
+                >
+                  {client?.opening_title}, {client?.opening_description}
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );
