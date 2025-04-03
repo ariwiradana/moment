@@ -57,7 +57,7 @@ const Cover = ({ to, actions }: Props) => {
           alt="cover"
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-nirvaya-dark/30 via-nirvaya-dark/0 to-nirvaya-dark/70 to-[70%] z-20"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-20"></div>
       <div className="flex flex-col justify-between items-center h-full w-full relative z-30">
         <div>
           <p
@@ -112,7 +112,11 @@ const Cover = ({ to, actions }: Props) => {
             Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
             acara {getEventNames(events || [])} kami.
           </p>
-          <div className="flex justify-center" data-aos="fade-down" data-aos-delay="600">
+          <div
+            className="flex justify-center"
+            data-aos="fade-down"
+            data-aos-delay="600"
+          >
             <Button
               onClick={() => {
                 toggleIsOpen();

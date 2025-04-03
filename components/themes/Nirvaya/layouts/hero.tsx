@@ -99,7 +99,7 @@ const Hero = () => {
                 <div>
                   <p
                     data-aos="fade-down"
-                    data-aos-delay="600"
+                    data-aos-delay="1000"
                     className={`text-white text-center tracking-[3px] font-medium text-[10px] lg:text-xs uppercase transform transition-all ease-in-out duration-300 ${
                       eventState.fade
                         ? "opacity-100 translate-y-0"
@@ -109,6 +109,8 @@ const Hero = () => {
                     {eventState.events[eventState.currentIndex].name}
                   </p>
                   <p
+                    data-aos="fade-down"
+                    data-aos-delay="800"
                     className={`text-white text-center tracking-[3px] font-medium text-[10px] lg:text-xs uppercase mt-2 transform transition-all ease-in-out duration-300 delay-100 ${
                       eventState.fade
                         ? "opacity-100 translate-y-0"
@@ -121,7 +123,7 @@ const Hero = () => {
                   </p>
                   <div
                     data-aos="fade-down"
-                    data-aos-delay="800"
+                    data-aos-delay="600"
                     className={`flex justify-center gap-x-14 mt-4 transform transition-all ease-in-out duration-300 delay-200 ${
                       eventState.fade
                         ? "opacity-100 translate-y-0"
