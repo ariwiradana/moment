@@ -130,7 +130,7 @@ const PackageThemeLinkForm = () => {
                   ? `Galeri Foto (maksimal ${detailPackage?.max_gallery_photos} foto)`
                   : "Galeri Foto"}
               </li>
-              <li
+              {/* <li
                 className={`list-disc ${
                   Number(detailPackage?.max_videos) === 0 &&
                   "line-through text-gray-300"
@@ -139,7 +139,7 @@ const PackageThemeLinkForm = () => {
                 {Number(detailPackage?.max_videos) !== 0
                   ? `Rekaman video (maksimal ${detailPackage?.max_videos} video)`
                   : "Rekaman video"}
-              </li>
+              </li> */}
               <li
                 className={`list-disc ${
                   !detailPackage?.contact_social_media &&

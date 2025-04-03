@@ -53,11 +53,13 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
         <p className={`${redhat.className} text-xs text-white/70`}>
           Mulai dari
         </p>
-        {client.package && (
+        {client.packages && (
           <h6
             className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
           >
-            {formatToRupiah(client.package.price)}
+            {formatToRupiah(
+              client.packages.find((p) => p.name === "Basic")?.price || 0
+            )}
           </h6>
         )}
 

@@ -130,6 +130,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             },
             theme: clientTheme,
             package: clientPackage,
+            packages: packageCategories,
           };
         });
 

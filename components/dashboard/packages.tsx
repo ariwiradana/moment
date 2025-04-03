@@ -176,7 +176,7 @@ const PackageComponent = () => {
                             ? `Galeri Foto (maksimal ${p.max_gallery_photos} foto)`
                             : "Galeri Foto"}
                         </li>
-                        <li
+                        {/* <li
                           className={`list-disc ${
                             Number(p.max_videos) === 0 &&
                             "line-through text-gray-300"
@@ -185,7 +185,7 @@ const PackageComponent = () => {
                           {Number(p.max_videos) !== 0
                             ? `Rekaman video (maksimal ${p.max_videos} video)`
                             : "Rekaman video"}
-                        </li>
+                        </li> */}
                         <li
                           className={`list-disc ${
                             !p.contact_social_media &&
