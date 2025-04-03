@@ -16,6 +16,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useCallback, useEffect } from "react";
 import { BiLogoWhatsapp } from "react-icons/bi";
+import "swiper/css";
+import "swiper/css/effect-fade";
 
 const Dashboard = () => {
   const { activeSection, setActiveSection, manualScroll, setManualScroll } =

@@ -6,8 +6,7 @@ import Image from "next/image";
 import Lightbox from "react-spring-lightbox";
 import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
 import useClientStore from "@/store/useClientStore";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import Slider, { Settings } from "react-slick";
 
 const Component = () => {
   const [open, setOpen] = useState(false);
@@ -36,6 +35,8 @@ const Component = () => {
     if (imageIndex < images?.length - 1) setImageIndex((prev) => prev + 1);
   }, [imageIndex, images?.length]);
 
+  const [dragging, setDragging] = useState(false);
+
   const handleToggleLightbox = useCallback(
     (img: string) => {
       if (images.length > 0) {
@@ -60,6 +61,25 @@ const Component = () => {
       default:
         return "col-span-1 row-span-1 aspect-square";
     }
+  };
+
+  const settings: Settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    waitForAnimate: false,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    arrows: false,
+    cssEase: "ease-in-out",
+    speed: 1500,
+    afterChange() {
+      setDragging(false);
+    },
+    beforeChange() {
+      setDragging(true);
+    },
   };
 
   return (
@@ -156,32 +176,38 @@ const Component = () => {
               ))}
             </div>
             <div className="mt-2 px-2">
-              <Swiper
-                slidesPerView={2}
-                spaceBetween={8}
-                modules={[Autoplay]}
-                speed={2000}
-                autoplay={{
-                  delay: 2000,
-                }}
-              >
-                {slideImages.map((img, index) => (
-                  <SwiperSlide
-                    onClick={() => handleToggleLightbox(img)}
-                    key={`Slide Image ${index}`}
-                  >
-                    <div className="w-full relative aspect-square overflow-hidden">
-                      <Image
-                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                        src={img}
-                        fill
-                        alt={`slide-${index + 1}`}
-                        className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <Slider {...settings}>
+                {Array.isArray(client?.gallery) && client?.gallery.length > 0
+                  ? client.gallery
+                      .filter(
+                        (image) =>
+                          image !== client?.cover && image !== client?.seo
+                      )
+                      .map((image, index) => (
+                        <div
+                          key={`Foto Galeri ${index + 1}`}
+                          className="px-1"
+                          onClick={() => {
+                            if (!dragging) {
+                              handleToggleLightbox(image);
+                            }
+                          }}
+                        >
+                          <div className="aspect-square w-full relative">
+                            <Image
+                              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                              fill
+                              quality={100}
+                              alt={`hero-img-${index}`}
+                              priority
+                              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
+                              src={image}
+                            />
+                          </div>
+                        </div>
+                      ))
+                  : null}
+              </Slider>
             </div>
           </div>
         </div>

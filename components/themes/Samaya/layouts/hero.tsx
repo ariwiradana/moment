@@ -5,9 +5,8 @@ import useCoverStore from "@/store/useCoverStore";
 import moment from "moment";
 import Image from "next/image";
 import React, { memo } from "react";
-import { Autoplay, EffectFade } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import usePhotos from "@/hooks/themes/usePhotos";
+import Slider, { Settings } from "react-slick";
 
 const HeroComponent = () => {
   const { state: eventState } = useEvents();
@@ -17,42 +16,37 @@ const HeroComponent = () => {
   const { isOpen } = useCoverStore();
   const { state: participantState } = useParticipants();
 
+  const settings: Settings = {
+    dots: false,
+    fade: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    speed: 3000,
+    cssEase: "ease-in-out",
+  };
+
   return (
     <section className="bg-samaya-dark">
       {images.length > 0 && (
         <div className="inset-0" data-aos="zoom-out" data-aos-delay="1000">
-          <Swiper
-            loop
-            effect="fade"
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            speed={2000}
-            className="w-full transition-transform h-lvh"
-            spaceBetween={0}
-            slidesPerView={1}
-            modules={[Autoplay, EffectFade]}
-          >
+          <Slider {...settings} className="w-full transition-transform h-lvh">
             {images.map((image, index) => (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`hero-img-${index}`}
-              >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                    fill
-                    quality={100}
-                    alt={`hero-img-${index}`}
-                    priority
-                    className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
-                    src={image as string}
-                  />
-                </div>
-              </SwiperSlide>
+              <Image
+                key={`Main Slider ${index + 1}`}
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                fill
+                quality={100}
+                alt={`Main Slider ${index + 1}`}
+                priority
+                className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+                src={image as string}
+              />
             ))}
-          </Swiper>
+          </Slider>
         </div>
       )}
       <div className="absolute h-lvh inset-0 z-10 bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%]">

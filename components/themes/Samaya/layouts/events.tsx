@@ -4,7 +4,6 @@ import moment from "moment";
 import { BiSolidCalendar, BiSolidMap } from "react-icons/bi";
 import Link from "next/link";
 import useEvents from "@/hooks/themes/useEvents";
-import ImageShimmer from "@/components/image.shimmer";
 import Image from "next/image";
 import ButtonDark from "../elements/button.dark";
 
@@ -21,13 +20,13 @@ const EventsComponent = () => {
                 className={`inset-0 z-0 w-full aspect-[1/${state.events.length}]`}
                 key={`Foto Card ${event.name}`}
               >
-                <ImageShimmer
+                <Image
                   fill
                   quality={100}
                   alt={`Foto Card ${event.name}`}
                   priority
                   sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                  className="object-cover grayscale transform translate-y-0 lg:translate-y-0 transition-transform bg-white/5"
+                  className="object-cover grayscale shine-dark transform translate-y-0 lg:translate-y-0 transition-transform opacity-30"
                   src={(event.image as string) || ""}
                 />
               </div>

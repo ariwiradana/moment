@@ -8,8 +8,7 @@ import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
 import Image from "next/image";
 import React, { memo, useMemo } from "react";
-import { Autoplay, EffectFade } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import Slider, { Settings } from "react-slick";
 
 const HeroComponent = () => {
   const { client } = useClientStore();
@@ -26,6 +25,19 @@ const HeroComponent = () => {
   }, [client?.videos]);
 
   const eventNames = useMemo(() => getEventNames(events), [events]);
+
+  const settings: Settings = {
+    dots: false,
+    fade: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    speed: 3000,
+    cssEase: "ease-in-out",
+  };
 
   return (
     <section className="relative min-h-[600px] h-lvh overflow-hidden">
@@ -49,47 +61,27 @@ const HeroComponent = () => {
           </div>
         ) : (
           <div data-aos="zoom-out-up">
-            <Swiper
-              loop
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-              }}
-              effect="fade"
-              speed={2000}
-              className="w-full transition-transform min-h-[600px] h-lvh"
-              spaceBetween={0}
-              slidesPerView={1}
-              modules={[Autoplay, EffectFade]}
-            >
-              <>
-                {Array.isArray(client?.gallery) && client?.gallery.length > 0
-                  ? client.gallery
-                      .filter(
-                        (image) =>
-                          image !== client?.cover && image !== client?.seo
-                      )
-                      .map((image, index) => (
-                        <SwiperSlide
-                          className="relative w-full h-full"
-                          key={`hero-img-${index}`}
-                        >
-                          <div className="absolute inset-0 z-0">
-                            <Image
-                              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                              fill
-                              quality={100}
-                              alt={`hero-img-${index}`}
-                              priority
-                              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
-                              src={image}
-                            />
-                          </div>
-                        </SwiperSlide>
-                      ))
-                  : null}
-              </>
-            </Swiper>
+            <Slider {...settings} className="h-lvh">
+              {Array.isArray(client?.gallery) && client?.gallery.length > 0
+                ? client.gallery
+                    .filter(
+                      (image) =>
+                        image !== client?.cover && image !== client?.seo
+                    )
+                    .map((image, index) => (
+                      <Image
+                        key={`Main Slider ${index + 1}`}
+                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                        fill
+                        quality={100}
+                        alt={`Main Slider ${index + 1}`}
+                        priority
+                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
+                        src={image}
+                      />
+                    ))
+                : null}
+            </Slider>
           </div>
         )}
       </div>

@@ -14,6 +14,8 @@ import useSWR from "swr";
 import SplitText from "@/components/themes/split.text";
 import { redhat } from "@/lib/fonts";
 import PreviewNav from "@/components/themes/preview.nav";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface Props {
   untuk: string;

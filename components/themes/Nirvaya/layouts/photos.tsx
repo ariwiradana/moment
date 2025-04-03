@@ -1,18 +1,20 @@
 import usePhotos from "@/hooks/themes/usePhotos";
 import { raleway } from "@/lib/fonts";
 import Image from "next/image";
-import React from "react";
+import React, { useMemo } from "react";
 import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
 import Lightbox from "react-spring-lightbox";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const Photos = () => {
   const { state, actions } = usePhotos();
 
-  const divide = Math.floor(state.images.length / 3);
-
-  console.log(0, divide, divide, divide * 2, divide * 2, state.images.length);
+  const divide = useMemo(
+    () => Math.floor(state.images.length / 3),
+    [state.images]
+  );
 
   return (
     <>

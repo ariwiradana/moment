@@ -125,3 +125,12 @@
 .no-scroll {
   @apply overflow-hidden;
 }
+
+.slick-list,
+.slick-track {
+  height: 100%;
+}
+.slick-slide div {
+  height: 100%;
+  position: relative;
+}

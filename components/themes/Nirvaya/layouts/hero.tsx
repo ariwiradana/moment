@@ -6,9 +6,8 @@ import { getEventNames } from "@/utils/getEventNames";
 import moment from "moment";
 import Image from "next/image";
 import React, { memo } from "react";
-import { Autoplay, EffectFade } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import usePhotos from "@/hooks/themes/usePhotos";
+import Slider, { Settings } from "react-slick";
 
 const Hero = () => {
   const { isOpen } = useCoverStore();
@@ -18,6 +17,19 @@ const Hero = () => {
     state: { images },
   } = usePhotos();
 
+  const settings: Settings = {
+    dots: false,
+    fade: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    speed: 3000,
+    cssEase: "ease-in-out",
+  };
+
   return (
     <section
       data-aos="fade-in"
@@ -25,39 +37,20 @@ const Hero = () => {
       className={`relative bg-nirvaya-dark ${raleway.className}`}
     >
       <div>
-        <Swiper
-          data-aos="zoom-out"
-          loop
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false,
-          }}
-          effect="fade"
-          speed={2000}
-          className={`w-full transition-transform min-h-[600px] h-lvh`}
-          spaceBetween={0}
-          slidesPerView={1}
-          modules={[Autoplay, EffectFade]}
-        >
+        <Slider className="h-lvh" {...settings}>
           {images.map((image, index) => (
-            <SwiperSlide
-              className="relative w-full h-full"
-              key={`Hero Image ${index + 1}`}
-            >
-              <div className="absolute inset-0 z-0">
-                <Image
-                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                  fill
-                  quality={100}
-                  alt={`Hero Image ${index + 1}`}
-                  priority
-                  className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform shine-dark"
-                  src={image}
-                />
-              </div>
-            </SwiperSlide>
+            <Image
+              key={`Main Slider ${index + 1}`}
+              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+              fill
+              quality={100}
+              alt={`hero-img-${index}`}
+              priority
+              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
+              src={image}
+            />
           ))}
-        </Swiper>
+        </Slider>
       </div>
       <div
         className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-10`}
