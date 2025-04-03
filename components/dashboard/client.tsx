@@ -22,7 +22,6 @@ const ClientComponent = () => {
         <div data-aos="fade-up">
           <Swiper
             modules={[Autoplay, Navigation]}
-            loop
             autoplay={{
               delay: 3000,
             }}
