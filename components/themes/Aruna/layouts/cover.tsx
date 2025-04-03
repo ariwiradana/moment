@@ -41,7 +41,7 @@ const Cover: FC<Props> = (props) => {
             alt="cover"
           />
         )}
-        <div className="relative z-40 bg-gradient-to-b from-aruna-dark/50 px-6 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark h-screen flex flex-col py-[60px] md:py-[100px] justify-between items-center">
+        <div className="relative z-40 bg-gradient-to-b from-aruna-dark/50 px-6 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark h-dvh flex flex-col py-[60px] md:py-[100px] justify-between items-center">
           <div className="text-center">
             <p
               data-aos="fade-up"
