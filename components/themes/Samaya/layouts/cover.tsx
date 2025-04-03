@@ -43,7 +43,16 @@ const Cover: FC<Props> = (props) => {
                 fill
                 src={client?.cover as string}
                 alt="cover"
-                className="object-cover shine-dark"
+                className="object-cover shine-dark opacity-20 hidden 2xl:inline-block "
+              />
+              <Image
+                quality={100}
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                priority
+                fill
+                src={client?.cover as string}
+                alt="cover"
+                className="object-cover 2xl:object-scale-down z-10"
               />
             </div>
           )}
