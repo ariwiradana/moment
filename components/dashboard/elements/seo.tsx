@@ -28,8 +28,8 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image, url }) => {
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
       <meta property="og:image:secure_url" content={image} />
-      {/* <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" /> */}
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:description" content={description} />
 
       <meta name="twitter:card" content="summary_large_image" />
@@ -57,20 +57,27 @@ const Seo: FC<SEOProps> = ({ title, description, keywords, image, url }) => {
         type="image/png"
       />
 
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Moment Invitations",
-          url,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.whatsapp,
-            sosmedURLs.youtube,
-          ],
-        })}
-      </script>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Moment Invitation",
+              url: url,
+              sameAs: [
+                sosmedURLs.email || "",
+                sosmedURLs.instagram || "",
+                sosmedURLs.whatsapp || "",
+                sosmedURLs.youtube || "",
+              ],
+            },
+            null,
+            2
+          ),
+        }}
+      />
     </Head>
   );
 };
