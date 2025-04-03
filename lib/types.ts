@@ -174,3 +174,12 @@ export type ApiHandler = (
 ) => Promise<void>;
 
 export type Status = "unpaid" | "paid" | "completed";
+
+export interface SEO {
+  url: string;
+  seo_image: string;
+  page_title: string;
+  description: string;
+  theme_name: string;
+  name: string;
+}

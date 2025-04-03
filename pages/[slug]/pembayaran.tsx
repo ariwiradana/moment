@@ -16,7 +16,6 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Client } from "@/lib/types";
 import { formatToRupiah } from "@/utils/formatToRupiah";
-import { getDiscountPrice } from "@/utils/getDiscountPrice";
 import { BsCopy } from "react-icons/bs";
 import ButtonLight from "@/components/dashboard/elements/button.light";
 import ButtonPrimary from "@/components/dashboard/elements/button.primary";
@@ -72,7 +71,8 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
                   dengan harga promo{" "}
                   <span className="text-dashboard-dark font-semibold">
                     {formatToRupiah(
-                      getDiscountPrice(client?.package?.price || 0, 20)
+                      ((client.package?.price as number) || 0) -
+                        ((client.package?.discount as number) || 0)
                     )}
                   </span>{" "}
                   sesuai dengan{" "}

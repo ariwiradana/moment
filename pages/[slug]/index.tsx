@@ -1,38 +1,45 @@
 import ThemeNotFound from "@/components/themes/theme.notfound";
 import { fetcher } from "@/lib/fetcher";
-import { Client } from "@/lib/types";
+import { Client, SEO } from "@/lib/types";
 import { GetServerSideProps } from "next";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { themes } from "@/components/themes/themes";
 import ClientNotFound from "@/components/themes/client.notfound";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Seo from "@/components/dashboard/elements/seo";
-import { getParticipantNames } from "@/utils/getParticipantNames";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import useClientStore from "@/store/useClientStore";
-import { getEventNames } from "@/utils/getEventNames";
+import useSWR from "swr";
+import SplitText from "@/components/themes/split.text";
+import { redhat } from "@/lib/fonts";
 
 interface Props {
-  url: string;
   untuk: string;
-  client: Client | null;
-  themeName: string;
-  pageTitle: string;
-  description: string;
-  seoImage: string;
+  seo: SEO;
+  slug: string;
 }
 
-const MainPage: FC<Props> = ({
-  untuk,
-  client: clientData,
-  themeName,
-  pageTitle,
-  description,
-  seoImage,
-  url,
-}) => {
-  const { setClient } = useClientStore();
+const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
+  const { setClient, client } = useClientStore();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useSWR<{ data: Client }>(
+    slug ? `/api/_pb/_c/_u?slug=${slug}` : null,
+    fetcher,
+    {
+      onSuccess: (data) => {
+        setClient(data.data || null);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
+      },
+      revalidateOnReconnect: false,
+      revalidateOnFocus: false,
+      shouldRetryOnError: false,
+      refreshInterval: 0,
+    }
+  );
 
   useDisableInspect();
   useEffect(() => {
@@ -41,25 +48,39 @@ const MainPage: FC<Props> = ({
       offset: 50,
       once: true,
     });
-    setClient(clientData);
   }, []);
 
-  console.log(clientData?.guests, untuk);
+  if (isLoading)
+    return (
+      <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
+        <div data-aos="fade-up">
+          <SplitText
+            text={seo.name}
+            className={`text-3xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
+            delay={150}
+            animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
+            animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
+            threshold={0.2}
+            rootMargin="-50px"
+          />
+        </div>
+      </div>
+    );
 
-  if (!clientData) return <ClientNotFound />;
-  if (!clientData.guests?.includes(untuk) && untuk !== "Tamu Undangan")
+  if (!client) return <ClientNotFound />;
+  if (!client.guests?.includes(untuk) && untuk !== "Tamu Undangan")
     return <ClientNotFound />;
 
-  const ThemeComponent = themes[themeName];
+  const ThemeComponent = themes[seo.theme_name];
 
   return ThemeComponent ? (
     <>
       <Seo
-        url={url}
-        title={pageTitle}
-        description={description}
+        url={seo.url}
+        title={seo.page_title}
+        description={seo.description}
         keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-        image={seoImage}
+        image={seo.seo_image}
       />
       {ThemeComponent(untuk)}
     </>
@@ -73,41 +94,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
   const baseUrl = process.env.API_BASE_URL;
-  const response = await fetcher(`${baseUrl}/api/_pb/_c/_u?slug=${slug}`).catch(
-    (error) => {
-      console.error("API fetch error:", error);
-      return null;
-    }
-  );
+  const response = await fetcher(
+    `${baseUrl}/api/client/seo?slug=${slug}`
+  ).catch((error) => {
+    console.error("API fetch error:", error);
+    return null;
+  });
 
-  const client: Client | null = response?.data ?? null;
-
-  const themeName = client?.theme?.name || "";
-  const participantNames =
-    getParticipantNames(client?.participants || []) || "";
-  const description = `${client?.opening_title || ""}, ${
-    client?.opening_description || ""
-  }`;
-  const seoImage = client?.seo || "";
-  const url = `https://momentinvitation.com/${encodeURIComponent(slug)}`;
-  const pageTitle = client
-    ? client.status === "unpaid"
-      ? `Preview ${participantNames} | Undangan ${client.theme_category?.name}`
-      : client.is_preview
-      ? `Preview Undangan Tema ${client.theme?.name} | Moment`
-      : `${participantNames} | Undangan ${getEventNames(client.events)}`
-    : "Moment";
+  const seo = response || null;
 
   return {
     props: {
       untuk: untuk ?? "Tamu Undangan",
       slug,
-      client,
-      themeName,
-      pageTitle,
-      description,
-      seoImage,
-      url,
+      seo,
     },
   };
 };
