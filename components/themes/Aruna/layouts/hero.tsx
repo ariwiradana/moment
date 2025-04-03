@@ -7,7 +7,7 @@ import { getEventNames } from "@/utils/getEventNames";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
 import Image from "next/image";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -19,10 +19,13 @@ const HeroComponent = () => {
   } = useEvents();
   const { state: participant } = useParticipants();
 
-  const video =
-    Array.isArray(client?.videos) && client.videos.length > 0
+  const video = useMemo(() => {
+    return Array.isArray(client?.videos) && client.videos.length > 0
       ? client.videos.filter((v) => !isYoutubeVideo(v))
       : [];
+  }, [client?.videos]);
+
+  const eventNames = useMemo(() => getEventNames(events), [events]);
 
   return (
     <section className="relative min-h-[600px] h-lvh overflow-hidden">
@@ -103,7 +106,7 @@ const HeroComponent = () => {
                 data-aos-delay="200"
                 className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[4px] ${roboto.className}`}
               >
-                Undangan {getEventNames(events)}
+                Undangan {eventNames}
               </p>
               <h1
                 data-aos="fade-up"

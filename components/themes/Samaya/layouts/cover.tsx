@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useMemo } from "react";
 import { marcellus, raleway } from "@/lib/fonts";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
@@ -19,6 +19,11 @@ const Cover: FC<Props> = (props) => {
   const { isOpen, toggleIsOpen } = useCoverStore();
   const { client } = useClientStore();
   const { state: participantsState } = useParticipants();
+
+  const eventNames = useMemo(
+    () => getEventNames(client?.events || []),
+    [client?.events]
+  );
 
   return (
     <>
@@ -72,10 +77,7 @@ const Cover: FC<Props> = (props) => {
                 className={`${raleway.className} text-white text-[10px] md:text-xs tracking-[1px] max-w-md mx-auto text-center`}
               >
                 Tanpa mengurangi rasa hormat, kami mengundang anda untuk
-                menghadiri acara{" "}
-                <span className="lowercase">
-                  {getEventNames(client?.events || [])}
-                </span>{" "}
+                menghadiri acara <span className="lowercase">{eventNames}</span>{" "}
                 kami.
               </p>
               <p

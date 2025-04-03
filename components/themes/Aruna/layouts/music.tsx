@@ -2,14 +2,14 @@ import { UseMusic } from "@/hooks/themes/useMusic";
 import useClientStore from "@/store/useClientStore";
 import useCoverStore from "@/store/useCoverStore";
 import Image from "next/image";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import toast from "react-hot-toast";
 import { BiPause, BiPlay } from "react-icons/bi";
 
 const MusicComponent = ({ state, actions, refs }: UseMusic) => {
   const { client } = useClientStore();
   const { isOpen } = useCoverStore();
-  const musicSrc = client?.music as string;
+  const musicSrc = useMemo(() => client?.music as string, [client]);
 
   if (musicSrc) {
     return (

@@ -25,7 +25,7 @@ const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
   const { setClient, client } = useClientStore();
   const [isLoading, setIsLoading] = useState(true);
 
-  useSWR<{ data: Client }>(
+  const { error } = useSWR<{ data: Client }>(
     slug ? `/api/_pb/_c/_u?slug=${slug}` : null,
     fetcher,
     {
@@ -49,6 +49,8 @@ const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
       offset: 50,
       once: true,
     });
+
+    return () => AOS.refresh();
   }, []);
 
   if (isLoading && seo)
@@ -77,11 +79,11 @@ const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
       </>
     );
 
-  if (!client) return <ClientNotFound />;
+  if (!client || error) return <ClientNotFound />;
   if (!client.guests?.includes(untuk) && untuk !== "Tamu Undangan")
     return <ClientNotFound />;
 
-  const ThemeComponent = themes[seo.theme_name];
+  const ThemeComponent = seo?.theme_name ? themes[seo.theme_name] : null;
 
   return ThemeComponent ? (
     <>

@@ -2,7 +2,13 @@ import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
 import { Review } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { z } from "zod";
@@ -20,11 +26,14 @@ const initialReviewForm: FormData = {
 };
 
 const useRSVPWishes = (icon: ReactNode) => {
-  const attendantText: Record<string, string> = {
-    Hadir: "Saya akan hadir",
-    "Tidak Hadir": "Maaf saya tidak bisa hadir",
-    "Masih Ragu": "Maaf saya masih ragu",
-  };
+  const attendantText: Record<string, string> = useMemo(
+    () => ({
+      Hadir: "Saya akan hadir",
+      "Tidak Hadir": "Maaf saya tidak bisa hadir",
+      "Masih Ragu": "Maaf saya masih ragu",
+    }),
+    []
+  );
 
   const { client } = useClientStore();
 
@@ -63,69 +72,72 @@ const useRSVPWishes = (icon: ReactNode) => {
     }
   );
 
-  const handleChange = (name: string, value: string) => {
+  const handleChange = useCallback((name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: undefined,
     }));
-  };
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    const payload = { client_id: Number(client?.id), ...formData };
+      const payload = { client_id: Number(client?.id), ...formData };
 
-    setLoading(true);
-    try {
-      wisheschema.parse(formData);
-      const toastSubmit = toast.loading("Memberikan ucapan...");
-      const response = await getClient(`/api/_pb/_w`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
+      setLoading(true);
+      try {
+        wisheschema.parse(formData);
+        const toastSubmit = toast.loading("Memberikan ucapan...");
+        const response = await getClient(`/api/_pb/_w`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
 
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message);
-      }
+        if (!response.ok) {
+          const errorResult = await response.json();
+          throw new Error(errorResult.message);
+        }
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (result.success) {
-        mutate();
+        if (result.success) {
+          mutate();
+          setLoading(false);
+          setFormData(initialReviewForm);
+          toast.success("Berhasil. Terima kasih atas ucapannya!", {
+            id: toastSubmit,
+            icon: <div>{icon}</div>,
+          });
+        } else {
+          toast.error("Gagal membuat ucapan", { id: toastSubmit });
+        }
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          const formattedErrors: Record<string, string | undefined> = {};
+          error.errors.forEach((err) => {
+            if (err.path[0]) {
+              formattedErrors[err.path[0] as string] = err.message;
+            }
+          });
+          setErrors(formattedErrors);
+        } else {
+          console.error(error);
+        }
+      } finally {
         setLoading(false);
-        setFormData(initialReviewForm);
-        toast.success("Berhasil. Terima kasih atas ucapannya!", {
-          id: toastSubmit,
-          icon: <div>{icon}</div>,
-        });
-      } else {
-        toast.error("Gagal membuat ucapan", { id: toastSubmit });
       }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const formattedErrors: Record<string, string | undefined> = {};
-        error.errors.forEach((err) => {
-          if (err.path[0]) {
-            formattedErrors[err.path[0] as string] = err.message;
-          }
-        });
-        setErrors(formattedErrors);
-      } else {
-        console.error(error);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    []
+  );
 
-  const handleChangePagination = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setPage(value);
-  };
+  const handleChangePagination = useCallback(
+    (event: React.ChangeEvent<unknown>, value: number) => {
+      setPage(value);
+    },
+    []
+  );
 
   return {
     state: {

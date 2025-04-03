@@ -55,7 +55,7 @@ const HeroComponent = () => {
           </Swiper>
         </div>
       )}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%]">
+      <div className="absolute h-lvh inset-0 z-10 bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%]">
         {isOpen && (
           <div
             className="h-svh flex flex-col justify-end items-center py-8"

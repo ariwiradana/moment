@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { redhat } from "@/lib/fonts";
 import { sosmedURLs } from "@/constants/sosmed";
 import useClientStore from "@/store/useClientStore";
 import { BsCart } from "react-icons/bs";
 import Image from "next/image";
+import useCoverStore from "@/store/useCoverStore";
 
 const PreviewNav = () => {
   const { client } = useClientStore();
-  const handleChooseTheme = (name: string) => {
+  const { isOpen } = useCoverStore();
+
+  const handleChooseTheme = useCallback((name: string) => {
     const message = `Halo, saya tertarik untuk memilih tema undangan ${name}`;
     const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
       message
     )}`;
-    window.open(whatsappLink);
-  };
+    window.open(whatsappLink, "_blank");
+  }, []);
+
+  if (!isOpen) return null;
 
   if (client?.status === "unpaid" || client?.is_preview)
     return (

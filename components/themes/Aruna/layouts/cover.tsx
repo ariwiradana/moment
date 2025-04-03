@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useMemo } from "react";
 import { roboto } from "@/lib/fonts";
 import Button from "../elements/button";
 import { BiEnvelopeOpen } from "react-icons/bi";
@@ -22,6 +22,9 @@ const Cover: FC<Props> = (props) => {
   const {
     state: { events },
   } = useEvents();
+
+  const eventNames = useMemo(() => getEventNames(events), [events]);
+
   return (
     <>
       <div
@@ -48,7 +51,7 @@ const Cover: FC<Props> = (props) => {
               data-aos-delay="200"
               className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[4px] ${roboto.className}`}
             >
-              Undangan {getEventNames(events)}
+              Undangan {eventNames}
             </p>
             <h1
               data-aos="fade-up"
