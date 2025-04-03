@@ -18,14 +18,12 @@ const EventsComponent = () => {
   if (eventState.events.length > 0) {
     return (
       <section className="relative overflow-hidden z-0 bg-aruna-dark">
-        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-aruna-dark via-transparent to-transparent z-10"></div>
-        <div
-          className="absolute top-0 inset-x-0 grid grid-cols-2"
-          data-aos="zoom-out"
-        >
-          {images.map((image, index) => (
+        <div className="absolute inset-x-0 top-0 h-[30vh] bg-gradient-to-b from-aruna-dark via-transparent to-transparent z-10"></div>
+        <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-b from-transparent via-transparent to-aruna-dark z-10"></div>
+        <div className="absolute top-0 inset-x-0 grid" data-aos="zoom-out">
+          {images.reverse().map((image, index) => (
             <div
-              className="w-full h-[20vh] overflow-hidden bg-white/5 relative opacity-15"
+              className="w-full h-[20vh] overflow-hidden relative opacity-15"
               key={`Foto Event ${index + 1}`}
             >
               <Image
