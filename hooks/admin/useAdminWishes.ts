@@ -40,7 +40,7 @@ export const useAdminWishes = (token: string | null) => {
         setClientId(client.data[0].id as number);
       }
       const options: Option[] = client.data.map((client) => ({
-        label: client.name,
+        label: `${client.name} - ${client.slug}`,
         value: client.id as number,
       }));
       setClientOptions(options);
@@ -84,7 +84,7 @@ export const useAdminWishes = (token: string | null) => {
       toalRows: data?.total_rows || 0,
       clientOptions,
       clientId,
-      isLoadingClient
+      isLoadingClient,
     },
     actions: {
       mutate,
