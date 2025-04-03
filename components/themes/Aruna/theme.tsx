@@ -4,30 +4,19 @@ import PreviewNav from "../preview.nav";
 import Image from "next/image";
 import { roboto } from "@/lib/fonts";
 import { getEventNames } from "@/utils/getEventNames";
-import dynamic from "next/dynamic";
 import useMusic from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
-
-const Cover = dynamic(() => import("./layouts/cover"));
-const HeroComponent = dynamic(() => import("./layouts/hero"), {
-  ssr: false,
-});
-const VideoComponent = dynamic(() => import("./layouts/video"), {
-  ssr: false,
-});
-const FotoComponent = dynamic(() => import("./layouts/foto"), {
-  ssr: false,
-});
-const ThankyouComponent = dynamic(() => import("./layouts/thankyou"));
-const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"), {
-  ssr: false,
-});
-const MusicComponent = dynamic(() => import("./layouts/music"));
-const EventsComponent = dynamic(() => import("./layouts/events"));
-// const ParticipantsComponent = dynamic(() => import("./layouts/participants"));
-const GiftComponent = dynamic(() => import("./layouts/gift"));
+import Cover from "./layouts/cover";
+import MusicComponent from "./layouts/music";
+import HeroComponent from "./layouts/hero";
+import VideoComponent from "./layouts/video";
+import EventsComponent from "./layouts/events";
+import FotoComponent from "./layouts/foto";
+import GiftComponent from "./layouts/gift";
+import RSVPWishes from "./layouts/rsvp.wishes";
+import ThankyouComponent from "./layouts/thankyou";
 
 interface Props {
   untuk: string;
