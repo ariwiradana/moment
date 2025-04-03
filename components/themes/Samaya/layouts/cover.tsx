@@ -23,7 +23,7 @@ const Cover: FC<Props> = (props) => {
   return (
     <>
       <div
-        className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
+        className={`w-full h-dvh fixed bg-samaya-dark inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
           isOpen ? "invisible opacity-0 scale-105" : "visible"
         }`}
       >

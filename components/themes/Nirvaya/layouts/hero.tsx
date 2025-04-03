@@ -21,10 +21,13 @@ const Hero = () => {
   } = usePhotos();
 
   return (
-    <section className={`relative ${raleway.className}`}>
-      <div data-aos="zoom-out">
+    <section className={`relative bg-nirvaya-dark ${raleway.className}`}>
+      <div>
         {!isOpen && client?.cover ? (
-          <div className={`w-full transition-transform min-h-[600px] h-dvh`}>
+          <div
+            data-aos="zoom-out"
+            className={`w-full transition-transform min-h-[600px] h-dvh`}
+          >
             <div className="absolute inset-0 z-0">
               <Image
                 fill
@@ -39,6 +42,7 @@ const Hero = () => {
           </div>
         ) : (
           <Swiper
+            data-aos="zoom-out"
             loop
             autoplay={{
               delay: 2000,

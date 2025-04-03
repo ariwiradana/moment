@@ -25,13 +25,13 @@ const Cover: FC<Props> = (props) => {
   return (
     <>
       <div
-        data-aos="zoom-out"
-        className={`w-full h-dvh fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
+        className={`w-full h-dvh bg-aruna-dark fixed inset-x-0 transition-all ease-in-out duration-1000 delay-500 z-50 ${
           isOpen ? "-bottom-full invisible opacity-0" : "bottom-0 visible"
         }`}
       >
         {client?.cover && (
           <Image
+            data-aos="zoom-out"
             quality={100}
             priority
             sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
