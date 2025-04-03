@@ -35,7 +35,7 @@ const Aruna: FC<Props> = (props) => {
         {isOpen && (
           <div className="flex justify-between">
             <div className="fixed inset-0 hidden xl:block">
-              <div className="relative xl:w-[70vw] 2xl:w-[80vw] h-dvh">
+              <div className="relative xl:w-[70vw] 2xl:w-[75vw] h-dvh">
                 <div className="bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark absolute inset-0 z-20 flex flex-col justify-end p-[100px]">
                   <p
                     data-aos="fade-up"
@@ -67,7 +67,7 @@ const Aruna: FC<Props> = (props) => {
               </div>
             </div>
             <div
-              className={`relative w-full xl:max-w-[30vw] 2xl:max-w-[20vw] ml-auto`}
+              className={`relative w-full xl:max-w-[30vw] 2xl:max-w-[25vw] ml-auto`}
             >
               <HeroComponent />
               {/* <ParticipantsComponent /> */}

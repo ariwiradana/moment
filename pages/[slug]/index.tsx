@@ -13,7 +13,6 @@ import useClientStore from "@/store/useClientStore";
 import useSWR from "swr";
 import SplitText from "@/components/themes/split.text";
 import { redhat } from "@/lib/fonts";
-import useCoverStore from "@/store/useCoverStore";
 import PreviewNav from "@/components/themes/preview.nav";
 
 interface Props {
@@ -24,7 +23,6 @@ interface Props {
 
 const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
   const { setClient, client } = useClientStore();
-  const { isOpen } = useCoverStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useSWR<{ data: Client }>(
