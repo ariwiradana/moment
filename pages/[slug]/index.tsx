@@ -52,19 +52,28 @@ const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
 
   if (isLoading)
     return (
-      <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
-        <div data-aos="fade-up">
-          <SplitText
-            text={seo.name}
-            className={`text-3xl tracking-[1px] lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
-            delay={150}
-            animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
-            animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
-            threshold={0.2}
-            rootMargin="-50px"
-          />
+      <>
+        <Seo
+          url={seo.url}
+          title={seo.page_title}
+          description={seo.description}
+          keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
+          image={seo.seo_image}
+        />
+        <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
+          <div data-aos="fade-up">
+            <SplitText
+              text={seo.name}
+              className={`text-3xl tracking-[1px] lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
+              delay={150}
+              animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
+              animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
+              threshold={0.2}
+              rootMargin="-50px"
+            />
+          </div>
         </div>
-      </div>
+      </>
     );
 
   if (!client) return <ClientNotFound />;
