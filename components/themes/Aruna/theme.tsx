@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import Layout from "../layout";
-import PreviewNav from "../preview.nav";
 import Image from "next/image";
 import { roboto } from "@/lib/fonts";
 import { getEventNames } from "@/utils/getEventNames";
@@ -32,7 +31,6 @@ const Aruna: FC<Props> = (props) => {
     <Layout>
       <>
         <MusicComponent actions={actions} refs={refs} state={state} />
-        {isOpen && <PreviewNav />}
         <Cover actions={actions} untuk={props.untuk} />
         {isOpen && (
           <div className="flex justify-between">

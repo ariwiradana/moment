@@ -56,9 +56,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         )}`;
         const page_title = client
           ? client.status === "unpaid"
-            ? `Preview ${client.name} | Undangan ${client.theme_category_name}`
+            ? `Preview ${client.name} | Undangan ${client.theme_name}`
             : client.is_preview
-            ? `Preview Undangan Tema ${client.theme?.name} | Moment`
+            ? `Preview Undangan Tema ${client.theme_name} | Moment`
             : `${client.name} | Undangan ${getEventNames(events)}`
           : "Moment";
 

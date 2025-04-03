@@ -11,7 +11,6 @@ import Photos from "./layouts/photos";
 import Gift from "./layouts/gift";
 import RsvpWishes from "./layouts/rsvp.wishes";
 import Thankyou from "./layouts/thankyou";
-import PreviewNav from "../preview.nav";
 
 interface Props {
   untuk: string;
@@ -22,7 +21,6 @@ const Nirvaya = ({ untuk }: Props) => {
   const { state, actions, refs } = useMusic();
   return (
     <Layout>
-      {isOpen && <PreviewNav />}
       <MusicComponent actions={actions} refs={refs} state={state} />
       <Cover actions={actions} to={untuk} />
       <Hero />

@@ -94,7 +94,7 @@ const ThemeComponent: FC = () => {
 
           <div
             data-aos="fade-up"
-            className="grid grid-cols-2 md:grid-cols-5 gap-x-6 lg:gap-x-8 gap-y-8 mt-8 lg:mt-11"
+            className="grid grid-cols-2 md:grid-cols-4 gap-x-6 lg:gap-x-8 gap-y-8 mt-8 lg:mt-11"
           >
             {isLoading ? (
               <>

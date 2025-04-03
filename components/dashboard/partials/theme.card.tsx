@@ -28,7 +28,7 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
   };
 
   return (
-    <div>
+    <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015]">
       <div
         className="relative"
         onMouseEnter={handleMouseEnter}
@@ -37,7 +37,7 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
         <video
           ref={videoRef}
           poster={`/images/${client.theme?.slug}/thumbnail.png`}
-          className="min-w-full min-h-full"
+          className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px]"
           src={`/video/themes/${client.theme?.slug}.mp4`}
           muted
           loop

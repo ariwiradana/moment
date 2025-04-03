@@ -38,8 +38,8 @@ const PreviewNav = () => {
                 className={`${redhat.className} font-medium text-sm lg:text-base text-white`}
               >
                 {client.is_preview
-                  ? `Tema ${client.theme?.name}`
-                  : `Preview Undangan ${client.theme_category?.name}`}
+                  ? `Tema ${client?.theme?.name}`
+                  : `Preview Undangan ${client?.theme?.name}`}
               </h1>
             </li>
             {client.is_preview && (
