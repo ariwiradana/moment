@@ -112,7 +112,7 @@ const Cover = ({ to, actions }: Props) => {
             Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
             acara {getEventNames(events || [])} kami.
           </p>
-          <div data-aos="fade-down" data-aos-delay="600">
+          <div className="flex justify-center" data-aos="fade-down" data-aos-delay="600">
             <Button
               onClick={() => {
                 toggleIsOpen();
