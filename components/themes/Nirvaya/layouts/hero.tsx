@@ -2,7 +2,6 @@ import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
 import { raleway } from "@/lib/fonts";
 import useCoverStore from "@/store/useCoverStore";
-import useClientStore from "@/store/useClientStore";
 import { getEventNames } from "@/utils/getEventNames";
 import moment from "moment";
 import Image from "next/image";
@@ -12,7 +11,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import usePhotos from "@/hooks/themes/usePhotos";
 
 const Hero = () => {
-  const { client } = useClientStore();
   const { isOpen } = useCoverStore();
   const { state: participantsState } = useParticipants();
   const { state: eventState } = useEvents();
@@ -21,85 +19,71 @@ const Hero = () => {
   } = usePhotos();
 
   return (
-    <section className={`relative bg-nirvaya-dark ${raleway.className}`}>
+    <section
+      data-aos="fade-in"
+      data-aos-delay="400"
+      className={`relative bg-nirvaya-dark ${raleway.className}`}
+    >
       <div>
-        {!isOpen && client?.cover ? (
-          <div
-            data-aos="zoom-out"
-            className={`w-full transition-transform min-h-[600px] h-dvh`}
-          >
-            <div className="absolute inset-0 z-0">
-              <Image
-                fill
-                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                quality={100}
-                alt={`Hero Cover`}
-                priority
-                className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
-                src={client?.cover}
-              />
-            </div>
-          </div>
-        ) : (
-          <Swiper
-            data-aos="zoom-out"
-            loop
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            effect="fade"
-            speed={2000}
-            className={`w-full transition-transform min-h-[600px] h-lvh`}
-            spaceBetween={0}
-            slidesPerView={1}
-            modules={[Autoplay, EffectFade]}
-          >
-            {images.map((image, index) => (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`Hero Image ${index + 1}`}
-              >
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                    fill
-                    quality={100}
-                    alt={`Hero Image ${index + 1}`}
-                    priority
-                    className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform"
-                    src={image}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
+        <Swiper
+          data-aos="zoom-out"
+          loop
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          effect="fade"
+          speed={2000}
+          className={`w-full transition-transform min-h-[600px] h-lvh`}
+          spaceBetween={0}
+          slidesPerView={1}
+          modules={[Autoplay, EffectFade]}
+        >
+          {images.map((image, index) => (
+            <SwiperSlide
+              className="relative w-full h-full"
+              key={`Hero Image ${index + 1}`}
+            >
+              <div className="absolute inset-0 z-0">
+                <Image
+                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                  fill
+                  quality={100}
+                  alt={`Hero Image ${index + 1}`}
+                  priority
+                  className="object-cover bg-nirvaya-dark/5 transform translate-y-0 lg:translate-y-0 transition-transform shine-dark"
+                  src={image}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       <div
         className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-10`}
       >
-        <div className="flex flex-col justify-between items-center py-16 px-8 h-svh relative z-20">
-          <div>
-            <p
-              data-aos="fade-up"
-              data-aos-delay="200"
-              className="text-white text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
-            >
-              Undangan {getEventNames(eventState.events || [])}
-            </p>
-            <h2
-              data-aos="fade-up"
-              data-aos-delay="400"
-              className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-4xl lg:text-5xl text-center"
-            >
-              <span>{participantsState.groom?.nickname}</span>
-              <span className="italic"> dan </span>
-              <span>{participantsState.bride?.nickname}</span>
-            </h2>
-            {isOpen && (
+        {isOpen && (
+          <div className="flex flex-col justify-between items-center py-16 px-8 h-svh relative z-20">
+            <div>
               <p
                 data-aos="fade-up"
+                className="text-white text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+              >
+                Undangan {getEventNames(eventState.events || [])}
+              </p>
+              <h2
+                data-aos="fade-up"
+                data-aos-delay="200"
+                className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-4xl lg:text-5xl text-center"
+              >
+                <span>{participantsState.groom?.nickname}</span>
+                <span className="italic"> dan </span>
+                <span>{participantsState.bride?.nickname}</span>
+              </h2>
+
+              <p
+                data-aos="fade-up"
+                data-aos-delay="400"
                 className="text-white text-[10px] lg:mt-2 text-center mt-[10px] lg:text-xs max-w-md"
               >
                 Wahai pasangan suami-isteri, kembangkanlah cinta kasih di dalam
@@ -107,14 +91,15 @@ const Hero = () => {
                 Karena hanya orang yang bersungguh-sungguhlah mendapatkan
                 keberhasilan dalam berkeluarga.
               </p>
-            )}
-          </div>
-          {isOpen && (
+            </div>
+
             <div>
               {eventState.events.length > 0 &&
               eventState.timeRemainings.length > 0 ? (
-                <div data-aos="fade-down" data-aos-delay="200">
+                <div>
                   <p
+                    data-aos="fade-down"
+                    data-aos-delay="600"
                     className={`text-white text-center tracking-[3px] font-medium text-[10px] lg:text-xs uppercase transform transition-all ease-in-out duration-300 ${
                       eventState.fade
                         ? "opacity-100 translate-y-0"
@@ -135,6 +120,8 @@ const Hero = () => {
                     ).format("dddd, DD/MM/YYYY")}
                   </p>
                   <div
+                    data-aos="fade-down"
+                    data-aos-delay="800"
                     className={`flex justify-center gap-x-14 mt-4 transform transition-all ease-in-out duration-300 delay-200 ${
                       eventState.fade
                         ? "opacity-100 translate-y-0"
@@ -189,8 +176,8 @@ const Hero = () => {
                 </div>
               ) : null}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

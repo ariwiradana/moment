@@ -26,7 +26,7 @@ const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"), {
 });
 const MusicComponent = dynamic(() => import("./layouts/music"));
 const EventsComponent = dynamic(() => import("./layouts/events"));
-const ParticipantsComponent = dynamic(() => import("./layouts/participants"));
+// const ParticipantsComponent = dynamic(() => import("./layouts/participants"));
 const GiftComponent = dynamic(() => import("./layouts/gift"));
 
 interface Props {
@@ -70,10 +70,10 @@ const Aruna: FC<Props> = (props) => {
                   <Image
                     priority
                     quality={100}
-                    sizes="100vw"
+                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                     src={client?.cover as string}
                     fill
-                    className="object-cover"
+                    className="object-cover shine-dark"
                     alt="cover"
                   />
                 )}
@@ -83,7 +83,7 @@ const Aruna: FC<Props> = (props) => {
               className={`relative w-full xl:max-w-[40vw] 2xl:max-w-[30vw] ml-auto`}
             >
               <HeroComponent />
-              <ParticipantsComponent />
+              {/* <ParticipantsComponent /> */}
               <EventsComponent />
               <VideoComponent />
               <FotoComponent />

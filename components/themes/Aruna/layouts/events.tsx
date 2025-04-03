@@ -6,22 +6,48 @@ import Link from "next/link";
 import ImageShimmer from "@/components/image.shimmer";
 import ButtonDark from "../elements/button.dark";
 import useEvents from "@/hooks/themes/useEvents";
+import usePhotos from "@/hooks/themes/usePhotos";
+import Image from "next/image";
 
 const EventsComponent = () => {
   const { state: eventState, actions: eventActions } = useEvents();
+  const {
+    state: { images },
+  } = usePhotos();
 
   if (eventState.events.length > 0) {
     return (
       <section className="relative overflow-hidden z-0 bg-aruna-dark">
+        <div className="absolute inset-x-0 top-0 h-[20vh] bg-gradient-to-b from-aruna-dark via-transparent to-transparent z-10"></div>
+        <div
+          className="absolute top-0 inset-x-0 grid grid-cols-2"
+          data-aos="zoom-out"
+        >
+          {images.map((image, index) => (
+            <div
+              className="w-full h-[20vh] overflow-hidden bg-white/5 relative opacity-15"
+              key={`Foto Event ${index + 1}`}
+            >
+              <Image
+                src={image}
+                alt={`Foto Event ${index + 1}`}
+                fill
+                className="object-cover grayscale"
+              />
+            </div>
+          ))}
+        </div>
         <div className="flex flex-col z-10 items-center justify-center">
-          <div className={`flex flex-wrap justify-center relative z-20 gap-6`}>
+          <div
+            className={`flex gap-12 flex-wrap justify-center relative z-20 px-6 py-12`}
+          >
             {eventState.events.map((event, index) => (
               <div
                 data-aos="zoom-out-up"
-                className="px-6"
-                key={`event-${event.id}`}
+                className="rounded-t-[150px]"
+                key={`Acara ${event.name}`}
               >
-                <div className="w-full aspect-square relative">
+                <div className="w-full aspect-square relative rounded-t-[150px] overflow-hidden ">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/0 from-[50%] to-white z-10"></div>
                   {event.image && (
                     <ImageShimmer
@@ -35,7 +61,7 @@ const EventsComponent = () => {
                     />
                   )}
                 </div>
-                <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 text-center">
+                <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 text-center rounded-b-3xl">
                   <h2
                     data-aos="fade-up"
                     className={`font-high-summit text-4xl  text-aruna-dark`}

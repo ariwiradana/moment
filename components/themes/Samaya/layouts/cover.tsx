@@ -43,7 +43,7 @@ const Cover: FC<Props> = (props) => {
                 fill
                 src={client?.cover as string}
                 alt="cover"
-                className="object-cover"
+                className="object-cover shine-dark"
               />
             </div>
           )}

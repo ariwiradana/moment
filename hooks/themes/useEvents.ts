@@ -53,7 +53,7 @@ const useEvents = () => {
       }
     }, 8000);
 
-    const countdownInterval = setInterval(updateCountdowns, 1000);
+    const countdownInterval = setInterval(updateCountdowns, 8000);
     updateCountdowns();
 
     return () => {

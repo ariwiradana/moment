@@ -4,8 +4,6 @@ import moment from "moment";
 import { BiSolidCalendar, BiSolidMap } from "react-icons/bi";
 import Link from "next/link";
 import useEvents from "@/hooks/themes/useEvents";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade } from "swiper/modules";
 import ImageShimmer from "@/components/image.shimmer";
 import Image from "next/image";
 import ButtonDark from "../elements/button.dark";
@@ -17,38 +15,24 @@ const EventsComponent = () => {
     return (
       <section className="relative overflow-hidden bg-samaya-dark z-20">
         <div className="inset-0 absolute" data-aos="zoom-out">
-          <Swiper
-            loop
-            effect="fade"
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            speed={2000}
-            className="w-full transition-transform h-full"
-            spaceBetween={0}
-            slidesPerView={1}
-            modules={[Autoplay, EffectFade]}
-          >
-            {state.events.reverse().map((event, index) => (
-              <SwiperSlide
-                className="relative w-full h-full"
-                key={`hero-img-${index}`}
+          <div className="flex flex-col h-full relative">
+            {state.events.map((event) => (
+              <div
+                className={`inset-0 z-0 w-full aspect-[1/${state.events.length}]`}
+                key={`Foto Card ${event.name}`}
               >
-                <div className="absolute inset-0 z-0">
-                  <ImageShimmer
-                    fill
-                    quality={100}
-                    alt={`Foto Card ${event.name} ${index + 1}`}
-                    priority
-                    sizes="100vw"
-                    className="object-cover grayscale transform translate-y-0 lg:translate-y-0 transition-transform bg-white/5"
-                    src={(event.image as string) || ""}
-                  />
-                </div>
-              </SwiperSlide>
+                <ImageShimmer
+                  fill
+                  quality={100}
+                  alt={`Foto Card ${event.name}`}
+                  priority
+                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                  className="object-cover grayscale transform translate-y-0 lg:translate-y-0 transition-transform bg-white/5"
+                  src={(event.image as string) || ""}
+                />
+              </div>
             ))}
-          </Swiper>
+          </div>
         </div>
         <div className="absolute backdrop-blur-sm inset-0"></div>
         <div className="flex flex-col z-10 items-center justify-center px-6 md:px-12 lg:px-4 py-20 lg:py-40">
