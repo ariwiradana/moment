@@ -51,6 +51,7 @@ const initalFormData: Client & {
 } = {
   name: "",
   slug: "",
+  music_title: "",
   opening_title: "",
   opening_description: "",
   closing_title: "",

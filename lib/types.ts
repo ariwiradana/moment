@@ -61,6 +61,7 @@ export interface Event {
 export interface Client {
   id?: number;
   name: string;
+  music_title?: string;
   opening_title: string;
   opening_description: string;
   closing_title: string;

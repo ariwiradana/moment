@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
 import {
   Client,
-  ClientForm,
   Event,
   Option,
   Package,
@@ -48,6 +47,7 @@ const initalFormData: Client & { password: string } = {
   id: undefined,
   name: "",
   slug: "",
+  music_title: "",
   theme_id: null,
   package_id: null,
   events: [initialEvent],
@@ -244,6 +244,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         events: currentEvents,
         music: currentClient.music,
         package_id: currentClient.package_id,
+        music_title: currentClient.music_title,
         opening_title: currentClient.opening_title,
         opening_description: currentClient.opening_description,
         closing_title: currentClient.closing_title,

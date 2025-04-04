@@ -158,7 +158,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                 label="Video URL"
               />
             )}
-            {state.selectedTheme?.cover_video && !state.formData.coverVideo ? (
+            {state.selectedTheme?.cover_video ? (
               <Input
                 accept="video/*"
                 type="file"
@@ -173,7 +173,15 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
               />
             ) : null}
           </div>
-          {state.selectedPackage?.background_sound && (
+
+          <div className="grid grid-cols-2 gap-4">
+            <Input
+              value={state.formData.music_title}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "music_title")
+              }
+              label="Music Title"
+            />
             <Input
               accept="audio/mpeg"
               type="file"
@@ -186,7 +194,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
               className="w-full"
               label="Music"
             />
-          )}
+          </div>
 
           <h1 className="text-2xl font-bold mb-4 mt-8">Event(s)</h1>
           <div className="flex flex-col gap-y-4">

@@ -267,7 +267,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               label="Gallery"
             />
 
-            <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
               {Array.isArray(state.formData.gallery) &&
               state.formData.gallery.length > 0
                 ? state.formData.gallery.map((img: string, index: number) => {
@@ -357,23 +357,27 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   })
                 : null}
             </div>
+
+            {state.selectedTheme?.cover_video && (
+              <Input
+                id="cover-video"
+                accept="video/*"
+                type="file"
+                onChange={(e) =>
+                  actions.handleChangeClient(
+                    e.target.files?.length ? (e.target.files[0] as File) : "",
+                    "cover-video"
+                  )
+                }
+                className="w-full"
+                label="Cover Video"
+              />
+            )}
+
             <InputChip
               chips={state.videosForm}
               onChange={(value) => actions.handleChangeClient(value, "videos")}
-              label="Video URL"
-            />
-            <Input
-              id="cover-video"
-              accept="video/*"
-              type="file"
-              onChange={(e) =>
-                actions.handleChangeClient(
-                  e.target.files?.length ? (e.target.files[0] as File) : "",
-                  "cover-video"
-                )
-              }
-              className="w-full"
-              label="Cover Video"
+              label="Video URL (Youtube)"
             />
 
             {state.formData.videos && (
@@ -436,20 +440,29 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               </div>
             )}
 
-            <Input
-              id="music"
-              accept="audio/mpeg"
-              type="file"
-              multiple
-              onChange={(e) =>
-                actions.handleChangeClient(
-                  e.target.files?.length ? (e.target.files[0] as File) : "",
-                  "music"
-                )
-              }
-              className="w-full"
-              label="Music"
-            />
+            <div className="grid md:grid-cols-2 gap-4">
+              <Input
+                value={state.formData.music_title}
+                onChange={(e) =>
+                  actions.handleChangeClient(e.target.value, "music_title")
+                }
+                label="Music Title"
+              />
+              <Input
+                id="music"
+                accept="audio/mpeg"
+                type="file"
+                multiple
+                onChange={(e) =>
+                  actions.handleChangeClient(
+                    e.target.files?.length ? (e.target.files[0] as File) : "",
+                    "music"
+                  )
+                }
+                className="w-full"
+                label="Music"
+              />
+            </div>
 
             {state.formData.music && (
               <div className="relative flex items-center gap-x-4">

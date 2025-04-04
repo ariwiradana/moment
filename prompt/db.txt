@@ -51,6 +51,7 @@ CREATE TABLE clients (
   name VARCHAR(255),
   slug VARCHAR(255) UNIQUE,
   cover VARCHAR(255),
+  music_title VARCHAR(255),
   seo VARCHAR(255),
   theme_id INT REFERENCES themes(id) ON DELETE SET NULL,
   theme_category_id INT REFERENCES theme_categories(id) ON DELETE SET NULL,

@@ -12,6 +12,7 @@ import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
 import Slider, { Settings } from "react-slick";
 import Image from "next/image";
+import { BiMusic } from "react-icons/bi";
 
 const ThankyouComponent = () => {
   const { client } = useClientStore();
@@ -131,6 +132,16 @@ const ThankyouComponent = () => {
               </p>
             </Link>
           </li>
+          {client?.music_title && (
+            <li>
+              <div
+                className={`flex justify-center items-center gap-x-2 ${roboto.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
+              >
+                <BiMusic className="animate-pulse" />
+                <p>{client?.music_title}</p>
+              </div>
+            </li>
+          )}
         </ul>
       </div>
     </section>
