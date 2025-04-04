@@ -16,6 +16,7 @@ import FotoComponent from "./layouts/foto";
 import GiftComponent from "./layouts/gift";
 import RSVPWishes from "./layouts/rsvp.wishes";
 import ThankyouComponent from "./layouts/thankyou";
+import ParticipantsComponent from "./layouts/participants";
 
 interface Props {
   untuk: string;
@@ -70,7 +71,7 @@ const Aruna: FC<Props> = (props) => {
               className={`relative w-full xl:max-w-[30vw] 2xl:max-w-[25vw] ml-auto`}
             >
               <HeroComponent />
-              {/* <ParticipantsComponent /> */}
+              <ParticipantsComponent />
               <EventsComponent />
               <VideoComponent />
               <FotoComponent />

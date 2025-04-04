@@ -17,13 +17,29 @@ const EventsComponent = () => {
 
   if (eventState.events.length > 0) {
     return (
-      <section className="relative overflow-hidden z-0 bg-aruna-dark">
-        <div className="absolute inset-x-0 top-0 h-[30vh] bg-gradient-to-b from-aruna-dark via-transparent to-transparent z-10"></div>
+      <section className="relative overflow-hidden z-0 bg-aruna-dark py-[60px] md:py-[100px]">
+        <div className="relative z-20">
+          <p
+            data-aos="fade-up"
+            className={`${roboto.className} text-[10px] md:text-xs tracking-[1px] text-center text-white/80 max-w-screen-sm mx-auto mb-8 px-6`}
+          >
+            Hari yang dinanti telah tiba, sebuah kisah baru akan dimulai.
+            Jadilah bagian dari kebahagiaan kami
+          </p>
+
+          <p
+            data-aos="fade-up"
+            className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
+          >
+            Acara Kami
+          </p>
+        </div>
+        <div className="absolute inset-x-0 top-0 h-[50vh] bg-gradient-to-b from-aruna-dark via-aruna-dark/50 to-transparent z-10"></div>
         <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-b from-transparent via-transparent to-aruna-dark z-10"></div>
         <div className="absolute top-0 inset-x-0 grid" data-aos="zoom-out">
-          {images.reverse().map((image, index) => (
+          {images.map((image, index) => (
             <div
-              className="w-full h-[20vh] overflow-hidden relative opacity-15"
+              className="w-full h-[20vh] overflow-hidden relative opacity-30"
               key={`Foto Event ${index + 1}`}
             >
               <Image
@@ -42,10 +58,10 @@ const EventsComponent = () => {
             {eventState.events.map((event, index) => (
               <div
                 data-aos="zoom-out-up"
-                className="rounded-t-[150px]"
+                className="rounded-t-2xl"
                 key={`Acara ${event.name}`}
               >
-                <div className="w-full aspect-square relative rounded-t-[150px] overflow-hidden ">
+                <div className="w-full aspect-[3/2] relative overflow-hidden ">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/0 from-[50%] to-white z-10"></div>
                   {event.image && (
                     <ImageShimmer
@@ -54,12 +70,12 @@ const EventsComponent = () => {
                       priority
                       alt={`Acara ${event.name}`}
                       fill
-                      className="object-cover"
+                      className="object-cover rounded-t-[150px]"
                       src={event.image as string}
                     />
                   )}
                 </div>
-                <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 text-center rounded-b-3xl">
+                <div className="bg-white pb-8 md:pb-12 pt-3 px-6 md:px-12 text-center rounded-b-2xl">
                   <h2
                     data-aos="fade-up"
                     className={`font-high-summit text-4xl  text-aruna-dark`}

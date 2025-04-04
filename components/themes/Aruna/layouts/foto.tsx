@@ -82,6 +82,11 @@ const Component = () => {
     },
   };
 
+  const participantNames = useMemo(
+    () => getParticipantNames(participants),
+    [participants]
+  );
+
   return (
     <>
       <Lightbox
@@ -147,7 +152,7 @@ const Component = () => {
               data-aos="fade-up"
               className={`text-white/60 text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${roboto.className}`}
             >
-              Galeri {getParticipantNames(participants)}
+              Galeri {participantNames}
             </p>
           )}
           <div data-aos="zoom-out-up">
