@@ -24,6 +24,7 @@ const Hero = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     waitForAnimate: false,
+    arrows: false,
     autoplay: true,
     autoplaySpeed: 6000,
     speed: 3000,

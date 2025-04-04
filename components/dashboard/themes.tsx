@@ -38,7 +38,6 @@ const ThemeComponent: FC = () => {
       },
     }
   );
-
   return (
     <>
       <section

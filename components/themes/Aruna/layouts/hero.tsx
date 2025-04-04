@@ -35,6 +35,7 @@ const HeroComponent = () => {
     waitForAnimate: false,
     autoplay: true,
     autoplaySpeed: 6000,
+    arrows: false,
     speed: 3000,
     cssEase: "ease-in-out",
   };

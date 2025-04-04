@@ -1,5 +1,4 @@
 import Loader from "@/components/admin/elements/loader";
-import { afacad } from "@/lib/fonts";
 import React, { FC, ReactNode } from "react";
 
 interface ButtonFloatingProps
@@ -16,7 +15,7 @@ const ButtonFloating: FC<ButtonFloatingProps> = (props) => {
       <button
         {...props}
         disabled={props.isloading ? true : false}
-        className={`${afacad.className} ${
+        className={` ${
           props.className ?? ""
         }  flex items-center p-2 lg:p-3 shadow-md rounded-full text-dashboard-dark font-medium transition duration-500 hover:bg-opacity-100 justify-center ${
           props.isloading &&

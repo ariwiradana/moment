@@ -14,13 +14,13 @@ interface Props {
 const ThemeCard: NextPage<Props> = ({ client }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleMouseEnter = () => {
+  const handlePlay = () => {
     if (videoRef.current) {
       videoRef.current.play();
     }
   };
 
-  const handleMouseLeave = () => {
+  const handlePause = () => {
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
@@ -28,54 +28,56 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
   };
 
   return (
-    <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015]">
-      <div
-        className="relative"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <video
-          ref={videoRef}
-          poster={`/images/${client.theme?.slug}/thumbnail.png`}
-          className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px]"
-          src={`/video/themes/${client.theme?.slug}.mp4`}
-          muted
-          loop
-          playsInline
-        ></video>
-      </div>
-      <div className="flex flex-col items-center mt-2 md:mt-4">
-        <h5
-          className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
+    <>
+      <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015]">
+        <div
+          className="relative"
+          onMouseEnter={handlePlay}
+          onMouseLeave={handlePause}
         >
-          {client.theme?.name}
-        </h5>
-        <p className={`${redhat.className} text-xs text-white/70`}>
-          Mulai dari
-        </p>
-        {client.packages && (
-          <h6
-            className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
+          <video
+            ref={videoRef}
+            poster={`/images/${client.theme?.slug}/thumbnail.png`}
+            className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px]"
+            src={`/video/themes/${client.theme?.slug}.mp4`}
+            muted
+            loop
+            playsInline
+          ></video>
+        </div>
+        <div className="flex flex-col items-center mt-2 md:mt-4">
+          <h5
+            className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
           >
-            {formatToRupiah(
-              client.packages.find((p) => p.name === "Basic")?.price || 0
-            )}
-          </h6>
-        )}
+            {client.theme?.name}
+          </h5>
+          <p className={`${redhat.className} text-xs text-white/70`}>
+            Mulai dari
+          </p>
+          {client.packages && (
+            <h6
+              className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
+            >
+              {formatToRupiah(
+                client.packages.find((p) => p.name === "Basic")?.price || 0
+              )}
+            </h6>
+          )}
 
-        <Link
-          href={`/${client.slug}`}
-          aria-label={`Link Preview ${client.theme?.name}`}
-          target="_blank"
-        >
-          <ButtonOutlinedLight
-            size="small"
-            title="Live Preview"
-            icon={<BsEye />}
-          />
-        </Link>
+          <Link
+            href={`/${client.slug}`}
+            aria-label={`Link Preview ${client.theme?.name}`}
+            target="_blank"
+          >
+            <ButtonOutlinedLight
+              size="small"
+              title="Live Preview"
+              icon={<BsEye />}
+            />
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

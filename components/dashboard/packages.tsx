@@ -37,7 +37,7 @@ const PackageComponent = () => {
 
   if (pacakages.length > 0)
     return (
-      <section className="py-8 md:py-10 lg:py-16 select-none" id="section4">
+      <section className="py-8 md:py-10 lg:py-16 select-none relative" id="section4">
         <div className="max-w-screen-xl mx-auto">
           <div data-aos="fade-up" className="px-4 md:px-12 lg:px-4">
             <div className="flex justify-between items-center gap-4 mb-4 lg:hidden">

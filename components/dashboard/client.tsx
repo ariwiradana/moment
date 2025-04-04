@@ -93,10 +93,10 @@ const ClientComponent = () => {
             data-aos-delay="600"
             className="flex gap-3 mt-2 lg:mt-0"
           >
-            <button className="w-10 h-10 action-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-30">
+            <button className="w-10 h-10 action-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-60">
               <HiOutlineArrowLongLeft />
             </button>
-            <button className="w-10 h-10 action-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-30">
+            <button className="w-10 h-10 action-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-60">
               <HiOutlineArrowLongRight />
             </button>
           </div>

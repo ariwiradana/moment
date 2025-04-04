@@ -24,6 +24,7 @@ const HeroComponent = () => {
     slidesToScroll: 1,
     waitForAnimate: false,
     autoplay: true,
+    arrows: false,
     autoplaySpeed: 6000,
     speed: 3000,
     cssEase: "ease-in-out",
