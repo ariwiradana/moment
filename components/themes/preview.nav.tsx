@@ -28,7 +28,7 @@ const PreviewNav = () => {
           data-aos="fade-down"
           data-aos-offset="80"
         >
-          <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 py-4 bg-dashboard-dark/80 backdrop-blur-sm">
+          <ul className="px-6 md:px-12 lg:px-24 flex items-center justify-between gap-8 py-3 md:py-4 bg-dashboard-dark/80 backdrop-blur-sm">
             <li className="flex items-center gap-x-3">
               <div className="relative w-5 md:w-6 aspect-square">
                 <Image
@@ -40,7 +40,7 @@ const PreviewNav = () => {
                 />
               </div>
               <h1
-                className={`${redhat.className} font-medium text-sm lg:text-base text-white`}
+                className={`${redhat.className} font-medium text-sm md:text-base text-white`}
               >
                 {client.is_preview
                   ? `Tema ${client?.theme?.name}`
@@ -53,7 +53,7 @@ const PreviewNav = () => {
                   onClick={() =>
                     handleChooseTheme(client?.theme?.name as string)
                   }
-                  className={`${redhat.className} justify-center text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
+                  className={`${redhat.className} justify-center text-[10px] md:text-xs hover:bg-white/5 transition-all ease-in-out duration-500 flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 text-white py-2`}
                 >
                   Pesan Sekarang
                   <BsCart />
