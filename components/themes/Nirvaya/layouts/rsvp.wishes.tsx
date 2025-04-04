@@ -167,9 +167,9 @@ const RSVPWishesComponent: FC = () => {
 
         {/* Wishes List */}
         {state.wishes?.length > 0 && (
-          <div data-aos="fade-up">
-            <div className="w-full bg-nirvaya-primary p-6 md:px-8 md:py-4 mt-16">
-              <div className="w-full grid items-start md:grid-cols-2 gap-x-3 md:gap-x-12 divide-y md:divide-y-0 divide-white/10">
+          <div data-aos="fade-up" className="w-full">
+            <div className="bg-nirvaya-primary p-6 md:px-8 md:py-4 mt-16">
+              <div className="grid items-start md:grid-cols-2 gap-x-3 md:gap-x-12 divide-y md:divide-y-0 divide-white/10">
                 {state.wishes.map((wish, index) => (
                   <WishItem
                     key={`ucapan-${index + 1}`}
