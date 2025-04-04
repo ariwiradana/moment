@@ -9,9 +9,10 @@ import ButtonOutlinedLight from "../elements/button.outlined.white";
 
 interface Props {
   client: Client;
+  bestSeller: string;
 }
 
-const ThemeCard: NextPage<Props> = ({ client }) => {
+const ThemeCard: NextPage<Props> = ({ client, bestSeller }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlay = () => {
@@ -29,16 +30,23 @@ const ThemeCard: NextPage<Props> = ({ client }) => {
 
   return (
     <>
-      <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015]">
+      <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015] relative">
         <div
           className="relative"
           onMouseEnter={handlePlay}
           onMouseLeave={handlePause}
         >
+          {bestSeller === client.theme?.slug && (
+            <div
+              className={`${redhat.className} absolute top-5 md:top-6 z-30 right-0 bg-dashboard-primary font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px] transform rotate-[40deg] translate-x-4 -translate-y-4 shadow-md`}
+            >
+              Best Seller
+            </div>
+          )}
           <video
             ref={videoRef}
-            poster={`/images/${client.theme?.slug}/thumbnail.png`}
-            className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px]"
+            poster={client.theme?.phone_thumbnail || ""}
+            className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px] shine-dark"
             src={`/video/themes/${client.theme?.slug}.mp4`}
             muted
             loop

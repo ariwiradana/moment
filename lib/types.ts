@@ -184,3 +184,10 @@ export interface SEO {
   theme_name: string;
   name: string;
 }
+
+export interface ThemeUsage {
+  id: number;
+  usage_count: number;
+  name: string;
+  slug: string;
+}
