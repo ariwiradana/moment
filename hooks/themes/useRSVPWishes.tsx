@@ -80,57 +80,54 @@ const useRSVPWishes = (icon: ReactNode) => {
     }));
   }, []);
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      const payload = { client_id: Number(client?.id), ...formData };
+    const payload = { client_id: Number(client?.id), ...formData };
 
-      setLoading(true);
-      try {
-        wisheschema.parse(formData);
-        const toastSubmit = toast.loading("Memberikan ucapan...");
-        const response = await getClient(`/api/_pb/_w`, {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
+    setLoading(true);
+    try {
+      wisheschema.parse(formData);
+      const toastSubmit = toast.loading("Memberikan ucapan...");
+      const response = await getClient(`/api/_pb/_w`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
 
-        if (!response.ok) {
-          const errorResult = await response.json();
-          throw new Error(errorResult.message);
-        }
-
-        const result = await response.json();
-
-        if (result.success) {
-          mutate();
-          setLoading(false);
-          setFormData(initialReviewForm);
-          toast.success("Berhasil. Terima kasih atas ucapannya!", {
-            id: toastSubmit,
-            icon: <div>{icon}</div>,
-          });
-        } else {
-          toast.error("Gagal membuat ucapan", { id: toastSubmit });
-        }
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          const formattedErrors: Record<string, string | undefined> = {};
-          error.errors.forEach((err) => {
-            if (err.path[0]) {
-              formattedErrors[err.path[0] as string] = err.message;
-            }
-          });
-          setErrors(formattedErrors);
-        } else {
-          console.error(error);
-        }
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message);
       }
-    },
-    []
-  );
+
+      const result = await response.json();
+
+      if (result.success) {
+        mutate();
+        setLoading(false);
+        setFormData(initialReviewForm);
+        toast.success("Berhasil. Terima kasih atas ucapannya!", {
+          id: toastSubmit,
+          icon: <div>{icon}</div>,
+        });
+      } else {
+        toast.error("Gagal membuat ucapan", { id: toastSubmit });
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors: Record<string, string | undefined> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            formattedErrors[err.path[0] as string] = err.message;
+          }
+        });
+        setErrors(formattedErrors);
+      } else {
+        console.error(error);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChangePagination = useCallback(
     (event: React.ChangeEvent<unknown>, value: number) => {
