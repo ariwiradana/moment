@@ -122,10 +122,17 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           {!client.is_preview && (
                             <ButtonText
                               onClick={() =>
-                                actions.handleSetAsPreview(client.id as number)
+                                actions.handleSetAsPreview(
+                                  client.id as number,
+                                  !client.is_preview
+                                )
                               }
                               size="small"
-                              title="Set as Preview"
+                              title={
+                                client.is_preview
+                                  ? "Disable as Preview"
+                                  : "Set as Preview"
+                              }
                               icon={<BiSlideshow className="text-base" />}
                             />
                           )}
@@ -394,18 +401,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>
-                            {!client.is_preview && (
-                              <ButtonText
-                                onClick={() =>
-                                  actions.handleSetAsPreview(
-                                    client.id as number
-                                  )
-                                }
-                                size="medium"
-                                title="Set as Preview"
-                                icon={<BiSlideshow className="text-base" />}
-                              />
-                            )}
                             {client.status === "completed" && (
                               <>
                                 <ButtonText
@@ -460,7 +455,21 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 />
                               </>
                             )}
-
+                            <ButtonText
+                              onClick={() =>
+                                actions.handleSetAsPreview(
+                                  client.id as number,
+                                  !client.is_preview
+                                )
+                              }
+                              size="medium"
+                              title={
+                                client.is_preview
+                                  ? "Disable as Preview"
+                                  : "Set as Preview"
+                              }
+                              icon={<BiSlideshow className="text-base" />}
+                            />
                             <ButtonText
                               onClick={() =>
                                 router.push(`/admin/clients/${client.slug}`)

@@ -83,13 +83,13 @@ export const useAdminClients = (token: string | null) => {
     });
   };
 
-  const handleSetAsPreview = async (id: number) => {
+  const handleSetAsPreview = async (id: number, is_preview: boolean) => {
     const setAsPreview = async () => {
       const response = await getClient(
         `/api/_c/_sp`,
         {
           method: "POST",
-          body: JSON.stringify({ is_preview: true, id }),
+          body: JSON.stringify({ is_preview, id }),
         },
         token
       );
@@ -100,13 +100,17 @@ export const useAdminClients = (token: string | null) => {
       return await response.json();
     };
     toast.promise(setAsPreview(), {
-      loading: "Set as preview...",
+      loading: is_preview ? "Set as preview..." : "Disable as preview...",
       success: () => {
         mutate();
-        return "Successfully set as preview";
+        return is_preview
+          ? "Successfully set as preview"
+          : "Successfully disable as preview";
       },
       error: (error: any) => {
-        return error.message || "Failed to set as preview";
+        return error.message || is_preview
+          ? "Failed set as preview..."
+          : "Failed disable as preview...";
       },
     });
   };
