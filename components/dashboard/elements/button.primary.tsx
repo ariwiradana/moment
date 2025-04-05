@@ -52,7 +52,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
         size
       )} ${
         isloading || props.disabled
-          ? "pointer-events-none bg-opacity-50 cursor-not-allowed"
+          ? "pointer-events-none bg-opacity-50 cursor-not-allowed border-transparent"
           : ""
       }`}
     >

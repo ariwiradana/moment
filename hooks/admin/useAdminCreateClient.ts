@@ -90,28 +90,39 @@ export const useAdminCreateClient = (token: string | null) => {
       value: "",
     },
   ]);
+  
   const [themeOptions, setThemeOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
     },
   ]);
+
   const [themeCategoryOptions, setThemeCategoryOptions] = useState<Option[]>([
     {
       label: "",
       value: "",
     },
   ]);
+
   const { data: themes } = useSWR<{
     success: boolean;
     data: Theme[];
     total_rows: number;
-  }>(token ? `/api/_th` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/_th` : null, (url: string) => fetcher(url, token), {
+    onSuccess: (data) => {
+      setSelectedTheme(data.data[0]);
+    },
+  });
 
   const { data: packages } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token), {
+    onSuccess: (data) => {
+      setSelectedPackage(data.data[0]);
+    },
+  });
 
   const clientSchema = z.object({
     name: z.string().min(1, { message: "Client name is required." }),
