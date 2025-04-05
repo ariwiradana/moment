@@ -180,7 +180,7 @@ const RSVPWishesComponent: FC = () => {
               </div>
 
               {/* Pagination */}
-              {/* {state.totalRows > state.limit && ( */}
+              {state.totalRows > state.limit && ( */}
                 <div className="w-full mt-6">
                   <div className="-ml-2">
                     <Pagination
@@ -215,7 +215,7 @@ const RSVPWishesComponent: FC = () => {
                     />
                   </div>
                 </div>
-              {/* )} */}
+              )}
             </div>
           </div>
         )}
