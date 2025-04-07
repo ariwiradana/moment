@@ -15,6 +15,7 @@ const config: Config = {
         "tan-pearl": ["TanPearl", "sans-serif"],
         "high-summit": ["HighSummit", "sans-serif"],
         edensor: ["Edensor", "sans-serif"],
+        bigilla: ["Bigilla", "sans-serif"],
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
@@ -58,6 +59,10 @@ const config: Config = {
           dark: "#101010",
           background: "#f7f7f2",
           primary: "#886B5B",
+        },
+        luma: {
+          dark: "#101010",
+          primary: "#6E7568",
         },
         admin: {
           primary: "#3366FF",

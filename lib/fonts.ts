@@ -14,6 +14,7 @@ import {
   Raleway,
   Red_Hat_Display,
   Nanum_Gothic,
+  Rubik,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -82,5 +83,9 @@ export const nanum = Nanum_Gothic({
   subsets: ["latin"],
 });
 export const redhat = Red_Hat_Display({
+  subsets: ["latin"],
+});
+
+export const rubik = Rubik({
   subsets: ["latin"],
 });
