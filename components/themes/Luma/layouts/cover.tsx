@@ -35,7 +35,7 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
       }`}
       data-aos="zoom-out"
     >
-      <div className="w-full h-full bg-luma-primary relative aspect-square">
+      <div className="w-full h-full bg-luma-primary relative">
         <Image
           fill
           src={client?.cover || ""}
