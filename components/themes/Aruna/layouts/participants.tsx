@@ -1,6 +1,5 @@
 import React, { FC, memo } from "react";
 import { roboto } from "@/lib/fonts";
-import ImageShimmer from "../../../image.shimmer";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
 import {
@@ -12,6 +11,7 @@ import {
 import { getEventNames } from "@/utils/getEventNames";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
+import Image from "next/image";
 
 const ParticipantsComponent = () => {
   const { client } = useClientStore();
@@ -64,17 +64,17 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
   return (
     <div className="flex flex-col gap-2 justify-center items-center relative">
       <div
-        className="w-full aspect-square relative"
+        className="w-full aspect-square relative rounded-2xl overflow-hidden"
         data-aos={odd ? "fade-right" : "fade-left"}
       >
         {props.data.image && (
-          <ImageShimmer
+          <Image
             quality={100}
             sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
             priority
             src={props.data.image as string}
             fill
-            className={`object-cover rounded-2xl`}
+            className={`object-cover rounded-2xl shine-dark`}
             alt={props.data.name}
           />
         )}

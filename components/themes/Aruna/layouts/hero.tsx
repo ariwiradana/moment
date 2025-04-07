@@ -7,7 +7,7 @@ import { getEventNames } from "@/utils/getEventNames";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
 import Image from "next/image";
-import React, { memo, useMemo } from "react";
+import React, { memo, useMemo, useState } from "react";
 import Slider, { Settings } from "react-slick";
 
 const HeroComponent = () => {
@@ -40,17 +40,23 @@ const HeroComponent = () => {
     cssEase: "ease-in-out",
   };
 
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
-    <section className="relative min-h-[600px] h-lvh overflow-hidden">
-      <div className="top-0 right-0 w-full xl:w-[40vw] 2xl:w-[30vw] overflow-hidden">
-        {video && video?.length > 0 ? (
+    <section className="relative min-h-[600px] h-lvh overflow-hidden bg-aruna-dark">
+      <div
+        data-aos="zoom-out-up"
+        className="top-0 right-0 w-full xl:w-[40vw] 2xl:w-[30vw] overflow-hidden"
+      >
+        {video.length > 0 && (
           <div
-            className="min-h-[600px] h-lvh w-full"
-            data-aos="zoom-out"
-            data-aos-delay="500"
+            className={`min-h-[600px] h-lvh w-full relative ${
+              isPlaying ? "z-10" : "z-0"
+            }`}
           >
             <div className="absolute inset-0 w-full h-full overflow-hidden">
               <video
+                onPlay={() => setTimeout(() => setIsPlaying(true), 2000)}
                 className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 object-cover"
                 src={video[0]}
                 poster={client?.cover || ""}
@@ -61,31 +67,33 @@ const HeroComponent = () => {
               ></video>
             </div>
           </div>
-        ) : (
-          <div data-aos="zoom-out-up">
-            <Slider {...settings} className="h-lvh">
-              {Array.isArray(client?.gallery) && client?.gallery.length > 0
-                ? client.gallery
-                    .filter(
-                      (image) =>
-                        image !== client?.cover && image !== client?.seo
-                    )
-                    .map((image, index) => (
-                      <Image
-                        key={`Main Slider ${index + 1}`}
-                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                        fill
-                        quality={100}
-                        alt={`Main Slider ${index + 1}`}
-                        priority
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
-                        src={image}
-                      />
-                    ))
-                : null}
-            </Slider>
-          </div>
         )}
+        <div
+          className={`${
+            video.length > 0 && isPlaying ? "invisible" : "visible"
+          } absolute inset-0`}
+        >
+          <Slider {...settings} className="h-lvh">
+            {Array.isArray(client?.gallery) && client?.gallery.length > 0
+              ? client.gallery
+                  .filter(
+                    (image) => image !== client?.cover && image !== client?.seo
+                  )
+                  .map((image, index) => (
+                    <Image
+                      key={`Main Slider ${index + 1}`}
+                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                      fill
+                      quality={100}
+                      alt={`Main Slider ${index + 1}`}
+                      priority
+                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
+                      src={image}
+                    />
+                  ))
+              : null}
+          </Slider>
+        </div>
       </div>
       <div
         className={`absolute h-lvh inset-0 z-10 bg-gradient-to-b from-aruna-dark/50 from-[5%] via-aruna-dark/20 to-[85%] to-aruna-dark transition-opacity ease-in-out duration-1000 delay-500 ${
