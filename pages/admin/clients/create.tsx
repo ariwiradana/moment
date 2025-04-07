@@ -128,7 +128,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             }
             label="Closing Description"
           />
-          <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
+          <h1 className="text-2xl font-bold mb-4 mt-8">Photo/Video(s)</h1>
           <Input
             id="gallery"
             accept="image/*"
@@ -155,7 +155,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                 onChange={(value) =>
                   actions.handleChangeClient(value, "videos")
                 }
-                label="Video URL"
+                label="Youtube Video URL"
               />
             )}
             {state.selectedTheme?.cover_video ? (
@@ -174,27 +174,27 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             ) : null}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Input
-              value={state.formData.music_title}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "music_title")
-              }
-              label="Music Title"
-            />
-            <Input
-              accept="audio/mpeg"
-              type="file"
-              onChange={(e) =>
-                actions.handleChangeClient(
-                  e.target.files?.length ? (e.target.files[0] as File) : "",
-                  "music"
-                )
-              }
-              className="w-full"
-              label="Music"
-            />
-          </div>
+          <h1 className="text-2xl font-bold mb-4 mt-8">Music</h1>
+
+          <Input
+            value={state.formData.music_title}
+            onChange={(e) =>
+              actions.handleChangeClient(e.target.value, "music_title")
+            }
+            label="Title"
+          />
+          <Input
+            accept="audio/mpeg"
+            type="file"
+            onChange={(e) =>
+              actions.handleChangeClient(
+                e.target.files?.length ? (e.target.files[0] as File) : "",
+                "music"
+              )
+            }
+            className="w-full"
+            label="File"
+          />
 
           <h1 className="text-2xl font-bold mb-4 mt-8">Event(s)</h1>
           <div className="flex flex-col gap-y-4">

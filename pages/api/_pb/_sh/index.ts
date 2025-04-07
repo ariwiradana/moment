@@ -7,8 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET":
       try {
         const { rows: clients } = await sql.query(
-          `SELECT COUNT(*) FROM clients WHERE is_preview = $1 AND status = $2`,
-          [false, "completed"]
+          `SELECT COUNT(*) FROM clients`
         );
         const { rows: events } = await sql.query(`SELECT COUNT(*) FROM events`);
         const { rows: wishes } = await sql.query(`SELECT COUNT(*) FROM wishes`);

@@ -64,7 +64,7 @@ const ClientComponent = () => {
                       }
                       alt={`Thumbnail undangan digital ${c.name}`}
                       fill
-                      className="object-cover w-full h-full"
+                      className="object-cover w-full h-full shine"
                     />
                   </div>
                 </SwiperSlide>

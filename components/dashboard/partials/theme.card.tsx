@@ -6,6 +6,7 @@ import { BsEye } from "react-icons/bs";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import { useRef } from "react";
 import ButtonOutlinedLight from "../elements/button.outlined.white";
+import { BiPlayCircle, BiStar } from "react-icons/bi";
 
 interface Props {
   client: Client;
@@ -36,13 +37,6 @@ const ThemeCard: NextPage<Props> = ({ client, bestSeller }) => {
           onMouseEnter={handlePlay}
           onMouseLeave={handlePause}
         >
-          {bestSeller === client.theme?.slug && (
-            <div
-              className={`${redhat.className} absolute top-5 md:top-6 z-30 right-0 bg-dashboard-primary font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px] transform rotate-[40deg] translate-x-4 -translate-y-4 shadow-md`}
-            >
-              Best Seller
-            </div>
-          )}
           <video
             ref={videoRef}
             poster={client.theme?.phone_thumbnail || ""}
@@ -53,7 +47,27 @@ const ThemeCard: NextPage<Props> = ({ client, bestSeller }) => {
             playsInline
           ></video>
         </div>
-        <div className="flex flex-col items-center mt-2 md:mt-4">
+        <div className="flex flex-col items-center mt-3 md:mt-5">
+          {bestSeller === client.theme?.slug || client.theme?.cover_video ? (
+            <div className="flex justify-center flex-wrap gap-3 mb-2">
+              {bestSeller === client.theme?.slug && (
+                <div
+                  className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px]`}
+                >
+                  <BiStar />
+                  Favorit
+                </div>
+              )}
+              {client.theme?.cover_video && (
+                <div
+                  className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px]`}
+                >
+                  <BiPlayCircle />
+                  Cover Video
+                </div>
+              )}
+            </div>
+          ) : null}
           <h5
             className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
           >

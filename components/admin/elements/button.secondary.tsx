@@ -14,9 +14,9 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
   const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
-        return "px-2 py-1 text-sm gap-x-1";
+        return "px-2 py-1 text-xs gap-x-1";
       case "small":
-        return "px-3 py-2 text-sm gap-x-2";
+        return "px-3 py-2 text-xs gap-x-2";
       case "medium":
         return "px-4 py-3 text-base gap-x-3";
       case "large":
@@ -29,7 +29,7 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = (props) => {
       {...props}
       className={`${
         props.className ?? ""
-      } flex items-center text-admin-hover-dark rounded-lg font-semibold whitespace-nowrap bg-white border transition duration-200 hover:bg-gray-100 justify-start ${buttonStyles(
+      } flex items-center text-admin-hover-dark rounded-full font-semibold whitespace-nowrap bg-white border transition duration-200 hover:bg-gray-100 justify-start ${buttonStyles(
         props.size ?? "large"
       )} ${
         props.isloading &&

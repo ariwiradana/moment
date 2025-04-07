@@ -3,7 +3,6 @@ import "yet-another-react-lightbox/styles.css";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import dynamic from "next/dynamic";
-import VideoPlayer from "../elements/video.player";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import useClientStore from "@/store/useClientStore";
 
@@ -14,6 +13,8 @@ const YoutubeEmbed = dynamic(() => import("../elements/youtube.embed"), {
 const VideoComponent = () => {
   const { client } = useClientStore();
   const { videos = [], participants = [] } = client || {};
+
+  console.log(videos);
 
   if (videos?.length > 0)
     return (
@@ -29,8 +30,6 @@ const VideoComponent = () => {
                   youtubeId={youtubeId}
                 />
               );
-            } else {
-              return <VideoPlayer key={url} videoUrl={url} />;
             }
           })}
         </div>

@@ -42,6 +42,8 @@ interface UpdateClientProps {
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
 
+  console.log(state.selectedTheme?.cover_video);
+
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -253,7 +255,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               }
               label="Closing Description"
             />
-            <h1 className="text-2xl font-bold mb-4 mt-8">File(s)</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-8">Photo/Video(s)</h1>
 
             <Input
               id="gallery"
@@ -406,12 +408,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             </button>
                           </div>
 
-                          {/* {!isYouTubeVideo && (
+                          {!isYouTubeVideo && (
                             <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 absolute top-3 left-2 z-20 backdrop-blur text-white">
                               <BiImageAlt className="text-base font-medium" />
                               <span>Video Cover</span>
                             </div>
-                          )} */}
+                          )}
 
                           {isYouTubeVideo ? (
                             <div
@@ -440,29 +442,28 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               </div>
             )}
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <Input
-                value={state.formData.music_title}
-                onChange={(e) =>
-                  actions.handleChangeClient(e.target.value, "music_title")
-                }
-                label="Music Title"
-              />
-              <Input
-                id="music"
-                accept="audio/mpeg"
-                type="file"
-                multiple
-                onChange={(e) =>
-                  actions.handleChangeClient(
-                    e.target.files?.length ? (e.target.files[0] as File) : "",
-                    "music"
-                  )
-                }
-                className="w-full"
-                label="Music"
-              />
-            </div>
+            <h1 className="text-2xl font-bold mb-4 mt-8">Music</h1>
+            <Input
+              value={state.formData.music_title}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "music_title")
+              }
+              label="Title"
+            />
+            <Input
+              id="music"
+              accept="audio/mpeg"
+              type="file"
+              multiple
+              onChange={(e) =>
+                actions.handleChangeClient(
+                  e.target.files?.length ? (e.target.files[0] as File) : "",
+                  "music"
+                )
+              }
+              className="w-full"
+              label="File"
+            />
 
             {state.formData.music && (
               <div className="relative flex items-center gap-x-4">

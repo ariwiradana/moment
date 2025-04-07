@@ -85,17 +85,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
   const { data: user } = useSWR(`/api/_c/_u?slug=${slug}`, fetcher);
 
-  const { data: themes } = useSWR<{
-    success: boolean;
-    data: Theme[];
-    total_rows: number;
-  }>(token ? `/api/_th` : null, (url: string) => fetcher(url, token));
-
-  const { data: packages } = useSWR<{
-    success: boolean;
-    data: Package[];
-  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
-
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [formData, setFormData] = useState<Client & { password: string }>(
@@ -136,6 +125,39 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   >([]);
 
   const router = useRouter();
+
+  const { data: themes } = useSWR<{
+    success: boolean;
+    data: Theme[];
+    total_rows: number;
+  }>(
+    token && formData.theme_id ? `/api/_th` : null,
+    (url: string) => fetcher(url, token),
+    {
+      onSuccess: (data) => {
+        if (formData.theme_id) {
+          const selected = data.data.find((t) => t.id === formData.theme_id);
+          if (selected) setSelectedTheme(selected);
+        }
+      },
+    }
+  );
+
+  const { data: packages } = useSWR<{
+    success: boolean;
+    data: Package[];
+  }>(
+    token && formData.package_id ? `/api/_p` : null,
+    (url: string) => fetcher(url, token),
+    {
+      onSuccess: (data) => {
+        if (formData.package_id) {
+          const selected = data.data.find((p) => p.id === formData.package_id);
+          if (selected) setSelectedPackage(selected);
+        }
+      },
+    }
+  );
 
   useEffect(() => {
     if (user) {
@@ -179,8 +201,6 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       setThemeOptions(options);
     }
   }, [themes]);
-
-  console.log({ formData });
 
   useEffect(() => {
     if (client && client.data.length > 0) {
@@ -493,7 +513,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const handleUploadCoverVideo = async () => {
     let videoFileURL: string = "";
     if (coverVideoForm) {
-      const MAX_SIZE = 50 * 1024 * 1024;
+      const MAX_SIZE = 100 * 1024 * 1024;
       let i = 0;
 
       if (coverVideoForm instanceof File) {

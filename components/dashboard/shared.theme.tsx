@@ -2,17 +2,17 @@ import React from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { redhat } from "@/lib/fonts";
-import { formatNumber } from "@/utils/formatNumberK";
 import {
   TbBook2,
   TbCalendarCheck,
   TbMessage,
   TbUserCheck,
 } from "react-icons/tb";
+import CountUp from "./elements/count.up";
 
 const SharedThemeComponent = () => {
   const { data: response } = useSWR("/api/_pb/_sh", fetcher);
-  const data = (response && response.data) || {};
+  const data = (response && response.data) || null;
   if (data)
     return (
       <section className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden">
@@ -35,11 +35,13 @@ const SharedThemeComponent = () => {
               className="text-dashboard-dark flex flex-col items-center"
             >
               <TbUserCheck className="text-4xl" />
-              <h2
+              <CountUp
+                from={0}
+                to={data?.clients}
+                direction="up"
+                duration={1}
                 className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
-              >
-                {formatNumber(data?.clients * 5)}
-              </h2>
+              />
               <h2 className={`${redhat.className} text-lg text-center`}>
                 Klien
               </h2>
@@ -53,11 +55,14 @@ const SharedThemeComponent = () => {
               className="text-dashboard-dark flex flex-col items-center"
             >
               <TbCalendarCheck className="text-4xl" />
-              <h2
+              <CountUp
+                from={0}
+                to={data?.events}
+                separator=","
+                direction="up"
+                duration={1}
                 className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
-              >
-                {formatNumber(data?.events * 3)}
-              </h2>
+              />
               <h2 className={`${redhat.className} text-center`}>Acara</h2>
             </div>
           )}
@@ -69,11 +74,14 @@ const SharedThemeComponent = () => {
               className="text-dashboard-dark flex flex-col items-center"
             >
               <TbBook2 className="text-4xl" />
-              <h2
+              <CountUp
+                from={0}
+                to={data?.guests}
+                separator=","
+                direction="up"
+                duration={1}
                 className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
-              >
-                {formatNumber(data?.guests * 5)}
-              </h2>
+              />
               <h2 className={`${redhat.className} text-center`}>
                 Tamu Undangan
               </h2>
@@ -87,11 +95,14 @@ const SharedThemeComponent = () => {
               className="text-dashboard-dark flex flex-col items-center"
             >
               <TbMessage className="text-4xl" />
-              <h2
-                className={`${redhat.className} font-medium text-2xl lg:text-3xl`}
-              >
-                {formatNumber(data?.wishes * 10)}
-              </h2>
+              <CountUp
+                from={0}
+                to={data?.wishes}
+                separator=","
+                direction="up"
+                duration={1}
+                className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
+              />
               <h2 className={`${redhat.className} text-center`}>
                 Ucapan & Doa
               </h2>

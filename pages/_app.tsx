@@ -9,7 +9,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Toaster
         toastOptions={{
-          duration: 4000,
           className: `${redhat.className} text-sm border border-white/20`,
           style: {
             boxShadow: "none",

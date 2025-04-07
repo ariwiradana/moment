@@ -83,7 +83,7 @@ const TestimonialsComponent = () => {
                         <p
                           className={`${redhat.className} text-sm text-dashboard-dark/70 leading-none`}
                         >
-                          Undangan Tema {t.theme_name}
+                          Undangan {t.theme_name}
                         </p>
                       </div>
                     </div>

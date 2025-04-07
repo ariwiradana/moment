@@ -53,6 +53,7 @@ const HeroComponent = () => {
               <video
                 className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 object-cover"
                 src={video[0]}
+                poster={client?.cover || ""}
                 autoPlay
                 muted
                 loop

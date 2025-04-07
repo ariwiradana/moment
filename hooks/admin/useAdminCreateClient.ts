@@ -90,7 +90,7 @@ export const useAdminCreateClient = (token: string | null) => {
       value: "",
     },
   ]);
-  
+
   const [themeOptions, setThemeOptions] = useState<Option[]>([
     {
       label: "",
@@ -111,7 +111,10 @@ export const useAdminCreateClient = (token: string | null) => {
     total_rows: number;
   }>(token ? `/api/_th` : null, (url: string) => fetcher(url, token), {
     onSuccess: (data) => {
-      setSelectedTheme(data.data[0]);
+      if (formData.theme_id) {
+        const selected = data.data.find((t) => t.id === formData.theme_id);
+        if (selected) setSelectedTheme(selected);
+      }
     },
   });
 
@@ -120,7 +123,10 @@ export const useAdminCreateClient = (token: string | null) => {
     data: Package[];
   }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token), {
     onSuccess: (data) => {
-      setSelectedPackage(data.data[0]);
+      if (formData.package_id) {
+        const selected = data.data.find((p) => p.id === formData.package_id);
+        if (selected) setSelectedPackage(selected);
+      }
     },
   });
 
@@ -219,7 +225,7 @@ export const useAdminCreateClient = (token: string | null) => {
   const handleUploadVideos = async () => {
     const videoURLs: string[] = [];
     if (formData.videos && formData.videos.length > 0) {
-      const MAX_SIZE = 200 * 1024 * 1024;
+      const MAX_SIZE = 100 * 1024 * 1024;
 
       let i = 0;
 
@@ -306,7 +312,7 @@ export const useAdminCreateClient = (token: string | null) => {
   const handleUploadCoverVideo = async () => {
     let coverVideoURL: string = "";
     if (formData.coverVideo) {
-      const MAX_SIZE = 50 * 1024 * 1024;
+      const MAX_SIZE = 100 * 1024 * 1024;
 
       let i = 0;
 
