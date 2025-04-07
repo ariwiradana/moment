@@ -10,6 +10,8 @@ import {
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
 import { Autoplay, Navigation } from "swiper/modules";
+import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import { calculateDiscountPercentage } from "@/utils/calculateDiscount";
 
 const PackageComponent = () => {
   const { data } = useSWR("/api/_pb/_p", fetcher);
@@ -37,7 +39,10 @@ const PackageComponent = () => {
 
   if (pacakages.length > 0)
     return (
-      <section className="py-8 md:py-10 lg:py-16 select-none relative" id="section4">
+      <section
+        className="py-8 md:py-10 lg:py-16 select-none relative"
+        id="section4"
+      >
         <div className="max-w-screen-xl mx-auto">
           <div data-aos="fade-up" className="px-4 md:px-12 lg:px-4">
             <div className="flex justify-between items-center gap-4 mb-4 lg:hidden">
@@ -126,6 +131,15 @@ const PackageComponent = () => {
                         >
                           {formatToRupiah(p.price - p.discount)}
                         </h2>
+                        {p.discount > 0 && (
+                          <div
+                            className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px]`}
+                          >
+                            <TbRosetteDiscountCheckFilled />
+                            Diskon{" "}
+                            {calculateDiscountPercentage(p.price, p.discount)}%
+                          </div>
+                        )}
                       </div>
                       <ul
                         className={`${redhat.className} mt-4 list-inside text-sm capitalize leading-7 marker:text-xs`}
@@ -176,7 +190,7 @@ const PackageComponent = () => {
                             ? `Galeri Foto (maksimal ${p.max_gallery_photos} foto)`
                             : "Galeri Foto"}
                         </li>
-                        {/* <li
+                        <li
                           className={`list-disc ${
                             Number(p.max_videos) === 0 &&
                             "line-through text-gray-300"
@@ -185,7 +199,7 @@ const PackageComponent = () => {
                           {Number(p.max_videos) !== 0
                             ? `Rekaman video (maksimal ${p.max_videos} video)`
                             : "Rekaman video"}
-                        </li> */}
+                        </li>
                         <li
                           className={`list-disc ${
                             !p.contact_social_media &&
