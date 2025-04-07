@@ -52,13 +52,15 @@ const FaqComponent = () => {
             content={
               <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
                 <li>
-                  Lihat <span className="font-bold">tema undangan</span> yang
+                  Lihat <span className="font-bold">Tema Undangan</span> yang
                   tersedia terlebih dahulu.
                 </li>
                 <li>Pilih tema yang sesuai dengan selera kamu.</li>
                 <li>
-                  Klik tombol <span className="font-bold">Preview</span> untuk
-                  melihat preview tema secara langsung.
+                  <span className="font-bold">Dekatkan Kursor</span> pada contoh
+                  undangan atau klik tombol{" "}
+                  <span className="font-bold">Live Preview</span> untuk melihat
+                  preview tema undangan secara langsung.
                 </li>
                 <li>
                   Klik <span className="font-bold">Pesan Sekarang</span> untuk
@@ -93,6 +95,7 @@ const FaqComponent = () => {
                     aria-label="WhatsApp Moment Invitation"
                     className="text-dashboard-primary underline font-medium"
                     href={sosmedURLs.whatsapp}
+                    target="_blank"
                   >
                     Klik Disini.
                   </Link>
@@ -149,9 +152,11 @@ const FaqComponent = () => {
                     memberikan link tamu undangan.
                   </span>{" "}
                 </li>
+
                 <li>
-                  Cukup <span className="font-bold">bagikan</span> undangan kamu
-                  pada media sosial apapun dan undangan siap disebar.
+                  Cukup <span className="font-bold">tambahkan tamu</span>{" "}
+                  undangan dan klik <span className="font-bold">bagikan</span>{" "}
+                  kamu pada media sosial apapun dan undangan siap disebar.
                 </li>
               </ul>
             }
