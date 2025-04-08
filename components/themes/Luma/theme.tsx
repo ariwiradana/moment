@@ -1,9 +1,10 @@
 import { NextPage } from "next";
 import Cover from "./layouts/cover";
 import Layout from "../layout";
-import MusicComponent from "../Samaya/layouts/music";
 import useMusic from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
+import Music from "./layouts/music";
+import Hero from "./layouts/hero";
 
 interface Props {
   untuk: string;
@@ -14,9 +15,28 @@ const Luma: NextPage<Props> = ({ untuk }) => {
   const { isOpen } = useCoverStore();
   return (
     <Layout>
-      <MusicComponent actions={actions} refs={refs} state={state} />
+      <Music actions={actions} refs={refs} state={state} />
       <Cover actions={actions} untuk={untuk} />
-      {isOpen && <div className="h-[200vh] w-full bg-white"></div>}
+      {isOpen && (
+        <div className="snap-y snap-mandatory h-screen overflow-scroll">
+          <Hero />
+          <section className="h-screen snap-start flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white text-4xl font-bold">
+            Screen 1 - Hero
+          </section>
+
+          <section className="h-screen snap-start flex items-center justify-center bg-white text-black text-4xl font-bold">
+            Screen 2 - About
+          </section>
+
+          <section className="h-screen snap-start flex items-center justify-center bg-gray-100 text-black text-4xl font-bold">
+            Screen 3 - Services
+          </section>
+
+          <section className="h-screen snap-start flex items-center justify-center bg-black text-white text-4xl font-bold">
+            Screen 4 - Contact
+          </section>
+        </div>
+      )}
     </Layout>
   );
 };

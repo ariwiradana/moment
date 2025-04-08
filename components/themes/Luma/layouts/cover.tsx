@@ -30,63 +30,64 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
 
   return (
     <section
-      className={`flex flex-col fixed transition-all ease-in-out delay-500 ${
-        isOpen ? "invisible opacity-0 -top-full" : "opacity-100 visible inset-0"
+      className={`fixed transition-all ease-in-out duration-1000 delay-500 z-30 ${
+        isOpen ? "-top-full inset-x-0" : "inset-0"
       }`}
-      data-aos="zoom-out"
     >
-      <div className="w-full h-full bg-luma-primary relative">
-        <Image
-          fill
-          src={client?.cover || ""}
-          className="object-cover shine"
-          alt={`Cover Undangan Luma`}
-        />
-      </div>
-
-      <div className="w-full h-full bg-luma-primary relative px-8 pt-10 pb-14 gap-5 flex flex-col justify-between">
-        <div>
-          <h1
-            data-aos="fade-up"
-            data-aos-delay="200"
-            className="font-bigilla leading-[40px] text-white text-5xl"
-          >
-            {groom?.nickname} <br />& {bride?.nickname}
-          </h1>
+      <div data-aos="zoom-out" className="h-dvh w-full flex flex-col">
+        <div className="w-full h-full bg-luma-primary relative">
+          <Image
+            fill
+            src={client?.cover || ""}
+            className="object-cover shine"
+            alt={`Cover Undangan Luma`}
+          />
         </div>
 
-        <div>
-          <p
-            data-aos="fade-up"
-            data-aos-delay="400"
-            className={`mt-3 ${rubik.className} text-[10px] md:text-xs font-light text-white`}
-          >
-            Yth. Bapak / Ibu / Saudara / i
-          </p>
-          <h5
-            data-aos="fade-up"
-            data-aos-delay="600"
-            className={`mt-2 ${rubik.className} text-white`}
-          >
-            {untuk}
-          </h5>
-          <p
-            data-aos="fade-up"
-            data-aos-delay="800"
-            className={`${rubik.className} text-[10px] md:text-xs font-light text-white my-9`}
-          >
-            Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
-            acara {eventNames} kami.
-          </p>
-          <div data-aos="fade-up" data-aos-delay="1000">
-            <ButtonPrimary
-              onClick={() => {
-                toggleIsOpen();
-                actions.handlePlayPause();
-              }}
-              icon={<IoMailOpenOutline />}
-              title="Buka Undangan"
-            />
+        <div className="w-full h-full bg-luma-primary relative px-8 pt-10 pb-14 gap-5 flex flex-col justify-between">
+          <div>
+            <h1
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="font-bigilla leading-[40px] text-white text-5xl"
+            >
+              {groom?.nickname} <br />& {bride?.nickname}
+            </h1>
+          </div>
+
+          <div>
+            <p
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className={`mt-3 ${rubik.className} text-[10px] md:text-xs font-light text-white`}
+            >
+              Yth. Bapak / Ibu / Saudara / i
+            </p>
+            <h5
+              data-aos="fade-up"
+              data-aos-delay="600"
+              className={`mt-2 ${rubik.className} text-white`}
+            >
+              {untuk}
+            </h5>
+            <p
+              data-aos="fade-up"
+              data-aos-delay="800"
+              className={`${rubik.className} text-[10px] md:text-xs font-light text-white my-9`}
+            >
+              Tanpa mengurangi rasa hormat, kami mengundang anda untuk
+              menghadiri acara {eventNames} kami.
+            </p>
+            <div data-aos="fade-up" data-aos-delay="1000">
+              <ButtonPrimary
+                onClick={() => {
+                  toggleIsOpen();
+                  actions.handlePlayPause();
+                }}
+                icon={<IoMailOpenOutline />}
+                title="Buka Undangan"
+              />
+            </div>
           </div>
         </div>
       </div>
