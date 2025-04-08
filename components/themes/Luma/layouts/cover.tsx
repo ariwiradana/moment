@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import ButtonPrimary from "../elements/button.primary";
 import { IoMailOpenOutline } from "react-icons/io5";
 import { getEventNames } from "@/utils/getEventNames";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import useEvents from "@/hooks/themes/useEvents";
 import { UseMusic } from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
@@ -13,7 +13,7 @@ interface Props {
   actions: UseMusic["actions"];
 }
 
-const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
+const Cover: NextPage<Props> = ({ untuk, actions }) => {
   const {
     state: { events },
   } = useEvents();
@@ -30,7 +30,7 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
       <div
         data-aos="fade-up"
         data-aos-delay="800"
-        className="h-dvh w-full px-8 py-[60px] flex flex-col justify-end bg-gradient-to-b from-[20%] via-luma-primary/95 from-transparent to-luma-primary"
+        className="h-dvh w-full px-8 py-[60px] flex flex-col justify-end bg-gradient-to-b from-[25%] via-luma-primary/95 from-transparent to-luma-primary"
       >
         <p
           data-aos="fade-up"
@@ -69,4 +69,4 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
   );
 };
 
-export default CoverComponent;
+export default memo(Cover);
