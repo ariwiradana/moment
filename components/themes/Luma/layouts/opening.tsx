@@ -1,11 +1,19 @@
 import { rubik } from "@/lib/fonts";
+import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
+import { getParticipantNames } from "@/utils/getParticipantNames";
 import { NextPage } from "next";
 import Image from "next/image";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 const Opening: NextPage = () => {
   const { client } = useClientStore();
+
+  const participantNames = useMemo(
+    () => getParticipantNames(client?.participants as Participant[]),
+    [client]
+  );
+
   return (
     <section className="h-dvh snap-start w-full relative">
       <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/20 via-luma-dark/70 to-luma-dark/20 flex flex-col justify-center items-center py-[60px] px-8">
@@ -16,6 +24,11 @@ const Opening: NextPage = () => {
           className={`${rubik.className} text-[10px] md:text-xs font-light text-white text-center`}
         >
           {client?.opening_description}
+        </p>
+        <p
+          className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase text-center tracking-[4px] ${rubik.className}`}
+        >
+          {participantNames}
         </p>
       </div>
       <Image

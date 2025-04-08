@@ -79,7 +79,7 @@ const Hero: NextPage = () => {
               keberhasilan dalam berkeluarga.
             </p>
             <p
-              className={`${rubik.className} uppercase text-[10px] mt-4 md:text-xs tracking-[1px] font-light text-white`}
+              className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase tracking-[4px] ${rubik.className}`}
             >
               Rgveda : X.85.42
             </p>
