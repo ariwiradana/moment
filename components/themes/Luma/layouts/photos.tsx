@@ -27,7 +27,6 @@ const Photos: NextPage = () => {
     infinite: true,
     waitForAnimate: false,
     autoplay: true,
-    autoplaySpeed: 4000,
     arrows: false,
     cssEase: "ease-in-out",
     afterChange() {
@@ -99,7 +98,12 @@ const Photos: NextPage = () => {
           </div>
           <div className="w-full px-[2px]">
             <div className="relative">
-              <Slider slidesToScroll={4} slidesToShow={4} {...settings}>
+              <Slider
+                autoplaySpeed={3000}
+                slidesToScroll={4}
+                slidesToShow={4}
+                {...settings}
+              >
                 {images.slice(divide).map((image, index) => (
                   <div
                     className="h-full w-full px-[2px]"
@@ -127,7 +131,12 @@ const Photos: NextPage = () => {
             </div>
 
             <div className="relative -mt-[2px]">
-              <Slider slidesToScroll={2} slidesToShow={2} {...settings}>
+              <Slider
+                autoplaySpeed={4000}
+                slidesToScroll={2}
+                slidesToShow={2}
+                {...settings}
+              >
                 {images.slice(0, divide).map((image, index) => (
                   <div
                     className="h-full w-full px-[2px]"
