@@ -3,9 +3,8 @@ import useClientStore from "@/store/useClientStore";
 import { NextPage } from "next";
 import Image from "next/image";
 
-interface Props {}
 
-const Opening: NextPage<Props> = ({}) => {
+const Opening: NextPage = () => {
   const { client } = useClientStore();
   return (
     <section className="h-dvh snap-start w-full bg-luma-dark relative">
