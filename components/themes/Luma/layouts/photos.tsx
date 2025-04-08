@@ -94,7 +94,7 @@ const Photos: NextPage = () => {
         <div className="absolute z-20 inset-0 bg-luma-dark/60 flex flex-col justify-center items-center">
           <div className="w-full px-8">
             <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-6">
-              Galeri Foto
+              Galeri <span className="font-italic">Kami</span>
             </h2>
           </div>
           <div className="w-full px-[2px]">
