@@ -37,7 +37,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
         >
           Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
         </p>
-        <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-6">
+        <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-4">
           {data?.name}
         </h2>
         <p
