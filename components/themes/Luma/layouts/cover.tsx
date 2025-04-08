@@ -42,7 +42,7 @@ const Cover: NextPage<Props> = ({ untuk, actions }) => {
         <h5
           data-aos="fade-up"
           data-aos-delay="1200"
-          className={`mt-2 ${rubik.className} text-white`}
+          className={`mt-2 text-lg ${rubik.className} text-white`}
         >
           {untuk}
         </h5>

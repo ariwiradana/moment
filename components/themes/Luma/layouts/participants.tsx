@@ -33,11 +33,11 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
     <section className="h-dvh snap-start w-full bg-luma-dark relative">
       <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/0 to-luma-dark/70 flex flex-col justify-end py-[60px] px-8">
         <p
-          className={`${rubik.className} uppercase text-[10px] md:text-xs mb-1 tracking-[1px] font-light text-white`}
+          className={`${rubik.className} uppercase text-[10px] md:text-xs mb-2 tracking-[1px] font-light text-white`}
         >
           Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
         </p>
-        <h2 className="font-bigilla leading-[40px] text-white text-3xl mb-6">
+        <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-6">
           {data?.name}
         </h2>
         <p
