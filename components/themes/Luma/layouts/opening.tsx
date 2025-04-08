@@ -3,7 +3,6 @@ import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import { NextPage } from "next";
-import Image from "next/image";
 import { memo, useMemo } from "react";
 
 const Opening: NextPage = () => {
@@ -16,7 +15,7 @@ const Opening: NextPage = () => {
 
   return (
     <section className="h-dvh snap-start w-full relative">
-      <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/20 via-luma-dark/70 to-luma-dark/20 flex flex-col justify-center items-center py-[60px] px-8">
+      <div className="absolute z-20 inset-0 bg-luma-dark/60 flex flex-col justify-center items-center py-[60px] px-8">
         <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-2">
           {client?.opening_title}
         </h2>
@@ -31,16 +30,6 @@ const Opening: NextPage = () => {
           {participantNames}
         </p>
       </div>
-      <Image
-        key={`Opening Image`}
-        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-        fill
-        quality={100}
-        alt={`Opening Image`}
-        priority
-        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
-        src={client?.cover as string}
-      />
     </section>
   );
 };

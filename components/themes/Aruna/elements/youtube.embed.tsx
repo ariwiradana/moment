@@ -16,7 +16,7 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
       const iframe = document.createElement("iframe");
       iframe.setAttribute(
         "src",
-        `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&playlist=${youtubeId}&loop=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080&mute=1`
+        `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&playlist=${youtubeId}&loop=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080&mute=1&crontrol=0`
       );
 
       iframe.setAttribute("class", "absolute top-0 left-0 w-full h-full");
