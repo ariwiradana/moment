@@ -23,7 +23,7 @@ const ButtonPrimary: FC<Props> = ({
       {...props}
       className={`${rubik.className} ${
         props.disabled || isLoading ? "pointer-events-none" : ""
-      } ${className} bg-white/20 text-white hover:bg-white/30 rounded-full min-w-24 backdrop-blur-sm px-4 py-3 flex transition-colors ease-in-out duration-700 ${
+      } ${className} bg-white/10 text-white hover:bg-white/20 rounded-full min-w-24 backdrop-blur-sm px-4 py-3 flex transition-colors ease-in-out duration-700 ${
         fullWidth ? "w-full justify-center" : "justify-between"
       } items-center gap-x-2 md:gap-x-4 relative overflow-hidden shadow-sm`}
     >

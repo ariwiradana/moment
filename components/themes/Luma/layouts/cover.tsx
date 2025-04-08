@@ -39,10 +39,11 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
         <Image
           fill
           src={client?.cover || ""}
-          className="object-cover"
+          className="object-cover shine"
           alt={`Cover Undangan Luma`}
         />
       </div>
+
       <div className="w-full h-full bg-luma-primary relative px-8 pt-10 pb-14 flex flex-col justify-between">
         <div>
           <h1

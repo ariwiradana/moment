@@ -62,7 +62,7 @@ const config: Config = {
         },
         luma: {
           dark: "#101010",
-          primary: "#6E7568",
+          primary: "#44453E",
         },
         admin: {
           primary: "#3366FF",
