@@ -2,7 +2,6 @@ import useEvents from "@/hooks/themes/useEvents";
 import { rubik } from "@/lib/fonts";
 import moment from "moment";
 import { NextPage } from "next";
-import Image from "next/image";
 import { BiCalendarEvent, BiMap, BiTime } from "react-icons/bi";
 import ButtonPrimary from "../elements/button.primary";
 import Link from "next/link";
