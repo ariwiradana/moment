@@ -44,7 +44,7 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
         />
       </div>
 
-      <div className="w-full h-full bg-luma-primary relative px-8 pt-10 pb-14 flex flex-col justify-between">
+      <div className="w-full h-full bg-luma-primary relative px-8 pt-10 pb-14 gap-5 flex flex-col justify-between">
         <div>
           <h1
             data-aos="fade-up"
@@ -59,7 +59,7 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
           <p
             data-aos="fade-up"
             data-aos-delay="400"
-            className={`mt-3 ${rubik.className} text-xs font-light text-white`}
+            className={`mt-3 ${rubik.className} text-[10px] md:text-xs font-light text-white`}
           >
             Yth. Bapak / Ibu / Saudara / i
           </p>
@@ -73,7 +73,7 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
           <p
             data-aos="fade-up"
             data-aos-delay="800"
-            className={`${rubik.className} text-xs font-light text-white my-9`}
+            className={`${rubik.className} text-[10px] md:text-xs font-light text-white my-9`}
           >
             Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
             acara {eventNames} kami.
