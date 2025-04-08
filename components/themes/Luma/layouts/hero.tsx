@@ -2,6 +2,7 @@ import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
 import usePhotos from "@/hooks/themes/usePhotos";
 import { rubik } from "@/lib/fonts";
+import useCoverStore from "@/store/useCoverStore";
 import moment from "moment";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import { memo } from "react";
 import Slider, { Settings } from "react-slick";
 
 const Hero: NextPage = () => {
+  const { isOpen } = useCoverStore();
   const {
     state: { images },
   } = usePhotos();
@@ -66,21 +68,23 @@ const Hero: NextPage = () => {
             </div>
           </div>
         </div>
-        <div data-aos="fade-up" data-aos-delay="1800">
-          <p
-            className={`${rubik.className} text-[10px] md:text-xs font-light text-white`}
-          >
-            Wahai pasangan suami-isteri, kembangkanlah cinta kasih di dalam
-            dirimu, tekun dan tetaplah berkarma dalam menggapai kebahagiaan.
-            Karena hanya orang yang bersungguh-sungguhlah mendapatkan
-            keberhasilan dalam berkeluarga.
-          </p>
-          <p
-            className={`${rubik.className} uppercase text-[10px] mt-4 md:text-xs tracking-[1px] font-light text-white`}
-          >
-            Rgveda : X.85.42
-          </p>
-        </div>
+        {isOpen && (
+          <div data-aos="fade-up">
+            <p
+              className={`${rubik.className} text-[10px] md:text-xs font-light text-white`}
+            >
+              Wahai pasangan suami-isteri, kembangkanlah cinta kasih di dalam
+              dirimu, tekun dan tetaplah berkarma dalam menggapai kebahagiaan.
+              Karena hanya orang yang bersungguh-sungguhlah mendapatkan
+              keberhasilan dalam berkeluarga.
+            </p>
+            <p
+              className={`${rubik.className} uppercase text-[10px] mt-4 md:text-xs tracking-[1px] font-light text-white`}
+            >
+              Rgveda : X.85.42
+            </p>
+          </div>
+        )}
       </div>
       <div data-aos="zoom-out" className="w-full h-full">
         <Slider {...settings} className="w-full h-full">
