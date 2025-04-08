@@ -49,7 +49,7 @@ const Hero: NextPage = () => {
           </div>
         </div>
         {isOpen && (
-          <div data-aos="fade-up">
+          <div data-aos="fade-in">
             <p
               className={`${rubik.className} text-[10px] md:text-xs font-light text-white`}
             >
