@@ -2,14 +2,14 @@ import { rubik } from "@/lib/fonts";
 import useClientStore from "@/store/useClientStore";
 import { NextPage } from "next";
 import Image from "next/image";
-
+import { memo } from "react";
 
 const Opening: NextPage = () => {
   const { client } = useClientStore();
   return (
-    <section className="h-dvh snap-start w-full bg-luma-dark relative">
-      <div className="absolute inset-0 z-10 bg-luma-dark/70 flex flex-col justify-center items-center py-[60px] px-8">
-        <h2 className="font-bigilla leading-[40px] text-white text-2xl mb-2">
+    <section className="h-dvh snap-start w-full relative">
+      <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/20 via-luma-dark/70 to-luma-dark/20 flex flex-col justify-center items-center py-[60px] px-8">
+        <h2 className="font-bigilla leading-[40px] text-white text-3xl mb-2">
           {client?.opening_title}
         </h2>
         <p
@@ -32,4 +32,4 @@ const Opening: NextPage = () => {
   );
 };
 
-export default Opening;
+export default memo(Opening);
