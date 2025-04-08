@@ -23,6 +23,7 @@ const Luma: NextPage<Props> = ({ untuk }) => {
   const {
     state: { images },
   } = usePhotos();
+
   const settings: Settings = {
     dots: false,
     fade: true,
@@ -39,7 +40,7 @@ const Luma: NextPage<Props> = ({ untuk }) => {
 
   return (
     <Layout>
-      <main className="bg-luma-dark relative">
+      <main className="bg-luma-dark relative max-w-lg ml-auto">
         <div className="fixed inset-0">
           <Slider {...settings} className="w-full h-full relative">
             {images.map((image, index) => (

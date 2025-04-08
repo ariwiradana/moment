@@ -20,7 +20,7 @@ const Photos: NextPage = () => {
   } = usePhotos();
   const [dragging, setDragging] = useState(false);
 
-  const divide = useMemo(() => Math.floor(images.length / 3), [images]);
+  const divide = useMemo(() => Math.floor(images.length / 2), [images]);
 
   const settings: Settings = {
     dots: false,
@@ -92,10 +92,15 @@ const Photos: NextPage = () => {
       />
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-luma-dark/60 flex flex-col justify-center items-center">
+          <div className="w-full px-8">
+            <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-6">
+              Galeri Foto
+            </h2>
+          </div>
           <div className="w-full px-[2px]">
             <div className="relative">
-              <Slider slidesToScroll={2} slidesToShow={2} {...settings}>
-                {images.slice(0, divide).map((image, index) => (
+              <Slider slidesToScroll={4} slidesToShow={4} {...settings}>
+                {images.slice(divide).map((image, index) => (
                   <div
                     className="h-full w-full px-[2px]"
                     key={`Foto Galeri Primary ${index + 1}`}
@@ -105,14 +110,14 @@ const Photos: NextPage = () => {
                       }
                     }}
                   >
-                    <div className="aspect-[4/3] w-full h-full relative">
+                    <div className="aspect-square w-full h-full relative">
                       <Image
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                         fill
                         quality={100}
-                        alt={`hero-img-${index}`}
+                        alt={`Foto Galeri Primary ${index + 1}`}
                         priority
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
+                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer object-center"
                         src={image}
                       />
                     </div>
@@ -122,8 +127,8 @@ const Photos: NextPage = () => {
             </div>
 
             <div className="relative -mt-[2px]">
-              <Slider slidesToScroll={1} slidesToShow={1} {...settings}>
-                {images.slice(divide, divide * 2).map((image, index) => (
+              <Slider slidesToScroll={2} slidesToShow={2} {...settings}>
+                {images.slice(0, divide).map((image, index) => (
                   <div
                     className="h-full w-full px-[2px]"
                     key={`Foto Galeri Secondary ${index + 1}`}
@@ -133,41 +138,14 @@ const Photos: NextPage = () => {
                       }
                     }}
                   >
-                    <div className="aspect-[4/3] w-full h-full relative">
+                    <div className="aspect-square w-full h-full relative">
                       <Image
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                         fill
                         quality={100}
-                        alt={`hero-img-${index}`}
+                        alt={`Foto Galeri Secondary ${index + 1}`}
                         priority
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
-                        src={image}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </Slider>
-            </div>
-            <div className="relative -mt-[2px]">
-              <Slider slidesToScroll={2} slidesToShow={3} {...settings}>
-                {images.slice(divide).map((image, index) => (
-                  <div
-                    className="h-full w-full px-[2px]"
-                    key={`Foto Galeri Third ${index + 1}`}
-                    onClick={() => {
-                      if (!dragging) {
-                        handleToggleLightbox(image);
-                      }
-                    }}
-                  >
-                    <div className="aspect-[4/3] w-full h-full relative">
-                      <Image
-                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                        fill
-                        quality={100}
-                        alt={`hero-img-${index}`}
-                        priority
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
+                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer object-center"
                         src={image}
                       />
                     </div>
@@ -176,7 +154,7 @@ const Photos: NextPage = () => {
               </Slider>
             </div>
           </div>
-          <div className="w-full px-8 pt-9">
+          <div className="w-full px-8 pt-6">
             <p
               className={`${rubik.className} text-[10px] md:text-xs font-light text-justify text-white`}
             >
