@@ -26,7 +26,7 @@ const Opening: NextPage = () => {
           {client?.opening_description}
         </p>
         <p
-          className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase text-center tracking-[4px] ${rubik.className}`}
+          className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase text-center tracking-[3px] ${rubik.className}`}
         >
           {participantNames}
         </p>
