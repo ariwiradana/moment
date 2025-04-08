@@ -35,7 +35,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
         <p
           className={`${rubik.className} uppercase text-[10px] md:text-xs mb-1 tracking-[1px] font-light text-white`}
         >
-          Mempelai {data.gender === "male" ? "Putra" : "Putri"}
+          Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
         </p>
         <h2 className="font-bigilla leading-[40px] text-white text-3xl mb-6">
           {data?.name}
