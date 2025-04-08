@@ -46,7 +46,7 @@ const ButtonLight: FC<ButtonLightProps> = ({
       {...props}
       className={`${redhat.className} ${
         className ?? ""
-      } flex items-center text-dashboard-dark font-medium rounded-full bg-white transition duration-200 whitespace-nowrap justify-start ${buttonStyles(
+      } flex items-center text-dashboard-dark border border-zinc-200 font-medium rounded-full bg-white transition duration-200 whitespace-nowrap justify-start ${buttonStyles(
         size
       )} ${
         isloading || props.disabled
