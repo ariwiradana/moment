@@ -41,7 +41,7 @@ const Luma: NextPage<Props> = ({ untuk }) => {
   return (
     <Layout>
       <main className="bg-luma-dark relative max-w-lg ml-auto">
-        <div className="fixed inset-0">
+        <div className="fixed max-w-lg ml-auto inset-0">
           <Slider {...settings} className="w-full h-full relative">
             {images.map((image, index) => (
               <Image
