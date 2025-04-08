@@ -205,7 +205,7 @@ const Component = () => {
                               quality={100}
                               alt={`hero-img-${index}`}
                               priority
-                              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
+                              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
                               src={image}
                             />
                           </div>

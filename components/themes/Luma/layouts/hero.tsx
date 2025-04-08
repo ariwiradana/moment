@@ -84,7 +84,7 @@ const Hero: NextPage = () => {
             quality={100}
             alt={`Main Slider ${index + 1}`}
             priority
-            className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform"
+            className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
             src={image as string}
           />
         ))}

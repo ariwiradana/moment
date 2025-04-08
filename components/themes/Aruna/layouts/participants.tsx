@@ -74,7 +74,7 @@ const ParticipantComponent: FC<ComponentProps> = (props) => {
             priority
             src={props.data.image as string}
             fill
-            className={`object-cover rounded-2xl shine-dark`}
+            className={`object-cover rounded-2xl shimmer-dark`}
             alt={props.data.name}
           />
         )}

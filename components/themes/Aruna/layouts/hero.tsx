@@ -87,7 +87,7 @@ const HeroComponent = () => {
                       quality={100}
                       alt={`Main Slider ${index + 1}`}
                       priority
-                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shine-dark object-center"
+                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
                       src={image}
                     />
                   ))

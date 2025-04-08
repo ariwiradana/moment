@@ -35,16 +35,16 @@ const CoverComponent: NextPage<Props> = ({ untuk, actions }) => {
       }`}
     >
       <div data-aos="zoom-out" className="h-dvh w-full flex flex-col">
-        <div className="w-full h-full bg-luma-primary relative">
+        <div className="w-full h-full bg-luma-primary relative aspect-square">
           <Image
             fill
             src={client?.cover || ""}
-            className="object-cover shine"
+            className="object-cover shimmer aspect-square"
             alt={`Cover Undangan Luma`}
           />
         </div>
 
-        <div className="w-full h-full bg-luma-primary relative px-8 pt-10 pb-14 gap-5 flex flex-col justify-between">
+        <div className="w-full h-full bg-luma-primary relative px-8 pt-12 pb-14 gap-5 flex flex-col justify-between">
           <div>
             <h1
               data-aos="fade-up"

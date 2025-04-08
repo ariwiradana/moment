@@ -49,7 +49,7 @@ const ThankyouComponent = () => {
                     alt={`thankyou-img-${index}`}
                     priority
                     sizes="100vw"
-                    className="object-cover shine-dark transform translate-y-0 lg:translate-y-0 transition-transform grayscale"
+                    className="object-cover shimmer-dark transform translate-y-0 lg:translate-y-0 transition-transform grayscale"
                     src={image}
                   />
                 ))

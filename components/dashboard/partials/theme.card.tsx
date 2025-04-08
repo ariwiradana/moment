@@ -40,7 +40,7 @@ const ThemeCard: NextPage<Props> = ({ client, bestSeller }) => {
           <video
             ref={videoRef}
             poster={client.theme?.phone_thumbnail || ""}
-            className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px] shine-dark"
+            className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px] shimmer-dark"
             src={`/video/themes/${client.theme?.slug}.mp4`}
             muted
             loop

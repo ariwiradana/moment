@@ -3,7 +3,7 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap");
 
-.shine {
+.shimmer {
   background: #f6f7f8;
   background-image: linear-gradient(
     to right,
@@ -32,7 +32,7 @@
   }
 }
 
-.shine-dark {
+.shimmer-dark {
   background: #151515; /* Dark background */
   background-image: linear-gradient(
     to right,

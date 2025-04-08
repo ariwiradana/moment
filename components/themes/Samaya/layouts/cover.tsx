@@ -48,7 +48,7 @@ const Cover: FC<Props> = (props) => {
                 fill
                 src={client?.cover as string}
                 alt="cover"
-                className="object-cover shine-dark opacity-20 hidden 2xl:inline-block "
+                className="object-cover shimmer-dark opacity-20 hidden 2xl:inline-block "
               />
               <Image
                 quality={100}

@@ -53,7 +53,7 @@ const Cover = ({ to, actions }: Props) => {
           sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
           src={client?.cover as string}
           fill
-          className="object-cover shine-dark"
+          className="object-cover shimmer-dark"
           alt="cover"
         />
       )}

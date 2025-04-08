@@ -26,7 +26,7 @@ const EventsComponent = () => {
                   alt={`Foto Card ${event.name}`}
                   priority
                   sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                  className="object-cover grayscale shine-dark transform translate-y-0 lg:translate-y-0 transition-transform opacity-30"
+                  className="object-cover grayscale shimmer-dark transform translate-y-0 lg:translate-y-0 transition-transform opacity-30"
                   src={(event.image as string) || ""}
                 />
               </div>
