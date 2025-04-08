@@ -24,7 +24,7 @@ const Events: NextPage = () => {
     <>
       {events.map((event, index) => (
         <section
-          className="h-dvh snap-start w-full relative"
+          className="h-dvh snap-start w-full relative bg-luma-dark"
           key={`Acara ${event.name}`}
         >
           <div className="absolute z-20 inset-0 flex flex-col justify-center items-center bg-gradient-to-b from-luma-dark/50 via-luma-dark/70 to-luma-dark/20 py-[60px] px-8">
