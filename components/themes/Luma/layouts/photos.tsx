@@ -30,7 +30,6 @@ const Photos: NextPage = () => {
     autoplaySpeed: 4000,
     arrows: false,
     cssEase: "ease-in-out",
-    speed: 1500,
     afterChange() {
       setDragging(false);
     },
@@ -93,21 +92,7 @@ const Photos: NextPage = () => {
       />
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-luma-dark/60 flex flex-col justify-center items-center">
-          <div className="w-full px-8 pt-[60px]">
-            <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-1">
-              Galeri Foto
-            </h2>
-            <p
-              className={`${rubik.className} text-[10px] md:text-xs font-light text-justify text-white`}
-            >
-              <span>
-                <div className="w-5 h-[1px] bg-white/50 mb-1 inline-block mr-2"></div>
-              </span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Necessitatibus, iste.
-            </p>
-          </div>
-          <div className="w-full mt-6 px-[2px]">
+          <div className="w-full px-[2px]">
             <div className="relative">
               <Slider slidesToScroll={2} slidesToShow={2} {...settings}>
                 {images.slice(0, divide).map((image, index) => (
@@ -190,6 +175,22 @@ const Photos: NextPage = () => {
                 ))}
               </Slider>
             </div>
+          </div>
+          <div className="w-full px-8 pt-9">
+            <p
+              className={`${rubik.className} text-[10px] md:text-xs font-light text-justify text-white`}
+            >
+              <span>
+                <div className="w-5 h-[1px] bg-white/50 mb-1 inline-block mr-2"></div>
+              </span>
+              Setiap kisah cinta layak diabadikan, bukan hanya dalam ingatan,
+              tapi juga dalam gambar yang tak pernah pudar.
+            </p>
+            <p
+              className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase tracking-[3px] ${rubik.className}`}
+            >
+              Rayhan Malik
+            </p>
           </div>
         </div>
       </section>
