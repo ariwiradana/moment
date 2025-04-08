@@ -2,6 +2,7 @@ import useEvents from "@/hooks/themes/useEvents";
 import { rubik } from "@/lib/fonts";
 import moment from "moment";
 import { NextPage } from "next";
+import Image from "next/image";
 import { BiCalendarEvent, BiMap, BiTime } from "react-icons/bi";
 import ButtonPrimary from "../elements/button.primary";
 import Link from "next/link";
@@ -23,10 +24,10 @@ const Events: NextPage = () => {
     <>
       {events.map((event, index) => (
         <section
-          className="h-dvh snap-start w-full relative"
+          className="h-dvh snap-start w-full relative bg-luma-dark"
           key={`Acara ${event.name}`}
         >
-          <div className="absolute z-20 inset-0 flex flex-col justify-center items-center bg-luma-dark/60 py-[60px] px-8">
+          <div className="absolute z-20 inset-0 flex flex-col justify-center items-center bg-gradient-to-b from-luma-dark/50 via-luma-dark/70 to-luma-dark/20 py-[60px] px-8">
             <div className="w-full mb-4">
               <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-1">
                 {event?.name}
@@ -111,6 +112,16 @@ const Events: NextPage = () => {
               </div>
             </div>
           </div>
+          <Image
+            key={`${event.name} Image`}
+            sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+            fill
+            quality={100}
+            alt={`Opening Image`}
+            priority
+            className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
+            src={event?.image as string}
+          />
         </section>
       ))}
     </>
