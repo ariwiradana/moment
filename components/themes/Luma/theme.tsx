@@ -39,36 +39,32 @@ const Luma: NextPage<Props> = ({ untuk }) => {
 
   return (
     <Layout>
-      <main className="bg-luma-dark">
-        <div className="lg:max-w-lg mx-auto overflow-hidden">
-          <div className="fixed inset-0 lg:max-w-lg mx-auto overflow-hidden">
-            <div data-aos="zoom-out" className="w-full h-full">
-              <Slider {...settings} className="w-full h-full">
-                {images.map((image, index) => (
-                  <Image
-                    key={`Main Slider ${index + 1}`}
-                    sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                    fill
-                    quality={100}
-                    alt={`Main Slider ${index + 1}`}
-                    priority
-                    className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
-                    src={image as string}
-                  />
-                ))}
-              </Slider>
-            </div>
-          </div>
-          <Music actions={actions} refs={refs} state={state} />
-          <Cover actions={actions} untuk={untuk} />
-          <div className="snap-y snap-mandatory h-screen overflow-scroll relative z-10">
-            <Hero />
-            <Opening />
-            <Participants />
-            <Events />
-            <Videos />
-            <Photos />
-          </div>
+      <main className="bg-luma-dark relative">
+        <div className="fixed inset-0">
+          <Slider {...settings} className="w-full h-full relative">
+            {images.map((image, index) => (
+              <Image
+                key={`Main Slider ${index + 1}`}
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                fill
+                quality={100}
+                alt={`Main Slider ${index + 1}`}
+                priority
+                className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
+                src={image as string}
+              />
+            ))}
+          </Slider>
+        </div>
+        <Music actions={actions} refs={refs} state={state} />
+        <Cover actions={actions} untuk={untuk} />
+        <div className="snap-y snap-mandatory h-dvh overflow-auto relative z-10">
+          <Hero />
+          <Opening />
+          <Participants />
+          <Events />
+          <Videos />
+          <Photos />
         </div>
       </main>
     </Layout>

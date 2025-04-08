@@ -35,21 +35,21 @@ const Cover: NextPage<Props> = ({ untuk, actions }) => {
         <p
           data-aos="fade-up"
           data-aos-delay="1000"
-          className={`mt-3 ${rubik.className} text-[10px] md:text-xs font-light text-white`}
+          className={`${rubik.className} text-[10px] md:text-xs font-light text-white`}
         >
           Yth. Bapak / Ibu / Saudara / i
         </p>
         <h5
           data-aos="fade-up"
           data-aos-delay="1200"
-          className={`mt-2 text-lg ${rubik.className} text-white`}
+          className={`text-xl ${rubik.className} text-white`}
         >
           {untuk}
         </h5>
         <p
           data-aos="fade-up"
           data-aos-delay="1400"
-          className={`${rubik.className} text-[10px] md:text-xs font-light text-white my-6`}
+          className={`${rubik.className} text-[10px] md:text-xs font-light text-white mt-4 mb-6`}
         >
           Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
           acara {eventNames} kami.
