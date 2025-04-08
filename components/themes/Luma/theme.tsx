@@ -7,6 +7,11 @@ import Hero from "./layouts/hero";
 import Opening from "./layouts/opening";
 import Participants from "./layouts/participants";
 import Events from "./layouts/events";
+import Slider, { Settings } from "react-slick";
+import Image from "next/image";
+import usePhotos from "@/hooks/themes/usePhotos";
+import Photos from "./layouts/photos";
+import Videos from "./layouts/video";
 
 interface Props {
   untuk: string;
@@ -14,30 +19,51 @@ interface Props {
 
 const Luma: NextPage<Props> = ({ untuk }) => {
   const { state, actions, refs } = useMusic();
+
+  const {
+    state: { images },
+  } = usePhotos();
+  const settings: Settings = {
+    dots: false,
+    fade: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+    autoplay: true,
+    arrows: false,
+    autoplaySpeed: 6000,
+    speed: 3000,
+    cssEase: "ease-in-out",
+  };
+
   return (
     <Layout>
+      <div data-aos="zoom-out" className="fixed inset-0">
+        <Slider {...settings} className="w-full h-full">
+          {images.map((image, index) => (
+            <Image
+              key={`Main Slider ${index + 1}`}
+              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+              fill
+              quality={100}
+              alt={`Main Slider ${index + 1}`}
+              priority
+              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
+              src={image as string}
+            />
+          ))}
+        </Slider>
+      </div>
       <Music actions={actions} refs={refs} state={state} />
       <Cover actions={actions} untuk={untuk} />
-      <div className="snap-y snap-mandatory h-screen overflow-scroll">
+      <div className="snap-y snap-mandatory h-screen overflow-scroll relative z-10">
         <Hero />
         <Opening />
         <Participants />
         <Events />
-        <section className="h-screen snap-start flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white text-4xl font-bold">
-          Screen 1 - Hero
-        </section>
-
-        <section className="h-screen snap-start flex items-center justify-center bg-white text-black text-4xl font-bold">
-          Screen 2 - About
-        </section>
-
-        <section className="h-screen snap-start flex items-center justify-center bg-gray-100 text-black text-4xl font-bold">
-          Screen 3 - Services
-        </section>
-
-        <section className="h-screen snap-start flex items-center justify-center bg-black text-white text-4xl font-bold">
-          Screen 4 - Contact
-        </section>
+        <Videos />
+        <Photos />
       </div>
     </Layout>
   );

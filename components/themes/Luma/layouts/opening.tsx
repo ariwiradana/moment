@@ -15,7 +15,7 @@ const Opening: NextPage = () => {
   );
 
   return (
-    <section className="h-dvh snap-start w-full relative bg-luma-dark">
+    <section className="h-dvh snap-start w-full relative">
       <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/20 via-luma-dark/70 to-luma-dark/20 flex flex-col justify-center items-center py-[60px] px-8">
         <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-2">
           {client?.opening_title}

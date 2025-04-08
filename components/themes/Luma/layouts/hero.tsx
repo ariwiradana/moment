@@ -1,19 +1,13 @@
 import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
-import usePhotos from "@/hooks/themes/usePhotos";
 import { rubik } from "@/lib/fonts";
 import useCoverStore from "@/store/useCoverStore";
 import moment from "moment";
 import { NextPage } from "next";
-import Image from "next/image";
 import { memo } from "react";
-import Slider, { Settings } from "react-slick";
 
 const Hero: NextPage = () => {
   const { isOpen } = useCoverStore();
-  const {
-    state: { images },
-  } = usePhotos();
 
   const {
     state: { events, fade, currentIndex },
@@ -23,22 +17,8 @@ const Hero: NextPage = () => {
     state: { bride, groom },
   } = useParticipants();
 
-  const settings: Settings = {
-    dots: false,
-    fade: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    waitForAnimate: false,
-    autoplay: true,
-    arrows: false,
-    autoplaySpeed: 6000,
-    speed: 3000,
-    cssEase: "ease-in-out",
-  };
-
   return (
-    <section className="h-dvh snap-start w-full bg-luma-dark relative">
+    <section className="h-dvh snap-start w-full relative">
       <div className="absolute inset-0 z-10 bg-gradient-to-b h-full from-luma-dark/40 to-luma-dark/60 py-[60px] px-8 flex flex-col justify-between">
         <div>
           <h1
@@ -85,22 +65,6 @@ const Hero: NextPage = () => {
             </p>
           </div>
         )}
-      </div>
-      <div data-aos="zoom-out" className="w-full h-full">
-        <Slider {...settings} className="w-full h-full">
-          {images.map((image, index) => (
-            <Image
-              key={`Main Slider ${index + 1}`}
-              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-              fill
-              quality={100}
-              alt={`Main Slider ${index + 1}`}
-              priority
-              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
-              src={image as string}
-            />
-          ))}
-        </Slider>
       </div>
     </section>
   );
