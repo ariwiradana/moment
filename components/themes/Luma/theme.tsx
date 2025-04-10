@@ -33,15 +33,15 @@ const Luma: NextPage<Props> = ({ untuk }) => {
     waitForAnimate: false,
     autoplay: true,
     arrows: false,
-    autoplaySpeed: 6000,
-    speed: 3000,
+    autoplaySpeed: 3000,
+    speed: 1500,
     cssEase: "ease-in-out",
   };
 
   return (
     <Layout>
-      <main className="bg-luma-dark relative max-w-lg ml-auto">
-        <div className="fixed max-w-lg ml-auto inset-0">
+      <main className="bg-luma-dark max-w-lg ml-auto relative">
+        <div className="fixed max-w-lg ml-auto inset-0 z-10">
           <Slider {...settings} className="w-full h-full relative">
             {images.map((image, index) => (
               <Image
@@ -59,7 +59,7 @@ const Luma: NextPage<Props> = ({ untuk }) => {
         </div>
         <Music actions={actions} refs={refs} state={state} />
         <Cover actions={actions} untuk={untuk} />
-        <div className="snap-y snap-mandatory h-dvh overflow-auto relative z-10">
+        <div className="snap-y snap-mandatory h-dvh overflow-auto relative z-20">
           <Hero />
           <Opening />
           <Participants />

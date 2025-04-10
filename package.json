@@ -47,7 +47,7 @@
     "swr": "^2.2.5",
     "use-debounce": "^10.0.4",
     "vercel": "^37.6.1",
-    "yet-another-react-lightbox": "^3.21.6",
+    "yet-another-react-lightbox": "^3.22.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.2"
   },

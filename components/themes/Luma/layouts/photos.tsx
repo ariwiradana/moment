@@ -1,45 +1,39 @@
-import usePhotos from "@/hooks/themes/usePhotos";
+import useLightbox from "@/hooks/themes/useLightbox";
 import { rubik } from "@/lib/fonts";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useMemo, useState } from "react";
-import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
+import { useMemo, useRef } from "react";
+import { HiArrowLeft, HiArrowRight, HiXMark } from "react-icons/hi2";
 import Slider, { Settings } from "react-slick";
-import Lightbox from "react-spring-lightbox";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import { FiZoomIn, FiZoomOut } from "react-icons/fi";
 
 const Photos: NextPage = () => {
   const {
-    state: { images, imageIndex, isOpen, lightboxImage },
-    actions: {
-      gotoNext,
-      gotoPrevious,
-      handleToggleLightbox,
-      setIsOpen,
-      setImageIndex,
-    },
-  } = usePhotos();
-  const [dragging, setDragging] = useState(false);
+    state: { images, isOpen, imageIndex },
+    actions: { handleToggleLightbox, setIsOpen },
+  } = useLightbox();
 
+  const zoomRef = useRef(null);
+  const sliderRef = useRef<Slider | null>(null);
+  const sliderRef2 = useRef<Slider | null>(null);
   const divide = useMemo(() => Math.floor(images.length / 2), [images]);
 
   const settings: Settings = {
+    draggable: false,
     dots: false,
-    infinite: true,
     waitForAnimate: false,
-    autoplay: true,
     arrows: false,
     cssEase: "ease-in-out",
-    afterChange() {
-      setDragging(false);
-    },
-    beforeChange() {
-      setDragging(true);
-    },
   };
 
   return (
     <>
-      <Lightbox
+      {/* <Lightbox
         isOpen={isOpen}
         onPrev={gotoPrevious}
         onNext={gotoNext}
@@ -88,18 +82,101 @@ const Photos: NextPage = () => {
           enter: { opacity: 1 },
           leave: { opacity: 0 },
         }}
-      />
+      /> */}
+      {isOpen && (
+        <Lightbox
+          index={imageIndex}
+          plugins={[Counter, Zoom]}
+          zoom={{ ref: zoomRef }}
+          counter={{ container: { style: { top: 0, left: 0, padding: 0 } } }}
+          controller={{
+            closeOnPullDown: true,
+            closeOnBackdropClick: true,
+          }}
+          styles={{
+            container: {
+              zIndex: 100,
+              backgroundColor: "rgba(0, 0, 0, 0.6)",
+              padding: 0,
+              filter: "none",
+            },
+            slide: {
+              padding: 0,
+              filter: "none",
+            },
+            button: {
+              filter: "none",
+            },
+            icon: {
+              filter: "none",
+            },
+            toolbar: {
+              padding: 0,
+              filter: "none",
+            },
+            navigationNext: { padding: 0 },
+            navigationPrev: { padding: 0 },
+          }}
+          open={isOpen}
+          close={() => setIsOpen(false)}
+          slides={images}
+          render={{
+            iconZoomIn: () => <FiZoomIn className="text-white" />,
+            iconZoomOut: () => <FiZoomOut className="text-white" />,
+            buttonClose: () => {
+              return (
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-3 bg-luma-dark/40 aspect-square text-lg shadow-none"
+                >
+                  <HiXMark className="text-white" />
+                </button>
+              );
+            },
+            iconPrev: () => (
+              <div className="p-3 bg-luma-dark/40 aspect-square">
+                <HiArrowLeft className="text-white" />
+              </div>
+            ),
+            iconNext: () => (
+              <div className="p-3 bg-luma-dark/40 aspect-square">
+                <HiArrowRight className="text-white" />
+              </div>
+            ),
+          }}
+        />
+      )}
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-luma-dark/60 flex flex-col justify-center items-center">
-          <div className="w-full px-8">
-            <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-6">
+          <div className="w-full px-8 flex items-center justify-between mb-6">
+            <h2 className="font-bigilla leading-[40px] text-white text-4xl">
               Galeri <span className="font-italic">Kami</span>
             </h2>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  sliderRef.current?.slickPrev();
+                  sliderRef2.current?.slickPrev();
+                }}
+                className="p-2 rounded-full border border-white/50 text-white aspect-square"
+              >
+                <HiArrowLeft />
+              </button>
+              <button
+                onClick={() => {
+                  sliderRef.current?.slickNext();
+                  sliderRef2.current?.slickNext();
+                }}
+                className="p-2 rounded-full border border-white/50 text-white aspect-square"
+              >
+                <HiArrowRight />
+              </button>
+            </div>
           </div>
           <div className="w-full px-[2px]">
             <div className="relative">
               <Slider
-                autoplaySpeed={3000}
+                ref={sliderRef}
                 slidesToScroll={4}
                 slidesToShow={4}
                 {...settings}
@@ -108,21 +185,16 @@ const Photos: NextPage = () => {
                   <div
                     className="h-full w-full px-[2px]"
                     key={`Foto Galeri Primary ${index + 1}`}
-                    onClick={() => {
-                      if (!dragging) {
-                        handleToggleLightbox(image);
-                      }
-                    }}
+                    onClick={() => handleToggleLightbox(image.src)}
                   >
                     <div className="aspect-square w-full h-full relative">
                       <Image
+                        loading="lazy"
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                         fill
-                        quality={100}
                         alt={`Foto Galeri Primary ${index + 1}`}
-                        priority
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer object-center"
-                        src={image}
+                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
+                        src={image.src}
                       />
                     </div>
                   </div>
@@ -132,20 +204,17 @@ const Photos: NextPage = () => {
 
             <div className="relative -mt-[2px]">
               <Slider
-                autoplaySpeed={4000}
+                ref={sliderRef2}
                 slidesToScroll={2}
                 slidesToShow={2}
+                speed={700}
                 {...settings}
               >
                 {images.slice(0, divide).map((image, index) => (
                   <div
                     className="h-full w-full px-[2px]"
                     key={`Foto Galeri Secondary ${index + 1}`}
-                    onClick={() => {
-                      if (!dragging) {
-                        handleToggleLightbox(image);
-                      }
-                    }}
+                    onClick={() => handleToggleLightbox(image.src)}
                   >
                     <div className="aspect-square w-full h-full relative">
                       <Image
@@ -153,9 +222,9 @@ const Photos: NextPage = () => {
                         fill
                         quality={100}
                         alt={`Foto Galeri Secondary ${index + 1}`}
-                        priority
-                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer object-center"
-                        src={image}
+                        loading="lazy"
+                        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
+                        src={image.src}
                       />
                     </div>
                   </div>

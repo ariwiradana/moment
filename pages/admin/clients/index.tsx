@@ -119,23 +119,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
 
                       <div className="flex items-center relative gap-x-2">
                         <ButtonActionDialog>
-                          {!client.is_preview && (
-                            <ButtonText
-                              onClick={() =>
-                                actions.handleSetAsPreview(
-                                  client.id as number,
-                                  !client.is_preview
-                                )
-                              }
-                              size="small"
-                              title={
-                                client.is_preview
-                                  ? "Disable as Preview"
-                                  : "Set as Preview"
-                              }
-                              icon={<BiSlideshow className="text-base" />}
-                            />
-                          )}
                           {client.status === "completed" && (
                             <>
                               <ButtonText
@@ -189,7 +172,21 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               />
                             </>
                           )}
-
+                          <ButtonText
+                            onClick={() =>
+                              actions.handleSetAsPreview(
+                                client.id as number,
+                                !client.is_preview
+                              )
+                            }
+                            size="small"
+                            title={
+                              client.is_preview
+                                ? "Disable as Preview"
+                                : "Set as Preview"
+                            }
+                            icon={<BiSlideshow className="text-base" />}
+                          />
                           <ButtonText
                             onClick={() =>
                               router.push(`/admin/clients/${client.slug}`)
