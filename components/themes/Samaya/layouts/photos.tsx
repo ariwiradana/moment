@@ -1,92 +1,135 @@
-import usePhotos from "@/hooks/themes/usePhotos";
-import { raleway } from "@/lib/fonts";
-import {
-  ImageList,
-  ImageListItem,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import Image from "next/image";
-import React from "react";
-import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
-import Lightbox from "react-spring-lightbox";
+import React, { useEffect, useRef, useState } from "react";
+import { RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/rows.css";
+import useLightbox from "@/hooks/themes/useLightbox";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import { FiZoomIn, FiZoomOut } from "react-icons/fi";
+import { HiArrowLeft, HiArrowRight, HiXMark } from "react-icons/hi2";
+
+interface Photo {
+  src: string;
+  width: number;
+  height: number;
+}
 
 const Photos = () => {
-  const { state, actions } = usePhotos();
+  const {
+    state: { images, isOpen, imageIndex },
+    actions: { handleToggleLightbox, setIsOpen },
+  } = useLightbox();
 
-  const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
-  const isDesktop = useMediaQuery(theme.breakpoints.between("lg", "xl"));
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [rowHeight, setRowHeight] = useState(300);
 
-  const getCols = () => {
-    if (isLargeScreen) return 5;
-    if (isDesktop) return 4;
-    if (isTablet) return 2;
-    if (isMobile) return 2;
-  };
+  const zoomRef = useRef(null);
 
-  const getGap = () => {
-    if (isLargeScreen) return 8;
-    if (isDesktop) return 8;
-    if (isTablet) return 8;
-    if (isMobile) return 4;
-  };
+  useEffect(() => {
+    let isCancelled = false;
 
-  if (state.images.length > 0)
+    const loadImage = (src: string): Promise<Photo> =>
+      new Promise((resolve) => {
+        const img = new window.Image();
+        img.onload = () => {
+          if (!isCancelled) {
+            resolve({
+              src,
+              width: img.naturalWidth,
+              height: img.naturalHeight,
+            });
+          }
+        };
+        img.src = src;
+      });
+
+    Promise.all(images.map((image) => loadImage(image.src))).then((loaded) => {
+      if (!isCancelled) setPhotos(loaded);
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [images]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setRowHeight(window.innerWidth < 768 ? 300 : 400);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (images.length > 0)
     return (
       <>
-        <Lightbox
-          isOpen={state.isOpen}
-          onPrev={actions.gotoPrevious}
-          onNext={actions.gotoNext}
-          images={state.lightboxImage}
-          currentIndex={state.imageIndex}
-          onClose={() => actions.setIsOpen(false)}
-          className="bg-black/80"
-          renderHeader={() => (
-            <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
-              <p
-                className={`text-white text-sm relative z-10 p-2 ${raleway.className}`}
-              >
-                {state.imageIndex + 1} / {state.lightboxImage.length}
-              </p>
-              <button
-                onClick={() => {
-                  actions.setIsOpen(false);
-                  actions.setImageIndex(0);
-                }}
-                className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
-              >
-                <HiOutlineXMark />
-              </button>
-            </div>
-          )}
-          renderPrevButton={() => (
-            <button
-              disabled={state.imageIndex === 0}
-              onClick={actions.gotoPrevious}
-              className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
-            >
-              <HiChevronLeft />
-            </button>
-          )}
-          renderNextButton={() => (
-            <button
-              disabled={state.imageIndex === state.lightboxImage.length - 1}
-              onClick={actions.gotoNext}
-              className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex items-center justify-center md:mr-2 transition-colors ease-in-out"
-            >
-              <HiChevronRight />
-            </button>
-          )}
-          pageTransitionConfig={{
-            from: { opacity: 0 },
-            enter: { opacity: 1 },
-            leave: { opacity: 0 },
-          }}
-        />
+        {isOpen && (
+          <Lightbox
+            index={imageIndex}
+            plugins={[Counter, Zoom]}
+            zoom={{ ref: zoomRef }}
+            counter={{ container: { style: { top: 0, left: 0, padding: 0 } } }}
+            controller={{
+              closeOnPullDown: true,
+              closeOnBackdropClick: true,
+            }}
+            styles={{
+              container: {
+                zIndex: 100,
+                backgroundColor: "rgba(0, 0, 0, 0.7)",
+                padding: 0,
+                filter: "none",
+              },
+              slide: {
+                padding: 0,
+                filter: "none",
+              },
+              button: {
+                filter: "none",
+              },
+              icon: {
+                filter: "none",
+              },
+              toolbar: {
+                padding: 0,
+                filter: "none",
+              },
+              navigationNext: { padding: 0 },
+              navigationPrev: { padding: 0 },
+            }}
+            open={isOpen}
+            close={() => setIsOpen(false)}
+            slides={images}
+            render={{
+              iconZoomIn: () => <FiZoomIn className="text-white" />,
+              iconZoomOut: () => <FiZoomOut className="text-white" />,
+              buttonClose: () => {
+                return (
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-3 bg-luma-dark/50 aspect-square text-lg shadow-none"
+                  >
+                    <HiXMark className="text-white" />
+                  </button>
+                );
+              },
+              iconPrev: () => (
+                <div className="p-3 bg-luma-dark/50 aspect-square">
+                  <HiArrowLeft className="text-white" />
+                </div>
+              ),
+              iconNext: () => (
+                <div className="p-3 bg-luma-dark/50 aspect-square">
+                  <HiArrowRight className="text-white" />
+                </div>
+              ),
+            }}
+          />
+        )}
         <section className="bg-samaya-dark">
           <div className="pt-[60px] pb-1 md:pb-2 md:pt-[100px] px-1 md:px-2">
             <div className="px-6 md:px-0">
@@ -104,29 +147,14 @@ const Photos = () => {
               </p>
             </div>
             <div className="mt-8 md:mt-16" data-aos="fade-up">
-              <ImageList variant="masonry" cols={getCols()} gap={getGap()}>
-                {state.images.map((img, index) => (
-                  <ImageListItem key={img}>
-                    <div>
-                      <Image
-                        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                        onClick={() => {
-                          actions.setIsOpen(true);
-                          actions.setImageIndex(index);
-                        }}
-                        className="hover:scale-[0.99] transition-transform ease-in-out duration-500 bg-white/5"
-                        src={img}
-                        alt={`gallery-img-${index + 1}`}
-                        width={360}
-                        height={360}
-                        layout="responsive"
-                        objectFit="cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  </ImageListItem>
-                ))}
-              </ImageList>
+              <RowsPhotoAlbum
+                spacing={4}
+                targetRowHeight={rowHeight}
+                photos={photos}
+                onClick={({ photo }) => {
+                  handleToggleLightbox(photo.src);
+                }}
+              />
             </div>
           </div>
         </section>

@@ -33,56 +33,6 @@ const Photos: NextPage = () => {
 
   return (
     <>
-      {/* <Lightbox
-        isOpen={isOpen}
-        onPrev={gotoPrevious}
-        onNext={gotoNext}
-        images={lightboxImage}
-        currentIndex={imageIndex}
-        onClose={() => setIsOpen(false)}
-        className="bg-black/80"
-        renderHeader={() => (
-          <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
-            <p
-              className={`text-white text-sm relative z-10 p-2 ${rubik.className}`}
-            >
-              {imageIndex + 1} / {lightboxImage.length}
-            </p>
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                setImageIndex(0);
-              }}
-              className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
-            >
-              <HiOutlineXMark />
-            </button>
-          </div>
-        )}
-        renderPrevButton={() => (
-          <button
-            disabled={imageIndex === 0}
-            onClick={gotoPrevious}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
-          >
-            <HiChevronLeft />
-          </button>
-        )}
-        renderNextButton={() => (
-          <button
-            disabled={imageIndex === lightboxImage.length - 1}
-            onClick={gotoNext}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex items-center justify-center md:mr-2 transition-colors ease-in-out"
-          >
-            <HiChevronRight />
-          </button>
-        )}
-        pageTransitionConfig={{
-          from: { opacity: 0 },
-          enter: { opacity: 1 },
-          leave: { opacity: 0 },
-        }}
-      /> */}
       {isOpen && (
         <Lightbox
           index={imageIndex}
@@ -96,7 +46,7 @@ const Photos: NextPage = () => {
           styles={{
             container: {
               zIndex: 100,
-              backgroundColor: "rgba(0, 0, 0, 0.6)",
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
               padding: 0,
               filter: "none",
             },
@@ -127,19 +77,19 @@ const Photos: NextPage = () => {
               return (
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-3 bg-luma-dark/40 aspect-square text-lg shadow-none"
+                  className="p-3 bg-luma-dark/50 aspect-square text-lg shadow-none"
                 >
                   <HiXMark className="text-white" />
                 </button>
               );
             },
             iconPrev: () => (
-              <div className="p-3 bg-luma-dark/40 aspect-square">
+              <div className="p-3 bg-luma-dark/50 aspect-square">
                 <HiArrowLeft className="text-white" />
               </div>
             ),
             iconNext: () => (
-              <div className="p-3 bg-luma-dark/40 aspect-square">
+              <div className="p-3 bg-luma-dark/50 aspect-square">
                 <HiArrowRight className="text-white" />
               </div>
             ),
