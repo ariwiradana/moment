@@ -80,7 +80,7 @@ const Photos = () => {
             styles={{
               container: {
                 zIndex: 100,
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
+                backgroundColor: "rgba(0, 0, 0, 0.8)",
                 padding: 0,
                 filter: "none",
               },

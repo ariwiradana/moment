@@ -140,3 +140,8 @@
   height: 100%;
   position: relative;
 }
+
+.no-snap {
+  scroll-snap-align: none !important;
+  scroll-snap-stop: unset !important;
+}
