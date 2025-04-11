@@ -97,7 +97,7 @@ const Photos: NextPage = () => {
         />
       )}
       <section className="h-dvh snap-start w-full relative">
-        <div className="absolute z-20 inset-0 bg-luma-dark/60 flex flex-col justify-center items-center">
+        <div className="absolute z-20 inset-0 bg-luma-dark/70 flex flex-col justify-center items-center">
           <div className="w-full px-8 flex items-center justify-between mb-6">
             <h2 className="font-bigilla leading-[40px] text-white text-4xl">
               Galeri <span className="font-italic">Kami</span>
@@ -129,6 +129,7 @@ const Photos: NextPage = () => {
                 ref={sliderRef}
                 slidesToScroll={4}
                 slidesToShow={4}
+                speed={200}
                 {...settings}
               >
                 {images.slice(divide).map((image, index) => (
@@ -157,7 +158,7 @@ const Photos: NextPage = () => {
                 ref={sliderRef2}
                 slidesToScroll={2}
                 slidesToShow={2}
-                speed={700}
+                speed={400}
                 {...settings}
               >
                 {images.slice(0, divide).map((image, index) => (
