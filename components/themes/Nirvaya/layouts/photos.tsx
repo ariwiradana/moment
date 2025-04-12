@@ -20,7 +20,7 @@ const Photos = () => {
         <FsLightbox
           toggler={state.isOpen}
           sources={state.images || []}
-          slide={state.imageIndex}
+          slide={state.imageIndex + 1}
         />
       )}
       <section className="bg-nirvaya-light-brown">

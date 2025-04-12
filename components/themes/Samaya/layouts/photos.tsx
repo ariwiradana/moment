@@ -63,7 +63,7 @@ const Photos = () => {
           <FsLightbox
             toggler={isOpen}
             sources={images || []}
-            slide={imageIndex}
+            slide={imageIndex + 1}
           />
         )}
         <section className="bg-samaya-dark">

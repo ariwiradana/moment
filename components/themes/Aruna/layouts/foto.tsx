@@ -65,7 +65,7 @@ const Component = () => {
         <FsLightbox
           toggler={isOpen}
           sources={images || []}
-          slide={imageIndex}
+          slide={imageIndex + 1}
         />
       )}
       <section className="relative bg-aruna-dark overflow-hidden">

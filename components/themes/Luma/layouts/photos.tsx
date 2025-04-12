@@ -31,7 +31,7 @@ const Photos: NextPage = () => {
         <FsLightbox
           toggler={isOpen}
           sources={images || []}
-          slide={imageIndex}
+          slide={imageIndex + 1}
         />
       )}
       <section className="h-dvh snap-start w-full relative">
