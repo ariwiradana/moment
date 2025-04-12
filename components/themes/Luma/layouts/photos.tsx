@@ -69,7 +69,7 @@ const Photos: NextPage = () => {
                 speed={200}
                 {...settings}
               >
-                {images.slice(divide).map((image, index) => (
+                {images.slice(0, divide).map((image, index) => (
                   <div
                     className="h-full w-full px-[2px]"
                     key={`Foto Galeri Primary ${index + 1}`}
@@ -98,7 +98,7 @@ const Photos: NextPage = () => {
                 speed={400}
                 {...settings}
               >
-                {images.slice(0, divide).map((image, index) => (
+                {images.slice(divide).map((image, index) => (
                   <div
                     className="h-full w-full px-[2px]"
                     key={`Foto Galeri Secondary ${index + 1}`}
