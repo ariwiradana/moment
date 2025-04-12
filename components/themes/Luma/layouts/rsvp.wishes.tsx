@@ -66,7 +66,7 @@ const RSVPWishesComponent: FC = () => {
     <div className="p-1 text-sm bg-aruna-dark text-white">
       <BiCheck />
     </div>,
-    2
+    4
   );
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,82 +90,92 @@ const RSVPWishesComponent: FC = () => {
   );
 
   return (
-    <section className="h-dvh snap-start w-full relative">
-      <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/70 to-luma-primary flex flex-col justify-center items-center">
-        <div className="w-full px-8 flex items-center justify-between mb-6">
-          <h2 className="font-bigilla leading-[40px] text-white text-4xl">
-            RSVP <span className="font-italic">dan</span> Ucapan
-          </h2>
-        </div>
-        <form
-          onSubmit={actions.handleSubmit}
-          className="flex flex-col gap-4 w-full px-8 max-w-screen-lg mx-auto"
-        >
-          <Input
-            disabled={client?.status === "completed"}
-            error={state.errors.name}
-            placeholder="Masukkan nama kamu"
-            value={state.formData.name}
-            id="name"
-            onChange={handleNameChange}
-          />
-          <InputTextarea
-            disabled={client?.status === "completed"}
-            error={state.errors.wishes}
-            placeholder="Masukkan ucapan kamu"
-            value={state.formData.wishes}
-            id="wishes"
-            rows={6}
-            onChange={handleWishesChange}
-          />
-          <div className="flex gap-x-8 justify-between lg:justify-start">
-            <InputCheckbox
-              disabled={client?.status === "completed"}
-              value="Hadir"
-              checked={state.formData.attendant === "Hadir"}
-              label="Hadir"
-              onChange={handleAttendantChange}
-            />
-            <InputCheckbox
-              disabled={client?.status === "completed"}
-              value="Tidak Hadir"
-              checked={state.formData.attendant === "Tidak Hadir"}
-              label="Tidak Hadir"
-              onChange={handleAttendantChange}
-            />
-            <InputCheckbox
-              disabled={client?.status === "completed"}
-              checked={state.formData.attendant === "Masih Ragu"}
-              value="Masih Ragu"
-              label="Masih Ragu"
-              onChange={handleAttendantChange}
-            />
+    <>
+      <section className="h-dvh snap-start w-full relative">
+        <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/70 to-luma-primary flex flex-col justify-center items-center">
+          <div className="w-full px-8 flex items-center justify-between mb-6">
+            <h2 className="font-bigilla leading-[40px] text-white text-4xl">
+              RSVP <span className="font-italic">dan</span> Ucapan
+            </h2>
           </div>
-          {client?.status === "paid" && (
-            <div className="mt-4">
-              <ButtonDark
-                isLoading={state.loading}
-                type="submit"
-                title="Kirim"
-                icon={<BiSend />}
+          <form
+            onSubmit={actions.handleSubmit}
+            className="flex flex-col gap-4 w-full px-8 max-w-screen-lg mx-auto"
+          >
+            <Input
+              disabled={client?.status === "completed"}
+              error={state.errors.name}
+              placeholder="Masukkan nama kamu"
+              value={state.formData.name}
+              id="name"
+              onChange={handleNameChange}
+            />
+            <InputTextarea
+              disabled={client?.status === "completed"}
+              error={state.errors.wishes}
+              placeholder="Masukkan ucapan kamu"
+              value={state.formData.wishes}
+              id="wishes"
+              rows={6}
+              onChange={handleWishesChange}
+            />
+            <div className="flex gap-x-8 justify-between lg:justify-start">
+              <InputCheckbox
+                disabled={client?.status === "completed"}
+                value="Hadir"
+                checked={state.formData.attendant === "Hadir"}
+                label="Hadir"
+                onChange={handleAttendantChange}
+              />
+              <InputCheckbox
+                disabled={client?.status === "completed"}
+                value="Tidak Hadir"
+                checked={state.formData.attendant === "Tidak Hadir"}
+                label="Tidak Hadir"
+                onChange={handleAttendantChange}
+              />
+              <InputCheckbox
+                disabled={client?.status === "completed"}
+                checked={state.formData.attendant === "Masih Ragu"}
+                value="Masih Ragu"
+                label="Masih Ragu"
+                onChange={handleAttendantChange}
               />
             </div>
-          )}
-        </form>
-
-        {state.wishes?.length > 0 && (
-          <div className="w-full">
-            <div className="px-8 mt-12">
-              <div className="grid items-start divide-y md:divide-y-0 divide-white/10">
-                {state.wishes.map((wish, index) => (
-                  <WishItem
-                    key={`ucapan-${index + 1}`}
-                    wish={wish}
-                    attendantText={state.attendantText}
-                  />
-                ))}
+            {client?.status === "paid" && (
+              <div className="mt-4">
+                <ButtonDark
+                  isLoading={state.loading}
+                  type="submit"
+                  title="Kirim"
+                  icon={<BiSend />}
+                />
               </div>
+            )}
+          </form>
+        </div>
+      </section>
 
+      <section className="h-dvh snap-start w-full relative">
+        <div className="absolute z-20 inset-0 bg-luma-primary flex flex-col justify-center items-center">
+          <div className="w-full px-8 flex items-center justify-between mb-6">
+            <h2 className="font-bigilla leading-[40px] text-white text-4xl">
+              RSVP <span className="font-italic">dan</span> Ucapan
+            </h2>
+          </div>
+          <div className="w-full">
+            <div className="px-8">
+              {state.wishes.length > 0 && (
+                <div className="grid items-start divide-y md:divide-y-0 divide-white/10">
+                  {state.wishes.map((wish, index) => (
+                    <WishItem
+                      key={`ucapan-${index + 1}`}
+                      wish={wish}
+                      attendantText={state.attendantText}
+                    />
+                  ))}
+                </div>
+              )}
               {state.totalRows > state.limit && (
                 <div className="w-full mt-6">
                   <div className="-ml-2">
@@ -204,9 +214,9 @@ const RSVPWishesComponent: FC = () => {
               )}
             </div>
           </div>
-        )}
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 };
 
