@@ -1,5 +1,4 @@
 import React, { memo, useState } from "react";
-import "yet-another-react-lightbox/styles.css";
 import { roboto } from "@/lib/fonts";
 import { BiCheck, BiChevronRightCircle, BiCopy } from "react-icons/bi";
 import Image from "next/image";

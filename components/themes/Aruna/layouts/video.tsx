@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import "yet-another-react-lightbox/styles.css";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import dynamic from "next/dynamic";

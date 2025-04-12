@@ -50,6 +50,9 @@ const Lightbox: NextPage<Props> = ({
       setPosition({ x: 0, y: 0 });
       scrollToIndex(imageIndex);
       setCurrentIndex(imageIndex);
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
     }
   }, [isOpen, imageIndex]);
 

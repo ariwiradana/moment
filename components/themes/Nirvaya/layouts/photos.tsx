@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import Lightbox from "@/components/lightbox";
+import FsLightbox from "fslightbox-react";
 
 const Photos = () => {
   const { state, actions } = usePhotos();
@@ -16,12 +16,13 @@ const Photos = () => {
 
   return (
     <>
-      <Lightbox
-        imageIndex={state.imageIndex}
-        images={state.images}
-        isOpen={state.isOpen}
-        onClose={() => actions.setIsOpen(false)}
-      />
+      {state.images.length > 0 && (
+        <FsLightbox
+          toggler={state.isOpen}
+          sources={state.images || []}
+          slide={state.imageIndex}
+        />
+      )}
       <section className="bg-nirvaya-light-brown">
         <div className="max-w-screen-lg mx-auto pt-16 md:px-8">
           <div

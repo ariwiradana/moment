@@ -1,4 +1,3 @@
-import Lightbox from "@/components/lightbox";
 import useLightbox from "@/hooks/themes/useLightbox";
 import { rubik } from "@/lib/fonts";
 import { NextPage } from "next";
@@ -6,11 +5,12 @@ import Image from "next/image";
 import { useMemo, useRef } from "react";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import Slider, { Settings } from "react-slick";
+import FsLightbox from "fslightbox-react";
 
 const Photos: NextPage = () => {
   const {
     state: { images, isOpen, imageIndex },
-    actions: { handleToggleLightbox, setIsOpen },
+    actions: { handleToggleLightbox },
   } = useLightbox();
 
   const sliderRef = useRef<Slider | null>(null);
@@ -27,12 +27,13 @@ const Photos: NextPage = () => {
 
   return (
     <>
-      <Lightbox
-        imageIndex={imageIndex}
-        images={images}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      {images.length > 0 && (
+        <FsLightbox
+          toggler={isOpen}
+          sources={images || []}
+          slide={imageIndex}
+        />
+      )}
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-luma-dark/70 flex flex-col justify-center items-center">
           <div className="w-full px-8 flex items-center justify-between mb-6">

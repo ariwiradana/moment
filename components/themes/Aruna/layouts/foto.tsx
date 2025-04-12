@@ -5,7 +5,7 @@ import Image from "next/image";
 import useClientStore from "@/store/useClientStore";
 import Slider, { Settings } from "react-slick";
 import usePhotos from "@/hooks/themes/usePhotos";
-import Lightbox from "@/components/lightbox";
+import FsLightbox from "fslightbox-react";
 
 const Component = () => {
   const { client } = useClientStore();
@@ -13,7 +13,7 @@ const Component = () => {
 
   const {
     state: { images, imageIndex, isOpen },
-    actions: { handleToggleLightbox, setIsOpen },
+    actions: { handleToggleLightbox },
   } = usePhotos();
 
   const gridImages = useMemo(() => images.slice(0, 6), [images]);
@@ -61,12 +61,13 @@ const Component = () => {
 
   return (
     <>
-      <Lightbox
-        imageIndex={imageIndex}
-        images={images}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      {images.length > 0 && (
+        <FsLightbox
+          toggler={isOpen}
+          sources={images || []}
+          slide={imageIndex}
+        />
+      )}
       <section className="relative bg-aruna-dark overflow-hidden">
         <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-2">
           <p

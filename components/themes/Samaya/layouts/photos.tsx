@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 import useLightbox from "@/hooks/themes/useLightbox";
-import Lightbox from "@/components/lightbox";
+import FsLightbox from "fslightbox-react";
 
 interface Photo {
   src: string;
@@ -13,7 +13,7 @@ interface Photo {
 const Photos = () => {
   const {
     state: { images, isOpen, imageIndex },
-    actions: { handleToggleLightbox, setIsOpen },
+    actions: { handleToggleLightbox },
   } = useLightbox();
 
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -59,12 +59,13 @@ const Photos = () => {
   if (images.length > 0)
     return (
       <>
-        <Lightbox
-          imageIndex={imageIndex}
-          images={images}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
+        {images.length > 0 && (
+          <FsLightbox
+            toggler={isOpen}
+            sources={images || []}
+            slide={imageIndex}
+          />
+        )}
         <section className="bg-samaya-dark">
           <div className="pt-[60px] pb-1 md:pb-2 md:pt-[100px] px-1 md:px-2">
             <div className="px-6 md:px-0">
