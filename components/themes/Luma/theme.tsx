@@ -15,6 +15,7 @@ import Videos from "./layouts/video";
 import useClientStore from "@/store/useClientStore";
 import useCoverStore from "@/store/useCoverStore";
 import { useMemo } from "react";
+import RsvpWishes from "./layouts/rsvp.wishes";
 
 interface Props {
   untuk: string;
@@ -89,6 +90,7 @@ const Luma: NextPage<Props> = ({ untuk }) => {
           <Events />
           <Videos />
           <Photos />
+          <RsvpWishes />
         </div>
       </main>
     </Layout>

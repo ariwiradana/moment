@@ -59,10 +59,10 @@ const Photos = () => {
   if (images.length > 0)
     return (
       <>
-        {images.length > 0 && (
+        {isOpen && (
           <FsLightbox
             toggler={isOpen}
-            sources={images || []}
+            sources={images}
             slide={imageIndex + 1}
           />
         )}
