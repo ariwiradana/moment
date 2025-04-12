@@ -1,5 +1,5 @@
 import React, { FC, memo, useCallback } from "react";
-import { BiCheck, BiSend, BiTime } from "react-icons/bi";
+import { BiCheck, BiChevronRight, BiSend, BiTime } from "react-icons/bi";
 import { rubik } from "@/lib/fonts";
 import { Pagination } from "@mui/material";
 import { Review } from "@/lib/types";
@@ -11,6 +11,8 @@ import moment from "moment";
 import Input from "../elements/input";
 import useRSVPWishesLimit from "@/hooks/themes/useRSVPWishesLimit";
 import ButtonDark from "../elements/button.dark";
+import ButtonPrimary from "../elements/button.primary";
+import { RotatingLines } from "react-loader-spinner";
 
 const WishItem = memo(
   ({
@@ -91,18 +93,28 @@ const RSVPWishesComponent: FC = () => {
 
   return (
     <>
-      <section className="h-dvh snap-start w-full relative">
-        <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/70 to-luma-primary flex flex-col justify-center items-center">
-          <div className="w-full px-8 flex items-center justify-between mb-6">
-            <h2 className="font-bigilla leading-[40px] text-white text-4xl">
-              RSVP <span className="font-italic">dan</span> Ucapan
-            </h2>
-          </div>
+      <div
+        onClick={() => actions.setIsOpen((state) => !state)}
+        className={`fixed inset-0 bg-luma-dark/60 z-[999] flex items-end transition-all ease-in-out duration-300 ${
+          state.isOpen ? "opacity-100 visible" : "opacity-0 invisible delay-200"
+        }`}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={`bg-luma-dark/70 backdrop-blur w-full px-8 py-12 transform transition-all ease-in-out duration-300 ${
+            state.isOpen ? "translate-y-0 delay-200" : "translate-y-full"
+          }`}
+        >
+          <h2 className={`text-white text-2xl mb-4 ${rubik.className}`}>
+            Kirim Ucapan
+          </h2>
+
           <form
             onSubmit={actions.handleSubmit}
-            className="flex flex-col gap-4 w-full px-8 max-w-screen-lg mx-auto"
+            className="flex flex-col gap-2 w-full"
           >
             <Input
+              label="Nama"
               disabled={client?.status === "completed"}
               error={state.errors.name}
               placeholder="Masukkan nama kamu"
@@ -111,6 +123,7 @@ const RSVPWishesComponent: FC = () => {
               onChange={handleNameChange}
             />
             <InputTextarea
+              label="Ucapan"
               disabled={client?.status === "completed"}
               error={state.errors.wishes}
               placeholder="Masukkan ucapan kamu"
@@ -143,7 +156,7 @@ const RSVPWishesComponent: FC = () => {
               />
             </div>
             {client?.status === "paid" && (
-              <div className="mt-4">
+              <div className="mt-6">
                 <ButtonDark
                   isLoading={state.loading}
                   type="submit"
@@ -154,14 +167,19 @@ const RSVPWishesComponent: FC = () => {
             )}
           </form>
         </div>
-      </section>
+      </div>
 
       <section className="h-dvh snap-start w-full relative">
-        <div className="absolute z-20 inset-0 bg-luma-primary flex flex-col justify-center items-center">
-          <div className="w-full px-8 flex items-center justify-between mb-6">
-            <h2 className="font-bigilla leading-[40px] text-white text-4xl">
+        <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/70 to-luma-primary flex flex-col justify-center items-center">
+          <div className="w-full px-8 mb-8">
+            <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-2">
               RSVP <span className="font-italic">dan</span> Ucapan
             </h2>
+            <ButtonPrimary
+              onClick={() => actions.setIsOpen((state) => !state)}
+              title="Kirim Ucapan"
+              icon={<BiChevronRight />}
+            />
           </div>
           <div className="w-full">
             <div className="px-8">
@@ -174,6 +192,17 @@ const RSVPWishesComponent: FC = () => {
                       attendantText={state.attendantText}
                     />
                   ))}
+                </div>
+              )}
+              {state.isLoadingWishes && (
+                <div className="flex justify-center mt-6">
+                  <RotatingLines
+                    strokeColor="#ffff"
+                    width="16"
+                    strokeWidth="3"
+                    animationDuration="1"
+                    ariaLabel="rotating-lines-loading"
+                  />
                 </div>
               )}
               {state.totalRows > state.limit && (

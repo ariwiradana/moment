@@ -11,7 +11,7 @@ const Input: FC<Props> = (props) => {
     <div>
       {props.label && (
         <label
-          className={`text-sm mb-3 ml-2 ${rubik.className} text-luma-dark/70`}
+          className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase tracking-[3px] ${rubik.className}`}
           htmlFor={props.id}
         >
           {props.label}
@@ -20,7 +20,7 @@ const Input: FC<Props> = (props) => {
       <input
         {...props}
         id={props.id}
-        className={`p-4 w-full outline-none bg-transparent text-white backdrop-blur text-xs md:text-sm rounded-none placeholder:text-xs placeholder:text-white border border-white/50 ${rubik.className}`}
+        className={`p-4 w-full outline-none bg-transparent text-white text-xs md:text-sm rounded-none placeholder:text-xs mt-1 placeholder:text-white border border-white/50 ${rubik.className}`}
       />
       {props.error && (
         <p className={`text-admin-danger text-xs mt-1 ${rubik.className}`}>

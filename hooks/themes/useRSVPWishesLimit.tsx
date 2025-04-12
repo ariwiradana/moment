@@ -43,6 +43,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
   const [page, setPage] = useState(1);
   const [wishes, setWishes] = useState<Review[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const wisheschema = z.object({
     name: z
@@ -55,7 +56,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
       .max(500, "Ucapan tidak boleh melebihi 500 karakter"),
   });
 
-  const { mutate } = useSWR<{
+  const { mutate, isLoading: isLoadingWishes } = useSWR<{
     data: Review[];
     total_rows: number;
   }>(
@@ -108,6 +109,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
           id: toastSubmit,
           icon: <div>{icon}</div>,
         });
+        setIsOpen(false);
       } else {
         toast.error("Gagal membuat ucapan", { id: toastSubmit });
       }
@@ -145,11 +147,14 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
       limit,
       page,
       formData,
+      isOpen,
+      isLoadingWishes,
     },
     actions: {
       handleSubmit,
       handleChange,
       handleChangePagination,
+      setIsOpen,
     },
   };
 };
