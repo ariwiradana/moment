@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import { HiOutlineZoomIn, HiOutlineZoomOut, HiX } from "react-icons/hi";
-import { redhat } from "@/lib/fonts";
 
 interface Props {
   isOpen: boolean;
@@ -32,14 +31,16 @@ const Lightbox: NextPage<Props> = ({
 
   const scrollNext = () => {
     if (scrollRef.current) {
-      scrollRef.current?.scrollBy({ left: 320, behavior: "smooth" });
+      const width = scrollRef.current.clientWidth;
+      scrollRef.current?.scrollBy({ left: width, behavior: "smooth" });
       if (currentIndex < images.length - 1)
         setCurrentIndex((state) => state + 1);
     }
   };
   const scrollPrev = () => {
     if (scrollRef.current) {
-      scrollRef.current?.scrollBy({ left: -320, behavior: "smooth" });
+      const width = scrollRef.current.clientWidth;
+      scrollRef.current?.scrollBy({ left: -width, behavior: "smooth" });
       if (currentIndex > 0) setCurrentIndex((state) => state - 1);
     }
   };
@@ -164,17 +165,11 @@ const Lightbox: NextPage<Props> = ({
           })}
         </div>
       </div>
-      <p
-        className={`fixed top-3 left-3 text-xs md:text-sm text-white ${redhat.className}`}
-      >
-        {currentIndex + 1} / {images.length}
-      </p>
       <div
         className="fixed top-0 right-0 flex"
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          disabled={zoomed.zoomed === 2}
           onClick={() => {
             setZoomed((state) => ({
               ...state,
@@ -188,7 +183,6 @@ const Lightbox: NextPage<Props> = ({
           <HiOutlineZoomIn />
         </button>
         <button
-          disabled={zoomed.zoomed === 0}
           onClick={() => {
             setZoomed((state) => ({
               ...state,
@@ -209,7 +203,6 @@ const Lightbox: NextPage<Props> = ({
         </button>
       </div>
       <button
-        disabled={currentIndex === images.length - 1}
         onClick={(e) => {
           e.stopPropagation();
           scrollNext();
@@ -219,7 +212,6 @@ const Lightbox: NextPage<Props> = ({
         <HiArrowRight />
       </button>
       <button
-        disabled={currentIndex === 0}
         onClick={(e) => {
           e.stopPropagation();
           scrollPrev();
