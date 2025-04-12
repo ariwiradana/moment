@@ -1,14 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 import useLightbox from "@/hooks/themes/useLightbox";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import "yet-another-react-lightbox/plugins/counter.css";
-import Counter from "yet-another-react-lightbox/plugins/counter";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import { FiZoomIn, FiZoomOut } from "react-icons/fi";
-import { HiArrowLeft, HiArrowRight, HiXMark } from "react-icons/hi2";
+import Lightbox from "@/components/lightbox";
 
 interface Photo {
   src: string;
@@ -24,8 +18,6 @@ const Photos = () => {
 
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [rowHeight, setRowHeight] = useState(300);
-
-  const zoomRef = useRef(null);
 
   useEffect(() => {
     let isCancelled = false;
@@ -45,7 +37,7 @@ const Photos = () => {
         img.src = src;
       });
 
-    Promise.all(images.map((image) => loadImage(image.src))).then((loaded) => {
+    Promise.all(images.map((image) => loadImage(image))).then((loaded) => {
       if (!isCancelled) setPhotos(loaded);
     });
 
@@ -67,69 +59,12 @@ const Photos = () => {
   if (images.length > 0)
     return (
       <>
-        {isOpen && (
-          <Lightbox
-            index={imageIndex}
-            plugins={[Counter, Zoom]}
-            zoom={{ ref: zoomRef }}
-            counter={{ container: { style: { top: 0, left: 0, padding: 0 } } }}
-            controller={{
-              closeOnPullDown: true,
-              closeOnBackdropClick: true,
-            }}
-            styles={{
-              container: {
-                zIndex: 100,
-                backgroundColor: "rgba(0, 0, 0, 0.8)",
-                padding: 0,
-                filter: "none",
-              },
-              slide: {
-                padding: 0,
-                filter: "none",
-              },
-              button: {
-                filter: "none",
-              },
-              icon: {
-                filter: "none",
-              },
-              toolbar: {
-                padding: 0,
-                filter: "none",
-              },
-              navigationNext: { padding: 0 },
-              navigationPrev: { padding: 0 },
-            }}
-            open={isOpen}
-            close={() => setIsOpen(false)}
-            slides={images}
-            render={{
-              iconZoomIn: () => <FiZoomIn className="text-white" />,
-              iconZoomOut: () => <FiZoomOut className="text-white" />,
-              buttonClose: () => {
-                return (
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-3 bg-luma-dark/50 aspect-square text-lg shadow-none"
-                  >
-                    <HiXMark className="text-white" />
-                  </button>
-                );
-              },
-              iconPrev: () => (
-                <div className="p-3 bg-luma-dark/50 aspect-square">
-                  <HiArrowLeft className="text-white" />
-                </div>
-              ),
-              iconNext: () => (
-                <div className="p-3 bg-luma-dark/50 aspect-square">
-                  <HiArrowRight className="text-white" />
-                </div>
-              ),
-            }}
-          />
-        )}
+        <Lightbox
+          imageIndex={imageIndex}
+          images={images}
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+        />
         <section className="bg-samaya-dark">
           <div className="pt-[60px] pb-1 md:pb-2 md:pt-[100px] px-1 md:px-2">
             <div className="px-6 md:px-0">

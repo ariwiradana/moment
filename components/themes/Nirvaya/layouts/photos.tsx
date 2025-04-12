@@ -1,12 +1,10 @@
 import usePhotos from "@/hooks/themes/usePhotos";
-import { raleway } from "@/lib/fonts";
 import Image from "next/image";
 import React, { useMemo } from "react";
-import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
-import Lightbox from "react-spring-lightbox";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Lightbox from "@/components/lightbox";
 
 const Photos = () => {
   const { state, actions } = usePhotos();
@@ -19,54 +17,10 @@ const Photos = () => {
   return (
     <>
       <Lightbox
+        imageIndex={state.imageIndex}
+        images={state.images}
         isOpen={state.isOpen}
-        onPrev={actions.gotoPrevious}
-        onNext={actions.gotoNext}
-        images={state.lightboxImage}
-        currentIndex={state.imageIndex}
         onClose={() => actions.setIsOpen(false)}
-        className="bg-black/80"
-        renderHeader={() => (
-          <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
-            <p
-              className={`text-white text-sm relative z-10 p-2 ${raleway.className}`}
-            >
-              {state.imageIndex + 1} / {state.lightboxImage.length}
-            </p>
-            <button
-              onClick={() => {
-                actions.setIsOpen(false);
-                actions.setImageIndex(0);
-              }}
-              className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
-            >
-              <HiOutlineXMark />
-            </button>
-          </div>
-        )}
-        renderPrevButton={() => (
-          <button
-            disabled={state.imageIndex === 0}
-            onClick={actions.gotoPrevious}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out"
-          >
-            <HiChevronLeft />
-          </button>
-        )}
-        renderNextButton={() => (
-          <button
-            disabled={state.imageIndex === state.lightboxImage.length - 1}
-            onClick={actions.gotoNext}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex items-center justify-center md:mr-2 transition-colors ease-in-out"
-          >
-            <HiChevronRight />
-          </button>
-        )}
-        pageTransitionConfig={{
-          from: { opacity: 0 },
-          enter: { opacity: 1 },
-          leave: { opacity: 0 },
-        }}
       />
       <section className="bg-nirvaya-light-brown">
         <div className="max-w-screen-lg mx-auto pt-16 md:px-8">

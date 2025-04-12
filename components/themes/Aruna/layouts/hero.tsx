@@ -83,8 +83,8 @@ const HeroComponent = () => {
                     <Image
                       key={`Main Slider ${index + 1}`}
                       sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                      fill
                       quality={100}
+                      fill
                       alt={`Main Slider ${index + 1}`}
                       priority
                       className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"

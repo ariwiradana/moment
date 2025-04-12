@@ -10,15 +10,15 @@ const useLightbox = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [imageIndex, setImageIndex] = React.useState(0);
 
-  const images: Image[] = useMemo(
-    () => (client?.gallery as string[])?.map((image) => ({ src: image })) ?? [],
+  const images: string[] = useMemo(
+    () => (client?.gallery as string[])?.map((image) => image) ?? [],
     [client?.gallery]
   );
 
   const handleToggleLightbox = useCallback(
     (image: string) => {
       setIsOpen((state) => !state);
-      const index = images.findIndex((img) => img.src === image);
+      const index = images.findIndex((img) => img === image);
       setImageIndex(index);
     },
     [isOpen]
