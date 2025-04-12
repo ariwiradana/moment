@@ -1,52 +1,25 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
-import "yet-another-react-lightbox/styles.css";
+import React, { memo, useMemo, useState } from "react";
 import { roboto } from "@/lib/fonts";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 import Image from "next/image";
-import Lightbox from "react-spring-lightbox";
-import { HiChevronLeft, HiChevronRight, HiOutlineXMark } from "react-icons/hi2";
 import useClientStore from "@/store/useClientStore";
 import Slider, { Settings } from "react-slick";
+import usePhotos from "@/hooks/themes/usePhotos";
+import Lightbox from "@/components/lightbox";
 
 const Component = () => {
-  const [open, setOpen] = useState(false);
-  const [imageIndex, setImageIndex] = useState(0);
-
   const { client } = useClientStore();
-  const { gallery = [], cover, seo, participants = [] } = client || {};
+  const { participants = [] } = client || {};
 
-  const images = useMemo(
-    () => (gallery as string[])?.filter((g) => g !== cover && g !== seo),
-    [gallery, cover, seo]
-  );
-  const lightboxImage = useMemo(
-    () =>
-      images?.map((img, index) => ({ src: img, alt: `gallery-${index + 1}` })),
-    [images]
-  );
+  const {
+    state: { images, imageIndex, isOpen },
+    actions: { handleToggleLightbox, setIsOpen },
+  } = usePhotos();
+
   const gridImages = useMemo(() => images.slice(0, 6), [images]);
   const slideImages = useMemo(() => images?.slice(6), [images]);
 
-  const gotoPrevious = useCallback(() => {
-    if (imageIndex > 0) setImageIndex((prev) => prev - 1);
-  }, [imageIndex]);
-
-  const gotoNext = useCallback(() => {
-    if (imageIndex < images?.length - 1) setImageIndex((prev) => prev + 1);
-  }, [imageIndex, images?.length]);
-
   const [dragging, setDragging] = useState(false);
-
-  const handleToggleLightbox = useCallback(
-    (img: string) => {
-      if (images.length > 0) {
-        const idx = images.indexOf(img);
-        setImageIndex(idx);
-        setOpen((prev) => !prev);
-      }
-    },
-    [images]
-  );
 
   const gridSpan = (index: number) => {
     switch (index) {
@@ -70,10 +43,9 @@ const Component = () => {
     slidesToScroll: 2,
     waitForAnimate: false,
     autoplay: true,
-    autoplaySpeed: 4000,
     arrows: false,
     cssEase: "ease-in-out",
-    speed: 1500,
+    speed: 400,
     afterChange() {
       setDragging(false);
     },
@@ -90,52 +62,10 @@ const Component = () => {
   return (
     <>
       <Lightbox
-        isOpen={open}
-        onPrev={gotoPrevious}
-        onNext={gotoNext}
-        images={lightboxImage}
-        currentIndex={imageIndex}
-        onClose={() => setOpen(false)}
-        className="bg-black/80"
-        renderHeader={() => (
-          <div className="flex justify-between items-center z-10 fixed top-0 inset-x-0">
-            <p className={`text-white relative z-10 p-2 ${roboto.className}`}>
-              {imageIndex + 1} / {lightboxImage?.length}
-            </p>
-            <button
-              onClick={() => {
-                setOpen(false);
-                setImageIndex(0);
-              }}
-              className="text-white/90 text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out backdrop-blur-sm"
-            >
-              <HiOutlineXMark />
-            </button>
-          </div>
-        )}
-        renderPrevButton={() => (
-          <button
-            disabled={imageIndex === 0}
-            onClick={gotoPrevious}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex justify-center items-center md:ml-2 transition-colors ease-in-out backdrop-blur-sm"
-          >
-            <HiChevronLeft />
-          </button>
-        )}
-        renderNextButton={() => (
-          <button
-            disabled={imageIndex === lightboxImage.length - 1}
-            onClick={gotoNext}
-            className="text-white text-2xl p-2 relative z-10 disabled:opacity-30 bg-black/30 hover:bg-black/40 disabled:hover:bg-black/30 flex items-center justify-center md:mr-2 transition-colors ease-in-out backdrop-blur-sm"
-          >
-            <HiChevronRight />
-          </button>
-        )}
-        pageTransitionConfig={{
-          from: { opacity: 0 },
-          enter: { opacity: 1 },
-          leave: { opacity: 0 },
-        }}
+        imageIndex={imageIndex}
+        images={images}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
       />
       <section className="relative bg-aruna-dark overflow-hidden">
         <div className="w-full h-full relative z-20 pt-[60px] md:pt-[100px] pb-2">

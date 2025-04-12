@@ -106,7 +106,7 @@ const HeroComponent = () => {
               <p
                 data-aos="fade-up"
                 data-aos-delay="200"
-                className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[4px] ${roboto.className}`}
+                className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[3px] ${roboto.className}`}
               >
                 Undangan {eventNames}
               </p>

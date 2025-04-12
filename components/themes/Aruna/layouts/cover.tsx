@@ -49,7 +49,7 @@ const Cover: FC<Props> = (props) => {
             <p
               data-aos="fade-up"
               data-aos-delay="200"
-              className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[4px] ${roboto.className}`}
+              className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[3px] ${roboto.className}`}
             >
               Undangan {eventNames}
             </p>
@@ -65,7 +65,7 @@ const Cover: FC<Props> = (props) => {
             <p
               data-aos="fade-down"
               data-aos-delay="1000"
-              className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[4px] ${roboto.className}`}
+              className={`text-white/70 text-[10px] md:text-xs uppercase text-center tracking-[3px] ${roboto.className}`}
             >
               YTH. Bapak / Ibu / Saudara / i
             </p>
