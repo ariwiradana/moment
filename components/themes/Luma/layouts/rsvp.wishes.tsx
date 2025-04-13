@@ -69,7 +69,7 @@ const RSVPWishesComponent: FC = () => {
     <div className="p-1 text-sm bg-aruna-dark text-white">
       <BiCheck />
     </div>,
-    10
+    3
   );
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -190,7 +190,7 @@ const RSVPWishesComponent: FC = () => {
           </div>
           <div className="w-full">
             {state.wishes.length > 0 && (
-              <div className="grid items-start divide-y md:divide-y-0 divide-white/10 px-8 max-h-[60vh] overflow-y-auto">
+              <div className="grid items-start divide-y md:divide-y-0 divide-white/10 px-8">
                 {state.wishes.map((wish, index) => (
                   <WishItem
                     key={`ucapan-${index + 1}`}
