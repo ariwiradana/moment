@@ -11,7 +11,7 @@ import useClientStore from "@/store/useClientStore";
 import useCoverStore from "@/store/useCoverStore";
 import { useMemo } from "react";
 import Opening from "./layouts/opening";
-// import Participants from "./layouts/participants";
+import Participants from "./layouts/participants";
 // import Events from "./layouts/events";
 // import Photos from "./layouts/photos";
 // import Videos from "./layouts/video";
@@ -86,7 +86,7 @@ const Luma: NextPage<Props> = ({ untuk }) => {
         <div className="snap-y snap-mandatory h-dvh overflow-auto relative z-20">
           <Hero />
           <Opening />
-          {/* <Participants /> */}
+          <Participants />
           {/* <Events /> */}
           {/* <Videos /> */}
           {/* <Photos /> */}

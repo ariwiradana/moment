@@ -19,8 +19,8 @@ const Participants: NextPage = () => {
 
   return (
     <>
-      <ParticipantItem data={groom as Participant} />
-      <ParticipantItem data={bride as Participant} />
+      {groom && <ParticipantItem data={groom as Participant} />}
+      {bride && <ParticipantItem data={bride as Participant} />}
     </>
   );
 };
@@ -35,7 +35,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
         <p
           className={`text-white/70 mb-3 text-[8px] md:text-[10px] uppercase tracking-[3px] ${rubik.className}`}
         >
-          Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
+          Mempelai {data?.gender === "male" ? "Pria" : "Wanita"}
         </p>
         <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-4">
           {data?.name}
@@ -43,7 +43,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
         <p
           className={`${rubik.className} text-[10px] md:text-xs mb-1 font-light text-white`}
         >
-          {data.gender === "male" ? "Putra" : "Putri"} {data?.child} dari
+          {data?.gender === "male" ? "Putra" : "Putri"} {data?.child} dari
           pasangan <br />
           Bapak {data?.parents_male} dan Ibu {data?.parents_female}
         </p>
@@ -91,7 +91,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
         fill
         quality={100}
-        alt={`${data.role} Image`}
+        alt={`${data?.role} Image`}
         priority
         className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
         src={data?.image as string}
