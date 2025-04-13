@@ -23,7 +23,7 @@ const Cover: NextPage<Props> = ({ untuk, actions }) => {
 
   return (
     <section
-      className={`fixed transition-all ease-in-out duration-1000 delay-200 z-30 ${
+      className={`fixed transition-all ease-in-out duration-1000 delay-200 z-30 max-w-lg ml-auto ${
         isOpen ? "-bottom-full inset-x-0 opacity-0" : "inset-0 opacity-100"
       }`}
     >
