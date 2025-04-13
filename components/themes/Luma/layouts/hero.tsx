@@ -19,7 +19,7 @@ const Hero: NextPage = () => {
 
   return (
     <section className="h-dvh snap-start w-full relative">
-      <div className="absolute inset-0 z-10 bg-gradient-to-b h-full from-luma-dark/40 to-luma-dark/60 py-[60px] px-8 flex flex-col justify-between">
+      <div className="absolute inset-0 z-10 bg-gradient-to-b h-full from-luma-dark/40 via-luma-dark/30 to-luma-dark/50 py-[60px] px-8 flex flex-col justify-between">
         <div>
           <h1
             data-aos="fade-up"

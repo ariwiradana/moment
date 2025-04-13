@@ -25,7 +25,7 @@ const initialReviewForm: FormData = {
   wishes: "",
 };
 
-const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
+const useRSVPWishesLimit = (icon: ReactNode) => {
   const attendantText: Record<string, string> = useMemo(
     () => ({
       Hadir: "Saya akan hadir",
@@ -40,7 +40,6 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const [page, setPage] = useState(1);
   const [wishes, setWishes] = useState<Review[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -67,18 +66,12 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
   const { mutate, isLoading: isLoadingWishes } = useSWR<{
     data: Review[];
     total_rows: number;
-  }>(
-    client?.id
-      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
-      : null,
-    fetcher,
-    {
-      onSuccess: (data) => {
-        setWishes(data.data);
-        setTotalRows(data?.total_rows);
-      },
-    }
-  );
+  }>(client?.id ? `/api/_pb/_w?client_id=${client.id}` : null, fetcher, {
+    onSuccess: (data) => {
+      setWishes(data.data);
+      setTotalRows(data?.total_rows);
+    },
+  });
 
   const handleChange = useCallback((name: string, value: string) => {
     setFormData((state) => ({ ...state, [name]: value }));
@@ -138,13 +131,6 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
     }
   };
 
-  const handleChangePagination = useCallback(
-    (event: React.ChangeEvent<unknown>, value: number) => {
-      setPage(value);
-    },
-    []
-  );
-
   return {
     state: {
       attendantText,
@@ -152,8 +138,6 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
       errors,
       wishes,
       totalRows,
-      limit,
-      page,
       formData,
       isOpen,
       isLoadingWishes,
@@ -161,7 +145,6 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
     actions: {
       handleSubmit,
       handleChange,
-      handleChangePagination,
       setIsOpen,
     },
   };
