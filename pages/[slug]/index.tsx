@@ -16,16 +16,15 @@ import { redhat } from "@/lib/fonts";
 import PreviewNav from "@/components/themes/preview.nav";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getEventNames } from "@/utils/getEventNames";
 
 interface Props {
   untuk: string;
-  name: string;
+  seo: SEO;
   slug: string;
 }
 
-const MainPage: FC<Props> = ({ untuk, slug, name }) => {
-  const { setClient, client, setSEO, seo } = useClientStore();
+const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
+  const { setClient, client } = useClientStore();
   const [isLoading, setIsLoading] = useState(true);
 
   const { error } = useSWR<{ data: Client }>(
@@ -33,41 +32,10 @@ const MainPage: FC<Props> = ({ untuk, slug, name }) => {
     fetcher,
     {
       onSuccess: (data) => {
-        const clientData = data.data;
-
-        const name = client?.name || "";
-        const theme_name = clientData.theme?.name || "";
-        const description = `${clientData?.opening_title || ""}, ${
-          clientData?.opening_description || ""
-        }`;
-        const seo_image = clientData?.seo || "";
-        const url = `https://momentinvitation.com/${encodeURIComponent(
-          slug as string
-        )}`;
-        const page_title = clientData
-          ? clientData.status === "unpaid"
-            ? `Preview ${clientData.name} | Undangan ${clientData.theme?.name}`
-            : clientData.is_preview
-            ? `Preview Undangan Tema ${clientData.theme?.name} | Moment`
-            : `${clientData.name} | Undangan ${getEventNames(
-                clientData.events
-              )}`
-          : "Moment";
-
-        const seoData: SEO = {
-          name,
-          description,
-          page_title,
-          seo_image,
-          theme_name,
-          url,
-        };
-        setSEO(seoData);
         setClient(data.data || null);
-
         setTimeout(() => {
           setIsLoading(false);
-        }, 2000);
+        }, 1000);
       },
       revalidateOnReconnect: false,
       revalidateOnFocus: false,
@@ -87,22 +55,20 @@ const MainPage: FC<Props> = ({ untuk, slug, name }) => {
     return () => AOS.refresh();
   }, []);
 
-  if (isLoading)
+  if (isLoading && seo)
     return (
       <>
-        {seo && (
-          <Seo
-            url={seo.url}
-            title={seo.page_title}
-            description={seo.description}
-            keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-            image={seo.seo_image}
-          />
-        )}
+        <Seo
+          url={seo?.url}
+          title={seo?.page_title}
+          description={seo?.description}
+          keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
+          image={seo?.seo_image}
+        />
         <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
           <div data-aos="fade-up">
             <SplitText
-              text={name}
+              text={seo?.name}
               className={`text-3xl tracking-[1px] lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
               delay={150}
               animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
@@ -124,15 +90,13 @@ const MainPage: FC<Props> = ({ untuk, slug, name }) => {
   return ThemeComponent ? (
     <>
       <PreviewNav />
-      {seo && (
-        <Seo
-          url={seo.url}
-          title={seo.page_title}
-          description={seo.description}
-          keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
-          image={seo.seo_image}
-        />
-      )}
+      <Seo
+        url={seo.url}
+        title={seo.page_title}
+        description={seo.description}
+        keywords="undangan digital, undangan online, undangan pernikahan, undangan metatah, undangan digital bali, undangan bali, undangan digital, platform undangan online, Moment Invitation, template undangan digital, undangan pernikahan digital, undangan online, undangan digital dengan RSVP, undangan dengan Google Maps, undangan digital premium, buat undangan digital, undangan digital minimalis, momentinvitations"
+        image={seo.seo_image}
+      />
       {ThemeComponent(untuk)}
     </>
   ) : (
@@ -146,19 +110,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const baseUrl = process.env.API_BASE_URL;
   const response = await fetcher(
-    `${baseUrl}/api/client/name?slug=${slug}`
+    `${baseUrl}/api/client/seo?slug=${slug}`
   ).catch((error) => {
     console.error("API fetch error:", error);
     return null;
   });
 
-  const name = response?.name || null;
+  const seo = response || null;
 
   return {
     props: {
       untuk: untuk ?? "Tamu Undangan",
       slug,
-      name,
+      seo,
     },
   };
 };
