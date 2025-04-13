@@ -13,6 +13,7 @@ import useRSVPWishesLimit from "@/hooks/themes/useRSVPWishesLimit";
 import ButtonDark from "../elements/button.dark";
 import ButtonPrimary from "../elements/button.primary";
 import { RotatingLines } from "react-loader-spinner";
+import { HiX } from "react-icons/hi";
 
 const WishItem = memo(
   ({
@@ -68,7 +69,7 @@ const RSVPWishesComponent: FC = () => {
     <div className="p-1 text-sm bg-aruna-dark text-white">
       <BiCheck />
     </div>,
-    4
+    10
   );
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,17 +96,23 @@ const RSVPWishesComponent: FC = () => {
     <>
       <div
         onClick={() => actions.setIsOpen((state) => !state)}
-        className={`fixed inset-0 bg-luma-dark/60 z-[999] flex items-end transition-all ease-in-out duration-300 ${
+        className={`fixed inset-0 bg-luma-dark/80 z-[999] flex items-end transition-all ease-in-out duration-300 ${
           state.isOpen ? "opacity-100 visible" : "opacity-0 invisible delay-200"
         }`}
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`bg-luma-dark/70 backdrop-blur w-full px-8 py-12 transform transition-all ease-in-out duration-300 ${
+          className={`bg-white w-full px-8 py-12 transform transition-all ease-in-out duration-300 ${
             state.isOpen ? "translate-y-0 delay-200" : "translate-y-full"
           }`}
         >
-          <h2 className={`text-white text-2xl mb-4 ${rubik.className}`}>
+          <button
+            onClick={() => actions.setIsOpen(false)}
+            className="absolute top-6 right-6 text-luma-dark"
+          >
+            <HiX />
+          </button>
+          <h2 className={`text-luma-dark text-2xl mb-4 ${rubik.className}`}>
             Kirim Ucapan
           </h2>
 
@@ -182,9 +189,9 @@ const RSVPWishesComponent: FC = () => {
             />
           </div>
           <div className="w-full">
-            <div className="px-8">
+            <div>
               {state.wishes.length > 0 && (
-                <div className="grid items-start divide-y md:divide-y-0 divide-white/10">
+                <div className="grid items-start divide-y md:divide-y-0 divide-white/10 max-h-[60vh] overflow-y-auto px-8">
                   {state.wishes.map((wish, index) => (
                     <WishItem
                       key={`ucapan-${index + 1}`}

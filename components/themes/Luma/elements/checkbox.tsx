@@ -12,10 +12,10 @@ const InputCheckbox: FC<Props> = (props) => {
         {...props}
         type="checkbox"
         id={props.id}
-        className={`bg-white bg-opacity-5 w-4 h-4 outline-none accent-luma-primary focus:border focus:border-gray-200 text-sm font-medium text-luma-dark ${rubik.className}`}
+        className={`bg-luma-dark bg-opacity-5 w-4 h-4 outline-none accent-luma-primary focus:border focus:border-gray-200 text-sm font-medium text-luma-dark ${rubik.className}`}
       />
       <p
-        className={`text-base ${rubik.className} text-white text-xs md:text-sm mt-[1px]`}
+        className={`text-base ${rubik.className} text-luma-dark text-xs md:text-sm mt-[1px]`}
       >
         {props.label}
       </p>

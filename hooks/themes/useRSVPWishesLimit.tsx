@@ -25,7 +25,7 @@ const initialReviewForm: FormData = {
   wishes: "",
 };
 
-const useRSVPWishesLimit = (icon: ReactNode, limit: number = 2) => {
+const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
   const attendantText: Record<string, string> = useMemo(
     () => ({
       Hadir: "Saya akan hadir",
