@@ -96,13 +96,13 @@ const RSVPWishesComponent: FC = () => {
     <>
       <div
         onClick={() => actions.setIsOpen((state) => !state)}
-        className={`fixed inset-0 bg-luma-dark/80 z-[999] flex items-end transition-all ease-in-out duration-300 ${
+        className={`fixed inset-0 bg-luma-dark/80 z-[999] flex items-end md:items-center md:justify-center transition-all ease-in-out duration-300 ${
           state.isOpen ? "opacity-100 visible" : "opacity-0 invisible delay-200"
         }`}
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`bg-white w-full p-8 transform transition-all ease-in-out duration-300 ${
+          className={`bg-white w-full md:w-auto md:min-w-[40vw] p-8 transform transition-all ease-in-out duration-300 ${
             state.isOpen ? "translate-y-0 delay-200" : "translate-y-full"
           }`}
         >
