@@ -189,66 +189,64 @@ const RSVPWishesComponent: FC = () => {
             />
           </div>
           <div className="w-full">
-            <div>
-              {state.wishes.length > 0 && (
-                <div className="grid items-start divide-y md:divide-y-0 divide-white/10 max-h-[60vh] overflow-y-auto px-8">
-                  {state.wishes.map((wish, index) => (
-                    <WishItem
-                      key={`ucapan-${index + 1}`}
-                      wish={wish}
-                      attendantText={state.attendantText}
-                    />
-                  ))}
-                </div>
-              )}
-              {state.isLoadingWishes && (
-                <div className="flex justify-center mt-6">
-                  <RotatingLines
-                    strokeColor="#ffff"
-                    width="16"
-                    strokeWidth="3"
-                    animationDuration="1"
-                    ariaLabel="rotating-lines-loading"
+            {state.wishes.length > 0 && (
+              <div className="grid items-start divide-y md:divide-y-0 divide-white/10 px-8 max-h-[60vh] overflow-y-auto">
+                {state.wishes.map((wish, index) => (
+                  <WishItem
+                    key={`ucapan-${index + 1}`}
+                    wish={wish}
+                    attendantText={state.attendantText}
                   />
-                </div>
-              )}
-              {state.totalRows > state.limit && (
-                <div className="w-full mt-6">
-                  <div className="-ml-2">
-                    <Pagination
-                      shape="rounded"
-                      page={state.page}
-                      sx={{
-                        "& .MuiPaginationItem-root": {
-                          color: "white",
-                          fontSize: 12,
-                          maxWidth: 24,
-                          maxHeight: 24,
-                          minHeight: 24,
-                          minWidth: 24,
-                          borderRadius: 0,
-                          "&:hover": {
-                            backgroundColor: "#FFFFFF0D",
-                            color: "white",
-                          },
-                        },
-                        "& .MuiPaginationItem-page.Mui-selected": {
+                ))}
+              </div>
+            )}
+            {state.isLoadingWishes && (
+              <div className="flex justify-center mt-6">
+                <RotatingLines
+                  strokeColor="#ffff"
+                  width="16"
+                  strokeWidth="3"
+                  animationDuration="1"
+                  ariaLabel="rotating-lines-loading"
+                />
+              </div>
+            )}
+            {state.totalRows > state.limit && (
+              <div className="w-full mt-6">
+                <div className="-ml-2">
+                  <Pagination
+                    shape="rounded"
+                    page={state.page}
+                    sx={{
+                      "& .MuiPaginationItem-root": {
+                        color: "white",
+                        fontSize: 12,
+                        maxWidth: 24,
+                        maxHeight: 24,
+                        minHeight: 24,
+                        minWidth: 24,
+                        borderRadius: 0,
+                        "&:hover": {
                           backgroundColor: "#FFFFFF0D",
                           color: "white",
-                          "&:hover": {
-                            backgroundColor: "#FFFFFF0D",
-                            color: "white",
-                            cursor: "default",
-                          },
                         },
-                      }}
-                      onChange={actions.handleChangePagination}
-                      count={Math.ceil(state.totalRows / state.limit)}
-                    />
-                  </div>
+                      },
+                      "& .MuiPaginationItem-page.Mui-selected": {
+                        backgroundColor: "#FFFFFF0D",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: "#FFFFFF0D",
+                          color: "white",
+                          cursor: "default",
+                        },
+                      },
+                    }}
+                    onChange={actions.handleChangePagination}
+                    count={Math.ceil(state.totalRows / state.limit)}
+                  />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
