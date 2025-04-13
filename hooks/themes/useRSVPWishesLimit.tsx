@@ -45,6 +45,14 @@ const useRSVPWishesLimit = (icon: ReactNode, limit: number) => {
   const [totalRows, setTotalRows] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [isOpen]);
+
   const wisheschema = z.object({
     name: z
       .string()
