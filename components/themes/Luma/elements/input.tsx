@@ -20,7 +20,7 @@ const Input: FC<Props> = (props) => {
       <input
         {...props}
         id={props.id}
-        className={`p-4 w-full outline-none bg-transparent placeholder:text-luma-dark/40 text-luma-dark text-xs md:text-sm rounded-none placeholder:text-xs mt-[2px] placeholder:text-luma-dark border border-luma-dark/50 ${rubik.className}`}
+        className={`p-4 w-full disabled:opacity-40 outline-none bg-transparent placeholder:text-luma-dark/40 text-luma-dark text-xs md:text-sm rounded-none placeholder:text-xs mt-[2px] border border-luma-dark/50 ${rubik.className}`}
       />
       {props.error && (
         <p className={`text-admin-danger text-xs mt-1 ${rubik.className}`}>
