@@ -131,7 +131,7 @@ const RSVPWishesComponent: FC = () => {
             />
             <InputTextarea
               label="Ucapan"
-              disabled
+              disabled={client?.status === "completed"}
               error={state.errors.wishes}
               placeholder="Masukkan ucapan kamu"
               value={state.formData.wishes}
