@@ -9,7 +9,7 @@ const Opening: NextPage = () => {
   const { client } = useClientStore();
 
   const participantNames = useMemo(
-    () => getParticipantNames(client?.participants as Participant[]),
+    () => getParticipantNames((client?.participants as Participant[]) || []),
     [client]
   );
 
