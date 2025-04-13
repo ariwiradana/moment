@@ -188,9 +188,9 @@ const RSVPWishesComponent: FC = () => {
               icon={<BiChevronRight />}
             />
           </div>
-          <div className="w-full">
+          <div className="w-full px-8">
             {state.wishes.length > 0 && (
-              <div className="grid items-start divide-y md:divide-y-0 divide-white/10 px-8">
+              <div className="grid items-start divide-y md:divide-y-0 divide-white/10">
                 {state.wishes.map((wish, index) => (
                   <WishItem
                     key={`ucapan-${index + 1}`}
