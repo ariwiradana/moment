@@ -10,7 +10,7 @@ import usePhotos from "@/hooks/themes/usePhotos";
 import useClientStore from "@/store/useClientStore";
 import useCoverStore from "@/store/useCoverStore";
 import { useMemo } from "react";
-// import Opening from "./layouts/opening";
+import Opening from "./layouts/opening";
 // import Participants from "./layouts/participants";
 // import Events from "./layouts/events";
 // import Photos from "./layouts/photos";
@@ -85,12 +85,12 @@ const Luma: NextPage<Props> = ({ untuk }) => {
         <Cover actions={actions} untuk={untuk} />
         <div className="snap-y snap-mandatory h-dvh overflow-auto relative z-20">
           <Hero />
-          {/* <Opening />
-          <Participants />
-          <Events />
-          <Videos />
-          <Photos />
-          <RsvpWishes /> */}
+          <Opening />
+          {/* <Participants /> */}
+          {/* <Events /> */}
+          {/* <Videos /> */}
+          {/* <Photos /> */}
+          {/* <RsvpWishes /> */}
         </div>
       </main>
     </Layout>
