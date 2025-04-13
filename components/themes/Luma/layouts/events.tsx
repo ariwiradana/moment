@@ -8,6 +8,7 @@ import ButtonPrimary from "../elements/button.primary";
 import Link from "next/link";
 import ButtonDark from "../elements/button.dark";
 import { HiArrowLongRight } from "react-icons/hi2";
+import { memo } from "react";
 
 const Events: NextPage = () => {
   const {
@@ -128,4 +129,4 @@ const Events: NextPage = () => {
   );
 };
 
-export default Events;
+export default memo(Events);

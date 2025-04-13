@@ -48,11 +48,9 @@ const useEvents = () => {
       );
     };
 
-    // Update countdown setiap 1 detik agar lebih akurat
     countdownIntervalRef.current = setInterval(updateCountdowns, 1000);
     updateCountdowns();
 
-    // Ganti event setiap 8 detik
     switchEventIntervalRef.current = setInterval(() => {
       if (events.length > 1) {
         setFade(false);
@@ -75,11 +73,6 @@ const useEvents = () => {
     () => events.map((event) => event.image as string),
     [events]
   );
-
-  const formatDateTime = (date: string, time: string) => {
-    const d = new Date(`${date}T${time}Z`);
-    return d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
-  };
 
   const handleAddToCalendar = useCallback(
     (event: Event) => {

@@ -12,7 +12,7 @@ import useCoverStore from "@/store/useCoverStore";
 import { useMemo } from "react";
 import Opening from "./layouts/opening";
 import Participants from "./layouts/participants";
-// import Events from "./layouts/events";
+import Events from "./layouts/events";
 // import Photos from "./layouts/photos";
 // import Videos from "./layouts/video";
 // import RsvpWishes from "./layouts/rsvp.wishes";
@@ -87,7 +87,7 @@ const Luma: NextPage<Props> = ({ untuk }) => {
           <Hero />
           <Opening />
           <Participants />
-          {/* <Events /> */}
+          <Events />
           {/* <Videos /> */}
           {/* <Photos /> */}
           {/* <RsvpWishes /> */}
