@@ -4,18 +4,18 @@ import Layout from "../layout";
 import useMusic from "@/hooks/themes/useMusic";
 import Music from "./layouts/music";
 import Hero from "./layouts/hero";
-import Opening from "./layouts/opening";
-import Participants from "./layouts/participants";
-import Events from "./layouts/events";
 import Slider, { Settings } from "react-slick";
 import Image from "next/image";
 import usePhotos from "@/hooks/themes/usePhotos";
-import Photos from "./layouts/photos";
-import Videos from "./layouts/video";
 import useClientStore from "@/store/useClientStore";
 import useCoverStore from "@/store/useCoverStore";
 import { useMemo } from "react";
-import RsvpWishes from "./layouts/rsvp.wishes";
+// import Opening from "./layouts/opening";
+// import Participants from "./layouts/participants";
+// import Events from "./layouts/events";
+// import Photos from "./layouts/photos";
+// import Videos from "./layouts/video";
+// import RsvpWishes from "./layouts/rsvp.wishes";
 
 interface Props {
   untuk: string;
@@ -85,12 +85,12 @@ const Luma: NextPage<Props> = ({ untuk }) => {
         <Cover actions={actions} untuk={untuk} />
         <div className="snap-y snap-mandatory h-dvh overflow-auto relative z-20">
           <Hero />
-          <Opening />
+          {/* <Opening />
           <Participants />
           <Events />
           <Videos />
           <Photos />
-          <RsvpWishes />
+          <RsvpWishes /> */}
         </div>
       </main>
     </Layout>
