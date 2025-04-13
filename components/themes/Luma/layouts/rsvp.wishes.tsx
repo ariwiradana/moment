@@ -102,7 +102,7 @@ const RSVPWishesComponent: FC = () => {
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`bg-white w-full px-8 py-12 transform transition-all ease-in-out duration-300 ${
+          className={`bg-white w-full p-8 transform transition-all ease-in-out duration-300 ${
             state.isOpen ? "translate-y-0 delay-200" : "translate-y-full"
           }`}
         >
