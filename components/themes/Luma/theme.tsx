@@ -13,9 +13,9 @@ import { useMemo } from "react";
 import Opening from "./layouts/opening";
 import Participants from "./layouts/participants";
 import Events from "./layouts/events";
+import Videos from "./layouts/video";
 // import Photos from "./layouts/photos";
-// import Videos from "./layouts/video";
-// import RsvpWishes from "./layouts/rsvp.wishes";
+import RsvpWishes from "./layouts/rsvp.wishes";
 
 interface Props {
   untuk: string;
@@ -88,9 +88,9 @@ const Luma: NextPage<Props> = ({ untuk }) => {
           <Opening />
           <Participants />
           <Events />
-          {/* <Videos /> */}
+          <Videos />
           {/* <Photos /> */}
-          {/* <RsvpWishes /> */}
+          <RsvpWishes />
         </div>
       </main>
     </Layout>

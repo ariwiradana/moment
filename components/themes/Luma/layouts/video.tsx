@@ -24,11 +24,11 @@ const Videos: NextPage = () => {
     },
   ];
 
-  const youtubeVideos =
-    useMemo(
-      () => (client?.videos as string[]).filter((url) => isYoutubeVideo(url)),
-      [client?.videos]
-    ) || [];
+  const youtubeVideos = useMemo(
+    () =>
+      (client?.videos as string[]).filter((url) => isYoutubeVideo(url)) || [],
+    [client?.videos]
+  );
 
   if (client?.videos && client?.videos?.length > 0)
     return (
