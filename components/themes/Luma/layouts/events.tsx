@@ -118,7 +118,7 @@ const Events: NextPage = () => {
             sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
             fill
             quality={100}
-            key={`${event.name} Image`}
+            alt={`${event.name} Image`}
             priority
             className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
             src={event?.image as string}
