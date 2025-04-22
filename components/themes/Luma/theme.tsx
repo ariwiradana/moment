@@ -14,7 +14,7 @@ import Opening from "./layouts/opening";
 import Participants from "./layouts/participants";
 import Events from "./layouts/events";
 import Videos from "./layouts/video";
-// import Photos from "./layouts/photos";
+import Photos from "./layouts/photos";
 import RsvpWishes from "./layouts/rsvp.wishes";
 
 interface Props {
@@ -83,13 +83,13 @@ const Luma: NextPage<Props> = ({ untuk }) => {
         </div>
         <Music actions={actions} refs={refs} state={state} />
         <Cover actions={actions} untuk={untuk} />
-        <div className="snap-y snap-mandatory h-dvh overflow-auto relative z-20">
+        <div className="snap-y snap-mandatory h-dvh overflow-y-auto overflow-x-hidden relative z-20">
           <Hero />
           <Opening />
           <Participants />
           <Events />
           <Videos />
-          {/* <Photos /> */}
+          <Photos />
           <RsvpWishes />
         </div>
       </main>

@@ -9,22 +9,24 @@ const useLightbox = () => {
   const { client } = useClientStore();
   const [isOpen, setIsOpen] = React.useState(false);
   const [imageIndex, setImageIndex] = React.useState(0);
+  const zoomRef = React.useRef(null);
 
-  const images: string[] = useMemo(
-    () => (client?.gallery as string[])?.map((image) => image) ?? [],
+  const images: Image[] = useMemo(
+    () => (client?.gallery as string[])?.map((image) => ({ src: image })) ?? [],
     [client?.gallery]
   );
 
   const handleToggleLightbox = useCallback(
     (image: string) => {
       setIsOpen((state) => !state);
-      const index = images.findIndex((img) => img === image);
+      const index = images.findIndex((img) => img.src === image);
       setImageIndex(index);
     },
     [isOpen]
   );
 
   return {
+    ref: { zoomRef },
     state: {
       images,
       isOpen,

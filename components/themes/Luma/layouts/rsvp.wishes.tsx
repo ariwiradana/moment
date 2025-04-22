@@ -11,8 +11,8 @@ import Input from "../elements/input";
 import useRSVPWishesLimit from "@/hooks/themes/useRSVPWishesLimit";
 import ButtonDark from "../elements/button.dark";
 import ButtonPrimary from "../elements/button.primary";
-import { RotatingLines } from "react-loader-spinner";
 import { HiX } from "react-icons/hi";
+import Slider, { Settings } from "react-slick";
 
 const WishItem = memo(
   ({
@@ -89,6 +89,16 @@ const RSVPWishesComponent: FC = () => {
     },
     [actions]
   );
+
+  const settings: Settings = {
+    autoplay: true,
+    slidesToShow: 1,
+    autoplaySpeed: 4000,
+    speed: 500,
+    rows: 3,
+    slidesPerRow: 1,
+    dots: true,
+  };
 
   return (
     <>
@@ -205,29 +215,18 @@ const RSVPWishesComponent: FC = () => {
               />
             </div>
           </div>
-          <div className="w-full h-full overflow-y-auto">
-            {state.wishes.length > 0 && (
-              <div className="grid items-start divide-y md:divide-y-0 divide-white/10 px-8">
-                {state.wishes.map((wish, index) => (
+          <div className="w-full">
+            <Slider {...settings}>
+              {state.wishes.map((wish, index) => (
+                <div className="px-8" key={`Ucapan ${wish.name}`}>
                   <WishItem
                     key={`ucapan-${index + 1}`}
                     wish={wish}
                     attendantText={state.attendantText}
                   />
-                ))}
-              </div>
-            )}
-            {state.isLoadingWishes && (
-              <div className="flex justify-center mt-6">
-                <RotatingLines
-                  strokeColor="#ffff"
-                  width="16"
-                  strokeWidth="3"
-                  animationDuration="1"
-                  ariaLabel="rotating-lines-loading"
-                />
-              </div>
-            )}
+                </div>
+              ))}
+            </Slider>
           </div>
         </div>
       </section>

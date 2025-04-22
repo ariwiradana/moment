@@ -1,13 +1,14 @@
-import usePhotos from "@/hooks/themes/usePhotos";
 import Image from "next/image";
 import React, { useMemo } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import FsLightbox from "fslightbox-react";
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import useLightbox from "@/hooks/themes/useLightbox";
 
 const Photos = () => {
-  const { state, actions } = usePhotos();
+  const { state, actions } = useLightbox();
 
   const divide = useMemo(
     () => Math.floor(state.images.length / 3),
@@ -18,10 +19,12 @@ const Photos = () => {
     return (
       <>
         {state.isOpen && (
-          <FsLightbox
-            toggler={state.isOpen}
-            sources={state.images}
-            slide={state.imageIndex + 1}
+          <Lightbox
+            index={state.imageIndex}
+            plugins={[Zoom]}
+            open={state.isOpen}
+            close={() => actions.setIsOpen(false)}
+            slides={state.images}
           />
         )}
         <section className="bg-nirvaya-light-brown">
@@ -57,10 +60,10 @@ const Photos = () => {
                   {state.images.slice(0, divide).map((img) => (
                     <SwiperSlide key={`Image Part 1 ${img}`}>
                       <Image
-                        onClick={() => actions.handleToggleLightbox(img)}
+                        onClick={() => actions.handleToggleLightbox(img.src)}
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                        src={img}
-                        alt={`Image Part 1 ${img}`}
+                        src={img.src}
+                        alt={`Image Part 1 ${img.src}`}
                         fill
                         className="object-cover bg-nirvaya-dark/5"
                       />
@@ -84,10 +87,10 @@ const Photos = () => {
                   {state.images.slice(divide, divide * 2).map((img) => (
                     <SwiperSlide key={`Image Part 2 ${img}`}>
                       <Image
-                        onClick={() => actions.handleToggleLightbox(img)}
+                        onClick={() => actions.handleToggleLightbox(img.src)}
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                        alt={`Image Part 2 ${img}`}
-                        src={img}
+                        alt={`Image Part 2 ${img.src}`}
+                        src={img.src}
                         fill
                         className="object-cover bg-nirvaya-dark/5"
                       />
@@ -112,10 +115,10 @@ const Photos = () => {
                   {state.images.slice(divide * 2).map((img) => (
                     <SwiperSlide key={`Image Part 3 ${img}`}>
                       <Image
-                        onClick={() => actions.handleToggleLightbox(img)}
+                        onClick={() => actions.handleToggleLightbox(img.src)}
                         sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                        src={img}
-                        alt={`Image Part 3 ${img}`}
+                        src={img.src}
+                        alt={`Image Part 3 ${img.src}`}
                         fill
                         className="object-cover bg-nirvaya-dark/5"
                       />

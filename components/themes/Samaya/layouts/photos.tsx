@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 import useLightbox from "@/hooks/themes/useLightbox";
-import FsLightbox from "fslightbox-react";
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import { RotatingLines } from "react-loader-spinner";
 
 interface Photo {
   src: string;
@@ -13,7 +15,7 @@ interface Photo {
 const Photos = () => {
   const {
     state: { images, isOpen, imageIndex },
-    actions: { handleToggleLightbox },
+    actions: { handleToggleLightbox, setIsOpen },
   } = useLightbox();
 
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -37,7 +39,7 @@ const Photos = () => {
         img.src = src;
       });
 
-    Promise.all(images.map((image) => loadImage(image))).then((loaded) => {
+    Promise.all(images.map((image) => loadImage(image.src))).then((loaded) => {
       if (!isCancelled) setPhotos(loaded);
     });
 
@@ -60,10 +62,12 @@ const Photos = () => {
     return (
       <>
         {isOpen && (
-          <FsLightbox
-            toggler={isOpen}
-            sources={images}
-            slide={imageIndex + 1}
+          <Lightbox
+            index={imageIndex}
+            plugins={[Zoom]}
+            open={isOpen}
+            close={() => setIsOpen(false)}
+            slides={images}
           />
         )}
         <section className="bg-samaya-dark">
@@ -82,15 +86,29 @@ const Photos = () => {
                 Potret momen spesial dengan penuh makna dalam galeri kami,
               </p>
             </div>
-            <div className="mt-8 md:mt-16" data-aos="fade-up">
-              <RowsPhotoAlbum
-                spacing={4}
-                targetRowHeight={rowHeight}
-                photos={photos}
-                onClick={({ photo }) => {
-                  handleToggleLightbox(photo.src);
-                }}
-              />
+            <div className="mt-8 md:mt-16">
+              {photos.length === 0 ? (
+                <div className="flex justify-center pb-8">
+                  <RotatingLines
+                    strokeColor="#D1CAA1"
+                    width="24"
+                    strokeWidth="3"
+                    animationDuration="1"
+                    ariaLabel="rotating-lines-loading"
+                  />
+                </div>
+              ) : (
+                <div data-aos="fade-up">
+                  <RowsPhotoAlbum
+                    spacing={4}
+                    targetRowHeight={rowHeight}
+                    photos={photos}
+                    onClick={({ photo }) => {
+                      handleToggleLightbox(photo.src);
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </section>

@@ -4,8 +4,9 @@ import { getParticipantNames } from "@/utils/getParticipantNames";
 import Image from "next/image";
 import useClientStore from "@/store/useClientStore";
 import Slider, { Settings } from "react-slick";
-import usePhotos from "@/hooks/themes/usePhotos";
-import FsLightbox from "fslightbox-react";
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import useLightbox from "@/hooks/themes/useLightbox";
 
 const Component = () => {
   const { client } = useClientStore();
@@ -13,8 +14,8 @@ const Component = () => {
 
   const {
     state: { images, imageIndex, isOpen },
-    actions: { handleToggleLightbox },
-  } = usePhotos();
+    actions: { handleToggleLightbox, setIsOpen },
+  } = useLightbox();
 
   const gridImages = useMemo(() => images.slice(0, 6), [images]);
   const slideImages = useMemo(() => images?.slice(6), [images]);
@@ -63,10 +64,12 @@ const Component = () => {
     return (
       <>
         {isOpen && (
-          <FsLightbox
-            toggler={isOpen}
-            sources={images}
-            slide={imageIndex + 1}
+          <Lightbox
+            index={imageIndex}
+            plugins={[Zoom]}
+            open={isOpen}
+            close={() => setIsOpen(false)}
+            slides={images}
           />
         )}
         <section className="relative bg-aruna-dark overflow-hidden">
@@ -96,7 +99,7 @@ const Component = () => {
                 {gridImages?.map((img, index) => (
                   <div
                     key={`gallery-${index + 1}`}
-                    onClick={() => handleToggleLightbox(img)}
+                    onClick={() => handleToggleLightbox(img.src)}
                     className={`${gridSpan(
                       index
                     )} w-full relative overflow-hidden`}
@@ -104,7 +107,7 @@ const Component = () => {
                     <Image
                       sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
                       priority={index < 2}
-                      src={img}
+                      src={img.src}
                       fill
                       alt={`gallery-${index + 1}`}
                       className="object-cover hover:scale-105 transition-transform ease-in-out duration-500 bg-white/5"

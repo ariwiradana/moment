@@ -145,3 +145,11 @@
   scroll-snap-align: none !important;
   scroll-snap-stop: unset !important;
 }
+
+.slick-dots li.slick-active button:before {
+  @apply text-white !important;
+}
+
+.slick-dots li button:before {
+  @apply text-white/70 !important;
+}

@@ -16,6 +16,7 @@ import { redhat } from "@/lib/fonts";
 import PreviewNav from "@/components/themes/preview.nav";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "yet-another-react-lightbox/styles.css";
 
 interface Props {
   untuk: string;
@@ -35,7 +36,7 @@ const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
         setClient(data.data || null);
         setTimeout(() => {
           setIsLoading(false);
-        }, 1000);
+        }, 2000);
       },
       revalidateOnReconnect: false,
       revalidateOnFocus: false,
