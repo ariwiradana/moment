@@ -33,6 +33,18 @@ const MainPage: FC<Props> = ({ seo, slug }) => {
   const router = useRouter();
   const untuk = (router.query.untuk as string) || "Tamu Undangan";
 
+  useEffect(() => {
+    window.addEventListener("error", (event) => {
+      console.log("JS Error:", event.error);
+      alert("Error: " + event.message);
+    });
+
+    window.addEventListener("unhandledrejection", (event) => {
+      console.log("Promise Rejection:", event.reason);
+      alert("Promise Error: " + event.reason);
+    });
+  }, []);
+
   const { error } = useSWR<{ data: Client }>(
     slug ? `/api/_pb/_c/_u?slug=${slug}` : null,
     fetcher,
