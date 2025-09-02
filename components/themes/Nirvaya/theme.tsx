@@ -7,7 +7,7 @@ import useMusic from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
 import Participants from "./layouts/participants";
 import Events from "./layouts/events";
-// import Photos from "./layouts/photos";
+import Photos from "./layouts/photos";
 // import Gift from "./layouts/gift";
 // import RsvpWishes from "./layouts/rsvp.wishes";
 // import Thankyou from "./layouts/thankyou";
@@ -28,7 +28,7 @@ const Nirvaya = ({ untuk }: Props) => {
         <>
           <Participants />
           <Events />
-          {/* <Photos /> */}
+          <Photos />
           {/* <Gift /> */}
           {/* <RsvpWishes /> */}
           {/* <Thankyou /> */}
