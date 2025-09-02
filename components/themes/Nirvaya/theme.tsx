@@ -2,9 +2,9 @@ import React from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
 import Hero from "./layouts/hero";
-import useCoverStore from "@/store/useCoverStore";
 import MusicComponent from "./layouts/music";
 import useMusic from "@/hooks/themes/useMusic";
+// import useCoverStore from "@/store/useCoverStore";
 // import Participants from "./layouts/participants";
 // import Events from "./layouts/events";
 // import Photos from "./layouts/photos";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const Nirvaya = ({ untuk }: Props) => {
-  const { isOpen } = useCoverStore();
+  // const { isOpen } = useCoverStore();
   const { state, actions, refs } = useMusic();
   return (
     <Layout>
