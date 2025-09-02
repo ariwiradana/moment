@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
-// import Hero from "./layouts/hero";
+import Hero from "./layouts/hero";
 import MusicComponent from "./layouts/music";
 import useMusic from "@/hooks/themes/useMusic";
 // import useCoverStore from "@/store/useCoverStore";
@@ -23,7 +23,7 @@ const Nirvaya = ({ untuk }: Props) => {
     <Layout>
       <MusicComponent actions={actions} refs={refs} state={state} />
       <Cover actions={actions} to={untuk} />
-      {/* <Hero /> */}
+      <Hero />
       {/* {isOpen && (
         <>
           <Participants />

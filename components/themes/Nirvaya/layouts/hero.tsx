@@ -5,9 +5,12 @@ import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
 import moment from "moment";
 import Image from "next/image";
-import React, { memo } from "react";
+import React from "react";
 import usePhotos from "@/hooks/themes/usePhotos";
-import Slider, { Settings } from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
 
 const Hero = () => {
   const { isOpen } = useCoverStore();
@@ -17,20 +20,6 @@ const Hero = () => {
     state: { images },
   } = usePhotos();
 
-  const settings: Settings = {
-    dots: false,
-    fade: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    waitForAnimate: false,
-    arrows: false,
-    autoplay: true,
-    autoplaySpeed: 6000,
-    speed: 3000,
-    cssEase: "ease-in-out",
-  };
-
   return (
     <section
       data-aos="fade-in"
@@ -38,20 +27,27 @@ const Hero = () => {
       className={`relative bg-nirvaya-dark ${raleway.className}`}
     >
       <div>
-        <Slider className="h-lvh" {...settings}>
+        <Swiper
+          modules={[Autoplay, EffectFade]}
+          effect="fade"
+          speed={1500}
+          autoplay={{ delay: 6000, disableOnInteraction: false }}
+          className="h-lvh w-full"
+        >
           {images.map((image, index) => (
-            <Image
-              key={`Main Slider ${index + 1}`}
-              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-              fill
-              quality={100}
-              alt={`hero-img-${index}`}
-              priority
-              className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
-              src={image}
-            />
+            <SwiperSlide key={`hero-slide-${index}`}>
+              <Image
+                sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                fill
+                quality={90}
+                alt={`hero-img-${index}`}
+                priority={index === 0}
+                className="object-cover shimmer-dark"
+                src={image}
+              />
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       </div>
       <div
         className={`absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-10`}
@@ -179,4 +175,4 @@ const Hero = () => {
   );
 };
 
-export default memo(Hero);
+export default Hero;
