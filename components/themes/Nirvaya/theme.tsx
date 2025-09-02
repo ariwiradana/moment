@@ -2,15 +2,15 @@ import React from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
 import Hero from "./layouts/hero";
-import Participants from "./layouts/participants";
 import useCoverStore from "@/store/useCoverStore";
-import Events from "./layouts/events";
 import MusicComponent from "./layouts/music";
 import useMusic from "@/hooks/themes/useMusic";
-import Photos from "./layouts/photos";
-import Gift from "./layouts/gift";
-import RsvpWishes from "./layouts/rsvp.wishes";
-import Thankyou from "./layouts/thankyou";
+// import Participants from "./layouts/participants";
+// import Events from "./layouts/events";
+// import Photos from "./layouts/photos";
+// import Gift from "./layouts/gift";
+// import RsvpWishes from "./layouts/rsvp.wishes";
+// import Thankyou from "./layouts/thankyou";
 
 interface Props {
   untuk: string;
@@ -24,7 +24,7 @@ const Nirvaya = ({ untuk }: Props) => {
       <MusicComponent actions={actions} refs={refs} state={state} />
       <Cover actions={actions} to={untuk} />
       <Hero />
-      {isOpen && (
+      {/* {isOpen && (
         <>
           <Participants />
           <Events />
@@ -33,7 +33,7 @@ const Nirvaya = ({ untuk }: Props) => {
           <RsvpWishes />
           <Thankyou />
         </>
-      )}
+      )} */}
     </Layout>
   );
 };
