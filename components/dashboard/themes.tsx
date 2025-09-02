@@ -35,9 +35,7 @@ const ThemeComponent: FC = () => {
   });
 
   const { isLoading } = useSWR<{ data: Client[] }>(
-    activeCategoryId
-      ? `/api/_pb/_c?is_preview=true&theme_category_id=${activeCategoryId}&order=DESC`
-      : null,
+    activeCategoryId ? `/api/_pb/_c?is_preview=true&order=DESC` : null,
     fetcher,
     {
       onSuccess: (data) => {

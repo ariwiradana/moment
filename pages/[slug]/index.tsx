@@ -1,7 +1,7 @@
 import ThemeNotFound from "@/components/themes/theme.notfound";
 import { fetcher } from "@/lib/fetcher";
 import { Client, SEO } from "@/lib/types";
-import { GetServerSideProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import React, { FC, useEffect, useState } from "react";
 import { themes } from "@/components/themes/themes";
 import ClientNotFound from "@/components/themes/client.notfound";
@@ -17,16 +17,21 @@ import PreviewNav from "@/components/themes/preview.nav";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "yet-another-react-lightbox/styles.css";
+import { getEventNames } from "@/utils/getEventNames";
+import sql from "@/lib/db";
+import { useRouter } from "next/router";
 
 interface Props {
-  untuk: string;
   seo: SEO;
   slug: string;
 }
 
-const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
+const MainPage: FC<Props> = ({ seo, slug }) => {
   const { setClient, client } = useClientStore();
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
+  const untuk = (router.query.untuk as string) || "Tamu Undangan";
 
   const { error } = useSWR<{ data: Client }>(
     slug ? `/api/_pb/_c/_u?slug=${slug}` : null,
@@ -105,27 +110,81 @@ const MainPage: FC<Props> = ({ untuk, seo, slug }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { untuk } = context.query;
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking", // generate halaman on-demand
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
-  const baseUrl = process.env.API_BASE_URL;
-  const response = await fetcher(
-    `${baseUrl}/api/client/seo?slug=${slug}`
-  ).catch((error) => {
-    console.error("API fetch error:", error);
-    return null;
-  });
+  try {
+    const { rows } = await sql.query(
+      `SELECT
+        c.id,
+        c.name,
+        c.status,
+        c.is_preview,
+        c.theme_id,
+        c.opening_title,
+        c.opening_description,
+        c.seo,
+        t.name as theme_name,
+        tc.name as theme_category_name
+      FROM clients c
+      JOIN themes t ON c.theme_id = t.id
+      JOIN theme_categories tc ON c.theme_category_id = tc.id
+      WHERE c.slug = $1`,
+      [slug]
+    );
 
-  const seo = response || null;
+    if (rows.length === 0) {
+      return { notFound: true };
+    }
 
-  return {
-    props: {
-      untuk: untuk ?? "Tamu Undangan",
-      slug,
-      seo,
-    },
-  };
+    const client = rows[0];
+
+    const { rows: events } = await sql.query(
+      `SELECT * FROM events WHERE client_id = $1`,
+      [client.id]
+    );
+
+    const name = client?.name || "";
+    const theme_name = client?.theme_name || "";
+    const description = `${client?.opening_title || ""}, ${
+      client?.opening_description || ""
+    }`;
+    const seo_image = client?.seo || "";
+    const url = `https://momentinvitation.com/${encodeURIComponent(slug)}`;
+    const page_title = client
+      ? client.status === "unpaid"
+        ? `Preview ${client.name} | Undangan ${client.theme_name}`
+        : client.is_preview
+        ? `Preview Undangan Tema ${client.theme_name} | Moment`
+        : `${client.name} | Undangan ${getEventNames(events)}`
+      : "Moment";
+
+    return {
+      props: {
+        slug,
+        seo: {
+          success: true,
+          name,
+          url,
+          seo_image,
+          page_title,
+          description,
+          theme_name,
+        },
+      },
+      revalidate: 3600,
+    };
+  } catch (error) {
+    console.error("ISR error:", error);
+    return { notFound: true };
+  }
 };
 
 export default MainPage;

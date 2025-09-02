@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { HiArrowLongUp } from "react-icons/hi2";
 import { sosmedURLs } from "@/constants/sosmed";
 import {
-  TbBrandInstagram,
+  // TbBrandInstagram,
   TbBrandWhatsapp,
   TbBrandYoutube,
   TbMail,
@@ -72,14 +72,14 @@ const FooterComponent = () => {
                   >
                     <TbBrandWhatsapp />
                   </Link>
-                  <Link
+                  {/* <Link
                     aria-label="footer-instagram-link"
                     className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                     target="_blank"
                     href={sosmedURLs.instagram}
                   >
                     <TbBrandInstagram />
-                  </Link>
+                  </Link> */}
                   <Link
                     aria-label="footer-email-link"
                     className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
