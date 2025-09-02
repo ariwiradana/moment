@@ -2,7 +2,7 @@ import useEvents from "@/hooks/themes/useEvents";
 import { raleway } from "@/lib/fonts";
 import moment from "moment";
 import Image from "next/image";
-import React, { memo } from "react";
+import React from "react";
 import { BiCalendar, BiMap } from "react-icons/bi";
 import Link from "next/link";
 import ButtonOutlinedLight from "../elements/button.outlined.light";
@@ -105,4 +105,4 @@ const Events = () => {
   );
 };
 
-export default memo(Events);
+export default Events;
