@@ -36,7 +36,7 @@ const FaqComponent = () => {
             </h2>
             <div className="h-[1px] w-full bg-dashboard-dark/10 hidden lg:block"></div>
             <p
-              className={`${redhat.className} text-sm text-dashbbg-dashboard-dark/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
+              className={`${redhat.className} text-base text-dashbbg-dashboard-dark/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
             >
               Pertanyaan yang sering diajukan oleh pelanggan kami
             </p>
@@ -50,7 +50,7 @@ const FaqComponent = () => {
           <Accordion
             title="Bagaimana cara memesan undangan melalui website Moment?"
             content={
-              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+              <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
                 <li>
                   Lihat <span className="font-bold">Tema Undangan</span> yang
                   tersedia terlebih dahulu.
@@ -81,7 +81,7 @@ const FaqComponent = () => {
           <Accordion
             title="Bagaimana cara melakukan pembayaran dan konfirmasi pembayaran?"
             content={
-              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+              <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
                 <li>
                   Silahkan melakukan pembayaran sesuai dengan harga dan paket
                   tema yang dipilih melalui{" "}
@@ -106,7 +106,7 @@ const FaqComponent = () => {
           <Accordion
             title="Berapa lama estimasi pengerjaan undangan?"
             content={
-              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+              <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
                 <li>
                   Undangan akan dibuat dengan estimasi{" "}
                   <span className="font-bold">1 - 2 jam</span> setelah melakukan
@@ -118,7 +118,7 @@ const FaqComponent = () => {
           <Accordion
             title="Bagaimana cara mengirim foto dan video dengan kualitas yang baik?"
             content={
-              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+              <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
                 <li>
                   Pengiriman Foto dan Video dikirimkan melalui{" "}
                   <span className="font-bold">
@@ -131,7 +131,7 @@ const FaqComponent = () => {
           <Accordion
             title="Apakah undangan dapat direvisi?"
             content={
-              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+              <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
                 <li>
                   Kami siap untuk membantu revisi undangan kamu apabila terdapat
                   kesalahan data{" "}
@@ -145,7 +145,7 @@ const FaqComponent = () => {
           <Accordion
             title="Bagaimana cara menyebarkan undangan?"
             content={
-              <ul className="list-disc ml-4 text-xs md:text-sm marker:text-xs flex flex-col gap-2">
+              <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
                 <li>
                   Setelah undangan berhasil dibuat, Admin Moment akan{" "}
                   <span className="font-bold">

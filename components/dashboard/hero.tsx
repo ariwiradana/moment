@@ -40,7 +40,7 @@ const HeroComponent = () => {
         <p
           data-aos="fade-up"
           data-aos-delay="200"
-          className={`${redhat.className} text-sm text-dashboard-dark/70 max-w-lg`}
+          className={`${redhat.className} text-base text-dashboard-dark/70 max-w-lg`}
         >
           Buat momen spesial lebih berkesan dengan undangan digital yang
           minimalis, praktis, cepat, dan mudah dibagikan. Kami memastikan
@@ -69,7 +69,7 @@ const HeroComponent = () => {
         data-aos-delay="600"
         className="flex justify-end items-center gap-4 lg:gap-40"
       >
-        <p className={`${redhat.className} text-sm text-dashboard-dark/70`}>
+        <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
           Buat undangan digital Anda dengan cepat dan mudah.
         </p>
         <button
@@ -77,7 +77,7 @@ const HeroComponent = () => {
             setActiveSection(`section3`);
             scrollTo(`section3`);
           }}
-          className={`${redhat.className} text-xs flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2`}
+          className={`${redhat.className} text-sm flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2`}
         >
           Lihat Undangan
           <BsChevronRight />

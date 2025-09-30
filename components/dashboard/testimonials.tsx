@@ -33,7 +33,7 @@ const TestimonialsComponent = () => {
               Mereka Katakan?
             </h2>
             <p
-              className={`${redhat.className} text-sm text-dashboard-dark/70 mt-2`}
+              className={`${redhat.className} text-base text-dashboard-dark/70 mt-2`}
             >
               Kami Berterima kasih kepada klien kami yang telah berbagi
               pengalaman mereka
@@ -81,7 +81,7 @@ const TestimonialsComponent = () => {
                           {t.name}
                         </h4>
                         <p
-                          className={`${redhat.className} text-sm text-dashboard-dark/70 leading-none`}
+                          className={`${redhat.className} text-base text-dashboard-dark/70 leading-none`}
                         >
                           Undangan {t.theme_name}
                         </p>

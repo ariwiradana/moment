@@ -37,7 +37,7 @@ const FooterComponent = () => {
                     />
                   </div>
                 </Link>
-                <p className={`${redhat.className} text-zinc-400 mt-4 text-sm`}>
+                <p className={`${redhat.className} text-zinc-400 mt-4 text-base`}>
                   Moment adalah penyedia undangan digital yang memudahkan Anda
                   membuat undangan untuk momen spesial.
                 </p>

@@ -62,7 +62,7 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
               Pembayaran
             </h1>
             <p
-              className={`${redhat.className} text-sm text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
+              className={`${redhat.className} text-base text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
             >
               Pembayaran dapat dilakukan melalui bank transfer
               {client && (
@@ -115,7 +115,7 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
             Konfirmasi Pembayaran
           </h1>
           <p
-            className={`${redhat.className} text-sm text-white/70 mt-2 lg:max-w-[50%] mb-6`}
+            className={`${redhat.className} text-base text-white/70 mt-2 lg:max-w-[50%] mb-6`}
           >
             Setelah melakukan pembayaran, kirim bukti transfer Anda langsung
             melalui WhatsApp untuk proses verifikasi yang lebih cepat!.
@@ -181,7 +181,7 @@ const BankCard: FC<PaymentMethod> = ({
             >
               {accountName}
             </h5>
-            <p className={`${redhat.className} text-sm text-dashboard-dark/70`}>
+            <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
               {accountNumber}
             </p>
           </div>

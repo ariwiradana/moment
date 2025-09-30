@@ -148,7 +148,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
                     </h1>
 
                     <p
-                      className={`${redhat.className} text-sm text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
+                      className={`${redhat.className} text-base text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
                     >
                       Kami ingin mendengar pengalaman Anda! Isi form di bawah
                       ini untuk berbagi pendapat dan membantu orang lain

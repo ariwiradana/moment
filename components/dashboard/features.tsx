@@ -28,7 +28,7 @@ const FeaturesComponent = () => {
                 {f.title}
               </h5>
               <p
-                className={`${redhat.className} text-sm text-dashboard-dark/70 mt-1`}
+                className={`${redhat.className} text-base text-dashboard-dark/70 mt-1`}
               >
                 {f.description}
               </p>

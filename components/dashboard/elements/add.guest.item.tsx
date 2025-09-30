@@ -86,7 +86,7 @@ const AddGuestItem = ({
     <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full p-4">
       <div className={`${redhat.className} text-sm w-full`}>
         <div className="w-full">
-          <p className="block text-dashboard-dark/50 text-xs font-normal">
+          <p className="block text-dashboard-dark/50 text-sm font-normal">
             Nama Tamu
           </p>
           <p className="text-dashboard-dark font-medium text-base leading-6">

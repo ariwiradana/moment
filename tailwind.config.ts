@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        "4xl": "1920px",
+      },
       fontSize: {
         responsive: "5vw",
       },

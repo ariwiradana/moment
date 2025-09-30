@@ -25,7 +25,7 @@ const initialReviewForm: FormData = {
   wishes: "",
 };
 
-const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
+const useRSVPWishesNoLimit = (icon: ReactNode) => {
   const attendantText: Record<string, string> = useMemo(
     () => ({
       Hadir: "Saya akan hadir",
@@ -43,8 +43,6 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
   const [wishes, setWishes] = useState<Review[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [limit] = useState<number>(limitPage || 8);
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (isOpen) {
@@ -70,7 +68,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
     total_rows: number;
   }>(
     client?.id
-      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
+      ? `/api/_pb/_w?client_id=${client.id}`
       : null,
     fetcher,
     {
@@ -139,13 +137,6 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
     }
   };
 
-  const handleChangePagination = useCallback(
-    (event: React.ChangeEvent<unknown>, value: number) => {
-      setPage(value);
-    },
-    []
-  );
-
   return {
     state: {
       attendantText,
@@ -156,17 +147,13 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
       formData,
       isOpen,
       isLoadingWishes,
-      page,
-      limit,
     },
     actions: {
       handleSubmit,
       handleChange,
       setIsOpen,
-      handleChangePagination,
-      setPage,
     },
   };
 };
 
-export default useRSVPWishesLimit;
+export default useRSVPWishesNoLimit;

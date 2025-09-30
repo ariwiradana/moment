@@ -22,11 +22,11 @@ const ButtonOutlinedLight: FC<ButtonOutlinedLightProps> = ({
   const buttonStyles = (size: "small" | "medium" | "large") => {
     switch (size) {
       case "small":
-        return "px-4 py-2 text-xs gap-x-2";
+        return "px-4 py-2 text-sm gap-x-2";
       case "medium":
-        return "px-4 py-3 text-xs gap-x-3";
+        return "px-4 py-3 text-sm gap-x-3";
       case "large":
-        return "px-6 py-4 text-sm gap-x-4";
+        return "px-6 py-4 text-base gap-x-4";
     }
   };
 

@@ -105,7 +105,7 @@ const NavbarComponent = () => {
                             router.push(path);
                           }
                         }}
-                        className={`${redhat.className} text-xs cursor-pointer outline-none relative text-dashboard-dark duration-500 uppercase ease-in-out`}
+                        className={`${redhat.className} text-sm cursor-pointer outline-none relative text-dashboard-dark duration-500 uppercase ease-in-out`}
                       >
                         {title}
                         <div

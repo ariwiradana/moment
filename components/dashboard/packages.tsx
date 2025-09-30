@@ -106,15 +106,15 @@ const PackageComponent = () => {
                       } border border-dashboard-dark/10 p-8 lg:p-10`}
                       key={p.id}
                     >
-                      <h2
+                      <h5
                         className={`${redhat.className} text-2xl font-semibold`}
                       >
                         Paket {p.name}
-                      </h2>
+                      </h5>
 
                       <div className="flex items-center gap-2 my-2">
                         {p.discount > 0 && (
-                          <h2
+                          <p
                             className={`${
                               redhat.className
                             } text-base md:text-lg leading-4 ${
@@ -124,25 +124,25 @@ const PackageComponent = () => {
                             } line-through`}
                           >
                             {formatToRupiah(p.price)}
-                          </h2>
+                          </p>
                         )}
-                        <h2
+                        <p
                           className={`${redhat.className} font-medium text-lg md:text-xl`}
                         >
                           {formatToRupiah(p.price - p.discount)}
-                        </h2>
+                        </p>
                         {p.discount > 0 && (
-                          <div
+                          <p
                             className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px]`}
                           >
                             <TbRosetteDiscountCheckFilled />
                             Diskon{" "}
                             {calculateDiscountPercentage(p.price, p.discount)}%
-                          </div>
+                          </p>
                         )}
                       </div>
                       <ul
-                        className={`${redhat.className} mt-4 list-inside text-sm capitalize leading-7 marker:text-xs`}
+                        className={`${redhat.className} mt-4 list-inside text-base capitalize leading-7 marker:text-xs`}
                       >
                         <li
                           className={`list-disc ${

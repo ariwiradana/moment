@@ -1,12 +1,21 @@
+"use client";
+
 import useLightbox from "@/hooks/themes/useLightbox";
 import { rubik } from "@/lib/fonts";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
-import Slider, { Settings } from "react-slick";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import type { Swiper as SwiperType } from "swiper";
+
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Grid } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/grid";
 
 const Photos: NextPage = () => {
   const {
@@ -14,14 +23,10 @@ const Photos: NextPage = () => {
     actions: { handleToggleLightbox, setIsOpen },
   } = useLightbox();
 
-  const sliderRef = useRef<Slider | null>(null);
+  const swiperRef = useRef<SwiperType | null>(null);
 
-  const settings: Settings = {
-    draggable: false,
-    dots: false,
-    waitForAnimate: false,
-    arrows: false,
-  };
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
 
   if (images.length > 0)
     return (
@@ -36,44 +41,52 @@ const Photos: NextPage = () => {
           />
         )}
         <section className="h-dvh snap-start w-full relative">
-          <div className="absolute z-20 inset-0 bg-luma-dark flex flex-col justify-center items-center">
+          <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/90 to-luma-dark/80 flex flex-col justify-center items-center">
+            {/* Header */}
             <div className="w-full px-8 flex items-center justify-between mb-6">
               <h2 className="font-bigilla leading-[40px] text-white text-4xl">
                 Galeri <span className="font-italic">Kami</span>
               </h2>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => {
-                    sliderRef.current?.slickPrev();
-                  }}
-                  className="p-2 rounded-full border border-white/50 text-white aspect-square"
+                  disabled={isBeginning}
+                  onClick={() => swiperRef.current?.slidePrev()}
+                  className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
                 >
                   <HiArrowLeft />
                 </button>
                 <button
-                  onClick={() => {
-                    sliderRef.current?.slickNext();
-                  }}
-                  className="p-2 rounded-full border border-white/50 text-white aspect-square"
+                  disabled={isEnd}
+                  onClick={() => swiperRef.current?.slideNext()}
+                  className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
                 >
                   <HiArrowRight />
                 </button>
               </div>
             </div>
+
+            {/* Swiper Gallery */}
             <div className="w-full overflow-x-hidden">
-              <div className="relative px-1">
-                <Slider
-                  ref={sliderRef}
-                  slidesToScroll={3}
-                  slidesToShow={3}
-                  rows={3}
-                  speed={500}
-                  {...settings}
-                >
-                  {images.map((image, index) => (
+              <Swiper
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                  setIsBeginning(swiper.isBeginning);
+                  setIsEnd(swiper.isEnd);
+                }}
+                onSlideChange={(swiper) => {
+                  setIsBeginning(swiper.isBeginning);
+                  setIsEnd(swiper.isEnd);
+                }}
+                modules={[Navigation, Grid]}
+                slidesPerView={2}
+                grid={{ rows: 2, fill: "row" }}
+                speed={500}
+                spaceBetween={4}
+              >
+                {images.map((image, index) => (
+                  <SwiperSlide key={`Foto Galeri ${index + 1}`}>
                     <div
-                      className="h-full w-full px-1"
-                      key={`Foto Galeri ${index + 1}`}
+                      className="h-full w-full cursor-pointer"
                       onClick={() => handleToggleLightbox(image.src)}
                     >
                       <div className="aspect-square w-full h-full relative">
@@ -82,15 +95,17 @@ const Photos: NextPage = () => {
                           sizes="(max-width: 600px) 480px"
                           fill
                           alt={`Foto Galeri ${index + 1}`}
-                          className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
+                          className="object-cover transition-transform shimmer-dark object-center"
                           src={image.src}
                         />
                       </div>
                     </div>
-                  ))}
-                </Slider>
-              </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
+
+            {/* Footer */}
             <div className="w-full px-8 pt-6">
               <p
                 className={`${rubik.className} text-[10px] md:text-xs font-light text-justify text-white`}

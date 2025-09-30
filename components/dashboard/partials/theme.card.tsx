@@ -52,7 +52,7 @@ const ThemeCard: NextPage<Props> = ({ client, bestSeller }) => {
             <div className="flex justify-center flex-wrap gap-3 mb-2">
               {bestSeller === client.theme?.slug && (
                 <div
-                  className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px]`}
+                  className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
                 >
                   <BiStar />
                   Favorit
@@ -60,7 +60,7 @@ const ThemeCard: NextPage<Props> = ({ client, bestSeller }) => {
               )}
               {client.theme?.cover_video && (
                 <div
-                  className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-[10px] md:text-xs px-2 py-[2px]`}
+                  className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
                 >
                   <BiPlayCircle />
                   Cover Video
@@ -69,16 +69,16 @@ const ThemeCard: NextPage<Props> = ({ client, bestSeller }) => {
             </div>
           ) : null}
           <h5
-            className={`${redhat.className} text-lg text-white font-semibold mb-1 md:mb-2`}
+            className={`${redhat.className} text-xl text-white font-semibold mb-2 md:mb-3`}
           >
             {client.theme?.name}
           </h5>
-          <p className={`${redhat.className} text-xs text-white/70`}>
+          <p className={`${redhat.className} text-sm text-white/70`}>
             Mulai dari
           </p>
           {client.packages && (
             <h6
-              className={`${redhat.className} text-lg text-white font-medium mb-2 md:mb-4 leading-6`}
+              className={`${redhat.className} text-xl text-white font-medium mb-2 md:mb-4 leading-6`}
             >
               {formatToRupiah(
                 client.packages.find((p) => p.name === "Basic")?.price || 0

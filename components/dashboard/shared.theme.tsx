@@ -63,7 +63,9 @@ const SharedThemeComponent = () => {
                 duration={1}
                 className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
               />
-              <h2 className={`${redhat.className} text-center`}>Acara</h2>
+              <h2 className={`${redhat.className} text-center text-lg`}>
+                Acara
+              </h2>
             </div>
           )}
 
@@ -82,7 +84,7 @@ const SharedThemeComponent = () => {
                 duration={1}
                 className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
               />
-              <h2 className={`${redhat.className} text-center`}>
+              <h2 className={`${redhat.className} text-center text-lg`}>
                 Tamu Undangan
               </h2>
             </div>
@@ -103,7 +105,7 @@ const SharedThemeComponent = () => {
                 duration={1}
                 className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
               />
-              <h2 className={`${redhat.className} text-center`}>
+              <h2 className={`${redhat.className} text-center text-lg`}>
                 Ucapan & Doa
               </h2>
             </div>

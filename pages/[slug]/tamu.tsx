@@ -144,7 +144,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
               Undangan
             </h1>
             <p
-              className={`${redhat.className} text-sm text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
+              className={`${redhat.className} text-base text-dashboard-dark/70 mt-2 lg:max-w-[70%]`}
             >
               Tambahkan tamu undangan untuk acara Anda! Isi form nama tamu di
               bawah ini untuk mengatur daftar tamu Anda. Setelah tamu
