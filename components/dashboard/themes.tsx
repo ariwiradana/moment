@@ -2,26 +2,31 @@ import React, { FC, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { redhat } from "@/lib/fonts";
-import { Client, ThemeCategory, ThemeUsage } from "@/lib/types";
+import { ThemeCategory, ThemeUsage } from "@/lib/types";
 import ThemeShimmer from "./elements/theme.shimmer";
 import ThemeCard from "./partials/theme.card";
 
 const ThemeComponent: FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
-  const [clients, setClients] = useState<Client[]>([]);
   const [themeCategories, setThemeCategories] = useState<ThemeCategory[]>([]);
+  const [themes, setThemes] = useState<ThemeUsage[]>([]);
   const [bestSeller, setBestSeller] = useState<string>("");
 
-  useSWR<{ data: ThemeUsage[] }>(`/api/_pb/_th/_uc`, fetcher, {
-    onSuccess: (data) => {
-      if (data.data) {
-        const bestSeller = data.data.reduce((max, theme) =>
-          theme.usage_count > max.usage_count ? theme : max
-        );
-        setBestSeller(bestSeller.slug);
-      }
-    },
-  });
+  const { isLoading } = useSWR<{ data: ThemeUsage[] }>(
+    `/api/_pb/_th/_uc`,
+    fetcher,
+    {
+      onSuccess: (data) => {
+        if (data.data) {
+          const bestSeller = data.data.reduce((max, theme) =>
+            theme.usage_count > max.usage_count ? theme : max
+          );
+          setThemes(data.data);
+          setBestSeller(bestSeller.slug);
+        }
+      },
+    }
+  );
 
   useSWR<{ data: ThemeCategory[] }>(`/api/_pb/_tc`, fetcher, {
     onSuccess: (data) => {
@@ -33,21 +38,6 @@ const ThemeComponent: FC = () => {
       }
     },
   });
-
-  const { isLoading } = useSWR<{ data: Client[] }>(
-    activeCategoryId ? `/api/_pb/_c?is_preview=true&order=DESC` : null,
-    fetcher,
-    {
-      onSuccess: (data) => {
-        if (data.data) {
-          setClients(data.data);
-        }
-      },
-      onError: () => {
-        setClients([]);
-      },
-    }
-  );
 
   return (
     <>
@@ -113,15 +103,14 @@ const ThemeComponent: FC = () => {
                 <ThemeShimmer />
               </>
             ) : (
-              clients.map((client) => {
+              themes.map((theme, index) => {
                 return (
-                  <>
-                    <ThemeCard
-                      bestSeller={bestSeller}
-                      client={client}
-                      key={`Tema Undangan ${client?.theme?.name}`}
-                    />
-                  </>
+                  <ThemeCard
+                    index={index}
+                    bestSeller={bestSeller}
+                    theme={theme}
+                    key={`Tema Undangan ${theme?.name}`}
+                  />
                 );
               })
             )}

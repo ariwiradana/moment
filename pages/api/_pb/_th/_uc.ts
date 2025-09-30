@@ -1,32 +1,49 @@
 import handleError from "@/lib/errorHandling";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import { ThemeUsage } from "@/lib/types";
 
-// Get Best Seller Theme based on number of clients using the theme
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
         const query = `
-          SELECT 
-            t.id, 
-            t.slug,
-            t.name,
-            COUNT(c.theme_id)::int AS usage_count
-          FROM themes t
-          JOIN clients c ON c.theme_id = t.id
-          GROUP BY t.id, t.slug, t.name
-          ORDER BY usage_count DESC;
-        `;
+  SELECT 
+    t.*,
+    COUNT(DISTINCT c.id)::int AS usage_count,
+    MIN(c.slug) AS client_slug -- ambil salah satu slug (yang terkecil misalnya)
+  FROM themes t
+  JOIN clients c ON c.theme_id = t.id
+  WHERE t.active = TRUE 
+    AND c.is_preview = TRUE
+  GROUP BY t.id, t.slug, t.name, t.active, t.updated_at
+  ORDER BY t.updated_at DESC;
+`;
 
         const { rows } = await sql.query(query);
 
+        const { rows: packages } = await sql.query(
+          `SELECT * FROM packages ORDER BY id ASC`
+        );
+
+        const themes = rows.map((theme: ThemeUsage) => {
+          const packageIdsSet = new Set(theme.package_ids);
+          const filteredPackage = packages.filter((pkg) =>
+            packageIdsSet.has(pkg.id)
+          );
+
+          return {
+            ...theme,
+            packages: filteredPackage,
+          };
+        });
+
         return res.status(200).json({
           success: true,
-          data: rows,
+          data: themes,
         });
       } catch (error) {
-        handleError(res, error);
+        return handleError(res, error);
       }
 
     default:

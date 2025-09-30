@@ -231,27 +231,32 @@ const RSVPWishesComponent: FC = () => {
               />
             ))}
           </div>
-          <div className="flex items-center gap-4 mt-6">
-            <button
-              disabled={state.page === 1}
-              onClick={() => actions.setPage((state) => state - 1)}
-              className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
-            >
-              <HiArrowLeft />
-            </button>
-            <p
-              className={`text-white/70 text-[8px] md:text-[10px] uppercase text-center tracking-[3px] ${rubik.className}`}
-            >
-              {state.page} / {Math.ceil(state.totalRows / state.limit)}
-            </p>
-            <button
-              disabled={state.page === Math.ceil(state.totalRows / state.limit)}
-              onClick={() => actions.setPage((state) => state + 1)}
-              className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
-            >
-              <HiArrowRight />
-            </button>
-          </div>
+          {state.totalRows > 0 &&
+          Math.ceil(state.totalRows / state.limit) > state.page ? (
+            <div className="flex items-center gap-4 mt-6">
+              <button
+                disabled={state.page === 1}
+                onClick={() => actions.setPage((state) => state - 1)}
+                className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
+              >
+                <HiArrowLeft />
+              </button>
+              <p
+                className={`text-white/70 text-[8px] md:text-[10px] uppercase text-center tracking-[3px] ${rubik.className}`}
+              >
+                {state.page} / {Math.ceil(state.totalRows / state.limit)}
+              </p>
+              <button
+                disabled={
+                  state.page === Math.ceil(state.totalRows / state.limit)
+                }
+                onClick={() => actions.setPage((state) => state + 1)}
+                className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
+              >
+                <HiArrowRight />
+              </button>
+            </div>
+          ) : null}
         </div>
       </section>
     </>

@@ -186,9 +186,7 @@ export interface SEO {
   name: string;
 }
 
-export interface ThemeUsage {
-  id: number;
+export interface ThemeUsage extends Theme {
   usage_count: number;
-  name: string;
-  slug: string;
+  client_slug: string;
 }
