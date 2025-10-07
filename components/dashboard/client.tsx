@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { redhat } from "@/lib/fonts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
@@ -12,21 +12,38 @@ import {
 } from "react-icons/hi2";
 
 const ClientComponent = () => {
+  const skeletonCount = 12;
   const { data, isLoading } = useSWR("/api/_pb/_c?status=completed", fetcher);
   const clients: Client[] = useMemo(() => data?.data || [], [data]);
 
-  const skeletonCount = 6;
+  const [slidesPerView, setSlidesPerView] = useState(2);
+
+  const updateSlides = () => {
+    const width = window.innerWidth;
+    if (width >= 1920) setSlidesPerView(6);
+    else if (width >= 1440) setSlidesPerView(4);
+    else if (width >= 768) setSlidesPerView(3);
+    else setSlidesPerView(2);
+  };
+
+  useEffect(() => {
+    updateSlides();
+    window.addEventListener("resize", updateSlides);
+    return () => window.removeEventListener("resize", updateSlides);
+  }, []);
 
   return (
     <section className="relative select-none bg-white pb-8 lg:pb-16">
       <div>
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 4xl:grid-cols-6 gap-4">
+          <div
+            className={`grid`}
+            style={{
+              gridTemplateColumns: `repeat(${slidesPerView}, minmax(0, 1fr))`,
+            }}
+          >
             {Array.from({ length: skeletonCount }).map((_, idx) => (
-              <div
-                key={idx}
-                className="w-full aspect-square shimmer rounded-lg"
-              />
+              <div key={idx} className="w-full aspect-square shimmer" />
             ))}
           </div>
         ) : (
@@ -70,7 +87,7 @@ const ClientComponent = () => {
         )}
       </div>
 
-      <div className="mt-4 md:mt-8 lg:mt-10 flex flex-col lg:flex-row justify-between gap-2 px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto items-center">
+      <div className="mt-4 md:mt-8 lg:mt-10 flex flex-col lg:flex-row justify-between gap-2 px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto xl:items-center">
         <h3
           className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl font-semibold text-dashboard-dark whitespace-nowrap`}
         >
