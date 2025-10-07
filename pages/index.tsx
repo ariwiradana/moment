@@ -1,96 +1,101 @@
-import ClientComponent from "@/components/dashboard/client";
-import ButtonFloating from "@/components/dashboard/elements/button.floating";
+"use client";
+
+import dynamic from "next/dynamic";
 import Seo from "@/components/dashboard/elements/seo";
-import FaqComponent from "@/components/dashboard/faq";
-import FeaturesComponent from "@/components/dashboard/features";
-import HeroComponent from "@/components/dashboard/hero";
-import Layout from "@/components/dashboard/layout";
-import PackageComponent from "@/components/dashboard/packages";
-import SharedThemeComponent from "@/components/dashboard/shared.theme";
-import TestimonialsComponent from "@/components/dashboard/testimonials";
-import ThemeComponent from "@/components/dashboard/themes";
+import ButtonFloating from "@/components/dashboard/elements/button.floating";
 import { sosmedURLs } from "@/constants/sosmed";
 import useDisableInspect from "@/hooks/useDisableInspect";
 import useDashboardStore from "@/store/useDashboardStore";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import React, { useCallback, useEffect } from "react";
 import { BiLogoWhatsapp } from "react-icons/bi";
-import "swiper/css";
-import "swiper/css/effect-fade";
+import React, { useEffect, useCallback, startTransition } from "react";
+
+// Dynamic import semua komponen client-heavy
+const HeroComponent = dynamic(() => import("@/components/dashboard/hero"), {
+  ssr: false,
+});
+const ClientComponent = dynamic(() => import("@/components/dashboard/client"), {
+  ssr: false,
+});
+const FeaturesComponent = dynamic(
+  () => import("@/components/dashboard/features"),
+  { ssr: false }
+);
+const ThemeComponent = dynamic(() => import("@/components/dashboard/themes"), {
+  ssr: false,
+});
+const PackageComponent = dynamic(
+  () => import("@/components/dashboard/packages"),
+  { ssr: false }
+);
+const TestimonialsComponent = dynamic(
+  () => import("@/components/dashboard/testimonials"),
+  { ssr: false }
+);
+const SharedThemeComponent = dynamic(
+  () => import("@/components/dashboard/shared.theme"),
+  { ssr: false }
+);
+const FaqComponent = dynamic(() => import("@/components/dashboard/faq"), {
+  ssr: false,
+});
+const Layout = dynamic(() => import("@/components/dashboard/layout"), {
+  ssr: false,
+});
 
 const Dashboard = () => {
   const { activeSection, setActiveSection, manualScroll, setManualScroll } =
     useDashboardStore();
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 0,
-    });
-  }, []);
-
+  // Scroll handler optimized
   const handleScroll = useCallback(() => {
-    if (manualScroll) {
-      const sections = [
-        "section1",
-        "section2",
-        "section3",
-        "section4",
-        "section5",
-        "section6",
-      ];
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-
-        if (element) {
-          const rect = element.getBoundingClientRect();
-
-          if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-            if (activeSection !== section) {
-              setActiveSection(section);
-            }
-            break;
-          }
+    if (!manualScroll) return;
+    const sections = [
+      "section1",
+      "section2",
+      "section3",
+      "section4",
+      "section5",
+      "section6",
+    ];
+    for (const section of sections) {
+      const el = document.getElementById(section);
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+        if (activeSection !== section) {
+          startTransition(() => {
+            setActiveSection(section);
+          });
         }
+        break;
       }
     }
-  }, [activeSection]);
+  }, [activeSection, manualScroll, setActiveSection]);
 
-  const scrollTo = useCallback((section: string) => {
-    setManualScroll(false);
-    const element = document.getElementById(section);
-    if (element) {
-      const isMobile = window.innerWidth < 768;
-      const offset = isMobile ? 50 : 100;
+  // Scroll to section
+  const scrollTo = useCallback(
+    (section: string) => {
+      setManualScroll(false);
+      const el = document.getElementById(section);
+      if (!el) return;
+      const offset = window.innerWidth < 768 ? 50 : 100;
+      const pos = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: pos, behavior: "smooth" });
+    },
+    [setManualScroll]
+  );
 
-      const elementPosition =
-        element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  }, []);
-
+  // Mounting effects
   useEffect(() => {
     setManualScroll(true);
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll, setManualScroll]);
 
   useEffect(() => {
-    if (activeSection && !manualScroll) {
-      scrollTo(activeSection);
-    }
-  }, [activeSection, manualScroll]);
+    if (activeSection && !manualScroll) scrollTo(activeSection);
+  }, [activeSection, manualScroll, scrollTo]);
+
   useDisableInspect();
 
   return (
@@ -98,16 +103,19 @@ const Dashboard = () => {
       <Seo
         url="https://momentinvitation.com"
         title="Buat Undangan Digital Disini! | Moment"
-        description="Moment Invitation menawarkan solusi undangan digital di Bali dengan desain elegan, mudah digunakan, dan praktis. Pilih dari berbagai tema kustom yang dapat disesuaikan, nikmati fitur seperti revisi tak terbatas, dan bagikan momen spesial Anda dengan cepat. Dengan paket harga terjangkau, proses pembuatan undangan yang cepat, serta tampilan yang responsif, Moment memberikan pengalaman undangan digital yang sempurna untuk acara Anda."
-        keywords="undangan digital, undangan digital bali, undangan pernikahan digital bali, undangan minimalis, undangan mempandes digital, undangan digital pernikahan, undangan bali, undangan online bali, undangan kustom bali, tema undangan pernikahan bali, tema mempandes digital bali, undangan digital untuk pernikahan, undangan pernikahan praktis, undangan pernikahan elegan Bali, undangan mempandes praktis, paket undangan Bali, undangan Bali harga terjangkau, undangan digital kustom Bali, undangan digital untuk mempandes, cara membuat undangan pernikahan bali, undangan cepat dan mudah, undangan digital yang responsif, layanan undangan Bali, Moment undangan digital, undangan pernikahan modern Bali, undangan digital, undangan digital murah, undangan digital terjangkau, undangan online murah, undangan online terjangkau"
+        description="Moment Invitation menawarkan solusi undangan digital di Bali dengan desain elegan, mudah digunakan, dan praktis..."
+        keywords="undangan digital, undangan digital bali, undangan pernikahan digital bali, undangan minimalis, undangan mempandes digital..."
         image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
       />
+
       <ButtonFloating
         aria-label="Hubungi Kami melalui WhatsApp"
         onClick={() => window.open(sosmedURLs.whatsapp)}
         className="bg-green-500 text-white"
         icon={<BiLogoWhatsapp />}
       />
+
+      {/* Semua komponen client-heavy */}
       <HeroComponent />
       <ClientComponent />
       <FeaturesComponent />
