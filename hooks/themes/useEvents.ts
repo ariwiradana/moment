@@ -1,14 +1,7 @@
-import { Event } from "@/lib/types";
+import { Event, TimeRemaining } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useParticipants from "./useParticipants";
-
-interface TimeRemaining {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
 
 const useEvents = () => {
   const { client } = useClientStore();
@@ -19,78 +12,88 @@ const useEvents = () => {
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [fade, setFade] = useState<boolean>(true);
-  const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(
-    events.length > 0
-      ? events.map(() => ({ days: 0, hours: 0, minutes: 0, seconds: 0 }))
-      : []
+  const [timeRemainings, setTimeRemainings] = useState<TimeRemaining[]>(() =>
+    events.map(() => ({ days: 0, hours: 0, minutes: 0, seconds: 0 }))
   );
 
   const switchEventIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Update countdown tiap detik
   useEffect(() => {
-    if (events.length === 0) return;
+    if (!events.length) return;
 
     const updateCountdowns = () => {
       const now = new Date();
-      setTimeRemainings(
-        events.map((event) => {
+      setTimeRemainings((prev) =>
+        events.map((event, idx) => {
           const targetDateTime = new Date(`${event.date}T${event.start_time}`);
           const diffMs = targetDateTime.getTime() - now.getTime();
 
-          return {
+          const newCountdown = {
             days: Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24))),
             hours: Math.max(0, Math.floor((diffMs / (1000 * 60 * 60)) % 24)),
             minutes: Math.max(0, Math.floor((diffMs / (1000 * 60)) % 60)),
             seconds: Math.max(0, Math.floor((diffMs / 1000) % 60)),
           };
+
+          // Hanya update state jika berubah (optional untuk performance)
+          const prevCountdown = prev[idx];
+          if (
+            prevCountdown.days !== newCountdown.days ||
+            prevCountdown.hours !== newCountdown.hours ||
+            prevCountdown.minutes !== newCountdown.minutes ||
+            prevCountdown.seconds !== newCountdown.seconds
+          ) {
+            return newCountdown;
+          }
+          return prevCountdown;
         })
       );
     };
 
-    countdownIntervalRef.current = setInterval(updateCountdowns, 1000);
     updateCountdowns();
-
-    switchEventIntervalRef.current = setInterval(() => {
-      if (events.length > 1) {
-        setFade(false);
-        setTimeout(() => {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
-          setFade(true);
-        }, 500);
-      }
-    }, 8000);
+    countdownIntervalRef.current = setInterval(updateCountdowns, 1000);
 
     return () => {
       if (countdownIntervalRef.current)
         clearInterval(countdownIntervalRef.current);
-      if (switchEventIntervalRef.current)
-        clearInterval(switchEventIntervalRef.current);
     };
   }, [events]);
 
-  const images = useMemo(
-    () => events.map((event) => event.image as string),
-    [events]
-  );
+  // Switch event tiap 8 detik
+  useEffect(() => {
+    if (events.length < 2) return;
+
+    switchEventIntervalRef.current = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % events.length);
+        setFade(true);
+      }, 500);
+    }, 8000);
+
+    return () => {
+      if (switchEventIntervalRef.current)
+        clearInterval(switchEventIntervalRef.current);
+    };
+  }, [events.length]);
+
+  const images = useMemo(() => events.map((e) => e.image || ""), [events]);
 
   const handleAddToCalendar = useCallback(
     (event: Event) => {
-      const startDateFormatted = `${event.date.replace(/-/g, "")}T${(
-        parseInt(event.start_time.split(":")[0]) - 8
-      )
-        .toString()
-        .padStart(2, "0")}${event.start_time.split(":")[1]}00Z`;
+      const formatDate = (date: string, time: string) =>
+        `${date.replace(/-/g, "")}T${(parseInt(time.split(":")[0]) - 8)
+          .toString()
+          .padStart(2, "0")}${time.split(":")[1]}00Z`;
 
-      const endDateFormatted = `${event.date.replace(/-/g, "")}T${
-        event.end_time === "selesai"
-          ? "235900"
-          : (parseInt(event.end_time.split(":")[0]) - 8)
-              .toString()
-              .padStart(2, "0") + event.end_time.split(":")[1]
-      }00Z`;
+      const startDateFormatted = formatDate(event.date, event.start_time);
+      const endDateFormatted = formatDate(
+        event.date,
+        event.end_time === "selesai" ? "23:59" : event.end_time
+      );
 
-      console.log(event.start_time, event.end_time, event.date);
       const participants = `${groom?.nickname} & ${bride?.nickname}`;
       const description = `${client?.opening_title},\n\n${
         client?.opening_description
@@ -105,28 +108,21 @@ const useEvents = () => {
         event.address
       }\n\n${client?.closing_description}\n\nSalam hangat,\n${participants}`;
 
-      const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-        `Undangan ${event.name} - ${participants}`
-      )}&dates=${startDateFormatted}/${endDateFormatted}&details=${encodeURIComponent(
-        description
-      )}&location=${encodeURIComponent(event.address)}&sf=true&output=xml`;
-
-      window.open(googleCalendarUrl, "_blank");
+      window.open(
+        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+          `Undangan ${event.name} - ${participants}`
+        )}&dates=${startDateFormatted}/${endDateFormatted}&details=${encodeURIComponent(
+          description
+        )}&location=${encodeURIComponent(event.address)}&sf=true&output=xml`,
+        "_blank"
+      );
     },
     [groom, bride, client]
   );
 
   return {
-    state: {
-      events,
-      currentIndex,
-      fade,
-      timeRemainings,
-      images,
-    },
-    actions: {
-      handleAddToCalendar,
-    },
+    state: { events, currentIndex, fade, timeRemainings, images },
+    actions: { handleAddToCalendar },
   };
 };
 

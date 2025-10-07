@@ -8,43 +8,37 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let result;
 
     switch (method) {
-      case "GET":
+      case "GET": {
         const { client_id, page = 1, limit = 10 } = req.query;
+        if (!client_id)
+          return res
+            .status(400)
+            .json({ success: false, message: "client_id required" });
 
-        let query = `SELECT * FROM wishes`;
-        let countQuery = `SELECT COUNT(*) FROM wishes`;
-
-        const values: (string | number)[] = [];
-        const countValues: (string | number)[] = [];
-
-        if (client_id) {
-          const valueIndex = values.length + 1;
-          query += ` WHERE client_id = $${valueIndex}`;
-          countQuery += ` WHERE client_id = $${valueIndex}`;
-          values.push(Number(client_id));
-          countValues.push(Number(client_id));
-        }
-
-        const valueIndex = values.length + 1;
-        query += ` ORDER BY updated_at DESC LIMIT $${valueIndex} OFFSET $${
-          valueIndex + 1
-        }`;
         const pageNumber = Number(page);
         const limitNumber = Number(limit);
         const offset = (pageNumber - 1) * limitNumber;
-        values.push(limitNumber, offset);
 
+        const query = `
+          SELECT *, COUNT(*) OVER() AS total_count
+          FROM wishes
+          WHERE client_id = $1
+          ORDER BY updated_at DESC
+          LIMIT $2 OFFSET $3
+        `;
+        const values = [Number(client_id), limitNumber, offset];
         const { rows } = await sql.query(query, values);
-        const { rows: total } = await sql.query(countQuery, countValues);
 
-        result = {
+        const totalRows = rows[0]?.total_count ?? 0;
+
+        return res.status(200).json({
           success: true,
           data: rows,
-          total_rows: Number(total[0].count),
+          total_rows: totalRows,
           page: pageNumber,
           limit: limitNumber,
-        };
-        break;
+        });
+      }
 
       case "POST":
         const { client_id: postClientId, name, wishes, attendant } = req.body;

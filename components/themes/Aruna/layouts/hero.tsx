@@ -7,8 +7,9 @@ import { getEventNames } from "@/utils/getEventNames";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import moment from "moment";
 import Image from "next/image";
-import React, { memo, useMemo, useState } from "react";
-import Slider, { Settings } from "react-slick";
+import React, { memo, useMemo, useState, useRef, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade, Lazy } from "swiper/modules";
 
 const HeroComponent = () => {
   const { client } = useClientStore();
@@ -18,6 +19,9 @@ const HeroComponent = () => {
   } = useEvents();
   const { state: participant } = useParticipants();
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+
   const video = useMemo(() => {
     return Array.isArray(client?.videos) && client.videos.length > 0
       ? client.videos.filter((v) => !isYoutubeVideo(v))
@@ -26,77 +30,65 @@ const HeroComponent = () => {
 
   const eventNames = useMemo(() => getEventNames(events), [events]);
 
-  const settings: Settings = {
-    dots: false,
-    fade: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    waitForAnimate: false,
-    autoplay: true,
-    autoplaySpeed: 6000,
-    arrows: false,
-    speed: 3000,
-    cssEase: "ease-in-out",
-  };
-
-  const [isPlaying, setIsPlaying] = useState(false);
+  // play video on mount
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current
+        .play()
+        .then(() => setVideoPlaying(true))
+        .catch(() => setVideoPlaying(false));
+    }
+  }, [videoRef.current]);
 
   return (
     <section className="relative min-h-[600px] h-lvh overflow-hidden bg-aruna-dark">
-      <div
-        data-aos="zoom-out-up"
-        className="top-0 right-0 w-full xl:w-[40vw] 2xl:w-[30vw] overflow-hidden"
-      >
-        {video.length > 0 && (
-          <div
-            className={`min-h-[600px] h-lvh w-full relative ${
-              isPlaying ? "z-10" : "z-0"
-            }`}
-          >
-            <div className="absolute inset-0 w-full h-full overflow-hidden">
-              <video
-                onPlay={() => setTimeout(() => setIsPlaying(true), 2000)}
-                className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 object-cover"
-                src={video[0]}
-                poster={client?.cover || ""}
-                autoPlay
-                muted
-                loop
-                playsInline
-              ></video>
-            </div>
-          </div>
-        )}
-        <div
-          className={`${
-            video.length > 0 && isPlaying ? "invisible" : "visible"
-          } absolute inset-0`}
+      {video.length > 0 && (
+        <video
+          ref={videoRef}
+          src={video[0]}
+          poster={client?.cover || ""}
+          className="absolute w-full h-full object-cover top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+      )}
+
+      {video.length === 0 &&
+      !videoPlaying &&
+      Array.isArray(client?.gallery) &&
+      client.gallery.length > 0 ? (
+        <Swiper
+          modules={[Autoplay, EffectFade, Lazy]}
+          slidesPerView={1}
+          effect="fade"
+          loop
+          autoplay={{ delay: 6000, disableOnInteraction: false }}
+          lazyPreloadPrevNext={2}
+          className="absolute inset-0 h-lvh"
         >
-          <Slider {...settings} className="h-lvh">
-            {Array.isArray(client?.gallery) && client?.gallery.length > 0
-              ? client.gallery
-                  .filter(
-                    (image) => image !== client?.cover && image !== client?.seo
-                  )
-                  .map((image, index) => (
-                    <Image
-                      key={`Main Slider ${index + 1}`}
-                      sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                      quality={100}
-                      fill
-                      alt={`Main Slider ${index + 1}`}
-                      priority
-                      className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark object-center"
-                      src={image}
-                    />
-                  ))
-              : null}
-          </Slider>
-        </div>
-      </div>
+          {client.gallery
+            .filter((img) => img !== client?.cover && img !== client?.seo)
+            .map((img, index) => (
+              <SwiperSlide key={`slide-${index}`}>
+                <Image
+                  src={img}
+                  alt={`Gallery ${index + 1}`}
+                  fill
+                  quality={70}
+                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+                  loading="lazy"
+                  className="object-cover shimmer-dark"
+                />
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      ) : null}
+
       <div
-        className={`absolute h-lvh inset-0 z-10 bg-gradient-to-b from-aruna-dark/50 from-[5%] via-aruna-dark/20 to-[85%] to-aruna-dark transition-opacity ease-in-out duration-1000 delay-500 ${
+        className={`absolute inset-0 z-10 bg-gradient-to-b from-aruna-dark/50 from-[5%] via-aruna-dark/20 to-[85%] to-aruna-dark transition-opacity ease-in-out duration-1000 delay-500 ${
           isOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >

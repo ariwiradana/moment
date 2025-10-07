@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import Cover from "./layouts/cover";
 import Layout from "../layout";
 import useMusic from "@/hooks/themes/useMusic";
@@ -20,7 +19,7 @@ interface Props {
   untuk: string;
 }
 
-const Luma: NextPage<Props> = ({ untuk }) => {
+const Luma = ({ untuk }: Props) => {
   const { state, actions, refs } = useMusic();
 
   const {

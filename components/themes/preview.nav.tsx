@@ -12,6 +12,8 @@ const PreviewNav = () => {
   const { client } = useClientStore();
   const { isOpen } = useCoverStore();
 
+  console.log(client);
+
   const handleChooseTheme = useCallback((theme: Theme) => {
     const message = `Halo, saya tertarik untuk memilih tema undangan ${theme.name}`;
     const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(

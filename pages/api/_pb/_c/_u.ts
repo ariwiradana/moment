@@ -1,96 +1,85 @@
 import handleError from "@/lib/errorHandling";
-import { Client, Review } from "@/lib/types";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface Query {
   slug?: string;
-  page?: number;
-  limit?: number;
-  id?: number;
-  status?: Client["status"];
-  is_preview?: Client["is_preview"];
 }
 
-const handler = async (request: NextApiRequest, response: NextApiResponse) => {
-  switch (request.method) {
-    case "GET":
-      try {
-        const { slug }: Query = request.query;
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== "GET") {
+    res.setHeader("Allow", ["GET"]);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 
-        const { rows } = await sql.query(
-          "SELECT * FROM clients WHERE slug = $1",
-          [slug]
-        );
-        const client: (Client & { wishes: Review[] }) | null = rows[0] || null;
+  try {
+    const { slug }: Query = req.query;
 
-        if (client) {
-          const { rows: participants } = await sql.query(
-            `
-            SELECT *
-            FROM participants
-            WHERE client_id = $1
-            ORDER BY id ASC`,
-            [client.id]
-          );
+    // Ambil client + theme + package + theme_category sekaligus
+    const { rows } = await sql.query(
+      `
+      SELECT c.*, 
+        t.id AS theme_id, t.slug AS theme_slug, t.name AS theme_name, t.thumbnail AS theme_thumbnail, t.phone_thumbnail AS theme_phone_thumbnail, t.cover_video AS theme_cover_video, t.is_preview AS theme_is_preview,
+        p.id AS package_id, p.name AS package_name, p.price AS package_price, p.discount AS package_discount, p.custom_opening_closing AS package_custom_opening_closing, p.unlimited_revisions AS package_unlimited_revisions,
+        tc.id AS theme_category_id, tc.slug AS theme_category_slug, tc.name AS theme_category_name
+      FROM clients c
+      LEFT JOIN themes t ON c.theme_id = t.id
+      LEFT JOIN packages p ON c.package_id = p.id
+      LEFT JOIN theme_categories tc ON c.theme_category_id = tc.id
+      WHERE c.slug = $1
+      `,
+      [slug]
+    );
 
-          const { rows: events } = await sql.query(
-            `
-            SELECT *
-            FROM events
-            WHERE client_id = $1
-            ORDER BY date ASC, start_time::time ASC`,
-            [client.id]
-          );
+    const client = rows[0];
 
-          const { rows: themes } = await sql.query(
-            `
-            SELECT *
-            FROM themes
-            WHERE id = $1`,
-            [client.theme_id]
-          );
-          const { rows: wishes } = await sql.query(
-            `
-            SELECT *
-            FROM wishes
-            WHERE client_id = $1`,
-            [client.id]
-          );
-          const { rows: packages } = await sql.query(
-            `
-            SELECT *
-            FROM packages
-            WHERE id = $1`,
-            [client.package_id]
-          );
-          const { rows: themeCategories } = await sql.query(
-            `
-            SELECT * 
-            FROM theme_categories
-            WHERE id = $1`,
-            [client.theme_category_id]
-          );
+    if (!client) return res.status(200).json({ success: true, data: null });
 
-          client["participants"] = participants;
-          client["events"] = events;
-          client["theme"] = themes[0];
-          client["wishes"] = wishes;
-          client["package"] = packages[0];
-          client["theme_category"] = themeCategories[0];
-        }
+    const [participantsRes, eventsRes, wishesRes] = await Promise.all([
+      sql.query(
+        "SELECT * FROM participants WHERE client_id = $1 ORDER BY id ASC",
+        [client.id]
+      ),
+      sql.query(
+        "SELECT * FROM events WHERE client_id = $1 ORDER BY date ASC, start_time::time ASC",
+        [client.id]
+      ),
+      sql.query("SELECT * FROM wishes WHERE client_id = $1", [client.id]),
+    ]);
 
-        return response.status(200).json({
-          success: true,
-          data: client,
-        });
-      } catch (error) {
-        handleError(response, error);
-      }
+    client.participants = participantsRes.rows;
+    client.events = eventsRes.rows;
+    client.wishes = wishesRes.rows;
 
-    default:
-      response.setHeader("Allow", ["GET"]);
-      return response.status(405).end(`Method ${request.method} Not Allowed`);
+    // Format theme, package, theme_category
+    client.theme = {
+      id: client.theme_id,
+      slug: client.theme_slug,
+      name: client.theme_name,
+      thumbnail: client.theme_thumbnail,
+      phone_thumbnail: client.theme_phone_thumbnail,
+      cover_video: client.theme_cover_video,
+      is_preview: client.theme_is_preview,
+    };
+
+    client.package = {
+      id: client.package_id,
+      name: client.package_name,
+      price: client.package_price,
+      discount: client.package_discount,
+      custom_opening_closing: client.package_custom_opening_closing,
+      unlimited_revisions: client.package_unlimited_revisions,
+    };
+
+    client.theme_category = {
+      id: client.theme_category_id,
+      slug: client.theme_category_slug,
+      name: client.theme_category_name,
+    };
+
+    return res.status(200).json({ success: true, data: client });
+  } catch (error) {
+    handleError(res, error);
   }
 };
 

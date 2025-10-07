@@ -12,27 +12,24 @@ interface ImageShimmerProps extends ImageProps {
   priority?: boolean;
   onClick?: () => void;
 }
-
 const ImageShimmer: React.FC<ImageShimmerProps> = (props) => {
   const [loading, setLoading] = useState(true);
 
   return (
     <div
-      onClick={props.onClick ? props.onClick : undefined}
-      className="relative w-full h-full overflow-hidden"
-      style={{ height: props.width, width: props.height }}
+      onClick={props.onClick}
+      className={`relative overflow-hidden ${props.className ?? ""}`}
+      style={
+        props.fill
+          ? { width: "100%", height: "100%" } // wajib untuk fill
+          : { width: props.width, height: props.height }
+      }
     >
       {loading && <ShimmerLoader />}
       <Image
         {...props}
-        priority={props.priority}
-        fill={props.fill}
-        src={props.src}
-        alt={props.alt}
-        width={props.width}
-        height={props.height}
-        onLoad={() => setLoading(false)}
-        className={`${props.className ?? ""} ${loading ? "hidden" : "block"}`}
+        onLoadingComplete={() => setLoading(false)}
+        className={`${loading ? "hidden" : "block"} ${props.className ?? ""}`}
       />
     </div>
   );

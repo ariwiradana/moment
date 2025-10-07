@@ -88,6 +88,7 @@ export interface Client {
   is_preview?: boolean;
   is_detail?: boolean;
   guests?: string[];
+  wishes?: Review[];
   client_form?: ClientForm | null;
   created_at?: Date | string;
   updated_at?: Date | string;
@@ -190,3 +191,10 @@ export interface ThemeUsage extends Theme {
   usage_count: number;
   client_slug: string;
 }
+
+export type TimeRemaining = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};

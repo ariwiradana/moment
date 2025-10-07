@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback } from "react";
+import React, { FC, memo, useCallback, useMemo } from "react";
 import {
   BiCheck,
   BiSend,
@@ -25,46 +25,53 @@ const WishItem = memo(
   }: {
     wish: Review;
     attendantText: Record<string, string>;
-  }) => (
-    <div className="py-6">
-      <div className="relative flex flex-col items-start">
+  }) => {
+    const attendantIcon = useMemo(() => {
+      if (wish.attendant === "Hadir")
+        return <BiUserCheck className="text-xs md:text-sm" />;
+      if (wish.attendant === "Tidak Hadir")
+        return <BiUserX className="text-xs md:text-sm" />;
+      return <BiUserPlus className="text-xs md:text-sm" />;
+    }, [wish.attendant]);
+
+    const timeText = useMemo(
+      () => moment(wish.created_at).fromNow(),
+      [wish.created_at]
+    );
+
+    return (
+      <div className="py-6">
         <h4
           className={`${roboto.className} relative text-white text-xs md:text-sm uppercase tracking-[2px] mb-2`}
         >
           {wish.name}
         </h4>
-      </div>
-      <p className={`${roboto.className} text-white/60 text-xs md:text-sm`}>
-        {wish.wishes}
-      </p>
-      <div className="flex mt-4 items-center gap-x-4 whitespace-nowrap">
-        <div className="flex items-center gap-x-1 text-white/80">
-          {wish.attendant === "Hadir" ? (
-            <BiUserCheck className="text-xs md:text-sm" />
-          ) : wish.attendant === "Tidak Hadir" ? (
-            <BiUserX className="text-xs md:text-sm" />
-          ) : (
-            <BiUserPlus className="text-xs md:text-sm" />
-          )}
-          <p
-            className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
-          >
-            {attendantText[wish.attendant]}
-          </p>
+        <p className={`${roboto.className} text-white/60 text-xs md:text-sm`}>
+          {wish.wishes}
+        </p>
+        <div className="flex mt-4 items-center gap-x-4 whitespace-nowrap">
+          <div className="flex items-center gap-x-1 text-white/80">
+            {attendantIcon}
+            <p
+              className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
+            >
+              {attendantText[wish.attendant]}
+            </p>
+          </div>
+          <div className="w-[2px] min-w-[2px] h-[2px] min-h-[2px] rounded-full bg-white/80"></div>
+          <div className="flex items-center gap-x-1 text-white/80">
+            <BiTime className="text-xs md:text-sm" />
+            <p
+              className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
+            >
+              {timeText}
+            </p>
+          </div>
+          <div className="w-full h-[0.5px] bg-white/20"></div>
         </div>
-        <div className="w-[2px] min-w-[2px] h-[2px] min-h-[2px] rounded-full bg-white/80"></div>
-        <div className="flex items-center gap-x-1 text-white/80">
-          <BiTime className="text-xs md:text-sm" />
-          <p
-            className={`${roboto.className} text-[10px] md:text-xs tracking-[1px]`}
-          >
-            {moment(wish.created_at).fromNow()}
-          </p>
-        </div>
-        <div className="w-full h-[0.5px] bg-white/20"></div>
       </div>
-    </div>
-  )
+    );
+  }
 );
 
 WishItem.displayName = "WishItem";
@@ -76,25 +83,46 @@ const RSVPWishesComponent: FC = () => {
       <BiCheck />
     </div>
   );
+
   const handleNameChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      actions.handleChange("name", e.target.value);
-    },
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      actions.handleChange("name", e.target.value),
     [actions]
   );
-
   const handleWishesChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      actions.handleChange("wishes", e.target.value);
-    },
+    (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+      actions.handleChange("wishes", e.target.value),
+    [actions]
+  );
+  const handleAttendantChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      actions.handleChange("attendant", e.target.value),
     [actions]
   );
 
-  const handleAttendantChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      actions.handleChange("attendant", e.target.value);
-    },
-    [actions]
+  const paginationStyles = useMemo(
+    () => ({
+      "& .MuiPaginationItem-root": {
+        color: "white",
+        fontSize: 12,
+        maxWidth: 24,
+        maxHeight: 24,
+        minHeight: 24,
+        minWidth: 24,
+        borderRadius: 0,
+        "&:hover": { backgroundColor: "#FFFFFF0D", color: "white" },
+      },
+      "& .MuiPaginationItem-page.Mui-selected": {
+        backgroundColor: "#FFFFFF0D",
+        color: "white",
+        "&:hover": {
+          backgroundColor: "#FFFFFF0D",
+          color: "white",
+          cursor: "default",
+        },
+      },
+    }),
+    []
   );
 
   return (
@@ -116,7 +144,6 @@ const RSVPWishesComponent: FC = () => {
           </p>
         </div>
 
-        {/* Form */}
         <form
           onSubmit={actions.handleSubmit}
           className="flex flex-col gap-4 w-full md:max-w-screen-sm mx-auto p-6"
@@ -140,27 +167,16 @@ const RSVPWishesComponent: FC = () => {
             onChange={handleWishesChange}
           />
           <div className="flex gap-x-8 justify-between lg:justify-start">
-            <InputCheckbox
-              disabled={client?.status === "completed"}
-              value="Hadir"
-              checked={state.formData.attendant === "Hadir"}
-              label="Hadir"
-              onChange={handleAttendantChange}
-            />
-            <InputCheckbox
-              disabled={client?.status === "completed"}
-              value="Tidak Hadir"
-              checked={state.formData.attendant === "Tidak Hadir"}
-              label="Tidak Hadir"
-              onChange={handleAttendantChange}
-            />
-            <InputCheckbox
-              disabled={client?.status === "completed"}
-              checked={state.formData.attendant === "Masih Ragu"}
-              value="Masih Ragu"
-              label="Masih Ragu"
-              onChange={handleAttendantChange}
-            />
+            {["Hadir", "Tidak Hadir", "Masih Ragu"].map((val) => (
+              <InputCheckbox
+                key={val}
+                disabled={client?.status === "completed"}
+                value={val}
+                checked={state.formData.attendant === val}
+                label={val}
+                onChange={handleAttendantChange}
+              />
+            ))}
           </div>
           {client?.status === "paid" && (
             <div className="mt-4">
@@ -174,7 +190,6 @@ const RSVPWishesComponent: FC = () => {
           )}
         </form>
 
-        {/* Wishes List */}
         {state.wishes?.length > 0 && (
           <div className="w-full bg-aruna-dark py-8" data-aos="fade-up">
             <div className="max-w-screen-sm mx-auto w-full px-6">
@@ -187,41 +202,15 @@ const RSVPWishesComponent: FC = () => {
               ))}
             </div>
 
-            {/* Pagination */}
             {state.totalRows > state.limit && (
               <div className="max-w-screen-sm w-full py-6 px-6">
-                <div className="-ml-2">
-                  <Pagination
-                    shape="rounded"
-                    page={state.page}
-                    sx={{
-                      "& .MuiPaginationItem-root": {
-                        color: "white",
-                        fontSize: 12,
-                        maxWidth: 24,
-                        maxHeight: 24,
-                        minHeight: 24,
-                        minWidth: 24,
-                        borderRadius: 0,
-                        "&:hover": {
-                          backgroundColor: "#FFFFFF0D",
-                          color: "white",
-                        },
-                      },
-                      "& .MuiPaginationItem-page.Mui-selected": {
-                        backgroundColor: "#FFFFFF0D",
-                        color: "white",
-                        "&:hover": {
-                          backgroundColor: "#FFFFFF0D",
-                          color: "white",
-                          cursor: "default",
-                        },
-                      },
-                    }}
-                    onChange={actions.handleChangePagination}
-                    count={Math.ceil(state.totalRows / state.limit)}
-                  />
-                </div>
+                <Pagination
+                  shape="rounded"
+                  page={state.page}
+                  sx={paginationStyles}
+                  onChange={actions.handleChangePagination}
+                  count={Math.ceil(state.totalRows / state.limit)}
+                />
               </div>
             )}
           </div>

@@ -5,15 +5,16 @@ import React, { useMemo } from "react";
 const useParticipants = () => {
   const { client } = useClientStore();
 
-  const groom = useMemo(
-    () => client?.participants?.find((p) => p.role === "groom") || null,
-    [client?.participants]
-  );
+  const participantsMap = useMemo(() => {
+    const map: Record<string, Participant> = {};
+    client?.participants?.forEach((p) => {
+      map[p.role] = p;
+    });
+    return map;
+  }, [client?.participants]);
 
-  const bride = useMemo(
-    () => client?.participants?.find((p) => p.role === "bride") || null,
-    [client?.participants]
-  );
+  const groom = participantsMap["groom"] || null;
+  const bride = participantsMap["bride"] || null;
 
   return {
     state: {
