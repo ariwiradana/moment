@@ -37,16 +37,14 @@ const TestimonialsComponent = () => {
       itemReviewed: {
         "@type": "Product",
         name: `Undangan Digital Bali - Tema ${t.theme_name}`,
-        brand: {
-          "@type": "Organization",
-          name: "Moment Invitation",
-        },
+        image: t.theme_phone_thumbnail,
+        brand: "Moment Invitation",
         offers: {
           "@type": "Offer",
           priceCurrency: "IDR",
           price: "199000",
           availability: "https://schema.org/InStock",
-          url: `https://www.momentinvitation.com/${t.theme_name}`,
+          url: `https://www.momentinvitation.com/${t.client_slug}`,
         },
         aggregateRating: {
           "@type": "AggregateRating",

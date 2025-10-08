@@ -57,16 +57,12 @@ const ThemeComponent: FC = () => {
     itemListElement: displayedThemes.map((theme, index) => ({
       "@type": "Product",
       position: index + 1,
+      brand: "Moment Invitation",
       name: `Undangan Digital Bali - Tema ${theme.name}`,
       description: `Tema undangan digital ${theme.name} dari Moment Invitation`,
       image: theme.phone_thumbnail,
       url: `https://www.momentinvitation.com/${theme.client_slug}`,
       sku: theme.slug,
-      brand: {
-        "@type": "Organization",
-        name: "Moment Invitation",
-        logo: "https://www.momentinvitation.com/logo-bg.jpg",
-      },
       offers: {
         "@type": "Offer",
         url: `https://www.momentinvitation.com/${theme.client_slug}`,

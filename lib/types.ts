@@ -142,8 +142,10 @@ export interface Testimonials {
   comments: string;
   client_name: string;
   client_cover: string;
+  client_slug: string;
   theme_name: string;
   theme_category: string;
+  theme_phone_thumbnail: string;
   created_at: string;
   updated_at: string;
 }
@@ -190,7 +192,7 @@ export interface SEO {
 export interface ThemeUsage extends Theme {
   usage_count: number;
   client_slug: string;
-  testimonials?: Testimonials[]
+  testimonials?: Testimonials[];
 }
 
 export type TimeRemaining = {
