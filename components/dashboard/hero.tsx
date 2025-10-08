@@ -63,7 +63,7 @@ const HeroComponent = () => {
       </div>
 
       {/* Call to Action */}
-      <div className="flex justify-end items-center gap-4 lg:gap-40 transition-opacity duration-700 ease-in-out opacity-100">
+      <div className="flex flex-wrap justify-end items-center gap-4 lg:gap-40 transition-opacity duration-700 ease-in-out opacity-100">
         <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
           Buat undangan digital Anda dengan cepat dan mudah.
         </p>
@@ -74,7 +74,7 @@ const HeroComponent = () => {
           }}
           className={`${redhat.className} text-sm flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2 hover:bg-zinc-100 transition-colors duration-300`}
         >
-          Lihat Template Undangan Digital Bali <BsChevronRight />
+          Lihat Tema Undangan <BsChevronRight />
         </button>
       </div>
     </section>
