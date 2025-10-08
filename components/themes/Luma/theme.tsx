@@ -65,8 +65,8 @@ const Luma = ({ untuk }: Props) => {
                   } dari undangan digital ${untuk}`}
                   fill
                   sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1280px"
-                  priority={true} // preload semua hero images pertama
-                  loading="eager"
+                  priority={index < 2}
+                  loading={index < 2 ? "eager" : "lazy"}
                   className="object-cover"
                   quality={80}
                 />
