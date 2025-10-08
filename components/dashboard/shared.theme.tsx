@@ -9,6 +9,7 @@ import {
   TbUserCheck,
 } from "react-icons/tb";
 import CountUp from "./elements/count.up";
+import Head from "next/head";
 
 const SharedThemeComponent = () => {
   const { data: response } = useSWR("/api/_pb/_sh", fetcher);
@@ -23,8 +24,26 @@ const SharedThemeComponent = () => {
     { icon: TbMessage, value: data.wishes, label: "Ucapan & Doa" },
   ];
 
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      name: "Statistik Moment Invitation",
+      description: "Statistik penggunaan undangan digital Moment Invitation",
+      distribution: stats.map((s) => ({
+        "@type": "DataDownload",
+        name: s.label,
+        contentUrl: s.value.toString(),
+      })),
+    };
+
   return (
     <section className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden">
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </Head>
       <div className="absolute inset-0 w-full h-full">
         <video
           className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-cover"
@@ -33,9 +52,13 @@ const SharedThemeComponent = () => {
           muted
           loop
           playsInline
+          aria-hidden="true"
         />
       </div>
-      <span className="absolute inset-0 bg-dashboard-dark/5"></span>
+      <span
+        className="absolute inset-0 bg-dashboard-dark/5"
+        aria-hidden="true"
+      ></span>
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid md:grid-cols-4 gap-8 lg:gap-16 relative z-20">
         {stats.map(({ icon: Icon, value, label }, i) =>
           value > 0 ? (

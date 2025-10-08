@@ -3,17 +3,49 @@ import { redhat } from "@/lib/fonts";
 import { BsChevronDown } from "react-icons/bs";
 import { features } from "@/constants/features";
 import ButtonSecondary from "./elements/button.secondary";
+import Head from "next/head";
 
 const FeaturesComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const displayedFeatures = isExpanded ? features : features.slice(0, 4);
 
+  const jsonLdFeatures = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Fitur Undangan Digital Bali",
+    provider: {
+      "@type": "Organization",
+      name: "Moment Invitation",
+      url: "https://momentinvitation.com",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Fitur Undangan Digital",
+      itemListElement: features.map((f) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: f.title,
+          description: f.description,
+        },
+      })),
+    },
+  };
+
   return (
     <section
       className="py-8 md:py-10 lg:py-16 relative select-none"
       id="section2"
     >
+      <Head>
+        {jsonLdFeatures && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFeatures) }}
+          />
+        )}
+      </Head>
       <div className="px-4 md:px-12 lg:px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6">
         {displayedFeatures.map((f) => (
           <div
@@ -46,9 +78,14 @@ const FeaturesComponent = () => {
             onClick={() => setIsExpanded(true)}
             title="Tampilkan Semua Fitur"
             icon={<BsChevronDown />}
+            aria-expanded={isExpanded}
           />
         </div>
       )}
+      <p className="sr-only">
+        Fitur undangan digital Bali, undangan pernikahan online, undangan
+        mempandes digital, template undangan minimalis dan modern.
+      </p>
     </section>
   );
 };

@@ -79,6 +79,10 @@ const MainPage: FC<Props> = ({ seo, slug }) => {
           description={seo.description}
           keywords="undangan digital, undangan online, undangan pernikahan, Moment Invitation"
           image={seo.seo_image}
+          author="Moment Invitation"
+          locale="id_ID"
+          siteName="Moment Invitation"
+          robots="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
         />
         <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
           <div data-aos="fade-up">

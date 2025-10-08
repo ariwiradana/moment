@@ -11,6 +11,7 @@ import {
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
+import Head from "next/head";
 
 const PackageComponent = () => {
   const { data } = useSWR<{ data: Package[] }>("/api/_pb/_p", fetcher);
@@ -31,20 +32,73 @@ const PackageComponent = () => {
 
   if (!packages.length) return null;
 
+  const jsonLdPackages = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: packages.map((p, index) => ({
+      "@type": "Product",
+      position: index + 1,
+      name: `Paket ${p.name}`,
+      description: `Paket ${p.name} untuk undangan digital Bali. Fitur: ${
+        p.custom_opening_closing ? "Custom opening & closing, " : ""
+      }${p.unlimited_revisions ? "Unlimited revisi, " : ""}${
+        p.unlimited_guest_names ? "Nama tamu tidak terbatas, " : ""
+      }${p.countdown ? "Hitung mundur waktu, " : ""}${
+        Number(p.max_events) !== 0 ? `Maksimal ${p.max_events} acara, ` : ""
+      }${
+        Number(p.max_gallery_photos) !== 0
+          ? `Galeri foto ${p.max_gallery_photos} foto, `
+          : ""
+      }${Number(p.max_videos) !== 0 ? `Video ${p.max_videos}, ` : ""}${
+        p.contact_social_media ? "Kontak media sosial, " : ""
+      }${p.background_sound ? "Musik latar, " : ""}${
+        p.rsvp_and_greetings ? "RSVP & ucapan, " : ""
+      }${p.google_maps_integration ? "Lokasi Google Maps, " : ""}${
+        p.add_to_calendar ? "Tambahkan ke kalender, " : ""
+      }${p.custom_cover ? "Custom cover, " : ""}${
+        p.digital_envelope ? "Amplop digital" : ""
+      }`,
+      image: `/images/packages/${p.name.toLowerCase()}.jpg`,
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "IDR",
+        price: p.price - p.discount,
+        url: `https://momentinvitation.com/packages/${p.id}`,
+      },
+      brand: {
+        "@type": "Organization",
+        name: "Moment Invitation",
+      },
+    })),
+  };
+
+
   return (
     <section
       className="py-8 md:py-10 lg:py-16 select-none relative"
       id="section4"
     >
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPackages) }}
+        />
+      </Head>
       <div className="max-w-screen-xl mx-auto">
         <div className="px-4 md:px-12 lg:px-4">
           {/* Navigation Buttons & Indicators */}
           <div className="flex justify-between items-center gap-4 mb-4 lg:hidden">
             <div className="flex gap-3">
-              <button className="w-10 h-10 package-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center">
+              <button
+                aria-label="Previous Paket"
+                className="w-10 h-10 package-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center"
+              >
                 <HiOutlineArrowLongLeft />
               </button>
-              <button className="w-10 h-10 package-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center">
+              <button
+                aria-label="Next Paket"
+                className="w-10 h-10 package-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center"
+              >
                 <HiOutlineArrowLongRight />
               </button>
             </div>

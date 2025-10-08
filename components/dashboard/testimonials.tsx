@@ -11,6 +11,7 @@ import {
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
 import { BiSolidQuoteAltLeft } from "react-icons/bi";
+import Head from "next/head";
 
 const TestimonialsComponent = () => {
   const { data } = useSWR<{ data: Testimonials[] }>("/api/_pb/_ts", fetcher);
@@ -18,17 +19,45 @@ const TestimonialsComponent = () => {
 
   if (!testimonials.length) return null;
 
+  const jsonLdReviews = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: testimonials.map((t, index) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: t.name,
+      },
+      reviewBody: t.comments,
+      itemReviewed: {
+        "@type": "Product",
+        name: `Undangan Digital Bali - ${t.theme_name}`,
+        brand: {
+          "@type": "Organization",
+          name: "Moment Invitation",
+        },
+      },
+      position: index + 1,
+    })),
+  };
+
   return (
     <section
       className="py-8 md:py-10 lg:py-16 relative bg-zinc-50"
       id="section5"
     >
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdReviews) }}
+        />
+      </Head>
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-2 px-4 md:px-12 lg:px-4">
         <div>
           <h2
             className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl font-semibold text-dashboard-dark`}
           >
-            Apa Yang <br /> Mereka Katakan?
+            Apa Kata Mereka Tentang <br /> Undangan Digital Moment?
           </h2>
           <p
             className={`${redhat.className} text-base text-dashboard-dark/70 mt-2`}
@@ -37,10 +66,16 @@ const TestimonialsComponent = () => {
             mereka
           </p>
           <div className="flex gap-3 mt-6">
-            <button className="w-10 h-10 review-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center">
+            <button
+              aria-label="Navigasi Testimoni Sebelumnya"
+              className="w-10 h-10 review-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center"
+            >
               <HiOutlineArrowLongLeft />
             </button>
-            <button className="w-10 h-10 review-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center">
+            <button
+              aria-label="Navigasi Testimoni Berikutnya"
+              className="w-10 h-10 review-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center"
+            >
               <HiOutlineArrowLongRight />
             </button>
           </div>
@@ -67,7 +102,7 @@ const TestimonialsComponent = () => {
                         src={t.client_cover}
                         fill
                         className="object-cover rounded-full"
-                        alt={`Testimoni ${t.client_name}`}
+                        alt={`Foto klien ${t.name} yang menggunakan tema ${t.theme_name}`}
                       />
                     </div>
                     <div>

@@ -52,6 +52,7 @@ const ThemeCard: NextPage<Props> = ({
           loop
           playsInline
           preload="metadata"
+          aria-label={`Tema undangan digital Bali: ${theme.name}`}
         />
         {bestSeller && (
           <div

@@ -49,6 +49,7 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
         description={`Proses pembayaran undangan digital di Moment sangat mudah dan aman. Pilih paket yang Anda inginkan, lakukan pembayaran dengan berbagai metode yang tersedia, dan segera mulai membuat undangan Anda.`}
         keywords={`pembayaran undangan digital Bali, cara bayar undangan digital, pembayaran undangan pernikahan Bali, pembayaran undangan mempandes Bali, metode pembayaran undangan digital, bayar undangan Bali, pembayaran aman undangan Bali, transaksi undangan digital Bali, undangan Bali pembayaran mudah`}
         image="https://res.cloudinary.com/dsbmvj2s3/image/upload/v1759919489/seo_cvsy5o.webp"
+        noIndex
       />
 
       <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4 py-8 md:py-10 lg:py-16 mt-12 md:mt-16 lg:mt-20">

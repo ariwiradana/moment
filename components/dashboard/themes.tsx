@@ -5,6 +5,7 @@ import { redhat } from "@/lib/fonts";
 import { ThemeCategory, ThemeUsage } from "@/lib/types";
 import ThemeShimmer from "./elements/theme.shimmer";
 import ThemeCard from "./partials/theme.card";
+import Head from "next/head";
 
 const ThemeComponent: FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
@@ -50,11 +51,37 @@ const ThemeComponent: FC = () => {
   const displayedThemes = useMemo(() => themes, [themes]);
   const displayedCategories = useMemo(() => themeCategories, [themeCategories]);
 
+  const jsonLdThemes = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: displayedThemes.map((theme, index) => ({
+      "@type": "VideoObject",
+      position: index + 1,
+      name: theme.name,
+      description:
+        theme.description ||
+        "Tema undangan digital Bali elegan dari Moment Invitation",
+      thumbnailUrl: theme.phone_thumbnail,
+      contentUrl: `/video/themes/${theme.slug}.mp4`,
+      uploadDate: theme.created_at,
+      publisher: {
+        "@type": "Organization",
+        name: "Moment Invitation",
+      },
+    })),
+  };
+
   return (
     <section
       className="py-8 md:py-10 lg:py-16 bg-dashboard-dark select-none"
       id="section3"
     >
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdThemes) }}
+        />
+      </Head>
       <div className="px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto">
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
           <div className="flex flex-col lg:flex-row justify-between lg:items-center w-full gap-x-8 gap-1">
@@ -68,8 +95,8 @@ const ThemeComponent: FC = () => {
             <p
               className={`${redhat.className} text-base text-white/70 md:max-w-[60vw] lg:max-w-[30vw] w-full lg:text-right`}
             >
-              Jelajahi pilihan tema undangan yang beragam dan dirancang untuk
-              momen spesial Anda.
+              Jelajahi pilihan tema undangan digital Bali, minimalis, modern,
+              dan elegan, untuk momen spesial Anda.
             </p>
           </div>
         </div>
@@ -78,6 +105,7 @@ const ThemeComponent: FC = () => {
         <div className="mt-4 gap-2 whitespace-nowrap overflow-x-auto hidden">
           {displayedCategories.map((tc) => (
             <button
+              aria-pressed={activeCategoryId === tc.id}
               key={tc.id}
               onClick={() => setActiveCategoryId(tc.id)}
               className={`py-2 lg:py-3 px-4 lg:px-6 border transition-all duration-500 ${
@@ -110,6 +138,10 @@ const ThemeComponent: FC = () => {
               ))}
         </div>
       </div>
+      <p className="sr-only">
+        Tema undangan digital Bali, template undangan minimalis, tema undangan
+        pernikahan dan mempandes online.
+      </p>
     </section>
   );
 };

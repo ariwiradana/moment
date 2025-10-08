@@ -18,14 +18,14 @@ interface SeoProps {
 }
 
 export default function Seo({
-  title = "Moment Invitation | Undangan Digital Bali",
-  description = "Moment Invitation menawarkan solusi undangan digital di Bali dengan desain elegan, mudah digunakan, dan praktis untuk pernikahan & mempandes.",
-  keywords = "undangan digital, undangan digital bali, undangan pernikahan digital bali, undangan minimalis, undangan mempandes digital, wedding invitation bali",
-  url = "https://momentinvitation.com",
+  title,
+  description,
+  keywords,
+  url,
   image = "https://res.cloudinary.com/dsbmvj2s3/image/upload/v1759919489/seo_cvsy5o.webp",
-  type = "website",
+  type = "Organization",
   siteName = "Moment Invitation",
-  author = "Moment Invitation Team",
+  author = "Moment Invitation",
   publishedTime,
   updatedTime,
   noIndex = false,
@@ -60,11 +60,17 @@ export default function Seo({
           url,
           logo: image,
           description,
-          sameAs: [
-            sosmedURLs.email,
-            sosmedURLs.instagram,
-            sosmedURLs.youtube,
-          ],
+          sameAs: [sosmedURLs.email, sosmedURLs.instagram, sosmedURLs.youtube],
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Bali",
+            addressCountry: "ID",
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: -8.3405,
+            longitude: 115.092,
+          },
         }),
   };
 

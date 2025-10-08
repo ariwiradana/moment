@@ -5,6 +5,7 @@ import Link from "next/link";
 import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import { sosmedURLs } from "@/constants/sosmed";
+import Head from "next/head";
 
 const FaqComponent = () => {
   const { setActiveSection } = useDashboardStore();
@@ -123,11 +124,43 @@ const FaqComponent = () => {
     },
   ];
 
+  const extractText = (content: React.ReactNode): string => {
+    const childrenArray = React.Children.toArray(content);
+    return childrenArray
+      .map((child) => {
+        if (typeof child === "string") return child;
+        if (React.isValidElement(child) && child.props.children) {
+          return extractText(child.props.children);
+        }
+        return "";
+      })
+      .join(" ");
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.title,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: extractText(faq.content),
+      },
+    })),
+  };
+
   return (
     <section
       className="py-8 md:py-10 lg:py-16 relative select-none"
       id="section6"
     >
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      </Head>
       <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4 relative">
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
           <div className="flex flex-col gap-1 lg:flex-row justify-between lg:items-center w-full gap-x-8">
@@ -147,7 +180,11 @@ const FaqComponent = () => {
 
         <div className="mt-8 flex flex-col gap-2">
           {faqs.map((faq, idx) => (
-            <Accordion key={idx} title={faq.title} content={faq.content} />
+            <Accordion
+              key={idx}
+              title={faq.title}
+              content={faq.content}
+            />
           ))}
         </div>
       </div>

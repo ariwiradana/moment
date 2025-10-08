@@ -1,9 +1,9 @@
 module.exports = {
-  siteUrl: process.env.SITE_URL || "https://www.momentinvitation.com",
+  siteUrl: "https://www.momentinvitation.com",
   generateRobotsTxt: true, // Generates robots.txt file
   changefreq: "daily",
   priority: 0.7,
-  exclude: ["/login", "/404"], // Optionally exclude pages
+  exclude: ["/login", "/404", "/admin/*"], // Optionally exclude pages
   // Custom transformation for the sitemap
   transform: async (config, path) => {
     return {
@@ -16,8 +16,9 @@ module.exports = {
   additionalPaths: async (config) => {
     const dynamicRoutes = [
       "/",
-      "/form/pernikahan",
-      "/form/mepandes",
+      "/deyung-ning",
+      "/shawa-sakme",
+      "/resepsi-marta-arsita",
     ];
 
     return dynamicRoutes.map((route) => ({

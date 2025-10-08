@@ -10,6 +10,7 @@ import {
   HiOutlineArrowLongLeft,
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
+import Head from "next/head";
 
 const ClientComponent = () => {
   const { data, isLoading } = useSWR("/api/_pb/_c?status=completed", fetcher);
@@ -31,8 +32,37 @@ const ClientComponent = () => {
     return () => window.removeEventListener("resize", updateSlides);
   }, []);
 
+  const jsonLd = useMemo(() => {
+    if (!clients.length) return null;
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: clients.map((c, index) => ({
+        "@type": "Review",
+        itemReviewed: {
+          "@type": "Organization",
+          name: "Moment Invitation",
+        },
+        author: {
+          "@type": "Person",
+          name: c.name || `Klien ${index + 1}`,
+        },
+        reviewBody: `Klien mempercayakan undangan digital Bali mereka kepada Moment Invitation.`,
+      })),
+    };
+  }, [clients]);
+
   return (
     <section className="relative select-none bg-white pb-8 lg:pb-16">
+      <Head>
+        {jsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        )}
+      </Head>
       <div>
         {isLoading ? (
           <div
@@ -62,7 +92,7 @@ const ClientComponent = () => {
               1920: { slidesPerView: 6 },
             }}
           >
-            {clients.map((c) => (
+            {clients.map((c, index) => (
               <SwiperSlide key={c.id}>
                 <div className="aspect-square relative overflow-hidden">
                   <Image
@@ -74,10 +104,10 @@ const ClientComponent = () => {
                         "-"
                       )}`
                     }
-                    alt={`Thumbnail undangan digital ${c.name}`}
+                    alt={`Klien Moment Invitation - Undangan digital Bali: ${c.name}`}
                     fill
                     className="object-cover"
-                    loading="lazy"
+                    loading={index < 2 ? "eager" : "lazy"}
                   />
                 </div>
               </SwiperSlide>
@@ -95,23 +125,28 @@ const ClientComponent = () => {
           Menggunakan Jasa Kami
         </h3>
         <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
-          Beberapa klien yang mempercayakan momen penting mereka kepada kami
+          Beberapa klien yang mempercayakan momen acara spesial mereka kepada
+          kami.
         </p>
         <div className="flex gap-3 mt-2 lg:mt-0">
           <button
             aria-label="Button Previous Client"
-            className="w-12 h-12 action-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-60"
+            className="action-prev w-12 h-12 action-prev aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-60"
           >
             <HiOutlineArrowLongLeft />
           </button>
           <button
             aria-label="Button Next Client"
-            className="w-12 h-12 action-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-60"
+            className="action-next w-12 h-12 action-next aspect-square rounded-full border border-zinc-400 flex justify-center items-center disabled:opacity-60"
           >
             <HiOutlineArrowLongRight />
           </button>
         </div>
       </div>
+      <p className="sr-only">
+        Undangan digital Bali, template undangan digital, klien pernikahan
+        Moment Invitation, mempandes digital Bali
+      </p>
     </section>
   );
 };

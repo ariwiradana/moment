@@ -25,6 +25,7 @@ const SlugLogin = ({ slug }: SlugLoginProps) => {
         description="Masuk ke akun Anda untuk mengelola tamu undangan digital. Halaman login Moment memudahkan Anda untuk mengakses tamu undangan yang telah Anda buat."
         keywords={`login, undangan digital, undangan online, undangan pernikahan, undangan metatah, moment invitation, moment, ${slug}`}
         image="https://res.cloudinary.com/dsbmvj2s3/image/upload/v1759919489/seo_cvsy5o.webp"
+        noIndex
       />
       <section className="min-h-dvh w-full flex justify-center items-center p-8 md:p-16 bg-white md:bg-gray-50">
         <div className="flex flex-col justify-center max-w-md w-full bg-white md:shadow-sm md:p-8">
