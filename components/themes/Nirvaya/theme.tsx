@@ -25,9 +25,9 @@ const Nirvaya = ({ untuk }: Props) => {
     <Layout>
       <MusicComponent actions={actions} refs={refs} state={state} />
       <Cover actions={actions} to={untuk} />
+      <Hero />
       {isOpen && (
         <Suspense fallback={<LoadingDark />}>
-          <Hero />
           <Participants />
           <Events />
           <Photos />
