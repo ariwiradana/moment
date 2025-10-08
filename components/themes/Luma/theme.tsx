@@ -67,7 +67,7 @@ const Luma = ({ untuk }: Props) => {
                   sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1280px"
                   priority={index < 2}
                   loading={index < 2 ? "eager" : "lazy"}
-                  className="object-cover"
+                  className="object-cover shimmer-dark"
                   quality={80}
                 />
               </SwiperSlide>
