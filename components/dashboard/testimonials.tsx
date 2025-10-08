@@ -41,8 +41,8 @@ const TestimonialsComponent = () => {
       },
       aggregateRating: {
         "@type": "AggregateRating",
-        ratingValue: "5", // default kalau testimonial positif
-        reviewCount: "1",
+        ratingValue: "5",
+        reviewCount: "10",
       },
       review: [
         {

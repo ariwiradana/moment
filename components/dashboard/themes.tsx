@@ -82,7 +82,7 @@ const ThemeComponent: FC = () => {
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: 5,
-        reviewCount: theme.testimonials && theme.testimonials.length,
+        reviewCount: 10,
       },
       video: `/videos/video/themes/${theme.slug}.mp4`
         ? {
