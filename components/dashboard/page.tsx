@@ -100,8 +100,6 @@ const DashboardPage = () => {
         className="bg-green-500 text-white"
         icon={<BiLogoWhatsapp />}
       />
-
-      {/* Semua komponen client-heavy */}
       <HeroComponent />
       <ClientComponent />
       <FeaturesComponent />
