@@ -10,6 +10,7 @@ import useParticipants from "@/hooks/themes/useParticipants";
 import dynamic from "next/dynamic";
 import Cover from "./layouts/cover";
 import MusicComponent from "./layouts/music";
+import LoadingDark from "../loading.dark";
 
 // Dynamic import heavy components
 const HeroComponent = dynamic(() => import("./layouts/hero"), { ssr: false });
@@ -85,55 +86,18 @@ const Aruna: FC<Props> = ({ untuk }) => {
           </div>
 
           {/* Right side sections */}
-          <div className="relative w-full xl:max-w-[30vw] 2xl:max-w-[25vw] ml-auto space-y-10">
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
+          <Suspense fallback={<LoadingDark />}>
+            <div className="relative w-full xl:max-w-[30vw] 2xl:max-w-[25vw] ml-auto space-y-10">
               <HeroComponent />
-            </Suspense>
-
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
               <ParticipantsComponent />
-            </Suspense>
-
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
               <EventsComponent />
-            </Suspense>
-
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
               <VideoComponent />
-            </Suspense>
-
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
               <FotoComponent />
-            </Suspense>
-
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
               <GiftComponent />
-            </Suspense>
-
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
               <RSVPWishes />
-            </Suspense>
-
-            <Suspense
-              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-            >
               <ThankyouComponent />
-            </Suspense>
-          </div>
+            </div>
+          </Suspense>
         </div>
       )}
     </Layout>

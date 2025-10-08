@@ -7,6 +7,7 @@ import useMusic from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
 import Participants from "./layouts/participants";
 import Events from "./layouts/events";
+import LoadingDark from "../loading.dark";
 const Photos = React.lazy(() => import("./layouts/photos"));
 const Gift = React.lazy(() => import("./layouts/gift"));
 const RsvpWishes = React.lazy(() => import("./layouts/rsvp.wishes"));
@@ -25,43 +26,15 @@ const Nirvaya = ({ untuk }: Props) => {
       <MusicComponent actions={actions} refs={refs} state={state} />
       <Cover actions={actions} to={untuk} />
       {isOpen && (
-        <>
-          <Suspense
-            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-          >
-            <Hero />
-          </Suspense>
-          <Suspense
-            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-          >
-            <Participants />
-          </Suspense>
-          <Suspense
-            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-          >
-            <Events />
-          </Suspense>
-          <Suspense
-            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-          >
-            <Photos />
-          </Suspense>
-          <Suspense
-            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-          >
-            <Gift />
-          </Suspense>
-          <Suspense
-            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-          >
-            <RsvpWishes />
-          </Suspense>
-          <Suspense
-            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
-          >
-            <Thankyou />
-          </Suspense>
-        </>
+        <Suspense fallback={<LoadingDark />}>
+          <Hero />
+          <Participants />
+          <Events />
+          <Photos />
+          <Gift />
+          <RsvpWishes />
+          <Thankyou />
+        </Suspense>
       )}
     </Layout>
   );
