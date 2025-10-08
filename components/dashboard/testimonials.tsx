@@ -25,7 +25,7 @@ const TestimonialsComponent = () => {
     itemListElement: testimonials.map((t, index) => ({
       "@type": "Product",
       position: index + 1,
-      name: `Undangan Digital Bali - Tema ${t.theme_name}`, // wajib ada
+      name: `Undangan Digital - Tema ${t.theme_name}`, // wajib ada
       image: t.theme_phone_thumbnail || "", // wajib ada minimal 1 image
       description: `Tema undangan digital ${t.theme_name} dari Moment Invitation`,
       brand: {
@@ -60,7 +60,6 @@ const TestimonialsComponent = () => {
       ],
     })),
   };
-
 
   return (
     <section
