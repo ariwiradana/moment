@@ -55,19 +55,56 @@ const ThemeComponent: FC = () => {
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: displayedThemes.map((theme, index) => ({
-      "@type": "VideoObject",
+      "@type": "Product",
       position: index + 1,
-      name: theme.name,
+      name: `Undangan Digital Tema ${theme.name}`,
       description:
         theme.description ||
         "Tema undangan digital Bali elegan dari Moment Invitation",
-      thumbnailUrl: theme.phone_thumbnail,
-      contentUrl: `/video/themes/${theme.slug}.mp4`,
-      uploadDate: theme.created_at,
-      publisher: {
+      image: theme.phone_thumbnail,
+      url: `https://www.momentinvitation.com/${theme.slug}`,
+      sku: theme.slug,
+      brand: {
         "@type": "Organization",
         name: "Moment Invitation",
+        logo: "https://www.momentinvitation.com/logo-bg.jpg",
       },
+      offers: {
+        "@type": "Offer",
+        url: `https://www.momentinvitation.com/${theme.slug}`,
+        priceCurrency: "IDR",
+        price: 199000,
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/NewCondition",
+      },
+      review: theme.testimonials?.map((t) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: t.name },
+        reviewBody: t.comments,
+        datePublished: t.created_at,
+      })),
+      aggregateRating: theme.testimonials?.length
+        ? {
+            "@type": "AggregateRating",
+            ratingValue: 5,
+            reviewCount: theme.testimonials.length,
+          }
+        : undefined,
+      video: `/videos/video/themes/${theme.slug}.mp4`
+        ? {
+            "@type": "VideoObject",
+            name: theme.name,
+            description:
+              theme.description || `Video tema undangan digital ${theme.name}`,
+            thumbnailUrl: theme.phone_thumbnail,
+            contentUrl: `/video/themes/${theme.slug}.mp4`,
+            uploadDate: theme.created_at,
+            publisher: {
+              "@type": "Organization",
+              name: "Moment Invitation",
+            },
+          }
+        : undefined,
     })),
   };
 

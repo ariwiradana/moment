@@ -29,6 +29,23 @@ const TestimonialsComponent = () => {
         name: t.name,
       },
       reviewBody: t.comments,
+      review: testimonials.map((t) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: t.name },
+        reviewBody: t.comments,
+      })),
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "IDR",
+        price: "199000",
+        availability: "https://schema.org/InStock",
+        url: `https://www.momentinvitation.com/${t.theme_name}`,
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5",
+        reviewCount: testimonials.length.toString(),
+      },
       itemReviewed: {
         "@type": "Product",
         name: `Undangan Digital Bali - ${t.theme_name}`,

@@ -8,17 +8,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET":
       try {
         const query = `
-  SELECT 
-    t.*,
-    COUNT(DISTINCT c.id)::int AS usage_count,
-    MIN(c.slug) AS client_slug -- ambil salah satu slug (yang terkecil misalnya)
-  FROM themes t
-  JOIN clients c ON c.theme_id = t.id
-  WHERE t.active = TRUE 
-    AND c.is_preview = TRUE
-  GROUP BY t.id, t.slug, t.name, t.active, t.updated_at
-  ORDER BY t.updated_at DESC;
-`;
+         SELECT 
+            t.*,
+            COUNT(DISTINCT c.id)::int AS usage_count,
+            MIN(c.slug) AS client_slug,
+            json_agg(
+                json_build_object(
+                    'id', ts.id,
+                    'name', ts.name,
+                    'comments', ts.comments,
+                    'created_at', ts.created_at,
+                    'updated_at', ts.updated_at
+                )
+            ) FILTER (WHERE ts.id IS NOT NULL) AS testimonials
+        FROM themes t
+        JOIN clients c ON c.theme_id = t.id
+        LEFT JOIN testimonials ts ON ts.client_id = c.id
+        WHERE t.active = TRUE
+          AND c.is_preview = TRUE
+        GROUP BY t.id, t.slug, t.name, t.active, t.updated_at
+        ORDER BY t.updated_at DESC;
+        `;
 
         const { rows } = await sql.query(query);
 
