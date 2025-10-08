@@ -23,39 +23,44 @@ const TestimonialsComponent = () => {
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: testimonials.map((t, index) => ({
-      "@type": "Review",
-      author: {
-        "@type": "Person",
-        name: t.name,
-      },
-      reviewBody: t.comments,
-      review: testimonials.map((t) => ({
-        "@type": "Review",
-        author: { "@type": "Person", name: t.name },
-        reviewBody: t.comments,
-      })),
-      itemReviewed: {
-        "@type": "Product",
-        name: `Undangan Digital Bali - Tema ${t.theme_name}`,
-        image: t.theme_phone_thumbnail,
-        description: `Tema undangan digital ${t.theme_name} dari Moment Invitation`,
-        brand: "Moment Invitation",
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "IDR",
-          price: "199000",
-          availability: "https://schema.org/InStock",
-          url: `https://www.momentinvitation.com/${t.client_slug}`,
-        },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "5",
-          reviewCount: testimonials.length.toString(),
-        },
-      },
+      "@type": "Product",
       position: index + 1,
+      name: `Undangan Digital Bali - Tema ${t.theme_name}`, // wajib ada
+      image: t.theme_phone_thumbnail || "", // wajib ada minimal 1 image
+      description: `Tema undangan digital ${t.theme_name} dari Moment Invitation`,
+      brand: {
+        "@type": "Organization",
+        name: "Moment Invitation",
+      },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "IDR",
+        price: "199000",
+        availability: "https://schema.org/InStock",
+        url: `https://www.momentinvitation.com/${t.client_slug}`,
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5", // default kalau testimonial positif
+        reviewCount: "1",
+      },
+      review: [
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: t.name },
+          reviewBody: t.comments,
+          datePublished: t.created_at,
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: "5",
+            bestRating: "5",
+            worstRating: "1",
+          },
+        },
+      ],
     })),
   };
+
 
   return (
     <section
