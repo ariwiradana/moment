@@ -38,6 +38,8 @@ const EventsComponent = () => {
         </p>
       </div>
 
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-aruna-dark/90 from-[20%] via-transparent via-[60%] to-aruna-dark/90 to-[80%]"></div>
+
       {/* Background images */}
       <div className="absolute top-0 inset-x-0 grid" data-aos="zoom-out">
         {images.map((image, idx) => (

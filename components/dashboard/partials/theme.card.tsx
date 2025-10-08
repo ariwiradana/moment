@@ -51,7 +51,7 @@ const ThemeCard: NextPage<Props> = ({
           muted
           loop
           playsInline
-          preload="metadata" // ✅ Lazy load video metadata
+          preload="metadata"
         />
         {bestSeller && (
           <div

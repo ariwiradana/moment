@@ -12,6 +12,7 @@ import { memo } from "react";
 const Events: NextPage = () => {
   const {
     state: { events, timeRemainings },
+    actions,
   } = useEvents();
 
   const quotes = [
@@ -108,6 +109,7 @@ const Events: NextPage = () => {
               </div>
               <div className="mt-6">
                 <ButtonDark
+                  onClick={() => actions.handleAddToCalendar(event)}
                   icon={<HiArrowLongRight />}
                   title="Simpan Tanggal"
                   aria-label={`Simpan tanggal acara ${event.name}`}

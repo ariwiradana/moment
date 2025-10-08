@@ -12,72 +12,124 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
+  const start = performance.now();
+
   try {
     const { slug }: Query = req.query;
 
-    // Ambil client + theme + package + theme_category sekaligus
+    console.time("⏱ Main query (JOIN + JSON_AGG)");
     const { rows } = await sql.query(
-      `
-      SELECT c.*, 
-        t.id AS theme_id, t.slug AS theme_slug, t.name AS theme_name, t.thumbnail AS theme_thumbnail, t.phone_thumbnail AS theme_phone_thumbnail, t.cover_video AS theme_cover_video, t.is_preview AS theme_is_preview,
-        p.id AS package_id, p.name AS package_name, p.price AS package_price, p.discount AS package_discount, p.custom_opening_closing AS package_custom_opening_closing, p.unlimited_revisions AS package_unlimited_revisions,
-        tc.id AS theme_category_id, tc.slug AS theme_category_slug, tc.name AS theme_category_name
+      `SELECT 
+        c.*,
+        -- Theme
+        json_build_object(
+          'id', t.id,
+          'slug', t.slug,
+          'name', t.name,
+          'thumbnail', t.thumbnail,
+          'phone_thumbnail', t.phone_thumbnail,
+          'cover_video', t.cover_video,
+          'is_preview', t.is_preview
+        ) AS theme,
+
+        -- Package
+        json_build_object(
+          'id', p.id,
+          'name', p.name,
+          'price', p.price,
+          'discount', p.discount,
+          'custom_opening_closing', p.custom_opening_closing,
+          'unlimited_revisions', p.unlimited_revisions
+        ) AS package,
+
+        -- Theme Category
+        json_build_object(
+          'id', tc.id,
+          'slug', tc.slug,
+          'name', tc.name
+        ) AS theme_category,
+
+        -- Participants
+        COALESCE(pr.participants, '[]'::jsonb) AS participants,
+
+        -- Events
+        COALESCE(ev.events, '[]'::jsonb) AS events,
+
+        -- Wishes
+        COALESCE(ws.wishes, '[]'::jsonb) AS wishes
+
       FROM clients c
       LEFT JOIN themes t ON c.theme_id = t.id
       LEFT JOIN packages p ON c.package_id = p.id
       LEFT JOIN theme_categories tc ON c.theme_category_id = tc.id
+
+      -- LATERAL SUBQUERIES (each only executes once per client)
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(
+          jsonb_build_object(
+            'id', p2.id,
+            'name', p2.name,
+            'nickname', p2.nickname,
+            'address', p2.address,
+            'child', p2.child,
+            'parents_male', p2.parents_male,
+            'parents_female', p2.parents_female,
+            'image', p2.image,
+            'role', p2.role,
+            'facebook', p2.facebook,
+            'twitter', p2.twitter,
+            'instagram', p2.instagram,
+            'tiktok', p2.tiktok
+          ) ORDER BY p2.id
+        ) AS participants
+        FROM participants p2
+        WHERE p2.client_id = c.id
+      ) pr ON TRUE
+
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(
+          jsonb_build_object(
+            'id', e2.id,
+            'name', e2.name,
+            'date', e2.date,
+            'start_time', e2.start_time,
+            'end_time', e2.end_time,
+            'address', e2.address,
+            'address_url', e2.address_url,
+            'image', e2.image
+          ) ORDER BY e2.date ASC, e2.start_time::time ASC
+        ) AS events
+        FROM events e2
+        WHERE e2.client_id = c.id
+      ) ev ON TRUE
+
+      LEFT JOIN LATERAL (
+        SELECT jsonb_agg(
+          jsonb_build_object(
+            'id', w2.id,
+            'name', w2.name,
+            'attendant', w2.attendant,
+            'wishes', w2.wishes
+          ) ORDER BY w2.id
+        ) AS wishes
+        FROM wishes w2
+        WHERE w2.client_id = c.id
+      ) ws ON TRUE
+
       WHERE c.slug = $1
+      LIMIT 1;
       `,
       [slug]
     );
 
+    console.timeEnd("⏱ Main query (JOIN + JSON_AGG)");
+
     const client = rows[0];
+    console.log(
+      `🔥 Total API time: ${(performance.now() - start).toFixed(2)} ms`
+    );
 
-    if (!client) return res.status(200).json({ success: true, data: null });
-
-    const [participantsRes, eventsRes, wishesRes] = await Promise.all([
-      sql.query(
-        "SELECT * FROM participants WHERE client_id = $1 ORDER BY id ASC",
-        [client.id]
-      ),
-      sql.query(
-        "SELECT * FROM events WHERE client_id = $1 ORDER BY date ASC, start_time::time ASC",
-        [client.id]
-      ),
-      sql.query("SELECT * FROM wishes WHERE client_id = $1", [client.id]),
-    ]);
-
-    client.participants = participantsRes.rows;
-    client.events = eventsRes.rows;
-    client.wishes = wishesRes.rows;
-
-    // Format theme, package, theme_category
-    client.theme = {
-      id: client.theme_id,
-      slug: client.theme_slug,
-      name: client.theme_name,
-      thumbnail: client.theme_thumbnail,
-      phone_thumbnail: client.theme_phone_thumbnail,
-      cover_video: client.theme_cover_video,
-      is_preview: client.theme_is_preview,
-    };
-
-    client.package = {
-      id: client.package_id,
-      name: client.package_name,
-      price: client.package_price,
-      discount: client.package_discount,
-      custom_opening_closing: client.package_custom_opening_closing,
-      unlimited_revisions: client.package_unlimited_revisions,
-    };
-
-    client.theme_category = {
-      id: client.theme_category_id,
-      slug: client.theme_category_slug,
-      name: client.theme_category_name,
-    };
-
-    return res.status(200).json({ success: true, data: client });
+    return res.status(200).json({ success: true, data: client || null });
   } catch (error) {
     handleError(res, error);
   }
