@@ -58,11 +58,9 @@ const ThemeComponent: FC = () => {
       "@type": "Product",
       position: index + 1,
       name: `Undangan Digital Bali - Tema ${theme.name}`,
-      description:
-        theme.description ||
-        "Tema undangan digital Bali elegan dari Moment Invitation",
+      description: `Tema undangan digital ${theme.name} dari Moment Invitation`,
       image: theme.phone_thumbnail,
-      url: `https://www.momentinvitation.com/${theme.slug}`,
+      url: `https://www.momentinvitation.com/${theme.client_slug}`,
       sku: theme.slug,
       brand: {
         "@type": "Organization",
@@ -71,25 +69,25 @@ const ThemeComponent: FC = () => {
       },
       offers: {
         "@type": "Offer",
-        url: `https://www.momentinvitation.com/${theme.slug}`,
+        url: `https://www.momentinvitation.com/${theme.client_slug}`,
         priceCurrency: "IDR",
         price: 199000,
         availability: "https://schema.org/InStock",
         itemCondition: "https://schema.org/NewCondition",
       },
-      review: theme.testimonials?.map((t) => ({
-        "@type": "Review",
-        author: { "@type": "Person", name: t.name },
-        reviewBody: t.comments,
-        datePublished: t.created_at,
-      })),
-      aggregateRating: theme.testimonials?.length
-        ? {
-            "@type": "AggregateRating",
-            ratingValue: 5,
-            reviewCount: theme.testimonials.length,
-          }
-        : undefined,
+      review:
+        theme.testimonials &&
+        theme.testimonials?.map((t) => ({
+          "@type": "Review",
+          author: { "@type": "Person", name: t.name },
+          reviewBody: t.comments,
+          datePublished: t.created_at,
+        })),
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: 5,
+        reviewCount: theme.testimonials && theme.testimonials.length,
+      },
       video: `/videos/video/themes/${theme.slug}.mp4`
         ? {
             "@type": "VideoObject",
@@ -107,6 +105,8 @@ const ThemeComponent: FC = () => {
         : undefined,
     })),
   };
+
+  console.log(jsonLdThemes);
 
   return (
     <section
