@@ -34,24 +34,24 @@ const TestimonialsComponent = () => {
         author: { "@type": "Person", name: t.name },
         reviewBody: t.comments,
       })),
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "IDR",
-        price: "199000",
-        availability: "https://schema.org/InStock",
-        url: `https://www.momentinvitation.com/${t.theme_name}`,
-      },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "5",
-        reviewCount: testimonials.length.toString(),
-      },
       itemReviewed: {
         "@type": "Product",
-        name: `Undangan Digital Bali - ${t.theme_name}`,
+        name: `Undangan Digital Bali - Tema ${t.theme_name}`,
         brand: {
           "@type": "Organization",
           name: "Moment Invitation",
+        },
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "IDR",
+          price: "199000",
+          availability: "https://schema.org/InStock",
+          url: `https://www.momentinvitation.com/${t.theme_name}`,
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "5",
+          reviewCount: testimonials.length.toString(),
         },
       },
       position: index + 1,

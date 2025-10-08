@@ -57,7 +57,7 @@ const ThemeComponent: FC = () => {
     itemListElement: displayedThemes.map((theme, index) => ({
       "@type": "Product",
       position: index + 1,
-      name: `Undangan Digital Tema ${theme.name}`,
+      name: `Undangan Digital Bali - Tema ${theme.name}`,
       description:
         theme.description ||
         "Tema undangan digital Bali elegan dari Moment Invitation",
