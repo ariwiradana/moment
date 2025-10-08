@@ -1,26 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 
 const useScreenSize = () => {
-  const [screenSize, setScreenSize] = useState({
-    isMobile: true,
-    isTablet: false,
-    isDesktop: false,
-  });
+  const getSize = () => {
+    const width = window.innerWidth;
+    return {
+      isMobile: width <= 640,
+      isTablet: width > 640 && width <= 1024,
+      isDesktop: width > 1024,
+    };
+  };
 
-  useEffect(() => {
+  const [screenSize, setScreenSize] = useState(getSize);
+
+  useLayoutEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const handleResize = () => {
-      const width = window.innerWidth;
-
-      setScreenSize({
-        isMobile: width <= 640,
-        isTablet: width > 640 && width <= 1024, // Tablet: > 640px and ≤ 1024px
-        isDesktop: width > 1024, // Desktop: > 1024px
-      });
+      clearTimeout(timeoutId);
+      // Debounce resize event 100ms
+      timeoutId = setTimeout(() => {
+        setScreenSize(getSize());
+      }, 100);
     };
 
-    handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return screenSize;

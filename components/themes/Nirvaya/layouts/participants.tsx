@@ -1,17 +1,17 @@
+import React, { memo } from "react";
 import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
-import { raleway } from "@/lib/fonts";
-import { Participant } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
+import { raleway } from "@/lib/fonts";
 import Image from "next/image";
 import Link from "next/link";
-import React, { memo } from "react";
 import {
   BiLogoFacebook,
   BiLogoInstagram,
   BiLogoTiktok,
   BiLogoTwitter,
 } from "react-icons/bi";
+import { Participant } from "@/lib/types";
 
 const Participants = () => {
   const { client } = useClientStore();
@@ -57,6 +57,7 @@ const Participants = () => {
         >
           {client?.opening_description}
         </p>
+
         <div className="flex flex-col lg:flex-row mt-16 gap-16">
           {client?.participants.map((participant, index) => (
             <ParticipantItem
@@ -82,17 +83,19 @@ const ParticipantItem = ({
     <div>
       <div
         data-aos="zoom-out-up"
-        className={`w-full h-[430px] lg:h-[500px] relative drop-shadow-xl ${
+        className={`w-full h-[430px] lg:h-[500px] relative drop-shadow-xl overflow-hidden ${
           order === "odd"
             ? "rounded-tl-[150px] rounded-br-[150px]"
             : "rounded-tr-[150px] rounded-bl-[150px]"
         }`}
       >
         <Image
-          priority
+          priority={
+            participant.role === "groom" || participant.role === "bride"
+          }
           sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
           alt={`Participant ${participant.nickname}`}
-          src={(participant.image as string) || ""}
+          src={participant.image as string}
           fill
           className={`object-cover bg-nirvaya-dark/5 ${
             order === "odd"
@@ -101,10 +104,11 @@ const ParticipantItem = ({
           }`}
         />
       </div>
+
       <div className={`mt-8 ${order === "odd" ? "text-left" : "text-right"}`}>
         <p
           data-aos="fade-up"
-          className={`text-nirvaya-dark/50 tracking-[2px] font-medium text-[10px] lg:text-xs uppercase`}
+          className="text-nirvaya-dark/50 tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
         >
           {participant?.role === "groom"
             ? "Mempelai Pria"
@@ -120,7 +124,7 @@ const ParticipantItem = ({
         </h3>
         <p
           data-aos="fade-up"
-          className={`text-nirvaya-dark/50 tracking-[2px] text-[10px] lg:text-xs mt-3`}
+          className="text-nirvaya-dark/50 tracking-[2px] text-[10px] lg:text-xs mt-3"
         >
           {participant.role === "groom"
             ? "Putra"
@@ -130,6 +134,7 @@ const ParticipantItem = ({
           {participant.child} dari pasangan Bapak {participant.parents_male} dan
           Ibu {participant.parents_female}
         </p>
+
         <div
           data-aos="fade-up"
           className={`flex mt-9 gap-x-5 text-nirvaya-dark/50 text-xl ${

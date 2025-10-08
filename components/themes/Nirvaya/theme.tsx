@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Layout from "../layout";
 import Cover from "./layouts/cover";
 import Hero from "./layouts/hero";
@@ -7,10 +7,10 @@ import useMusic from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
 import Participants from "./layouts/participants";
 import Events from "./layouts/events";
-import Photos from "./layouts/photos";
-import Gift from "./layouts/gift";
-import RsvpWishes from "./layouts/rsvp.wishes";
-import Thankyou from "./layouts/thankyou";
+const Photos = React.lazy(() => import("./layouts/photos"));
+const Gift = React.lazy(() => import("./layouts/gift"));
+const RsvpWishes = React.lazy(() => import("./layouts/rsvp.wishes"));
+const Thankyou = React.lazy(() => import("./layouts/thankyou"));
 
 interface Props {
   untuk: string;
@@ -19,23 +19,26 @@ interface Props {
 const Nirvaya = ({ untuk }: Props) => {
   const { isOpen } = useCoverStore();
   const { state, actions, refs } = useMusic();
+
   return (
     <Layout>
       <MusicComponent actions={actions} refs={refs} state={state} />
       <Cover actions={actions} to={untuk} />
-      <Hero />
       {isOpen && (
-        <>
+        <Suspense
+          fallback={<div className="text-center py-12">Loading...</div>}
+        >
+          <Hero />
           <Participants />
           <Events />
           <Photos />
           <Gift />
           <RsvpWishes />
           <Thankyou />
-        </>
+        </Suspense>
       )}
     </Layout>
   );
 };
 
-export default Nirvaya;
+export default React.memo(Nirvaya);

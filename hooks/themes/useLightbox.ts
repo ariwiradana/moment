@@ -1,5 +1,5 @@
 import useClientStore from "@/store/useClientStore";
-import React, { useCallback, useMemo } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 
 interface Image {
   src: string;
@@ -7,32 +7,30 @@ interface Image {
 
 const useLightbox = () => {
   const { client } = useClientStore();
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [imageIndex, setImageIndex] = React.useState(0);
-  const zoomRef = React.useRef(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [imageIndex, setImageIndex] = useState<number>(0);
+  const zoomRef = useRef<HTMLDivElement | null>(null);
 
+  // Memoized images array
   const images: Image[] = useMemo(
-    () => (client?.gallery as string[])?.map((image) => ({ src: image })) ?? [],
+    () => (client?.gallery as string[])?.map((src) => ({ src })) ?? [],
     [client?.gallery]
   );
 
+  // Toggle lightbox and set index
   const handleToggleLightbox = useCallback(
-    (image: string) => {
-      setIsOpen((state) => !state);
-      const index = images.findIndex((img) => img.src === image);
-      setImageIndex(index);
+    (src: string) => {
+      const index = images.findIndex((img) => img.src === src);
+      if (index !== -1) setImageIndex(index);
+      setIsOpen((prev) => !prev); // toggle tetap aman
     },
-    [isOpen]
+    [images]
   );
 
   return {
     ref: { zoomRef },
-    state: {
-      images,
-      isOpen,
-      imageIndex,
-    },
-    actions: { handleToggleLightbox, setIsOpen },
+    state: { images, isOpen, imageIndex },
+    actions: { handleToggleLightbox, setIsOpen }, // tetap bisa dipanggil setIsOpen(false)
   };
 };
 

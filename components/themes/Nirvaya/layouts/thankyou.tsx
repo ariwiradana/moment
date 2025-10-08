@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { raleway } from "@/lib/fonts";
 import Link from "next/link";
+import Image from "next/image";
 import { sosmedURLs } from "@/constants/sosmed";
 import {
   AiOutlineInstagram,
@@ -8,11 +9,10 @@ import {
   AiOutlineWhatsApp,
   AiOutlineYoutube,
 } from "react-icons/ai";
+import { BiMusic } from "react-icons/bi";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
 import usePhotos from "@/hooks/themes/usePhotos";
-import Image from "next/image";
-import { BiMusic } from "react-icons/bi";
 
 const ThankyouComponent = () => {
   const { client } = useClientStore();
@@ -20,38 +20,57 @@ const ThankyouComponent = () => {
   const {
     state: { images },
   } = usePhotos();
+
+  // Limit render images to prevent heavy load
+  const visibleImages = images?.slice(0, 10) ?? [];
+
   return (
-    <section className="relative flex flex-col justify-center">
-      <div className="absolute inset-0 bg-gradient-to-b from-nirvaya-dark from-[5%] via-nirvaya-dark/80 to-nirvaya-dark/90 z-10"></div>
+    <section className="relative flex flex-col justify-center h-svh">
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-nirvaya-dark from-[5%] via-nirvaya-dark/80 to-nirvaya-dark/90 z-10" />
+
+      {/* Background images */}
       <div className="absolute inset-0 grid grid-cols-2">
-        {images.slice(0, 10).map((image, index) => (
+        {visibleImages.map((image, index) => (
           <div
             className="w-full h-[20vh] overflow-hidden bg-white/5 relative"
-            key={`Foto Thankyou ${index + 1}`}
+            key={image ?? index}
           >
             <Image
               src={image}
               alt={`Foto Thankyou ${index + 1}`}
               fill
               className="object-cover grayscale"
+              sizes="50vw"
+              loading={index < 2 ? "eager" : "lazy"} // prioritize first 2 images
             />
           </div>
         ))}
       </div>
-      <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center relative z-30">
-        <h1
-          data-aos="fade-up"
-          className="text-white text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase mb-6"
-        >
-          {client?.closing_title}
-        </h1>
-        <p
-          data-aos="fade-up"
-          className={`text-white/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto lg:text-xs text-[10px] my-16 ${raleway.className}`}
-        >
-          {client?.closing_description}
-        </p>
 
+      {/* Main content */}
+      <div className="max-w-screen-sm mx-auto py-[60px] md:py-[100px] px-8 flex flex-col justify-center relative z-30">
+        {/* Closing Title */}
+        {client?.closing_title && (
+          <h1
+            data-aos="fade-up"
+            className="text-white text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase mb-6"
+          >
+            {client.closing_title}
+          </h1>
+        )}
+
+        {/* Closing Description */}
+        {client?.closing_description && (
+          <p
+            data-aos="fade-up"
+            className={`text-white/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto lg:text-xs text-[10px] my-16 ${raleway.className}`}
+          >
+            {client.closing_description}
+          </p>
+        )}
+
+        {/* Bride & Groom */}
         {client?.theme_category?.name === "Pernikahan" && (
           <>
             <p
@@ -60,23 +79,23 @@ const ThankyouComponent = () => {
             >
               Kami Yang Berbahagia
             </p>
-            <h1
+            <h2
               data-aos="fade-up"
               className="text-white text-center leading-8 text-4xl font-edensor mt-2"
             >
-              {participantState.groom?.nickname}{" "}
+              {participantState.groom?.nickname ?? "-"}{" "}
               <span className="font-italic">dan </span>
-              {participantState.bride?.nickname}
-            </h1>
+              {participantState.bride?.nickname ?? "-"}
+            </h2>
           </>
         )}
+
+        {/* Social & Footer */}
         <ul
           data-aos="zoom-in-up"
-          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-[100px] justify-self-end"
+          className="flex flex-col justify-center gap-2 items-center relative z-30 mt-[100px]"
         >
-          <li
-            className={`flex items-center justify-center gap-2 text-base text-white mt-2`}
-          >
+          <li className="flex items-center justify-center gap-2 text-base text-white mt-2">
             <Link
               aria-label="footer-whatsapp-link"
               target="_blank"
@@ -106,6 +125,8 @@ const ThankyouComponent = () => {
               <AiOutlineYoutube />
             </Link>
           </li>
+
+          {/* Footer copyright */}
           <li className="mt-2">
             <Link href="/" target="_blank">
               <p
@@ -115,13 +136,15 @@ const ThankyouComponent = () => {
               </p>
             </Link>
           </li>
+
+          {/* Music title */}
           {client?.music_title && (
             <li>
               <div
                 className={`flex justify-center items-center gap-x-2 ${raleway.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
               >
                 <BiMusic className="animate-pulse" />
-                <p>{client?.music_title}</p>
+                <p>{client.music_title}</p>
               </div>
             </li>
           )}

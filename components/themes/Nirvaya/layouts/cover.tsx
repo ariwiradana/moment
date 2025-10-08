@@ -5,14 +5,15 @@ import { raleway } from "@/lib/fonts";
 import useCoverStore from "@/store/useCoverStore";
 import { getEventNames } from "@/utils/getEventNames";
 import useEvents from "@/hooks/themes/useEvents";
-import { UseMusic } from "@/hooks/themes/useMusic";
+import useParticipants from "@/hooks/themes/useParticipants";
 import useClientStore from "@/store/useClientStore";
 import Image from "next/image";
-import useParticipants from "@/hooks/themes/useParticipants";
 
 interface Props {
   to: string;
-  actions: UseMusic["actions"];
+  actions: {
+    handlePlayPause: () => void;
+  };
 }
 
 const Cover = ({ to, actions }: Props) => {
@@ -26,39 +27,37 @@ const Cover = ({ to, actions }: Props) => {
   const { client } = useClientStore();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
+    window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
   useEffect(() => {
-    if (!isOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
+    document.body.classList.toggle("no-scroll", !isOpen);
   }, [isOpen]);
 
   return (
     <section
-      className={`fixed bg-nirvaya-dark transition-all ease-in-out duration-700 ${
-        isOpen ? "-bottom-full opacity-0 h-dvh" : "bottom-0 opacity-100 h-svh"
-      } inset-x-0 bg-gradient-to-b z-20 py-16 ${raleway.className}`}
+      className={`fixed inset-x-0 py-16 transition-all duration-700 ease-in-out z-20 
+        ${isOpen ? "invisible opacity-0 h-dvh" : "visible opacity-100 h-svh"} 
+        bg-gradient-to-b from-nirvaya-dark/0 to-nirvaya-dark/90 ${
+          raleway.className
+        }`}
     >
       {client?.cover && (
         <Image
           data-aos="zoom-out"
-          quality={100}
-          priority
-          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-          src={client?.cover as string}
-          fill
-          className="object-cover shimmer-dark"
+          src={client.cover}
           alt="cover"
+          fill
+          priority
+          quality={80} // optimize quality for faster load
+          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+          className="object-cover shimmer-dark"
         />
       )}
+
       <div className="absolute inset-0 bg-gradient-to-b from-nirvaya-dark/60 via-nirvaya-dark/0 to-nirvaya-dark/90 to-[90%] z-20"></div>
-      <div className="flex flex-col justify-between items-center h-full w-full relative z-30">
+
+      <div className="relative z-30 flex flex-col justify-between items-center h-full w-full">
         <div>
           <p
             data-aos="fade-up"
@@ -113,9 +112,9 @@ const Cover = ({ to, actions }: Props) => {
             acara {getEventNames(events || [])} kami.
           </p>
           <div
-            className="flex justify-center"
             data-aos="fade-down"
             data-aos-delay="600"
+            className="flex justify-center"
           >
             <Button
               onClick={() => {
@@ -132,4 +131,4 @@ const Cover = ({ to, actions }: Props) => {
   );
 };
 
-export default Cover;
+export default React.memo(Cover);

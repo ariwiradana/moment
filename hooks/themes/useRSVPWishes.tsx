@@ -35,7 +35,7 @@ const useRSVPWishes = (icon: ReactNode) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [page, setPage] = useState(1);
-  const limit = 8;
+  const limit = 6;
 
   const wisheschema = useMemo(
     () =>
