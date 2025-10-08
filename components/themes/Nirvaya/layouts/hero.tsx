@@ -44,21 +44,21 @@ const Hero = () => {
     <section className={`relative bg-nirvaya-dark ${raleway.className}`}>
       <Swiper
         modules={[Autoplay, EffectFade]}
+        speed={2000}
         effect="fade"
-        speed={1500}
         autoplay={{ delay: 6000, disableOnInteraction: false }}
         className="h-lvh w-full"
       >
         {images.map((image, index) => (
           <SwiperSlide key={`hero-slide-${index}`}>
             <Image
-              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
               fill
-              quality={80} // optimize load
+              quality={80}
               alt={`hero-img-${index}`}
               priority={index === 0}
               className="object-cover shimmer-dark bg-nirvaya-dark"
               src={image}
+              sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1280px"
             />
           </SwiperSlide>
         ))}
