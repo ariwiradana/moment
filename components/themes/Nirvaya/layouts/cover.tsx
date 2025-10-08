@@ -36,11 +36,9 @@ const Cover = ({ to, actions }: Props) => {
 
   return (
     <section
-      className={`fixed inset-x-0 py-16 transition-all duration-700 ease-in-out z-20 
+      className={`fixed inset-x-0 py-16 transition-all duration-1000 ease-in-out z-20 
         ${
-          isOpen
-            ? "-bottom-full opacity-70 h-dvh"
-            : "bottom-0 opacity-100 h-svh"
+          isOpen ? "-bottom-full opacity-0 h-dvh" : "bottom-0 opacity-100 h-svh"
         } 
         bg-gradient-to-b from-nirvaya-dark/0 to-nirvaya-dark/90 ${
           raleway.className
