@@ -93,7 +93,7 @@ const DashboardPage = () => {
   useDisableInspect();
 
   return (
-    <>
+    <main className="min-h-dvh">
       <ButtonFloating
         aria-label="Hubungi Kami melalui WhatsApp"
         onClick={() => window.open(sosmedURLs.whatsapp)}
@@ -108,7 +108,7 @@ const DashboardPage = () => {
       <TestimonialsComponent />
       <SharedThemeComponent />
       <FaqComponent />
-    </>
+    </main>
   );
 };
 
