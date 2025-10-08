@@ -25,6 +25,7 @@ const DashboardForm = ({ category }: Props) => {
         description="Masukkan informasi klien dengan mudah di halaman Form Klien Moment. Kelola data klien, tambahkan detail undangan, dan buat pengalaman pernikahan atau mempandes yang disesuaikan dengan kebutuhan."
         keywords={`form klien undangan, masukkan data klien pernikahan, form klien mempandes, kelola informasi klien, undangan digital klien, form klien Bali, kelola data klien undangan`}
         image="https://res.cloudinary.com/dsbmvj2s3/image/upload/v1759919489/seo_cvsy5o.webp"
+        noIndex
       />
 
       <div className="max-w-screen-2xl mx-auto pt-16 md:pt-20 lg:pt-24">

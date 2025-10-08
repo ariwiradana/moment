@@ -17,6 +17,7 @@ const AdminLogin: FC = () => {
     <>
       <Head>
         <title>Login | Moment</title>
+        <meta name="robots" content="noindex, nofollow"></meta>
       </Head>
       <section className="min-h-dvh w-full flex justify-center items-center p-8 md:p-16 bg-white md:bg-gray-50">
         <div className="flex flex-col justify-center max-w-md w-full bg-white md:shadow-lg md:p-8 rounded-lg">
