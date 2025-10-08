@@ -66,10 +66,7 @@ const PackageComponent = () => {
         price: p.price - p.discount,
         url: `https://momentinvitation.com`,
       },
-      brand: {
-        "@type": "Organization",
-        name: "Moment Invitation",
-      },
+      brand: "Moment Invitation",
     })),
   };
 

@@ -38,6 +38,7 @@ const TestimonialsComponent = () => {
         "@type": "Product",
         name: `Undangan Digital Bali - Tema ${t.theme_name}`,
         image: t.theme_phone_thumbnail,
+        description: `Tema undangan digital ${t.theme_name} dari Moment Invitation`,
         brand: "Moment Invitation",
         offers: {
           "@type": "Offer",
