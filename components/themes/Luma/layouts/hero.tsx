@@ -46,27 +46,27 @@ const Hero: NextPage = () => {
             </span>
           </h1>
 
-          <div
-            data-aos="fade-up"
-            data-aos-delay="600"
-            className={`transform transition-all flex items-center ease-in-out duration-200 ${
-              fade
-                ? "opacity-100 translate-y-0"
-                : "opacity-10 translate-y-[4px]"
-            }`}
-          >
-            <p
-              className={`${rubik.className} uppercase text-[10px] md:text-xs tracking-[1px] font-light text-white`}
+          <div data-aos="fade-up" data-aos-delay="600">
+            <div
+              className={`transform transition-all flex items-center ease-in-out duration-200 ${
+                fade
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-10 translate-y-[4px]"
+              }`}
             >
-              {currentEvent.name}
-            </p>
-            <div className="w-[2px] h-[2px] aspect-square rounded-full bg-white mx-3" />
-            <time
-              className={`${rubik.className} uppercase text-[10px] md:text-xs tracking-[1px] font-light text-white`}
-              dateTime={currentEvent.date}
-            >
-              {formattedDate}
-            </time>
+              <p
+                className={`${rubik.className} uppercase text-[10px] md:text-xs tracking-[1px] font-light text-white`}
+              >
+                {currentEvent.name}
+              </p>
+              <div className="w-[2px] h-[2px] aspect-square rounded-full bg-white mx-3" />
+              <time
+                className={`${rubik.className} uppercase text-[10px] md:text-xs tracking-[1px] font-light text-white`}
+                dateTime={currentEvent.date}
+              >
+                {formattedDate}
+              </time>
+            </div>
           </div>
         </div>
 

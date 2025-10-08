@@ -43,11 +43,11 @@ const Luma = ({ untuk }: Props) => {
   return (
     <Layout>
       <Music actions={actions} refs={refs} state={state} />
-      <main className="bg-luma-dark relative">
+      <main className="bg-luma-dark relative overflow-x-hidden">
         <div
           className="fixed inset-0 lg:max-w-[30vw] mx-auto"
           aria-hidden="true"
-          data-aos="zoom-out"
+          data-aos="fade-in"
         >
           <Swiper
             modules={[Autoplay, EffectFade]}
