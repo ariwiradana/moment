@@ -28,7 +28,7 @@ const ParticipantsComponent = () => {
   return (
     <section
       style={{ marginTop: 0 }}
-      className="relative z-10 bg-aruna-dark px-6 py-[60px] md:py-[100px]"
+      className="relative z-10 bg-aruna-dark px-6 pb-[60px] md:pb-[100px]"
     >
       <div className="relative flex flex-col items-center gap-12">
         {participantState.groom && (
