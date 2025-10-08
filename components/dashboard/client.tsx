@@ -34,7 +34,7 @@ const ClientComponent = () => {
   return (
     <section className="relative select-none bg-white pb-8 lg:pb-16">
       <div>
-        {!isLoading ? (
+        {isLoading ? (
           <div
             className={`grid`}
             style={{
