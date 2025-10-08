@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { raleway } from "@/lib/fonts";
 import { Participant } from "@/lib/types";
 import Link from "next/link";
@@ -23,7 +23,7 @@ const ParticipantsComponent = () => {
     >
       <h2
         data-aos="fade-up"
-        className={`text-white text-center leading-8 text-xl md:text-2xl 2xl:3xl font-tan-pearl`}
+        className="text-white text-center leading-8 text-xl md:text-2xl 2xl:3xl font-tan-pearl"
       >
         {client?.opening_title}
       </h2>
@@ -33,6 +33,7 @@ const ParticipantsComponent = () => {
       >
         {client?.opening_description}
       </p>
+
       <div className="flex md:grid md:grid-cols-2 flex-col gap-8 md:gap-4 lg:gap-12 mt-20 max-w-screen-lg mx-auto">
         <ParticipantComponent
           data={participantState?.groom as Participant}
@@ -51,15 +52,20 @@ interface ComponentProps {
   data: Participant;
   index: number;
 }
-const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
+
+const ParticipantComponent: FC<ComponentProps> = memo(({ data, index }) => {
   const odd = index % 2 !== 0;
+
   return (
     <div>
       <div
         className="w-full aspect-[3/4] relative bg-white/5"
         data-aos="zoom-in"
       >
+        {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-samaya-dark/30 via-transparent to-samaya-dark/80 z-10"></div>
+
+        {/* Circular Text */}
         <div
           data-aos={odd ? "fade-up-right" : "fade-up-left"}
           className={`absolute top-0 w-10 h-10 flex justify-center items-center z-20 ${
@@ -73,29 +79,36 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
             className={raleway.className}
           />
         </div>
+
+        {/* Participant Image */}
         <Image
-          quality={100}
+          quality={80} // optimize kualitas
           sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
           alt={`Foto Partisipan ${index + 1}`}
-          src={(data?.image as string) || ""}
+          src={data?.image as string}
           fill
+          loading="lazy"
           className={`object-cover border-[4px] border-samaya-dark ${
             odd
               ? "rounded-tr-[100px] lg:rounded-tr-[200px]"
               : "rounded-tl-[100px] lg:rounded-tl-[200px]"
           }`}
         />
+
+        {/* Participant Info */}
         <div className="absolute bottom-0 left-0 p-8 z-20">
           <p
             className={`${raleway.className} text-[10px] md:text-xs tracking-[2px] uppercase leading-5 text-white/80`}
           >
             Mempelai {data?.gender === "male" ? "Pria" : "Wanita"}
           </p>
-          <h2 className={`font-tan-pearl text-white text-xl md:text-2xl mt-4`}>
+          <h2 className="font-tan-pearl text-white text-xl md:text-2xl mt-4">
             {data?.name}
           </h2>
         </div>
       </div>
+
+      {/* Parent Info */}
       <p
         data-aos="fade-up"
         className={`${raleway.className} ml-1 tracking-[1px] text-[10px] md:text-xs leading-4 text-white/50 mt-8`}
@@ -103,6 +116,8 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
         {data?.gender === "male" ? "Putra" : "Putri"} {data?.child} dari
         pasangan Bapak {data?.parents_male} dan Ibu {data?.parents_female}
       </p>
+
+      {/* Social Links */}
       <div
         data-aos="fade-up"
         className="flex mt-6 ml-1 gap-x-4 text-samaya-primary text-base md:text-lg text-center"
@@ -146,6 +161,8 @@ const ParticipantComponent: FC<ComponentProps> = ({ data, index }) => {
       </div>
     </div>
   );
-};
+});
+
+ParticipantComponent.displayName = "ParticipantComponent";
 
 export default ParticipantsComponent;

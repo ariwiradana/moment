@@ -30,8 +30,6 @@ const GiftComponent = () => {
     [isGiftShown]
   );
 
-  if (client?.status !== "paid") return;
-
   return (
     <section
       style={{ marginTop: 0 }}

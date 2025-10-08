@@ -6,9 +6,9 @@ import usePhotos from "@/hooks/themes/usePhotos";
 import useParticipants from "@/hooks/themes/useParticipants";
 import useCoverStore from "@/store/useCoverStore";
 import Image from "next/image";
-import moment from "moment";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
+import { formatDate } from "@/utils/formatDate";
 
 const HeroComponent = () => {
   const { state: eventState } = useEvents();
@@ -18,23 +18,31 @@ const HeroComponent = () => {
   const { isOpen } = useCoverStore();
   const { state: participantState } = useParticipants();
 
-  const slides = useMemo(() => {
-    return images.map((image, index) => (
-      <SwiperSlide key={`hero-slide-${index}`}>
-        <Image
-          src={image as string}
-          alt={`Hero Slide ${index + 1}`}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority={index === 0} // hanya preload slide pertama
-        />
-      </SwiperSlide>
-    ));
-  }, [images]);
+  // Memoize slides supaya tidak rerender setiap render parent
+  const slides = useMemo(
+    () =>
+      images.map((image, index) => (
+        <SwiperSlide key={`hero-slide-${index}`}>
+          <Image
+            src={image as string}
+            alt={`Hero Slide ${index + 1}`}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            quality={80} // sedikit lebih ringan tapi tetap tajam
+            priority={index === 0} // preload hanya slide pertama
+            loading={index === 0 ? "eager" : "lazy"}
+          />
+        </SwiperSlide>
+      )),
+    [images]
+  );
 
   return (
-    <section className="relative bg-samaya-dark h-lvh w-full overflow-hidden">
+    <section
+      className="relative bg-samaya-dark h-lvh w-full overflow-hidden"
+      aria-label="Hero Section"
+    >
       {images.length > 0 && (
         <Swiper
           modules={[Autoplay, EffectFade]}
@@ -48,16 +56,25 @@ const HeroComponent = () => {
         </Swiper>
       )}
 
+      {/* Gradient overlay */}
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%]" />
 
+      {/* Text overlay */}
       {isOpen && (
         <div className="absolute inset-0 z-20 flex flex-col justify-end items-center py-8 px-6">
-          <h1 className="font-tan-pearl text-white text-2xl md:text-3xl 2xl:text-4xl mb-2 lg:mb-4 text-center">
+          <h1
+            data-aos="fade-up"
+            className="font-tan-pearl text-white text-2xl md:text-3xl 2xl:text-4xl mb-2 lg:mb-4 text-center"
+          >
             {participantState.groom?.nickname} &{" "}
             {participantState.bride?.nickname}
           </h1>
 
-          <div className="w-full flex justify-center mt-4">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="100"
+            className="w-full flex justify-center mt-4"
+          >
             <div
               className={`flex items-center gap-x-3 transition-all duration-500 ease-in-out ${
                 eventState.fade
@@ -74,14 +91,16 @@ const HeroComponent = () => {
               <p
                 className={`${raleway.className} text-white text-xs md:text-sm tracking-[1px]`}
               >
-                {moment(eventState.events[eventState.currentIndex].date).format(
-                  "DD / MMMM / YYYY"
-                )}
+                {formatDate(eventState.events[eventState.currentIndex].date)}
               </p>
             </div>
           </div>
 
-          <div className="h-12 lg:h-16 aspect-video relative mt-4">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="h-12 lg:h-16 aspect-video relative mt-4"
+          >
             <Image
               src="/images/samaya/leaf-primary.svg"
               alt="floral-top-corner"

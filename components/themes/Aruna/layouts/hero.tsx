@@ -9,7 +9,7 @@ import moment from "moment";
 import Image from "next/image";
 import React, { memo, useMemo, useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade, Lazy } from "swiper/modules";
+import { Autoplay, EffectFade } from "swiper/modules";
 
 const HeroComponent = () => {
   const { client } = useClientStore();
@@ -61,7 +61,7 @@ const HeroComponent = () => {
       Array.isArray(client?.gallery) &&
       client.gallery.length > 0 ? (
         <Swiper
-          modules={[Autoplay, EffectFade, Lazy]}
+          modules={[Autoplay, EffectFade]}
           slidesPerView={1}
           effect="fade"
           loop

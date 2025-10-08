@@ -12,7 +12,6 @@ import {
 } from "react-icons/hi2";
 
 const ClientComponent = () => {
-  const skeletonCount = 12;
   const { data, isLoading } = useSWR("/api/_pb/_c?status=completed", fetcher);
   const clients: Client[] = useMemo(() => data?.data || [], [data]);
 
@@ -35,14 +34,14 @@ const ClientComponent = () => {
   return (
     <section className="relative select-none bg-white pb-8 lg:pb-16">
       <div>
-        {isLoading ? (
+        {!isLoading ? (
           <div
             className={`grid`}
             style={{
               gridTemplateColumns: `repeat(${slidesPerView}, minmax(0, 1fr))`,
             }}
           >
-            {Array.from({ length: skeletonCount }).map((_, idx) => (
+            {Array.from({ length: slidesPerView }).map((_, idx) => (
               <div key={idx} className="w-full aspect-square shimmer" />
             ))}
           </div>

@@ -111,7 +111,7 @@ const ThankyouComponent = () => {
               <p
                 className={`${raleway.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
               >
-                Undangan Digital © 2024 | Moment Invitation
+                Undangan Digital © 2025 | Moment Invitation
               </p>
             </Link>
           </li>

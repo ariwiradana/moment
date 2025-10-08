@@ -35,7 +35,7 @@ const Cover: FC<Props> = (props) => {
         {client?.cover && (
           <Image
             data-aos="zoom-out"
-            quality={100}
+            quality={80}
             priority
             sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
             src={client?.cover as string}

@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { memo } from "react";
 import { BiCheck, BiSolidSend, BiTime, BiUser } from "react-icons/bi";
 import Input from "../elements/input";
 import InputTextarea from "../elements/textarea";
@@ -19,10 +20,13 @@ const RSVPWishesComponent = () => {
     </div>
   );
 
+  if (!client) return null;
+
   return (
     <section className="relative bg-white w-full overflow-hidden z-20">
-      <div className="max-w-screen-lg mx-auto relative w-full flex flex-col justify-center items-center z-20 pb-[60px] md:pb-[100px] px-6 md:px-12 lg:px-4">
+      <div className="max-w-screen-lg mx-auto relative flex flex-col justify-center items-center w-full z-20 pb-[60px] md:pb-[100px] px-6 md:px-12 lg:px-4">
         <div className="w-full">
+          {/* --- Form Input --- */}
           <form
             data-aos="fade-up"
             onSubmit={actions.handleSubmit}
@@ -30,54 +34,42 @@ const RSVPWishesComponent = () => {
           >
             <Input
               placeholder="Masukkan nama kamu"
-              disabled={client?.status === "completed"}
+              disabled={client.status === "completed"}
               error={state.errors.name}
               value={state.formData.name}
               id="name"
               onChange={(e) => actions.handleChange("name", e.target.value)}
             />
             <InputTextarea
-              disabled={client?.status === "completed"}
-              error={state.errors.wishes}
               placeholder="Masukkan ucapan kamu"
+              disabled={client.status === "completed"}
+              error={state.errors.wishes}
               value={state.formData.wishes}
               id="wishes"
               rows={6}
               onChange={(e) => actions.handleChange("wishes", e.target.value)}
             />
+
+            {/* --- Attendance Options --- */}
             <div className="flex gap-x-4 justify-between lg:justify-start">
-              <InputCheckbox
-                disabled={client?.status === "completed"}
-                value="Hadir"
-                checked={state.formData.attendant === "Hadir"}
-                label="Hadir"
-                onChange={(e) =>
-                  actions.handleChange("attendant", e.target.value)
-                }
-              />
-              <InputCheckbox
-                disabled={client?.status === "completed"}
-                value="Tidak Hadir"
-                checked={state.formData.attendant === "Tidak Hadir"}
-                label="Tidak Hadir"
-                onChange={(e) =>
-                  actions.handleChange("attendant", e.target.value)
-                }
-              />
-              <InputCheckbox
-                disabled={client?.status === "completed"}
-                checked={state.formData.attendant === "Masih Ragu"}
-                value="Masih Ragu"
-                label="Masih Ragu"
-                onChange={(e) =>
-                  actions.handleChange("attendant", e.target.value)
-                }
-              />
+              {["Hadir", "Tidak Hadir", "Masih Ragu"].map((val) => (
+                <InputCheckbox
+                  key={val}
+                  disabled={client.status === "completed"}
+                  value={val}
+                  checked={state.formData.attendant === val}
+                  label={val}
+                  onChange={(e) =>
+                    actions.handleChange("attendant", e.target.value)
+                  }
+                />
+              ))}
             </div>
-            {client?.status === "paid" && (
+
+            {client.status === "paid" && (
               <div className="mt-4">
                 <ButtonDark
-                  isLoading={state.loading ? true : false}
+                  isLoading={!!state.loading}
                   type="submit"
                   title="Kirim"
                   icon={<BiSolidSend />}
@@ -85,7 +77,9 @@ const RSVPWishesComponent = () => {
               </div>
             )}
           </form>
-          {state.wishes && state.wishes?.length > 0 ? (
+
+          {/* --- Wishes List --- */}
+          {state.wishes && state.wishes.length > 0 && (
             <div
               data-aos="fade-up"
               className="flex flex-col w-full gap-4 mt-8"
@@ -97,8 +91,10 @@ const RSVPWishesComponent = () => {
                 >
                   {state.totalRows} Ucapan
                 </p>
-                {state.wishes?.map((r) => (
+
+                {state.wishes.map((r) => (
                   <div key={r.id} className="flex">
+                    {/* Avatar */}
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 border border-samaya-dark/10 rounded-full flex justify-center items-center uppercase font-medium text-samaya-dark">
                         <span className="font-tan-pearl">
@@ -107,13 +103,13 @@ const RSVPWishesComponent = () => {
                       </div>
                     </div>
 
+                    {/* Message */}
                     <div className="ml-4 relative">
                       <div className="p-3 bg-samaya-dark rounded-lg relative">
-                        <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark"></div>
-
+                        <div className="absolute left-[-8px] top-3 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-samaya-dark" />
                         <div className="flex items-center gap-x-3">
                           <div className="flex items-center gap-x-2">
-                            <div className="h-[0.5px] w-4 bg-white"></div>
+                            <div className="h-[0.5px] w-4 bg-white" />
                             <p
                               className={`${raleway.className} text-white text-sm md:text-base`}
                             >
@@ -145,11 +141,14 @@ const RSVPWishesComponent = () => {
                 ))}
               </div>
 
+              {/* --- Pagination --- */}
               {state.totalRows > state.limit && (
                 <div className="w-full border-t border-t-samaya-dark/10 pt-4">
                   <div className="-ml-4">
                     <Pagination
                       page={state.page}
+                      count={Math.ceil(state.totalRows / state.limit)}
+                      onChange={actions.handleChangePagination}
                       sx={{
                         "& .MuiPaginationItem-root": {
                           color: "#101010",
@@ -167,18 +166,16 @@ const RSVPWishesComponent = () => {
                           },
                         },
                       }}
-                      onChange={actions.handleChangePagination}
-                      count={Math.ceil(state.totalRows / state.limit)}
                     />
                   </div>
                 </div>
               )}
             </div>
-          ) : null}
+          )}
         </div>
       </div>
     </section>
   );
 };
 
-export default RSVPWishesComponent;
+export default memo(RSVPWishesComponent);

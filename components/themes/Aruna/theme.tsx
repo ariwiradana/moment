@@ -72,6 +72,7 @@ const Aruna: FC<Props> = ({ untuk }) => {
 
               {client?.cover && (
                 <Image
+                  quality={80}
                   src={client.cover as string}
                   fill
                   className="object-cover shimmer-dark"
