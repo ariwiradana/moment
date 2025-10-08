@@ -15,6 +15,12 @@ import { BiMusic } from "react-icons/bi";
 const ThankyouComponent = () => {
   const { client } = useClientStore();
   const { state: participantState } = useParticipants();
+
+  if (!client) return null;
+
+  const { closing_title, closing_description, theme_category, music_title } =
+    client;
+
   return (
     <section className="h-dvh snap-start w-full overflow-hidden relative flex flex-col justify-center">
       <div className="absolute inset-0 bg-luma-dark/80 z-10"></div>
@@ -22,16 +28,16 @@ const ThankyouComponent = () => {
         <p
           className={`text-white mt-4 text-xs md:text-sm uppercase tracking-[3px] text-center ${rubik.className}`}
         >
-          {client?.closing_title}
+          {closing_title}
         </p>
 
         <p
           className={`mt-6 text-center max-w-xl mx-auto text-[10px] md:text-xs font-light text-white my-16 ${rubik.className}`}
         >
-          {client?.closing_description}
+          {closing_description}
         </p>
 
-        {client?.theme_category?.name === "Pernikahan" && (
+        {theme_category?.name === "Pernikahan" && (
           <>
             <p
               className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase tracking-[3px] text-center ${rubik.className}`}
@@ -82,17 +88,17 @@ const ThankyouComponent = () => {
               <p
                 className={`${rubik.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
               >
-                Undangan Digital © 2025 | Moment Invitation
+                Undangan Digital © 2024 | Moment Invitation
               </p>
             </Link>
           </li>
-          {client?.music_title && (
+          {music_title && (
             <li>
               <div
                 className={`flex justify-center items-center gap-x-2 ${rubik.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
               >
                 <BiMusic className="animate-pulse" />
-                <p>{client?.music_title}</p>
+                <p>{music_title}</p>
               </div>
             </li>
           )}

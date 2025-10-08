@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import "swiper/css";
+import "swiper/css/grid";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import "swiper/css/effect-fade";

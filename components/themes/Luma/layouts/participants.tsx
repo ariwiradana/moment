@@ -19,8 +19,8 @@ const Participants: NextPage = () => {
 
   return (
     <>
-      {groom && <ParticipantItem data={groom as Participant} />}
-      {bride && <ParticipantItem data={bride as Participant} />}
+      {groom && <ParticipantItem data={groom} />}
+      {bride && <ParticipantItem data={bride} />}
     </>
   );
 };
@@ -33,24 +33,28 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
     <section className="h-dvh snap-start w-full bg-luma-dark relative">
       <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/0 to-luma-dark/70 flex flex-col justify-end py-[60px] px-8">
         <p
-          className={`text-white/70 mb-3 text-[8px] md:text-[10px] uppercase tracking-[3px] ${rubik.className}`}
+          className={`${rubik.className} text-white/70 mb-3 text-[8px] md:text-[10px] uppercase tracking-[3px]`}
         >
           Mempelai {data?.gender === "male" ? "Pria" : "Wanita"}
         </p>
-        <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-4">
+        <h2
+          className="font-bigilla text-white text-4xl md:text-5xl mb-4 leading-[40px] md:leading-[50px]"
+          aria-label={`Nama mempelai ${data?.name}`}
+        >
           {data?.name}
         </h2>
         <p
           className={`${rubik.className} text-[10px] md:text-xs mb-1 font-light text-white`}
+          aria-label={`Informasi orang tua dari ${data?.name}`}
         >
           {data?.gender === "male" ? "Putra" : "Putri"} {data?.child} dari
           pasangan <br />
           Bapak {data?.parents_male} dan Ibu {data?.parents_female}
         </p>
-        <div className={`flex gap-x-5 text-white text-lg mt-6`}>
+        <div className="flex gap-x-5 text-white text-lg mt-6">
           {data?.facebook && (
             <Link
-              aria-label="sosmed-facebook-link"
+              aria-label={`Facebook ${data?.name}`}
               target="_blank"
               href={data?.facebook}
             >
@@ -59,7 +63,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
           )}
           {data?.twitter && (
             <Link
-              aria-label="sosmed-twitter-link"
+              aria-label={`Twitter ${data?.name}`}
               target="_blank"
               href={data?.twitter}
             >
@@ -68,7 +72,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
           )}
           {data?.instagram && (
             <Link
-              aria-label="sosmed-instagram-link"
+              aria-label={`Instagram ${data?.name}`}
               target="_blank"
               href={data?.instagram}
             >
@@ -77,7 +81,7 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
           )}
           {data?.tiktok && (
             <Link
-              aria-label="sosmed-tiktok-link"
+              aria-label={`Tiktok ${data?.name}`}
               target="_blank"
               href={data?.tiktok}
             >
@@ -87,14 +91,15 @@ const ParticipantItem = ({ data }: ParticipantProps) => {
         </div>
       </div>
       <Image
-        key={`Opening Image`}
-        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-        fill
-        quality={100}
-        alt={`${data?.role} Image`}
-        priority
-        className="object-cover transform translate-y-0 lg:translate-y-0 transition-transform shimmer-dark"
+        key={`participant-image-${data?.name}`}
         src={data?.image as string}
+        alt={`Foto mempelai ${data?.name}`}
+        fill
+        sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1280px"
+        quality={90}
+        className="object-cover shimmer-dark transition-transform transform"
+        priority={data?.role === "groom"} // prioritas untuk groom
+        loading={data?.role !== "groom" ? "lazy" : "eager"} // lazy load untuk yang tidak hero
       />
     </section>
   );

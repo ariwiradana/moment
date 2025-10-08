@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback } from "react";
+import React, { FC, memo, useCallback, useMemo } from "react";
 import { BiCheck, BiChevronRight, BiSend, BiTime } from "react-icons/bi";
 import { rubik } from "@/lib/fonts";
 import { Review } from "@/lib/types";
@@ -15,6 +15,7 @@ import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import useRSVPWishesLimit from "@/hooks/themes/useRSVPWishesLimit";
 import { RotatingLines } from "react-loader-spinner";
 
+// Memoized Wish Item
 const WishItem = memo(
   ({
     wish,
@@ -22,45 +23,51 @@ const WishItem = memo(
   }: {
     wish: Review;
     attendantText: Record<string, string>;
-  }) => (
-    <div className="py-2 first:pt-0 last:pb-0">
-      <div className="flex items-center gap-x-2">
-        <div
-          className="w-8 h-8 bg-white aspect-square rounded-full flex justify-center items-center uppercase font-medium text-nirvaya-dark"
-          style={{ lineHeight: "none" }}
-        >
-          <span className={`${rubik.className} text-xs`}>
-            {getInitial(wish.name)}
-          </span>
+  }) => {
+    const timeFromNow = useMemo(
+      () => moment(wish.created_at).fromNow(),
+      [wish.created_at]
+    );
+
+    return (
+      <div className="py-2 first:pt-0 last:pb-0">
+        <div className="flex items-center gap-x-2">
+          <div
+            className="w-8 h-8 bg-white aspect-square rounded-full flex justify-center items-center uppercase font-medium text-nirvaya-dark"
+            style={{ lineHeight: "none" }}
+          >
+            <span className={`${rubik.className} text-xs`}>
+              {getInitial(wish.name)}
+            </span>
+          </div>
+          <div>
+            <h5
+              className={`capitalize text-white text-xs leading-5 line-clamp-1 ${rubik.className}`}
+            >
+              {wish.name}
+            </h5>
+            <p
+              className={`${rubik.className} text-[10px] md:text-xs tracking-[1px] text-white/50`}
+            >
+              {attendantText[wish.attendant]}
+            </p>
+          </div>
         </div>
-        <div>
-          <h5
-            className={`capitalize text-white text-xs leading-5 line-clamp-1 ${rubik.className}`}
-          >
-            {wish.name}
-          </h5>
+        <p className="text-white tracking-[1px] md:text-xs text-[10px] mt-2">
+          {wish.wishes}
+        </p>
+        <div className="flex items-center gap-x-1 text-white/80 mt-1">
+          <BiTime className="text-xs md:text-sm" />
           <p
-            className={`${rubik.className} text-[10px] md:text-xs tracking-[1px] text-white/50`}
+            className={`${rubik.className} text-[10px] md:text-xs tracking-[1px]`}
           >
-            {attendantText[wish.attendant]}
+            {timeFromNow}
           </p>
         </div>
       </div>
-      <p className="text-white tracking-[1px] md:text-xs text-[10px] mt-2">
-        {wish.wishes}
-      </p>
-      <div className="flex items-center gap-x-1 text-white/80 mt-1">
-        <BiTime className="text-xs md:text-sm" />
-        <p
-          className={`${rubik.className} text-[10px] md:text-xs tracking-[1px]`}
-        >
-          {moment(wish.created_at).fromNow()}
-        </p>
-      </div>
-    </div>
-  )
+    );
+  }
 );
-
 WishItem.displayName = "WishItem";
 
 const RSVPWishesComponent: FC = () => {
@@ -91,6 +98,11 @@ const RSVPWishesComponent: FC = () => {
       actions.handleChange("attendant", e.target.value);
     },
     [actions]
+  );
+
+  const totalPages = useMemo(
+    () => Math.ceil(state.totalRows / state.limit),
+    [state.totalRows, state.limit]
   );
 
   return (
@@ -142,27 +154,16 @@ const RSVPWishesComponent: FC = () => {
               onChange={handleWishesChange}
             />
             <div className="flex gap-x-8 justify-between lg:justify-start">
-              <InputCheckbox
-                disabled={client?.status === "completed"}
-                value="Hadir"
-                checked={state.formData.attendant === "Hadir"}
-                label="Hadir"
-                onChange={handleAttendantChange}
-              />
-              <InputCheckbox
-                disabled={client?.status === "completed"}
-                value="Tidak Hadir"
-                checked={state.formData.attendant === "Tidak Hadir"}
-                label="Tidak Hadir"
-                onChange={handleAttendantChange}
-              />
-              <InputCheckbox
-                disabled={client?.status === "completed"}
-                checked={state.formData.attendant === "Masih Ragu"}
-                value="Masih Ragu"
-                label="Masih Ragu"
-                onChange={handleAttendantChange}
-              />
+              {["Hadir", "Tidak Hadir", "Masih Ragu"].map((value) => (
+                <InputCheckbox
+                  key={value}
+                  disabled={client?.status === "completed"}
+                  value={value}
+                  checked={state.formData.attendant === value}
+                  label={value}
+                  onChange={handleAttendantChange}
+                />
+              ))}
             </div>
             {client?.status === "paid" && (
               <div className="mt-6">
@@ -231,8 +232,8 @@ const RSVPWishesComponent: FC = () => {
               />
             ))}
           </div>
-          {state.totalRows > 0 &&
-          Math.ceil(state.totalRows / state.limit) > state.page ? (
+
+          {totalPages > 1 && (
             <div className="flex items-center gap-4 mt-6">
               <button
                 disabled={state.page === 1}
@@ -244,19 +245,17 @@ const RSVPWishesComponent: FC = () => {
               <p
                 className={`text-white/70 text-[8px] md:text-[10px] uppercase text-center tracking-[3px] ${rubik.className}`}
               >
-                {state.page} / {Math.ceil(state.totalRows / state.limit)}
+                {state.page} / {totalPages}
               </p>
               <button
-                disabled={
-                  state.page === Math.ceil(state.totalRows / state.limit)
-                }
+                disabled={state.page === totalPages}
                 onClick={() => actions.setPage((state) => state + 1)}
                 className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
               >
                 <HiArrowRight />
               </button>
             </div>
-          ) : null}
+          )}
         </div>
       </section>
     </>
