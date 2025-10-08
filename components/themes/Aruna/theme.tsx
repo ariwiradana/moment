@@ -86,35 +86,51 @@ const Aruna: FC<Props> = ({ untuk }) => {
 
           {/* Right side sections */}
           <div className="relative w-full xl:max-w-[30vw] 2xl:max-w-[25vw] ml-auto space-y-10">
-            <Suspense fallback={<div>Loading Hero...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <HeroComponent />
             </Suspense>
 
-            <Suspense fallback={<div>Loading Participants...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <ParticipantsComponent />
             </Suspense>
 
-            <Suspense fallback={<div>Loading Events...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <EventsComponent />
             </Suspense>
 
-            <Suspense fallback={<div>Loading Video...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <VideoComponent />
             </Suspense>
 
-            <Suspense fallback={<div>Loading Gallery...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <FotoComponent />
             </Suspense>
 
-            <Suspense fallback={<div>Loading Gift...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <GiftComponent />
             </Suspense>
 
-            <Suspense fallback={<div>Loading RSVP Wishes...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <RSVPWishes />
             </Suspense>
 
-            <Suspense fallback={<div>Loading Thank You...</div>}>
+            <Suspense
+              fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+            >
               <ThankyouComponent />
             </Suspense>
           </div>

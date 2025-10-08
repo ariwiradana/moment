@@ -25,17 +25,43 @@ const Nirvaya = ({ untuk }: Props) => {
       <MusicComponent actions={actions} refs={refs} state={state} />
       <Cover actions={actions} to={untuk} />
       {isOpen && (
-        <Suspense
-          fallback={<div className="text-center py-12">Loading...</div>}
-        >
-          <Hero />
-          <Participants />
-          <Events />
-          <Photos />
-          <Gift />
-          <RsvpWishes />
-          <Thankyou />
-        </Suspense>
+        <>
+          <Suspense
+            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+          >
+            <Hero />
+          </Suspense>
+          <Suspense
+            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+          >
+            <Participants />
+          </Suspense>
+          <Suspense
+            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+          >
+            <Events />
+          </Suspense>
+          <Suspense
+            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+          >
+            <Photos />
+          </Suspense>
+          <Suspense
+            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+          >
+            <Gift />
+          </Suspense>
+          <Suspense
+            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+          >
+            <RsvpWishes />
+          </Suspense>
+          <Suspense
+            fallback={<div className="h-20 w-full bg-aruna-dark"></div>}
+          >
+            <Thankyou />
+          </Suspense>
+        </>
       )}
     </Layout>
   );

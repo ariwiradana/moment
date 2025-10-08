@@ -5,6 +5,7 @@ import useCoverStore from "@/store/useCoverStore";
 import useMusic from "@/hooks/themes/useMusic";
 import MusicComponent from "./layouts/music";
 import Cover from "./layouts/cover";
+import LoadingDark from "../loading.dark";
 
 const HeroComponent = lazy(() => import("./layouts/hero"));
 const ParticipantsComponent = lazy(() => import("./layouts/participants"));
@@ -27,7 +28,7 @@ const Samaya: FC<Props> = ({ untuk }) => {
       <>
         <MusicComponent actions={actions} refs={refs} state={state} />
         <Cover actions={actions} state={state} untuk={untuk} />
-        <Suspense fallback={<div className="h-screen bg-samaya-dark" />}>
+        <Suspense fallback={<LoadingDark />}>
           {isOpen && (
             <>
               <HeroComponent />

@@ -1,3 +1,4 @@
+import { sosmedURLs } from "@/constants/sosmed";
 import Head from "next/head";
 
 interface SeoProps {
@@ -12,6 +13,8 @@ interface SeoProps {
   publishedTime?: string;
   updatedTime?: string;
   noIndex?: boolean;
+  locale?: string;
+  robots?: string; // ✅ Tambahkan ini
 }
 
 export default function Seo({
@@ -26,6 +29,8 @@ export default function Seo({
   publishedTime,
   updatedTime,
   noIndex = false,
+  locale = "id_ID",
+  robots = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1", // ✅ Default SEO-friendly
 }: SeoProps) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -56,9 +61,9 @@ export default function Seo({
           logo: image,
           description,
           sameAs: [
-            "https://www.instagram.com/momentinvitation",
-            "https://www.tiktok.com/@momentinvitation",
-            "https://www.facebook.com/momentinvitation",
+            sosmedURLs.email,
+            sosmedURLs.instagram,
+            sosmedURLs.youtube,
           ],
         }),
   };
@@ -72,10 +77,17 @@ export default function Seo({
       <meta name="author" content={author} />
       <link rel="canonical" href={url} />
 
-      {/* Indexing Control */}
-      {noIndex && <meta name="robots" content="noindex, nofollow" />}
+      {/* Locale */}
+      <meta property="og:locale" content={locale} />
 
-      {/* Open Graph (Facebook, WhatsApp, LinkedIn) */}
+      {/* Indexing Control */}
+      {noIndex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content={robots} /> // ✅ Gunakan robots props
+      )}
+
+      {/* Open Graph */}
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:title" content={title} />
