@@ -11,6 +11,7 @@ const ThemeComponent: FC = () => {
   const [themeCategories, setThemeCategories] = useState<ThemeCategory[]>([]);
   const [themes, setThemes] = useState<ThemeUsage[]>([]);
   const [bestSeller, setBestSeller] = useState<string>("");
+  const [newest, setNewest] = useState<string>("");
 
   const { isLoading } = useSWR<{ data: ThemeUsage[] }>(
     `/api/_pb/_th/_uc`,
@@ -21,8 +22,15 @@ const ThemeComponent: FC = () => {
           const best = data.data.reduce((max, theme) =>
             theme.usage_count > max.usage_count ? theme : max
           );
+          const newest = data.data.reduce((latest, theme) => {
+            return new Date(theme.created_at as string) >
+              new Date(latest.created_at as string)
+              ? theme
+              : latest;
+          });
           setThemes(data.data);
           setBestSeller(best.slug);
+          setNewest(newest?.slug);
         }
       },
       revalidateOnFocus: false,
@@ -95,7 +103,8 @@ const ThemeComponent: FC = () => {
                 <ThemeCard
                   key={theme.slug}
                   index={index}
-                  bestSeller={bestSeller}
+                  bestSeller={bestSeller === theme.slug}
+                  newest={newest === theme.slug}
                   theme={theme}
                 />
               ))}

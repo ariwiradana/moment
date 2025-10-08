@@ -5,16 +5,21 @@ import Link from "next/link";
 import { BsEye } from "react-icons/bs";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import ButtonOutlinedLight from "../elements/button.outlined.white";
-import { BiCard, BiPlayCircle, BiSolidStar } from "react-icons/bi";
 import { useRef, useCallback } from "react";
+import { TbNewSection, TbStar, TbVideo } from "react-icons/tb";
 
 interface Props {
   theme: ThemeUsage;
-  bestSeller: string;
+  bestSeller: boolean;
+  newest: boolean;
   index: number;
 }
 
-const ThemeCard: NextPage<Props> = ({ theme, bestSeller, index }) => {
+const ThemeCard: NextPage<Props> = ({
+  theme,
+  bestSeller = false,
+  newest = false,
+}) => {
   const { name, slug, phone_thumbnail, packages, cover_video } = theme;
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -30,7 +35,6 @@ const ThemeCard: NextPage<Props> = ({ theme, bestSeller, index }) => {
   }, []);
 
   const basicPrice = packages?.find((p) => p.name === "Basic")?.price || 0;
-  const showLabel = bestSeller === slug || cover_video || index === 0;
 
   return (
     <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015] relative">
@@ -49,34 +53,35 @@ const ThemeCard: NextPage<Props> = ({ theme, bestSeller, index }) => {
           playsInline
           preload="metadata" // ✅ Lazy load video metadata
         />
+        {bestSeller && (
+          <div
+            className={`absolute top-[14px] -right-5 md:top-6 md:-right-7 bg-gradient-to-r from-[#C98C30] via-dashboard-primary to-[#C98C30] gap-x-1 px-4 md:px-8 py-0.5 rotate-45 z-10 flex justify-center items-center text-xs md:text-sm`}
+          >
+            <TbStar />
+            <span>Terlaris</span>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col items-center mt-3 md:mt-5">
-        {showLabel && (
+        {cover_video || newest ? (
           <div className="flex justify-center flex-wrap gap-3 mb-2">
-            {index === 0 && (
+            {newest && (
               <div
                 className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
               >
-                <BiCard /> Desain Baru
-              </div>
-            )}
-            {bestSeller === slug && (
-              <div
-                className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
-              >
-                <BiSolidStar /> Terlaris
+                <TbNewSection /> Desain Baru
               </div>
             )}
             {cover_video && (
               <div
                 className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
               >
-                <BiPlayCircle /> Cover Video
+                <TbVideo /> Thumbnail Video
               </div>
             )}
           </div>
-        )}
+        ) : null}
 
         <h5
           className={`${redhat.className} text-xl text-white font-semibold mb-2 md:mb-3`}
