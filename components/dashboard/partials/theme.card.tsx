@@ -58,7 +58,7 @@ const ThemeCard: NextPage<Props> = ({ theme, bestSeller, index }) => {
               <div
                 className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
               >
-                <BiSolidStar /> Favorit
+                <BiSolidStar /> Terlaris
               </div>
             )}
             {cover_video && (
