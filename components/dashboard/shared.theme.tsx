@@ -28,6 +28,7 @@ const SharedThemeComponent = () => {
       "@context": "https://schema.org",
       "@type": "Dataset",
       name: "Statistik Moment Invitation",
+      creator: 'Moment Invitation',
       description: "Statistik penggunaan undangan digital Moment Invitation",
       distribution: stats.map((s) => ({
         "@type": "DataDownload",

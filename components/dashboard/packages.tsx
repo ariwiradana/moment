@@ -38,7 +38,7 @@ const PackageComponent = () => {
     itemListElement: packages.map((p, index) => ({
       "@type": "Product",
       position: index + 1,
-      name: `Paket ${p.name}`,
+      name: `Undangan Digital Paket ${p.name}`,
       description: `Paket ${p.name} untuk undangan digital Bali. Fitur: ${
         p.custom_opening_closing ? "Custom opening & closing, " : ""
       }${p.unlimited_revisions ? "Unlimited revisi, " : ""}${
@@ -57,13 +57,14 @@ const PackageComponent = () => {
         p.add_to_calendar ? "Tambahkan ke kalender, " : ""
       }${p.custom_cover ? "Custom cover, " : ""}${
         p.digital_envelope ? "Amplop digital" : ""
-      }`,
-      image: `/images/packages/${p.name.toLowerCase()}.jpg`,
+      }`.toLowerCase(),
+      image: `/logo-bg.jpg`,
       offers: {
         "@type": "Offer",
+        availability: "https://schema.org/InStock",
         priceCurrency: "IDR",
         price: p.price - p.discount,
-        url: `https://momentinvitation.com/packages/${p.id}`,
+        url: `https://momentinvitation.com`,
       },
       brand: {
         "@type": "Organization",
