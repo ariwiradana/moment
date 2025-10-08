@@ -57,7 +57,7 @@ const Events: NextPage = () => {
             </div>
 
             <div
-              className="bg-luma-primary/90 p-6 md:p-8 w-full rounded-md"
+              className="bg-luma-primary/70 p-6 md:p-8 w-full rounded-md"
               aria-label={`Detail acara ${event.name}`}
             >
               <div className="flex gap-x-2 mb-3 items-center">

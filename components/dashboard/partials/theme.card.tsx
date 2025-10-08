@@ -5,7 +5,7 @@ import Link from "next/link";
 import { BsEye } from "react-icons/bs";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import ButtonOutlinedLight from "../elements/button.outlined.white";
-import { BiPlayCircle, BiSolidStar } from "react-icons/bi";
+import { BiCard, BiPlayCircle, BiSolidStar } from "react-icons/bi";
 import { useRef, useCallback } from "react";
 
 interface Props {
@@ -54,6 +54,13 @@ const ThemeCard: NextPage<Props> = ({ theme, bestSeller, index }) => {
       <div className="flex flex-col items-center mt-3 md:mt-5">
         {showLabel && (
           <div className="flex justify-center flex-wrap gap-3 mb-2">
+            {index === 0 && (
+              <div
+                className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
+              >
+                <BiCard /> Desain Baru
+              </div>
+            )}
             {bestSeller === slug && (
               <div
                 className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-dashboard-primary font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
