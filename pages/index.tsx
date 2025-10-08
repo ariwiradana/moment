@@ -105,7 +105,7 @@ const Dashboard = () => {
         title="Undangan Digital Bali | Moment"
         description="Moment Invitation menawarkan solusi undangan digital di Bali dengan desain elegan, mudah digunakan, dan praktis..."
         keywords="undangan digital, undangan digital bali, undangan pernikahan digital bali, undangan minimalis, undangan mempandes digital..."
-        image="https://res.cloudinary.com/dwitznret/image/upload/v1734241503/seo_xftrjs.webp"
+        image="https://res.cloudinary.com/dsbmvj2s3/image/upload/v1759919489/seo_cvsy5o.webp"
       />
 
       <ButtonFloating

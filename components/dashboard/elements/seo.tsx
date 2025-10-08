@@ -1,85 +1,111 @@
-import { FC } from "react";
 import Head from "next/head";
-import { sosmedURLs } from "@/constants/sosmed";
 
-interface SEOProps {
-  title: string;
-  description: string;
-  keywords: string;
-  image: string;
-  url: string;
+interface SeoProps {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  url?: string;
+  image?: string;
+  type?: string;
+  siteName?: string;
+  author?: string;
+  publishedTime?: string;
+  updatedTime?: string;
+  noIndex?: boolean;
 }
 
-const Seo: FC<SEOProps> = ({ title, description, keywords, image, url }) => {
+export default function Seo({
+  title = "Moment Invitation | Undangan Digital Bali",
+  description = "Moment Invitation menawarkan solusi undangan digital di Bali dengan desain elegan, mudah digunakan, dan praktis untuk pernikahan & mempandes.",
+  keywords = "undangan digital, undangan digital bali, undangan pernikahan digital bali, undangan minimalis, undangan mempandes digital, wedding invitation bali",
+  url = "https://momentinvitation.com",
+  image = "https://res.cloudinary.com/dsbmvj2s3/image/upload/v1759919489/seo_cvsy5o.webp",
+  type = "website",
+  siteName = "Moment Invitation",
+  author = "Moment Invitation Team",
+  publishedTime,
+  updatedTime,
+  noIndex = false,
+}: SeoProps) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": type === "article" ? "Article" : "Organization",
+    ...(type === "article"
+      ? {
+          headline: title,
+          description,
+          image,
+          author: {
+            "@type": "Person",
+            name: author,
+          },
+          datePublished: publishedTime,
+          dateModified: updatedTime || publishedTime,
+          publisher: {
+            "@type": "Organization",
+            name: siteName,
+            logo: {
+              "@type": "ImageObject",
+              url: image,
+            },
+          },
+        }
+      : {
+          name: siteName,
+          url,
+          logo: image,
+          description,
+          sameAs: [
+            "https://www.instagram.com/momentinvitation",
+            "https://www.tiktok.com/@momentinvitation",
+            "https://www.facebook.com/momentinvitation",
+          ],
+        }),
+  };
+
   return (
     <Head>
+      {/* Primary */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="author" content="Moment Invitations" />
-      <meta name="robots" content="index, follow" />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-      />
+      <meta name="author" content={author} />
+      <link rel="canonical" href={url} />
 
+      {/* Indexing Control */}
+      {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+      {/* Open Graph (Facebook, WhatsApp, LinkedIn) */}
+      <meta property="og:type" content={type} />
+      <meta property="og:site_name" content={siteName} />
       <meta property="og:title" content={title} />
-      <meta property="og:type" content="website" />
+      <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
-      <meta property="og:image:secure_url" content={image} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:description" content={description} />
+      {publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      {updatedTime && (
+        <meta property="article:modified_time" content={updatedTime} />
+      )}
 
+      {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:creator" content="@momentinvitation" />
 
-      <link rel="canonical" href={url} />
+      {/* Icons */}
+      <link rel="icon" href="/favicon.ico" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <meta name="theme-color" content="#ffffff" />
 
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="/favicon-180x180.png"
-      />
-      <link
-        rel="icon"
-        href="/favicon-32x32.png"
-        sizes="32x32"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        href="/favicon-16x16.png"
-        sizes="16x16"
-        type="image/png"
-      />
-
+      {/* Structured Data (JSON-LD) */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            {
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "Moment Invitation",
-              url: url,
-              sameAs: [
-                sosmedURLs.email || "",
-                sosmedURLs.instagram || "",
-                sosmedURLs.whatsapp || "",
-                sosmedURLs.youtube || "",
-              ],
-            },
-            null,
-            2
-          ),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </Head>
   );
-};
-
-export default Seo;
+}
