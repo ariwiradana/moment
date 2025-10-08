@@ -36,24 +36,23 @@ const Cover: FC<Props> = ({ untuk, actions }) => {
         isOpen ? "invisible opacity-0 scale-105" : "visible opacity-100"
       }`}
     >
+      {client?.cover && (
+        <div data-aos="zoom-out" className="absolute inset-0">
+          <Image
+            src={client.cover}
+            alt="cover"
+            fill
+            priority
+            quality={85} // turunkan sedikit dari 100
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-20" />
+        </div>
+      )}
       <div
         data-aos="fade-in"
         className="relative flex h-dvh flex-col justify-end items-center bg-gradient-to-b from-transparent to-samaya-dark to-[90%]"
       >
-        {client?.cover && (
-          <div data-aos="zoom-out" className="absolute inset-0 z-10">
-            <Image
-              src={client.cover}
-              alt="cover"
-              fill
-              priority
-              quality={85} // turunkan sedikit dari 100
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-20" />
-          </div>
-        )}
-
         <div className="relative z-20 h-dvh w-full py-[60px] md:py-[100px] px-8 flex flex-col justify-end items-center">
           <h1
             data-aos="fade-up"
