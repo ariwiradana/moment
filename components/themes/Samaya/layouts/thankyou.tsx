@@ -62,7 +62,7 @@ const ThankyouComponent = () => {
         </p>
         <h1
           data-aos="fade-up"
-          className="font-tan-pearl text-2xl md:text-3xl 2xl:text-4xl text-center mt-4 leading-7 text-white font-medium mb-24"
+          className="font-tan-pearl text-2xl md:text-3xl xl:text-4xl text-center mt-4 leading-7 text-white font-medium mb-24"
         >
           {state.groom?.nickname} & {state.bride?.nickname}
         </h1>

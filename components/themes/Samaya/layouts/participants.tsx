@@ -23,7 +23,7 @@ const ParticipantsComponent = () => {
     >
       <h2
         data-aos="fade-up"
-        className="text-white text-center leading-8 text-xl md:text-2xl 2xl:3xl font-tan-pearl"
+        className="text-white text-center leading-8 text-xl md:text-2xl xl:text-3xl font-tan-pearl"
       >
         {client?.opening_title}
       </h2>

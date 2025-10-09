@@ -24,7 +24,7 @@ const RSVPWishesComponent = () => {
 
   return (
     <section className="relative bg-white w-full overflow-hidden z-20">
-      <div className="max-w-screen-lg mx-auto relative flex flex-col justify-center items-center w-full z-20 pb-[60px] md:pb-[100px] px-6 md:px-12 lg:px-4">
+      <div className="max-w-screen-sm mx-auto relative flex flex-col justify-center items-center w-full z-20 pb-[60px] md:pb-[100px] px-6 md:px-12 lg:px-4">
         <div className="w-full">
           {/* --- Form Input --- */}
           <form

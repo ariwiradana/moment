@@ -25,7 +25,7 @@ const HeroComponent = () => {
         <SwiperSlide key={`hero-slide-${index}`}>
           <Image
             src={image as string}
-            alt={`Hero Slide ${index + 1}`}
+            alt={`Foto ${index + 1} Slide Undangan Samaya`}
             fill
             sizes="100vw"
             className="object-cover"
@@ -64,7 +64,7 @@ const HeroComponent = () => {
         <div className="absolute inset-0 z-20 flex flex-col justify-end items-center py-12 px-6">
           <h1
             data-aos="fade-up"
-            className="font-tan-pearl text-white text-2xl md:text-3xl 2xl:text-4xl mb-2 lg:mb-4 text-center"
+            className="font-tan-pearl text-white text-2xl md:text-3xl xl:text-4xl mb-2 lg:mb-4 text-center"
           >
             {participantState.groom?.nickname} &{" "}
             {participantState.bride?.nickname}

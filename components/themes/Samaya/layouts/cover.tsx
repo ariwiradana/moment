@@ -37,27 +37,46 @@ const Cover: FC<Props> = ({ untuk, actions }) => {
       }`}
     >
       {client?.cover && (
-        <div data-aos="zoom-out" className="absolute inset-0">
-          <Image
-            src={client.cover}
-            alt="cover"
-            fill
-            priority
-            quality={85} // turunkan sedikit dari 100
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-[60%] to-black opacity-20" />
+        <div className="grid grid-cols-3 h-dvh w-full" data-aos="zoom-out">
+          <div className="w-full h-full relative hidden xl:block">
+            <Image
+              src={client.cover}
+              alt="Foto Cover 1 Undangan Tema Samaya"
+              fill
+              quality={85}
+              className="object-cover"
+            />
+          </div>
+          <div className="w-full h-full relative col-span-3 xl:col-span-1">
+            <Image
+              src={client.cover}
+              alt="Foto Cover Utama Undangan Tema Samaya"
+              fill
+              priority
+              quality={85}
+              className="object-cover"
+            />
+          </div>
+          <div className="w-full h-full relative hidden xl:block">
+            <Image
+              src={client.cover}
+              alt="Foto Cover 2 Undangan Tema Samaya"
+              fill
+              quality={85}
+              className="object-cover"
+            />
+          </div>
         </div>
       )}
       <div
         data-aos="fade-in"
-        className="relative flex h-dvh flex-col justify-end items-center bg-gradient-to-b from-transparent to-samaya-dark to-[90%]"
+        className="z-20 flex absolute inset-0 h-dvh flex-col justify-end items-center bg-gradient-to-b from-transparent to-samaya-dark to-[90%]"
       >
         <div className="relative z-20 h-dvh w-full py-[60px] md:py-[100px] px-8 flex flex-col justify-end items-center">
           <h1
             data-aos="fade-up"
             data-aos-delay="600"
-            className="font-tan-pearl text-white text-center text-2xl md:text-3xl 2xl:text-4xl mb-3"
+            className="font-tan-pearl text-white text-center text-2xl md:text-3xl xl:text-4xl mb-3 md:mb-4 xl:mb-5"
           >
             {participantsState.groom?.nickname} &{" "}
             {participantsState.bride?.nickname}

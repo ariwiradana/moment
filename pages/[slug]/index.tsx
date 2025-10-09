@@ -67,7 +67,7 @@ const MainPage: FC<Props> = ({ seo, slug }) => {
   useDisableInspect();
 
   useEffect(() => {
-    AOS.init({ duration: 1200, offset: 50, once: true });
+    AOS.init({ duration: 1200, offset: 60, once: true });
     return () => AOS.refresh();
   }, []);
 

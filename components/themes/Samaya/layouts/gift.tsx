@@ -19,7 +19,7 @@ const GiftComponent = () => {
         <div className={raleway.className}>
           <h2
             data-aos="fade-up"
-            className="text-samaya-dark text-center leading-8 text-xl md:text-2xl 2xl:text-3xl font-tan-pearl"
+            className="text-samaya-dark text-center leading-8 text-xl md:text-2xl xl:text-3xl font-tan-pearl"
           >
             Mohon Doa Restu
           </h2>
@@ -79,7 +79,9 @@ const GiftComponent = () => {
 
               <button
                 onClick={() =>
-                  actions.handleCopyRekening(client?.gift_account_number as string)
+                  actions.handleCopyRekening(
+                    client?.gift_account_number as string
+                  )
                 }
                 className="p-2 rounded-full aspect-square bg-white flex justify-center items-center text-samaya-dark text-xs md:text-sm"
                 aria-label="Copy rekening"

@@ -13,8 +13,11 @@ const useLightbox = () => {
 
   // Memoized images array
   const images: Image[] = useMemo(
-    () => (client?.gallery as string[])?.map((src) => ({ src })) ?? [],
-    [client?.gallery]
+    () =>
+      (client?.gallery as string[])
+        ?.filter((src) => src !== client?.cover) // filter cover
+        .map((src) => ({ src })) ?? [],
+    [client?.gallery, client?.cover]
   );
 
   // Toggle lightbox and set index
