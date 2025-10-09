@@ -16,9 +16,9 @@ module.exports = {
   additionalPaths: async (config) => {
     const dynamicRoutes = [
       "/",
-      "/deyung-ning",
-      "/shawa-sakme",
-      "/resepsi-marta-arsita",
+      "/samaya",
+      "/aruna",
+      "/nirvaya",
     ];
 
     return dynamicRoutes.map((route) => ({

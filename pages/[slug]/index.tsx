@@ -55,7 +55,7 @@ const MainPage: FC<Props> = ({ seo, slug }) => {
       onSuccess: (data) => {
         console.log({ data, slug });
         setClient(data.data || null);
-        setTimeout(() => setIsLoading(false), 1500);
+        setTimeout(() => setIsLoading(false), 2000);
       },
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

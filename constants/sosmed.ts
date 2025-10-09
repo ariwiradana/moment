@@ -8,6 +8,6 @@ interface SosmedURLs {
 export const sosmedURLs: SosmedURLs = {
   whatsapp: "https://wa.me/6281247686727",
   email: "mailto:moment.invitations@gmail.com",
-  instagram: "https://instagram.com/moment.invitations",
+  instagram: "https://www.instagram.com/momentinvitation/",
   youtube: "https://youtube.com/@moment.invitations",
 };
