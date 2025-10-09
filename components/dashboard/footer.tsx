@@ -7,7 +7,7 @@ import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import { HiArrowLongUp } from "react-icons/hi2";
 import { sosmedURLs } from "@/constants/sosmed";
-import { TbBrandWhatsapp, TbBrandYoutube, TbMail } from "react-icons/tb";
+import { TbBrandInstagram, TbBrandWhatsapp, TbMail } from "react-icons/tb";
 
 // Memoized Footer Nav Button
 const FooterNavButton = memo(
@@ -86,7 +86,7 @@ const FooterComponent = () => {
 
               <div className="flex items-center gap-3 text-xl mt-4 text-white">
                 <Link
-                  aria-label="footer-whatsapp-link"
+                  aria-label="Hubungi kami via WhatsApp"
                   className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
                   href={sosmedURLs.whatsapp}
@@ -94,20 +94,28 @@ const FooterComponent = () => {
                   <TbBrandWhatsapp />
                 </Link>
                 <Link
-                  aria-label="footer-email-link"
+                  aria-label="Kunjungi Instagram Moment Invitation"
+                  className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
+                  target="_blank"
+                  href={sosmedURLs.instagram}
+                >
+                  <TbBrandInstagram />
+                </Link>
+                <Link
+                  aria-label="Kunjungi TikTok Moment Invitation"
+                  className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
+                  target="_blank"
+                  href={sosmedURLs.tiktok}
+                >
+                  <TbBrandInstagram />
+                </Link>
+                <Link
+                  aria-label="Kirim email ke Moment Invitation"
                   className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
                   href={sosmedURLs.email}
                 >
                   <TbMail />
-                </Link>
-                <Link
-                  aria-label="footer-youtube-link"
-                  className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
-                  target="_blank"
-                  href={sosmedURLs.youtube}
-                >
-                  <TbBrandYoutube />
                 </Link>
               </div>
 

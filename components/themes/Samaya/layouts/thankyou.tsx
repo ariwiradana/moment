@@ -5,8 +5,8 @@ import { sosmedURLs } from "@/constants/sosmed";
 import {
   AiOutlineInstagram,
   AiOutlineMail,
+  AiOutlineTikTok,
   AiOutlineWhatsApp,
-  AiOutlineYoutube,
 } from "react-icons/ai";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
@@ -75,32 +75,32 @@ const ThankyouComponent = () => {
       >
         <li className="flex items-center justify-center gap-2 text-base text-white mt-2">
           <Link
-            aria-label="footer-whatsapp-link"
+            aria-label="Hubungi kami via WhatsApp"
             target="_blank"
             href={sosmedURLs.whatsapp}
           >
             <AiOutlineWhatsApp />
           </Link>
           <Link
-            aria-label="footer-instagram-link"
+            aria-label="Lihat galeri kami di Instagram"
             target="_blank"
             href={sosmedURLs.instagram}
           >
             <AiOutlineInstagram />
           </Link>
           <Link
-            aria-label="footer-email-link"
+            aria-label="Lihat video kami di TikTok"
+            target="_blank"
+            href={sosmedURLs.tiktok}
+          >
+            <AiOutlineTikTok />
+          </Link>
+          <Link
+            aria-label="Kirim email ke Moment Invitation"
             target="_blank"
             href={sosmedURLs.email}
           >
             <AiOutlineMail />
-          </Link>
-          <Link
-            aria-label="footer-youtube-link"
-            target="_blank"
-            href={sosmedURLs.youtube}
-          >
-            <AiOutlineYoutube />
           </Link>
         </li>
 
