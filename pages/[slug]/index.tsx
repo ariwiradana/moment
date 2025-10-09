@@ -53,6 +53,7 @@ const MainPage: FC<Props> = ({ seo, slug }) => {
     fetcher,
     {
       onSuccess: (data) => {
+        console.log({ data, slug });
         setClient(data.data || null);
         setTimeout(() => setIsLoading(false), 1500);
       },
@@ -137,24 +138,39 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   try {
     const { rows } = await sql.query(
-      `SELECT
-        c.id, c.name, c.status, c.is_preview, c.theme_id,
-        c.opening_title, c.opening_description, c.seo,
-        t.name as theme_name, tc.name as theme_category_name
-      FROM clients c
-      JOIN themes t ON c.theme_id = t.id
-      JOIN theme_categories tc ON c.theme_category_id = tc.id
-      WHERE c.slug = $1`,
+      `
+        SELECT
+          c.id, c.name, c.status, c.is_preview, c.theme_id,
+          c.opening_title, c.opening_description, c.seo,
+          t.name as theme_name, tc.name as theme_category_name,
+          COALESCE(
+            json_agg(
+              json_build_object(
+                'id', e.id,
+                'name', e.name,
+                'date', e.date,
+                'start_time', e.start_time,
+                'end_time', e.end_time,
+                'address', e.address,
+                'address_url', e.address_url,
+                'created_at', e.created_at,
+                'updated_at', e.updated_at
+              )
+            ) FILTER (WHERE e.id IS NOT NULL),
+            '[]'
+          ) AS events
+        FROM clients c
+        JOIN themes t ON c.theme_id = t.id
+        JOIN theme_categories tc ON c.theme_category_id = tc.id
+        LEFT JOIN events e ON e.client_id = c.id
+        WHERE c.slug = $1
+        GROUP BY c.id, t.name, tc.name`,
       [slug]
     );
 
     if (rows.length === 0) return { notFound: true };
 
     const client = rows[0];
-    const { rows: events } = await sql.query(
-      `SELECT * FROM events WHERE client_id = $1`,
-      [client.id]
-    );
 
     const name = client.name || "";
     const theme_name = client.theme_name || "";
@@ -168,7 +184,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         ? `Preview ${client.name} | Undangan ${client.theme_name}`
         : client.is_preview
         ? `Preview Undangan Tema ${client.theme_name} | Moment`
-        : `${client.name} | Undangan ${events
+        : `${client.name} | Undangan ${client.events
             .map((e: Event) => e.name)
             .join(", ")}`
       : "Moment";
