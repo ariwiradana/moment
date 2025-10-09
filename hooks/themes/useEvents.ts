@@ -27,7 +27,15 @@ const useEvents = () => {
       const now = new Date();
       setTimeRemainings((prev) =>
         events.map((event, idx) => {
-          const targetDateTime = new Date(`${event.date}T${event.start_time}`);
+          let targetDateTime = new Date(`${event.date}T${event.start_time}`);
+
+          if (targetDateTime.getTime() < now.getTime()) {
+            targetDateTime = new Date();
+            targetDateTime.setDate(now.getDate() + idx + 1);
+            const [hours, minutes] = event.start_time.split(":").map(Number);
+            targetDateTime.setHours(hours, minutes, 0, 0);
+          }
+
           const diffMs = targetDateTime.getTime() - now.getTime();
 
           const newCountdown = {

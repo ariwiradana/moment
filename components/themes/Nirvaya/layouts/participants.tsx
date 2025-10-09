@@ -34,10 +34,10 @@ const Participants = () => {
           Selamat Datang di Acara{" "}
           {eventState.events.length > 0 && (
             <span
-              className={`transition-all ease-in-out duration-300 transform italic ${
+              className={`transition-all ease-in-out duration-500 transform italic ${
                 eventState.fade
                   ? "opacity-100 translate-y-0"
-                  : "opacity-10 -translate-y-1"
+                  : "opacity-10 translate-y-3"
               }`}
             >
               {eventState.events[eventState.currentIndex].name}

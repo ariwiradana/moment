@@ -95,7 +95,13 @@ const Hero = () => {
               </p>
             </div>
 
-            <div>
+            <div
+              className={`duration-500 ease-in-out transition-all ${
+                eventState.fade
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-10 translate-y-3"
+              }`}
+            >
               <p
                 data-aos="fade-down"
                 data-aos-delay="1000"
@@ -110,7 +116,11 @@ const Hero = () => {
               >
                 {formatEventDate(countdownData.currentEvent.date)}
               </p>
-              <div className="flex justify-center gap-x-14 mt-4">
+              <div
+                className="flex justify-center gap-x-14 mt-4"
+                data-aos="fade-down"
+                data-aos-delay="600"
+              >
                 {["days", "hours", "minutes", "seconds"].map((unit, idx) => (
                   <div key={idx} className="text-center">
                     <h6 className="font-edensor leading-none text-2xl lg:text-3xl text-white">
