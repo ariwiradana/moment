@@ -46,7 +46,7 @@ const Cover: FC<Props> = ({ untuk, actions }) => {
             quality={85} // turunkan sedikit dari 100
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-[60%] to-black opacity-20" />
         </div>
       )}
       <div
@@ -78,7 +78,7 @@ const Cover: FC<Props> = ({ untuk, actions }) => {
             {untuk}
           </p>
 
-          <div className="mt-4 md:mt-6" data-aos="fade-up" data-aos-delay="900">
+          <div className="mt-6 md:mt-8" data-aos="fade-up" data-aos-delay="900">
             <Button
               onClick={handleOpen}
               icon={<BiEnvelopeOpen />}

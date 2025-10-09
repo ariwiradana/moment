@@ -40,7 +40,7 @@ const HeroComponent = () => {
 
   return (
     <section
-      className="relative bg-samaya-dark h-lvh w-full overflow-hidden"
+      className="relative bg-samaya-dark h-svh w-full overflow-hidden"
       aria-label="Hero Section"
     >
       {images.length > 0 && (
@@ -61,7 +61,7 @@ const HeroComponent = () => {
 
       {/* Text overlay */}
       {isOpen && (
-        <div className="absolute inset-0 z-20 flex flex-col justify-end items-center py-8 px-6">
+        <div className="absolute inset-0 z-20 flex flex-col justify-end items-center py-12 px-6">
           <h1
             data-aos="fade-up"
             className="font-tan-pearl text-white text-2xl md:text-3xl 2xl:text-4xl mb-2 lg:mb-4 text-center"
@@ -73,7 +73,7 @@ const HeroComponent = () => {
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className="w-full flex justify-center mt-4"
+            className="w-full flex justify-center mt-2"
           >
             <div
               className={`flex items-center gap-x-3 transition-all duration-500 ease-in-out ${
