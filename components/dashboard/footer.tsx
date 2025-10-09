@@ -7,7 +7,7 @@ import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import { HiArrowLongUp } from "react-icons/hi2";
 import { sosmedURLs } from "@/constants/sosmed";
-import { TbBrandInstagram, TbBrandWhatsapp, TbMail } from "react-icons/tb";
+import { TbBrandInstagram, TbBrandTiktok, TbBrandWhatsapp, TbMail } from "react-icons/tb";
 
 // Memoized Footer Nav Button
 const FooterNavButton = memo(
@@ -107,7 +107,7 @@ const FooterComponent = () => {
                   target="_blank"
                   href={sosmedURLs.tiktok}
                 >
-                  <TbBrandInstagram />
+                  <TbBrandTiktok />
                 </Link>
                 <Link
                   aria-label="Kirim email ke Moment Invitation"
