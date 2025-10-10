@@ -27,7 +27,7 @@ const PhotosComponent = () => {
       )}
 
       <section className="bg-samaya-dark">
-        <div className="py-[60px] md:py-[100px] px-1 md:px-2">
+        <div className="py-[60px] px-1 md:px-4 md:py-[100px]">
           <div className="px-6 md:px-0 text-center">
             <h2
               data-aos="fade-up"
@@ -43,30 +43,26 @@ const PhotosComponent = () => {
             </p>
           </div>
 
-          {/* --- Photo Album --- */}
-          <div
-            className="mt-8 md:mt-16 max-w-screen-xl mx-auto"
-            data-aos="fade-up"
-          >
-            <div className="grid grid-cols-2 xl:grid-cols-3 gap-2">
-              {images.map((image, index) => (
+          <div className="mt-8 md:mt-16 max-w-screen-xl mx-auto">
+            <div className="columns-2 md:columns-2 lg:columns-4 gap-2 md:gap-4 space-y-2 md:space-y-4">
+              {images.map((img, index) => (
                 <div
-                  role="Button"
-                  onClick={() => handleToggleLightbox(image.src)}
-                  key={index}
-                  className="w-full relative" // remove aspect-[4/5] and handle ratio with padding
-                  style={{ paddingBottom: "125%" }} // 4/5 aspect ratio
                   data-aos="fade-up"
                   data-aos-delay={`${50 + index * 50}`}
+                  onClick={() => handleToggleLightbox(img.src)}
+                  key={`Foto Galeri ${index + 1} Tema Samaya`}
+                  className="relative overflow-hidden group cursor-pointer"
                 >
                   <Image
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     quality={80}
-                    priority={index < 3} // reduce number of eager images
-                    alt={`Foto Galeri ${index + 1} Tema Samaya`}
-                    src={image.src}
-                    fill
-                    className="object-cover"
+                    priority={index < 3}
                     loading={index < 3 ? "eager" : "lazy"}
+                    alt={`Foto Galeri ${index + 1} Tema Samaya`}
+                    src={img.src}
+                    width={500}
+                    height={700}
+                    className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
               ))}
