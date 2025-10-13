@@ -10,7 +10,6 @@ import useSWR from "swr";
 import OrderPage from "@/components/dashboard/order/order.page";
 import { usePreventLeave } from "@/hooks/dashboard/usePreventLeave";
 import { useCheckFullfilledSteps } from "@/hooks/dashboard/order/useCheckFullfilledSteps";
-import { useStepValidation } from "@/hooks/dashboard/order/useStepValidation";
 
 const Order = () => {
   const store = useOrderStore();
@@ -71,7 +70,6 @@ const Order = () => {
   );
 
   usePreventLeave();
-  useStepValidation();
   useCheckFullfilledSteps();
 
   return (

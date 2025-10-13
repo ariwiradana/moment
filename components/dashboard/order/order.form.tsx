@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import { BiChevronLeft, BiCheck, BiCreditCard, BiSave } from "react-icons/bi";
 import toast from "react-hot-toast";
@@ -18,7 +18,6 @@ const OrderForm = ({ mutate }: Props) => {
   const router = useRouter();
   const steps = useSteps();
 
-  const allFullfilled = store.fullfilledSteps.every((item) => item === true);
   const isUpdate = router.pathname === "/order/[slug]";
   const isLastStep = store.activeStep === steps.length - 1;
 
@@ -67,6 +66,10 @@ const OrderForm = ({ mutate }: Props) => {
     [store]
   );
 
+  const isDisabledButton = useMemo(() => {
+    return !store.fullfilledSteps?.[store.activeStep];
+  }, [store.activeStep, store.fullfilledSteps]);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -77,7 +80,10 @@ const OrderForm = ({ mutate }: Props) => {
         {store.activeStep > 0 && (
           <button
             type="button"
-            onClick={() => store.setActiveStep(store.activeStep - 1)}
+            onClick={() => {
+              store.setActiveStep(store.activeStep - 1);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             className="flex items-center text-sm gap-x-2 print:hidden"
           >
             <BiChevronLeft className="text-lg" />
@@ -86,7 +92,7 @@ const OrderForm = ({ mutate }: Props) => {
         )}
         <ButtonPrimary
           className="print:hidden"
-          disabled={!allFullfilled}
+          disabled={isDisabledButton}
           type="submit"
           title={
             isLastStep && isUpdate

@@ -1,14 +1,24 @@
+import useSteps from "@/components/dashboard/order/order.steps";
 import { Event, Participant } from "@/lib/types";
 import useOrderStore from "@/store/useOrderStore";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export function useCheckFullfilledSteps() {
-  const router = useRouter();
   const store = useOrderStore();
-  useEffect(() => {
-    const { form, pkg, fullfilledSteps, setFullfilledSteps } = store;
+  const {
+    form,
+    pkg,
+    fullfilledSteps,
+    activeStep,
+    setFullfilledSteps,
+    maxStepReached,
+  } = store;
 
+  const steps = useSteps();
+  const router = useRouter();
+
+  useEffect(() => {
     const isEventComplete = (ev: Event) =>
       ev.name &&
       ev.address &&
@@ -42,8 +52,9 @@ export function useCheckFullfilledSteps() {
       !!form.media?.image_link,
     ];
 
-    if (pkg && pkg.name !== "Basic")
-      checks.push(router.pathname === "/order/[slug]" ? true : false);
+    // Step 5: Digital Envelope
+    if (pkg?.name !== "Basic" && router.pathname === "/[slug]/order")
+      checks.push(maxStepReached >= 5);
 
     checks.push(
       !!(
@@ -54,9 +65,17 @@ export function useCheckFullfilledSteps() {
       )
     );
 
-    console.log({ checks });
+    // Step Terakhir: Pembayaran
+    const totalSteps = steps.length;
+    const isAllPreviousFulfilled = checks
+      .slice(0, totalSteps - 1)
+      .every(Boolean);
+    const hasReachedLastStep = maxStepReached >= totalSteps - 1;
+    const isLastStepFulfilled =
+      (isAllPreviousFulfilled && hasReachedLastStep) ||
+      router.pathname !== "/[slug]/order";
+    checks.push(isLastStepFulfilled);
 
-    // Cek hanya update jika memang ada perubahan
     const isDifferent = checks.some(
       (fulfilled, i) => fulfilled !== fullfilledSteps[i]
     );
@@ -64,5 +83,5 @@ export function useCheckFullfilledSteps() {
     if (isDifferent) {
       setFullfilledSteps(checks);
     }
-  }, [store.form]);
+  }, [form, pkg, activeStep, fullfilledSteps, maxStepReached, steps]);
 }

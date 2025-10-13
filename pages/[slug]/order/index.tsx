@@ -9,14 +9,15 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import OrderPage from "@/components/dashboard/order/order.page";
 import { usePreventLeave } from "@/hooks/dashboard/usePreventLeave";
-import { useStepValidation } from "@/hooks/dashboard/order/useStepValidation";
 import { useCheckFullfilledSteps } from "@/hooks/dashboard/order/useCheckFullfilledSteps";
+import useSteps from "@/components/dashboard/order/order.steps";
 
 const OrderTheme = () => {
   const store = useOrderStore();
   const router = useRouter();
   const { slug } = router.query as { slug?: string };
   const [isLoading, setIsLoading] = useState(true);
+  const steps = useSteps();
 
   useSWR<{ data: Theme[] }>(
     slug ? `/api/guest/themes?slug=${slug}` : null,
@@ -53,11 +54,9 @@ const OrderTheme = () => {
     }
   );
 
-  usePreventLeave();
-  useStepValidation();
+  const isLastStep = store.activeStep === steps.length - 1;
+  usePreventLeave(!isLastStep);
   useCheckFullfilledSteps();
-
-  console.log(store.theme);
 
   return (
     <>

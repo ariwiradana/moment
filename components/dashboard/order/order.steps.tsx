@@ -8,10 +8,19 @@ import OrderGift from "./components/gift";
 import OrderOpeningClosing from "./components/opening.closing";
 import OrderPayment from "./components/payment";
 import useOrderStore from "@/store/useOrderStore";
+import {
+  BiCalendar,
+  BiImage,
+  BiGift,
+  BiMessageSquareDetail,
+  BiCreditCard,
+  BiLayout,
+  BiMaleSign,
+  BiFemaleSign,
+} from "react-icons/bi";
 
 export default function useSteps() {
   const store = useOrderStore();
-
   const pkgName = store.pkg?.name;
 
   const steps = useMemo(() => {
@@ -23,6 +32,7 @@ export default function useSteps() {
         description:
           "Isi nama dan nomor WhatsApp yang bisa dihubungi, tentukan link undanganmu, lalu pilih paket yang paling sesuai dengan gaya acara spesialmu.",
         component: <OrderLinkPackages />,
+        icon: <BiLayout />,
       },
       {
         stepTitle: "Detail Acara",
@@ -34,6 +44,7 @@ export default function useSteps() {
             : ""
         }`,
         component: <OrderEvents />,
+        icon: <BiCalendar />,
       },
       {
         stepTitle: "Mempelai Pria",
@@ -42,6 +53,7 @@ export default function useSteps() {
         description:
           "Perkenalkan sang mempelai pria. Lengkapi nama, foto, dan informasi singkat mempelai pria.",
         component: <OrderGroom />,
+        icon: <BiMaleSign />,
       },
       {
         stepTitle: "Mempelai Wanita",
@@ -50,6 +62,7 @@ export default function useSteps() {
         description:
           "Kini giliran sang mempelai wanita. Lengkapi data mempelai wanita agar undanganmu terasa lebih personal.",
         component: <OrderBride />,
+        icon: <BiFemaleSign />,
       },
       {
         stepTitle: "Media Pendukung",
@@ -61,10 +74,11 @@ export default function useSteps() {
           pkgName !== "Basic" ? `dan ${store.pkg?.max_videos} video` : ""
         } untuk paket yang kamu pilih.`,
         component: <OrderMedia />,
+        icon: <BiImage />,
       },
     ];
 
-    if (store.pkg?.name !== "Basic") {
+    if (pkgName !== "Basic") {
       baseSteps.push({
         stepTitle: "Amplop Digital",
         stepDescription: "Aktifkan fitur hadiah online.",
@@ -72,6 +86,7 @@ export default function useSteps() {
         description:
           "Beri kemudahan bagi tamu. Aktifkan fitur amplop digital agar tamu bisa memberi hadiah dengan mudah.",
         component: <OrderGift />,
+        icon: <BiGift />,
       });
     }
 
@@ -82,6 +97,7 @@ export default function useSteps() {
       description:
         "Kamu dapat menyesuaikan kalimat pembuka dan penutup undangan sesuai keinginan.",
       component: <OrderOpeningClosing />,
+      icon: <BiMessageSquareDetail />,
     });
 
     if (store.withPayment) {
@@ -92,11 +108,12 @@ export default function useSteps() {
         description:
           "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
         component: <OrderPayment />,
+        icon: <BiCreditCard />,
       });
     }
 
     return baseSteps;
-  }, [store.pkg]); // akan re-run kalau paket berubah
+  }, [store.pkg, store.withPayment]);
 
   return steps;
 }

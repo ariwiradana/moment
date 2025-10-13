@@ -12,10 +12,10 @@ import { create } from "zustand";
 interface StoreState {
   form: Omit<Client, "cover" | "seo">;
   activeStep: number;
+  maxStepReached: number;
   theme: Theme | null;
   pkg: Package | null;
   isLoading: boolean;
-  isDisabledButton: boolean;
   fullfilledSteps: boolean[];
   withPayment: boolean;
   setForm: (
@@ -33,7 +33,6 @@ interface StoreState {
   setTheme: (theme: Theme) => void;
   setPackage: (pkg: Package) => void;
   setIsLoading: (isLoading: boolean) => void;
-  setDisabledButton: (isDisabledButton: boolean) => void;
   resetForm: () => void;
   setFullForm: (form: Omit<Client, "cover" | "seo">) => void;
   setFullfilledSteps: (fullfilledSteps: boolean[]) => void;
@@ -74,11 +73,11 @@ export const initialForm: Omit<Client, "cover" | "seo"> = {
 const useOrderStore = create<StoreState>((set) => ({
   form: initialForm,
   activeStep: 0,
+  maxStepReached: 0,
   theme: null,
   pkg: null,
   themes: null,
   isLoading: false,
-  isDisabledButton: false,
   fullfilledSteps: [],
   withPayment: true,
 
@@ -100,11 +99,13 @@ const useOrderStore = create<StoreState>((set) => ({
       },
     })),
 
-  setActiveStep: (step: number) => set({ activeStep: step }),
+  setActiveStep: (step: number) =>
+    set((state) => ({
+      activeStep: step,
+      maxStepReached: Math.max(state.maxStepReached, step),
+    })),
 
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
-
-  setDisabledButton: (isDisabledButton: boolean) => set({ isDisabledButton }),
 
   setTheme: (theme: Theme) => set({ theme }),
 

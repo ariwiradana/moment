@@ -54,7 +54,7 @@ const OrderInformation = () => {
         toast.error(
           error instanceof Error ? error.message : "Terjadi kesalahan"
         );
-        store.setDisabledButton(true);
+        store.setForm("slug", "");
       },
       revalidateOnFocus: false,
     }

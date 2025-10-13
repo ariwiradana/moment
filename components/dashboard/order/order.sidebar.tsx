@@ -3,13 +3,10 @@ import { BiAlignJustify, BiCheck, BiLayout } from "react-icons/bi";
 import useOrderStore from "@/store/useOrderStore";
 import { redhat } from "@/lib/fonts";
 import useSteps from "./order.steps";
-import { useRouter } from "next/router";
 
 const OrderSidebar = () => {
   const store = useOrderStore();
   const steps = useSteps();
-
-  const router = useRouter();
 
   return (
     <div className="flex flex-col sticky top-36 space-y-2">
@@ -37,7 +34,7 @@ const OrderSidebar = () => {
             />
             <div className="p-2 rounded-full relative z-10 bg-white">
               <button
-                disabled={router.pathname === "/[slug]/order"}
+                disabled={!isFullfilled}
                 onClick={() => store.setActiveStep(index)}
                 className={`w-8 h-8 flex justify-center items-center rounded-full ${
                   isActive
@@ -47,7 +44,9 @@ const OrderSidebar = () => {
                     : "bg-dashboard-dark/10"
                 }`}
               >
-                {isFullfilled ? (
+                {isActive ? (
+                  <div className="text-white text-lg">{step.icon}</div>
+                ) : isFullfilled ? (
                   <BiCheck className="text-white text-lg" />
                 ) : (
                   <p

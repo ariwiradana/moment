@@ -144,7 +144,7 @@ const ModalPackages = ({ pkg, isOpen, setOpenModal, theme }: Props) => {
               Amplop digital
             </li>
           </ul>
-          {pkg.name === "Exclusive" && (
+          {pkg.name === "Exclusive" && theme.features?.length > 0 ? (
             <>
               <p className="mt-4 text-dashboard-dark font-medium">
                 Fitur Tambahan Tema
@@ -152,7 +152,7 @@ const ModalPackages = ({ pkg, isOpen, setOpenModal, theme }: Props) => {
               <ul
                 className={`${redhat.className} list-inside text-sm capitalize leading-7 marker:text-xs`}
               >
-                {theme.features.map((feature) => (
+                {theme.features?.map((feature) => (
                   <li
                     key={`Fitur Tambahan Tema ${theme.name}`}
                     className={`list-disc`}
@@ -162,7 +162,7 @@ const ModalPackages = ({ pkg, isOpen, setOpenModal, theme }: Props) => {
                 ))}
               </ul>
             </>
-          )}
+          ) : null}
         </div>
       </div>
     </Modal>
