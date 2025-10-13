@@ -52,7 +52,7 @@ export default async function handler(
         ? `Preview ${name} | Undangan ${theme_name}`
         : client.is_preview
         ? `Preview Undangan Tema ${theme_name} | Moment`
-        : `${name} | Undangan ${getEventNames(client.event_names) || ""}`;
+        : `${name} | Undangan ${getEventNames(client.events) || ""}`;
 
     const seo = {
       name,
