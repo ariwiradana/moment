@@ -18,7 +18,6 @@ import "aos/dist/aos.css";
 import sql from "@/lib/db";
 import { useRouter } from "next/router";
 
-// Optional: simple ErrorBoundary
 class ThemeErrorBoundary extends React.Component<
   { children: React.ReactNode },
   { hasError: boolean }
@@ -49,13 +48,13 @@ const MainPage: FC<Props> = ({ seo, slug }) => {
 
   // Fetch client data
   const { error } = useSWR<{ data: Client }>(
-    slug ? `/api/_pb/_c/_u?slug=${slug}` : null,
+    slug ? `/api/guest/invitation?slug=${slug}` : null,
     fetcher,
     {
       onSuccess: (data) => {
         console.log({ data, slug });
         setClient(data.data || null);
-        setTimeout(() => setIsLoading(false), 2000);
+        setTimeout(() => setIsLoading(false), 1500);
       },
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -90,7 +89,7 @@ const MainPage: FC<Props> = ({ seo, slug }) => {
             <SplitText
               text={seo.name}
               className={`text-3xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
-              delay={150}
+              delay={50}
               animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
               animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
               threshold={0.2}

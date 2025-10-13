@@ -17,6 +17,7 @@ export interface Theme {
   theme_categories?: ThemeCategory[];
   cover_video?: boolean;
   active: boolean;
+  features: string[];
 }
 
 export interface Option {
@@ -61,6 +62,7 @@ export interface Event {
 export interface Client {
   id?: number;
   name: string;
+  phone?: number | string;
   music_title?: string;
   opening_title: string;
   opening_description: string;
@@ -89,7 +91,7 @@ export interface Client {
   is_detail?: boolean;
   guests?: string[];
   wishes?: Review[];
-  client_form?: ClientForm | null;
+  media?: MediaForm | null;
   created_at?: Date | string;
   updated_at?: Date | string;
 }
@@ -201,3 +203,26 @@ export type TimeRemaining = {
   minutes: number;
   seconds: number;
 };
+
+export interface Order {
+  order_id: string;
+  client_id?: string;
+  name: string;
+  phone: string | number;
+  theme_id: number;
+  package_id: number;
+  price: number;
+  discount: number;
+  admin_fee: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface MediaForm {
+  client_id?: string;
+  music_title?: string;
+  video_link?: string;
+  image_link?: string;
+  created_at?: string;
+  updated_at?: string;
+}

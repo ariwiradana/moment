@@ -14,7 +14,7 @@ export const useAdminThemes = (token: string | null) => {
     data: Theme[];
     total_rows: number;
   }>(
-    token ? `/api/_th?page=${page}&limit=${limit}&order=DESC` : null,
+    token ? `/api/admin/themes?page=${page}&limit=${limit}&order=DESC` : null,
     (url: string) => fetcher(url, token)
   );
 
@@ -28,7 +28,7 @@ export const useAdminThemes = (token: string | null) => {
   const handleDelete = async (id: number) => {
     const deleteToast = toast.loading("Deleting theme...");
     const res = await getClient(
-      `/api/_th?id=${id}`,
+      `/api/admin/themes?id=${id}`,
       {
         method: "DELETE",
       },

@@ -89,20 +89,22 @@ const ParticipantItem = ({
             : "rounded-tr-[150px] rounded-bl-[150px]"
         }`}
       >
-        <Image
-          priority={
-            participant.role === "groom" || participant.role === "bride"
-          }
-          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-          alt={`Participant ${participant.nickname}`}
-          src={participant.image as string}
-          fill
-          className={`object-cover bg-nirvaya-dark/5 ${
-            order === "odd"
-              ? "rounded-tl-[150px] rounded-br-[150px]"
-              : "rounded-tr-[150px] rounded-bl-[150px]"
-          }`}
-        />
+        {participant.image && (
+          <Image
+            priority={
+              participant.role === "groom" || participant.role === "bride"
+            }
+            sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+            alt={`Participant ${participant.nickname}`}
+            src={participant.image as string}
+            fill
+            className={`object-cover bg-nirvaya-dark/5 ${
+              order === "odd"
+                ? "rounded-tl-[150px] rounded-br-[150px]"
+                : "rounded-tr-[150px] rounded-bl-[150px]"
+            }`}
+          />
+        )}
       </div>
 
       <div className={`mt-8 ${order === "odd" ? "text-left" : "text-right"}`}>

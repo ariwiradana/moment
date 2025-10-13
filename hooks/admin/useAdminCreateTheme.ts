@@ -14,6 +14,7 @@ interface Form {
   theme_category_ids: Number[];
   cover_video: boolean;
   active: boolean;
+  features: string[];
 }
 
 const initalFormData: Form = {
@@ -24,6 +25,7 @@ const initalFormData: Form = {
   theme_category_ids: [],
   cover_video: false,
   active: true,
+  features: [],
 };
 
 export const useAdminCreateTheme = (token: string | null) => {
@@ -34,33 +36,25 @@ export const useAdminCreateTheme = (token: string | null) => {
   const { data: packageResult } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/admin/packages` : null, (url: string) =>
+    fetcher(url, token)
+  );
 
   const { data: themeCategoryResults } = useSWR<{
     success: boolean;
     data: ThemeCategory[];
-  }>(token ? `/api/_tc` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/admin/theme-categories` : null, (url: string) =>
+    fetcher(url, token)
+  );
 
   const packages = packageResult?.data || [];
   const themeCategories = themeCategoryResults?.data || [];
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    name: string,
+    value: string | File | string[] | boolean
   ) => {
-    const { name, value } = e.target;
-
-    if (
-      ["thumbnail", "phone_thumbnail"].includes(name) &&
-      e.target.type === "file"
-    ) {
-      const files = e.target.files;
-      if (files && files.length > 0) {
-        setFormData((state) => ({
-          ...state,
-          [name]: files,
-        }));
-      }
-    } else if (name === "package_ids" || name === "theme_category_ids") {
+    if (name === "package_ids" || name === "theme_category_ids") {
       let currentValues: Number[] = [...formData[name]];
       if (currentValues.includes(Number(value))) {
         currentValues = currentValues.filter((v) => v !== Number(value));
@@ -71,11 +65,6 @@ export const useAdminCreateTheme = (token: string | null) => {
         ...state,
         [name]: currentValues,
       }));
-    } else if (name === "cover_video") {
-      setFormData((state) => ({
-        ...state,
-        cover_video: !JSON.parse(value),
-      }));
     } else {
       setFormData((state) => ({
         ...state,
@@ -84,13 +73,15 @@ export const useAdminCreateTheme = (token: string | null) => {
     }
   };
 
+  console.log(formData);
+
   const handleUploadThumbnail = async () => {
     let url = "";
     if (formData.thumbnail) {
       const MAX_SIZE = 5 * 1024 * 1024;
 
-      if (formData.thumbnail instanceof FileList) {
-        const image = formData.thumbnail[0];
+      if (formData.thumbnail instanceof File) {
+        const image = formData.thumbnail;
         const toastUpload = toast.loading(`Uploading thumbnail...`);
         try {
           if (image.size > MAX_SIZE) {
@@ -100,7 +91,7 @@ export const useAdminCreateTheme = (token: string | null) => {
 
           const fd = new FormData();
           fd.append("file", image);
-          const response = await fetch(`/api/_ub`, {
+          const response = await fetch(`/api/upload-blob`, {
             method: "POST",
             body: fd,
           });
@@ -126,8 +117,8 @@ export const useAdminCreateTheme = (token: string | null) => {
     if (formData.phone_thumbnail) {
       const MAX_SIZE = 5 * 1024 * 1024;
 
-      if (formData.phone_thumbnail instanceof FileList) {
-        const image = formData.phone_thumbnail[0];
+      if (formData.phone_thumbnail instanceof File) {
+        const image = formData.phone_thumbnail;
         const toastUpload = toast.loading(`Uploading phone thumbnail...`);
         try {
           if (image.size > MAX_SIZE) {
@@ -137,7 +128,7 @@ export const useAdminCreateTheme = (token: string | null) => {
 
           const fd = new FormData();
           fd.append("file", image);
-          const response = await fetch(`/api/_ub`, {
+          const response = await fetch(`/api/upload-blob`, {
             method: "POST",
             body: fd,
           });
@@ -172,7 +163,7 @@ export const useAdminCreateTheme = (token: string | null) => {
 
     const createTheme = async () => {
       const response = await getClient(
-        "/api/_th",
+        "/api/admin/themes",
         {
           method: "POST",
           body: JSON.stringify(modifiedFormdata),

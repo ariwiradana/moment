@@ -14,7 +14,7 @@ const initalFormData: Theme = {
   phone_thumbnail: null,
   package_ids: [],
   theme_category_ids: [],
-  cover_video: false,
+  features: [],
   active: false,
 };
 
@@ -26,19 +26,19 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
   } = useSWR<{
     success: boolean;
     data: Theme[];
-  }>(id ? `/api/_th?id=${id}` : undefined, (url: string) =>
+  }>(id ? `/api/admin/themes?id=${id}` : undefined, (url: string) =>
     fetcher(url, token)
   );
 
   const { data: packageResult } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(`/api/_p`, (url: string) => fetcher(url, token));
+  }>(`/api/admin/packages`, (url: string) => fetcher(url, token));
 
   const { data: themeCategoryResults } = useSWR<{
     success: boolean;
     data: ThemeCategory[];
-  }>(`/api/_tc`, (url: string) => fetcher(url, token));
+  }>(`/api/admin/theme-categories`, (url: string) => fetcher(url, token));
 
   const packages = packageResult?.data || [];
   const themeCategories = themeCategoryResults?.data || [];
@@ -64,14 +64,14 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
         category: currentTheme.category ?? "Pernikahan",
         package_ids: currentTheme.package_ids ?? [],
         theme_category_ids: currentTheme.theme_category_ids ?? [],
-        cover_video: currentTheme.cover_video,
         active: currentTheme.active,
+        features: currentTheme.features ?? [],
       }));
     }
   }, [themes]);
 
   const handleChange = (
-    value: string | number | FileList | boolean,
+    value: string | number | FileList | boolean | string[],
     name: string
   ) => {
     if (name === "thumbnail") {
@@ -118,7 +118,7 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
 
     const updateTheme = async () => {
       const response = await getClient(
-        `/api/_th?id=${id}`,
+        `/api/admin/themes?id=${id}`,
         {
           method: "PUT",
           body: JSON.stringify(modifiedFormdata),
@@ -166,7 +166,7 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
 
         const fd = new FormData();
         fd.append("file", image);
-        const response = await fetch(`/api/_ub`, {
+        const response = await fetch(`/api/upload-blob`, {
           method: "POST",
           body: fd,
         });
@@ -206,7 +206,7 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
 
         const fd = new FormData();
         fd.append("file", image);
-        const response = await fetch(`/api/_ub`, {
+        const response = await fetch(`/api/upload-blob`, {
           method: "POST",
           body: fd,
         });
@@ -239,7 +239,7 @@ export const useAdminUpdateTheme = (id: number, token: string | null) => {
 
       const deleteBlob = async () => {
         const response = await getClient(
-          `/api/_th/_dt`,
+          `/api/admin/themes/delete`,
           {
             method: "POST",
             body: JSON.stringify(payload),

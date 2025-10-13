@@ -5,12 +5,13 @@ import { BiGift, BiSolidCopy } from "react-icons/bi";
 import Image from "next/image";
 import useClientStore from "@/store/useClientStore";
 import useGift from "@/hooks/themes/useGift";
+import { formatBankNumber } from "@/utils/formatBankNumber";
 
 const GiftComponent = () => {
   const { actions } = useGift(<BiGift />);
   const { client } = useClientStore();
 
-  if (!client) return null; // fallback kalau client belum ready
+  if (!client?.package?.digital_envelope) return null;
 
   return (
     <section className="relative bg-white overflow-hidden z-20">
@@ -58,7 +59,9 @@ const GiftComponent = () => {
                 />
               </div>
               <h1 className="text-2xl font-semibold text-white">
-                {client.gift_bank_name}
+                {client?.status === "paid"
+                  ? client?.gift_bank_name
+                  : "Bank Jago"}
               </h1>
             </div>
 
@@ -68,26 +71,32 @@ const GiftComponent = () => {
                 <p
                   className={`text-xs md:text-sm leading-5 text-white ${raleway.className}`}
                 >
-                  {client.gift_account_name}
+                  {client?.status === "paid"
+                    ? client?.gift_account_name
+                    : "Moment Invitation"}
                 </p>
                 <p
                   className={`text-sm md:text-base font-medium text-white ${raleway.className}`}
                 >
-                  {client.gift_account_number}
+                  {client?.status === "paid"
+                    ? formatBankNumber(client?.gift_account_number as number)
+                    : formatBankNumber(123456789)}
                 </p>
               </div>
 
-              <button
-                onClick={() =>
-                  actions.handleCopyRekening(
-                    client?.gift_account_number as string
-                  )
-                }
-                className="p-2 rounded-full aspect-square bg-white flex justify-center items-center text-samaya-dark text-xs md:text-sm"
-                aria-label="Copy rekening"
-              >
-                <BiSolidCopy />
-              </button>
+              {client.status === "paid" && (
+                <button
+                  onClick={() =>
+                    actions.handleCopyRekening(
+                      client?.gift_account_number as string
+                    )
+                  }
+                  className="p-2 rounded-full aspect-square bg-white flex justify-center items-center text-samaya-dark text-xs md:text-sm"
+                  aria-label="Copy rekening"
+                >
+                  <BiSolidCopy />
+                </button>
+              )}
             </div>
           </div>
         </div>

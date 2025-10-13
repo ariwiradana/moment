@@ -81,19 +81,21 @@ const ParticipantComponent: FC<ComponentProps> = memo(({ data, index }) => {
         </div>
 
         {/* Participant Image */}
-        <Image
-          quality={80} // optimize kualitas
-          sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-          alt={`Foto Partisipan ${index + 1}`}
-          src={data?.image as string}
-          fill
-          loading="lazy"
-          className={`object-cover border-[4px] border-samaya-dark ${
-            odd
-              ? "rounded-tr-[100px] lg:rounded-tr-[200px]"
-              : "rounded-tl-[100px] lg:rounded-tl-[200px]"
-          }`}
-        />
+        {data.image && (
+          <Image
+            quality={80} // optimize kualitas
+            sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
+            alt={`Foto Partisipan ${index + 1}`}
+            src={data?.image as string}
+            fill
+            loading="lazy"
+            className={`object-cover border-[4px] border-samaya-dark ${
+              odd
+                ? "rounded-tr-[100px] lg:rounded-tr-[200px]"
+                : "rounded-tl-[100px] lg:rounded-tl-[200px]"
+            }`}
+          />
+        )}
 
         {/* Participant Info */}
         <div className="absolute bottom-0 left-0 p-8 z-20">

@@ -21,7 +21,7 @@ const EventsComponent = dynamic(() => import("./layouts/events"), {
   ssr: false,
 });
 const VideoComponent = dynamic(() => import("./layouts/video"), { ssr: false });
-const FotoComponent = dynamic(() => import("./layouts/foto"), { ssr: false });
+const FotoComponent = dynamic(() => import("./layouts/photos"), { ssr: false });
 const GiftComponent = dynamic(() => import("./layouts/gift"), { ssr: false });
 const RSVPWishes = dynamic(() => import("./layouts/rsvp.wishes"), {
   ssr: false,

@@ -23,7 +23,7 @@ export const useAdminLogin = () => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      const res = await getClient("/api/_a/_li", {
+      const res = await getClient("/api/auth/login", {
         method: "POST",
         body: JSON.stringify({ ...formData, role: "admin" }),
       });

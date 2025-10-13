@@ -14,7 +14,10 @@ import { BiSolidQuoteAltLeft } from "react-icons/bi";
 import Head from "next/head";
 
 const TestimonialsComponent = () => {
-  const { data } = useSWR<{ data: Testimonials[] }>("/api/_pb/_ts", fetcher);
+  const { data } = useSWR<{ data: Testimonials[] }>(
+    "/api/guest/testimonials",
+    fetcher
+  );
   const testimonials = data?.data || [];
 
   if (!testimonials.length) return null;

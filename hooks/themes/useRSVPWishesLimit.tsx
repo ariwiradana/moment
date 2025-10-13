@@ -1,3 +1,4 @@
+import { DummyWishes } from "@/constants/dummyWishes";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
 import { Review } from "@/lib/types";
@@ -64,10 +65,10 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
   // Memoize SWR URL
   const fetchUrl = useMemo(
     () =>
-      client?.id
-        ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
+      client?.id && client.status === "paid"
+        ? `/api/guest/wishes?page=${page}&limit=${limit}&client_id=${client.id}`
         : null,
-    [client?.id, page, limit]
+    [client, page, limit]
   );
 
   const { mutate, isLoading: isLoadingWishes } = useSWR<{
@@ -96,7 +97,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
         wisheschema.parse(formData);
         const toastSubmit = toast.loading("Memberikan ucapan...");
 
-        const response = await getClient(`/api/_pb/_w`, {
+        const response = await getClient(`/api/guest/wishes`, {
           method: "POST",
           body: JSON.stringify({ client_id: Number(client?.id), ...formData }),
         });
@@ -147,7 +148,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
       attendantText: ATTENDANT_TEXT,
       loading,
       errors,
-      wishes,
+      wishes: wishes.length > 0 ? wishes : DummyWishes,
       totalRows,
       formData,
       isOpen,

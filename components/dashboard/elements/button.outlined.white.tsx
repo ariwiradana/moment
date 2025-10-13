@@ -46,7 +46,7 @@ const ButtonOutlinedLight: FC<ButtonOutlinedLightProps> = ({
       {...props}
       className={`${redhat.className} ${
         className ?? ""
-      } flex items-center text-white font-medium rounded-full hover:bg-white hover:text-dashboard-dark hover:border-white transition duration-200 border border-zinc-400 whitespace-nowrap justify-start ${buttonStyles(
+      } flex items-center w-full text-white font-medium rounded-full hover:bg-white hover:text-dashboard-dark hover:border-white transition duration-200 border border-zinc-400 whitespace-nowrap justify-center ${buttonStyles(
         size
       )} ${
         isloading || props.disabled

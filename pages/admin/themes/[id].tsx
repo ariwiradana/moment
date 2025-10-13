@@ -13,6 +13,7 @@ import InputCheckbox from "@/components/admin/elements/input.checkbox";
 import { isTokenExpired } from "@/lib/auth";
 import Cookies from "cookies";
 import InputSwitch from "@/components/admin/elements/input.switch";
+import InputChip from "@/components/admin/elements/input.chip";
 
 interface DetailThemeProps {
   id: number;
@@ -94,6 +95,12 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                   ))}
               </div>
             </div>
+
+            <InputChip
+              chips={state.formData.features as string[]}
+              onChange={(value) => actions.handleChange(value, "features")}
+              label="Other Features"
+            />
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex flex-col gap-6">
@@ -186,30 +193,15 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <InputSwitch
-                onChange={() =>
-                  actions.handleChange(
-                    !state.formData.cover_video,
-                    "cover_video"
-                  )
-                }
-                checked={state.formData.cover_video as boolean}
-                name="cover_video"
-                label="Cover Video"
-                description="Enable or disable the cover video"
-              />
-
-              <InputSwitch
-                label="Activate theme"
-                description="Enable or disable this theme."
-                onChange={() =>
-                  actions.handleChange(!state.formData.active, "active")
-                }
-                checked={state.formData.active as boolean}
-                name="active"
-              />
-            </div>
+            <InputSwitch
+              label="Activate theme"
+              description="Enable or disable this theme."
+              onChange={() =>
+                actions.handleChange(!state.formData.active, "active")
+              }
+              checked={state.formData.active as boolean}
+              name="active"
+            />
 
             <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
               <ButtonPrimary

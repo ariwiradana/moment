@@ -13,7 +13,7 @@ import {
 import Head from "next/head";
 
 const ClientComponent = () => {
-  const { data, isLoading } = useSWR("/api/_pb/_c?status=completed", fetcher);
+  const { data, isLoading } = useSWR("/api/guest?status=completed", fetcher);
   const clients: Client[] = useMemo(() => data?.data || [], [data]);
 
   const [slidesPerView, setSlidesPerView] = useState(2);

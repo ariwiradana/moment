@@ -1,3 +1,4 @@
+import { DummyWishes } from "@/constants/dummyWishes";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
 import { Review } from "@/lib/types";
@@ -53,14 +54,15 @@ const useRSVPWishes = (icon: ReactNode) => {
   );
 
   const { data, mutate } = useSWR<{ data: Review[]; total_rows: number }>(
-    client?.id
-      ? `/api/_pb/_w?page=${page}&limit=${limit}&client_id=${client.id}`
+    client?.id && client.status === "paid"
+      ? `/api/guest/wishes?page=${page}&limit=${limit}&client_id=${client.id}`
       : null,
     fetcher,
     { keepPreviousData: true, revalidateOnFocus: false }
   );
 
-  const wishes = data?.data ?? [];
+  const wishes = data?.data ?? DummyWishes;
+  console.log({ wishes });
   const totalRows = data?.total_rows ?? 0;
 
   const handleChange = useCallback((name: string, value: string) => {
@@ -76,7 +78,7 @@ const useRSVPWishes = (icon: ReactNode) => {
       try {
         wisheschema.parse(formData);
         const toastId = toast.loading("Memberikan ucapan...");
-        const response = await getClient(`/api/_pb/_w`, {
+        const response = await getClient(`/api/guest/wishes`, {
           method: "POST",
           body: JSON.stringify({ client_id: client?.id, ...formData }),
         });

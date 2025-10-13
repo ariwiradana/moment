@@ -2,11 +2,13 @@ import { redhat } from "@/lib/fonts";
 import { ThemeUsage } from "@/lib/types";
 import { NextPage } from "next";
 import Link from "next/link";
-import { BsEye } from "react-icons/bs";
+import { BsCart, BsEye } from "react-icons/bs";
 import { formatToRupiah } from "@/utils/formatToRupiah";
-import ButtonOutlinedLight from "../elements/button.outlined.white";
 import { useRef, useCallback } from "react";
-import { TbNewSection, TbStar, TbVideo } from "react-icons/tb";
+import { TbNewSection, TbSettingsAutomation, TbStar } from "react-icons/tb";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import ButtonTetiary from "../elements/button.tetiary";
 
 interface Props {
   theme: ThemeUsage;
@@ -20,7 +22,9 @@ const ThemeCard: NextPage<Props> = ({
   bestSeller = false,
   newest = false,
 }) => {
-  const { name, slug, phone_thumbnail, packages, cover_video } = theme;
+  const { name, slug, phone_thumbnail, packages, features } = theme;
+
+  console.log(features);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlay = useCallback(() => {
@@ -65,24 +69,36 @@ const ThemeCard: NextPage<Props> = ({
       </div>
 
       <div className="flex flex-col items-center mt-3 md:mt-5">
-        {cover_video || newest ? (
-          <div className="flex justify-center flex-wrap gap-3 mb-2">
-            {newest && (
+        <Swiper
+          modules={[Autoplay]}
+          autoplay
+          slidesPerView={1}
+          grabCursor
+          className="!overflow-visible mb-3"
+        >
+          {newest && (
+            <SwiperSlide className="!w-auto">
               <div
                 className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
               >
                 <TbNewSection /> Desain Baru
               </div>
-            )}
-            {cover_video && (
+            </SwiperSlide>
+          )}
+
+          {features.map((feature) => (
+            <SwiperSlide
+              key={`Fitur Tambahan Tema ${name}`}
+              className="!w-auto"
+            >
               <div
                 className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
               >
-                <TbVideo /> Thumbnail Video
+                <TbSettingsAutomation /> {feature}
               </div>
-            )}
-          </div>
-        ) : null}
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
         <h5
           className={`${redhat.className} text-xl text-white font-semibold mb-2 md:mb-3`}
@@ -101,13 +117,18 @@ const ThemeCard: NextPage<Props> = ({
         <Link
           href={`/${theme.client_slug}`}
           target="_blank"
-          aria-label={`Link Preview ${name}`}
+          className="w-full lg:w-3/4"
+          aria-label={`Link Preview Tema ${name}`}
         >
-          <ButtonOutlinedLight
-            size="small"
-            title="Live Preview"
-            icon={<BsEye />}
-          />
+          <ButtonTetiary size="small" title="Live Preview" icon={<BsEye />} />
+        </Link>
+        <Link
+          href={`/${theme.client_slug}/order`}
+          target="_blank"
+          aria-label={`Link Pesan Tema ${name}`}
+          className="mt-2 w-full lg:w-3/4"
+        >
+          <ButtonTetiary size="small" title="Pesan Tema" icon={<BsCart />} />
         </Link>
       </div>
     </div>

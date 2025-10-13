@@ -25,7 +25,7 @@ const ThankyouComponent = () => {
   return (
     <section
       style={{ marginTop: 0 }}
-      className="relative flex flex-col justify-center h-screen bg-aruna-dark"
+      className="relative flex flex-col justify-center h-screen bg-aruna-dark overflow-hidden"
     >
       <div className="absolute inset-0 z-10 bg-aruna-dark/80"></div>
       <div className="absolute top-0 inset-x-0 grid" data-aos="zoom-out">

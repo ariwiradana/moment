@@ -20,7 +20,7 @@ const RSVPWishesComponent = () => {
     </div>
   );
 
-  if (!client) return null;
+  if (!client?.package?.rsvp_and_greetings) return null;
 
   return (
     <section className="relative bg-white w-full overflow-hidden z-20">

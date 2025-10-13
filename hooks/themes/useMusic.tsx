@@ -52,6 +52,27 @@ const useMusic = (): UseMusic => {
     };
   }, [isPlaying]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Pastikan bukan sedang mengetik di input/textarea
+      const target = e.target as HTMLElement;
+      const isTyping =
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable;
+
+      if (isTyping) return;
+
+      if (e.code === "Space") {
+        e.preventDefault(); // biar gak scroll halaman
+        handlePlayPause();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isPlaying]);
+
   return {
     refs: { audioRef },
     state: { isPlaying },

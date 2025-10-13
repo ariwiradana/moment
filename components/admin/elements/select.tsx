@@ -33,7 +33,7 @@ const InputSelect: FC<InputSelectProps> = (props) => {
       {props.label && (
         <label
           htmlFor={props.id}
-          className="block text-dashboard-dark/60 mb-1 text-xs"
+          className="block text-dashboard-dark/60 mb-1 text-sm"
         >
           {props.label}{" "}
           <span className="text-sm text-gray-400">

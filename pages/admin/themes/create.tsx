@@ -11,7 +11,7 @@ import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
 import { Package } from "@/lib/types";
-import InputSwitch from "@/components/admin/elements/input.switch";
+import InputChip from "@/components/admin/elements/input.chip";
 
 interface CreateThemeProps {
   token: string | null;
@@ -36,20 +36,26 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
         >
           <Input
             className="w-full"
-            onChange={actions.handleChange}
+            onChange={(e) => actions.handleChange("name", e.target.value)}
             name="name"
             label="Theme Name"
             value={state.formData.name}
           />
           <div className="grid md:grid-cols-2 gap-4">
             <Input
-              onChange={actions.handleChange}
+              onChange={(e) =>
+                e.target.files &&
+                actions.handleChange("thumbnail", e.target.files[0])
+              }
               name="thumbnail"
               type="file"
               label="Thumbnail"
             />
             <Input
-              onChange={actions.handleChange}
+              onChange={(e) =>
+                e.target.files &&
+                actions.handleChange("phone_thumbnail", e.target.files[0])
+              }
               name="phone_thumbnail"
               type="file"
               label="Phone Thumbnail"
@@ -65,7 +71,9 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
                       tc.id
                     )}
                     key={`theme-category-${tc.id}`}
-                    onChange={actions.handleChange}
+                    onChange={(e) =>
+                      actions.handleChange("theme_category_ids", e.target.value)
+                    }
                     name="theme_category_ids"
                     label={tc.name}
                     value={tc.id}
@@ -83,7 +91,9 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
                       pk.id as number
                     )}
                     key={`package-${pk.id}`}
-                    onChange={actions.handleChange}
+                    onChange={(e) =>
+                      actions.handleChange("package_ids", e.target.value)
+                    }
                     name="package_ids"
                     label={pk.name}
                     value={pk.id}
@@ -91,14 +101,12 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
                 ))}
             </div>
           </div>
-          <InputSwitch
-            onChange={actions.handleChange}
-            checked={state.formData.cover_video as boolean}
-            name="cover_video"
-            label="Cover Video"
-            description="Enable or disable the cover video"
-            value={String(state.formData.cover_video)}
+          <InputChip
+            chips={state.formData.features as string[]}
+            onChange={(value) => actions.handleChange("features", value)}
+            label="Other Features"
           />
+
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
               isloading={state.loading}

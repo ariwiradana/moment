@@ -49,6 +49,7 @@ CREATE TABLE packages (
 CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
+  phone VARCHAR(255),
   slug VARCHAR(255) UNIQUE,
   cover VARCHAR(255),
   music_title VARCHAR(255),
@@ -134,7 +135,7 @@ CREATE TABLE users(
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE client_form (
+CREATE TABLE media (
   id SERIAL PRIMARY KEY,
   client_id INT REFERENCES clients(id) ON DELETE SET NULL,
   image_link VARCHAR(255),

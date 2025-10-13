@@ -12,7 +12,7 @@ import CountUp from "./elements/count.up";
 import Head from "next/head";
 
 const SharedThemeComponent = () => {
-  const { data: response } = useSWR("/api/_pb/_sh", fetcher);
+  const { data: response } = useSWR("/api/guest/stats", fetcher);
   const data = response?.data;
 
   if (!data) return null;
@@ -24,18 +24,18 @@ const SharedThemeComponent = () => {
     { icon: TbMessage, value: data.wishes, label: "Ucapan & Doa" },
   ];
 
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "Dataset",
-      name: "Statistik Moment Invitation",
-      creator: 'Moment Invitation',
-      description: "Statistik penggunaan undangan digital Moment Invitation",
-      distribution: stats.map((s) => ({
-        "@type": "DataDownload",
-        name: s.label,
-        contentUrl: s.value.toString(),
-      })),
-    };
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: "Statistik Moment Invitation",
+    creator: "Moment Invitation",
+    description: "Statistik penggunaan undangan digital Moment Invitation",
+    distribution: stats.map((s) => ({
+      "@type": "DataDownload",
+      name: s.label,
+      contentUrl: s.value.toString(),
+    })),
+  };
 
   return (
     <section className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden">

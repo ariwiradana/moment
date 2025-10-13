@@ -47,7 +47,7 @@ const Cover = ({ to, actions }: Props) => {
       {client?.cover && (
         <Image
           data-aos="zoom-out"
-          src={client.cover}
+          src={client.cover || ""}
           alt="cover"
           fill
           priority

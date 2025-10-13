@@ -125,6 +125,8 @@ const RSVPWishesComponent: FC = () => {
     []
   );
 
+  if (!client?.package?.rsvp_and_greetings) return;
+
   return (
     <section className="relative bg-white w-full overflow-hidden">
       <div className="relative w-full flex flex-col justify-center items-center z-20 pt-[60px] md:pt-[100px]">

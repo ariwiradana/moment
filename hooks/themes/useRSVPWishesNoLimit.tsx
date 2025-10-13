@@ -1,3 +1,4 @@
+import { DummyWishes } from "@/constants/dummyWishes";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
 import { Review } from "@/lib/types";
@@ -67,8 +68,8 @@ const useRSVPWishesNoLimit = (icon: ReactNode) => {
     data: Review[];
     total_rows: number;
   }>(
-    client?.id
-      ? `/api/_pb/_w?client_id=${client.id}`
+    client?.id && client.status === "paid"
+      ? `/api/guest/wishes?client_id=${client.id}`
       : null,
     fetcher,
     {
@@ -96,7 +97,7 @@ const useRSVPWishesNoLimit = (icon: ReactNode) => {
     try {
       wisheschema.parse(formData);
       const toastSubmit = toast.loading("Memberikan ucapan...");
-      const response = await getClient(`/api/_pb/_w`, {
+      const response = await getClient(`/api/guest/wishes`, {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -142,7 +143,7 @@ const useRSVPWishesNoLimit = (icon: ReactNode) => {
       attendantText,
       loading,
       errors,
-      wishes,
+      wishes: wishes.length > 0 ? wishes : DummyWishes,
       totalRows,
       formData,
       isOpen,

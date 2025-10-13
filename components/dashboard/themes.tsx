@@ -15,7 +15,7 @@ const ThemeComponent: FC = () => {
   const [newest, setNewest] = useState<string>("");
 
   const { isLoading } = useSWR<{ data: ThemeUsage[] }>(
-    `/api/_pb/_th/_uc`,
+    `/api/guest/themes/usage`,
     fetcher,
     {
       onSuccess: (data) => {
@@ -38,7 +38,7 @@ const ThemeComponent: FC = () => {
     }
   );
 
-  useSWR<{ data: ThemeCategory[] }>(`/api/_pb/_tc`, fetcher, {
+  useSWR<{ data: ThemeCategory[] }>(`/api/guest/theme-categories`, fetcher, {
     onSuccess: (data) => {
       if (data.data) {
         setThemeCategories(data.data);

@@ -28,7 +28,7 @@ const Photos = () => {
         />
       )}
       <section className="bg-nirvaya-light-brown">
-        <div className="max-w-screen-lg mx-auto pt-16 md:px-8">
+        <div className="max-w-screen-lg mx-auto py-16 md:px-8">
           <div
             data-aos="fade-up"
             className="flex flex-col md:flex-row items-center gap-x-6 pl-8 md:pl-0"

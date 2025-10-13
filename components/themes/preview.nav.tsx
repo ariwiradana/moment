@@ -1,26 +1,16 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { redhat } from "@/lib/fonts";
-import { sosmedURLs } from "@/constants/sosmed";
 import useClientStore from "@/store/useClientStore";
 import { BsCart } from "react-icons/bs";
 import Image from "next/image";
 import useCoverStore from "@/store/useCoverStore";
 import ButtonLight from "../dashboard/elements/button.light";
-import { Theme } from "@/lib/types";
+import { useRouter } from "next/router";
 
 const PreviewNav = () => {
   const { client } = useClientStore();
   const { isOpen } = useCoverStore();
-
-  console.log(client);
-
-  const handleChooseTheme = useCallback((theme: Theme) => {
-    const message = `Halo, saya tertarik untuk memilih tema undangan ${theme.name}`;
-    const whatsappLink = `${sosmedURLs.whatsapp}?text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(whatsappLink, "_blank");
-  }, []);
+  const router = useRouter();
 
   if (!isOpen) return null;
 
@@ -31,9 +21,9 @@ const PreviewNav = () => {
           <div className="relative group">
             <div className="w-3 h-3 group-hover:-right-1 transition-all ease-in-out rounded-full aspect-square bg-dashboard-primary animate-pulse absolute -top-1 right-0 z-20"></div>
             <ButtonLight
-              onClick={() => handleChooseTheme(client.theme as Theme)}
+              onClick={() => router.push(`/${client.slug}/order`)}
               className="group-hover:scale-105"
-              title="Pesan Sekarang"
+              title="Pesan Tema"
               size="small"
               icon={<BsCart />}
             />
@@ -54,7 +44,7 @@ const PreviewNav = () => {
                 />
               </div>
               {client.is_preview
-                ? `Preview Tema ${client?.theme?.name}`
+                ? `Preview Tema ${client?.theme?.name} ${client.package?.name}`
                 : `Preview Undangan ${client?.theme?.name}`}
             </li>
           </ul>

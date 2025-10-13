@@ -13,8 +13,9 @@ export const useAdminTestimonials = (token: string | null) => {
     success: boolean;
     data: Testimonials[];
     total_rows: number;
-  }>(token ? `/api/_ts?page=${page}&limit=${limit}` : null, (url: string) =>
-    fetcher(url, token)
+  }>(
+    token ? `/api/admin/testimonials?page=${page}&limit=${limit}` : null,
+    (url: string) => fetcher(url, token)
   );
 
   const handleChangePagination = (
@@ -26,7 +27,7 @@ export const useAdminTestimonials = (token: string | null) => {
 
   const handleDelete = (id: number) => {
     const deleteTestimonial = getClient(
-      `/api/_ts?id=${id}`,
+      `/api/admin/testimonials?id=${id}`,
       {
         method: "DELETE",
       },

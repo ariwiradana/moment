@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { redhat } from "@/lib/fonts";
 import useDashboardStore from "@/store/useDashboardStore";
 import { BsChevronRight } from "react-icons/bs";
+import Image from "next/image";
 
 const HeroComponent = () => {
   const { setActiveSection } = useDashboardStore();
@@ -55,10 +56,13 @@ const HeroComponent = () => {
           poster="/video/hero-poster.jpg"
         />
         {/* Hidden Image untuk SEO */}
-        <img
+        <Image
+          quality={40}
           src="/video/hero-poster.jpg"
           alt="Undangan digital Bali minimalis dan elegan untuk pernikahan & mempandes"
           className="hidden"
+          height={100}
+          width={100}
         />
       </div>
 

@@ -30,7 +30,7 @@ type MenuItem = {
 const Sidebar: FC = () => {
   const router = useRouter();
   const { isSidebarOpen, toggleSidebar } = useAdminSidebar();
-  const { data: user } = useSWR("/api/_a/_u", fetcher);
+  const { data: user } = useSWR("/api/auth/user", fetcher);
 
   const menuItems: MenuItem[] = [
     { name: "Clients", path: "/admin/clients", icon: <BiUser /> },
@@ -54,7 +54,7 @@ const Sidebar: FC = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await getClient("/api/_a/_lo", {
+      const res = await getClient("/api/auth/logout", {
         method: "POST",
       });
       const result = await res.json();

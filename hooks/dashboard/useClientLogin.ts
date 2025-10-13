@@ -23,7 +23,7 @@ export const useClientLogin = () => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      const res = await getClient("/api/_a/_li", {
+      const res = await getClient("/api/auth/login", {
         method: "POST",
         body: JSON.stringify({
           ...formData,
@@ -37,7 +37,7 @@ export const useClientLogin = () => {
       } else {
         if (result.user.role === "client") {
           const responseClient = await fetcher(
-            `/api/_pb/_c/_u?slug=${formData.username}`
+            `/api/guest/invitation?slug=${formData.username}`
           );
           const client: Client | null = responseClient?.data ?? null;
           if (client) {

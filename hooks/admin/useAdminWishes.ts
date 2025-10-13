@@ -15,7 +15,7 @@ export const useAdminWishes = (token: string | null) => {
     success: boolean;
     data: Client[];
     total_rows: number;
-  }>(token ? `/api/_c` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/admin` : null, (url: string) => fetcher(url, token));
 
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
@@ -23,7 +23,7 @@ export const useAdminWishes = (token: string | null) => {
     total_rows: number;
   }>(
     clientId && token
-      ? `/api/_w?page=${page}&limit=${limit}&client_id=${clientId}`
+      ? `/api/admin/wishes?page=${page}&limit=${limit}&client_id=${clientId}`
       : null,
     (url: string) => fetcher(url, token)
   );
@@ -54,7 +54,7 @@ export const useAdminWishes = (token: string | null) => {
 
   const handleDelete = (id: number) => {
     const deleteReview = getClient(
-      `/api/_w?id=${id}`,
+      `/api/admin/wishes?id=${id}`,
       {
         method: "DELETE",
       },
@@ -64,10 +64,10 @@ export const useAdminWishes = (token: string | null) => {
       loading: "Deleting review...",
       success: () => {
         mutate();
-        return "Successfully deleted review";
+        return "Successfully deleted wishes";
       },
       error: (error: any) => {
-        return error.message || "Failed to delete review";
+        return error.message || "Failed to delete wishes";
       },
     });
   };

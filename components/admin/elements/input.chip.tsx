@@ -53,9 +53,9 @@ const InputChip: React.FC<InputChipProps> = ({
 
   return (
     <div className={`${montserrat.className} text-sm`}>
-      <label htmlFor={id} className="block text-dashboard-dark/60 mb-1 text-xs">
+      <label htmlFor={id} className="block text-dashboard-dark/60 mb-1 text-sm">
         {label}{" "}
-        <span className="text-sm text-gray-400">
+        <span className="text-xs text-gray-400">
           {optional && "(opsional)"}
         </span>
       </label>

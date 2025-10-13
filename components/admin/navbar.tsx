@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Navbar: FC = () => {
   const { isSidebarOpen, toggleSidebar } = useAdminSidebar();
-  const { data: user } = useSWR("/api/_a/_u", fetcher);
+  const { data: user } = useSWR("/api/auth/user", fetcher);
 
   const sanitizedUser = ((user as string) ?? "").replaceAll(/[^a-zA-Z]+/g, " ");
   return (

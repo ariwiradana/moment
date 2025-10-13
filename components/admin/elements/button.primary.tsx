@@ -22,13 +22,13 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
   const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
-        return "px-2 py-2 text-xs gap-x-1";
+        return "pl-2 pr-3 py-2 text-xs gap-x-1";
       case "small":
-        return "px-3 py-3 text-xs gap-x-2";
+        return "pl-3 pr-4 py-3 text-xs gap-x-2";
       case "medium":
-        return "px-4 py-3 text-sm gap-x-3";
+        return "pl-4 pr-5 py-3 text-sm gap-x-3";
       case "large":
-        return "px-6 py-4 text-sm gap-x-3";
+        return "pl-6 pr-7 py-4 text-sm gap-x-3";
     }
   };
 

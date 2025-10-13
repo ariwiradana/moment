@@ -30,6 +30,8 @@ const GiftComponent = () => {
     [isGiftShown]
   );
 
+  if (!client?.package?.digital_envelope) return;
+
   return (
     <section
       style={{ marginTop: 0 }}
@@ -83,32 +85,40 @@ const GiftComponent = () => {
               <h1
                 className={`text-xl md:text-2xl font-semibold text-aruna-dark ${roboto.className}`}
               >
-                {client?.gift_bank_name}
+                {client?.status === "paid"
+                  ? client?.gift_bank_name
+                  : "Bank Jago"}
               </h1>
             </div>
 
             <h3
               className={`text-lg tracking-[2px] text-aruna-dark ${roboto.className}`}
             >
-              {formatBankNumber(client?.gift_account_number as number)}
+              {client?.status === "paid"
+                ? formatBankNumber(client?.gift_account_number as number)
+                : formatBankNumber(123456789)}
             </h3>
 
             <div className="flex justify-between items-end gap-x-3">
               <p
                 className={`text-sm leading-5 text-aruna-dark/60 ${roboto.className}`}
               >
-                {client?.gift_account_name}
+                {client?.status === "paid"
+                  ? client?.gift_account_name
+                  : "Moment Invitation"}
               </p>
-              <ButtonDark
-                title="Salin"
-                icon={<BiCopy />}
-                type="button"
-                onClick={() =>
-                  actions.handleCopyRekening(
-                    client?.gift_account_number as string
-                  )
-                }
-              />
+              {client?.status === "paid" && (
+                <ButtonDark
+                  title="Salin"
+                  icon={<BiCopy />}
+                  type="button"
+                  onClick={() =>
+                    actions.handleCopyRekening(
+                      client?.gift_account_number as string
+                    )
+                  }
+                />
+              )}
             </div>
           </div>
         </div>

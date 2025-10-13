@@ -245,6 +245,14 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           {client.theme_category?.name ?? "-"}
                         </p>
                       </div>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Phone
+                        </p>
+                        <p className="text-gray-800 font-semibold text-sm capitalize">
+                          {client.phone}
+                        </p>
+                      </div>
                       {client.status && (
                         <div>
                           <p className="text-gray-500 font-medium text-xs mb-1">
@@ -276,6 +284,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                     <tr>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                         Client
+                      </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        Phone
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Theme
@@ -335,7 +346,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 <span className="whitespace-nowrap">
                                   {client.name}
                                 </span>
-                                <p className="text-gray-500 font-medium text-xs">
+                                <p className="text-gray-600 font-medium text-sm">
                                   {client.slug}
                                 </p>
                               </div>
@@ -357,6 +368,9 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               </Link>
                             </div>
                           </div>
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          <p>{client.phone ?? "-"}</p>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <p>{client.theme?.name ?? "-"}</p>

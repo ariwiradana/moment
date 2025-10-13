@@ -42,8 +42,6 @@ interface UpdateClientProps {
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
 
-  console.log(state.selectedTheme?.cover_video);
-
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
@@ -197,25 +195,30 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             <InputSelect
               options={state.packageOptions}
               value={state.formData.package_id ?? ""}
-              onChange={(e) =>
-                actions.handleChangeClient(Number(e.target.value), "package_id")
-              }
-              label="Theme"
+              onChange={(e) => {
+                actions.handleChangeClient(
+                  Number(e.target.value),
+                  "package_id"
+                );
+
+                console.log(e.target.value);
+              }}
+              label="Package"
             />
             <h1 className="text-2xl font-bold mb-4 mt-8">Client Asset(s)</h1>
             <Input
               disabled
-              value={state.formData.client_form?.image_link || "-"}
+              value={state.formData.media?.image_link || "-"}
               label="Photos Link"
             />
             <Input
               disabled
-              value={state.formData.client_form?.video_link || "-"}
+              value={state.formData.media?.video_link || "-"}
               label="Video Link"
             />
             <Input
               disabled
-              value={state.formData.client_form?.music_title || "-"}
+              value={state.formData.media?.music_title || "-"}
               label="Music Title"
             />
             <h1 className="text-2xl font-bold mb-4 mt-8">Greeting(s)</h1>
@@ -262,6 +265,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               accept="image/*"
               type="file"
               multiple
+              max={state.selectedPackage?.max_gallery_photos as number}
               onChange={(e) =>
                 actions.handleChangeClient(e.target.files as FileList, "images")
               }
@@ -376,11 +380,16 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               />
             )}
 
-            <InputChip
-              chips={state.videosForm}
-              onChange={(value) => actions.handleChangeClient(value, "videos")}
-              label="Video URL (Youtube)"
-            />
+            {state.selectedPackage?.max_videos &&
+              state.selectedPackage?.max_videos > 0 && (
+                <InputChip
+                  chips={state.videosForm}
+                  onChange={(value) =>
+                    actions.handleChangeClient(value, "videos")
+                  }
+                  label="Video URL (Youtube)"
+                />
+              )}
 
             {state.formData.videos && (
               <div className="grid gap-2 relative">
@@ -442,53 +451,57 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               </div>
             )}
 
-            <h1 className="text-2xl font-bold mb-4 mt-8">Music</h1>
-            <Input
-              value={state.formData.music_title}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "music_title")
-              }
-              label="Title"
-            />
-            <Input
-              id="music"
-              accept="audio/mpeg"
-              type="file"
-              multiple
-              onChange={(e) =>
-                actions.handleChangeClient(
-                  e.target.files?.length ? (e.target.files[0] as File) : "",
-                  "music"
-                )
-              }
-              className="w-full"
-              label="File"
-            />
-
-            {state.formData.music && (
-              <div className="relative flex items-center gap-x-4">
-                <audio
-                  controls
-                  className="rounded-lg bg-gray-100 aspect-video object-cover"
-                >
-                  <source
-                    type="audio/mpeg"
-                    src={state.formData.music as string}
-                  />
-                </audio>
-                <ButtonPrimary
-                  type="button"
-                  onClick={() =>
-                    actions.handleDeleteMusic(
-                      state.formData.music as string,
-                      state.formData.id as number
+            {state.selectedPackage?.name !== "Basic" && (
+              <>
+                <h1 className="text-2xl font-bold mb-4 mt-8">Music</h1>
+                <Input
+                  value={state.formData.music_title}
+                  onChange={(e) =>
+                    actions.handleChangeClient(e.target.value, "music_title")
+                  }
+                  label="Title"
+                />
+                <Input
+                  id="music"
+                  accept="audio/mpeg"
+                  type="file"
+                  multiple
+                  onChange={(e) =>
+                    actions.handleChangeClient(
+                      e.target.files?.length ? (e.target.files[0] as File) : "",
+                      "music"
                     )
                   }
-                  icon={<BiX />}
-                  title="Remove"
-                  size="small"
+                  className="w-full"
+                  label="File"
                 />
-              </div>
+
+                {state.formData.music && (
+                  <div className="relative flex items-center gap-x-4">
+                    <audio
+                      controls
+                      className="rounded-lg bg-gray-100 aspect-video object-cover"
+                    >
+                      <source
+                        type="audio/mpeg"
+                        src={state.formData.music as string}
+                      />
+                    </audio>
+                    <ButtonPrimary
+                      type="button"
+                      onClick={() =>
+                        actions.handleDeleteMusic(
+                          state.formData.music as string,
+                          state.formData.id as number
+                        )
+                      }
+                      icon={<BiX />}
+                      title="Remove"
+                      size="small"
+                    />
+                  </div>
+                )}
+              </>
             )}
 
             <h1 className="text-2xl font-bold mb-4 mt-8">Event(s)</h1>
@@ -657,7 +670,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           </div>
                         </div>
                       </div>
-                      {event.id && (
+                      {index === state.formData.events.length - 1 && (
                         <div className="flex">
                           <ButtonPrimary
                             type="button"
@@ -674,15 +687,19 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   }
                 />
               ))}
-              <div className="">
-                <ButtonSecondary
-                  onClick={actions.handleAddAnotherEvent}
-                  type="button"
-                  title="Add Another"
-                  size="small"
-                  icon={<BiSolidPlusCircle />}
-                />
-              </div>
+              {state.selectedPackage?.max_events &&
+              state.selectedPackage?.max_events >
+                state.formData.events.length ? (
+                <div>
+                  <ButtonSecondary
+                    onClick={actions.handleAddAnotherEvent}
+                    type="button"
+                    title="Add Another"
+                    size="small"
+                    icon={<BiSolidPlusCircle />}
+                  />
+                </div>
+              ) : null}
             </div>
 
             <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
@@ -946,37 +963,43 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               </div>
             </div>
 
-            <h1 className="text-2xl font-bold mb-4 mt-8">Digital Gift</h1>
-            <div className="grid md:grid-cols-3 gap-4">
-              <Input
-                value={state.formData.gift_bank_name}
-                onChange={(e) =>
-                  actions.handleChangeClient(e.target.value, "gift_bank_name")
-                }
-                label="Bank / Platform Name"
-              />
-              <Input
-                value={state.formData.gift_account_name}
-                onChange={(e) =>
-                  actions.handleChangeClient(
-                    e.target.value,
-                    "gift_account_name"
-                  )
-                }
-                label="Account Name"
-              />
-              <Input
-                value={state.formData.gift_account_number}
-                onChange={(e) =>
-                  actions.handleChangeClient(
-                    e.target.value,
-                    "gift_account_number"
-                  )
-                }
-                label="Account Number"
-              />
-            </div>
-
+            {state.selectedPackage?.digital_envelope && (
+              <>
+                <h1 className="text-2xl font-bold mb-4 mt-8">Digital Gift</h1>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <Input
+                    value={state.formData.gift_bank_name}
+                    onChange={(e) =>
+                      actions.handleChangeClient(
+                        e.target.value,
+                        "gift_bank_name"
+                      )
+                    }
+                    label="Bank / Platform Name"
+                  />
+                  <Input
+                    value={state.formData.gift_account_name}
+                    onChange={(e) =>
+                      actions.handleChangeClient(
+                        e.target.value,
+                        "gift_account_name"
+                      )
+                    }
+                    label="Account Name"
+                  />
+                  <Input
+                    value={state.formData.gift_account_number}
+                    onChange={(e) =>
+                      actions.handleChangeClient(
+                        e.target.value,
+                        "gift_account_number"
+                      )
+                    }
+                    label="Account Number"
+                  />
+                </div>
+              </>
+            )}
             <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
               <ButtonPrimary
                 isloading={state.loading || state.isLoading}

@@ -27,10 +27,10 @@ const InputTextarea: FC<InputTextareaProps> = (props) => {
     <div className={`${redhat.className} text-sm`}>
       <label
         htmlFor={props.id}
-        className="block text-dashboard-dark/60 mb-1 text-xs"
+        className="block text-dashboard-dark/60 mb-1 text-sm"
       >
         {props.label}{" "}
-        <span className="text-sm text-gray-400">
+        <span className="text-xs text-gray-400">
           {props.optional && "(opsional)"}
         </span>
       </label>

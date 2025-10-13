@@ -29,7 +29,7 @@ const DashboardPayment: FC<DashboardPaymentProps> = ({ slug }) => {
 
   useEffect(() => setActiveSection("section6"), []);
 
-  const { data } = useSWR(slug ? `/api/_pb/_c?slug=${slug}` : null, fetcher);
+  const { data } = useSWR(slug ? `/api/guest?slug=${slug}` : null, fetcher);
 
   const client: Client | null = data?.data?.length ? data.data[0] : null;
 

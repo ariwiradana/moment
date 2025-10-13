@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { redhat } from "@/lib/fonts";
 import Accordion from "./elements/accordion.button";
-import Link from "next/link";
 import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
-import { sosmedURLs } from "@/constants/sosmed";
 import Head from "next/head";
 
 const FaqComponent = () => {
@@ -32,39 +30,20 @@ const FaqComponent = () => {
             preview tema undangan secara langsung.
           </li>
           <li>
-            Klik <span className="font-bold">Pesan Sekarang</span> untuk memesan
-            tema undangan yang diinginkan.
+            Klik tombol <span className="font-bold">Pesan Tema</span> untuk
+            memesan tema undangan yang diinginkan.
           </li>
           <li>
-            Undangan yang dipesan akan masuk melalui{" "}
-            <span className="font-bold">Pesan WhatsApp</span> secara otomatis.
+            <span className="font-bold">Isi form</span> yang dibutuhkan untuk
+            tema undangan yang dipilih.
           </li>
           <li>
-            Menunggu <span className="font-bold">balasan</span> dari Admin
+            <span className="font-bold">Lakukan pembayaran</span> dengan metode
+            pembayaran yang tersedia.
+          </li>
+          <li>
+            Menunggu <span className="font-bold">konfirmasi</span> dari Admin
             Moment.
-          </li>
-        </ul>
-      ),
-    },
-    {
-      title: "Bagaimana cara melakukan pembayaran dan konfirmasi pembayaran?",
-      content: (
-        <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
-          <li>
-            Silahkan melakukan pembayaran sesuai dengan harga dan paket tema
-            yang dipilih melalui{" "}
-            <span className="font-bold">Nomor Rekening</span> kami.
-          </li>
-          <li>
-            Setelah melakukan pembayaran, kirim bukti melalui{" "}
-            <span className="font-bold">Pesan WhatsApp</span> atau{" "}
-            <Link
-              href={sosmedURLs.whatsapp}
-              target="_blank"
-              className="text-dashboard-primary underline font-medium"
-            >
-              Klik Disini.
-            </Link>
           </li>
         </ul>
       ),
@@ -75,8 +54,8 @@ const FaqComponent = () => {
         <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
           <li>
             Undangan akan dibuat dengan estimasi{" "}
-            <span className="font-bold">1 - 2 jam</span> setelah konfirmasi
-            pembayaran dan mengisi data.
+            <span className="font-bold">1 - 2 jam</span> setelah mengisi form
+            dan terkonfirmasi oleh Admin Moment.
           </li>
         </ul>
       ),
@@ -88,10 +67,7 @@ const FaqComponent = () => {
         <ul className="list-disc ml-4 text-sm md:text-base marker:text-xs flex flex-col gap-2">
           <li>
             Pengiriman Foto dan Video dikirimkan melalui{" "}
-            <span className="font-bold">
-              Google Drive atau WhatsApp Document
-            </span>
-            .
+            <span className="font-bold">Google Drive dan sejenisnya.</span>.
           </li>
         </ul>
       ),
@@ -180,11 +156,7 @@ const FaqComponent = () => {
 
         <div className="mt-8 flex flex-col gap-2">
           {faqs.map((faq, idx) => (
-            <Accordion
-              key={idx}
-              title={faq.title}
-              content={faq.content}
-            />
+            <Accordion key={idx} title={faq.title} content={faq.content} />
           ))}
         </div>
       </div>

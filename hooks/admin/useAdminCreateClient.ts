@@ -109,26 +109,34 @@ export const useAdminCreateClient = (token: string | null) => {
     success: boolean;
     data: Theme[];
     total_rows: number;
-  }>(token ? `/api/_th` : null, (url: string) => fetcher(url, token), {
-    onSuccess: (data) => {
-      if (formData.theme_id) {
-        const selected = data.data.find((t) => t.id === formData.theme_id);
-        if (selected) setSelectedTheme(selected);
-      }
-    },
-  });
+  }>(
+    token ? `/api/admin/themes?active=true` : null,
+    (url: string) => fetcher(url, token),
+    {
+      onSuccess: (data) => {
+        if (formData.theme_id) {
+          const selected = data.data.find((t) => t.id === formData.theme_id);
+          if (selected) setSelectedTheme(selected);
+        }
+      },
+    }
+  );
 
   const { data: packages } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token), {
-    onSuccess: (data) => {
-      if (formData.package_id) {
-        const selected = data.data.find((p) => p.id === formData.package_id);
-        if (selected) setSelectedPackage(selected);
-      }
-    },
-  });
+  }>(
+    token ? `/api/admin/packages` : null,
+    (url: string) => fetcher(url, token),
+    {
+      onSuccess: (data) => {
+        if (formData.package_id) {
+          const selected = data.data.find((p) => p.id === formData.package_id);
+          if (selected) setSelectedPackage(selected);
+        }
+      },
+    }
+  );
 
   const clientSchema = z.object({
     name: z.string().min(1, { message: "Client name is required." }),
@@ -197,7 +205,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
             const fd = new FormData();
             fd.append("file", image);
-            const response = await fetch(`/api/_ub`, {
+            const response = await fetch(`/api/upload-blob`, {
               method: "POST",
               body: fd,
             });
@@ -246,7 +254,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
             const fd = new FormData();
             fd.append("file", video);
-            const response = await fetch(`/api/_ub`, {
+            const response = await fetch(`/api/upload-blob`, {
               method: "POST",
               body: fd,
             });
@@ -291,7 +299,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
           const fd = new FormData();
           fd.append("file", music);
-          const response = await fetch(`/api/_ub`, {
+          const response = await fetch(`/api/upload-blob`, {
             method: "POST",
             body: fd,
           });
@@ -330,7 +338,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
           const fd = new FormData();
           fd.append("file", coverVideo);
-          const response = await fetch(`/api/_ub`, {
+          const response = await fetch(`/api/upload-blob`, {
             method: "POST",
             body: fd,
           });
@@ -374,7 +382,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
           const fd = new FormData();
           fd.append("file", image);
-          const response = await fetch(`/api/_ub`, {
+          const response = await fetch(`/api/upload-blob`, {
             method: "POST",
             body: fd,
           });
@@ -418,7 +426,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
           const fd = new FormData();
           fd.append("file", image);
-          const response = await fetch(`/api/_ub`, {
+          const response = await fetch(`/api/upload-blob`, {
             method: "POST",
             body: fd,
           });
@@ -604,7 +612,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
       const createClient = async () => {
         const response = await getClient(
-          "/api/_c",
+          "/api/admin",
           {
             method: "POST",
             body: JSON.stringify(modifiedFormdata),

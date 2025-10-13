@@ -38,13 +38,13 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
   const [searchQuery] = useDebounce(search, 500);
 
   const { data: clientResult, isLoading: isLoadingClient } = useSWR(
-    `/api/_pb/_c?slug=${slug}`,
+    `/api/guest?slug=${slug}`,
     fetcher
   );
 
   const { data, mutate, isLoading } = useSWR(
     token
-      ? `/api/_c/_g?slug=${slug}&page=${page}&limit=${limit}&search=${searchQuery}`
+      ? `/api/admin/delete-guest?slug=${slug}&page=${page}&limit=${limit}&search=${searchQuery}`
       : null,
     (url: string) => fetcher(url, token)
   );
@@ -73,7 +73,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
         guest: form.guest,
       };
       const response = await getClient(
-        "/api/_c/_g",
+        "/api/admin/delete-guest",
         {
           method: "POST",
           body: JSON.stringify(payload),

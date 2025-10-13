@@ -14,7 +14,7 @@ import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import Head from "next/head";
 
 const PackageComponent = () => {
-  const { data } = useSWR<{ data: Package[] }>("/api/_pb/_p", fetcher);
+  const { data } = useSWR<{ data: Package[] }>("/api/guest/packages", fetcher);
   const packages = data?.data || [];
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicators, setIndicators] = useState(3);
@@ -69,7 +69,6 @@ const PackageComponent = () => {
       brand: "Moment Invitation",
     })),
   };
-
 
   return (
     <section
@@ -264,13 +263,7 @@ const PackageComponent = () => {
                       >
                         Fitur Tambahkan ke Kalender
                       </li>
-                      <li
-                        className={`list-disc ${
-                          !p.custom_cover && "line-through text-gray-300"
-                        }`}
-                      >
-                        Pilih cover foto / video cover
-                      </li>
+
                       <li
                         className={`list-disc ${
                           !p.digital_envelope && "line-through text-gray-300"

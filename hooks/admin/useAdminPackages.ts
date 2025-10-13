@@ -13,7 +13,9 @@ export const useAdminPackages = (token: string | null) => {
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
     data: Package[];
-  }>(token ? `/api/_p` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/admin/packages` : null, (url: string) =>
+    fetcher(url, token)
+  );
 
   useEffect(() => {
     if (data?.data) {
@@ -43,7 +45,7 @@ export const useAdminPackages = (token: string | null) => {
       try {
         console.log({ pk });
         const response = await getClient(
-          `/api/_p`,
+          `/api/admin/packages`,
           {
             method: "PUT",
             body: JSON.stringify(pk),
