@@ -68,7 +68,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
         slug,
         untuk: untuk ?? "Tamu Undangan",
       },
-      revalidate: 3600, // regenerate every 1 hour
+      revalidate: 600,
     };
   } catch (error) {
     console.error("ISR SEO fetch error:", error);

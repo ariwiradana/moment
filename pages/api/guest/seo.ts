@@ -51,9 +51,7 @@ export default async function handler(
       client.status === "unpaid"
         ? `Preview ${name} | Undangan ${theme_name}`
         : client.is_preview
-        ? `Preview Undangan Tema ${theme_name} | Moment ${
-            client.event_names || ""
-          }`
+        ? `Preview Undangan Tema ${theme_name} | Moment`
         : `${name} | Undangan ${getEventNames(client.event_names) || ""}`;
 
     const seo = {
