@@ -2,7 +2,7 @@
 import ThemeNotFound from "@/components/themes/theme.notfound";
 import ClientNotFound from "@/components/themes/client.notfound";
 import { fetcher } from "@/lib/fetcher";
-import { Client, Event, SEO } from "@/lib/types";
+import { Client, SEO } from "@/lib/types";
 import React, { FC, useEffect, useState } from "react";
 import { themes, ThemeName } from "@/components/themes/themes";
 import AOS from "aos";
@@ -14,7 +14,8 @@ import SplitText from "@/components/themes/split.text";
 import { redhat } from "@/lib/fonts";
 import PreviewNav from "@/components/themes/preview.nav";
 import "aos/dist/aos.css";
-import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { getClient } from "@/lib/client";
 
 class ThemeErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -33,22 +34,51 @@ class ThemeErrorBoundary extends React.Component<
   }
 }
 
-interface Props {
+interface PageProps {
+  seo: SEO;
   slug: string;
+  untuk: string;
 }
 
-const MainPage: FC<Props> = () => {
+export const getStaticPaths: GetStaticPaths = async () => ({
+  paths: [],
+  fallback: "blocking",
+});
+
+export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
+  const { slug, untuk } = context.params as { slug: string; untuk: string };
+
+  try {
+    const res = await getClient(
+      `https://momentinvitation.com/api/guest/seo?slug=${slug}`
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch SEO data");
+
+    const { data } = await res.json();
+
+    if (!data)
+      return {
+        notFound: true,
+      };
+
+    return {
+      props: {
+        seo: data ?? null,
+        slug,
+        untuk: untuk ?? "Tamu Undangan",
+      },
+      revalidate: 3600, // regenerate every 1 hour
+    };
+  } catch (error) {
+    console.error("ISR SEO fetch error:", error);
+    return { notFound: true };
+  }
+};
+const MainPage: FC<PageProps> = ({ seo, slug, untuk }) => {
   const { setClient, client } = useClientStore();
   const [isLoading, setIsLoading] = useState(true);
-  const [seo, setSeo] = useState<SEO | null>(null);
-  const router = useRouter();
 
-  const { slug, untuk = "Tamu Undangan" } = router.query as {
-    slug?: string;
-    untuk?: string;
-  };
-
-  // Fetch client data
   const {
     data,
     error,
@@ -58,10 +88,8 @@ const MainPage: FC<Props> = () => {
     fetcher,
     {
       onSuccess: (data) => {
-        const seoData = getSeo(data.data as Client);
-        setSeo(seoData as SEO);
         setClient(data.data || null);
-        setTimeout(() => setIsLoading(false), 1500);
+        setTimeout(() => setIsLoading(false), 1300);
       },
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -77,98 +105,66 @@ const MainPage: FC<Props> = () => {
     return () => AOS.refresh();
   }, []);
 
-  const getSeo = (client: Client) => {
-    if (!client) return;
-
-    const name = client.name || "";
-    const theme_name = client.theme?.name || "";
-    const description = `${client.opening_title || ""}, ${
-      client.opening_description || ""
-    }`;
-    const seo_image = client.seo || "";
-    const url = `https://momentinvitation.com/${encodeURIComponent(
-      slug as string
-    )}`;
-    const page_title = client
-      ? client.status === "unpaid"
-        ? `Preview ${client.name} | Undangan ${client.theme?.name}`
-        : client.is_preview
-        ? `Preview Undangan Tema ${client.theme?.name} | Moment`
-        : `${client.name} | Undangan ${client.events
-            .map((e: Event) => e.name)
-            .join(", ")}`
-      : "Moment";
-
-    const seo: SEO = {
-      name,
-      description,
-      page_title,
-      seo_image,
-      theme_name,
-      url,
-    };
-
-    return seo;
-  };
-
-  if ((isLoading || swrLoading) && seo)
+  if (seo) {
     return (
       <>
-        <Seo
-          url={seo?.url}
-          title={seo?.page_title}
-          description={seo?.description}
-          keywords="undangan digital, undangan online, undangan pernikahan, Moment Invitation"
-          image={seo?.seo_image}
-          author="Moment Invitation"
-          locale="id_ID"
-          siteName="Moment Invitation"
-          robots="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-        />
-        <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
-          <div data-aos="fade-up">
-            <SplitText
-              text={seo?.name}
-              className={`text-3xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
-              delay={50}
-              animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
-              animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
-              threshold={0.2}
-              rootMargin="-50px"
-            />
-          </div>
-        </div>
-      </>
-    );
-
-  if (!isLoading && !swrLoading) {
-    if (error || !data?.data) return <ClientNotFound />;
-
-    const validGuest =
-      client?.guests?.includes(untuk) || untuk === "Tamu Undangan";
-    if (!validGuest) return <ClientNotFound />;
-
-    const ThemeComponent: React.FC<{ untuk: string }> | null =
-      seo?.theme_name && themes[seo.theme_name as ThemeName]
-        ? themes[seo.theme_name as ThemeName]
-        : null;
-
-    return ThemeComponent && seo ? (
-      <>
-        <PreviewNav />
         <Seo
           url={seo.url}
           title={seo.page_title}
           description={seo.description}
           keywords="undangan digital, undangan online, Moment Invitation"
           image={seo.seo_image}
+          author="Moment Invitation"
+          locale="id_ID"
+          siteName="Moment Invitation"
+          robots="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
         />
-        <ThemeErrorBoundary>
-          <ThemeComponent untuk={untuk} />
-        </ThemeErrorBoundary>
+
+        {(isLoading || swrLoading) && (
+          <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
+            <div data-aos="fade-up">
+              <SplitText
+                text={seo.name}
+                className={`text-3xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
+                delay={50}
+                animationFrom={{
+                  opacity: 0,
+                  transform: "translate3d(0,50px,0)",
+                }}
+                animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
+                threshold={0.2}
+                rootMargin="-50px"
+              />
+            </div>
+          </div>
+        )}
+
+        {!isLoading &&
+          !swrLoading &&
+          (() => {
+            if (error || !data?.data) return <ClientNotFound />;
+
+            const validGuest =
+              client?.guests?.includes(untuk) || untuk === "Tamu Undangan";
+            if (!validGuest) return <ClientNotFound />;
+
+            const ThemeComponent: React.FC<{ untuk: string }> | null =
+              seo.theme_name && themes[seo.theme_name as ThemeName]
+                ? themes[seo.theme_name as ThemeName]
+                : null;
+
+            return ThemeComponent ? (
+              <>
+                <PreviewNav />
+                <ThemeErrorBoundary>
+                  <ThemeComponent untuk={untuk} />
+                </ThemeErrorBoundary>
+              </>
+            ) : (
+              <ThemeNotFound />
+            );
+          })()}
       </>
-    ) : (
-      <ThemeNotFound />
     );
   }
 

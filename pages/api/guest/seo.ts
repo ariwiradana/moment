@@ -1,4 +1,5 @@
 import sql from "@/lib/db";
+import { getEventNames } from "@/utils/getEventNames";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -12,25 +13,23 @@ export default async function handler(
     }
 
     const query = `
-      SELECT 
-        c.name,
-        c.slug,
-        c.opening_title,
-        c.opening_description,
-        c.status,
-        c.is_preview,
-        c.seo,
-        c.cover,
-        t.name AS theme_name,
-        (
-          SELECT string_agg(e.name, ', ')
-          FROM events e
-          WHERE e.client_id = c.id
-        ) AS event_names
-      FROM clients c
-      LEFT JOIN themes t ON t.id = c.theme_id
-      WHERE c.slug = $1
-      LIMIT 1;
+      SELECT
+          c.id, c.name, c.status, c.is_preview, c.theme_id,
+          c.opening_title, c.opening_description, c.seo,
+          t.name as theme_name,
+          COALESCE(
+            json_agg(
+              json_build_object(
+                'name', e.name
+              )
+            ) FILTER (WHERE e.id IS NOT NULL),
+            '[]'
+          ) AS events
+        FROM clients c
+        JOIN themes t ON c.theme_id = t.id
+        LEFT JOIN events e ON e.client_id = c.id
+        WHERE c.slug = $1
+        GROUP BY c.id, t.name
     `;
 
     const result = await sql.query(query, [slug]);
@@ -52,8 +51,10 @@ export default async function handler(
       client.status === "unpaid"
         ? `Preview ${name} | Undangan ${theme_name}`
         : client.is_preview
-        ? `Preview Undangan Tema ${theme_name} | Moment`
-        : `${name} | Undangan ${client.event_names || ""}`;
+        ? `Preview Undangan Tema ${theme_name} | Moment ${
+            client.event_names || ""
+          }`
+        : `${name} | Undangan ${getEventNames(client.event_names) || ""}`;
 
     const seo = {
       name,
