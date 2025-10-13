@@ -38,10 +38,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         json_build_object(
           'id', p.id,
           'name', p.name,
-          'price', p.price,
-          'discount', p.discount,
           'custom_opening_closing', p.custom_opening_closing,
-          'unlimited_revisions', p.unlimited_revisions
+          'unlimited_revisions', p.unlimited_revisions,
+          'unlimited_guest_names', p.unlimited_guest_names,
+          'max_events', p.max_events,
+          'max_gallery_photos', p.max_gallery_photos,
+          'contact_social_media', p.contact_social_media,
+          'background_sound', p.background_sound,
+          'max_videos', p.max_videos,
+          'rsvp_and_greetings', p.rsvp_and_greetings,
+          'digital_envelope', p.digital_envelope,
+          'google_maps_integration', p.google_maps_integration,
+          'add_to_calendar', p.add_to_calendar,
+          'countdown', p.countdown,
+          'price', p.price,
+          'discount', p.discount
         ) AS package,
 
         json_build_object(
