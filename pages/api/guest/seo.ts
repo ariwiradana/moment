@@ -45,7 +45,7 @@ export default async function handler(
     const description = `${client.opening_title || ""}, ${
       client.opening_description || ""
     }`;
-    const seo_image = client.seo || client.cover || "/default-cover.jpg";
+    const seo_image = client.seo || client.cover;
     const url = `https://momentinvitation.com/${encodeURIComponent(slug)}`;
     const page_title =
       client.status === "unpaid"
