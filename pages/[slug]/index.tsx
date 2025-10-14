@@ -49,10 +49,10 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   const { slug, untuk } = context.params as { slug: string; untuk: string };
 
   try {
-    const res = await getClient(
-      `https://momentinvitation.com/api/guest/seo?slug=${slug}`
-    );
+    const baseUrl = process.env.API_BASE_URL;
 
+    const res = await getClient(`${baseUrl}/guest/seo?slug=${slug}`);
+    console.log({ res });
     if (!res.ok) throw new Error("Failed to fetch SEO data");
 
     const { data } = await res.json();
