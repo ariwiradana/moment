@@ -1,14 +1,7 @@
-import { ApiHandler, ThemeCategory } from "../../../../lib/types";
+import { ApiHandler } from "../../../../lib/types";
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
-import {
-  Client,
-  Event,
-  Package,
-  Participant,
-  Review,
-  Theme,
-} from "@/lib/types";
+import { Client, Event, Participant } from "@/lib/types";
 import { createSlug } from "@/utils/createSlug";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -44,152 +37,119 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           is_preview,
         }: Query = request.query;
 
-        let query = `SELECT * FROM clients`;
-        let countQuery = `SELECT COUNT(*) FROM clients`;
-
-        const values: (number | string | boolean)[] = [];
-        const countValues: (number | string | boolean)[] = [];
-
-        let hasCondition = false;
+        const values: (string | number | boolean)[] = [];
+        const conditions: string[] = [];
 
         if (id) {
-          const valueIndex = values.length + 1;
-          query += ` WHERE id = $${valueIndex}`;
-          countQuery += ` WHERE id = $${valueIndex}`;
           values.push(id);
-          countValues.push(id);
-          hasCondition = true;
+          conditions.push(`c.id = $${values.length}`);
         }
 
         if (slug) {
-          const valueIndex = values.length + 1;
-          query += hasCondition ? ` AND` : ` WHERE`;
-          query += ` slug = $${valueIndex}`;
-          countQuery += hasCondition ? ` AND` : ` WHERE`;
-          countQuery += ` slug = $${valueIndex}`;
           values.push(slug);
-          countValues.push(slug);
-          hasCondition = true;
-        }
-
-        if (status) {
-          const valueIndex = values.length + 1;
-          query += hasCondition ? ` AND` : ` WHERE`;
-          query += ` status = $${valueIndex}`;
-          countQuery += hasCondition ? ` AND` : ` WHERE`;
-          countQuery += ` status = $${valueIndex}`;
-          values.push(status);
-          countValues.push(status);
-          hasCondition = true;
+          conditions.push(`c.slug = $${values.length}`);
         }
 
         if (is_preview) {
-          const valueIndex = values.length + 1;
           const is_preview_bool = String(is_preview) === "true";
-          query += hasCondition ? ` AND` : ` WHERE`;
-          query += ` is_preview = $${valueIndex}`;
-          countQuery += hasCondition ? ` AND` : ` WHERE`;
-          countQuery += ` is_preview = $${valueIndex}`;
           values.push(is_preview_bool);
-          countValues.push(is_preview_bool);
-          hasCondition = true;
+          conditions.push(`c.is_preview = $${values.length}`);
         }
 
-        query += ` ORDER BY is_preview ASC, status DESC, updated_at DESC`;
+        if (status) {
+          values.push(status);
+          conditions.push(`c.status = $${values.length}`);
+        }
 
-        const pageNumber = Number(page);
+        const whereClause = conditions.length
+          ? `WHERE ${conditions.join(" AND ")}`
+          : "";
+
         const limitNumber = Number(limit);
+        const pageNumber = Number(page);
         const offset = (pageNumber - 1) * limitNumber;
-        const valueIndex = values.length + 1;
-        query += ` LIMIT $${valueIndex} OFFSET $${valueIndex + 1}`;
         values.push(limitNumber, offset);
 
+        const query = `
+      WITH filtered_clients AS (
+        SELECT *
+        FROM clients c
+        ${whereClause}
+        ORDER BY c.is_preview ASC, c.status DESC, c.updated_at DESC
+        LIMIT $${values.length - 1} OFFSET $${values.length}
+      )
+      SELECT 
+        c.*,
+        (
+          SELECT json_agg(p ORDER BY p.id ASC)
+          FROM participants p
+          WHERE p.client_id = c.id
+        ) AS participants,
+        (
+          SELECT json_agg(e ORDER BY e.date ASC, e.start_time::time ASC)
+          FROM events e
+          WHERE e.client_id = c.id
+        ) AS events,
+        (
+          SELECT json_agg(w ORDER BY w.id ASC)
+          FROM wishes w
+          WHERE w.client_id = c.id
+        ) AS wishes,
+        (
+          SELECT to_jsonb(t)
+          FROM themes t
+          WHERE t.id = c.theme_id
+        ) AS theme,
+        (
+          SELECT to_jsonb(pac)
+          FROM packages pac
+          WHERE pac.id = c.package_id
+        ) AS package,
+        (
+          SELECT to_jsonb(tc)
+          FROM theme_categories tc
+          WHERE tc.id = c.theme_category_id
+        ) AS theme_category,
+        (
+          SELECT to_jsonb(m)
+          FROM media m
+          WHERE m.client_id = c.id
+          ORDER BY m.id ASC
+          LIMIT 1
+        ) AS media,
+        (
+          SELECT to_jsonb(o)
+          FROM orders o
+          WHERE o.client_id = c.id
+          ORDER BY o.id ASC
+          LIMIT 1
+        ) AS "order"
+      FROM filtered_clients c;
+    `;
+
+        const countQuery = `
+      SELECT COUNT(*) AS total
+      FROM clients c
+      ${whereClause};
+    `;
+
         const { rows } = await sql.query(query, values);
-        const { rows: total } = await sql.query(countQuery, countValues);
-
-        const clientIds = rows.map((client) => client.id);
-
-        const { rows: mediaForms } = await sql.query(
-          `SELECT cf.*
-          FROM media cf
-          JOIN clients c ON cf.client_id = c.id
-          WHERE c.id = ANY($1::int[])
-          ORDER BY cf.id ASC
-          `,
-          [clientIds]
+        const { rows: countRows } = await sql.query(
+          countQuery,
+          values.slice(0, values.length - 2)
         );
-
-        const { rows: participants } = await sql.query(
-          `
-            SELECT p.*
-            FROM participants p
-            JOIN clients c ON p.client_id = c.id
-            WHERE c.id = ANY($1::int[])
-            ORDER BY p.id ASC
-        `,
-          [clientIds]
-        );
-
-        const { rows: events } = await sql.query(
-          `
-            SELECT e.*
-            FROM events e
-            JOIN clients c ON e.client_id = c.id
-            WHERE c.id = ANY($1::int[])
-            ORDER BY e.date ASC, e.start_time::time ASC
-        `,
-          [clientIds]
-        );
-
-        const { rows: themes } = await sql.query(`SELECT * FROM themes`);
-        const { rows: wishes } = await sql.query(`SELECT * FROM wishes`);
-        const { rows: packages } = await sql.query(`SELECT * FROM packages`);
-        const { rows: themeCategories } = await sql.query(
-          `SELECT * FROM theme_categories`
-        );
-
-        const clients = rows.map((client: Client) => {
-          const mediaForm = mediaForms.filter(
-            (cf) => cf.client_id === client.id
-          );
-          const clientParticipants = participants.filter(
-            (p) => p.client_id === client.id
-          );
-          const clientEvents = events.filter((e) => e.client_id === client.id);
-          const clientTheme: Theme[] = themes.find(
-            (th) => th.id === client.theme_id
-          );
-          const clientPackages: Package[] = packages.find(
-            (pk) => pk.id === client.package_id
-          );
-          const clientThemeCategories: ThemeCategory[] = themeCategories.find(
-            (tc) => tc.id === client.theme_category_id
-          );
-          const clientwishes: Review[] = wishes.filter(
-            (r) => r.client_id === client.id
-          );
-          return {
-            ...client,
-            participants: clientParticipants,
-            events: clientEvents,
-            theme: clientTheme,
-            wishes: clientwishes,
-            package: clientPackages,
-            theme_category: clientThemeCategories,
-            media: mediaForm.length > 0 ? mediaForm[0] : null,
-          };
-        });
 
         return response.status(200).json({
           success: true,
-          data: clients,
-          total_rows: Number(total[0].count),
+          data: rows,
+          total_rows: Number(countRows[0].total),
           page: pageNumber,
           limit: limitNumber,
         });
       } catch (error) {
         handleError(response, error);
       }
+      break;
 
     case "POST":
       try {

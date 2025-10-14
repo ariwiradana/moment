@@ -2,7 +2,7 @@ import handleError from "@/lib/errorHandling";
 import sql from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 import { authenticateUser } from "@/lib/middleware";
-import { ApiHandler } from "@/lib/types";
+import { ApiHandler, Order } from "@/lib/types";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -86,14 +86,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const packages = packagesResult.rows;
         const clients = clientsResult.rows;
 
-        const merged = orders.map((order) => ({
+        const merged: Order[] = orders.map((order) => ({
           id: order.id,
           order_id: order.order_id,
+          status: order.status,
           name: order.name,
           phone: order.phone,
+          email: order.phone,
           price: order.price,
           discount: order.discount,
           admin_fee: order.admin_fee,
+          snap_token: order.snap_token,
           created_at: order.created_at,
           updated_at: order.updated_at,
           client: clients.find((c) => c.id === order.client_id) || null,

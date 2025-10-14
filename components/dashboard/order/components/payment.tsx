@@ -1,16 +1,42 @@
 import useOrderStore from "@/store/useOrderStore";
 import { calculateDiscountPercentage } from "@/utils/calculateDiscount";
 import { formatToRupiah } from "@/utils/formatToRupiah";
-import React from "react";
+import React, { useEffect } from "react";
 import { BiDownload } from "react-icons/bi";
-import ButtonSecondary from "../../elements/button.secondary";
 import Image from "next/image";
+import ButtonSecondary from "../../elements/button.secondary";
+import { Order } from "@/lib/types";
+import moment from "moment";
+import { generateInvoiceId } from "@/utils/generateInvoiceId";
 
 const OrderPayment = () => {
   const store = useOrderStore();
   const { order } = store;
 
   const handlePrint = () => window.print();
+
+  useEffect(() => {
+    if (!order.order_id) {
+      handleSetOrder();
+    }
+  }, [order]);
+
+  const handleSetOrder = () => {
+    const newOrder: Omit<Order, "id" | "client_id"> = {
+      name: store.form.name,
+      email: store.form.email as string,
+      phone: store.form.phone as string,
+      package_id: store.pkg?.id as number,
+      price: store.pkg?.price as number,
+      discount: store.pkg?.discount || 0,
+      theme_id: store.theme?.id as number,
+      admin_fee: 0,
+      created_at: moment().format("DD MMMM YYYY"),
+      status: "pending",
+      order_id: generateInvoiceId(),
+    };
+    store.setNewOrder(newOrder);
+  };
 
   return (
     <div className="bg-dashboard-dark/[0.02] lg:py-10 lg:px-6 print:bg-white border border-dashboard-dark/10 lg:border-transparent print:border-none ">

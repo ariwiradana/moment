@@ -62,7 +62,8 @@ export interface Event {
 export interface Client {
   id?: number;
   name: string;
-  phone?: number | string;
+  phone?: string;
+  email?: string;
   music_title?: string;
   opening_title: string;
   opening_description: string;
@@ -77,7 +78,7 @@ export interface Client {
   gallery?: string[] | FileList | [];
   videos?: string[] | FileList | [];
   music?: string | File | null;
-  status?: "paid" | "unpaid" | "completed" | null;
+  status?: Status;
   theme_id: number | null;
   theme_category_id: number | null | number[];
   package_id: number | null;
@@ -92,6 +93,7 @@ export interface Client {
   guests?: string[];
   wishes?: Review[];
   media?: MediaForm | null;
+  order?: Order;
   created_at?: Date | string;
   updated_at?: Date | string;
 }
@@ -181,6 +183,13 @@ export type ApiHandler = (
 ) => Promise<void>;
 
 export type Status = "unpaid" | "paid" | "completed";
+export type OrderStatus =
+  | "pending"
+  | "settlement"
+  | "expire"
+  | "cancel"
+  | "deny"
+  | "failure";
 
 export interface SEO {
   url: string;
@@ -207,12 +216,13 @@ export type TimeRemaining = {
 
 export interface Order {
   id?: number;
-  order_id: string;
-  client_id: number;
+  order_id?: string;
+  client_id?: number;
   name: string;
-  phone: string | number;
-  theme_id: number;
-  package_id: number;
+  phone: string;
+  email: string;
+  theme_id?: number;
+  package_id?: number;
   price: number;
   discount: number;
   admin_fee: number;
@@ -221,6 +231,8 @@ export interface Order {
   theme?: Theme;
   package?: Package;
   client?: Client;
+  status: OrderStatus;
+  snap_token?: string;
 }
 
 export interface MediaForm {
@@ -230,4 +242,23 @@ export interface MediaForm {
   image_link?: string;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface SnapTransactionResult {
+  status_code: string;
+  status_message: string;
+  transaction_id: string;
+  order_id: string;
+  payment_type: string;
+  transaction_time: string;
+  transaction_status: OrderStatus;
+  fraud_status?: string;
+  signature_key: string;
+  masked_card?: string;
+  bank?: string;
+  va_numbers?: {
+    bank: string;
+    va_number: string;
+  }[];
+  settlement_time?: string;
 }

@@ -65,7 +65,7 @@ const initalFormData: Client & { password: string } = {
   gift_account_name: "",
   gift_account_number: "",
   is_preview: false,
-  status: null,
+  status: undefined,
   theme_category_id: null,
   password: "",
   media: null,

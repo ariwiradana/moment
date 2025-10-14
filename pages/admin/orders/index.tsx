@@ -14,8 +14,8 @@ import { useAdminOrders } from "@/hooks/admin/useAdminOrders";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import Link from "next/link";
 import InputSelect from "@/components/admin/elements/select";
-import { clientStatus } from "@/constants/status";
-import { Status } from "@/lib/types";
+import { OrderStatus } from "@/lib/types";
+import { orderStatus } from "@/constants/orderStatus";
 
 interface Props {
   token: string | null;
@@ -62,11 +62,11 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                               {!isExpired ? (
                                 <InputSelect
                                   inputSize="extrasmall"
-                                  options={clientStatus}
-                                  value={order.client?.status as Status}
+                                  options={orderStatus}
+                                  value={order.status as OrderStatus}
                                   onChange={(e) =>
                                     actions.handleSetStatus(
-                                      order.client?.id as number,
+                                      order?.id as number,
                                       e.target.value
                                     )
                                   }
@@ -109,14 +109,6 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                       </div>
                       <div className="pt-3 flex flex-col gap-y-2 w-full">
                         <div className="grid grid-cols-2 gap-2">
-                          <div>
-                            <p className="text-gray-500 font-medium text-xs">
-                              Status
-                            </p>
-                            <p className="text-gray-800 font-semibold text-sm capitalize">
-                              {order.client?.status}
-                            </p>
-                          </div>
                           <div>
                             <p className="text-gray-500 font-medium text-xs">
                               Telepon
@@ -163,11 +155,14 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                   <table className="table-auto overflow-x-auto w-full table">
                     <thead>
                       <tr>
-                        <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                           ID Pesanan
                         </td>
-                        <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
-                          Identitas
+                        <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                          Klien
+                        </td>
+                        <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                          Telepon
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                           Tema & Paket
@@ -210,9 +205,13 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                               <p className="whitespace-nowrap">{order.name}</p>
-                              <p className="text-gray-600 font-medium text-sm mt-1">
-                                {order.phone}
+                              <p className="text-gray-600 font-medium text-sm">
+                                {order.client?.slug}
                               </p>
+                            </td>
+
+                            <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                              <p>{order.phone ?? "-"}</p>
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -241,11 +240,11 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                 {!isExpired ? (
                                   <InputSelect
                                     inputSize="small"
-                                    options={clientStatus}
-                                    value={order.client?.status as Status}
+                                    options={orderStatus}
+                                    value={order.status as OrderStatus}
                                     onChange={(e) =>
                                       actions.handleSetStatus(
-                                        order.client?.id as number,
+                                        order.id as number,
                                         e.target.value
                                       )
                                     }

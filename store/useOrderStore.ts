@@ -18,7 +18,6 @@ interface StoreState {
   pkg: Package | null;
   isLoading: boolean;
   fullfilledSteps: boolean[];
-  withPayment: boolean;
   order: Omit<Order, "id" | "client_id">;
   setForm: (
     name: string,
@@ -38,7 +37,6 @@ interface StoreState {
   resetForm: () => void;
   setFullForm: (form: Omit<Client, "cover" | "seo">) => void;
   setFullfilledSteps: (fullfilledSteps: boolean[]) => void;
-  setWithPayment: (withPayment: boolean) => void;
   setNewOrder: (order: Omit<Order, "id" | "client_id">) => void;
 }
 
@@ -70,19 +68,21 @@ export const initialForm: Omit<Client, "cover" | "seo"> = {
   theme_category_id: null,
   theme_id: null,
   music: null,
-  status: "unpaid",
 };
 
 const initialOrder: Omit<Order, "id" | "client_id"> = {
-  admin_fee: 2000,
+  admin_fee: 0,
   price: 0,
   order_id: "",
   discount: 0,
   name: "",
   package_id: 0,
   phone: "",
+  email: "",
   theme_id: 0,
+  status: "pending",
   created_at: moment().format("DD-MM-YYYY"),
+  snap_token: undefined,
 };
 
 const useOrderStore = create<StoreState>((set) => ({
@@ -94,7 +94,6 @@ const useOrderStore = create<StoreState>((set) => ({
   themes: null,
   isLoading: false,
   fullfilledSteps: [],
-  withPayment: true,
   order: initialOrder,
 
   setForm: (
@@ -132,8 +131,6 @@ const useOrderStore = create<StoreState>((set) => ({
   resetForm: () => set({ form: initialForm }),
 
   setFullfilledSteps: (fullfilledSteps: boolean[]) => set({ fullfilledSteps }),
-
-  setWithPayment: (withPayment: boolean) => set({ withPayment }),
 
   setNewOrder: (order: Omit<Order, "id" | "client_id">) => set({ order }),
 }));

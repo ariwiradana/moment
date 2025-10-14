@@ -9,6 +9,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   inputSize?: "small" | "medium" | "large";
   optional?: boolean;
+  description?: string;
 }
 
 const Input: FC<InputProps> = ({
@@ -18,6 +19,7 @@ const Input: FC<InputProps> = ({
   id,
   inputSize = "large",
   optional = false,
+  description = "",
   ...props
 }) => {
   const paddingStyles = (size: "small" | "medium" | "large") => {
@@ -78,11 +80,13 @@ const Input: FC<InputProps> = ({
         )}
       </div>
 
-      {error && (
-        <p className="text-admin-danger border-admin-danger text-sm mt-1">
+      {error ? (
+        <p className="text-admin-danger border-admin-danger text-sm my-1">
           {error}
         </p>
-      )}
+      ) : description ? (
+        <p className="text-admin-dark/60 text-xs my-1">{description}</p>
+      ) : null}
     </div>
   );
 };

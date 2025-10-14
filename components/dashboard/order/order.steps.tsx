@@ -6,7 +6,6 @@ import OrderBride from "./components/bride";
 import OrderMedia from "./components/media";
 import OrderGift from "./components/gift";
 import OrderOpeningClosing from "./components/opening.closing";
-import OrderPayment from "./components/payment";
 import useOrderStore from "@/store/useOrderStore";
 import {
   BiCalendar,
@@ -18,6 +17,7 @@ import {
   BiMaleSign,
   BiFemaleSign,
 } from "react-icons/bi";
+import OrderPayment from "./components/payment";
 
 export default function useSteps() {
   const store = useOrderStore();
@@ -90,18 +90,17 @@ export default function useSteps() {
       });
     }
 
-    baseSteps.push({
-      stepTitle: "Pembuka & Penutup",
-      stepDescription: "Salam pembuka & penutup.",
-      title: "Tambahkan Salam Pembuka & Penutup",
-      description:
-        "Kamu dapat menyesuaikan kalimat pembuka dan penutup undangan sesuai keinginan.",
-      component: <OrderOpeningClosing />,
-      icon: <BiMessageSquareDetail />,
-    });
-
-    if (store.withPayment) {
-      baseSteps.push({
+    baseSteps.push(
+      {
+        stepTitle: "Pembuka & Penutup",
+        stepDescription: "Salam pembuka & penutup.",
+        title: "Tambahkan Salam Pembuka & Penutup",
+        description:
+          "Kamu dapat menyesuaikan kalimat pembuka dan penutup undangan sesuai keinginan.",
+        component: <OrderOpeningClosing />,
+        icon: <BiMessageSquareDetail />,
+      },
+      {
         stepTitle: "Pembayaran",
         stepDescription: "Lanjutkan ke Pembayaran.",
         title: "Pembayaran",
@@ -109,11 +108,11 @@ export default function useSteps() {
           "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
         component: <OrderPayment />,
         icon: <BiCreditCard />,
-      });
-    }
+      }
+    );
 
     return baseSteps;
-  }, [store.pkg, store.withPayment]);
+  }, [store.pkg]);
 
   return steps;
 }

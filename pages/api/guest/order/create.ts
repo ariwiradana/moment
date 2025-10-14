@@ -20,13 +20,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const {
       rows: [newOrder],
     } = await sql.query(
-      `INSERT INTO orders (
-        order_id, client_id, name, phone, theme_id, package_id, price,
-        discount, admin_fee
+      `
+      INSERT INTO orders (
+        order_id, client_id, name, phone, theme_id, package_id,
+        price, discount, admin_fee, status
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      ON CONFLICT (order_id)
+      DO UPDATE SET
+        client_id = EXCLUDED.client_id,
+        name = EXCLUDED.name,
+        phone = EXCLUDED.phone,
+        theme_id = EXCLUDED.theme_id,
+        package_id = EXCLUDED.package_id,
+        price = EXCLUDED.price,
+        discount = EXCLUDED.discount,
+        admin_fee = EXCLUDED.admin_fee,
+        status = EXCLUDED.status,
+        updated_at = NOW()
       RETURNING *;
-    `,
+      `,
       [
         order.order_id,
         order.client_id,
@@ -37,13 +50,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         order.price,
         order.discount,
         order.admin_fee,
+        order.status,
       ]
     );
 
     return res.status(200).json({
       success: true,
       data: newOrder,
-      message: "Pesanan Anda telah berhasil diproses.",
+      message: newOrder
+        ? "Pesanan Anda berhasil disimpan atau diperbarui."
+        : "Tidak ada perubahan pada pesanan.",
     });
   } catch (error) {
     return handleError(res, error);

@@ -50,7 +50,7 @@ export const useAdminOrders = (token: string | null) => {
   const handleSetStatus = async (id: number, status: string) => {
     const setStatus = async () => {
       const response = await getClient(
-        `/api/admin/client/status`,
+        `/api/admin/orders/status`,
         {
           method: "POST",
           body: JSON.stringify({ status, id }),

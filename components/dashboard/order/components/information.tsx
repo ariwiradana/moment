@@ -89,9 +89,21 @@ const OrderInformation = () => {
         onChange={(e) => store.setForm("name", e.target.value)}
         inputSize="medium"
         name="name"
-        placeholder="contoh: Rama & Shinta"
+        placeholder="contoh: Rama Putra"
         label="Nama"
       />
+
+      <Input
+        value={store.form.email}
+        onChange={(e) => store.setForm("email", e.target.value)}
+        inputSize="medium"
+        name="email"
+        placeholder="contoh: rama@gmail.com"
+        label="Email"
+        type="email"
+        description="Email diperlukan untuk menerima notifikasi dan bukti pembayaran dari sistem."
+      />
+
       <Input
         type="number"
         value={store.form.phone}
@@ -100,6 +112,7 @@ const OrderInformation = () => {
         name="phone"
         placeholder="contoh: 081627522612"
         label="No Hp / WhatsApp"
+        description="Nomor HP / WhatsApp diperlukan agar kami bisa menghubungimu."
       />
 
       {!isUpdate && (

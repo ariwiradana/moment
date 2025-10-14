@@ -37,7 +37,7 @@ export function useCheckFullfilledSteps() {
 
     const checks = [
       // Step 0: Data utama
-      !!(form.slug && form.package_id && form.name && form.phone),
+      !!(form.slug && form.package_id && form.name && form.phone && form.email),
 
       // Step 1: Acara
       !!(form.events?.length && form.events.every(isEventComplete)),

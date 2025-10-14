@@ -11,4 +11,6 @@ export const sampleOrder: Order = {
   discount: 1000,
   admin_fee: 1000,
   created_at: new Date().toISOString(),
+  email: "",
+  status: "pending",
 };

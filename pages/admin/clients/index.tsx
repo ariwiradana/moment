@@ -116,19 +116,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
 
                       <div className="flex items-center relative gap-x-2">
-                        <span
-                          className={`capitalize text-xs rounded px-1.5 py-0.5 font-medium ${
-                            client?.status === "paid"
-                              ? "bg-admin-success/10 text-admin-success"
-                              : client?.status === "unpaid"
-                              ? "bg-admin-danger/10 text-admin-danger"
-                              : client?.status === "completed"
-                              ? "bg-blue-100 text-blue-700"
-                              : "bg-gray-100 text-gray-700"
-                          }`}
-                        >
-                          {client?.status || "unknown"}
-                        </span>
                         <ButtonActionDialog>
                           {client.status === "completed" && (
                             <>
@@ -260,7 +247,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           Telepon
                         </p>
                         <p className="text-gray-800 font-semibold text-sm capitalize">
-                          {client.phone}
+                          {client.phone || "-"}
                         </p>
                       </div>
                     </div>

@@ -53,6 +53,7 @@ CREATE TABLE clients (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   phone VARCHAR(255),
+  email VARCHAR(255),
   slug VARCHAR(255) UNIQUE,
   cover VARCHAR(255),
   seo VARCHAR(255),
@@ -171,6 +172,8 @@ CREATE TABLE orders (
   price INT DEFAULT 0,
   discount INT DEFAULT 0,
   admin_fee INT DEFAULT 0,
+  status VARCHAR(20) CHECK (status IN ('pending', 'settlement', 'expire', 'cancel', 'deny', 'failure')) DEFAULT 'pending',
+  snap_token VARCHAR(255),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
