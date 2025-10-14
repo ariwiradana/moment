@@ -120,7 +120,7 @@ const ThemeCard: NextPage<Props> = ({
           <ButtonTetiary size="small" title="Live Preview" icon={<BsEye />} />
         </Link>
         <Link
-          href={`/${theme.client_slug}/order`}
+          href={`/${theme.slug}/order`}
           target="_blank"
           aria-label={`Link Pesan Tema ${name}`}
           className="mt-3 w-full lg:w-3/4"
