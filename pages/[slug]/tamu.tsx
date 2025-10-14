@@ -44,7 +44,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
 
   const { data, mutate, isLoading } = useSWR(
     token
-      ? `/api/admin/delete-guest?slug=${slug}&page=${page}&limit=${limit}&search=${searchQuery}`
+      ? `/api/admin/client/delete-guest?slug=${slug}&page=${page}&limit=${limit}&search=${searchQuery}`
       : null,
     (url: string) => fetcher(url, token)
   );
@@ -73,7 +73,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
         guest: form.guest,
       };
       const response = await getClient(
-        "/api/admin/delete-guest",
+        "/api/admin/client/delete-guest",
         {
           method: "POST",
           body: JSON.stringify(payload),

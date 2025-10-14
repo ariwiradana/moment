@@ -86,10 +86,10 @@ const OrderPayment = () => {
                 <span>-{formatToRupiah(order.discount)}</span>
               </div>
             )}
-            {order.discount > 0 && (
+            {order.admin_fee > 0 && (
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Biaya Layanan</span>
-                <span>-{formatToRupiah(order.admin_fee)}</span>
+                <span>{formatToRupiah(order.admin_fee)}</span>
               </div>
             )}
 

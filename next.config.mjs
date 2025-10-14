@@ -37,11 +37,6 @@ const nextConfig = {
         destination: "/admin/login",
         permanent: false,
       },
-      {
-        source: "/form",
-        destination: "/form/pernikahan",
-        permanent: false,
-      },
     ];
   },
 };

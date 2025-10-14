@@ -7,7 +7,7 @@ import { montserrat } from "@/lib/fonts";
 import { Pagination } from "@mui/material";
 import { GetServerSideProps } from "next";
 import React from "react";
-import { BiShow, BiTrash } from "react-icons/bi";
+import { BiReceipt, BiTrash, BiUser } from "react-icons/bi";
 import Cookies from "cookies";
 import moment from "moment";
 import { useAdminOrders } from "@/hooks/admin/useAdminOrders";
@@ -76,6 +76,14 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                               )}
                             </div>
                             <ButtonActionDialog>
+                              <Link href={`/admin/orders/${order.order_id}`}>
+                                <ButtonText
+                                  type="button"
+                                  size="small"
+                                  title="Lihat Pesanan"
+                                  icon={<BiReceipt className="text-base" />}
+                                />
+                              </Link>
                               <Link
                                 href={`/admin/clients/${order.client?.slug}`}
                               >
@@ -83,7 +91,7 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                   type="button"
                                   size="small"
                                   title="Lihat Klien"
-                                  icon={<BiShow className="text-base" />}
+                                  icon={<BiUser className="text-base" />}
                                 />
                               </Link>
                               <ButtonText
@@ -92,7 +100,7 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                   actions.handleDelete(order.id as number)
                                 }
                                 size="small"
-                                title="Hapus Order"
+                                title="Hapus"
                                 icon={<BiTrash className="text-base" />}
                               />
                             </ButtonActionDialog>
@@ -256,6 +264,14 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                               <ButtonActionDialog>
+                                <Link href={`/admin/orders/${order.order_id}`}>
+                                  <ButtonText
+                                    type="button"
+                                    size="medium"
+                                    title="Lihat Pesanan"
+                                    icon={<BiReceipt className="text-base" />}
+                                  />
+                                </Link>
                                 <Link
                                   href={`/admin/clients/${order.client?.slug}`}
                                 >
@@ -263,7 +279,7 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                     type="button"
                                     size="medium"
                                     title="Lihat Klien"
-                                    icon={<BiShow className="text-base" />}
+                                    icon={<BiUser className="text-base" />}
                                   />
                                 </Link>
                                 <ButtonText
@@ -272,7 +288,7 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                     actions.handleDelete(order.id as number)
                                   }
                                   size="medium"
-                                  title="Hapus Order"
+                                  title="Hapus"
                                   icon={<BiTrash className="text-base" />}
                                 />
                               </ButtonActionDialog>

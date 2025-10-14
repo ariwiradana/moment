@@ -1,4 +1,4 @@
-import { ApiHandler, ThemeCategory } from "../../../lib/types";
+import { ApiHandler, ThemeCategory } from "../../../../lib/types";
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
 import {
@@ -249,6 +249,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             INSERT INTO clients (
               slug,
               name,
+              phone,
               theme_id,
               theme_category_id,
               status,
@@ -266,13 +267,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               gift_account_number,
               music_title
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
             RETURNING *;
           `;
 
         const resultClient = await sql.query(queryClient, [
           sanitizeSlug,
           client.name,
+          client.phone,
           client.theme_id,
           client.theme_category_id,
           client.status,
@@ -406,8 +408,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             gift_account_number = $15,
             theme_category_id = $16,
             music_title = $17,
+            phone = $18,
             updated_at = NOW()
-          WHERE id = $18
+          WHERE id = $19
           RETURNING *;`;
 
         const sanitizeSlug = createSlug(client.slug as string);
@@ -430,6 +433,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           client.gift_account_number,
           client.theme_category_id,
           client.music_title,
+          client.phone,
           Number(id),
         ]);
 

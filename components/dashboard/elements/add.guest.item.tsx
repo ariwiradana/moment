@@ -54,7 +54,7 @@ const AddGuestItem = ({
         guest: value,
       };
       const response = await getClient(
-        "/api/admin/delete-guest",
+        "/api/admin/client/delete-guest",
         {
           method: "DELETE",
           body: JSON.stringify(payload),

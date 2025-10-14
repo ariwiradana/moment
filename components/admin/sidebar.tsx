@@ -34,8 +34,8 @@ const Sidebar: FC = () => {
   const { data: user } = useSWR("/api/auth/user", fetcher);
 
   const menuItems: MenuItem[] = [
-    { name: "Klien", path: "/admin/clients", icon: <BiUser /> },
     { name: "Pesanan", path: "/admin/orders", icon: <BiCartAlt /> },
+    { name: "Klien", path: "/admin/clients", icon: <BiUser /> },
     { name: "Tema", path: "/admin/themes", icon: <BiFolder /> },
     { name: "Ucapan", path: "/admin/wishes", icon: <BiChat /> },
     {

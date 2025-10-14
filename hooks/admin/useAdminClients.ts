@@ -13,7 +13,7 @@ export const useAdminClients = (token: string | null) => {
     success: boolean;
     data: Client[];
     total_rows: number;
-  }>(token ? `/api/admin?page=${page}&limit=${limit}` : null, (url: string) =>
+  }>(token ? `/api/admin/client?page=${page}&limit=${limit}` : null, (url: string) =>
     fetcher(url, token)
   );
 
@@ -26,7 +26,7 @@ export const useAdminClients = (token: string | null) => {
 
   const handleDelete = (id: number) => {
     const deleteClient = getClient(
-      `/api/admin?id=${id}`,
+      `/api/admin/client?id=${id}`,
       {
         method: "DELETE",
       },
@@ -55,12 +55,10 @@ export const useAdminClients = (token: string | null) => {
       });
   };
 
-  
-
   const handleSetAsPreview = async (id: number, is_preview: boolean) => {
     const setAsPreview = async () => {
       const response = await getClient(
-        `/api/admin/preview`,
+        `/api/admin/client/preview`,
         {
           method: "POST",
           body: JSON.stringify({ is_preview, id }),

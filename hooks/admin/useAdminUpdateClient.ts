@@ -79,7 +79,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   } = useSWR<{
     success: boolean;
     data: Client[];
-  }>(slug && token ? `/api/admin?slug=${slug}` : null, (url: string) =>
+  }>(slug && token ? `/api/admin/client?slug=${slug}` : null, (url: string) =>
     fetcher(url, token)
   );
 
@@ -252,6 +252,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         ...state,
         id: currentClient.id,
         name: currentClient.name,
+        phone: currentClient.phone,
         slug: currentClient.slug,
         theme_id: !currentClient.theme_id
           ? (themeOptions[0].value as number)
@@ -586,7 +587,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
     const updateClient = async () => {
       const response = await getClient(
-        `/api/admin?id=${client?.data[0].id}`,
+        `/api/admin/client?id=${client?.data[0].id}`,
         {
           method: "PUT",
           body: JSON.stringify(modifiedFormdata),
@@ -606,12 +607,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       success: () => {
         mutate();
         setLoading(false);
-        clearFileInput();
-        router
-          .push(`/admin/clients/${createSlug(formData.slug as string)}`)
-          .then(() => {
-            window.location.reload();
-          });
+        router.push(`/admin/clients/${createSlug(formData.slug as string)}`);
         return "Successfully update client";
       },
       error: (error: any) => {
@@ -632,7 +628,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
       const deleteBlob = async () => {
         const response = await getClient(
-          `/api/admin/delete-gallery`,
+          `/api/admin/client/delete-gallery`,
           {
             method: "POST",
             body: JSON.stringify(payload),
@@ -830,7 +826,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const handleSetCover = async (url: string, id: number) => {
     const setCover = async () => {
       const response = await getClient(
-        `/api/admin/cover`,
+        `/api/admin/client/cover`,
         {
           method: "POST",
           body: JSON.stringify({ url, id }),
@@ -860,7 +856,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const handleSetSeoImage = async (url: string, id: number) => {
     const setCover = async () => {
       const response = await getClient(
-        `/api/admin/statuse`,
+        `/api/admin/client/seo`,
         {
           method: "POST",
           body: JSON.stringify({ url, id }),
@@ -898,7 +894,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
       const deleteVideo = async () => {
         const response = await getClient(
-          `/api/admin/delete-video`,
+          `/api/admin/client/delete-video`,
           {
             method: "POST",
             body: JSON.stringify(payload),
@@ -941,7 +937,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
       const deleteMusic = async () => {
         const response = await getClient(
-          `/api/admin/delete-music`,
+          `/api/admin/client/delete-music`,
           {
             method: "POST",
             body: JSON.stringify(payload),

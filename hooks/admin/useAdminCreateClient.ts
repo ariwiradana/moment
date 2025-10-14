@@ -612,7 +612,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
       const createClient = async () => {
         const response = await getClient(
-          "/api/admin",
+          "/api/admin/client",
           {
             method: "POST",
             body: JSON.stringify(modifiedFormdata),

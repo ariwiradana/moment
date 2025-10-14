@@ -113,13 +113,22 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             className="mt-8 max-w-screen-md flex flex-col gap-y-4"
             onSubmit={actions.handleSubmit}
           >
-            <Input
-              value={state.formData.name}
-              onChange={(e) =>
-                actions.handleChangeClient(e.target.value, "name")
-              }
-              label="Nama Klien"
-            />
+            <div className="grid md:grid-cols-2 gap-4">
+              <Input
+                value={state.formData.name}
+                onChange={(e) =>
+                  actions.handleChangeClient(e.target.value, "name")
+                }
+                label="Nama Klien"
+              />
+              <Input
+                value={state.formData.phone}
+                onChange={(e) =>
+                  actions.handleChangeClient(e.target.value, "phone")
+                }
+                label="Telepon"
+              />
+            </div>
             <div className="flex gap-4">
               <Input
                 className="w-full"
