@@ -1,4 +1,4 @@
-import { hashPassword, verifyPassword } from "@/lib/auth";
+import { hashPassword } from "@/lib/auth";
 import sql from "@/lib/db";
 import handleError from "@/lib/errorHandling";
 import { authenticateUser } from "@/lib/middleware";
