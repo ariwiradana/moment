@@ -112,7 +112,7 @@ const useEvents = () => {
         day: "2-digit",
         month: "long",
         year: "numeric",
-      })}\nWaktu: ${event.start_time} WITA - ${event.end_time} WITA\nTempat: ${
+      })}\nWaktu: ${event.start_time} - ${event.end_time} \nTempat: ${
         event.address
       }\n\n${client?.closing_description}\n\nSalam hangat,\n${participants}`;
 

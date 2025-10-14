@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
-  BiCart,
+  BiCartAlt,
   BiChat,
   BiFolder,
   BiLogOut,
@@ -34,17 +34,17 @@ const Sidebar: FC = () => {
   const { data: user } = useSWR("/api/auth/user", fetcher);
 
   const menuItems: MenuItem[] = [
-    { name: "Clients", path: "/admin/clients", icon: <BiUser /> },
-    { name: "Orders", path: "/admin/orders", icon: <BiCart /> },
-    { name: "Themes", path: "/admin/themes", icon: <BiFolder /> },
-    { name: "RSVP & Wishes", path: "/admin/wishes", icon: <BiChat /> },
+    { name: "Klien", path: "/admin/clients", icon: <BiUser /> },
+    { name: "Pesanan", path: "/admin/orders", icon: <BiCartAlt /> },
+    { name: "Tema", path: "/admin/themes", icon: <BiFolder /> },
+    { name: "Ucapan", path: "/admin/wishes", icon: <BiChat /> },
     {
-      name: "Testimonials",
+      name: "Testimoni",
       path: "/admin/testimonials",
       icon: <BiMessageSquareDots />,
     },
     {
-      name: "Packages",
+      name: "Paket",
       path: "/admin/packages",
       icon: <BiPackage />,
     },

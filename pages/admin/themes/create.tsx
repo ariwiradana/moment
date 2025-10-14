@@ -26,10 +26,10 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
         <Link href="/admin/themes">
           <div className="flex items-center gap-x-1 text-gray-400">
             <BiLeftArrowAlt className="text-base" />
-            <span className="text-sm font-medium">back</span>
+            <span className="text-sm font-medium">kembali</span>
           </div>
         </Link>
-        <h1 className="text-2xl font-bold mb-8 mt-2">Add New Theme</h1>
+        <h1 className="text-2xl font-bold mb-8 mt-2">Tambah Tema</h1>
         <form
           onSubmit={actions.handleSubmit}
           className="mt-8 max-w-screen-md flex flex-col gap-y-4"
@@ -38,31 +38,20 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
             className="w-full"
             onChange={(e) => actions.handleChange("name", e.target.value)}
             name="name"
-            label="Theme Name"
+            label="Nama Tema"
             value={state.formData.name}
           />
-          <div className="grid md:grid-cols-2 gap-4">
-            <Input
-              onChange={(e) =>
-                e.target.files &&
-                actions.handleChange("thumbnail", e.target.files[0])
-              }
-              name="thumbnail"
-              type="file"
-              label="Thumbnail"
-            />
-            <Input
-              onChange={(e) =>
-                e.target.files &&
-                actions.handleChange("phone_thumbnail", e.target.files[0])
-              }
-              name="phone_thumbnail"
-              type="file"
-              label="Phone Thumbnail"
-            />
-          </div>
+          <Input
+            onChange={(e) =>
+              e.target.files &&
+              actions.handleChange("phone_thumbnail", e.target.files[0])
+            }
+            name="phone_thumbnail"
+            type="file"
+            label="Thumbnail HP"
+          />
           <div>
-            <p className="text-sm text-gray-700 mb-2">Theme Categories</p>
+            <p className="text-sm text-gray-700 mb-2">Kategori Tema</p>
             <div className="flex gap-x-4">
               {state.themeCategories.length > 0 &&
                 state.themeCategories.map((tc) => (
@@ -82,7 +71,7 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
             </div>
           </div>
           <div>
-            <p className="text-sm text-gray-700 mb-2">Packages</p>
+            <p className="text-sm text-gray-700 mb-2">Paket</p>
             <div className="flex gap-x-4">
               {state.packages.length > 0 &&
                 state.packages.map((pk: Package) => (
@@ -104,13 +93,13 @@ const CreateTheme: React.FC<CreateThemeProps> = ({ token }) => {
           <InputChip
             chips={state.formData.features as string[]}
             onChange={(value) => actions.handleChange("features", value)}
-            label="Other Features"
+            label="Fitur Lainnya"
           />
 
           <div className="flex justify-end mt-6 bg-gray-50 border p-4 rounded-lg">
             <ButtonPrimary
               isloading={state.loading}
-              title="Add Theme"
+              title="Tambah Tema"
               icon={<BiFolderPlus />}
             />
           </div>

@@ -8,7 +8,9 @@ import useCoverStore from "@/store/useCoverStore";
 import Participants from "./layouts/participants";
 import Events from "./layouts/events";
 import LoadingDark from "../loading.dark";
+
 const Photos = React.lazy(() => import("./layouts/photos"));
+const Video = React.lazy(() => import("./layouts/video"));
 const Gift = React.lazy(() => import("./layouts/gift"));
 const RsvpWishes = React.lazy(() => import("./layouts/rsvp.wishes"));
 const Thankyou = React.lazy(() => import("./layouts/thankyou"));
@@ -31,6 +33,7 @@ const Nirvaya = ({ untuk }: Props) => {
           <Participants />
           <Events />
           <Photos />
+          <Video />
           <Gift />
           <RsvpWishes />
           <Thankyou />

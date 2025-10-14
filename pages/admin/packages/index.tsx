@@ -21,7 +21,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
   return (
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
-        <h1 className="text-2xl font-bold mb-4">Packages Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-4">Dashboard Paket</h1>
 
         {state.isLoading ? (
           <Loader />
@@ -36,7 +36,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       className="border border-gray-200 p-6 rounded-lg flex flex-col gap-4"
                     >
                       <Input
-                        label="Name"
+                        label="Nama Paket"
                         value={state.form[index].name}
                         onChange={(e) =>
                           actions.handleChange(
@@ -50,7 +50,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                         <Input
                           name="price"
                           type="number"
-                          label="Price"
+                          label="Harga Paket"
                           value={state.form[index].price}
                           onChange={(e) =>
                             actions.handleChange(
@@ -63,7 +63,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                         <Input
                           name="discount"
                           type="number"
-                          label="Discount"
+                          label="Diskon"
                           value={state.form[index].discount}
                           onChange={(e) =>
                             actions.handleChange(
@@ -77,7 +77,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <div className="grid grid-cols-3 gap-4">
                         <Input
                           type="number"
-                          label="Max Event"
+                          label="Acara"
                           value={state.form[index].max_events}
                           onChange={(e) =>
                             actions.handleChange(
@@ -89,7 +89,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                         />
                         <Input
                           type="number"
-                          label="Max Photos"
+                          label="Galeri Foto"
                           value={state.form[index].max_gallery_photos}
                           onChange={(e) =>
                             actions.handleChange(
@@ -101,7 +101,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                         />
                         <Input
                           type="number"
-                          label="Max Videos"
+                          label="Video"
                           value={state.form[index].max_videos}
                           onChange={(e) =>
                             actions.handleChange(
@@ -115,7 +115,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].unlimited_revisions}
                         type="checkbox"
-                        label="Unlimited Revision"
+                        label="Revisi Tanpa Batas"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].unlimited_revisions,
@@ -127,7 +127,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].unlimited_guest_names}
                         type="checkbox"
-                        label="Unlimited Guest"
+                        label="Tamu Tanpa Batas"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].unlimited_guest_names,
@@ -139,7 +139,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].custom_opening_closing}
                         type="checkbox"
-                        label="Custom Opening & Closing"
+                        label="Ucapan Pembuka & Penutup"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].custom_opening_closing,
@@ -151,7 +151,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].countdown}
                         type="checkbox"
-                        label="Countdown"
+                        label="Hitung Mundur Waktu"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].countdown,
@@ -163,7 +163,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].contact_social_media}
                         type="checkbox"
-                        label="Social Media"
+                        label="Media Sosial"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].contact_social_media,
@@ -175,7 +175,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].background_sound}
                         type="checkbox"
-                        label="Background Music"
+                        label="Lagu"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].background_sound,
@@ -187,7 +187,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].rsvp_and_greetings}
                         type="checkbox"
-                        label="RSVP & Wishes"
+                        label="RSVP & Ucapan"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].rsvp_and_greetings,
@@ -199,7 +199,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].google_maps_integration}
                         type="checkbox"
-                        label="Google Maps Integration"
+                        label="Google Maps"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].google_maps_integration,
@@ -211,7 +211,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                       <InputCheckbox
                         checked={state.form[index].add_to_calendar}
                         type="checkbox"
-                        label="Add to Google Calendar"
+                        label="Tambah ke Google Calendar"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].add_to_calendar,
@@ -221,21 +221,9 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                         }
                       />
                       <InputCheckbox
-                        checked={state.form[index].custom_cover}
-                        type="checkbox"
-                        label="Cover Image / Video Cover"
-                        onChange={() =>
-                          actions.handleChange(
-                            !state.form[index].custom_cover,
-                            "custom_cover",
-                            pk.id as number
-                          )
-                        }
-                      />
-                      <InputCheckbox
                         checked={state.form[index].digital_envelope}
                         type="checkbox"
-                        label="Digital Envelope"
+                        label="Hadiah Digital"
                         onChange={() =>
                           actions.handleChange(
                             !state.form[index].digital_envelope,
@@ -252,7 +240,7 @@ const PackagesDashboard: React.FC<PackagesDashboardProps> = ({ token }) => {
                     onClick={actions.handleSubmit}
                     isloading={state.isLoading || state.loading}
                     type="button"
-                    title="Update Package"
+                    title="Ubah Paket"
                     icon={<BiEdit />}
                   />
                 </div>

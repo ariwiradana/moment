@@ -2,8 +2,8 @@ import useSWR from "swr";
 import { Order } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { getClient } from "@/lib/client";
+import toast from "react-hot-toast";
 
 export const useAdminOrders = (token: string | null) => {
   const [page, setPage] = useState<number>(1);
@@ -25,24 +25,26 @@ export const useAdminOrders = (token: string | null) => {
     setPage(value);
   };
 
-  const handleDelete = (id: number) => {
-    const deleteTestimonial = getClient(
-      `/api/admin/testimonials?id=${id}`,
-      {
-        method: "DELETE",
-      },
-      token
-    );
-    toast.promise(deleteTestimonial, {
-      loading: "Deleting testimonials...",
-      success: () => {
+  const handleDelete = async (id: number) => {
+    const toastId = toast.loading("Menghapus order...");
+    try {
+      const res = await getClient(
+        `/api/admin/orders/delete?id=${id}`,
+        {
+          method: "DELETE",
+        },
+        token
+      );
+      const result = await res.json();
+      if (result.success) {
         mutate();
-        return "Successfully deleted testimonials";
-      },
-      error: (error: any) => {
-        return error.message || "Failed to delete testimonials";
-      },
-    });
+        toast.success(result.message, { id: toastId });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message, { id: toastId });
+      }
+    }
   };
 
   const handleSetStatus = async (id: number, status: string) => {

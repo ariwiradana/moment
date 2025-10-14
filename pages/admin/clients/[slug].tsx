@@ -51,11 +51,11 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
         <button onClick={() => router.back()}>
           <div className="flex items-center gap-x-1 text-gray-400">
             <BiLeftArrowAlt className="text-base" />
-            <span className="text-sm font-medium">back</span>
+            <span className="text-sm font-medium">kembali</span>
           </div>
         </button>
         <div className="flex flex-wrap items-center mb-8 mt-2 gap-3">
-          <h1 className="text-2xl font-bold">Client</h1>
+          <h1 className="text-2xl font-bold">Klien</h1>
 
           {state.formData.status && (
             <div className="flex items-center font-semibold text-sm">
@@ -118,7 +118,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               onChange={(e) =>
                 actions.handleChangeClient(e.target.value, "name")
               }
-              label="Client Name"
+              label="Nama Klien"
             />
             <div className="flex gap-4">
               <Input
@@ -127,7 +127,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 onChange={(e) =>
                   actions.handleChangeClient(e.target.value, "slug")
                 }
-                label="Slug"
+                label="Link Undangan"
               />
               <div className="flex gap-x-4 items-end w-full">
                 {state.showChangePassword && (
@@ -138,7 +138,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                     onChange={(e) =>
                       actions.handleChangeClient(e.target.value, "password")
                     }
-                    label="Password"
+                    label="Kata Sandi"
                   />
                 )}
                 <ButtonPrimary
@@ -168,11 +168,11 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   title={
                     state.showChangePassword &&
                     state.formData.password?.length > 0
-                      ? "Save"
+                      ? "Simpan"
                       : state.showChangePassword &&
                         state.formData.password?.length === 0
-                      ? "Cancel"
-                      : "Change Password"
+                      ? "Batal"
+                      : "Ganti Kata Sandi"
                   }
                   className="mb-[10px]"
                 />
@@ -185,7 +185,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 onChange={(e) =>
                   actions.handleChangeClient(Number(e.target.value), "theme_id")
                 }
-                label="Theme"
+                label="Tema"
               />
               <InputSelect
                 options={state.themeCategoryOptions}
@@ -196,7 +196,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                     "theme_category_id"
                   )
                 }
-                label="Theme Category"
+                label="Kategori Tema"
               />
             </div>
             <InputSelect
@@ -210,9 +210,9 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
 
                 console.log(e.target.value);
               }}
-              label="Package"
+              label="Paket"
             />
-            <h1 className="text-2xl font-bold mb-4 mt-8">Client Asset(s)</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-8">Form Media</h1>
             <Input
               disabled
               value={state.formData.media?.image_link || "-"}
@@ -228,13 +228,15 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               value={state.formData.media?.music_title || "-"}
               label="Music Title"
             />
-            <h1 className="text-2xl font-bold mb-4 mt-8">Greeting(s)</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-8">
+              Kalimat Pembuka & Penutup
+            </h1>
             <Input
               value={state.formData.opening_title}
               onChange={(e) =>
                 actions.handleChangeClient(e.target.value, "opening_title")
               }
-              label="Opening Title"
+              label="Judul Pembuka"
             />
             <InputTextarea
               rows={6}
@@ -245,14 +247,14 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   "opening_description"
                 )
               }
-              label="Opening Description"
+              label="Deskripsi Pembuka"
             />
             <Input
               value={state.formData.closing_title}
               onChange={(e) =>
                 actions.handleChangeClient(e.target.value, "closing_title")
               }
-              label="Closing Title"
+              label="Judul Penutup"
             />
             <InputTextarea
               rows={6}
@@ -263,9 +265,9 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   "closing_description"
                 )
               }
-              label="Closing Description"
+              label="Deskripsi Penutup"
             />
-            <h1 className="text-2xl font-bold mb-4 mt-8">Photo/Video(s)</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-8">Foto & Video</h1>
 
             <Input
               id="gallery"
@@ -277,7 +279,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 actions.handleChangeClient(e.target.files as FileList, "images")
               }
               className="w-full"
-              label="Gallery"
+              label="Foto Galeri"
             />
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -394,7 +396,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   onChange={(value) =>
                     actions.handleChangeClient(value, "videos")
                   }
-                  label="Video URL (Youtube)"
+                  label="Link Video (Youtube)"
                 />
               )}
 
@@ -460,13 +462,13 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
 
             {state.selectedPackage?.name !== "Basic" && (
               <>
-                <h1 className="text-2xl font-bold mb-4 mt-8">Music</h1>
+                <h1 className="text-2xl font-bold mb-4 mt-8">Lagu Undangan</h1>
                 <Input
                   value={state.formData.music_title}
                   onChange={(e) =>
                     actions.handleChangeClient(e.target.value, "music_title")
                   }
-                  label="Title"
+                  label="Judul Lagu"
                 />
                 <Input
                   id="music"
@@ -480,7 +482,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                     )
                   }
                   className="w-full"
-                  label="File"
+                  label="File Lagu"
                 />
 
                 {state.formData.music && (
@@ -511,12 +513,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               </>
             )}
 
-            <h1 className="text-2xl font-bold mb-4 mt-8">Event(s)</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-8">Acara</h1>
             <div className="flex flex-col gap-y-4">
               {state.formData.events.map((event, index) => (
                 <Accordion
                   key={`event-${index}`}
-                  title={`Event ${index + 1}`}
+                  title={`Acara ${index + 1}`}
                   content={
                     <div className="flex flex-col gap-y-4">
                       <div className="flex flex-col lg:flex-row gap-4">
@@ -562,7 +564,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               )
                             }
                             className="w-full"
-                            label="Name"
+                            label="Nama Acara"
                           />
                           <Input
                             accept="image/*"
@@ -575,7 +577,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               )
                             }
                             className="w-full"
-                            label="Image"
+                            label="Foto Acara"
                           />
                         </div>
                       </div>
@@ -589,7 +591,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           )
                         }
                         className="w-full"
-                        label="Address URL"
+                        label="Link Google Maps"
                       />
                       <InputTextarea
                         rows={6}
@@ -601,7 +603,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             index
                           )
                         }
-                        label="Address"
+                        label="Alamat"
                       />
                       <Input
                         value={state.formData.events[index].date}
@@ -614,7 +616,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                         }
                         className="w-full"
                         type="date"
-                        label="Date"
+                        label="Tanggal Acara"
                       />
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         <Input
@@ -628,7 +630,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           }
                           className="w-full"
                           type="time"
-                          label="Start Time"
+                          label="Waktu Mulai"
                         />
                         <div className="flex justify-between gap-4 items-end">
                           {state.toggleEndTimes[index] ? (
@@ -643,7 +645,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                 )
                               }
                               className="w-full"
-                              label="End Time"
+                              label="Waktu Selesai"
                             />
                           ) : (
                             <Input
@@ -657,7 +659,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                 )
                               }
                               className="w-full"
-                              label="End Time"
+                              label="Waktu Selesai"
                             />
                           )}
 
@@ -667,8 +669,8 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               size="small"
                               title={
                                 state.toggleEndTimes[index]
-                                  ? "Set End Time"
-                                  : "Set Until Done"
+                                  ? "Buat Waktu Selesai"
+                                  : "Hingga Selesai"
                               }
                               onClick={() => actions.handletoggleEndTime(index)}
                               type="button"
@@ -701,7 +703,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   <ButtonSecondary
                     onClick={actions.handleAddAnotherEvent}
                     type="button"
-                    title="Add Another"
+                    title="Tambah Acara Lainnya"
                     size="small"
                     icon={<BiSolidPlusCircle />}
                   />
@@ -709,12 +711,12 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               ) : null}
             </div>
 
-            <h1 className="text-2xl font-bold mb-4 mt-8">Participant(s)</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-8">Partisipan</h1>
             <div className="flex flex-col gap-y-4">
               {state.formData.participants.map((participant, index) => (
                 <Accordion
                   key={`participant-${index}`}
-                  title={`Participant ${index + 1}`}
+                  title={`Partisipan ${index + 1}`}
                   content={
                     <div className="flex flex-col gap-y-4">
                       <div className="flex flex-col lg:flex-row gap-x-6 gap-y-4">
@@ -755,7 +757,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           <Input
                             value={state.formData.participants[index].name}
                             className="w-full"
-                            label="Full Name"
+                            label="Nama Lengkap"
                             onChange={(e) =>
                               actions.handleChangeParticipant(
                                 e.target.value,
@@ -767,7 +769,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           <Input
                             value={state.formData.participants[index].nickname}
                             className="w-full"
-                            label="Nickname"
+                            label="Nama Panggilan"
                             onChange={(e) =>
                               actions.handleChangeParticipant(
                                 e.target.value,
@@ -789,7 +791,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           )
                         }
                         className="w-full"
-                        label="Image"
+                        label="Foto"
                       />
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -799,7 +801,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             undefined
                           }
                           className="w-full"
-                          label="Parent Male Name"
+                          label="Nama Ayah"
                           onChange={(e) =>
                             actions.handleChangeParticipant(
                               e.target.value,
@@ -814,7 +816,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             undefined
                           }
                           className="w-full"
-                          label="Parent Female Name"
+                          label="Nama Ibu"
                           onChange={(e) =>
                             actions.handleChangeParticipant(
                               e.target.value,
@@ -835,7 +837,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               index
                             )
                           }
-                          label="Gender"
+                          label="Jenis Kelamin"
                         />
                         <InputSelect
                           value={state.formData.participants[index].role}
@@ -862,13 +864,13 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               index
                             )
                           }
-                          label="Child Order"
+                          label="Anak Ke"
                         />
                       </div>
                       <InputTextarea
                         rows={6}
                         value={state.formData.participants[index].address}
-                        label="Address Full"
+                        label="Alamat"
                         onChange={(e) =>
                           actions.handleChangeParticipant(
                             e.target.value,
@@ -878,7 +880,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                         }
                       />
 
-                      <h1 className="text-base font-bold mt-6">Social Media</h1>
+                      <h1 className="text-base font-bold mt-6">Media Sosial</h1>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input
                           optional
@@ -963,7 +965,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 <ButtonSecondary
                   onClick={actions.handleAddAnotherParticipant}
                   type="button"
-                  title="Add Another"
+                  title="Tambah Partisipan Lainnya"
                   size="small"
                   icon={<BiSolidPlusCircle />}
                 />
@@ -972,7 +974,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
 
             {state.selectedPackage?.digital_envelope && (
               <>
-                <h1 className="text-2xl font-bold mb-4 mt-8">Digital Gift</h1>
+                <h1 className="text-2xl font-bold mb-4 mt-8">Hadiah Digital</h1>
                 <div className="grid md:grid-cols-3 gap-4">
                   <Input
                     value={state.formData.gift_bank_name}
@@ -982,7 +984,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                         "gift_bank_name"
                       )
                     }
-                    label="Bank / Platform Name"
+                    label="Nama Bank / Platform"
                   />
                   <Input
                     value={state.formData.gift_account_name}
@@ -992,7 +994,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                         "gift_account_name"
                       )
                     }
-                    label="Account Name"
+                    label="Nama Akun"
                   />
                   <Input
                     value={state.formData.gift_account_number}
@@ -1002,7 +1004,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                         "gift_account_number"
                       )
                     }
-                    label="Account Number"
+                    label="Nomor Akun"
                   />
                 </div>
               </>
@@ -1011,7 +1013,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               <ButtonPrimary
                 isloading={state.loading || state.isLoading}
                 type="submit"
-                title="Update Client"
+                title="Ubah Klien"
                 icon={<BiEdit />}
               />
             </div>

@@ -13,7 +13,6 @@ import React from "react";
 import { BiTrash } from "react-icons/bi";
 import Cookies from "cookies";
 import { useAdminWishes } from "@/hooks/admin/useAdminWishes";
-
 interface WishesDashboardProps {
   token: string | null;
 }
@@ -24,7 +23,7 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
   return (
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
-        <h1 className="text-2xl font-bold mb-4">Wishes Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-4">Dashboard RSVP & Ucapan</h1>
 
         <>
           {state.isLoadingClient ? (
@@ -39,7 +38,7 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                     }
                     value={state.clientId ?? ""}
                     inputSize="medium"
-                    label="Client"
+                    label="Klien"
                     options={state.clientOptions}
                   />
                 </div>
@@ -80,7 +79,7 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                               type="button"
                               onClick={() => actions.handleDelete(review.id)}
                               size="small"
-                              title="Delete"
+                              title="Hapus Ucapan"
                               icon={<BiTrash className="text-base" />}
                             />
                           </ButtonActionDialog>
@@ -89,7 +88,7 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                       <div className="pt-3 flex flex-col gap-y-2">
                         <div>
                           <p className="text-gray-500 font-medium text-xs">
-                            Wishes
+                            Ucapan
                           </p>
                           <p className="text-gray-800 font-semibold text-sm">
                             {review.wishes}
@@ -109,10 +108,10 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                             User
                           </td>
                           <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                            Wishes
+                            Ucapan
                           </td>
                           <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
-                            Actions
+                            Aksi
                           </td>
                         </tr>
                       </thead>
@@ -160,7 +159,7 @@ const WishesDashboard: React.FC<WishesDashboardProps> = ({ token }) => {
                                     actions.handleDelete(review.id)
                                   }
                                   size="medium"
-                                  title="Delete"
+                                  title="Hapus Ucapan"
                                   icon={<BiTrash className="text-base" />}
                                 />
                               </ButtonActionDialog>

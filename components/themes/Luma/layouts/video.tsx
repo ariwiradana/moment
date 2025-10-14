@@ -7,7 +7,9 @@ import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 
-const YoutubeEmbed = dynamic(() => import("./youtube.embed"), { ssr: false });
+const YoutubeEmbed = dynamic(() => import("../../youtube.embed"), {
+  ssr: false,
+});
 
 const Videos: NextPage = () => {
   const { client } = useClientStore();

@@ -6,6 +6,7 @@ import useMusic from "@/hooks/themes/useMusic";
 import MusicComponent from "./layouts/music";
 import Cover from "./layouts/cover";
 import LoadingDark from "../loading.dark";
+import Video from "./layouts/video";
 
 const HeroComponent = lazy(() => import("./layouts/hero"));
 const ParticipantsComponent = lazy(() => import("./layouts/participants"));
@@ -35,6 +36,7 @@ const Samaya: FC<Props> = ({ untuk }) => {
               <ParticipantsComponent />
               <EventsComponent />
               <PhotosComponent />
+              <Video />
               <GiftComponent />
               <RSVPWishes />
               <ThankyouComponent />

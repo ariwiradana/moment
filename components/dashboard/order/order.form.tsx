@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import { BiChevronLeft, BiCheck, BiCreditCard, BiSave } from "react-icons/bi";
 import toast from "react-hot-toast";
@@ -19,6 +19,8 @@ const OrderForm = ({ mutate }: Props) => {
   const store = useOrderStore();
   const router = useRouter();
   const steps = useSteps();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const isUpdate = router.pathname === "/order/[slug]";
   const isLastStep = store.activeStep === steps.length - 1;
@@ -107,8 +109,10 @@ const OrderForm = ({ mutate }: Props) => {
         );
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
+        setIsLoading(true);
         const newClient = await handleSaveClient();
         if (!isUpdate) await handleSubmitOrder(newClient);
+        setIsLoading(false);
       }
     },
     [store]
@@ -135,6 +139,7 @@ const OrderForm = ({ mutate }: Props) => {
           </button>
         )}
         <ButtonPrimary
+          isloading={isLoading}
           className="print:hidden"
           disabled={!isAllFulfilled}
           type="submit"

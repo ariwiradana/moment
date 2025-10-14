@@ -26,12 +26,12 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
   return (
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
-        <h1 className="text-2xl font-bold mb-4">Theme Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-4">Dashboard Tema</h1>
         <Link href="/admin/themes/create">
           <div>
             <ButtonPrimary
               size="small"
-              title="Add Theme"
+              title="Tambah Tema"
               icon={<BiPlus className="text-lg" />}
             />
           </div>
@@ -48,11 +48,6 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                       <h1 className="text-gray-800 font-semibold text-sm">
                         {theme.name}
                       </h1>
-                      {theme.cover_video && (
-                        <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg">
-                          Cover Video
-                        </p>
-                      )}
                       <p
                         className={`${
                           theme.active
@@ -60,21 +55,21 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                             : "bg-admin-dark/10 text-admin-dark/50"
                         } text-xs font-semibold px-2 py-[2px] rounded-lg`}
                       >
-                        {theme.active ? "Enabled" : "Disabled"}
+                        {theme.active ? "Aktif" : "Nonaktif"}
                       </p>
                     </div>
                     <ButtonActionDialog>
                       <ButtonText
                         onClick={() => router.push(`/admin/themes/${theme.id}`)}
                         size="small"
-                        title="Detail"
+                        title="Lihat Detail"
                         icon={<BiEdit className="text-base" />}
                       />
                       <ButtonText
                         type="button"
                         onClick={() => actions.handleDelete(theme.id as number)}
                         size="small"
-                        title="Delete"
+                        title="Hapus Tema"
                         icon={<BiTrash className="text-base" />}
                       />
                     </ButtonActionDialog>
@@ -82,7 +77,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                   <div className="pt-3 flex flex-col gap-y-2">
                     <div>
                       <p className="text-gray-500 font-medium text-xs">
-                        Available Categories
+                        Kategori
                       </p>
                       <div className="flex gap-2 mt-1">
                         {theme.theme_categories?.map((tc: ThemeCategory) => (
@@ -96,9 +91,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                       </div>
                     </div>
                     <div>
-                      <p className="text-gray-500 font-medium text-xs">
-                        Available Packages
-                      </p>
+                      <p className="text-gray-500 font-medium text-xs">Paket</p>
                       <div className="flex gap-2 mt-1">
                         {theme.packages?.map((pk: Package) => (
                           <p
@@ -121,16 +114,16 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                   <thead>
                     <tr>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
-                        Name
+                        Nama
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Available Categories
+                        Kategori Tema
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Available Packages
+                        Paket
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
-                        Actions
+                        Aksi
                       </td>
                     </tr>
                   </thead>
@@ -147,11 +140,6 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex items-center gap-x-2">
                             <h6>{theme.name}</h6>
-                            {theme.cover_video && (
-                              <p className="bg-admin-dark text-white text-xs font-semibold px-2 py-[2px] rounded-lg">
-                                Cover Video
-                              </p>
-                            )}
                             <p
                               className={`${
                                 theme.active
@@ -159,7 +147,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                                   : "bg-admin-dark/10 text-admin-dark/50"
                               } text-xs font-semibold px-2 py-[2px] rounded-lg`}
                             >
-                              {theme.active ? "Enabled" : "Disabled"}
+                              {theme.active ? "Aktif" : "Nonaktif"}
                             </p>
                           </div>
                         </td>
@@ -205,7 +193,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                                 router.push(`/admin/themes/${theme.id}`)
                               }
                               size="medium"
-                              title="Detail"
+                              title="Lihat Detail"
                               icon={<BiDetail className="text-base" />}
                             />
                             <ButtonText
@@ -214,7 +202,7 @@ const ReviewDashboard: React.FC<PageProps> = ({ token }) => {
                                 actions.handleDelete(theme.id as number)
                               }
                               size="medium"
-                              title="Delete"
+                              title="Hapus Delete"
                               icon={<BiTrash className="text-base" />}
                             />
                           </ButtonActionDialog>

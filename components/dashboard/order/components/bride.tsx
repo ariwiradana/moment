@@ -17,6 +17,7 @@ const OrderBride = () => {
     participants[1] = {
       ...(existingBride as Partial<Participant>),
       role: "bride",
+      gender: "female",
       child: existingBride.child ?? "pertama",
       [name]: value,
     } as Participant;

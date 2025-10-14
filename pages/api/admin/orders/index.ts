@@ -16,25 +16,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const limitNumber = Number(limit);
         const offset = (pageNumber - 1) * limitNumber;
 
-        // 1️⃣ Query orders
         let orderQuery = `
-          SELECT * FROM orders
+          SELECT o.*, c.status AS client_status
+          FROM orders o
+          LEFT JOIN clients c ON o.client_id = c.id
         `;
+
         const values: (string | number)[] = [];
 
         if (client_id) {
-          orderQuery += ` WHERE client_id = $1`;
+          orderQuery += ` WHERE o.client_id = $1`;
           values.push(Number(client_id));
         }
 
-        orderQuery += ` ORDER BY updated_at DESC LIMIT $${
-          values.length + 1
-        } OFFSET $${values.length + 2}`;
-        values.push(limitNumber, offset);
+        orderQuery += `
+          ORDER BY
+            CASE c.status
+              WHEN 'unpaid' THEN 1
+              WHEN 'paid' THEN 2
+              WHEN 'completed' THEN 3
+              ELSE 4
+            END,
+            o.updated_at DESC
+          LIMIT $${values.length + 1} OFFSET $${values.length + 2}
+        `;
 
+        values.push(limitNumber, offset);
         const { rows: orders } = await sql.query(orderQuery, values);
 
-        // Hitung total
         let countQuery = `SELECT COUNT(*) FROM orders`;
         const countValues: (string | number)[] = [];
         if (client_id) {
@@ -43,15 +52,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
         const { rows: total } = await sql.query(countQuery, countValues);
 
-        // 2️⃣ Ambil semua themes, packages, clients yang relevan
         const themeIds = Array.from(
           new Set(orders.map((o) => o.theme_id).filter(Boolean))
         );
-
         const packageIds = Array.from(
           new Set(orders.map((o) => o.package_id).filter(Boolean))
         );
-
         const clientIds = Array.from(
           new Set(orders.map((o) => o.client_id).filter(Boolean))
         );
@@ -80,8 +86,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const packages = packagesResult.rows;
         const clients = clientsResult.rows;
 
-        // 3️⃣ Gabungkan hasilnya secara manual
         const merged = orders.map((order) => ({
+          id: order.id,
           order_id: order.order_id,
           name: order.name,
           phone: order.phone,

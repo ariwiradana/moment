@@ -17,6 +17,7 @@ const OrderGroom = () => {
     participants[0] = {
       ...(existingGroom as Partial<Participant>),
       role: "groom",
+      gender: 'male',
       child: existingGroom.child ?? "pertama",
       [name]: value,
     } as Participant;

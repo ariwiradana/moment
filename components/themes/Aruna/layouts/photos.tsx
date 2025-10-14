@@ -132,7 +132,7 @@ const GalleryComponent = () => {
                         alt={`slide-img-${index + 1}`}
                         fill
                         loading="lazy"
-                        className="object-cover rounded-md"
+                        className="object-cover"
                       />
                     </div>
                   </SwiperSlide>

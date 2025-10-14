@@ -47,13 +47,13 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
   return (
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
-        <h1 className="text-2xl font-bold mb-4">Client Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-4">Dashboard Klien</h1>
 
         <Link href="/admin/clients/create">
           <div>
             <ButtonPrimary
               size="small"
-              title="Add"
+              title="Tambah"
               icon={<BiPlus className="text-lg" />}
             />
           </div>
@@ -139,7 +139,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                   )
                                 }
                                 size="small"
-                                title="Copy Link Testimonial"
+                                title="Salin Link Testimonial"
                                 icon={<BiMessageAdd className="text-base" />}
                               />
                             </>
@@ -153,7 +153,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                   )
                                 }
                                 size="small"
-                                title="Copy Link Add Guests"
+                                title="Salin Link Tambah Tamu"
                                 icon={<BiUserPlus className="text-base" />}
                               />
                               <ButtonText
@@ -164,7 +164,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 }
                                 type="button"
                                 size="small"
-                                title="Copy Invitation Link"
+                                title="Salin Link Undangan"
                                 icon={<BiLink className="text-base" />}
                               />
                             </>
@@ -193,8 +193,8 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             size="small"
                             title={
                               client.is_preview
-                                ? "Disable as Preview"
-                                : "Set as Preview"
+                                ? "Nonaktifkan Preview"
+                                : "Aktifkan Preview"
                             }
                             icon={<BiSlideshow className="text-base" />}
                           />
@@ -203,7 +203,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               router.push(`/admin/clients/${client.slug}`)
                             }
                             size="small"
-                            title="Detail"
+                            title="Lihat Detail"
                             icon={<BiEditAlt className="text-base" />}
                           />
                           {client.status === "unpaid" && (
@@ -213,7 +213,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 client.id && actions.handleDelete(client.id)
                               }
                               size="small"
-                              title="Delete"
+                              title="Hapus Klien"
                               icon={<BiTrash className="text-base" />}
                             />
                           )}
@@ -225,16 +225,15 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                     <div className="grid grid-cols-2 gap-2">
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
-                          Event(s)
+                          Acara
                         </p>
                         <p className="text-gray-800 font-semibold text-sm capitalize">
-                          {client.events.length}{" "}
-                          {client.events.length > 1 ? "Events" : "Event"}
+                          {client.events.length} Acara
                         </p>
                       </div>
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
-                          Package
+                          Paket
                         </p>
                         <p className="text-gray-800 font-semibold text-sm capitalize">
                           {client.package?.name}
@@ -242,7 +241,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
-                          Theme
+                          Tema
                         </p>
                         <p className="text-gray-800 font-semibold text-sm">
                           {client.theme?.name ?? "-"}
@@ -250,7 +249,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
-                          Theme Category
+                          Kategori Tema
                         </p>
                         <p className="text-gray-800 font-semibold text-sm">
                           {client.theme_category?.name ?? "-"}
@@ -258,7 +257,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
-                          Phone
+                          Telepon
                         </p>
                         <p className="text-gray-800 font-semibold text-sm capitalize">
                           {client.phone}
@@ -276,25 +275,25 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                   <thead>
                     <tr>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
-                        Client
+                        Klien
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Phone
+                        Telepon
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Theme
+                        Tema
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Event(s)
+                        Acara
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Package
+                        Paket
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Status
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
-                        Actions
+                        Aksi
                       </td>
                     </tr>
                   </thead>
@@ -372,10 +371,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           </p>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <h1>
-                            {client.events.length}{" "}
-                            {client.events.length > 1 ? "Event" : "Events"}
-                          </h1>
+                          <h1>{client.events.length} Acara</h1>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex">
@@ -429,7 +425,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                     )
                                   }
                                   size="medium"
-                                  title="Copy Link Testimonial"
+                                  title="Salin Link Testimonial"
                                   icon={<BiMessageAdd className="text-base" />}
                                 />
                               </>
@@ -443,7 +439,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                     )
                                   }
                                   size="medium"
-                                  title="Copy Link Add Guests"
+                                  title="Salin Link Tambah Tamu"
                                   icon={<BiUserPlus className="text-base" />}
                                 />
 
@@ -455,22 +451,8 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                   }
                                   type="button"
                                   size="medium"
-                                  title="Copy Invitation Link"
+                                  title="Salin Link Undangan"
                                   icon={<BiLink className="text-base" />}
-                                />
-                              </>
-                            )}
-                            {client.status === "unpaid" && (
-                              <>
-                                <ButtonText
-                                  onClick={() =>
-                                    actions.handleCopyURL(
-                                      `${baseURL}/${client?.slug}/pembayaran`
-                                    )
-                                  }
-                                  size="medium"
-                                  title="Copy Link Payment"
-                                  icon={<BiMoney className="text-base" />}
                                 />
                               </>
                             )}
@@ -484,8 +466,8 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               size="medium"
                               title={
                                 client.is_preview
-                                  ? "Disable as Preview"
-                                  : "Set as Preview"
+                                  ? "Nonaktifkan Preview"
+                                  : "Aktifkan Preview"
                               }
                               icon={<BiSlideshow className="text-base" />}
                             />
@@ -494,7 +476,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 router.push(`/admin/clients/${client.slug}`)
                               }
                               size="medium"
-                              title="Detail"
+                              title="Lihat Detail"
                               icon={<BiEditAlt className="text-base" />}
                             />
                             {client?.status === "unpaid" && (
@@ -504,7 +486,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                   client.id && actions.handleDelete(client.id)
                                 }
                                 size="medium"
-                                title="Delete"
+                                title="Hapus Klien"
                                 icon={<BiTrash className="text-base" />}
                               />
                             )}

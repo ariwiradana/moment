@@ -62,7 +62,7 @@ const PhotosComponent = () => {
                     src={img.src}
                     width={500}
                     height={700}
-                    className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-auto transition-transform duration-500 group-hover:scale-105 bg-white/5"
                   />
                 </div>
               ))}

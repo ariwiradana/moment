@@ -24,7 +24,7 @@ const ButtonPrimary: FC<ButtonPrimaryProps> = ({
       case "extrasmall":
         return "pl-2 pr-3 py-2 text-xs gap-x-1";
       case "small":
-        return "pl-3 pr-4 py-3 text-xs gap-x-2";
+        return "pl-3 pr-4 py-3 text-sm gap-x-1";
       case "medium":
         return "pl-4 pr-5 py-3 text-sm gap-x-3";
       case "large":

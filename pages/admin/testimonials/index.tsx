@@ -25,7 +25,7 @@ const TestimonialsDashboard: React.FC<TestimonialsDashboardProps> = ({
   return (
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
-        <h1 className="text-2xl font-bold mb-4">Testimonials Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-4">Dashboard Testimoni</h1>
 
         {state.isLoading ? (
           <Loader />
@@ -52,7 +52,7 @@ const TestimonialsDashboard: React.FC<TestimonialsDashboardProps> = ({
                               {testimonial.name}
                             </h1>
                             <p className="text-gray-500 font-medium text-xs">
-                              {testimonial.theme_name} Theme
+                              Tema {testimonial.theme_name}
                             </p>
                           </div>
                         </div>
@@ -61,7 +61,7 @@ const TestimonialsDashboard: React.FC<TestimonialsDashboardProps> = ({
                             type="button"
                             onClick={() => actions.handleDelete(testimonial.id)}
                             size="small"
-                            title="Delete"
+                            title="Hapus Testimoni"
                             icon={<BiTrash className="text-base" />}
                           />
                         </ButtonActionDialog>
@@ -92,13 +92,13 @@ const TestimonialsDashboard: React.FC<TestimonialsDashboardProps> = ({
                           User
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                          Testimonial
+                          Testimoni
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                          Created At
+                          Dibuat Pada
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
-                          Actions
+                          Aksi
                         </td>
                       </tr>
                     </thead>
@@ -126,7 +126,7 @@ const TestimonialsDashboard: React.FC<TestimonialsDashboardProps> = ({
                               <div>
                                 <span>{testimonial.name}</span>
                                 <p className="text-gray-500 font-medium text-xs">
-                                  {testimonial.theme_name} Theme
+                                  Tema {testimonial.theme_name}
                                 </p>
                               </div>
                             </div>
@@ -148,7 +148,7 @@ const TestimonialsDashboard: React.FC<TestimonialsDashboardProps> = ({
                                   actions.handleDelete(testimonial.id)
                                 }
                                 size="medium"
-                                title="Delete"
+                                title="Hapus Testimoni"
                                 icon={<BiTrash className="text-base" />}
                               />
                             </ButtonActionDialog>

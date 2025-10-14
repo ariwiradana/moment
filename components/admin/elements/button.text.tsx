@@ -18,7 +18,7 @@ const ButtonText: FC<ButtonTextProps> = (props) => {
       case "small":
         return "px-3 py-2 text-sm gap-x-2";
       case "medium":
-        return "px-4 py-3 text-base gap-x-3";
+        return "px-4 py-3 text-sm gap-x-3";
       case "large":
         return "px-6 py-3 text-base gap-x-3";
     }

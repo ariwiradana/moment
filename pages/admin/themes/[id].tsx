@@ -29,10 +29,10 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
         <Link href="/admin/themes">
           <div className="flex items-center gap-x-1 text-gray-400">
             <BiLeftArrowAlt className="text-base" />
-            <span className="text-sm font-medium">back</span>
+            <span className="text-sm font-medium">kembali</span>
           </div>
         </Link>
-        <h1 className="text-2xl font-bold mb-8 mt-2">Update Theme</h1>
+        <h1 className="text-2xl font-bold mb-8 mt-2">Ubah Tema</h1>
         {state.isLoading ? (
           <div className="max-w-screen-md">
             <Loader />
@@ -46,10 +46,10 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
               className="w-full"
               value={state.formData.name}
               onChange={(e) => actions.handleChange(e.target.value, "name")}
-              label="Name"
+              label="Nama Tema"
             />
             <div>
-              <p className="text-sm text-gray-700 mb-2">Theme Categories</p>
+              <p className="text-sm text-gray-700 mb-2">Kategori Tema</p>
               <div className="flex gap-x-4">
                 {state.themeCategories.length > 0 &&
                   state.themeCategories.map((tc) => (
@@ -73,7 +73,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
             </div>
 
             <div>
-              <p className="text-sm text-gray-700 mb-2">Packages</p>
+              <p className="text-sm text-gray-700 mb-2">Paket</p>
               <div className="flex gap-x-4">
                 {state.packages.length > 0 &&
                   state.packages.map((pk) => (
@@ -99,103 +99,57 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
             <InputChip
               chips={state.formData.features as string[]}
               onChange={(value) => actions.handleChange(value, "features")}
-              label="Other Features"
+              label="Fitur Lainnya"
             />
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-6">
-                <Input
-                  id="thumbnail"
-                  accept="image/*"
-                  type="file"
-                  onChange={(e) =>
-                    actions.handleChange(
-                      e.target.files as FileList,
-                      "thumbnail"
-                    )
-                  }
-                  className="w-full"
-                  label="Thumbnail"
-                />
-                {state.formData.thumbnail && (
-                  <div className="relative">
-                    <div className="relative w-full aspect-square">
-                      <ImageShimmer
-                        priority
-                        alt="theme-thumbnail"
-                        src={state.formData.thumbnail ?? ""}
-                        fill
-                        className="object-contain rounded-lg"
-                      />
-                    </div>
-                    <div className="absolute top-2 right-2 z-10">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          actions.handleDeleteThumbnail(
-                            state.formData.thumbnail as string,
-                            state.formData.id as number,
-                            "thumbnail"
-                          )
-                        }
-                        disabled={state.loading || state.isLoading}
-                        className="w-5 h-5 rounded-full bg-gray-200 text-admin-dark flex justify-center items-center"
-                      >
-                        <BiX />
-                      </button>
-                    </div>
+            <div className="flex flex-col gap-6">
+              <Input
+                id="phone_thumbnail"
+                accept="image/*"
+                type="file"
+                onChange={(e) =>
+                  actions.handleChange(
+                    e.target.files as FileList,
+                    "phone_thumbnail"
+                  )
+                }
+                className="w-full"
+                label="Thumbnail HP"
+              />
+              {state.formData.phone_thumbnail && (
+                <div className="relative">
+                  <div className="relative w-1/2 aspect-square">
+                    <ImageShimmer
+                      priority
+                      alt="theme-phone-thumbnail"
+                      src={state.formData.phone_thumbnail ?? ""}
+                      fill
+                      className="object-contain rounded-lg"
+                    />
                   </div>
-                )}
-              </div>
-              <div className="flex flex-col gap-6">
-                <Input
-                  id="phone_thumbnail"
-                  accept="image/*"
-                  type="file"
-                  onChange={(e) =>
-                    actions.handleChange(
-                      e.target.files as FileList,
-                      "phone_thumbnail"
-                    )
-                  }
-                  className="w-full"
-                  label="Phone Thumbnail"
-                />
-                {state.formData.phone_thumbnail && (
-                  <div className="relative">
-                    <div className="relative w-full aspect-square">
-                      <ImageShimmer
-                        priority
-                        alt="theme-phone-thumbnail"
-                        src={state.formData.phone_thumbnail ?? ""}
-                        fill
-                        className="object-contain rounded-lg"
-                      />
-                    </div>
-                    <div className="absolute top-2 right-2 z-10">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          actions.handleDeleteThumbnail(
-                            state.formData.phone_thumbnail as string,
-                            state.formData.id as number,
-                            "phone_thumbnail"
-                          )
-                        }
-                        disabled={state.loading || state.isLoading}
-                        className="w-5 h-5 rounded-full bg-gray-200 text-admin-dark flex justify-center items-center"
-                      >
-                        <BiX />
-                      </button>
-                    </div>
+                  <div className="absolute top-2 right-2 z-10">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        actions.handleDeleteThumbnail(
+                          state.formData.phone_thumbnail as string,
+                          state.formData.id as number,
+                          "phone_thumbnail"
+                        )
+                      }
+                      disabled={state.loading || state.isLoading}
+                      className="w-5 h-5 rounded-full bg-gray-200 text-admin-dark flex justify-center items-center"
+                    >
+                      <BiX />
+                    </button>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
 
             <InputSwitch
-              label="Activate theme"
-              description="Enable or disable this theme."
+              label="Aktifkan Tema"
+              description="Aktifkan atau nonaktifkan tema ini."
               onChange={() =>
                 actions.handleChange(!state.formData.active, "active")
               }
@@ -207,7 +161,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
               <ButtonPrimary
                 isloading={state.loading || state.isLoading}
                 type="submit"
-                title="Update Theme"
+                title="Ubah Tema"
                 icon={<BiEdit />}
               />
             </div>
