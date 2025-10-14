@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
 import { BiChevronLeft, BiCheck, BiCreditCard, BiSave } from "react-icons/bi";
 import toast from "react-hot-toast";
@@ -7,7 +7,9 @@ import { getClient } from "@/lib/client";
 import { useRouter } from "next/router";
 import useSteps from "./order.steps";
 import { KeyedMutator } from "swr";
-import { Client } from "@/lib/types";
+import { Client, Order } from "@/lib/types";
+import { generateInvoiceId } from "@/utils/generateInvoiceId";
+import moment from "moment";
 
 interface Props {
   mutate?: KeyedMutator<{ data: Client }>;
@@ -20,13 +22,15 @@ const OrderForm = ({ mutate }: Props) => {
 
   const isUpdate = router.pathname === "/order/[slug]";
   const isLastStep = store.activeStep === steps.length - 1;
+  const isAllFulfilled = useMemo(() => {
+    return store.fullfilledSteps?.[store.activeStep];
+  }, [store.activeStep, store.fullfilledSteps]);
 
   const handleSaveClient = async () => {
-    const id = toast.loading("Menyimpan undangan");
     try {
       const payload = { ...store.form, status: "paid" };
       const response = await getClient(
-        `/api/guest/order/${isUpdate ? "update" : "create"}`,
+        `/api/guest/order/client/${isUpdate ? "update" : "create"}`,
         {
           method: isUpdate ? "PUT" : "POST",
           body: JSON.stringify(payload),
@@ -36,8 +40,51 @@ const OrderForm = ({ mutate }: Props) => {
 
       if (result.success) {
         if (mutate) mutate();
-        if (!isUpdate) router.push(`/${store.theme?.slug}/order/berhasil`);
+        return result.data;
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
+    }
+  };
+
+  useEffect(() => {
+    handleSetOrder();
+  }, [store.pkg, store.form]);
+
+  const handleSetOrder = () => {
+    const newOrder: Omit<Order, "client_id"> = {
+      order_id: generateInvoiceId(),
+      name: store.form.name,
+      phone: store.form.phone as string,
+      package_id: store.pkg?.id as number,
+      price: store.pkg?.price as number,
+      discount: store.pkg?.discount || 0,
+      theme_id: store.theme?.id as number,
+      admin_fee: 2000,
+      created_at: moment().format("DD MMMM YYYY"),
+    };
+    store.setNewOrder(newOrder);
+  };
+
+  const handleSubmitOrder = async (client: Omit<Client, "cover" | "seo">) => {
+    if (!client.id) return;
+
+    const id = toast.loading("Memproses order...");
+
+    try {
+      const payload: Order = { ...store.order, client_id: client.id };
+
+      const response = await getClient(`/api/guest/order/create`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        store.setNewOrder({ ...store.order, order_id: result.data.order_id });
+        router.push(`/${store.theme?.slug}/order/berhasil`);
         toast.success(result.message, { id });
+        return result.data;
       } else {
         toast.error(result.message, { id });
       }
@@ -53,22 +100,19 @@ const OrderForm = ({ mutate }: Props) => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (store.activeStep <= steps.length - 2) {
+      if (!isLastStep) {
         store.setActiveStep(store.activeStep + 1);
         toast.success(
           `${steps[store.activeStep].stepTitle} berhasil ditambahkan!`
         );
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        handleSaveClient();
+        const newClient = await handleSaveClient();
+        if (!isUpdate) await handleSubmitOrder(newClient);
       }
     },
     [store]
   );
-
-  const isDisabledButton = useMemo(() => {
-    return !store.fullfilledSteps?.[store.activeStep];
-  }, [store.activeStep, store.fullfilledSteps]);
 
   return (
     <form
@@ -92,13 +136,13 @@ const OrderForm = ({ mutate }: Props) => {
         )}
         <ButtonPrimary
           className="print:hidden"
-          disabled={isDisabledButton}
+          disabled={!isAllFulfilled}
           type="submit"
           title={
             isLastStep && isUpdate
               ? "Simpan Perubahan"
               : isLastStep
-              ? "Simapan & Lanjutkan ke Pembayaran"
+              ? "Bayar Sekarang"
               : "Lanjut"
           }
           icon={

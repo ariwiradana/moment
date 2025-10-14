@@ -182,7 +182,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       message: "Data undangan berhasil diperbarui.",
       data: {
         ...updatedClient,
-        media: { music_title: client.music },
+        media: { music_title: video_link, image_link },
         participants: client.participants || [],
         events: client.events || [],
       },

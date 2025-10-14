@@ -1,8 +1,6 @@
-import { Order } from "@/lib/types";
 import useOrderStore from "@/store/useOrderStore";
 import { calculateDiscountPercentage } from "@/utils/calculateDiscount";
 import { formatToRupiah } from "@/utils/formatToRupiah";
-import { generateInvoiceId } from "@/utils/generateInvoiceId";
 import React from "react";
 import { BiDownload } from "react-icons/bi";
 import ButtonSecondary from "../../elements/button.secondary";
@@ -10,22 +8,7 @@ import Image from "next/image";
 
 const OrderPayment = () => {
   const store = useOrderStore();
-
-  const order: Order = {
-    order_id: generateInvoiceId(),
-    name: store.form.name,
-    phone: store.form.phone as string,
-    package_id: store.pkg?.id as number,
-    price: store.pkg?.price as number,
-    discount: store.pkg?.discount || 0,
-    theme_id: store.theme?.id as number,
-    admin_fee: 4000,
-    created_at: new Date().toLocaleDateString("id-ID", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    }),
-  };
+  const { order } = store;
 
   const handlePrint = () => window.print();
 
@@ -97,17 +80,19 @@ const OrderPayment = () => {
               <div className="flex justify-between text-sm text-gray-600">
                 <span>
                   Diskon (
-                  {calculateDiscountPercentage(order.price, order.discount)}%)
+                  {calculateDiscountPercentage(order.price, order.discount)}
+                  %)
                 </span>
                 <span>-{formatToRupiah(order.discount)}</span>
               </div>
             )}
-            {order.admin_fee > 0 && (
+            {order.discount > 0 && (
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Biaya Layanan</span>
-                <span>{formatToRupiah(order.admin_fee)}</span>
+                <span>-{formatToRupiah(order.admin_fee)}</span>
               </div>
             )}
+
             <div className="border-t border-dashed border-gray-300 pt-3 mt-3 flex justify-between items-center">
               <span className="text-sm font-medium text-gray-700">Total</span>
               <span className="text-xl font-semibold text-gray-900">

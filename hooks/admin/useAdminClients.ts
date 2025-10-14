@@ -55,33 +55,7 @@ export const useAdminClients = (token: string | null) => {
       });
   };
 
-  const handleSetStatus = async (id: number, status: string) => {
-    const setStatus = async () => {
-      const response = await getClient(
-        `/api/admin/status`,
-        {
-          method: "POST",
-          body: JSON.stringify({ status, id }),
-        },
-        token
-      );
-      if (!response.ok) {
-        const errorResult = await response.json();
-        throw new Error(errorResult.message);
-      }
-      return await response.json();
-    };
-    toast.promise(setStatus(), {
-      loading: `Set status as ${status}...`,
-      success: () => {
-        mutate();
-        return `Successfully set status to ${status}`;
-      },
-      error: (error: any) => {
-        return error.message || `Failed set status to ${status}`;
-      },
-    });
-  };
+  
 
   const handleSetAsPreview = async (id: number, is_preview: boolean) => {
     const setAsPreview = async () => {
@@ -130,7 +104,6 @@ export const useAdminClients = (token: string | null) => {
       handleDelete,
       handleCopyURL,
       handleSetAsPreview,
-      handleSetStatus,
     },
   };
 };

@@ -65,7 +65,7 @@ const OrderComplete = () => {
                 Nomor Invoice
               </p>
               <p className="font-medium text-dashboard-dark">
-                {"INV-MOMENT-XXXX"}
+                {store.order.order_id}
               </p>
             </div>
 

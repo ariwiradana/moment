@@ -20,9 +20,16 @@ const ThemeComponent: FC = () => {
     {
       onSuccess: (data) => {
         if (data.data) {
-          const best = data.data.reduce((max, theme) =>
-            theme.usage_count > max.usage_count ? theme : max
-          );
+          const best =
+            data.data.length > 0
+              ? data.data.reduce((max, theme) =>
+                  theme.usage_count > max.usage_count ? theme : max
+                )
+              : null;
+
+          // kalau semua usage_count = 0, hasilnya null juga
+          const bestTheme = best && best.usage_count > 0 ? best.slug : "";
+
           const newest = data.data.reduce((latest, theme) => {
             return new Date(theme.created_at as string) >
               new Date(latest.created_at as string)
@@ -30,7 +37,7 @@ const ThemeComponent: FC = () => {
               : latest;
           });
           setThemes(data.data);
-          setBestSeller(best.slug);
+          setBestSeller(bestTheme);
           setNewest(newest?.slug);
         }
       },

@@ -8,19 +8,21 @@ interface InputSelectProps
   error?: string;
   full?: boolean;
   options: Option[];
-  inputSize?: "small" | "medium" | "large";
+  inputSize?: "extrasmall" | "small" | "medium" | "large";
   optional?: boolean;
 }
 
 const InputSelect: FC<InputSelectProps> = (props) => {
-  const paddingStyles = (size: "small" | "medium" | "large") => {
+  const styles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
+      case "extrasmall":
+        return "px-1 py-1.5 text-xs";
       case "small":
-        return "p-2";
+        return "p-2 text-sm";
       case "medium":
-        return "p-3";
+        return "p-3 text-sm";
       case "large":
-        return "py-4 pr-4 px-3";
+        return "py-4 pr-4 px-3 text-sm";
     }
   };
 
@@ -43,11 +45,11 @@ const InputSelect: FC<InputSelectProps> = (props) => {
       )}
       <select
         {...props}
-        className={`w-full border focus:ring-1 focus:outline-none text-sm ${
+        className={`w-full border focus:ring-1 focus:outline-none ${
           props.error
             ? "border-admin-danger focus:ring-transparent"
             : "focus:ring-black"
-        } ${paddingStyles(props.inputSize ?? "large")}`}
+        } ${styles(props.inputSize ?? "large")}`}
       >
         {props.options?.map(({ value, label }) => (
           <option key={value} value={value}>

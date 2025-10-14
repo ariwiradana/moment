@@ -1,6 +1,7 @@
 import { Order } from "@/lib/types";
 
 export const sampleOrder: Order = {
+  client_id: 1,
   order_id: "MOM-INV-0001",
   name: "Ari Wiradana",
   phone: "081726272612",

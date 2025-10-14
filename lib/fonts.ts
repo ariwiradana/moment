@@ -15,6 +15,7 @@ import {
   Red_Hat_Display,
   Nanum_Gothic,
   Rubik,
+  Inter,
 } from "next/font/google";
 
 export const comforta = Comfortaa({
@@ -87,5 +88,9 @@ export const redhat = Red_Hat_Display({
 });
 
 export const rubik = Rubik({
+  subsets: ["latin"],
+});
+
+export const inter = Inter({
   subsets: ["latin"],
 });

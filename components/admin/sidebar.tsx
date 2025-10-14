@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
+  BiCart,
   BiChat,
   BiFolder,
   BiLogOut,
@@ -34,6 +35,7 @@ const Sidebar: FC = () => {
 
   const menuItems: MenuItem[] = [
     { name: "Clients", path: "/admin/clients", icon: <BiUser /> },
+    { name: "Orders", path: "/admin/orders", icon: <BiCart /> },
     { name: "Themes", path: "/admin/themes", icon: <BiFolder /> },
     { name: "RSVP & Wishes", path: "/admin/wishes", icon: <BiChat /> },
     {

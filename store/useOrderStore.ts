@@ -2,6 +2,7 @@ import {
   Client,
   Event,
   MediaForm,
+  Order,
   Package,
   Participant,
   Theme,
@@ -18,6 +19,7 @@ interface StoreState {
   isLoading: boolean;
   fullfilledSteps: boolean[];
   withPayment: boolean;
+  order: Omit<Order, "id" | "client_id">;
   setForm: (
     name: string,
     value:
@@ -37,6 +39,7 @@ interface StoreState {
   setFullForm: (form: Omit<Client, "cover" | "seo">) => void;
   setFullfilledSteps: (fullfilledSteps: boolean[]) => void;
   setWithPayment: (withPayment: boolean) => void;
+  setNewOrder: (order: Omit<Order, "id" | "client_id">) => void;
 }
 
 export const initialEvent: Event = {
@@ -70,6 +73,18 @@ export const initialForm: Omit<Client, "cover" | "seo"> = {
   status: "unpaid",
 };
 
+const initialOrder: Omit<Order, "id" | "client_id"> = {
+  admin_fee: 2000,
+  price: 0,
+  order_id: "",
+  discount: 0,
+  name: "",
+  package_id: 0,
+  phone: "",
+  theme_id: 0,
+  created_at: moment().format("DD-MM-YYYY"),
+};
+
 const useOrderStore = create<StoreState>((set) => ({
   form: initialForm,
   activeStep: 0,
@@ -80,6 +95,7 @@ const useOrderStore = create<StoreState>((set) => ({
   isLoading: false,
   fullfilledSteps: [],
   withPayment: true,
+  order: initialOrder,
 
   setForm: (
     name: string,
@@ -118,6 +134,8 @@ const useOrderStore = create<StoreState>((set) => ({
   setFullfilledSteps: (fullfilledSteps: boolean[]) => set({ fullfilledSteps }),
 
   setWithPayment: (withPayment: boolean) => set({ withPayment }),
+
+  setNewOrder: (order: Omit<Order, "id" | "client_id">) => set({ order }),
 }));
 
 export default useOrderStore;

@@ -26,8 +26,6 @@ import ButtonText from "@/components/admin/elements/button.text";
 import Cookies from "cookies";
 import { GetServerSideProps } from "next";
 import { isTokenExpired } from "@/lib/auth";
-import InputSelect from "@/components/admin/elements/select";
-import { clientStatus } from "@/constants/status";
 
 interface ClientDashboardProps {
   token: string | null;
@@ -118,6 +116,19 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
 
                       <div className="flex items-center relative gap-x-2">
+                        <span
+                          className={`capitalize text-xs rounded px-1.5 py-0.5 font-medium ${
+                            client?.status === "paid"
+                              ? "bg-admin-success/10 text-admin-success"
+                              : client?.status === "unpaid"
+                              ? "bg-admin-danger/10 text-admin-danger"
+                              : client?.status === "completed"
+                              ? "bg-blue-100 text-blue-700"
+                              : "bg-gray-100 text-gray-700"
+                          }`}
+                        >
+                          {client?.status || "unknown"}
+                        </span>
                         <ButtonActionDialog>
                           {client.status === "completed" && (
                             <>
@@ -253,24 +264,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           {client.phone}
                         </p>
                       </div>
-                      {client.status && (
-                        <div>
-                          <p className="text-gray-500 font-medium text-xs mb-1">
-                            Status
-                          </p>
-                          <InputSelect
-                            onChange={(e) =>
-                              actions.handleSetStatus(
-                                client.id as number,
-                                e.target.value
-                              )
-                            }
-                            value={client.status}
-                            inputSize="small"
-                            options={clientStatus}
-                          />
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -394,21 +387,36 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {client.status && (
-                            <div className="flex">
-                              <InputSelect
-                                onChange={(e) =>
-                                  actions.handleSetStatus(
-                                    client.id as number,
-                                    e.target.value
-                                  )
-                                }
-                                value={client.status}
-                                inputSize="small"
-                                options={clientStatus}
-                              />
+                          <div className="flex items-center font-semibold text-sm">
+                            <div
+                              className={`${
+                                client?.status === "paid"
+                                  ? "bg-admin-success/10 text-admin-success"
+                                  : client?.status === "unpaid"
+                                  ? "bg-admin-danger/10 text-admin-danger"
+                                  : client?.status === "completed"
+                                  ? "bg-admin-primary/10 text-admin-primary"
+                                  : "bg-admin-hover-dark/10 text-admin-hover-dark"
+                              } px-3 py-1 rounded-lg flex items-center gap-x-2 ${
+                                montserrat.className
+                              }`}
+                            >
+                              <div
+                                className={`w-2 h-2 rounded-lg ${
+                                  client?.status === "paid"
+                                    ? "bg-admin-success"
+                                    : client?.status === "unpaid"
+                                    ? "bg-admin-danger"
+                                    : client?.status === "completed"
+                                    ? "bg-admin-primary"
+                                    : "bg-admin-hover-dark"
+                                }`}
+                              ></div>
+                              <span className="capitalize text-admin-hover-dark">
+                                {client.status}
+                              </span>
                             </div>
-                          )}
+                          </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>

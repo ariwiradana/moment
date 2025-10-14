@@ -34,6 +34,7 @@ import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { isValidUrl } from "@/utils/checkIsValidURL";
+import { useRouter } from "next/router";
 interface UpdateClientProps {
   slug: string;
   token: string | null;
@@ -42,38 +43,44 @@ interface UpdateClientProps {
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
 
+  const router = useRouter();
+
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
-        <Link href="/admin/clients">
+        <button onClick={() => router.back()}>
           <div className="flex items-center gap-x-1 text-gray-400">
             <BiLeftArrowAlt className="text-base" />
             <span className="text-sm font-medium">back</span>
           </div>
-        </Link>
+        </button>
         <div className="flex flex-wrap items-center mb-8 mt-2 gap-3">
           <h1 className="text-2xl font-bold">Client</h1>
 
           {state.formData.status && (
-            <div className="flex items-center text-gray-800 font-semibold text-sm">
+            <div className="flex items-center font-semibold text-sm">
               <div
                 className={`${
-                  state.formData.status === "paid"
-                    ? "bg-admin-success/10"
-                    : state.formData.status === "completed"
-                    ? "bg-admin-primary/10"
-                    : "bg-admin-hover-dark/10"
+                  state.formData?.status === "paid"
+                    ? "bg-admin-success/10 text-admin-success"
+                    : state.formData?.status === "unpaid"
+                    ? "bg-admin-danger/10 text-admin-danger"
+                    : state.formData?.status === "completed"
+                    ? "bg-admin-primary/10 text-admin-primary"
+                    : "bg-admin-hover-dark/10 text-admin-hover-dark"
                 } px-3 py-1 rounded-lg flex items-center gap-x-2 ${
                   montserrat.className
                 }`}
               >
                 <div
                   className={`w-2 h-2 rounded-lg ${
-                    state.formData.status === "paid"
+                    state.formData?.status === "paid"
                       ? "bg-admin-success"
-                      : state.formData.status === "completed"
+                      : state.formData?.status === "unpaid"
+                      ? "bg-admin-danger"
+                      : state.formData?.status === "completed"
                       ? "bg-admin-primary"
-                      : "bg-admin-hover-dark/30"
+                      : "bg-admin-hover-dark"
                   }`}
                 ></div>
                 <span className="capitalize text-admin-hover-dark">

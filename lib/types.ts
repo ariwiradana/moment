@@ -205,8 +205,9 @@ export type TimeRemaining = {
 };
 
 export interface Order {
+  id?: number;
   order_id: string;
-  client_id?: string;
+  client_id: number;
   name: string;
   phone: string | number;
   theme_id: number;
@@ -216,6 +217,9 @@ export interface Order {
   admin_fee: number;
   created_at?: string;
   updated_at?: string;
+  theme?: Theme;
+  package?: Package;
+  client?: Client;
 }
 
 export interface MediaForm {
