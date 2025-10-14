@@ -102,8 +102,6 @@ const ThemeComponent: FC = () => {
     })),
   };
 
-  console.log(jsonLdThemes);
-
   return (
     <section
       className="py-8 md:py-10 lg:py-16 bg-dashboard-dark select-none"

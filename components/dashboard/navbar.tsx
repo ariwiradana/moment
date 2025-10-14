@@ -10,8 +10,8 @@ import toast from "react-hot-toast";
 import { RiErrorWarningFill } from "react-icons/ri";
 import ButtonPrimary from "./elements/button.primary";
 import throttle from "lodash.throttle";
+import Head from "next/head";
 
-// Memoized NavItem
 const NavItem = memo(
   ({
     title,
@@ -27,8 +27,10 @@ const NavItem = memo(
     return (
       <div className="flex group">
         <button
+          type="button"
           onClick={onClick}
           className={`${redhat.className} text-sm cursor-pointer outline-none relative text-dashboard-dark duration-500 uppercase ease-in-out`}
+          aria-label={`Navigasi ke bagian ${title}`}
         >
           {title}
           <div
@@ -37,7 +39,7 @@ const NavItem = memo(
                 ? "opacity-100 -bottom-2"
                 : "opacity-0 -bottom-1"
             } left-1/2 transform -translate-x-1/2 w-[2px] h-[2px] bg-dashboard-dark rounded-full transition-all ease-in-out duration-500`}
-          ></div>
+          />
         </button>
       </div>
     );
@@ -52,7 +54,6 @@ const NavbarComponent = () => {
   const router = useRouter();
   const [isOnTop, setIsOnTop] = useState(true);
 
-  // CSS smooth scroll instead of JS
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     return () => {
@@ -60,7 +61,6 @@ const NavbarComponent = () => {
     };
   }, []);
 
-  // Throttled scroll listener
   useEffect(() => {
     const handleScroll = () => setIsOnTop(window.scrollY === 0);
     const throttled = throttle(handleScroll, 50);
@@ -68,7 +68,6 @@ const NavbarComponent = () => {
     return () => window.removeEventListener("scroll", throttled);
   }, []);
 
-  // Scroll to section
   const scrollToSection = (section: string) => {
     const element = document.getElementById(section);
     if (!element) return;
@@ -77,86 +76,119 @@ const NavbarComponent = () => {
     window.scrollTo({ top });
   };
 
-  return (
-    <section
-      className={`fixed top-0 inset-x-0 z-30 border-b ${
-        !isOnTop ? "bg-white border-b-zinc-100" : "border-b-transparent"
-      } transition-all ease-in-out duration-500`}
-    >
-      <nav className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4">
-        <ul
-          className={`flex items-center justify-between gap-8 transition-all ease-in-out duration-500 ${
-            isOnTop ? "h-16 md:h-20 lg:h-24" : "h-12 md:h-16 lg:h-20"
-          }`}
-        >
-          <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
-            <Link href="/" className="flex items-center">
-              <div className="relative w-6 aspect-square">
-                <Image
-                  alt="logo"
-                  fill
-                  className="object-contain"
-                  src="/favicon-180x180.png"
-                  sizes="100px"
-                />
-              </div>
-            </Link>
-          </li>
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: "https://moment.id/",
+    name: "Moment",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://momentinvitation.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  };
 
-          {router.pathname === "/" && (
-            <>
-              <li className="hidden lg:flex justify-center items-center gap-x-8">
-                {navData.map(({ title, path }: NavData, index: number) => (
-                  <NavItem
-                    key={title}
-                    title={title}
-                    index={index}
-                    activeSection={activeSection || ""}
+  return (
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </Head>
+
+      <header
+        className={`fixed top-0 inset-x-0 z-30 border-b ${
+          !isOnTop ? "bg-white border-b-zinc-100" : "border-b-transparent"
+        } transition-all ease-in-out duration-500`}
+      >
+        <nav
+          className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4"
+          aria-label="Navigasi utama Moment"
+          role="navigation"
+        >
+          <ul
+            className={`flex items-center justify-between gap-8 transition-all ease-in-out duration-500 ${
+              isOnTop ? "h-16 md:h-20 lg:h-24" : "h-12 md:h-16 lg:h-20"
+            }`}
+          >
+            {/* Logo */}
+            <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
+              <Link
+                href="/"
+                className="flex items-center"
+                aria-label="Beranda Moment"
+              >
+                <div className="relative w-6 aspect-square">
+                  <Image
+                    alt="Logo Moment"
+                    fill
+                    className="object-contain"
+                    src="/favicon-180x180.png"
+                    sizes="100px"
+                    priority
+                  />
+                </div>
+              </Link>
+            </li>
+
+            {/* Menu utama */}
+            {router.pathname === "/" && (
+              <>
+                <li className="hidden lg:flex justify-center items-center gap-x-8">
+                  {navData.map(({ title, path }: NavData, index: number) => (
+                    <NavItem
+                      key={title}
+                      title={title}
+                      index={index}
+                      activeSection={activeSection || ""}
+                      onClick={() => {
+                        setActiveSection(`section${index + 1}`);
+                        if (router.pathname === "/") {
+                          scrollToSection(`section${index + 1}`);
+                        } else {
+                          setManualScroll(false);
+                          router.push(path);
+                        }
+                      }}
+                    />
+                  ))}
+                </li>
+
+                {/* Tombol CTA */}
+                <li>
+                  <ButtonPrimary
+                    size="small"
+                    title="Pesan Sekarang"
+                    icon={<BsChevronRight />}
                     onClick={() => {
-                      setActiveSection(`section${index + 1}`);
-                      if (router.pathname === "/") {
-                        scrollToSection(`section${index + 1}`);
-                      } else {
-                        setManualScroll(false);
-                        router.push(path);
-                      }
+                      setActiveSection(`section3`);
+                      scrollToSection(`section3`);
+                      toast.success(
+                        "Silahkan pilih tema undangan terlebih dahulu!",
+                        {
+                          icon: (
+                            <RiErrorWarningFill className="text-dashboard-primary text-lg" />
+                          ),
+                          className: `${redhat.className} text-sm border border-white/20`,
+                          style: {
+                            boxShadow: "none",
+                            bottom: 0,
+                            backgroundColor: "#101010",
+                            color: "white",
+                            borderRadius: 100,
+                          },
+                        }
+                      );
                     }}
                   />
-                ))}
-              </li>
-
-              <li>
-                <ButtonPrimary
-                  size="small"
-                  title="Pesan Sekarang"
-                  icon={<BsChevronRight />}
-                  onClick={() => {
-                    setActiveSection(`section3`);
-                    scrollToSection(`section3`);
-                    toast.success(
-                      "Silahkan pilih tema undangan terlebih dahulu!",
-                      {
-                        icon: (
-                          <RiErrorWarningFill className="text-dashboard-primary text-lg" />
-                        ),
-                        className: `${redhat.className} text-sm border border-white/20`,
-                        style: {
-                          boxShadow: "none",
-                          bottom: 0,
-                          backgroundColor: "#101010",
-                          color: "white",
-                          borderRadius: 100,
-                        },
-                      }
-                    );
-                  }}
-                />
-              </li>
-            </>
-          )}
-        </ul>
-      </nav>
-    </section>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+      </header>
+    </>
   );
 };
 

@@ -109,7 +109,7 @@ const ThemeCard: NextPage<Props> = ({
           Mulai dari
         </p>
         <h6
-          className={`${redhat.className} text-xl text-white font-medium mb-2 md:mb-4 leading-6`}
+          className={`${redhat.className} text-xl text-white font-medium mb-3 md:mb-5 leading-6`}
         >
           {formatToRupiah(basicPrice)}
         </h6>
@@ -126,7 +126,7 @@ const ThemeCard: NextPage<Props> = ({
           href={`/${theme.client_slug}/order`}
           target="_blank"
           aria-label={`Link Pesan Tema ${name}`}
-          className="mt-2 w-full lg:w-3/4"
+          className="mt-3 w-full lg:w-3/4"
         >
           <ButtonTetiary size="small" title="Pesan Tema" icon={<BsCart />} />
         </Link>
