@@ -194,7 +194,8 @@ export interface SEO {
 export interface ThemeUsage extends Theme {
   usage_count: number;
   client_slug: string;
-  testimonials?: Testimonials[];
+  start_from: number;
+  discount: number;
 }
 
 export type TimeRemaining = {

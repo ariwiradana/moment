@@ -22,9 +22,8 @@ const ThemeCard: NextPage<Props> = ({
   bestSeller = false,
   newest = false,
 }) => {
-  const { name, slug, phone_thumbnail, packages, features } = theme;
+  const { name, slug, phone_thumbnail, start_from, discount, features } = theme;
 
-  console.log(features);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlay = useCallback(() => {
@@ -37,8 +36,6 @@ const ThemeCard: NextPage<Props> = ({
       videoRef.current.currentTime = 0;
     }
   }, []);
-
-  const basicPrice = packages?.find((p) => p.name === "Basic")?.price || 0;
 
   return (
     <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015] relative">
@@ -111,11 +108,11 @@ const ThemeCard: NextPage<Props> = ({
         <h6
           className={`${redhat.className} text-xl text-white font-medium mb-3 md:mb-5 leading-6`}
         >
-          {formatToRupiah(basicPrice)}
+          {formatToRupiah(start_from - discount)}
         </h6>
 
         <Link
-          href={`/${theme.slug}`}
+          href={`/${theme.client_slug}`}
           target="_blank"
           className="w-full lg:w-3/4"
           aria-label={`Link Preview Tema ${name}`}
@@ -123,7 +120,7 @@ const ThemeCard: NextPage<Props> = ({
           <ButtonTetiary size="small" title="Live Preview" icon={<BsEye />} />
         </Link>
         <Link
-          href={`/${theme.slug}/order`}
+          href={`/${theme.client_slug}/order`}
           target="_blank"
           aria-label={`Link Pesan Tema ${name}`}
           className="mt-3 w-full lg:w-3/4"

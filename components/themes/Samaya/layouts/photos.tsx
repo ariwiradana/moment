@@ -48,7 +48,6 @@ const PhotosComponent = () => {
               {images.map((img, index) => (
                 <div
                   data-aos="fade-up"
-                  data-aos-delay={`${50 + index * 50}`}
                   onClick={() => handleToggleLightbox(img.src)}
                   key={`Foto Galeri ${index + 1} Tema Samaya`}
                   className="relative overflow-hidden group cursor-pointer"

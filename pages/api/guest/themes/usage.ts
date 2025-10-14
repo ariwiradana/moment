@@ -10,54 +10,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const query = `
           SELECT 
             t.*,
-            COALESCE(
-              (
-                SELECT COUNT(DISTINCT c2.id)
-                FROM clients c2
-                WHERE c2.theme_id = t.id
-              ), 0
-            )::int AS usage_count,
-            MIN(c.slug) AS client_slug,
-            json_agg(
-              json_build_object(
-                'id', ts.id,
-                'name', ts.name,
-                'comments', ts.comments,
-                'created_at', ts.created_at,
-                'updated_at', ts.updated_at
-              )
-            ) FILTER (WHERE ts.id IS NOT NULL) AS testimonials
+            c.slug AS client_slug,
+            p_min.price AS start_from,
+            p_min.discount AS discount,
+            (
+              SELECT COUNT(*)::int
+              FROM clients c2
+              JOIN themes t2 ON t2.id = c2.theme_id
+              WHERE t2.slug = t.slug
+            ) AS usage_count
           FROM themes t
-          LEFT JOIN clients c 
-            ON c.theme_id = t.id 
-            AND c.is_preview = TRUE
-          LEFT JOIN testimonials ts 
-            ON ts.client_id = c.id
-          WHERE t.active = TRUE
-          GROUP BY t.id, t.slug, t.name, t.active, t.updated_at
+          JOIN clients c
+              ON c.theme_id = t.id
+          JOIN LATERAL (
+              SELECT p.*
+              FROM packages p
+              WHERE p.id = ANY(t.package_ids)
+              ORDER BY p.price ASC
+              LIMIT 1
+          ) p_min ON true
+          WHERE c.is_preview = $1
           ORDER BY t.updated_at DESC;
         `;
 
-        const { rows } = await sql.query(query);
-
-        const { rows: packages } = await sql.query(
-          `SELECT * FROM packages ORDER BY id ASC`
-        );
-
-        const themes = rows.map((theme: ThemeUsage) => {
-          const packageIdsSet = new Set(theme.package_ids);
-          const filteredPackage = packages.filter((pkg) =>
-            packageIdsSet.has(pkg.id)
-          );
-
-          return {
-            ...theme,
-            usage_count: theme.usage_count ?? 0,
-            client_slug: theme.client_slug || null,
-            testimonials: theme.testimonials || [],
-            packages: filteredPackage,
-          };
-        });
+        const { rows: themes } = await sql.query<ThemeUsage>(query, [true]);
 
         return res.status(200).json({
           success: true,

@@ -27,7 +27,6 @@ const ThemeComponent: FC = () => {
                 )
               : null;
 
-          // kalau semua usage_count = 0, hasilnya null juga
           const bestTheme = best && best.usage_count > 0 ? best.slug : "";
 
           const newest = data.data.reduce((latest, theme) => {
@@ -58,6 +57,7 @@ const ThemeComponent: FC = () => {
   const displayedThemes = useMemo(() => themes, [themes]);
   const displayedCategories = useMemo(() => themeCategories, [themeCategories]);
 
+  console.log({ displayedThemes });
   const jsonLdThemes = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -78,14 +78,6 @@ const ThemeComponent: FC = () => {
         availability: "https://schema.org/InStock",
         itemCondition: "https://schema.org/NewCondition",
       },
-      review:
-        theme.testimonials &&
-        theme.testimonials?.map((t) => ({
-          "@type": "Review",
-          author: { "@type": "Person", name: t.name },
-          reviewBody: t.comments,
-          datePublished: t.created_at,
-        })),
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: 5,

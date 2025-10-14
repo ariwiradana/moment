@@ -21,7 +21,7 @@ const PreviewNav = () => {
           <div className="relative group">
             <div className="w-3 h-3 group-hover:-right-1 transition-all ease-in-out rounded-full aspect-square bg-dashboard-primary animate-pulse absolute -top-1 right-0 z-20"></div>
             <ButtonLight
-              onClick={() => router.push(`/${client.slug}/order`)}
+              onClick={() => router.push(`/${client.theme?.slug}/order`)}
               className="group-hover:scale-105"
               title="Pesan Tema"
               size="small"
