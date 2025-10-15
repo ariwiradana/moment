@@ -1,15 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap");
 
 .shimmer {
   background: #f6f7f8;
-  background-image: linear-gradient(to right,
-      #f6f7f8 0%,
-      #edeef1 20%,
-      #f6f7f8 40%,
-      #f6f7f8 100%);
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
   background-repeat: no-repeat;
   position: relative;
   animation-duration: 1s;
@@ -32,14 +33,13 @@
 .shimmer-dark {
   background: #151515;
   /* Dark background */
-  background-image: linear-gradient(to right,
-      #151515 0%,
-      /* Dark shade */
-      #191919 20%,
-      /* Lighter dark shade for the shimmer */
-      #161616 40%,
-      /* Return to the dark base */
-      #151515 100%);
+  background-image: linear-gradient(
+    to right,
+    #151515 0%,
+    /* Dark shade */ #191919 20%,
+    /* Lighter dark shade for the shimmer */ #161616 40%,
+    /* Return to the dark base */ #151515 100%
+  );
   background-repeat: no-repeat;
   position: relative;
   animation-duration: 1s;
@@ -99,7 +99,6 @@
   scrollbar-width: none;
   /* Untuk Firefox */
 }
-
 
 @layer base {
   @font-face {

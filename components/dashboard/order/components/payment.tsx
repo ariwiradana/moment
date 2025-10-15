@@ -53,35 +53,37 @@ const OrderPayment = () => {
               </span>
             </p>
 
-            <div className="flex mt-2">
-              <span
-                className={`px-1.5 py-0.5 text-sm font-medium ${
-                  order.status === "pending"
-                    ? "bg-yellow-100 text-yellow-600"
+            {order.status && (
+              <div className="flex mt-2">
+                <span
+                  className={`px-1.5 py-0.5 text-sm font-medium ${
+                    order.status === "pending"
+                      ? "bg-yellow-100 text-yellow-600"
+                      : order.status === "settlement"
+                      ? "bg-green-100 text-green-600"
+                      : order.status === "expire"
+                      ? "bg-red-100 text-red-600"
+                      : order.status === "cancel"
+                      ? "bg-gray-100 text-gray-600"
+                      : order.status === "deny"
+                      ? "bg-red-200 text-red-700"
+                      : "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {order.status === "pending"
+                    ? "Menunggu Pembayaran"
                     : order.status === "settlement"
-                    ? "bg-green-100 text-green-600"
+                    ? "Pembayaran Berhasil"
                     : order.status === "expire"
-                    ? "bg-red-100 text-red-600"
+                    ? "Transaksi Kadaluarsa"
                     : order.status === "cancel"
-                    ? "bg-gray-100 text-gray-600"
+                    ? "Dibatalkan"
                     : order.status === "deny"
-                    ? "bg-red-200 text-red-700"
-                    : "bg-gray-100 text-gray-600"
-                }`}
-              >
-                {order.status === "pending"
-                  ? "Menunggu Pembayaran"
-                  : order.status === "settlement"
-                  ? "Pembayaran Berhasil"
-                  : order.status === "expire"
-                  ? "Transaksi Kadaluarsa"
-                  : order.status === "cancel"
-                  ? "Dibatalkan"
-                  : order.status === "deny"
-                  ? "Ditolak"
-                  : "Unknown"}
-              </span>
-            </div>
+                    ? "Ditolak"
+                    : "Unknown"}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="relative w-6 aspect-square">

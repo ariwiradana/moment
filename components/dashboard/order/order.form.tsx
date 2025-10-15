@@ -48,7 +48,7 @@ const OrderForm = ({ mutate }: Props) => {
     fetcher,
     {
       onSuccess: async (result) => {
-        if (!result.data && result.data.status_code === "404") return;
+        if (!result.data || result.data.status_code === "404") return;
 
         store.setNewOrder({
           ...store.order,
