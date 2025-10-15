@@ -15,10 +15,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!order.order_id) throw new Error("ID order wajib diisi.");
     if (!order.price) throw new Error("Harga wajib diisi.");
 
+    const clientKey = process.env.MIDTRANS_CLIENT_KEY as string;
+    const serverKey = process.env.MIDTRANS_SERVER_KEY as string;
+
+    if (!clientKey && !serverKey) throw new Error("Key wajib diisi.");
+
     const snap = new midtransClient.Snap({
       isProduction: process.env.NODE_ENV === "production",
-      serverKey: process.env.MIDTRANS_SERVER_KEY as string,
-      clientKey: process.env.MIDTRANS_CLIENT_KEY as string,
+      serverKey,
+      clientKey,
     });
 
     const parameter = {
