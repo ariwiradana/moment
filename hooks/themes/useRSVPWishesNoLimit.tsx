@@ -1,7 +1,7 @@
 import { DummyWishes } from "@/constants/dummyWishes";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
-import { Review } from "@/lib/types";
+import { Wish } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import React, {
   ReactNode,
@@ -41,7 +41,7 @@ const useRSVPWishesNoLimit = (icon: ReactNode) => {
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const [wishes, setWishes] = useState<Review[]>([]);
+  const [wishes, setWishes] = useState<Wish[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -65,10 +65,10 @@ const useRSVPWishesNoLimit = (icon: ReactNode) => {
   });
 
   const { mutate, isLoading: isLoadingWishes } = useSWR<{
-    data: Review[];
+    data: Wish[];
     total_rows: number;
   }>(
-    client?.id && client.status === "paid"
+    client?.id && client.status === "active"
       ? `/api/guest/wishes?client_id=${client.id}`
       : null,
     fetcher,

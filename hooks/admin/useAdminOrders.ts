@@ -75,6 +75,17 @@ export const useAdminOrders = (token: string | null) => {
     });
   };
 
+  const handleCopyURL = (slug: string) => {
+    navigator.clipboard
+      .writeText(slug)
+      .then(() => {
+        toast.success("URL berhasil disalin");
+      })
+      .catch(() => {
+        toast.error("Gagal menyalin URL");
+      });
+  };
+
   return {
     state: {
       orders: data?.data || [],
@@ -89,6 +100,7 @@ export const useAdminOrders = (token: string | null) => {
       handleChangePagination,
       handleDelete,
       handleSetStatus,
+      handleCopyURL,
     },
   };
 };

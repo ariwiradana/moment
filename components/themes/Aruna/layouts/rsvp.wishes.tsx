@@ -14,7 +14,7 @@ import { roboto } from "@/lib/fonts";
 import moment from "moment";
 import ButtonDark from "../elements/button.dark";
 import { Pagination } from "@mui/material";
-import { Review } from "@/lib/types";
+import { Wish } from "@/lib/types";
 import useRSVPWishes from "@/hooks/themes/useRSVPWishes";
 import useClientStore from "@/store/useClientStore";
 
@@ -23,7 +23,7 @@ const WishItem = memo(
     wish,
     attendantText,
   }: {
-    wish: Review;
+    wish: Wish;
     attendantText: Record<string, string>;
   }) => {
     const attendantIcon = useMemo(() => {
@@ -127,6 +127,8 @@ const RSVPWishesComponent: FC = () => {
 
   if (!client?.package?.rsvp_and_greetings) return;
 
+  const isDisabled = client?.status === "inactive" || client.status === "done";
+
   return (
     <section className="relative bg-white w-full overflow-hidden">
       <div className="relative w-full flex flex-col justify-center items-center z-20 pt-[60px] md:pt-[100px]">
@@ -152,7 +154,7 @@ const RSVPWishesComponent: FC = () => {
           data-aos="fade-up"
         >
           <Input
-            disabled={client?.status === "completed"}
+            disabled={isDisabled}
             error={state.errors.name}
             placeholder="Masukkan nama kamu"
             value={state.formData.name}
@@ -160,7 +162,7 @@ const RSVPWishesComponent: FC = () => {
             onChange={handleNameChange}
           />
           <InputTextarea
-            disabled={client?.status === "completed"}
+            disabled={isDisabled}
             error={state.errors.wishes}
             placeholder="Masukkan ucapan kamu"
             value={state.formData.wishes}
@@ -172,7 +174,7 @@ const RSVPWishesComponent: FC = () => {
             {["Hadir", "Tidak Hadir", "Masih Ragu"].map((val) => (
               <InputCheckbox
                 key={val}
-                disabled={client?.status === "completed"}
+                disabled={isDisabled}
                 value={val}
                 checked={state.formData.attendant === val}
                 label={val}
@@ -180,7 +182,7 @@ const RSVPWishesComponent: FC = () => {
               />
             ))}
           </div>
-          {client?.status === "paid" && (
+          {client?.status === "active" && (
             <div className="mt-4">
               <ButtonDark
                 isLoading={state.loading}

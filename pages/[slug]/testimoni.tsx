@@ -134,7 +134,7 @@ const DashboardTestimoni: FC<Props> = (props) => {
         </div>
       ) : (
         <>
-          {!client || client?.status !== "completed" || client?.is_preview ? (
+          {!client || client?.status !== "active" || client?.is_preview ? (
             <ClientNotFound />
           ) : (
             <Layout>

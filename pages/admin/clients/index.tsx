@@ -9,7 +9,6 @@ import {
   BiEditAlt,
   BiLink,
   BiMessageAdd,
-  BiMoney,
   BiPlus,
   BiSlideshow,
   BiSolidShow,
@@ -26,6 +25,8 @@ import ButtonText from "@/components/admin/elements/button.text";
 import Cookies from "cookies";
 import { GetServerSideProps } from "next";
 import { isTokenExpired } from "@/lib/auth";
+import InputSelect from "@/components/admin/elements/select";
+import { clientStatus } from "@/constants/status";
 
 interface ClientDashboardProps {
   token: string | null;
@@ -116,8 +117,19 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
 
                       <div className="flex items-center relative gap-x-2">
+                        <InputSelect
+                          inputSize="extrasmall"
+                          options={clientStatus}
+                          value={client.status}
+                          onChange={(e) =>
+                            actions.handleChangeStatus(
+                              client.id as number,
+                              e.target.value
+                            )
+                          }
+                        />
                         <ButtonActionDialog>
-                          {client.status === "completed" && (
+                          {client.status === "done" && (
                             <>
                               <ButtonText
                                 onClick={() =>
@@ -131,7 +143,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               />
                             </>
                           )}
-                          {client.status === "paid" && (
+                          {client.status === "active" && (
                             <>
                               <ButtonText
                                 onClick={() =>
@@ -156,20 +168,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               />
                             </>
                           )}
-                          {client.status === "unpaid" && (
-                            <>
-                              <ButtonText
-                                onClick={() =>
-                                  actions.handleCopyURL(
-                                    `${baseURL}/${client?.slug}/pembayaran`
-                                  )
-                                }
-                                size="small"
-                                title="Copy Link Payment"
-                                icon={<BiMoney className="text-base" />}
-                              />
-                            </>
-                          )}
+
                           <ButtonText
                             onClick={() =>
                               actions.handleSetAsPreview(
@@ -193,7 +192,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             title="Lihat Detail"
                             icon={<BiEditAlt className="text-base" />}
                           />
-                          {client.status === "unpaid" && (
+                          {client.status === "inactive" && (
                             <ButtonText
                               type="button"
                               onClick={() =>
@@ -370,40 +369,21 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <div className="flex items-center font-semibold text-sm">
-                            <div
-                              className={`${
-                                client?.status === "paid"
-                                  ? "bg-admin-success/10 text-admin-success"
-                                  : client?.status === "unpaid"
-                                  ? "bg-admin-danger/10 text-admin-danger"
-                                  : client?.status === "completed"
-                                  ? "bg-admin-primary/10 text-admin-primary"
-                                  : "bg-admin-hover-dark/10 text-admin-hover-dark"
-                              } px-3 py-1 rounded-lg flex items-center gap-x-2 ${
-                                montserrat.className
-                              }`}
-                            >
-                              <div
-                                className={`w-2 h-2 rounded-lg ${
-                                  client?.status === "paid"
-                                    ? "bg-admin-success"
-                                    : client?.status === "unpaid"
-                                    ? "bg-admin-danger"
-                                    : client?.status === "completed"
-                                    ? "bg-admin-primary"
-                                    : "bg-admin-hover-dark"
-                                }`}
-                              ></div>
-                              <span className="capitalize text-admin-hover-dark">
-                                {client.status}
-                              </span>
-                            </div>
-                          </div>
+                          <InputSelect
+                            inputSize="extrasmall"
+                            options={clientStatus}
+                            value={client.status}
+                            onChange={(e) =>
+                              actions.handleChangeStatus(
+                                client.id as number,
+                                e.target.value
+                              )
+                            }
+                          />
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>
-                            {client.status === "completed" && (
+                            {client.status === "done" && (
                               <>
                                 <ButtonText
                                   onClick={() =>
@@ -417,7 +397,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 />
                               </>
                             )}
-                            {client.status === "paid" && (
+                            {client.status === "active" && (
                               <>
                                 <ButtonText
                                   onClick={() =>
@@ -466,7 +446,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               title="Lihat Detail"
                               icon={<BiEditAlt className="text-base" />}
                             />
-                            {client?.status === "unpaid" && (
+                            {client?.status === "inactive" && (
                               <ButtonText
                                 type="button"
                                 onClick={() =>

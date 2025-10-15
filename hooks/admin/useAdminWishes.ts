@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { Client, Option, Review } from "@/lib/types";
+import { Client, Option, Wish } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ export const useAdminWishes = (token: string | null) => {
 
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
-    data: Review[];
+    data: Wish[];
     total_rows: number;
   }>(
     clientId && token

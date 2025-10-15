@@ -66,36 +66,45 @@ const ThemeCard: NextPage<Props> = ({
       </div>
 
       <div className="flex flex-col items-center mt-3 md:mt-5">
-        <Swiper
-          modules={[Autoplay]}
-          autoplay
-          slidesPerView={1}
-          grabCursor
-          className="!overflow-visible mb-3"
-        >
-          {newest && (
-            <SwiperSlide className="!w-auto">
-              <div
-                className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
-              >
-                <TbNewSection /> Desain Baru
-              </div>
-            </SwiperSlide>
-          )}
+        <div className="w-full overflow-hidden">
+          <Swiper
+            modules={[Autoplay]}
+            speed={500}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            slidesPerView={1}
+            className="mb-3"
+          >
+            {newest && (
+              <SwiperSlide className="w-auto">
+                <div className="flex justify-center">
+                  <div
+                    className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
+                  >
+                    <TbNewSection /> Desain Baru
+                  </div>
+                </div>
+              </SwiperSlide>
+            )}
 
-          {features.map((feature) => (
-            <SwiperSlide
-              key={`Fitur Tambahan Tema ${name}`}
-              className="!w-auto"
-            >
-              <div
-                className={`${redhat.className} flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
+            {features.map((feature) => (
+              <SwiperSlide
+                key={`Fitur Tambahan Tema ${name}`}
+                className="w-auto"
               >
-                <TbSettingsAutomation /> {feature}
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                <div className="flex justify-center">
+                  <div
+                    className={`${redhat.className} inline-flex items-center gap-x-1 rounded-full bg-white font-medium text-dashboard-dark text-xs md:text-sm px-2 py-[2px]`}
+                  >
+                    <TbSettingsAutomation /> {feature}
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
         <h5
           className={`${redhat.className} text-xl text-white font-semibold mb-2 md:mb-3`}

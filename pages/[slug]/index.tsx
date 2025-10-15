@@ -101,7 +101,7 @@ const MainPage: FC<PageProps> = ({ seo, slug, untuk }) => {
   useDisableInspect();
 
   useEffect(() => {
-    AOS.init({ duration: 900, offset: 60, once: true });
+    AOS.init({ duration: 900, offset: 40, once: true });
     return () => AOS.refresh();
   }, []);
 

@@ -22,6 +22,8 @@ const RSVPWishesComponent = () => {
 
   if (!client?.package?.rsvp_and_greetings) return null;
 
+  const isDisabled = client?.status === "inactive" || client.status === "done";
+
   return (
     <section className="relative bg-white w-full overflow-hidden z-20">
       <div className="max-w-screen-sm mx-auto relative flex flex-col justify-center items-center w-full z-20 pb-[60px] md:pb-[100px] px-6 md:px-12 lg:px-4">
@@ -34,7 +36,7 @@ const RSVPWishesComponent = () => {
           >
             <Input
               placeholder="Masukkan nama kamu"
-              disabled={client.status === "completed"}
+              disabled={isDisabled}
               error={state.errors.name}
               value={state.formData.name}
               id="name"
@@ -42,7 +44,7 @@ const RSVPWishesComponent = () => {
             />
             <InputTextarea
               placeholder="Masukkan ucapan kamu"
-              disabled={client.status === "completed"}
+              disabled={isDisabled}
               error={state.errors.wishes}
               value={state.formData.wishes}
               id="wishes"
@@ -55,7 +57,7 @@ const RSVPWishesComponent = () => {
               {["Hadir", "Tidak Hadir", "Masih Ragu"].map((val) => (
                 <InputCheckbox
                   key={val}
-                  disabled={client.status === "completed"}
+                  disabled={isDisabled}
                   value={val}
                   checked={state.formData.attendant === val}
                   label={val}
@@ -66,7 +68,7 @@ const RSVPWishesComponent = () => {
               ))}
             </div>
 
-            {client.status === "paid" && (
+            {client.status === "active" && (
               <div className="mt-4">
                 <ButtonDark
                   isLoading={!!state.loading}

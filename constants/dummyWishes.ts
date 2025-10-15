@@ -1,6 +1,6 @@
-import { Review } from "@/lib/types";
+import { Wish } from "@/lib/types";
 
-export const DummyWishes: Review[] = [
+export const DummyWishes: Wish[] = [
   {
     id: 67,
     client_id: 23,

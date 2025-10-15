@@ -56,6 +56,13 @@ const OrderTheme = () => {
           store.setNewOrder({ ...order });
           store.setTheme(order.client?.theme as Theme);
           store.setPackage(order.client?.package as Package);
+
+          if (client?.events && client.events.length > 0) {
+            const toggleValues = client.events.map(
+              (e) => e.end_time === "Selesai"
+            );
+            store.setToggleEndTimes(toggleValues);
+          }
         }
         setIsLoading(false);
       },

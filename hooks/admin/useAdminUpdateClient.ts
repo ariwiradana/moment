@@ -439,11 +439,11 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         for (const image of Array.from(galleryImagesForm)) {
           i++;
           const toastUpload = toast.loading(
-            `Uploading gallery image ${i} of ${galleryImagesForm.length}`
+            `Mengunggah foto ${i} dari ${galleryImagesForm.length}...`
           );
           try {
             if (image.size > MAX_SIZE) {
-              toast.error(`Gallery image ${i} size to large`, {
+              toast.error(`foto ${i} terlalu besar (maks 5MB).`, {
                 id: toastUpload,
               });
               continue;
@@ -458,16 +458,17 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             const result = await response.json();
 
             if (result.success) {
-              toast.success(
-                `Gallery image ${i} of ${galleryImagesForm.length} uploaded successfully!`,
-                { id: toastUpload }
-              );
+              toast.success(`foto ${i} berhasil diunggah.`, {
+                id: toastUpload,
+              });
               imageURLs.push(result.data.secure_url);
+            } else {
+              toast.error(`Gagal mengunggah foto ${i}.`, { id: toastUpload });
             }
           } catch (error: any) {
             toast.error(
-              error.message ||
-                `Error uploading gallery image ${i} of ${galleryImagesForm.length}`
+              error.message || `Terjadi kesalahan saat mengunggah foto ${i}.`,
+              { id: toastUpload }
             );
           }
         }
@@ -484,10 +485,10 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
       if (musicForm instanceof File) {
         i++;
-        const toastUpload = toast.loading(`Uploading music`);
+        const toastUpload = toast.loading(`Mengunggah musik...`);
         try {
           if (musicForm.size > MAX_SIZE) {
-            toast.error(`Music file size to large`, {
+            toast.error(`Ukuran file musik terlalu besar (maks 5MB).`, {
               id: toastUpload,
             });
             return;
@@ -502,13 +503,18 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Music uploaded successfully!`, {
+            toast.success(`Musik berhasil diunggah.`, {
               id: toastUpload,
             });
             musicURL = result.data.secure_url;
+          } else {
+            toast.error(`Gagal mengunggah musik.`, { id: toastUpload });
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading music`);
+          toast.error(
+            error.message || `Terjadi kesalahan saat mengunggah musik.`,
+            { id: toastUpload }
+          );
         }
       }
     }
@@ -523,10 +529,10 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
       if (coverVideoForm instanceof File) {
         i++;
-        const toastUpload = toast.loading(`Uploading cover video`);
+        const toastUpload = toast.loading(`Mengunggah video cover...`);
         try {
           if (coverVideoForm.size > MAX_SIZE) {
-            toast.error(`cover video size to large`, {
+            toast.error(`Ukuran video cover terlalu besar (maks 100MB).`, {
               id: toastUpload,
             });
             return;
@@ -541,13 +547,18 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Cover video uploaded successfully!`, {
+            toast.success(`Video cover berhasil diunggah.`, {
               id: toastUpload,
             });
             videoFileURL = result.data.secure_url;
+          } else {
+            toast.error(`Gagal mengunggah video cover.`, { id: toastUpload });
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading cover video`);
+          toast.error(
+            error.message || `Terjadi kesalahan saat mengunggah video cover.`,
+            { id: toastUpload }
+          );
         }
       }
     }
@@ -603,16 +614,16 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     };
 
     toast.promise(updateClient(), {
-      loading: "Updating client...",
+      loading: "Memperbarui data klien...",
       success: () => {
         mutate();
         setLoading(false);
         router.push(`/admin/clients/${createSlug(formData.slug as string)}`);
-        return "Successfully update client";
+        return "Data klien berhasil diperbarui.";
       },
       error: (error: any) => {
         setLoading(false);
-        return error.message || "Failed to update client";
+        return error.message || "Gagal memperbarui data klien.";
       },
     });
   };
@@ -643,15 +654,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       };
 
       toast.promise(deleteBlob(), {
-        loading: "Deleting image...",
+        loading: "Menghapus foto...",
         success: () => {
           mutate();
           setLoading(false);
-          return "Successfully delete image";
+          return "foto berhasil dihapus.";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to delete image";
+          return error.message || "Gagal menghapus foto.";
         },
       });
     } catch (error) {
@@ -686,15 +697,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       };
 
       toast.promise(deleteBlob(), {
-        loading: "Deleting participant image...",
+        loading: "Menghapus foto peserta...",
         success: () => {
           mutate();
           setLoading(false);
-          return "Successfully delete participant image";
+          return "Foto peserta berhasil dihapus.";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to delete participant image";
+          return error.message || "Gagal menghapus foto peserta.";
         },
       });
     } catch (error) {
@@ -714,14 +725,17 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         const MAX_SIZE = 5 * 1024 * 1024;
 
         const toastUpload = toast.loading(
-          `Uploading participant ${i + 1} image`
+          `Mengunggah foto peserta ${i + 1}...`
         );
 
         try {
           if (image.size > MAX_SIZE) {
-            toast.error(`Image size of participant ${i + 1} is too large`, {
-              id: toastUpload,
-            });
+            toast.error(
+              `Ukuran foto peserta ${i + 1} terlalu besar (maks 5MB).`,
+              {
+                id: toastUpload,
+              }
+            );
             continue;
           }
 
@@ -734,7 +748,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Image participant ${i + 1} uploaded successfully!`, {
+            toast.success(`Foto peserta ${i + 1} berhasil diunggah.`, {
               id: toastUpload,
             });
 
@@ -756,7 +770,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Error uploading participant image ${i + 1}`
+            error.message ||
+              `Terjadi kesalahan saat mengunggah foto peserta ${i + 1}.`,
+            { id: toastUpload }
           );
         }
       }
@@ -774,13 +790,16 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         const image = file[0] as File;
         const MAX_SIZE = 5 * 1024 * 1024;
 
-        const toastUpload = toast.loading(`Uploading event ${i + 1} image`);
+        const toastUpload = toast.loading(`Mengunggah foto acara ${i + 1}...`);
 
         try {
           if (image.size > MAX_SIZE) {
-            toast.error(`Image size of event ${i + 1} is too large`, {
-              id: toastUpload,
-            });
+            toast.error(
+              `Ukuran foto acara ${i + 1} terlalu besar (maks 5MB).`,
+              {
+                id: toastUpload,
+              }
+            );
             continue;
           }
 
@@ -793,7 +812,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Image event ${i + 1} uploaded successfully!`, {
+            toast.success(`Foto acara ${i + 1} berhasil diunggah.`, {
               id: toastUpload,
             });
 
@@ -815,7 +834,9 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Error uploading participant image ${i + 1}`
+            error.message ||
+              `Terjadi kesalahan saat mengunggah foto acara ${i + 1}.`,
+            { id: toastUpload }
           );
         }
       }
@@ -840,15 +861,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       return await response.json();
     };
     toast.promise(setCover(), {
-      loading: "Set cover image...",
+      loading: "Mengatur foto cover...",
       success: () => {
         mutate();
         setLoading(false);
-        return "Successfully set cover image";
+        return "Berhasil mengatur foto cover";
       },
       error: (error: any) => {
         setLoading(false);
-        return error.message || "Failed to set cover image";
+        return error.message || "Gagal mengatur foto cover";
       },
     });
   };
@@ -870,15 +891,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       return await response.json();
     };
     toast.promise(setCover(), {
-      loading: "Set seo image...",
+      loading: "Mengatur foto SEO...",
       success: () => {
         mutate();
         setLoading(false);
-        return "Successfully set seo image";
+        return "Berhasil mengatur foto SEO";
       },
       error: (error: any) => {
         setLoading(false);
-        return error.message || "Failed to set seo image";
+        return error.message || "Gagal mengatur foto SEO";
       },
     });
   };
@@ -909,15 +930,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       };
 
       toast.promise(deleteVideo(), {
-        loading: "Deleting video...",
+        loading: "Menghapus video...",
         success: () => {
           mutate();
           setLoading(false);
-          return "Successfully delete video";
+          return "Berhasil menghapus video";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to delete video";
+          return error.message || "Gagal menghapus video";
         },
       });
     } catch (error) {
@@ -952,15 +973,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       };
 
       toast.promise(deleteMusic(), {
-        loading: "Deleting music...",
+        loading: "Menghapus musik...",
         success: () => {
           mutate();
           setLoading(false);
-          return "Successfully delete music";
+          return "Berhasil menghapus musik";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to delete music";
+          return error.message || "Gagal menghapus musik";
         },
       });
     } catch (error) {
@@ -989,15 +1010,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       };
 
       toast.promise(deleteEvent(), {
-        loading: "Deleting event...",
+        loading: "Menghapus acara...",
         success: () => {
           mutate();
           setLoading(false);
-          return "Successfully delete event";
+          return "Berhasil menghapus acara";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to delete event";
+          return error.message || "Gagal menghapus acara";
         },
       });
     } catch (error) {
@@ -1032,15 +1053,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       };
 
       toast.promise(deleteBlob(), {
-        loading: "Deleting event image...",
+        loading: "Menghapus foto acara...",
         success: () => {
           mutate();
           setLoading(false);
-          return "Successfully delete event image";
+          return "Berhasil menghapus foto acara";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to delete event image";
+          return error.message || "Gagal menghapus foto acara";
         },
       });
     } catch (error) {
@@ -1079,15 +1100,15 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       };
 
       toast.promise(deleteParticipant(), {
-        loading: "Deleting participant...",
+        loading: "Menghapus peserta...",
         success: () => {
           mutate();
           setLoading(false);
-          return "Successfully delete participant";
+          return "Berhasil menghapus peserta";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to delete participant";
+          return error.message || "Gagal menghapus peserta";
         },
       });
     } catch (error) {
@@ -1118,7 +1139,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       if (!response.ok) {
         const errorResult = await response.json();
         throw new Error(
-          errorResult.message || "Failed to change client password"
+          errorResult.message || "Gagal mengubah kata sandi klien"
         );
       }
 
@@ -1126,16 +1147,16 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     };
 
     toast.promise(changePassword(), {
-      loading: "Changing client password...",
+      loading: "Mengubah kata sandi klien...",
       success: () => {
         setLoading(false);
         setFormData((state) => ({ ...state, password: "" }));
         setShowChangePassword(false);
-        return "Client password successfully changed";
+        return "Kata sandi klien berhasil diubah";
       },
       error: (error: any) => {
         setLoading(false);
-        return error.message || "Failed to change client password";
+        return error.message || "Gagal mengubah kata sandi klien";
       },
     });
   };

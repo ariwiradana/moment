@@ -2,7 +2,7 @@ import React, { FC, memo, useCallback } from "react";
 import { BiCheck, BiSend, BiTime } from "react-icons/bi";
 import { raleway } from "@/lib/fonts";
 import { Pagination } from "@mui/material";
-import { Review } from "@/lib/types";
+import { Wish } from "@/lib/types";
 import useRSVPWishes from "@/hooks/themes/useRSVPWishes";
 import useClientStore from "@/store/useClientStore";
 import Input from "../elements/input";
@@ -17,7 +17,7 @@ const WishItem = memo(
     wish,
     attendantText,
   }: {
-    wish: Review;
+    wish: Wish;
     attendantText: Record<string, string>;
   }) => {
     return (
@@ -79,6 +79,8 @@ const RSVPWishesComponent: FC = () => {
 
   if (!client?.package?.rsvp_and_greetings) return;
 
+  const isDisabled = client?.status === "inactive" || client.status === "done";
+
   return (
     <section className="relative bg-nirvaya-dark w-full overflow-hidden">
       <div className="relative w-full flex flex-col justify-center items-center z-20 pt-16 md:pb-16">
@@ -106,7 +108,7 @@ const RSVPWishesComponent: FC = () => {
           data-aos="fade-up"
         >
           <Input
-            disabled={client?.status === "completed"}
+            disabled={isDisabled}
             error={state.errors.name}
             placeholder="Masukkan nama kamu"
             value={state.formData.name ?? ""}
@@ -114,7 +116,7 @@ const RSVPWishesComponent: FC = () => {
             onChange={handleChange("name")}
           />
           <InputTextarea
-            disabled={client?.status === "completed"}
+            disabled={isDisabled}
             error={state.errors.wishes}
             placeholder="Masukkan ucapan kamu"
             value={state.formData.wishes ?? ""}
@@ -126,7 +128,7 @@ const RSVPWishesComponent: FC = () => {
             {["Hadir", "Tidak Hadir", "Masih Ragu"].map((option) => (
               <InputCheckbox
                 key={option}
-                disabled={client?.status === "completed"}
+                disabled={isDisabled}
                 value={option}
                 checked={state.formData.attendant === option}
                 label={option}
@@ -134,7 +136,7 @@ const RSVPWishesComponent: FC = () => {
               />
             ))}
           </div>
-          {client?.status === "paid" && (
+          {client?.status === "active" && (
             <div className="mt-4">
               <Button
                 isLoading={state.loading}

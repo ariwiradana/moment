@@ -59,7 +59,7 @@ const GiftComponent = () => {
                 />
               </div>
               <h1 className="text-2xl font-semibold text-white">
-                {client?.status === "paid"
+                {client?.status === "active"
                   ? client?.gift_bank_name
                   : "Bank Jago"}
               </h1>
@@ -71,20 +71,20 @@ const GiftComponent = () => {
                 <p
                   className={`text-xs md:text-sm leading-5 text-white ${raleway.className}`}
                 >
-                  {client?.status === "paid"
+                  {client?.status === "active"
                     ? client?.gift_account_name
                     : "Moment Invitation"}
                 </p>
                 <p
                   className={`text-sm md:text-base font-medium text-white ${raleway.className}`}
                 >
-                  {client?.status === "paid"
+                  {client?.status === "active"
                     ? formatBankNumber(client?.gift_account_number as number)
                     : formatBankNumber(123456789)}
                 </p>
               </div>
 
-              {client.status === "paid" && (
+              {client.status === "active" && (
                 <button
                   onClick={() =>
                     actions.handleCopyRekening(

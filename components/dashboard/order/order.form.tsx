@@ -69,8 +69,18 @@ const OrderForm = ({ mutate }: Props) => {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
-    script.setAttribute("data-client-key", "Mid-client-apCAGTae78uYssQs");
+
+    const midtransUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://app.midtrans.com/snap/snap.js"
+        : "https://app.sandbox.midtrans.com/snap/snap.js";
+
+    script.src = midtransUrl;
+    script.setAttribute(
+      "data-client-key",
+      process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY as string
+    );
+
     document.body.appendChild(script);
 
     return () => {

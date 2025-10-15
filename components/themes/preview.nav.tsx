@@ -14,7 +14,7 @@ const PreviewNav = () => {
 
   if (!isOpen) return null;
 
-  if (client?.status === "unpaid" || client?.is_preview)
+  if (client?.status === "inactive" || client?.is_preview)
     return (
       <>
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 md:bottom-8 z-50">

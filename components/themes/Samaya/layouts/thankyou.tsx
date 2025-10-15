@@ -20,9 +20,12 @@ const ThankyouComponent = () => {
   return (
     <section className="relative bg-samaya-dark z-20">
       {/* Cover Image */}
-      <div className="max-w-screen-sm mx-auto px-6 md:px-12 lg:px-4 py-[60px] md:py-[100px]">
+      <div
+        data-aos="fade-up"
+        className="max-w-screen-sm mx-auto px-6 md:px-12 lg:px-4 py-[60px] md:py-[100px]"
+      >
         {client?.cover && (
-          <div data-aos="fade-up" className="flex justify-center">
+          <div className="flex justify-center">
             <div className="relative w-[80vw] md:w-[400px] aspect-[3/4]">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-samaya-dark z-10 to-[90%]"></div>
               <Image

@@ -49,14 +49,16 @@ const OrderPayment = () => {
             <p className="text-base text-dashboard-dark/60">
               Tanggal:{" "}
               <span className="font-medium">
-                {moment(order.created_at).format("DD MMM YYYY")}
+                {order?.id
+                  ? moment(order.created_at).format("DD MMM YYYY")
+                  : moment().format("DD MMM YYYY")}
               </span>
             </p>
 
             {order.status && (
               <div className="flex mt-2">
                 <span
-                  className={`px-1.5 py-0.5 text-sm font-medium ${
+                  className={`capitalize text-xs md:text-sm font-semibold px-2 py-[2px] rounded-lg ${
                     order.status === "pending"
                       ? "bg-yellow-100 text-yellow-600"
                       : order.status === "settlement"

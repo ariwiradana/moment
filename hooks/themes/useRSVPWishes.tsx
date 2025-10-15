@@ -1,7 +1,7 @@
 import { DummyWishes } from "@/constants/dummyWishes";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
-import { Review } from "@/lib/types";
+import { Wish } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import React, { ReactNode, useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
@@ -53,8 +53,8 @@ const useRSVPWishes = (icon: ReactNode) => {
     []
   );
 
-  const { data, mutate } = useSWR<{ data: Review[]; total_rows: number }>(
-    client?.id && client.status === "paid"
+  const { data, mutate } = useSWR<{ data: Wish[]; total_rows: number }>(
+    client?.id && client.status === "active"
       ? `/api/guest/wishes?page=${page}&limit=${limit}&client_id=${client.id}`
       : null,
     fetcher,

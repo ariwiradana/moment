@@ -44,10 +44,12 @@ const PhotosComponent = () => {
           </div>
 
           <div className="mt-8 md:mt-16 max-w-screen-xl mx-auto">
-            <div className="columns-2 md:columns-2 lg:columns-4 gap-2 md:gap-4 space-y-2 md:space-y-4">
+            <div
+              data-aos="fade-up"
+              className="columns-2 md:columns-2 lg:columns-4 gap-2 md:gap-4 space-y-2 md:space-y-4"
+            >
               {images.map((img, index) => (
                 <div
-                  data-aos="fade-up"
                   onClick={() => handleToggleLightbox(img.src)}
                   key={`Foto Galeri ${index + 1} Tema Samaya`}
                   className="relative overflow-hidden group cursor-pointer"

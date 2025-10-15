@@ -6,23 +6,28 @@ import { isTokenExpired } from "@/lib/auth";
 import { montserrat } from "@/lib/fonts";
 import { Pagination } from "@mui/material";
 import { GetServerSideProps } from "next";
-import React from "react";
-import { BiReceipt, BiTrash, BiUser } from "react-icons/bi";
+import React, { useEffect, useState } from "react";
+import { BiCopyAlt, BiReceipt, BiTrash, BiUser } from "react-icons/bi";
 import Cookies from "cookies";
 import moment from "moment";
 import { useAdminOrders } from "@/hooks/admin/useAdminOrders";
 import { formatToRupiah } from "@/utils/formatToRupiah";
 import Link from "next/link";
-import InputSelect from "@/components/admin/elements/select";
-import { OrderStatus } from "@/lib/types";
-import { orderStatus } from "@/constants/orderStatus";
-
 interface Props {
   token: string | null;
 }
 
 const AdminOrders: React.FC<Props> = ({ token }) => {
   const { state, actions } = useAdminOrders(token);
+
+  const [baseURL, setBaseURL] = useState<string>("");
+
+  useEffect(() => {
+    const url = `${window.location.protocol}//${window.location.hostname}${
+      window.location.port ? `:${window.location.port}` : ""
+    }`;
+    setBaseURL(url);
+  }, []);
 
   return (
     <AdminLayout>
@@ -36,13 +41,6 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
             <div className="mt-4 lg:mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-4">
                 {state.orders.map((order) => {
-                  const oneMonthAgo = new Date();
-                  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-                  const isExpired =
-                    !order.client ||
-                    new Date(order.updated_at as string) < oneMonthAgo;
-
                   return (
                     <div key={order.id} className={`border rounded-lg p-3`}>
                       <div className="flex justify-between items-center pb-3 border-b">
@@ -59,21 +57,23 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                           </div>
                           <div className="flex items-center gap-x-2">
                             <div className="flex">
-                              {!isExpired ? (
-                                <InputSelect
-                                  inputSize="extrasmall"
-                                  options={orderStatus}
-                                  value={order.status as OrderStatus}
-                                  onChange={(e) =>
-                                    actions.handleSetStatus(
-                                      order?.id as number,
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              ) : (
-                                "-"
-                              )}
+                              <span
+                                className={`capitalize text-xs font-semibold px-2 py-[2px] rounded-lg ${
+                                  order.status === "pending"
+                                    ? "bg-yellow-100 text-yellow-600"
+                                    : order.status === "settlement"
+                                    ? "bg-green-100 text-green-600"
+                                    : order.status === "expire"
+                                    ? "bg-red-100 text-red-600"
+                                    : order.status === "cancel"
+                                    ? "bg-gray-100 text-gray-600"
+                                    : order.status === "deny"
+                                    ? "bg-red-200 text-red-700"
+                                    : "bg-gray-100 text-gray-600"
+                                }`}
+                              >
+                                {order.status}
+                              </span>
                             </div>
                             <ButtonActionDialog>
                               <Link href={`/admin/orders/${order.order_id}`}>
@@ -103,26 +103,45 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                 title="Hapus"
                                 icon={<BiTrash className="text-base" />}
                               />
+                              <ButtonText
+                                type="button"
+                                onClick={() =>
+                                  actions.handleCopyURL(
+                                    `${baseURL}/order/${order.order_id}`
+                                  )
+                                }
+                                size="small"
+                                title="Salin Link Pesanan"
+                                icon={<BiCopyAlt className="text-base" />}
+                              />
                             </ButtonActionDialog>
                           </div>
                         </div>
                       </div>
                       <div className="pt-3 flex flex-col gap-y-2 w-full">
                         <div className="grid grid-cols-2 gap-2">
+                          <div className="col-span-2">
+                            <p className="text-gray-500 font-medium text-xs">
+                              Email
+                            </p>
+                            <p className="text-gray-800 font-semibold text-sm">
+                              {order.client?.email || "-"}
+                            </p>
+                          </div>
                           <div>
                             <p className="text-gray-500 font-medium text-xs">
                               Telepon
                             </p>
-                            <p className="text-gray-800 font-semibold text-sm capitalize">
-                              {order.client?.phone}
+                            <p className="text-gray-800 font-semibold text-sm">
+                              {order.client?.phone || "-"}
                             </p>
                           </div>
                           <div>
                             <p className="text-gray-500 font-medium text-xs">
                               Tema
                             </p>
-                            <p className="text-gray-800 font-semibold text-sm capitalize">
-                              {order.theme?.name}
+                            <p className="text-gray-800 font-semibold text-sm">
+                              {order.client?.theme?.name}
                             </p>
                           </div>
                           <div>
@@ -130,12 +149,12 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                               Paket
                             </p>
                             <p className="text-gray-800 font-semibold text-sm">
-                              {order.package?.name}
+                              {order.client?.package?.name}
                             </p>
                           </div>
                           <div>
                             <p className="text-gray-500 font-medium text-xs">
-                              Total
+                              Total Harga
                             </p>
                             <p className="text-gray-800 font-semibold text-sm">
                               {formatToRupiah(
@@ -162,16 +181,13 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                           Klien
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                          Telepon
+                          Email / Telp
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                           Tema & Paket
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                           Total Harga
-                        </td>
-                        <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                          Status
                         </td>
                         <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                           Dibuat Pada
@@ -192,8 +208,27 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                 : "border-b-gray-200"
                             }`}
                           >
-                            <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                            <td className="px-4 py-3 text-gray-800 font-semibold">
                               <p>{order.order_id ?? "-"}</p>
+                              <div className="flex">
+                                <span
+                                  className={`capitalize text-xs font-semibold px-2 py-[2px] rounded-lg ${
+                                    order.status === "pending"
+                                      ? "bg-yellow-100 text-yellow-600"
+                                      : order.status === "settlement"
+                                      ? "bg-green-100 text-green-600"
+                                      : order.status === "expire"
+                                      ? "bg-red-100 text-red-600"
+                                      : order.status === "cancel"
+                                      ? "bg-gray-100 text-gray-600"
+                                      : order.status === "deny"
+                                      ? "bg-red-200 text-red-700"
+                                      : "bg-gray-100 text-gray-600"
+                                  }`}
+                                >
+                                  {order.status}
+                                </span>
+                              </div>
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -206,7 +241,12 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                              <p>{order.client?.phone ?? "-"}</p>
+                              <p className="whitespace-nowrap">
+                                {order.client?.email || "-"}
+                              </p>
+                              <p className="text-gray-600 font-medium text-sm">
+                                {order.client?.phone || "-"}
+                              </p>
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -228,42 +268,6 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                     )
                                   : "-"}
                               </p>
-                            </td>
-
-                            <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                              {order.status ? (
-                                <div className="flex">
-                                  <span
-                                    className={`px-2 py-1 text-sm font-medium ${
-                                      order.status === "pending"
-                                        ? "bg-yellow-100 text-yellow-600"
-                                        : order.status === "settlement"
-                                        ? "bg-green-100 text-green-600"
-                                        : order.status === "expire"
-                                        ? "bg-red-100 text-red-600"
-                                        : order.status === "cancel"
-                                        ? "bg-gray-100 text-gray-600"
-                                        : order.status === "deny"
-                                        ? "bg-red-200 text-red-700"
-                                        : "bg-gray-100 text-gray-600"
-                                    }`}
-                                  >
-                                    {order.status === "pending"
-                                      ? "Menunggu Pembayaran"
-                                      : order.status === "settlement"
-                                      ? "Pembayaran Berhasil"
-                                      : order.status === "expire"
-                                      ? "Transaksi Kadaluarsa"
-                                      : order.status === "cancel"
-                                      ? "Dibatalkan"
-                                      : order.status === "deny"
-                                      ? "Ditolak"
-                                      : "Unknown"}
-                                  </span>
-                                </div>
-                              ) : (
-                                "-"
-                              )}
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -300,6 +304,17 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                                   size="medium"
                                   title="Hapus"
                                   icon={<BiTrash className="text-base" />}
+                                />
+                                <ButtonText
+                                  type="button"
+                                  onClick={() =>
+                                    actions.handleCopyURL(
+                                      `${baseURL}/order/${order.order_id}`
+                                    )
+                                  }
+                                  size="medium"
+                                  title="Salin Link Pesanan"
+                                  icon={<BiCopyAlt className="text-base" />}
                                 />
                               </ButtonActionDialog>
                             </td>

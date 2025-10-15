@@ -35,7 +35,7 @@ const VideoComponent = () => {
       style={{ marginTop: 0 }}
       className="relative bg-aruna-dark overflow-hidden"
     >
-      <div className="grid gap-2">
+      <div className="grid gap-2" data-aos="zoom-out">
         {youtubeVideos.map(({ youtubeId }) => (
           <YoutubeEmbed
             key={youtubeId}

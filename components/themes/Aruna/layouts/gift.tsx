@@ -85,7 +85,7 @@ const GiftComponent = () => {
               <h1
                 className={`text-xl md:text-2xl font-semibold text-aruna-dark ${roboto.className}`}
               >
-                {client?.status === "paid"
+                {client?.status === "active"
                   ? client?.gift_bank_name
                   : "Bank Jago"}
               </h1>
@@ -94,7 +94,7 @@ const GiftComponent = () => {
             <h3
               className={`text-lg tracking-[2px] text-aruna-dark ${roboto.className}`}
             >
-              {client?.status === "paid"
+              {client?.status === "active"
                 ? formatBankNumber(client?.gift_account_number as number)
                 : formatBankNumber(123456789)}
             </h3>
@@ -103,11 +103,11 @@ const GiftComponent = () => {
               <p
                 className={`text-sm leading-5 text-aruna-dark/60 ${roboto.className}`}
               >
-                {client?.status === "paid"
+                {client?.status === "active"
                   ? client?.gift_account_name
                   : "Moment Invitation"}
               </p>
-              {client?.status === "paid" && (
+              {client?.status === "active" && (
                 <ButtonDark
                   title="Salin"
                   icon={<BiCopy />}

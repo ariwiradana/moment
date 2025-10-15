@@ -1,7 +1,7 @@
 import { Option } from "@/lib/types";
 
 export const clientStatus: Option[] = [
-  { label: "Unpaid", value: "unpaid" },
-  { label: "Paid", value: "paid" },
-  { label: "Completed", value: "completed" },
+  { label: "Nonaktif", value: "inactive" },
+  { label: "Aktif", value: "active" },
+  { label: "Selesai", value: "done" },
 ];

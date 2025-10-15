@@ -48,6 +48,7 @@ const Hero = () => {
         effect="fade"
         autoplay={{ delay: 6000, disableOnInteraction: false }}
         className="h-lvh w-full"
+        fadeEffect={{ crossFade: true }}
       >
         {images.map((image, index) => (
           <SwiperSlide key={`hero-slide-${index}`}>

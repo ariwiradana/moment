@@ -61,30 +61,22 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             <div className="flex items-center font-semibold text-sm">
               <div
                 className={`${
-                  state.formData?.status === "paid"
+                  state.formData.status === "active"
                     ? "bg-admin-success/10 text-admin-success"
-                    : state.formData?.status === "unpaid"
-                    ? "bg-admin-danger/10 text-admin-danger"
-                    : state.formData?.status === "completed"
-                    ? "bg-admin-primary/10 text-admin-primary"
-                    : "bg-admin-hover-dark/10 text-admin-hover-dark"
+                    : "bg-gray-300/20 text-gray-500"
                 } px-3 py-1 rounded-lg flex items-center gap-x-2 ${
                   montserrat.className
                 }`}
               >
                 <div
                   className={`w-2 h-2 rounded-lg ${
-                    state.formData?.status === "paid"
+                    state.formData.status === "active"
                       ? "bg-admin-success"
-                      : state.formData?.status === "unpaid"
-                      ? "bg-admin-danger"
-                      : state.formData?.status === "completed"
-                      ? "bg-admin-primary"
-                      : "bg-admin-hover-dark"
+                      : "bg-gray-400"
                   }`}
                 ></div>
                 <span className="capitalize text-admin-hover-dark">
-                  {state.formData.status}
+                  {state.formData.status === "active" ? "Aktif" : "Nonaktif"}
                 </span>
               </div>
             </div>
@@ -113,13 +105,20 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             className="mt-8 max-w-screen-md flex flex-col gap-y-4"
             onSubmit={actions.handleSubmit}
           >
+            <Input
+              value={state.formData.name}
+              onChange={(e) =>
+                actions.handleChangeClient(e.target.value, "name")
+              }
+              label="Nama Klien"
+            />
             <div className="grid md:grid-cols-2 gap-4">
               <Input
-                value={state.formData.name}
+                value={state.formData.email}
                 onChange={(e) =>
-                  actions.handleChangeClient(e.target.value, "name")
+                  actions.handleChangeClient(e.target.value, "email")
                 }
-                label="Nama Klien"
+                label="Email"
               />
               <Input
                 value={state.formData.phone}
@@ -129,6 +128,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 label="Telepon"
               />
             </div>
+
             <div className="flex gap-4">
               <Input
                 className="w-full"

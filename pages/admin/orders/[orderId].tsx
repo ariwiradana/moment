@@ -51,10 +51,10 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
                     Detail Pesanan
                   </h2>
 
-                  <p className="text-base text-dashboard-dark/60 mt-1">
+                  <p className="text-sm md:text-base text-dashboard-dark/60 mt-1">
                     ID: <span className="font-medium">{order?.order_id}</span>
                   </p>
-                  <p className="text-base text-dashboard-dark/60">
+                  <p className="text-sm md:text-base text-dashboard-dark/60">
                     Tanggal:{" "}
                     <span className="font-medium">
                       {moment(order?.created_at).format("DD MMM YYYY")}
@@ -63,7 +63,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
 
                   <div className="flex mt-2">
                     <span
-                      className={`px-1.5 py-0.5 text-sm font-medium ${
+                      className={`capitalize text-xs font-semibold px-2 py-[2px] rounded-lg ${
                         order?.status === "pending"
                           ? "bg-yellow-100 text-yellow-600"
                           : order?.status === "settlement"
@@ -77,17 +77,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
                           : "bg-gray-100 text-gray-600"
                       }`}
                     >
-                      {order?.status === "pending"
-                        ? "Menunggu Pembayaran"
-                        : order?.status === "settlement"
-                        ? "Pembayaran Berhasil"
-                        : order?.status === "expire"
-                        ? "Transaksi Kadaluarsa"
-                        : order?.status === "cancel"
-                        ? "Dibatalkan"
-                        : order?.status === "deny"
-                        ? "Ditolak"
-                        : "Unknown"}
+                      {order?.status}
                     </span>
                   </div>
                 </div>
@@ -107,17 +97,17 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
               <div className="p-6 print:px-0 space-y-6">
                 {/* Customer Info */}
                 <div>
-                  <h3 className="text-base text-dashboard-dark/60">Pemesan</h3>
-                  <p className="font-medium text-gray-800 text-lg">
+                  <h3 className="text-sm md:text-base text-dashboard-dark/60">Pemesan</h3>
+                  <p className="font-medium text-gray-800 text-base md:text-lg">
                     {order?.client?.name}
                   </p>
                   {order?.client?.email && (
-                    <p className="text-base text-gray-600">
+                    <p className="text-sm md:text-base text-gray-600">
                       {order.client.email}
                     </p>
                   )}
                   {order?.client?.phone && (
-                    <p className="text-base text-gray-600">
+                    <p className="text-sm md:text-base text-gray-600">
                       {order.client.phone}
                     </p>
                   )}
@@ -127,14 +117,14 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
                 <div className="border overflow-hidden">
                   <div className="flex justify-between items-center bg-dashboard-dark/[0.02] p-4">
                     <div>
-                      <p className="text-base font-medium text-gray-800">
+                      <p className="text-sm md:text-base font-medium text-gray-800">
                         Tema: {order?.client?.theme?.name}
                       </p>
-                      <p className="text-base text-dashboard-dark/60">
+                      <p className="text-sm md:text-base text-dashboard-dark/60">
                         Paket: {order?.client?.package?.name}
                       </p>
                     </div>
-                    <div className="text-base text-gray-700">
+                    <div className="text-sm md:text-base text-gray-700">
                       {formatToRupiah(order?.price as number)}
                     </div>
                   </div>
@@ -143,12 +133,12 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
                 {/* Summary */}
                 {order?.price && order.discount ? (
                   <div className="border-t border-dashboard-dark/10 pt-4 space-y-2">
-                    <div className="flex justify-between text-base text-gray-600">
+                    <div className="flex justify-between text-sm md:text-base text-gray-600">
                       <span>Subtotal</span>
                       <span>{formatToRupiah(order?.price)}</span>
                     </div>
                     {order?.discount > 0 && (
-                      <div className="flex justify-between text-base text-gray-600">
+                      <div className="flex justify-between text-sm md:text-base text-gray-600">
                         <span>
                           Diskon (
                           {calculateDiscountPercentage(
@@ -168,10 +158,10 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
                     )}
 
                     <div className="border-t border-dashed border-gray-300 pt-3 mt-3 flex justify-between items-center">
-                      <span className="text-base font-medium text-gray-700">
+                      <span className="text-sm md:text-base font-medium text-gray-700">
                         Total
                       </span>
-                      <span className="text-xl font-semibold text-gray-900">
+                      <span className="text-lg md:text-xl font-semibold text-gray-900">
                         {formatToRupiah(
                           order?.price - order?.discount + order?.admin_fee
                         )}
@@ -184,7 +174,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ orderId, token }) => {
               {/* Footer */}
               <div className="p-6 border-t border-dashboard-dark/10 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                  <p className="text-base text-dashboard-dark/60 text-center md:text-left">
+                  <p className="text-sm md:text-base text-dashboard-dark/60 text-center md:text-left">
                     Terima kasih telah memesan di <br />{" "}
                     <b>Moment Invitation</b> 💌
                   </p>

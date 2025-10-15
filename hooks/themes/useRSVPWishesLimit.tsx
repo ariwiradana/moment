@@ -1,7 +1,7 @@
 import { DummyWishes } from "@/constants/dummyWishes";
 import { getClient } from "@/lib/client";
 import { fetcher } from "@/lib/fetcher";
-import { Review } from "@/lib/types";
+import { Wish } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import React, {
   ReactNode,
@@ -50,7 +50,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
   const [formData, setFormData] = useState<FormData>(initialReviewForm);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const [wishes, setWishes] = useState<Review[]>([]);
+  const [wishes, setWishes] = useState<Wish[]>([]);
   const [totalRows, setTotalRows] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [limit] = useState(limitPage || 8);
@@ -65,14 +65,14 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
   // Memoize SWR URL
   const fetchUrl = useMemo(
     () =>
-      client?.id && client.status === "paid"
+      client?.id && client.status === "active"
         ? `/api/guest/wishes?page=${page}&limit=${limit}&client_id=${client.id}`
         : null,
     [client, page, limit]
   );
 
   const { mutate, isLoading: isLoadingWishes } = useSWR<{
-    data: Review[];
+    data: Wish[];
     total_rows: number;
   }>(fetchUrl, fetcher, {
     onSuccess: (data) => {

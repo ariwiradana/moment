@@ -182,7 +182,7 @@ export type ApiHandler = (
   res: NextApiResponse
 ) => Promise<void>;
 
-export type Status = "active" | "inactive";
+export type Status = "active" | "inactive" | "done";
 export type OrderStatus =
   | "pending"
   | "settlement"

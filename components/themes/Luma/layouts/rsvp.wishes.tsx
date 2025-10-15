@@ -1,7 +1,7 @@
 import React, { FC, memo, useCallback, useMemo } from "react";
 import { BiCheck, BiChevronRight, BiSend, BiTime } from "react-icons/bi";
 import { rubik } from "@/lib/fonts";
-import { Review } from "@/lib/types";
+import { Wish } from "@/lib/types";
 import useClientStore from "@/store/useClientStore";
 import InputTextarea from "../elements/textarea";
 import InputCheckbox from "../elements/checkbox";
@@ -21,7 +21,7 @@ const WishItem = memo(
     wish,
     attendantText,
   }: {
-    wish: Review;
+    wish: Wish;
     attendantText: Record<string, string>;
   }) => {
     const timeFromNow = useMemo(
@@ -136,7 +136,7 @@ const RSVPWishesComponent: FC = () => {
           >
             <Input
               label="Nama"
-              disabled={client?.status === "completed"}
+              disabled={client?.status === "inactive"}
               error={state.errors.name}
               placeholder="Masukkan nama kamu"
               value={state.formData.name}
@@ -145,7 +145,7 @@ const RSVPWishesComponent: FC = () => {
             />
             <InputTextarea
               label="Ucapan"
-              disabled={client?.status === "completed"}
+              disabled={client?.status === "inactive"}
               error={state.errors.wishes}
               placeholder="Masukkan ucapan kamu"
               value={state.formData.wishes}
@@ -157,7 +157,7 @@ const RSVPWishesComponent: FC = () => {
               {["Hadir", "Tidak Hadir", "Masih Ragu"].map((value) => (
                 <InputCheckbox
                   key={value}
-                  disabled={client?.status === "completed"}
+                  disabled={client?.status === "inactive"}
                   value={value}
                   checked={state.formData.attendant === value}
                   label={value}
@@ -165,7 +165,7 @@ const RSVPWishesComponent: FC = () => {
                 />
               ))}
             </div>
-            {client?.status === "paid" && (
+            {client?.status === "active" && (
               <div className="mt-6">
                 <ButtonDark
                   isLoading={state.loading}

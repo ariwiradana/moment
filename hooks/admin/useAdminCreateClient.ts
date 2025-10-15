@@ -61,7 +61,7 @@ const initalFormData: Client & {
   gift_account_number: "",
   theme_id: null,
   package_id: null,
-  status: "unpaid",
+  status: "inactive",
   participants: [initialParticipant],
   events: [initialEvent],
   gallery: [],
@@ -193,11 +193,11 @@ export const useAdminCreateClient = (token: string | null) => {
         for (const image of Array.from(formData.gallery)) {
           i++;
           const toastUpload = toast.loading(
-            `Uploading gallery image ${i} of ${images.length}`
+            `Mengunggah gambar galeri ${i} dari ${images.length}`
           );
           try {
             if (image.size > MAX_SIZE) {
-              toast.error(`Gallery image (${i}) size to large`, {
+              toast.error(`Ukuran gambar galeri (${i}) terlalu besar`, {
                 id: toastUpload,
               });
               continue;
@@ -213,7 +213,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
             if (result.success) {
               toast.success(
-                `Gallery image ${i} of ${images.length} uploaded successfully!`,
+                `Gambar galeri ${i} dari ${images.length} berhasil diunggah!`,
                 { id: toastUpload }
               );
               imageURLs.push(result.data.secure_url);
@@ -221,7 +221,7 @@ export const useAdminCreateClient = (token: string | null) => {
           } catch (error: any) {
             toast.error(
               error.message ||
-                `Error uploading gallery image ${i} of ${images.length}`
+                `Terjadi kesalahan saat mengunggah gambar galeri ${i} dari ${images.length}`
             );
           }
         }
@@ -242,11 +242,11 @@ export const useAdminCreateClient = (token: string | null) => {
         for (const video of Array.from(formData.videos)) {
           i++;
           const toastUpload = toast.loading(
-            `Uploading video ${i} of ${videos.length}`
+            `Mengunggah video ${i} dari ${videos.length}`
           );
           try {
             if (video.size > MAX_SIZE) {
-              toast.error(`Video ${i} size must lower than 200mb`, {
+              toast.error(`Ukuran video ${i} harus kurang dari 100MB`, {
                 id: toastUpload,
               });
               continue;
@@ -262,14 +262,15 @@ export const useAdminCreateClient = (token: string | null) => {
 
             if (result.success) {
               toast.success(
-                `Video ${i} of ${videos.length} uploaded successfully!`,
+                `Video ${i} dari ${videos.length} berhasil diunggah!`,
                 { id: toastUpload }
               );
               videoURLs.push(result.data.secure_url);
             }
           } catch (error: any) {
             toast.error(
-              error.message || `Error uploading video ${i} of ${videos.length}`
+              error.message ||
+                `Terjadi kesalahan saat mengunggah video ${i} dari ${videos.length}`
             );
           }
         }
@@ -288,10 +289,10 @@ export const useAdminCreateClient = (token: string | null) => {
       if (formData.music instanceof File) {
         const music = formData.music;
         i++;
-        const toastUpload = toast.loading(`Uploading music`);
+        const toastUpload = toast.loading(`Mengunggah musik...`);
         try {
           if (music.size > MAX_SIZE) {
-            toast.error(`Music file size to large`, {
+            toast.error(`Ukuran file musik terlalu besar`, {
               id: toastUpload,
             });
             return;
@@ -306,11 +307,13 @@ export const useAdminCreateClient = (token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Music uploaded successfully!`, { id: toastUpload });
+            toast.success(`Musik berhasil diunggah!`, { id: toastUpload });
             musicURL = result.data.secure_url;
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading music`);
+          toast.error(
+            error.message || `Terjadi kesalahan saat mengunggah musik`
+          );
         }
       }
     }
@@ -327,10 +330,10 @@ export const useAdminCreateClient = (token: string | null) => {
       if (formData.coverVideo instanceof File) {
         const coverVideo = formData.coverVideo;
         i++;
-        const toastUpload = toast.loading(`Uploading cover video`);
+        const toastUpload = toast.loading(`Mengunggah video cover...`);
         try {
           if (coverVideo.size > MAX_SIZE) {
-            toast.error(`Cover video size to large`, {
+            toast.error(`Ukuran video cover terlalu besar`, {
               id: toastUpload,
             });
             return;
@@ -345,13 +348,15 @@ export const useAdminCreateClient = (token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Cover video uploaded successfully!`, {
+            toast.success(`Video cover berhasil diunggah!`, {
               id: toastUpload,
             });
             coverVideoURL = result.data.secure_url;
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading cover video`);
+          toast.error(
+            error.message || `Terjadi kesalahan saat mengunggah video cover`
+          );
         }
       }
     }
@@ -369,12 +374,12 @@ export const useAdminCreateClient = (token: string | null) => {
         const MAX_SIZE = 5 * 1024 * 1024;
 
         const toastUpload = toast.loading(
-          `Uploading participant ${i + 1} image`
+          `Mengunggah foto peserta ${i + 1}...`
         );
 
         try {
           if (image.size > MAX_SIZE) {
-            toast.error(`Image size of participant ${i + 1} is too large`, {
+            toast.error(`Ukuran foto peserta ${i + 1} terlalu besar`, {
               id: toastUpload,
             });
             continue;
@@ -389,14 +394,15 @@ export const useAdminCreateClient = (token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Image participant ${i + 1} uploaded successfully!`, {
+            toast.success(`Foto peserta ${i + 1} berhasil diunggah!`, {
               id: toastUpload,
             });
             currentParticipants[i].image = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Error uploading participant image ${i + 1}`
+            error.message ||
+              `Terjadi kesalahan saat mengunggah foto peserta ${i + 1}`
           );
         }
       }
@@ -414,11 +420,11 @@ export const useAdminCreateClient = (token: string | null) => {
         const image = file[0] as File;
         const MAX_SIZE = 5 * 1024 * 1024;
 
-        const toastUpload = toast.loading(`Uploading event ${i + 1} image`);
+        const toastUpload = toast.loading(`Mengunggah foto acara ${i + 1}...`);
 
         try {
           if (image.size > MAX_SIZE) {
-            toast.error(`Image size of event ${i + 1} is too large`, {
+            toast.error(`Ukuran foto acara ${i + 1} terlalu besar`, {
               id: toastUpload,
             });
             continue;
@@ -433,13 +439,16 @@ export const useAdminCreateClient = (token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Image event ${i + 1} uploaded successfully!`, {
+            toast.success(`Foto acara ${i + 1} berhasil diunggah!`, {
               id: toastUpload,
             });
             currentEvents[i].image = result.data.secure_url;
           }
         } catch (error: any) {
-          toast.error(error.message || `Error uploading event image ${i + 1}`);
+          toast.error(
+            error.message ||
+              `Terjadi kesalahan saat mengunggah foto acara ${i + 1}`
+          );
         }
       }
     }
@@ -622,22 +631,20 @@ export const useAdminCreateClient = (token: string | null) => {
 
         if (!response.ok) {
           const errorResult = await response.json();
-          throw new Error(
-            errorResult.message || "Failed to create new client."
-          );
+          throw new Error(errorResult.message || "Gagal membuat klien baru.");
         }
 
         return await response.json();
       };
 
       toast.promise(createClient(), {
-        loading: "Creating new client...",
+        loading: "Sedang membuat klien...",
         success: () => {
-          return "Successfully created new client";
+          return "Berhasil membuat klien baru!";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to create new client";
+          return error.message || "Gagal membuat klien baru.";
         },
       });
 
@@ -657,25 +664,23 @@ export const useAdminCreateClient = (token: string | null) => {
 
         if (!response.ok) {
           const errorResult = await response.json();
-          throw new Error(
-            errorResult.message || "Failed to create new client."
-          );
+          throw new Error(errorResult.message || "Gagal membuat akun klien.");
         }
 
         return await response.json();
       };
 
       toast.promise(createAccount(), {
-        loading: "Creating account client...",
+        loading: "Sedang membuat akun klien...",
         success: () => {
           setFormData(initalFormData);
           setLoading(false);
           router.push("/admin/clients");
-          return "Successfully created account client";
+          return "Berhasil membuat akun klien!";
         },
         error: (error: any) => {
           setLoading(false);
-          return error.message || "Failed to create account client";
+          return error.message || "Gagal membuat akun klien.";
         },
       });
     } catch (error) {

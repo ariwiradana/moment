@@ -48,7 +48,7 @@ export default async function handler(
     const seo_image = client.seo || client.cover;
     const url = `https://momentinvitation.com/${encodeURIComponent(slug)}`;
     const page_title =
-      client.status === "unpaid"
+      client.status === "inactive"
         ? `Preview ${name} | Undangan ${theme_name}`
         : client.is_preview
         ? `Preview Undangan Tema ${theme_name} | Moment`
