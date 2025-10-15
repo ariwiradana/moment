@@ -29,6 +29,7 @@ const OrderInformation = () => {
     component: exclusivePackage as Package,
   });
 
+  const initialSlug = store.order.client?.slug || "";
   const [slugForm, setSlugForm] = useState(store.form.slug || "");
   const [slugQuery] = useDebounce(slugForm, 500);
 
@@ -36,12 +37,16 @@ const OrderInformation = () => {
     if (slugQuery.length === 0) {
       store.setForm("slug", "");
     }
+
+    if (initialSlug === slugQuery) {
+      store.setForm("slug", initialSlug);
+    }
   }, [slugQuery]);
 
+  const shouldCheckSlug = slugQuery.length > 3 && slugQuery !== initialSlug;
+
   useSWR(
-    slugQuery.length > 3 && router.pathname === "/[slug]/order"
-      ? `/api/guest/order/${slugQuery}/check`
-      : null,
+    shouldCheckSlug ? `/api/guest/order/${slugQuery}/check` : null,
     fetcher,
     {
       onSuccess(data) {
@@ -60,7 +65,7 @@ const OrderInformation = () => {
     }
   );
 
-  const isUpdate = router.pathname !== "/[slug]/order";
+  const isUpdate = router.pathname === "/order/[orderId]";
 
   return (
     <>
@@ -73,16 +78,14 @@ const OrderInformation = () => {
         }
       />
 
-      {!isUpdate && (
-        <Input
-          value={slugForm}
-          onChange={(e) => setSlugForm(e.target.value)}
-          inputSize="medium"
-          name="slug"
-          placeholder="contoh: rama-shinta"
-          label="Link Undangan"
-        />
-      )}
+      <Input
+        value={slugForm}
+        onChange={(e) => setSlugForm(e.target.value)}
+        inputSize="medium"
+        name="slug"
+        placeholder="contoh: rama-shinta"
+        label="Link Undangan"
+      />
 
       <div className="grid md:grid-cols-2 gap-4">
         <Input
@@ -117,7 +120,7 @@ const OrderInformation = () => {
 
       {!isUpdate && (
         <div className={redhat.className}>
-          <label className="block text-dashboard-dark/60 mb-1 text-base">
+          <label className="block text-dashboard-dark/60 mb-1 text-sm">
             Pilih Paket
           </label>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -142,7 +145,9 @@ const OrderInformation = () => {
                     </div>
                   )}
                   <div>
-                    <h2 className={`text-xl font-semibold`}>{pkg?.name}</h2>
+                    <h2 className={`text-lg font-semibold text-dashboard-dark`}>
+                      {pkg?.name}
+                    </h2>
 
                     <div className="flex items-center flex-wrap gap-x-1">
                       {pkg?.discount && pkg?.discount > 0 ? (

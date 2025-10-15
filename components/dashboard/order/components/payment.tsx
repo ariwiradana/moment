@@ -11,7 +11,7 @@ import { generateInvoiceId } from "@/utils/generateInvoiceId";
 
 const OrderPayment = () => {
   const store = useOrderStore();
-  const { order } = store;
+  const { order, form } = store;
 
   const handlePrint = () => window.print();
 
@@ -23,16 +23,11 @@ const OrderPayment = () => {
 
   const handleSetOrder = () => {
     const newOrder: Omit<Order, "id" | "client_id"> = {
-      name: store.form.name,
-      email: store.form.email as string,
-      phone: store.form.phone as string,
-      package_id: store.pkg?.id as number,
+      ...order,
       price: store.pkg?.price as number,
       discount: store.pkg?.discount || 0,
-      theme_id: store.theme?.id as number,
       admin_fee: 0,
       created_at: moment().format("DD MMMM YYYY"),
-      status: "pending",
       order_id: generateInvoiceId(),
     };
     store.setNewOrder(newOrder);
@@ -44,15 +39,49 @@ const OrderPayment = () => {
         {/* Header */}
         <div className="p-6 print:px-0 border-b border-dashboard-dark/10 flex justify-between items-start">
           <div>
-            <h2 className="text-xl font-semibold text-dashboard-dark">
-              Receipt
+            <h2 className="text-lg font-semibold text-dashboard-dark">
+              Detail Pesanan
             </h2>
+
             <p className="text-base text-dashboard-dark/60 mt-1">
-              Order ID: <span className="font-medium">{order.order_id}</span>
+              ID: <span className="font-medium">{order.order_id}</span>
             </p>
             <p className="text-base text-dashboard-dark/60">
-              Tanggal: <span className="font-medium">{order.created_at}</span>
+              Tanggal:{" "}
+              <span className="font-medium">
+                {moment(order.created_at).format("DD MMM YYYY")}
+              </span>
             </p>
+
+            <div className="flex mt-2">
+              <span
+                className={`px-1.5 py-0.5 text-sm font-medium ${
+                  order.status === "pending"
+                    ? "bg-yellow-100 text-yellow-600"
+                    : order.status === "settlement"
+                    ? "bg-green-100 text-green-600"
+                    : order.status === "expire"
+                    ? "bg-red-100 text-red-600"
+                    : order.status === "cancel"
+                    ? "bg-gray-100 text-gray-600"
+                    : order.status === "deny"
+                    ? "bg-red-200 text-red-700"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
+                {order.status === "pending"
+                  ? "Menunggu Pembayaran"
+                  : order.status === "settlement"
+                  ? "Pembayaran Berhasil"
+                  : order.status === "expire"
+                  ? "Transaksi Kadaluarsa"
+                  : order.status === "cancel"
+                  ? "Dibatalkan"
+                  : order.status === "deny"
+                  ? "Ditolak"
+                  : "Unknown"}
+              </span>
+            </div>
           </div>
 
           <div className="relative w-6 aspect-square">
@@ -70,12 +99,13 @@ const OrderPayment = () => {
         <div className="p-6 print:px-0 space-y-6">
           {/* Customer Info */}
           <div>
-            <h3 className="text-base text-dashboard-dark/60 uppercase">
-              Pemesan
-            </h3>
-            <p className="font-medium text-gray-800 text-lg">{order.name}</p>
-            {order.phone && (
-              <p className="text-base text-gray-600">{order.phone}</p>
+            <h3 className="text-base text-dashboard-dark/60">Pemesan</h3>
+            <p className="font-medium text-gray-800 text-lg">{form.name}</p>
+            {form.email && (
+              <p className="text-base text-gray-600">{form.email}</p>
+            )}
+            {form.phone && (
+              <p className="text-base text-gray-600">{form.phone}</p>
             )}
           </div>
 
@@ -120,8 +150,8 @@ const OrderPayment = () => {
             )}
 
             <div className="border-t border-dashed border-gray-300 pt-3 mt-3 flex justify-between items-center">
-              <span className="text-lg font-medium text-gray-700">Total</span>
-              <span className="text-2xl font-semibold text-gray-900">
+              <span className="text-base font-medium text-gray-700">Total</span>
+              <span className="text-xl font-semibold text-gray-900">
                 {formatToRupiah(order.price - order.discount + order.admin_fee)}
               </span>
             </div>

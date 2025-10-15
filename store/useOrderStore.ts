@@ -11,14 +11,16 @@ import moment from "moment";
 import { create } from "zustand";
 
 interface StoreState {
-  form: Omit<Client, "cover" | "seo">;
+  form: Client;
   activeStep: number;
   maxStepReached: number;
   theme: Theme | null;
   pkg: Package | null;
   isLoading: boolean;
   fullfilledSteps: boolean[];
-  order: Omit<Order, "id" | "client_id">;
+  order: Omit<Order, "client_id">;
+  toggleEndTimes: boolean[];
+  hasRecreateInvoice: boolean;
   setForm: (
     name: string,
     value:
@@ -35,9 +37,11 @@ interface StoreState {
   setPackage: (pkg: Package) => void;
   setIsLoading: (isLoading: boolean) => void;
   resetForm: () => void;
-  setFullForm: (form: Omit<Client, "cover" | "seo">) => void;
+  setFullForm: (form: Client) => void;
   setFullfilledSteps: (fullfilledSteps: boolean[]) => void;
-  setNewOrder: (order: Omit<Order, "id" | "client_id">) => void;
+  setNewOrder: (order: Omit<Order, "client_id">) => void;
+  setToggleEndTimes: (toggleEndTimes: boolean[]) => void;
+  setHasRecreateInvoice: (hasRecreateInvoice: boolean) => void;
 }
 
 export const initialEvent: Event = {
@@ -50,7 +54,7 @@ export const initialEvent: Event = {
   image: "",
 };
 
-export const initialForm: Omit<Client, "cover" | "seo"> = {
+export const initialForm: Client = {
   id: undefined,
   slug: "",
   phone: "",
@@ -67,19 +71,15 @@ export const initialForm: Omit<Client, "cover" | "seo"> = {
   participants: [],
   theme_category_id: null,
   theme_id: null,
-  music: null,
 };
 
-const initialOrder: Omit<Order, "id" | "client_id"> = {
+const initialOrder: Order = {
+  id: undefined,
+  client_id: undefined,
   admin_fee: 0,
   price: 0,
   order_id: "",
   discount: 0,
-  name: "",
-  package_id: 0,
-  phone: "",
-  email: "",
-  theme_id: 0,
   status: "pending",
   created_at: moment().format("DD-MM-YYYY"),
   snap_token: undefined,
@@ -95,6 +95,8 @@ const useOrderStore = create<StoreState>((set) => ({
   isLoading: false,
   fullfilledSteps: [],
   order: initialOrder,
+  toggleEndTimes: [false],
+  hasRecreateInvoice: false,
 
   setForm: (
     name: string,
@@ -126,13 +128,18 @@ const useOrderStore = create<StoreState>((set) => ({
 
   setPackage: (pkg: Package) => set({ pkg }),
 
-  setFullForm: (form: Omit<Client, "cover" | "seo">) => set({ form }),
+  setFullForm: (form: Client) => set({ form }),
 
   resetForm: () => set({ form: initialForm }),
 
   setFullfilledSteps: (fullfilledSteps: boolean[]) => set({ fullfilledSteps }),
 
-  setNewOrder: (order: Omit<Order, "id" | "client_id">) => set({ order }),
+  setNewOrder: (order: Omit<Order, "client_id">) => set({ order }),
+
+  setToggleEndTimes: (toggleEndTimes: boolean[]) => set({ toggleEndTimes }),
+
+  setHasRecreateInvoice: (hasRecreateInvoice: boolean) =>
+    set({ hasRecreateInvoice }),
 }));
 
 export default useOrderStore;

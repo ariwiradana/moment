@@ -20,6 +20,7 @@ const OrderOpeningClosing = () => {
   const handleUseTemplate = () => {
     const currentForm = { ...store.form, ...defaultOpeningClosing };
     store.setFullForm(currentForm);
+    window.scrollBy({ top: 500, behavior: "smooth" });
   };
 
   return (
@@ -49,7 +50,7 @@ const OrderOpeningClosing = () => {
         <ButtonSecondary
           className="mt-4"
           icon={<BiCheck />}
-          size="medium"
+          size="small"
           title="Gunakan ini"
           type="button"
           onClick={handleUseTemplate}

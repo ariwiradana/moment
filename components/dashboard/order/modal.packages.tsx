@@ -26,28 +26,28 @@ const ModalPackages = ({ pkg, isOpen, setOpenModal, theme }: Props) => {
         <div
           className={`text-dashboard-dark bg-white border border-dashboard-dark/10 p-8 lg:p-10`}
         >
-          <h2 className={`${redhat.className} text-2xl font-semibold`}>
+          <h2 className={`${redhat.className} text-lg text-dashboard-dark font-semibold`}>
             {pkg?.name}
           </h2>
 
-          <div className="flex items-center gap-2 my-2">
+          <div className="flex items-center gap-2">
             {pkg?.discount && pkg?.discount > 0 ? (
               <h2
-                className={`${redhat.className} text-lg md:text-xl leading-4 text-dashboard-dark/50 line-through`}
+                className={`${redhat.className} text-base md:text-lg leading-4 text-dashboard-dark/50 line-through`}
               >
                 {formatToRupiah(pkg?.price)}
               </h2>
             ) : null}
             {pkg?.price && (
               <h2
-                className={`${redhat.className} font-medium text-lg md:text-xl`}
+                className={`${redhat.className} font-medium text-base md:text-lg`}
               >
                 {formatToRupiah(pkg?.price - pkg?.discount)}
               </h2>
             )}
           </div>
           <ul
-            className={`${redhat.className} mt-4 list-inside text-base capitalize leading-7 marker:text-xs`}
+            className={`${redhat.className} mt-4 list-inside text-sm capitalize leading-7 marker:text-xs`}
           >
             <li
               className={`list-disc ${

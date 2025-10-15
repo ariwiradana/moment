@@ -10,6 +10,7 @@ import { Client, Order, OrderStatus, SnapTransactionResult } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import ButtonPrimary from "../elements/button.primary";
 import { redhat } from "@/lib/fonts";
+import { generateInvoiceId } from "@/utils/generateInvoiceId";
 
 interface Props {
   mutate?: KeyedMutator<{ data: Client }>;
@@ -22,11 +23,22 @@ const OrderForm = ({ mutate }: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const isUpdate = router.pathname === "/order/[slug]";
+  const isUpdate = router.pathname === "/order/[orderId]";
   const isClientSaved = store.form.id;
   const isLastStep = store.activeStep === steps.length - 1;
-  const isAllFulfilled = useMemo(() => {
-    return store.fullfilledSteps?.[store.activeStep];
+  const isSettlement = store.order.status === "settlement";
+  const isRecreatePayment = ["expire", "deny", "cancel"].includes(
+    store.order.status
+  );
+
+  const isFullfilledStep = useMemo(() => {
+    if (!store.fullfilledSteps) return false;
+
+    if (isLastStep) {
+      return store.fullfilledSteps.every(Boolean);
+    } else {
+      return Boolean(store.fullfilledSteps[store.activeStep]);
+    }
   }, [store.activeStep, store.fullfilledSteps]);
 
   useSWR(
@@ -35,10 +47,23 @@ const OrderForm = ({ mutate }: Props) => {
       : null,
     fetcher,
     {
-      refreshInterval: 10000,
-      onSuccess: (data) => {
-        console.log("✅ Status Midtrans:", data.transaction_status);
+      onSuccess: async (result) => {
+        if (!result.data && result.data.status_code === "404") return;
+
+        store.setNewOrder({
+          ...store.order,
+          status: result.data.transaction_status,
+        });
+
+        if (store.order.status !== result.data.transaction_status) {
+          await handleSaveOrderStatus(
+            store.order.id as number,
+            result.data.transaction_status
+          );
+        }
       },
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
   );
 
@@ -74,8 +99,6 @@ const OrderForm = ({ mutate }: Props) => {
     }
   };
 
-  console.log(store.order);
-
   const handleSaveOrderSnapToken = async (id: number, snap_token: string) => {
     try {
       const res = await getClient("/api/guest/order/snap-token", {
@@ -99,7 +122,12 @@ const OrderForm = ({ mutate }: Props) => {
     if (!newOrder || !store.theme?.slug) return;
 
     try {
-      const payload: Order = { ...newOrder };
+      const payload: Order = {
+        ...newOrder,
+        client: { ...store.form },
+      };
+
+      console.log({ pay: payload });
 
       // ✅ Jika token sudah ada (misalnya user close popup dan mau bayar lagi)
       if (store.order.snap_token) {
@@ -108,13 +136,10 @@ const OrderForm = ({ mutate }: Props) => {
       }
 
       // ✅ Kalau belum ada token → buat transaksi baru
-      const res = await getClient(
-        `/api/guest/order/payment/${store.theme.slug}`,
-        {
-          method: "POST",
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await getClient(`/api/guest/order/payment`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
       const result = await res.json();
 
       if (result.success && result.data.token) {
@@ -131,7 +156,6 @@ const OrderForm = ({ mutate }: Props) => {
     }
   };
 
-  // ✅ Fungsi pemanggil Midtrans Snap popup
   const handleMidtransSnapToken = (snapToken: string, order: Order) => {
     window.snap?.pay(snapToken, {
       onSuccess: async (result: SnapTransactionResult) => {
@@ -139,13 +163,15 @@ const OrderForm = ({ mutate }: Props) => {
           order.id as number,
           result.transaction_status
         );
-        router.push(`/${store.theme?.slug}/order/berhasil`);
+        toast.success("Pembayaran berhasil");
+        router.push(`/order/${order.order_id}`);
       },
       onPending: async (result: SnapTransactionResult) => {
         await handleSaveOrderStatus(
           order.id as number,
           result.transaction_status
         );
+        router.push(`/order/${order.order_id}`);
       },
       onError: async (result: SnapTransactionResult) => {
         await handleSaveOrderStatus(
@@ -159,7 +185,7 @@ const OrderForm = ({ mutate }: Props) => {
 
   const handleSaveClient = async () => {
     try {
-      const payload = { ...store.form, status: "paid" };
+      const payload = { ...store.form };
       const response = await getClient(
         `/api/guest/order/client/${
           isUpdate || isClientSaved ? "update" : "create"
@@ -188,6 +214,9 @@ const OrderForm = ({ mutate }: Props) => {
       const payload: Order = {
         ...store.order,
         client_id: client.id,
+        order_id: isRecreatePayment
+          ? generateInvoiceId()
+          : store.order.order_id,
       };
 
       const response = await getClient(`/api/guest/order/create`, {
@@ -198,6 +227,7 @@ const OrderForm = ({ mutate }: Props) => {
 
       if (result.success) {
         store.setNewOrder({ ...store.order, order_id: result.data.order_id });
+        console.log("hasil save order", result.data);
         return result.data;
       } else {
         toast.error(result.message);
@@ -218,13 +248,25 @@ const OrderForm = ({ mutate }: Props) => {
         );
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        const toastId = toast.loading("Memproses pembayaran");
         setIsLoading(true);
-        const newClient = await handleSaveClient();
-        const newOrder = await handleSaveOrder(newClient);
-        await handlePay(newOrder);
-        setIsLoading(false);
-        toast.dismiss(toastId);
+        const toastId = toast.loading("Menyimpan data pesanan");
+        try {
+          const newClient = await handleSaveClient();
+          const newOrder = await handleSaveOrder(newClient);
+          if (store.order.status !== "settlement") {
+            await handlePay(newOrder);
+            toast.dismiss(toastId);
+          } else {
+            toast.success("Undanganmu berhasil disimpan", { id: toastId });
+          }
+        } catch (error) {
+          toast.error(
+            error instanceof Error ? error.message : "Terjadi kesalahan",
+            { id: toastId }
+          );
+        } finally {
+          setIsLoading(false);
+        }
       }
     },
     [store]
@@ -253,10 +295,10 @@ const OrderForm = ({ mutate }: Props) => {
         <ButtonPrimary
           isloading={isLoading}
           className="print:hidden"
-          disabled={!isAllFulfilled}
+          disabled={!isFullfilledStep}
           type="submit"
           title={
-            isLastStep && isUpdate
+            isLastStep && isSettlement
               ? "Simpan Perubahan"
               : isLastStep
               ? "Bayar Sekarang"

@@ -90,27 +90,25 @@ export default function useSteps() {
       });
     }
 
-    baseSteps.push(
-      {
-        stepTitle: "Pembuka & Penutup",
-        stepDescription: "Salam pembuka & penutup.",
-        title: "Tambahkan Salam Pembuka & Penutup",
-        description:
-          "Kamu dapat menyesuaikan kalimat pembuka dan penutup undangan sesuai keinginan.",
-        component: <OrderOpeningClosing />,
-        icon: <BiMessageSquareDetail />,
-      },
-      {
-        stepTitle: "Pembayaran",
-        stepDescription: "Lanjutkan ke Pembayaran.",
-        title: "Pembayaran",
-        description:
-          "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
-        component: <OrderPayment />,
-        icon: <BiCreditCard />,
-      }
-    );
+    baseSteps.push({
+      stepTitle: "Pembuka & Penutup",
+      stepDescription: "Salam pembuka & penutup.",
+      title: "Tambahkan Salam Pembuka & Penutup",
+      description:
+        "Kamu dapat menyesuaikan kalimat pembuka dan penutup undangan sesuai keinginan.",
+      component: <OrderOpeningClosing />,
+      icon: <BiMessageSquareDetail />,
+    });
 
+    baseSteps.push({
+      stepTitle: "Pembayaran",
+      stepDescription: "Lanjutkan ke Pembayaran.",
+      title: "Pembayaran",
+      description:
+        "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
+      component: <OrderPayment />,
+      icon: <BiCreditCard />,
+    });
     return baseSteps;
   }, [store.pkg]);
 

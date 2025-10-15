@@ -45,8 +45,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           gift_bank_name = $12,
           gift_account_name = $13,
           gift_account_number = $14,
+          email = $15,
           updated_at = NOW()
-      WHERE id = $15
+      WHERE id = $16
       RETURNING *;
       `,
       [
@@ -64,6 +65,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         client.gift_bank_name || null,
         client.gift_account_name || null,
         client.gift_account_number || null,
+        client.email,
         client.id,
       ]
     );
@@ -179,7 +181,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).json({
       success: true,
-      message: "Data undangan berhasil diperbarui.",
+      message: "Undanganmu berhasil disimpan.",
       data: {
         ...updatedClient,
         media: { music_title: video_link, image_link },

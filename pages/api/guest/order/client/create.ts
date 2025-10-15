@@ -32,17 +32,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } = await sql.query(
       `
       INSERT INTO clients (
-        slug, name, phone, theme_id, theme_category_id, status, package_id,
+        slug, name, phone, email, theme_id, theme_category_id, status, package_id,
         opening_title, opening_description, closing_title, closing_description,
         gift_bank_name, gift_account_name, gift_account_number
       )
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
       RETURNING *;
     `,
       [
         slug,
         client.name,
         client.phone,
+        client.email,
         client.theme_id,
         client.theme_category_id,
         client.status,
@@ -145,7 +146,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // 🔹 Final response
     return res.status(200).json({
       success: true,
-      message: 'Data undagan berhasil disimpan.',
+      message: "Undanganmu berhasil disimpan.",
       data: {
         ...newClient,
         media: mediaForm[0],

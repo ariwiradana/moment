@@ -8,9 +8,11 @@ const OrderHeaderMobile = () => {
   const steps = useSteps();
 
   return (
-    <div className="flex print:hidden lg:hidden justify-between items-center border-b border-b-dashboard-dark/5 gap-x-4 col-span-3 py-3 sticky top-12 z-10 mb-2 bg-white">
+    <div
+      className={`flex print:hidden lg:hidden justify-between items-center border-b border-b-dashboard-dark/5 gap-x-4 col-span-3 py-3 sticky top-12 z-10 mb-2 bg-white ${redhat.className}`}
+    >
       <div>
-        <h5 className="text-2xl font-semibold text-dashboard-dark">
+        <h5 className="text-xl font-semibold text-dashboard-dark">
           {steps[store.activeStep].stepTitle}
         </h5>
         <p className={`${redhat.className} text-base text-dashboard-dark/70`}>

@@ -50,7 +50,7 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                           <div className="flex items-center gap-x-2">
                             <div>
                               <h1 className="text-gray-800 font-semibold text-sm">
-                                {order.name}
+                                {order.client?.name}
                               </h1>
                               <p className="text-gray-500 font-medium text-xs">
                                 {order.order_id}
@@ -114,7 +114,7 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                               Telepon
                             </p>
                             <p className="text-gray-800 font-semibold text-sm capitalize">
-                              {order.phone}
+                              {order.client?.phone}
                             </p>
                           </div>
                           <div>
@@ -183,13 +183,6 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                     </thead>
                     <tbody>
                       {state.orders.map((order, index) => {
-                        const oneMonthAgo = new Date();
-                        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-                        const isExpired =
-                          !order.client ||
-                          new Date(order.updated_at as string) < oneMonthAgo;
-
                         return (
                           <tr
                             key={order.id}
@@ -204,22 +197,24 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                              <p className="whitespace-nowrap">{order.name}</p>
+                              <p className="whitespace-nowrap">
+                                {order.client?.name}
+                              </p>
                               <p className="text-gray-600 font-medium text-sm">
                                 {order.client?.slug}
                               </p>
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                              <p>{order.phone ?? "-"}</p>
+                              <p>{order.client?.phone ?? "-"}</p>
                             </td>
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                               <span className="whitespace-nowrap">
-                                {order.theme?.name}
+                                {order.client?.theme?.name}
                               </span>
                               <p className="text-gray-600 font-medium text-sm">
-                                {order.package?.name}
+                                {order.client?.package?.name}
                               </p>
                             </td>
 
@@ -237,21 +232,33 @@ const AdminOrders: React.FC<Props> = ({ token }) => {
 
                             <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                               <div className="flex">
-                                {!isExpired ? (
-                                  <InputSelect
-                                    inputSize="small"
-                                    options={orderStatus}
-                                    value={order.status as OrderStatus}
-                                    onChange={(e) =>
-                                      actions.handleSetStatus(
-                                        order.id as number,
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                ) : (
-                                  "Expired"
-                                )}
+                                <span
+                                  className={`px-2 py-1 text-sm font-medium ${
+                                    order.status === "pending"
+                                      ? "bg-yellow-100 text-yellow-600"
+                                      : order.status === "settlement"
+                                      ? "bg-green-100 text-green-600"
+                                      : order.status === "expire"
+                                      ? "bg-red-100 text-red-600"
+                                      : order.status === "cancel"
+                                      ? "bg-gray-100 text-gray-600"
+                                      : order.status === "deny"
+                                      ? "bg-red-200 text-red-700"
+                                      : "bg-gray-100 text-gray-600"
+                                  }`}
+                                >
+                                  {order.status === "pending"
+                                    ? "Menunggu Pembayaran"
+                                    : order.status === "settlement"
+                                    ? "Pembayaran Berhasil"
+                                    : order.status === "expire"
+                                    ? "Transaksi Kadaluarsa"
+                                    : order.status === "cancel"
+                                    ? "Dibatalkan"
+                                    : order.status === "deny"
+                                    ? "Ditolak"
+                                    : "Unknown"}
+                                </span>
                               </div>
                             </td>
 

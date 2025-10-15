@@ -21,13 +21,12 @@ const OrderEvents = () => {
     store.setForm("events", newEvents);
   };
 
-  const [toggleEndTimes, setToggleEndTimes] = useState([false]);
   const [expandedAccordions, setExpandedAccordions] = useState([true]);
 
   const handleToggleEndTimes = (index: number) => {
-    const newToggleEndTimes = [...toggleEndTimes];
+    const newToggleEndTimes = [...store.toggleEndTimes];
     newToggleEndTimes[index] = !newToggleEndTimes[index];
-    setToggleEndTimes(newToggleEndTimes);
+    store.setToggleEndTimes(newToggleEndTimes);
   };
 
   const handleNewEvent = () => {
@@ -47,6 +46,8 @@ const OrderEvents = () => {
       store.setForm("events", trimmedEvents);
     }
   }, [store.pkg]);
+
+  console.log({ evene: store.form });
 
   return (
     <>
@@ -111,8 +112,8 @@ const OrderEvents = () => {
                 />
                 <div className="flex items-end">
                   <Input
-                    type={!toggleEndTimes[index] ? "time" : "text"}
-                    disabled={toggleEndTimes[index]}
+                    type={!store.toggleEndTimes[index] ? "time" : "text"}
+                    disabled={store.toggleEndTimes[index]}
                     value={store.form.events[index].end_time}
                     className="w-full"
                     label="Jam Selesai Acara"
@@ -126,15 +127,19 @@ const OrderEvents = () => {
                       handleChangeEvent(
                         index,
                         "end_time",
-                        !toggleEndTimes[index] ? "Selesai" : ""
+                        !store.toggleEndTimes[index]
+                          ? "Selesai"
+                          : moment().add(1, "hour").minutes(0).format("HH:mm")
                       );
                     }}
                     type="button"
                     className={`bg-dashboard-dark text-white text-sm px-2 ${
-                      toggleEndTimes[index] ? "min-h-[58px]" : "min-h-[60px]"
+                      store.toggleEndTimes[index]
+                        ? "min-h-[58px]"
+                        : "min-h-[60px]"
                     }`}
                   >
-                    {toggleEndTimes[index]
+                    {store.toggleEndTimes[index]
                       ? "Atur Jam Selesai Acara"
                       : "Atur Sampai Selesai"}
                   </button>

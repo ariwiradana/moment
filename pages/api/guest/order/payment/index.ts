@@ -10,7 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 
-    const { slug } = req.query;
     const order: Order = req.body;
 
     if (!order.order_id) throw new Error("ID order wajib diisi.");
@@ -28,12 +27,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         gross_amount: order.price - order.discount,
       },
       customer_details: {
-        first_name: order.name,
-        email: order.email,
-        phone: order.phone,
+        first_name: order.client?.name,
+        email: order.client?.email,
+        phone: order.client?.phone,
       },
       callbacks: {
-        finish: `${process.env.BASE_URL}/${slug}/order/berhasil`,
+        finish: `${process.env.BASE_URL}/order/${order.order_id}`,
       },
     };
 

@@ -27,7 +27,7 @@ const InputTextarea: FC<InputTextareaProps> = (props) => {
     <div className={`${redhat.className}`}>
       <label
         htmlFor={props.id}
-        className="block text-dashboard-dark/60 mb-1 text-base"
+        className="block text-dashboard-dark/60 mb-1 text-sm"
       >
         {props.label}{" "}
         <span className="text-sm text-gray-400">

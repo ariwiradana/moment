@@ -33,7 +33,7 @@ const InputSelect: FC<InputSelectProps> = (props) => {
       {props.label && (
         <label
           htmlFor={props.id}
-          className="block text-dashboard-dark/60 mb-1 text-base"
+          className="block text-dashboard-dark/60 mb-1 text-sm"
         >
           {props.label}{" "}
           <span className="text-sm text-gray-400">
@@ -43,7 +43,7 @@ const InputSelect: FC<InputSelectProps> = (props) => {
       )}
       <select
         {...props}
-        className={`w-full border focus:ring-1 focus:outline-none text-base ${
+        className={`w-full border focus:ring-1 focus:outline-none text-[15px] ${
           props.error
             ? "border-admin-danger focus:ring-transparent"
             : "focus:ring-admin-dark border-dashboard-dark/10"

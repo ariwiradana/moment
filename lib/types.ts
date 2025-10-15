@@ -86,8 +86,8 @@ export interface Client {
   packages?: Package[];
   theme_category?: ThemeCategory;
   theme?: Theme | null;
-  cover: null | string;
-  seo: null | string;
+  cover?: null | string;
+  seo?: null | string;
   is_preview?: boolean;
   is_detail?: boolean;
   guests?: string[];
@@ -218,11 +218,6 @@ export interface Order {
   id?: number;
   order_id?: string;
   client_id?: number;
-  name: string;
-  phone: string;
-  email: string;
-  theme_id?: number;
-  package_id?: number;
   price: number;
   discount: number;
   admin_fee: number;
