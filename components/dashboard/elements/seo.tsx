@@ -14,7 +14,7 @@ interface SeoProps {
   updatedTime?: string;
   noIndex?: boolean;
   locale?: string;
-  robots?: string; // ✅ Tambahkan ini
+  robots?: string;
 }
 
 export default function Seo({
@@ -30,7 +30,7 @@ export default function Seo({
   updatedTime,
   noIndex = false,
   locale = "id_ID",
-  robots = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1", // ✅ Default SEO-friendly
+  robots = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
 }: SeoProps) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -40,19 +40,13 @@ export default function Seo({
           headline: title,
           description,
           image,
-          author: {
-            "@type": "Person",
-            name: author,
-          },
+          author: { "@type": "Person", name: author },
           datePublished: publishedTime,
           dateModified: updatedTime || publishedTime,
           publisher: {
             "@type": "Organization",
             name: siteName,
-            logo: {
-              "@type": "ImageObject",
-              url: image,
-            },
+            logo: { "@type": "ImageObject", url: image },
           },
         }
       : {
@@ -76,7 +70,7 @@ export default function Seo({
 
   return (
     <Head>
-      {/* Primary */}
+      {/* Primary SEO */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
@@ -90,7 +84,7 @@ export default function Seo({
       {noIndex ? (
         <meta name="robots" content="noindex, nofollow" />
       ) : (
-        <meta name="robots" content={robots} /> // ✅ Gunakan robots props
+        <meta name="robots" content={robots} />
       )}
 
       {/* Open Graph */}
@@ -114,12 +108,40 @@ export default function Seo({
       <meta name="twitter:image" content={image} />
       <meta name="twitter:creator" content="@momentinvitation" />
 
-      {/* Icons */}
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      {/* Icons for iOS */}
+      <link
+        rel="apple-touch-icon"
+        sizes="120x120"
+        href="/apple-touch-icon-120x120.png"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="152x152"
+        href="/apple-touch-icon-152x152.png"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="167x167"
+        href="/apple-touch-icon-167x167.png"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/apple-touch-icon-180x180.png"
+      />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+      />
+      <meta name="apple-mobile-web-app-title" content={siteName} />
+
+      {/* Icons for Android */}
+      <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
       <meta name="theme-color" content="#ffffff" />
 
-      {/* Structured Data (JSON-LD) */}
+      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
