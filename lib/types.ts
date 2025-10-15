@@ -91,14 +91,14 @@ export interface Client {
   is_preview?: boolean;
   is_detail?: boolean;
   guests?: string[];
-  wishes?: Review[];
+  wishes?: Wish[];
   media?: MediaForm | null;
   order?: Order;
   created_at?: Date | string;
   updated_at?: Date | string;
 }
 
-export interface Review {
+export interface Wish {
   id: number;
   client_id: number;
   name: string;
@@ -182,7 +182,7 @@ export type ApiHandler = (
   res: NextApiResponse
 ) => Promise<void>;
 
-export type Status = "unpaid" | "paid" | "completed";
+export type Status = "active" | "inactive";
 export type OrderStatus =
   | "pending"
   | "settlement"
