@@ -33,7 +33,7 @@ const ModalPackages = ({ pkg, isOpen, setOpenModal, theme }: Props) => {
           <div className="flex items-center gap-2 my-2">
             {pkg?.discount && pkg?.discount > 0 ? (
               <h2
-                className={`${redhat.className} text-base md:text-lg leading-4 text-dashboard-dark/50 line-through`}
+                className={`${redhat.className} text-lg md:text-xl leading-4 text-dashboard-dark/50 line-through`}
               >
                 {formatToRupiah(pkg?.price)}
               </h2>
@@ -47,7 +47,7 @@ const ModalPackages = ({ pkg, isOpen, setOpenModal, theme }: Props) => {
             )}
           </div>
           <ul
-            className={`${redhat.className} mt-4 list-inside text-sm capitalize leading-7 marker:text-xs`}
+            className={`${redhat.className} mt-4 list-inside text-base capitalize leading-7 marker:text-xs`}
           >
             <li
               className={`list-disc ${
@@ -150,7 +150,7 @@ const ModalPackages = ({ pkg, isOpen, setOpenModal, theme }: Props) => {
                 Fitur Tambahan Tema
               </p>
               <ul
-                className={`${redhat.className} list-inside text-sm capitalize leading-7 marker:text-xs`}
+                className={`${redhat.className} list-inside text-base capitalize leading-7 marker:text-xs`}
               >
                 {theme.features?.map((feature) => (
                   <li

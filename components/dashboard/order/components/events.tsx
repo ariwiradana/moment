@@ -74,7 +74,7 @@ const OrderEvents = () => {
               <InputTextarea
                 value={store.form.events[index].address}
                 placeholder="Contoh: JL. Raya Kerobokan, Kuta Utara, Badung"
-                rows={6}
+                rows={5}
                 label="Alamat Acara"
                 onChange={(e) =>
                   handleChangeEvent(index, "address", e.target.value)
@@ -131,7 +131,7 @@ const OrderEvents = () => {
                     }}
                     type="button"
                     className={`bg-dashboard-dark text-white text-sm px-2 ${
-                      toggleEndTimes[index] ? "min-h-[54px]" : "min-h-[56px]"
+                      toggleEndTimes[index] ? "min-h-[58px]" : "min-h-[60px]"
                     }`}
                   >
                     {toggleEndTimes[index]
@@ -152,7 +152,7 @@ const OrderEvents = () => {
                     }}
                     icon={<BiTrash />}
                     type="button"
-                    size="small"
+                    size="medium"
                   />
                 )}
               </div>
@@ -166,7 +166,7 @@ const OrderEvents = () => {
             onClick={handleNewEvent}
             type="button"
             title="Tambah Acara Lainnya"
-            size="small"
+            size="medium"
             icon={<BiPlus />}
           />
         </div>

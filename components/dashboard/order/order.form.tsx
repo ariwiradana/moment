@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import ButtonPrimary from "@/components/admin/elements/button.primary";
 import { BiChevronLeft, BiCheck, BiCreditCard, BiSave } from "react-icons/bi";
 import toast from "react-hot-toast";
 import useOrderStore from "@/store/useOrderStore";
@@ -9,6 +8,8 @@ import useSteps from "./order.steps";
 import useSWR, { KeyedMutator } from "swr";
 import { Client, Order, OrderStatus, SnapTransactionResult } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
+import ButtonPrimary from "../elements/button.primary";
+import { redhat } from "@/lib/fonts";
 
 interface Props {
   mutate?: KeyedMutator<{ data: Client }>;
@@ -20,8 +21,6 @@ const OrderForm = ({ mutate }: Props) => {
   const steps = useSteps();
 
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log({ orders: store.order });
 
   const isUpdate = router.pathname === "/order/[slug]";
   const isClientSaved = store.form.id;
@@ -234,7 +233,7 @@ const OrderForm = ({ mutate }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 mt-6 max-w-screen-md sticky top-40"
+      className={`flex flex-col gap-4 mt-6 max-w-screen-md sticky top-40 ${redhat.className}`}
     >
       {steps[store.activeStep].component}
       <div className="mt-4 flex items-center gap-x-6">
@@ -245,7 +244,7 @@ const OrderForm = ({ mutate }: Props) => {
               store.setActiveStep(store.activeStep - 1);
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="flex items-center text-sm gap-x-2 print:hidden"
+            className="flex items-center text-base gap-x-2 print:hidden"
           >
             <BiChevronLeft className="text-lg" />
             Sebelumnya

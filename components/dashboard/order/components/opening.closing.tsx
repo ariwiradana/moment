@@ -26,7 +26,7 @@ const OrderOpeningClosing = () => {
     <>
       <div className="border border-dashboard-dark/10 p-4 mb-6">
         <div className="w-3 h-3 rounded-full aspect-square absolute z-10 -top-1 -right-1 animate-ping bg-red-500"></div>
-        <p className="text-dashboard-dark/80 text-sm">
+        <p className="text-dashboard-dark/80 text-base">
           <span className="font-semibold text-dashboard-dark">
             Contoh Kalimat Pembuka:
           </span>
@@ -49,7 +49,7 @@ const OrderOpeningClosing = () => {
         <ButtonSecondary
           className="mt-4"
           icon={<BiCheck />}
-          size="small"
+          size="medium"
           title="Gunakan ini"
           type="button"
           onClick={handleUseTemplate}
@@ -64,7 +64,7 @@ const OrderOpeningClosing = () => {
         label="Judul Pembuka Undangan"
       />
       <InputTextarea
-        rows={8}
+        rows={6}
         inputSize="medium"
         onChange={(e) => store.setForm("opening_description", e.target.value)}
         value={store.form.opening_description}
@@ -82,7 +82,7 @@ const OrderOpeningClosing = () => {
       />
       <InputTextarea
         inputSize="medium"
-        rows={8}
+        rows={6}
         onChange={(e) => store.setForm("closing_description", e.target.value)}
         value={store.form.closing_description}
         placeholder={`Contoh: ${defaultOpeningClosing.closing_description}`}

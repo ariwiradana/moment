@@ -84,25 +84,26 @@ const OrderInformation = () => {
         />
       )}
 
-      <Input
-        value={store.form.name}
-        onChange={(e) => store.setForm("name", e.target.value)}
-        inputSize="medium"
-        name="name"
-        placeholder="contoh: Rama Putra"
-        label="Nama"
-      />
+      <div className="grid md:grid-cols-2 gap-4">
+        <Input
+          value={store.form.name}
+          onChange={(e) => store.setForm("name", e.target.value)}
+          inputSize="medium"
+          name="name"
+          placeholder="contoh: Rama Putra"
+          label="Nama"
+        />
 
-      <Input
-        value={store.form.email}
-        onChange={(e) => store.setForm("email", e.target.value)}
-        inputSize="medium"
-        name="email"
-        placeholder="contoh: rama@gmail.com"
-        label="Email"
-        type="email"
-        description="Email diperlukan untuk menerima notifikasi dan bukti pembayaran dari sistem."
-      />
+        <Input
+          value={store.form.email}
+          onChange={(e) => store.setForm("email", e.target.value)}
+          inputSize="medium"
+          name="email"
+          placeholder="contoh: rama@gmail.com"
+          label="Email"
+          type="email"
+        />
+      </div>
 
       <Input
         type="number"
@@ -112,12 +113,11 @@ const OrderInformation = () => {
         name="phone"
         placeholder="contoh: 081627522612"
         label="No Hp / WhatsApp"
-        description="Nomor HP / WhatsApp diperlukan agar kami bisa menghubungimu."
       />
 
       {!isUpdate && (
         <div className={redhat.className}>
-          <label className="block text-dashboard-dark/60 mb-1 text-sm">
+          <label className="block text-dashboard-dark/60 mb-1 text-base">
             Pilih Paket
           </label>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -147,7 +147,7 @@ const OrderInformation = () => {
                     <div className="flex items-center flex-wrap gap-x-1">
                       {pkg?.discount && pkg?.discount > 0 ? (
                         <h2
-                          className={`text-sm text-dashboard-dark/30 line-through`}
+                          className={`text-base text-dashboard-dark/30 line-through`}
                         >
                           {formatToRupiah(pkg?.price)}
                         </h2>
@@ -168,7 +168,7 @@ const OrderInformation = () => {
                         component: pkg,
                       });
                     }}
-                    className="mt-4 flex items-center gap-x-1 text-sm font-medium"
+                    className="mt-4 flex items-center gap-x-1 text-base font-medium"
                   >
                     Detail Paket
                     <span>

@@ -16,26 +16,24 @@ const InputSelect: FC<InputSelectProps> = (props) => {
   const styles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
-        return "px-1 py-1.5 text-xs";
+        return "px-1 py-1.5";
       case "small":
-        return "p-2 text-sm";
+        return "p-2";
       case "medium":
-        return "p-3 text-sm";
+        return "p-3";
       case "large":
-        return "py-4 pr-4 px-3 text-sm";
+        return "py-4 pr-4 px-3";
     }
   };
 
   return (
     <div
-      className={`${props.full ? "w-full" : "w-auto"} ${
-        montserrat.className
-      } text-sm`}
+      className={`${props.full ? "w-full" : "w-auto"} ${montserrat.className}`}
     >
       {props.label && (
         <label
           htmlFor={props.id}
-          className="block text-dashboard-dark/60 mb-1 text-sm"
+          className="block text-dashboard-dark/60 mb-1 text-base"
         >
           {props.label}{" "}
           <span className="text-sm text-gray-400">
@@ -45,10 +43,10 @@ const InputSelect: FC<InputSelectProps> = (props) => {
       )}
       <select
         {...props}
-        className={`w-full border focus:ring-1 focus:outline-none ${
+        className={`w-full border focus:ring-1 focus:outline-none text-base ${
           props.error
             ? "border-admin-danger focus:ring-transparent"
-            : "focus:ring-black"
+            : "focus:ring-admin-dark border-dashboard-dark/10"
         } ${styles(props.inputSize ?? "large")}`}
       >
         {props.options?.map(({ value, label }) => (

@@ -10,7 +10,7 @@ const OrderHeaderMobile = () => {
   return (
     <div className="flex print:hidden lg:hidden justify-between items-center border-b border-b-dashboard-dark/5 gap-x-4 col-span-3 py-3 sticky top-12 z-10 mb-2 bg-white">
       <div>
-        <h5 className="text-lg font-semibold text-dashboard-dark">
+        <h5 className="text-2xl font-semibold text-dashboard-dark">
           {steps[store.activeStep].stepTitle}
         </h5>
         <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
@@ -45,7 +45,7 @@ const OrderHeaderMobile = () => {
           />
         </svg>
         <div className="w-9 h-9 rounded-full bg-white flex justify-center items-center">
-          <p className="text-sm font-medium text-dashboard-dark">
+          <p className="text-base font-medium text-dashboard-dark">
             {store.activeStep + 1}/{steps.length}
           </p>
         </div>

@@ -24,23 +24,23 @@ const InputTextarea: FC<InputTextareaProps> = (props) => {
     }
   };
   return (
-    <div className={`${redhat.className} text-sm`}>
+    <div className={`${redhat.className}`}>
       <label
         htmlFor={props.id}
-        className="block text-dashboard-dark/60 mb-1 text-sm"
+        className="block text-dashboard-dark/60 mb-1 text-base"
       >
         {props.label}{" "}
-        <span className="text-xs text-gray-400">
+        <span className="text-sm text-gray-400">
           {props.optional && "(opsional)"}
         </span>
       </label>
       <textarea
         rows={props.rows ?? 4}
         {...props}
-        className={`w-full border border-dashboard-dark/10 focus:ring-1 focus:outline-none ${
+        className={`w-full border text-base focus:ring-1 focus:outline-none ${
           props.error
             ? "border-admin-danger focus:ring-transparent"
-            : "focus:ring-admin-dark"
+            : "focus:ring-admin-dark border-dashboard-dark/10"
         } ${paddingStyles(props.inputSize ?? "large")}`}
       />
       {props.error && <p className="text-red-500 text-sm">{props.error}</p>}

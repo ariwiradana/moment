@@ -26,7 +26,7 @@ const Accordion: React.FC<AccordionProps> = ({
         type="button"
         aria-label={`btn-${title.replace(" ", "-").toLowerCase()}`}
         onClick={setIsExpanded}
-        className="w-full text-sm font-semibold flex justify-between items-center"
+        className="w-full text-base font-semibold flex justify-between items-center"
       >
         <span>{title}</span>
         {setIsExpanded && (

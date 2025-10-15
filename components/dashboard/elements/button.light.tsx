@@ -24,9 +24,9 @@ const ButtonLight: FC<ButtonLightProps> = ({
       case "small":
         return "px-4 py-2 text-sm gap-x-2";
       case "medium":
-        return "px-4 py-3 text-sm gap-x-3";
+        return "px-4 py-3 text-sm md:text-base gap-x-2";
       case "large":
-        return "px-6 py-4 text-base gap-x-4";
+        return "px-6 py-4 text-base gap-x-3";
     }
   };
 
@@ -35,7 +35,7 @@ const ButtonLight: FC<ButtonLightProps> = ({
       case "small":
         return "text-sm";
       case "medium":
-        return "text-xs";
+        return "text-base md:text-lg";
       case "large":
         return "text-lg";
     }

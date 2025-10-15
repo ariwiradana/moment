@@ -35,10 +35,13 @@ const Input: FC<InputProps> = ({
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className={`${className ?? ""} ${redhat.className} text-sm relative`}>
-      <label htmlFor={id} className="block text-dashboard-dark/60 mb-1 text-sm">
+    <div className={`${className ?? ""} ${redhat.className} relative`}>
+      <label
+        htmlFor={id}
+        className="block text-dashboard-dark/60 mb-1 text-base"
+      >
         {label}{" "}
-        <span className="text-xs text-gray-400">
+        <span className="text-sm text-gray-400">
           {optional && "(opsional)"}
         </span>
       </label>
@@ -53,10 +56,10 @@ const Input: FC<InputProps> = ({
               : props.type
           }
           id={id}
-          className={`w-full border border-dashboard-dark/10 focus:ring-1 focus:outline-none ${
+          className={`w-full border text-base focus:ring-1 focus:outline-none ${
             error
               ? "border-admin-danger focus:ring-transparent"
-              : "focus:ring-admin-dark"
+              : "focus:ring-admin-dark border-dashboard-dark/10 "
           } ${paddingStyles(inputSize ?? "large")}`}
         />
         {props.type === "password" && (
@@ -85,7 +88,7 @@ const Input: FC<InputProps> = ({
           {error}
         </p>
       ) : description ? (
-        <p className="text-admin-dark/60 text-xs my-1">{description}</p>
+        <p className="text-admin-dark/50 text-sm my-1">{description}</p>
       ) : null}
     </div>
   );

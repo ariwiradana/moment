@@ -25,7 +25,7 @@ const OrderPage = ({ mutate }: Props) => {
             <OrderSidebar />
           </div>
           <div className="col-span-3 lg:col-span-2">
-            <div className="hidden lg:block mb-6">
+            <div className="hidden lg:block mb-8">
               <h1
                 className={`${redhat.className} capitalize text-2xl md:text-3xl lg:text-4xl max-w-sm font-semibold text-dashboard-dark`}
               >

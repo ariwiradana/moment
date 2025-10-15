@@ -36,7 +36,7 @@ const OrderSidebar = () => {
               <button
                 disabled={!isFullfilled}
                 onClick={() => store.setActiveStep(index)}
-                className={`w-8 h-8 flex justify-center items-center rounded-full ${
+                className={`w-9 h-9 flex justify-center items-center rounded-full ${
                   isActive
                     ? "bg-dashboard-dark"
                     : isFullfilled
