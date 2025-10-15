@@ -127,8 +127,6 @@ const OrderForm = ({ mutate }: Props) => {
         client: { ...store.form },
       };
 
-      console.log({ pay: payload });
-
       // ✅ Jika token sudah ada (misalnya user close popup dan mau bayar lagi)
       if (store.order.snap_token) {
         handleMidtransSnapToken(store.order.snap_token, newOrder);

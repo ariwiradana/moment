@@ -19,16 +19,18 @@ export default async function handler(
 
     const authHeader = Buffer.from(`${serverKey}:`).toString("base64");
 
-    const response = await fetch(
-      `https://api.sandbox.midtrans.com/v2/${order_id}/status`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Basic ${authHeader}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://api.midtrans.com/v2"
+        : "https://api.sandbox.midtrans.com/v2";
+
+    const response = await fetch(`${baseUrl}/${order_id}/status`, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${authHeader}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     const data = await response.json();
 

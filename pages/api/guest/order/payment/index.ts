@@ -3,7 +3,10 @@ import handleError from "@/lib/errorHandling";
 import { Order } from "@/lib/types";
 import midtransClient from "midtrans-client";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     if (req.method !== "POST") {
       res.setHeader("Allow", ["POST"]);
@@ -15,10 +18,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!order.order_id) throw new Error("ID order wajib diisi.");
     if (!order.price) throw new Error("Harga wajib diisi.");
 
-    const clientKey = process.env.MIDTRANS_CLIENT_KEY as string;
-    const serverKey = process.env.MIDTRANS_SERVER_KEY as string;
+    const clientKey = process.env.MIDTRANS_CLIENT_KEY;
+    const serverKey = process.env.MIDTRANS_SERVER_KEY;
 
-    if (!clientKey && !serverKey) throw new Error("Key wajib diisi.");
+    if (!clientKey || !serverKey)
+      throw new Error("MIDTRANS key belum dikonfigurasi.");
 
     const snap = new midtransClient.Snap({
       isProduction: process.env.NODE_ENV === "production",
@@ -26,10 +30,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       clientKey,
     });
 
+    const grossAmount = order.price - (order.discount || 0);
+
     const parameter = {
       transaction_details: {
         order_id: order.order_id,
-        gross_amount: order.price - order.discount,
+        gross_amount: grossAmount,
       },
       customer_details: {
         first_name: order.client?.name,
@@ -46,10 +52,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({
       success: true,
       data: transaction,
+      env: process.env.NODE_ENV,
     });
   } catch (error) {
     return handleError(res, error);
   }
-};
-
-export default handler;
+}
