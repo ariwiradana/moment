@@ -23,7 +23,7 @@ const ThankyouComponent = () => {
 
   return (
     <section className="h-dvh snap-start w-full overflow-hidden relative flex flex-col justify-center">
-      <div className="absolute inset-0 bg-luma-dark/80 z-10"></div>
+      <div className="absolute inset-0 bg-luma-primary/95 z-10"></div>
       <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center relative z-30">
         <p
           className={`text-white mt-4 text-xs md:text-sm lg:text-base uppercase tracking-[3px] text-center ${rubik.className}`}

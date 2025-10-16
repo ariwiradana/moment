@@ -187,7 +187,7 @@ const RSVPWishesComponent: FC = () => {
 
       {/* Wishes Section */}
       <section className="h-dvh snap-start w-full relative">
-        <div className="absolute z-20 inset-0 bg-luma-dark/80 flex flex-col justify-center items-center py-10">
+        <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/80 to-luma-primary/95 flex flex-col justify-center items-center py-10">
           <div
             className={`w-full px-8 mb-8 lg:mb-12 ${
               state.wishes.length > 0 ? "text-left" : "text-center"
