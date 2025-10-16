@@ -90,7 +90,7 @@ const Hero: NextPage = () => {
           </div>
           <h1
             data-aos="fade-down"
-            className="font-bigilla leading-[46px] md:leading-[56px] lg:leading-[64px] text-center text-white text-6xl md:text-7xl lg:text-8xl mb-3 mt-5 lg:mt-8"
+            className="font-bigilla leading-[46px] md:leading-[56px] lg:leading-[72px] text-center text-white text-6xl md:text-7xl lg:text-8xl mb-3 mt-5 lg:mt-8"
           >
             <span aria-label={`Pengantin pria: ${groom?.nickname}`}>
               {groom?.nickname}
