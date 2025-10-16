@@ -96,7 +96,7 @@ const Photos: NextPage = () => {
                   slidesPerView: 4, // desktop
                 },
                 1280: {
-                  slidesPerView: 6, // large device
+                  slidesPerView: 5, // large device
                 },
               }}
               grid={{ rows: 2, fill: "row" }}

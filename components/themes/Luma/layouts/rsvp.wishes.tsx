@@ -223,9 +223,12 @@ const RSVPWishesComponent: FC = () => {
             </div>
           </div>
 
-          <div className="w-full grid lg:grid-cols-2 gap-x-20 mx-auto px-8 max-w-4xl">
+          <div className="w-full mx-auto px-8 max-w-4xl lg:columns-2 gap-4">
             {state.isLoadingWishes && (
-              <div className="flex justify-center" aria-label="Loading ucapan">
+              <div
+                className="flex justify-center mb-4"
+                aria-label="Loading ucapan"
+              >
                 <RotatingLines
                   strokeColor="#fff"
                   width="16"
@@ -235,12 +238,14 @@ const RSVPWishesComponent: FC = () => {
                 />
               </div>
             )}
+
             {state.wishes.map((wish, index) => (
-              <WishItem
+              <div
                 key={wish.id || `ucapan-${index + 1}`}
-                wish={wish}
-                attendantText={state.attendantText}
-              />
+                className="break-inside-avoid mb-4 lg:mb-0"
+              >
+                <WishItem wish={wish} attendantText={state.attendantText} />
+              </div>
             ))}
           </div>
 
