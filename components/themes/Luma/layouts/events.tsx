@@ -45,7 +45,7 @@ const Events: NextPage = () => {
                 </p>
                 <div className="w-full h-[1px] bg-white/20 mb-2.5 hidden lg:block"></div>
                 <h2
-                  className="font-bigilla leading-[40px] lg:text-center relative -mb-1.5 lg:-mb-2 text-white text-[40px] md:text-5xl lg:text-7xl"
+                  className="font-bigilla leading-[40px] whitespace-nowrap lg:text-center relative -mb-1.5 lg:-mb-2 text-white text-[40px] md:text-5xl lg:text-7xl"
                   aria-label={`Judul acara ${event.name}`}
                 >
                   {event?.name}
