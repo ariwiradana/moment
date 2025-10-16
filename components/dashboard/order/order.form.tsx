@@ -139,7 +139,11 @@ const OrderForm = ({ mutate }: Props) => {
 
       // ✅ Jika token sudah ada (misalnya user close popup dan mau bayar lagi)
       if (store.order.snap_token) {
-        handleMidtransSnapToken(store.order.snap_token, newOrder);
+        handleMidtransSnapToken(
+          store.order.snap_token,
+          newOrder,
+          store.form.id
+        );
         return;
       }
 
@@ -155,7 +159,7 @@ const OrderForm = ({ mutate }: Props) => {
           newOrder.id as number,
           result.data.token
         );
-        handleMidtransSnapToken(result.data.token, newOrder);
+        handleMidtransSnapToken(result.data.token, newOrder, store.form.id);
       } else {
         toast.error("Gagal membuat transaksi pembayaran.");
       }
@@ -164,13 +168,18 @@ const OrderForm = ({ mutate }: Props) => {
     }
   };
 
-  const handleMidtransSnapToken = (snapToken: string, order: Order) => {
+  const handleMidtransSnapToken = (
+    snapToken: string,
+    order: Order,
+    clientId: number | undefined
+  ) => {
     window.snap?.pay(snapToken, {
       onSuccess: async (result: SnapTransactionResult) => {
         await handleSaveOrderStatus(
           order.id as number,
           result.transaction_status
         );
+        await handleSetActiveClient(clientId);
         toast.success("Pembayaran berhasil");
         router.push(`/order/${order.order_id}`);
       },
@@ -209,6 +218,25 @@ const OrderForm = ({ mutate }: Props) => {
         if (mutate) mutate();
         store.setForm("id", result.data.id);
         return result.data;
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
+    }
+  };
+
+  const handleSetActiveClient = async (id: number | undefined) => {
+    if (!id) return;
+    try {
+      const res = await getClient("/api/guest/order/client/status", {
+        method: "POST",
+        body: JSON.stringify({
+          status: "active",
+          id,
+        }),
+      });
+      const result = await res.json();
+      if (result.success) {
+        store.setForm("status", status);
       }
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");

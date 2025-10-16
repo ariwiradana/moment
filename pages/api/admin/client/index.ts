@@ -75,7 +75,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         SELECT *
         FROM clients c
         ${whereClause}
-        ORDER BY c.is_preview ASC, c.status DESC, c.updated_at DESC
+        ORDER BY c.is_preview ASC, c.status ASC, c.updated_at DESC
         LIMIT $${values.length - 1} OFFSET $${values.length}
       )
       SELECT 
@@ -210,6 +210,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               slug,
               name,
               phone,
+              email,
               theme_id,
               theme_category_id,
               status,
@@ -227,7 +228,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               gift_account_number,
               music_title
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
             RETURNING *;
           `;
 
@@ -235,6 +236,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           sanitizeSlug,
           client.name,
           client.phone,
+          client.email,
           client.theme_id,
           client.theme_category_id,
           client.status,
@@ -369,8 +371,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             theme_category_id = $16,
             music_title = $17,
             phone = $18,
+            email = $19,
             updated_at = NOW()
-          WHERE id = $19
+          WHERE id = $20
           RETURNING *;`;
 
         const sanitizeSlug = createSlug(client.slug as string);
@@ -394,6 +397,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           client.theme_category_id,
           client.music_title,
           client.phone,
+          client.email,
           Number(id),
         ]);
 

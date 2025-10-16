@@ -41,24 +41,4 @@ export const DummyWishes: Wish[] = [
     created_at: "2025-04-07T12:30:18.880Z",
     updated_at: "2025-04-07T12:30:18.880Z",
   },
-  {
-    id: 71,
-    client_id: 23,
-    name: "Citra Ayu",
-    attendant: "Hadir",
-    wishes:
-      "Selamat yaa! Semoga menjadi keluarga yang penuh cinta dan keberkahan 🤍",
-    created_at: "2025-04-07T13:11:59.430Z",
-    updated_at: "2025-04-07T13:11:59.430Z",
-  },
-  {
-    id: 72,
-    client_id: 23,
-    name: "Wayan Arta",
-    attendant: "Hadir",
-    wishes:
-      "Selamat menikah, semoga selalu bahagia, saling menguatkan, dan langgeng selamanya 🙌",
-    created_at: "2025-04-07T14:45:33.600Z",
-    updated_at: "2025-04-07T14:45:33.600Z",
-  },
 ];

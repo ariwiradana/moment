@@ -14,7 +14,7 @@ const Music = ({ state, actions, refs }: UseMusic) => {
   // Memoize classNames
   const wrapperClass = useMemo(
     () =>
-      `fixed z-50 w-10 h-10 md:h-12 md:w-12 transition-all ease-in-out duration-1000 delay-1000 ${
+      `fixed z-30 w-10 h-10 md:h-12 md:w-12 transition-all ease-in-out duration-1000 delay-1000 ${
         !isOpen
           ? "invisible opacity-0 -bottom-4 right-4 md:right-8 md:-bottom-8 scale-0"
           : "visible bottom-4 right-4 md:right-8 md:bottom-8 opacity-100 -scale-80"

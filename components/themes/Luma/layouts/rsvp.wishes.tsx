@@ -30,36 +30,39 @@ const WishItem = memo(
     );
 
     return (
-      <div className="py-2 first:pt-0 last:pb-0">
-        <div className="flex items-center gap-x-2">
+      <div
+        className="py-2 lg:py-4 first:pt-0 last:pb-0 first:lg:pt-4 last:lg:pb-4"
+        aria-label={`Ucapan dari ${wish.name}`}
+      >
+        <div className="flex items-center gap-x-2 lg:gap-x-3">
           <div
-            className="w-8 h-8 bg-white aspect-square rounded-full flex justify-center items-center uppercase font-medium text-nirvaya-dark"
+            className="w-8 h-8 lg:w-10 lg:h-10 bg-white aspect-square rounded-full flex justify-center items-center uppercase font-medium text-nirvaya-dark"
             style={{ lineHeight: "none" }}
           >
-            <span className={`${rubik.className} text-xs`}>
+            <span className={`${rubik.className} text-xs lg:text-sm`}>
               {getInitial(wish.name)}
             </span>
           </div>
           <div>
             <h5
-              className={`capitalize text-white text-xs leading-5 line-clamp-1 ${rubik.className}`}
+              className={`capitalize text-white text-xs lg:text-base leading-5 line-clamp-1 ${rubik.className}`}
             >
               {wish.name}
             </h5>
             <p
-              className={`${rubik.className} text-[10px] md:text-xs tracking-[1px] text-white/50`}
+              className={`${rubik.className} text-[10px] md:text-xs lg:text-sm tracking-[1px] text-white/50`}
             >
               {attendantText[wish.attendant]}
             </p>
           </div>
         </div>
-        <p className="text-white tracking-[1px] md:text-xs text-[10px] mt-2">
+        <p className="text-white tracking-[1px] md:text-xs text-[10px] lg:text-sm mt-2">
           {wish.wishes}
         </p>
         <div className="flex items-center gap-x-1 text-white/80 mt-1">
           <BiTime className="text-xs md:text-sm" />
           <p
-            className={`${rubik.className} text-[10px] md:text-xs tracking-[1px]`}
+            className={`${rubik.className} text-[10px] md:text-xs lg:text-sm lg:mt-1 tracking-[1px]`}
           >
             {timeFromNow}
           </p>
@@ -110,19 +113,21 @@ const RSVPWishesComponent: FC = () => {
       {/* Modal Form */}
       <div
         onClick={() => actions.setIsOpen((state) => !state)}
-        className={`fixed inset-0 bg-luma-dark/80 z-[999] flex items-end md:items-center md:justify-center transition-all ease-in-out duration-300 ${
-          state.isOpen ? "opacity-100 visible" : "opacity-0 invisible delay-200"
+        className={`fixed inset-0 bg-luma-dark/80 z-[100] flex items-center px-4 justify-center transition-all ease-in-out duration-300 ${
+          state.isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
+        aria-hidden={!state.isOpen}
       >
         <div
           onClick={(e) => e.stopPropagation()}
           className={`bg-white w-full md:w-auto md:min-w-[40vw] p-8 transform transition-all ease-in-out duration-300 ${
-            state.isOpen ? "translate-y-0 delay-200" : "translate-y-full"
+            state.isOpen ? "translate-y-0" : "translate-y-8"
           }`}
         >
           <button
             onClick={() => actions.setIsOpen(false)}
             className="absolute top-6 right-6 text-luma-dark"
+            aria-label="Tutup form kirim ucapan"
           >
             <HiX />
           </button>
@@ -153,7 +158,7 @@ const RSVPWishesComponent: FC = () => {
               rows={6}
               onChange={handleWishesChange}
             />
-            <div className="flex gap-x-8 justify-between lg:justify-start">
+            <div className="flex gap-x-4 justify-between lg:justify-start">
               {["Hadir", "Tidak Hadir", "Masih Ragu"].map((value) => (
                 <InputCheckbox
                   key={value}
@@ -172,6 +177,7 @@ const RSVPWishesComponent: FC = () => {
                   type="submit"
                   title="Kirim"
                   icon={<BiSend />}
+                  aria-label="Kirim ucapan"
                 />
               </div>
             )}
@@ -183,16 +189,20 @@ const RSVPWishesComponent: FC = () => {
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-luma-dark/80 flex flex-col justify-center items-center py-10">
           <div
-            className={`w-full px-8 mb-8 ${
+            className={`w-full px-8 mb-8 lg:mb-12 ${
               state.wishes.length > 0 ? "text-left" : "text-center"
             }`}
           >
-            <h2 className="font-bigilla leading-[40px] text-white text-4xl mb-2">
+            <h2
+              className="font-bigilla leading-[40px] lg:text-center text-white text-[40px] md:text-5xl lg:text-7xl mb-2"
+              aria-label="Judul RSVP dan Ucapan"
+            >
               RSVP <span className="font-italic">dan</span> Ucapan
             </h2>
             {state.wishes.length === 0 && (
               <p
                 className={`${rubik.className} text-[10px] md:text-xs font-light text-white mb-4`}
+                aria-label="Deskripsi ketika belum ada ucapan"
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Nesciunt harum soluta aut blanditiis non veniam quidem maxime
@@ -200,7 +210,7 @@ const RSVPWishesComponent: FC = () => {
               </p>
             )}
             <div
-              className={`flex ${
+              className={`flex lg:justify-center ${
                 state.wishes.length > 0 ? "justify-left" : "justify-center"
               }`}
             >
@@ -208,13 +218,14 @@ const RSVPWishesComponent: FC = () => {
                 onClick={() => actions.setIsOpen((state) => !state)}
                 title="Kirim Ucapan"
                 icon={<BiChevronRight />}
+                aria-label="Buka form kirim ucapan"
               />
             </div>
           </div>
 
-          <div className="w-full px-8">
+          <div className="w-full grid lg:grid-cols-2 gap-x-20 mx-auto px-8 max-w-4xl">
             {state.isLoadingWishes && (
-              <div className="flex justify-center">
+              <div className="flex justify-center" aria-label="Loading ucapan">
                 <RotatingLines
                   strokeColor="#fff"
                   width="16"
@@ -226,7 +237,7 @@ const RSVPWishesComponent: FC = () => {
             )}
             {state.wishes.map((wish, index) => (
               <WishItem
-                key={`ucapan-${index + 1}`}
+                key={wish.id || `ucapan-${index + 1}`}
                 wish={wish}
                 attendantText={state.attendantText}
               />
@@ -234,23 +245,29 @@ const RSVPWishesComponent: FC = () => {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex items-center gap-4 mt-6">
+            <div
+              className="flex items-center gap-4 mt-6 lg:mt-10"
+              aria-label="Navigasi halaman ucapan"
+            >
               <button
                 disabled={state.page === 1}
                 onClick={() => actions.setPage((state) => state - 1)}
-                className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
+                className="p-2 rounded-full border lg:text-lg border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Halaman sebelumnya"
               >
                 <HiArrowLeft />
               </button>
               <p
-                className={`text-white/70 text-[8px] md:text-[10px] uppercase text-center tracking-[3px] ${rubik.className}`}
+                className={`text-white/70 text-[8px] md:text-[10px] lg:text-sm uppercase text-center tracking-[3px] ${rubik.className}`}
+                aria-label={`Halaman ${state.page} dari ${totalPages}`}
               >
                 {state.page} / {totalPages}
               </p>
               <button
                 disabled={state.page === totalPages}
                 onClick={() => actions.setPage((state) => state + 1)}
-                className="p-2 rounded-full border border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
+                className="p-2 rounded-full border lg:text-lg border-white/50 text-white aspect-square disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Halaman berikutnya"
               >
                 <HiArrowRight />
               </button>

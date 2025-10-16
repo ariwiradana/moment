@@ -114,7 +114,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const [galleryImagesForm, setGalleryImagesForm] = useState<FileList | null>(
     null
   );
-  const [coverVideoForm, setCoverVideoForm] = useState<FileList | null>(null);
+  const [videoBackground, setVideoBackground] = useState<FileList | null>(null);
   const [videosForm, setVideosForm] = useState<string[]>([]);
   const [musicForm, setMusicForm] = useState<File | null>(null);
   const [participantImagesForm, setParticipantImagesForm] = useState<
@@ -168,7 +168,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const clearFileInput = () => {
     const galleryInput = document.getElementById("gallery") as HTMLInputElement;
     const videoFileInput = document.getElementById(
-      "cover-video"
+      "video-background"
     ) as HTMLInputElement;
     const musicInput = document.getElementById("music") as HTMLInputElement;
 
@@ -177,9 +177,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     if (musicInput) musicInput.value = "";
     setGalleryImagesForm(null);
     setVideosForm([]);
-    setCoverVideoForm(null);
+    setVideoBackground(null);
     setMusicForm(null);
-    setCoverVideoForm(null);
   };
 
   useEffect(() => {
@@ -253,6 +252,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         id: currentClient.id,
         name: currentClient.name,
         phone: currentClient.phone,
+        email: currentClient.email,
         slug: currentClient.slug,
         theme_id: !currentClient.theme_id
           ? (themeOptions[0].value as number)
@@ -335,8 +335,8 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       }));
     } else if (name === "videos") {
       setVideosForm(value as string[]);
-    } else if (name === "cover-video") {
-      setCoverVideoForm(value as FileList);
+    } else if (name === "video-background") {
+      setVideoBackground(value as FileList);
     } else if (name === "music") {
       setMusicForm(value as File);
     } else {
@@ -521,25 +521,25 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     return musicURL;
   };
 
-  const handleUploadCoverVideo = async () => {
+  const handleUploadBackgroundVideo = async () => {
     let videoFileURL: string = "";
-    if (coverVideoForm) {
+    if (videoBackground) {
       const MAX_SIZE = 100 * 1024 * 1024;
       let i = 0;
 
-      if (coverVideoForm instanceof File) {
+      if (videoBackground instanceof File) {
         i++;
-        const toastUpload = toast.loading(`Mengunggah video cover...`);
+        const toastUpload = toast.loading(`Mengunggah vodeo...`);
         try {
-          if (coverVideoForm.size > MAX_SIZE) {
-            toast.error(`Ukuran video cover terlalu besar (maks 100MB).`, {
+          if (videoBackground.size > MAX_SIZE) {
+            toast.error(`Ukuran vodeo terlalu besar (maks 100MB).`, {
               id: toastUpload,
             });
             return;
           }
 
           const fd = new FormData();
-          fd.append("file", coverVideoForm);
+          fd.append("file", videoBackground);
           const response = await fetch(`/api/upload-blob`, {
             method: "POST",
             body: fd,
@@ -547,16 +547,16 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Video cover berhasil diunggah.`, {
+            toast.success(`vodeo berhasil diunggah.`, {
               id: toastUpload,
             });
             videoFileURL = result.data.secure_url;
           } else {
-            toast.error(`Gagal mengunggah video cover.`, { id: toastUpload });
+            toast.error(`Gagal mengunggah vodeo.`, { id: toastUpload });
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Terjadi kesalahan saat mengunggah video cover.`,
+            error.message || `Terjadi kesalahan saat mengunggah vodeo.`,
             { id: toastUpload }
           );
         }
@@ -571,7 +571,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
     const newGalleryURLs = await handleUploadGallery();
     const newMusicURL = await handleUploadMusic();
-    const newVideoFileURL = await handleUploadCoverVideo();
+    const newVideoFileURL = await handleUploadBackgroundVideo();
     const updatedParticipant = await handleUploadImageParticipant();
     const updatedEvent = await handleUploadImageEvent();
 
@@ -619,6 +619,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         mutate();
         setLoading(false);
         router.push(`/admin/clients/${createSlug(formData.slug as string)}`);
+        clearFileInput();
         return "Data klien berhasil diperbarui.";
       },
       error: (error: any) => {

@@ -330,10 +330,10 @@ export const useAdminCreateClient = (token: string | null) => {
       if (formData.coverVideo instanceof File) {
         const coverVideo = formData.coverVideo;
         i++;
-        const toastUpload = toast.loading(`Mengunggah video cover...`);
+        const toastUpload = toast.loading(`Mengunggah video background...`);
         try {
           if (coverVideo.size > MAX_SIZE) {
-            toast.error(`Ukuran video cover terlalu besar`, {
+            toast.error(`Ukuran video background terlalu besar`, {
               id: toastUpload,
             });
             return;
@@ -348,14 +348,14 @@ export const useAdminCreateClient = (token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`Video cover berhasil diunggah!`, {
+            toast.success(`video background berhasil diunggah!`, {
               id: toastUpload,
             });
             coverVideoURL = result.data.secure_url;
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Terjadi kesalahan saat mengunggah video cover`
+            error.message || `Terjadi kesalahan saat mengunggah video background`
           );
         }
       }

@@ -76,6 +76,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             'id', id,
             'name', name,
             'nickname', nickname,
+            'gender', gender,
             'address', address,
             'child', child,
             'parents_male', parents_male,

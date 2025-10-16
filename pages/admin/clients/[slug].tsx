@@ -34,7 +34,6 @@ import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { isValidUrl } from "@/utils/checkIsValidURL";
-import { useRouter } from "next/router";
 interface UpdateClientProps {
   slug: string;
   token: string | null;
@@ -43,40 +42,47 @@ interface UpdateClientProps {
 const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
   const { state, actions } = useAdminUpdateClient(slug, token);
 
-  const router = useRouter();
-
   return (
     <AdminLayout>
       <div className={`${montserrat.className}`}>
-        <button onClick={() => router.back()}>
+        <Link href={"/admin/clients"}>
           <div className="flex items-center gap-x-1 text-gray-400">
             <BiLeftArrowAlt className="text-base" />
             <span className="text-sm font-medium">kembali</span>
           </div>
-        </button>
+        </Link>
         <div className="flex flex-wrap items-center mb-8 mt-2 gap-3">
           <h1 className="text-2xl font-bold">Klien</h1>
 
           {state.formData.status && (
             <div className="flex items-center font-semibold text-sm">
               <div
-                className={`${
+                className={`px-3 py-1 rounded-lg flex items-center gap-x-2 ${
+                  montserrat.className
+                } ${
                   state.formData.status === "active"
                     ? "bg-admin-success/10 text-admin-success"
-                    : "bg-gray-300/20 text-gray-500"
-                } px-3 py-1 rounded-lg flex items-center gap-x-2 ${
-                  montserrat.className
+                    : state.formData.status === "inactive"
+                    ? "bg-gray-300/20 text-gray-500"
+                    : "bg-admin-primary/10 text-admin-primary" // untuk done
                 }`}
               >
                 <div
                   className={`w-2 h-2 rounded-lg ${
                     state.formData.status === "active"
                       ? "bg-admin-success"
-                      : "bg-gray-400"
+                      : state.formData.status === "inactive"
+                      ? "bg-gray-400"
+                      : "bg-admin-primary" // untuk done
                   }`}
                 ></div>
                 <span className="capitalize text-admin-hover-dark">
-                  {state.formData.status === "active" ? "Aktif" : "Nonaktif"}
+                  {state.formData.status === "active"
+                    ? "Aktif"
+                    : state.formData.status === "inactive"
+                    ? "Nonaktif"
+                    : "Selesai"}{" "}
+                  {/* untuk done */}
                 </span>
               </div>
             </div>
@@ -276,7 +282,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               }
               label="Deskripsi Penutup"
             />
-            <h1 className="text-2xl font-bold mb-4 mt-8">Foto & Video</h1>
+            <h1 className="text-2xl font-bold mb-4 mt-8">Galeri Foto</h1>
 
             <Input
               id="gallery"
@@ -288,7 +294,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 actions.handleChangeClient(e.target.files as FileList, "images")
               }
               className="w-full"
-              label="Foto Galeri"
+              label="Galeri Foto"
             />
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -382,92 +388,93 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 : null}
             </div>
 
-            {state.selectedTheme?.cover_video && (
-              <Input
-                id="cover-video"
-                accept="video/*"
-                type="file"
-                onChange={(e) =>
-                  actions.handleChangeClient(
-                    e.target.files?.length ? (e.target.files[0] as File) : "",
-                    "cover-video"
-                  )
-                }
-                className="w-full"
-                label="Cover Video"
-              />
-            )}
-
             {state.selectedPackage?.max_videos &&
               state.selectedPackage?.max_videos > 0 && (
-                <InputChip
-                  chips={state.videosForm}
-                  onChange={(value) =>
-                    actions.handleChangeClient(value, "videos")
-                  }
-                  label="Link Video (Youtube)"
-                />
+                <>
+                  <h1 className="text-2xl font-bold mb-4 mt-8">Video</h1>
+                  <Input
+                    id="video-background"
+                    accept="video/*"
+                    type="file"
+                    onChange={(e) =>
+                      actions.handleChangeClient(
+                        e.target.files?.length
+                          ? (e.target.files[0] as File)
+                          : "",
+                        "video-background"
+                      )
+                    }
+                    className="w-full"
+                    label="Video Background"
+                  />
+                  <InputChip
+                    chips={state.videosForm}
+                    onChange={(value) =>
+                      actions.handleChangeClient(value, "videos")
+                    }
+                    label="Link Video (Youtube)"
+                  />
+                  {state.formData.videos && (
+                    <div className="grid gap-2 relative">
+                      {Array.isArray(state.formData.videos) &&
+                      state.formData.videos.length > 0
+                        ? state.formData.videos.map((video) => {
+                            const youtubeId = getYouTubeVideoId(video);
+                            const isYouTubeVideo = isYoutubeVideo(video);
+
+                            return (
+                              <div className="relative" key={youtubeId}>
+                                <div className="absolute top-2 right-2 z-20">
+                                  <button
+                                    onClick={() =>
+                                      actions.handleDeleteVideo(
+                                        video,
+                                        state.formData.id as number
+                                      )
+                                    }
+                                    type="button"
+                                    disabled={state.loading || state.isLoading}
+                                    className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
+                                  >
+                                    <BiX />
+                                  </button>
+                                </div>
+
+                                {!isYouTubeVideo && (
+                                  <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 absolute top-3 left-2 z-20 backdrop-blur text-white">
+                                    <BiImageAlt className="text-base font-medium" />
+                                    <span>Video Background</span>
+                                  </div>
+                                )}
+
+                                {isYouTubeVideo ? (
+                                  <div
+                                    key={youtubeId}
+                                    className="relative w-full aspect-video overflow-hidden rounded-lg"
+                                  >
+                                    <iframe
+                                      className="absolute top-0 left-0 w-full h-full"
+                                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
+                                      title={youtubeId as string}
+                                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                      allowFullScreen
+                                    ></iframe>
+                                  </div>
+                                ) : (
+                                  <video
+                                    src={video}
+                                    controls
+                                    className="w-full h-auto aspect-video rounded-lg"
+                                  />
+                                )}
+                              </div>
+                            );
+                          })
+                        : null}
+                    </div>
+                  )}
+                </>
               )}
-
-            {state.formData.videos && (
-              <div className="grid gap-2 relative">
-                {Array.isArray(state.formData.videos) &&
-                state.formData.videos.length > 0
-                  ? state.formData.videos.map((video) => {
-                      const youtubeId = getYouTubeVideoId(video);
-                      const isYouTubeVideo = isYoutubeVideo(video);
-
-                      return (
-                        <div className="relative" key={youtubeId}>
-                          <div className="absolute top-2 right-2 z-20">
-                            <button
-                              onClick={() =>
-                                actions.handleDeleteVideo(
-                                  video,
-                                  state.formData.id as number
-                                )
-                              }
-                              type="button"
-                              disabled={state.loading || state.isLoading}
-                              className="w-5 h-5 rounded-full bg-white flex justify-center items-center"
-                            >
-                              <BiX />
-                            </button>
-                          </div>
-
-                          {!isYouTubeVideo && (
-                            <div className="h-5 px-2 rounded-md font-medium flex justify-center items-center text-center text-xs gap-x-1 absolute top-3 left-2 z-20 backdrop-blur text-white">
-                              <BiImageAlt className="text-base font-medium" />
-                              <span>Video Cover</span>
-                            </div>
-                          )}
-
-                          {isYouTubeVideo ? (
-                            <div
-                              key={youtubeId}
-                              className="relative w-full aspect-video overflow-hidden rounded-lg"
-                            >
-                              <iframe
-                                className="absolute top-0 left-0 w-full h-full"
-                                src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=1&modestbranding=1&showinfo=0&rel=0&vq=hd1080`}
-                                title={youtubeId as string}
-                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                              ></iframe>
-                            </div>
-                          ) : (
-                            <video
-                              src={video}
-                              controls
-                              className="w-full h-auto aspect-video rounded-lg"
-                            />
-                          )}
-                        </div>
-                      );
-                    })
-                  : null}
-              </div>
-            )}
 
             {state.selectedPackage?.name !== "Basic" && (
               <>

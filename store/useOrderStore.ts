@@ -71,6 +71,7 @@ export const initialForm: Client = {
   participants: [],
   theme_category_id: null,
   theme_id: null,
+  status: "inactive",
 };
 
 const initialOrder: Order = {

@@ -26,13 +26,13 @@ const ThankyouComponent = () => {
       <div className="absolute inset-0 bg-luma-dark/80 z-10"></div>
       <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-8 flex flex-col justify-center relative z-30">
         <p
-          className={`text-white mt-4 text-xs md:text-sm uppercase tracking-[3px] text-center ${rubik.className}`}
+          className={`text-white mt-4 text-xs md:text-sm lg:text-base uppercase tracking-[3px] text-center ${rubik.className}`}
         >
           {closing_title}
         </p>
 
         <p
-          className={`mt-6 text-center max-w-xl mx-auto text-[10px] md:text-xs font-light text-white my-16 ${rubik.className}`}
+          className={`mt-6 text-center max-w-xl mx-auto text-[10px] md:text-xs lg:text-sm font-light text-white my-16 ${rubik.className}`}
         >
           {closing_description}
         </p>
@@ -40,11 +40,11 @@ const ThankyouComponent = () => {
         {theme_category?.name === "Pernikahan" && (
           <>
             <p
-              className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase tracking-[3px] text-center ${rubik.className}`}
+              className={`text-white/70 mt-4 text-[10px] md:text-xs lg:text-sm uppercase tracking-[3px] text-center ${rubik.className}`}
             >
               Kami Yang Berbahagia
             </p>
-            <h1 className="font-bigilla leading-[40px] text-white text-5xl mb-3 mt-5 text-center">
+            <h1 className="font-bigilla leading-[40px] md:leading-[56px] lg:leading-[60px] text-white text-5xl lg:text-7xl mb-3 mt-5 lg:mt-8 text-center">
               {participantState.groom?.nickname} <br />&{" "}
               {participantState.bride?.nickname}
             </h1>

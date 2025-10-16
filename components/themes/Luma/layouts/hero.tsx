@@ -1,9 +1,10 @@
 import { NextPage } from "next";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import useEvents from "@/hooks/themes/useEvents";
 import useParticipants from "@/hooks/themes/useParticipants";
 import useCoverStore from "@/store/useCoverStore";
 import { rubik } from "@/lib/fonts";
+import useClientStore from "@/store/useClientStore";
 
 const Hero: NextPage = () => {
   const { isOpen } = useCoverStore();
@@ -13,77 +14,110 @@ const Hero: NextPage = () => {
   const {
     state: { bride, groom },
   } = useParticipants();
+  const { client } = useClientStore();
 
-  const currentEvent = events?.[currentIndex];
+  const currentEvent = useMemo(
+    () => events?.[currentIndex],
+    [events, currentIndex]
+  );
 
-  // Format tanggal tanpa moment.js → lebih ringan
-  const formattedDate = currentEvent?.date
-    ? new Intl.DateTimeFormat("id-ID", {
-        weekday: "long",
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }).format(new Date(currentEvent.date))
-    : "";
+  // Format tanggal tanpa moment.js
+  const { dayMonth, year } = useMemo(() => {
+    if (!currentEvent?.date) return { dayMonth: "", year: "" };
+    const date = new Date(currentEvent.date);
+    const formatter = new Intl.DateTimeFormat("id-ID", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    const [day, month, fullYear] = formatter.format(date).split("/");
+    return { dayMonth: `${day}/${month}`, year: fullYear };
+  }, [currentEvent?.date]);
 
-  if (!currentEvent) return null; // prevent crash jika events kosong
+  if (!currentEvent) return null;
 
   return (
     <section className="h-dvh snap-start w-full relative">
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-luma-dark/40 via-luma-dark/30 to-luma-dark/50 py-[60px] px-8 flex flex-col justify-between">
+      <div className="absolute inset-0 z-10 bg-luma-dark/50 py-[60px] px-8 flex flex-col justify-between">
         <div>
-          <h1
-            data-aos="fade-up"
+          <div
+            data-aos="fade-down"
             data-aos-delay="400"
-            className="font-bigilla leading-[1.1] text-white text-5xl md:text-6xl mb-3 mt-5"
+            className="flex justify-between w-full max-w-xl mx-auto"
           >
-            <span aria-label={`Pengantin pria: ${groom?.nickname}`}>
-              {groom?.nickname}
-            </span>{" "}
-            &{" "}
-            <span aria-label={`Pengantin wanita: ${bride?.nickname}`}>
-              {bride?.nickname}
-            </span>
-          </h1>
-
-          <div data-aos="fade-up" data-aos-delay="600">
             <div
-              className={`transform transition-all flex items-center ease-in-out duration-200 ${
+              className={`transform transition-all flex justify-center items-center ease-in-out duration-200 ${
                 fade
                   ? "opacity-100 translate-y-0"
                   : "opacity-10 translate-y-[4px]"
               }`}
             >
               <p
-                className={`${rubik.className} uppercase text-[10px] md:text-xs tracking-[1px] font-light text-white`}
+                className={`${rubik.className} uppercase text-xs md:text-sm lg:text-xl tracking-[4px] font-light text-white`}
               >
-                {currentEvent.name}
+                {dayMonth}
               </p>
-              <div className="w-[2px] h-[2px] aspect-square rounded-full bg-white mx-3" />
-              <time
-                className={`${rubik.className} uppercase text-[10px] md:text-xs tracking-[1px] font-light text-white`}
-                dateTime={currentEvent.date}
+            </div>
+            <div
+              className={`transform transition-all flex justify-center items-center ease-in-out duration-200 ${
+                fade
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-10 translate-y-[4px]"
+              }`}
+            >
+              <p
+                className={`${rubik.className} uppercase text-xs md:text-sm lg:text-xl tracking-[4px] font-light text-white`}
               >
-                {formattedDate}
-              </time>
+                {year}
+              </p>
             </div>
           </div>
+
+          <div data-aos="fade-down" data-aos-delay="200">
+            <div
+              className={`transform mt-10 transition-all flex justify-center items-center ease-in-out duration-200 delay-100 ${
+                fade
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-10 translate-y-[4px]"
+              }`}
+            >
+              <p
+                className={`${rubik.className} uppercase text-[10px] md:text-sm lg:text-base tracking-[4px] font-light text-white delay-200`}
+              >
+                Undangan {currentEvent.name}
+              </p>
+            </div>
+          </div>
+          <h1
+            data-aos="fade-down"
+            className="font-bigilla leading-[46px] md:leading-[56px] lg:leading-[60px] text-center text-white text-6xl md:text-7xl lg:text-8xl mb-3 mt-5 lg:mt-8"
+          >
+            <span aria-label={`Pengantin pria: ${groom?.nickname}`}>
+              {groom?.nickname}
+            </span>{" "}
+            & <br />
+            <span aria-label={`Pengantin wanita: ${bride?.nickname}`}>
+              {bride?.nickname}
+            </span>
+          </h1>
+
+          <div data-aos="fade-up" data-aos-delay="600"></div>
         </div>
 
         {isOpen && (
-          <div data-aos="fade-in">
+          <div>
             <p
-              className={`${rubik.className} text-[10px] md:text-xs font-light text-white`}
+              data-aos="fade-up"
+              className={`text-white/70 mb-4 text-[10px] text-center md:text-xs lg:text-base uppercase tracking-[3px] ${rubik.className}`}
             >
-              Wahai pasangan suami-isteri, kembangkanlah cinta kasih di dalam
-              dirimu, tekun dan tetaplah berkarma dalam menggapai kebahagiaan.
-              Karena hanya orang yang bersungguh-sungguhlah mendapatkan
-              keberhasilan dalam berkeluarga.
+              {client?.opening_title}
             </p>
             <p
-              className={`text-white/70 mt-4 text-[8px] md:text-[10px] uppercase tracking-[3px] ${rubik.className}`}
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className={`${rubik.className} max-w-md mx-auto text-[10px] md:text-xs lg:text-sm text-center font-light text-white`}
             >
-              Rgveda : X.85.42
+              {client?.opening_description}
             </p>
           </div>
         )}

@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import ButtonPrimary from "../elements/button.primary";
 import { IoMailOpenOutline } from "react-icons/io5";
 import { getEventNames } from "@/utils/getEventNames";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useCallback } from "react";
 import useEvents from "@/hooks/themes/useEvents";
 import { UseMusic } from "@/hooks/themes/useMusic";
 import useCoverStore from "@/store/useCoverStore";
@@ -19,11 +19,18 @@ const Cover: NextPage<Props> = ({ untuk, actions }) => {
   } = useEvents();
   const { isOpen, toggleIsOpen } = useCoverStore();
 
+  // Memoize event names supaya tidak dihitung ulang setiap render
   const eventNames = useMemo(() => getEventNames(events), [events]);
+
+  // Memoize click handler supaya tidak membuat fungsi baru setiap render
+  const handleOpen = useCallback(() => {
+    toggleIsOpen();
+    actions.handlePlayPause();
+  }, [toggleIsOpen, actions]);
 
   return (
     <section
-      className={`fixed transition-all ease-in-out duration-1000 delay-200 z-30 lg:max-w-[30vw] mx-auto ${
+      className={`fixed transition-all ease-in-out duration-1000 delay-200 z-30 mx-auto ${
         isOpen ? "-bottom-full inset-x-0 opacity-0" : "inset-0 opacity-100"
       }`}
     >
@@ -35,31 +42,32 @@ const Cover: NextPage<Props> = ({ untuk, actions }) => {
         <p
           data-aos="fade-up"
           data-aos-delay="1000"
-          className={`${rubik.className} text-[10px] md:text-xs font-light text-white`}
+          className={`${rubik.className} text-[10px] md:text-xs lg:text-sm text-center tracking-[1px] font-light text-white`}
         >
-          Yth. Bapak / Ibu / Saudara / i
+          Yth, Bapak / Ibu / Saudara / i
         </p>
         <h5
           data-aos="fade-up"
           data-aos-delay="1200"
-          className={`text-xl ${rubik.className} text-white`}
+          className={`text-xl ${rubik.className} text-white lg:text-2xl text-center mt-2`}
         >
           {untuk}
         </h5>
         <p
           data-aos="fade-up"
           data-aos-delay="1400"
-          className={`${rubik.className} text-[10px] md:text-xs font-light text-white mt-4 mb-6`}
+          className={`${rubik.className} text-[10px] max-w-md mx-auto md:text-xs lg:text-sm font-light text-center text-white mt-8 mb-6`}
         >
           Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
           acara {eventNames} kami.
         </p>
-        <div data-aos="fade-up" data-aos-delay="1600">
+        <div
+          className="flex justify-center"
+          data-aos="fade-up"
+          data-aos-delay="1600"
+        >
           <ButtonPrimary
-            onClick={() => {
-              toggleIsOpen();
-              actions.handlePlayPause();
-            }}
+            onClick={handleOpen}
             icon={<IoMailOpenOutline />}
             title="Buka Undangan"
           />

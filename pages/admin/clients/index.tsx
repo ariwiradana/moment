@@ -1,4 +1,3 @@
-import ButtonPrimary from "@/components/admin/elements/button.primary";
 import AdminLayout from "@/components/admin/layouts";
 import { useAdminClients } from "@/hooks/admin/useAdminClients";
 import { montserrat } from "@/lib/fonts";
@@ -9,7 +8,6 @@ import {
   BiEditAlt,
   BiLink,
   BiMessageAdd,
-  BiPlus,
   BiSlideshow,
   BiSolidShow,
   BiTrash,
@@ -49,16 +47,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
         <h1 className="text-2xl font-bold mb-4">Dashboard Klien</h1>
-
-        <Link href="/admin/clients/create">
-          <div>
-            <ButtonPrimary
-              size="small"
-              title="Tambah"
-              icon={<BiPlus className="text-lg" />}
-            />
-          </div>
-        </Link>
 
         {state.isLoading ? (
           <Loader />
@@ -117,17 +105,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       </div>
 
                       <div className="flex items-center relative gap-x-2">
-                        <InputSelect
-                          inputSize="extrasmall"
-                          options={clientStatus}
-                          value={client.status}
-                          onChange={(e) =>
-                            actions.handleChangeStatus(
-                              client.id as number,
-                              e.target.value
-                            )
-                          }
-                        />
                         <ButtonActionDialog>
                           {client.status === "done" && (
                             <>
@@ -249,6 +226,25 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           {client.phone || "-"}
                         </p>
                       </div>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Status Klien
+                        </p>
+                        <div className="flex">
+                          <InputSelect
+                            full={false}
+                            inputSize="extrasmall"
+                            options={clientStatus}
+                            value={client.status}
+                            onChange={(e) =>
+                              actions.handleChangeStatus(
+                                client.id as number,
+                                e.target.value
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -264,7 +260,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         Klien
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Telepon
+                        Order
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Tema
@@ -348,7 +344,29 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          <p>{client.phone ?? "-"}</p>
+                          {client.order ? (
+                            <div className="flex">
+                              <span
+                                className={`capitalize text-xs font-semibold px-2 py-[2px] rounded-lg ${
+                                  client.order?.status === "pending"
+                                    ? "bg-yellow-100 text-yellow-600"
+                                    : client.order?.status === "settlement"
+                                    ? "bg-green-100 text-green-600"
+                                    : client.order?.status === "expire"
+                                    ? "bg-red-100 text-red-600"
+                                    : client.order?.status === "cancel"
+                                    ? "bg-gray-100 text-gray-600"
+                                    : client.order?.status === "deny"
+                                    ? "bg-red-200 text-red-700"
+                                    : "bg-gray-100 text-gray-600"
+                                }`}
+                              >
+                                {client.order?.status}
+                              </span>
+                            </div>
+                          ) : (
+                            "-"
+                          )}
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <p>{client.theme?.name ?? "-"}</p>
