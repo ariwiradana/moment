@@ -51,10 +51,15 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   try {
     const baseUrl = process.env.API_BASE_URL;
 
+    console.log(baseUrl);
+
     const res = await getClient(`${baseUrl}/guest/seo?slug=${slug}`);
+    console.log(res);
     if (!res.ok) throw new Error("Failed to fetch SEO data");
 
     const { data } = await res.json();
+
+    console.log(data);
 
     if (!data)
       return {
