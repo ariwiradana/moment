@@ -15,7 +15,6 @@ import { redhat } from "@/lib/fonts";
 import PreviewNav from "@/components/themes/preview.nav";
 import "aos/dist/aos.css";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { getClient } from "@/lib/client";
 
 class ThemeErrorBoundary extends React.Component<
   { children: React.ReactNode },
