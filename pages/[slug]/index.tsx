@@ -53,9 +53,17 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
 
     console.log({ baseUrl });
 
-    const res = await getClient(`${baseUrl}/guest/seo?slug=${slug}`);
-    console.log({ result: res });
-    if (!res.ok) throw new Error("Failed to fetch SEO data");
+    const res = await fetch(`${baseUrl}/guest/seo?slug=${slug}`, {
+      next: { revalidate: 60 },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      console.error("SEO fetch failed:", res.status, res.statusText);
+      throw new Error("Failed to fetch SEO data");
+    }
 
     const { data } = await res.json();
 
