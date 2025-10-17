@@ -37,7 +37,7 @@ const Cover: NextPage<Props> = ({ untuk, actions }) => {
       <div
         data-aos="fade-up"
         data-aos-delay="800"
-        className="h-dvh w-full px-8 py-[60px] flex flex-col justify-end bg-gradient-to-b from-[30%] via-luma-primary/70 from-transparent to-luma-primary"
+        className="h-dvh w-full px-6 py-[60px] flex flex-col justify-end bg-gradient-to-b from-[30%] via-luma-primary/70 from-transparent to-luma-primary"
       >
         <p
           data-aos="fade-up"

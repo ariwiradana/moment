@@ -35,31 +35,30 @@ const Events: NextPage = () => {
           className="h-dvh snap-start w-full relative"
           key={`Acara-${event.name}`}
         >
-          <div className="absolute z-20 inset-0 flex flex-col justify-center items-center bg-luma-dark/50 py-[60px] px-8">
-            <div className="max-w-xl w-full mb-4 lg:mb-4 relative">
-              <div className="flex justify-between items-end gap-x-4 mb-2">
-                <h2
-                  className="font-bigilla leading-[40px] whitespace-nowrap lg:text-center relative -mb-1.5 lg:-mb-2 text-white text-[40px] md:text-5xl lg:text-7xl"
-                  aria-label={`Judul acara ${event.name}`}
-                > {event?.name}
-                </h2>
-              </div>
-            </div>
-
+          <div className="absolute z-20 inset-0 flex flex-col justify-center items-center bg-luma-dark/50 py-[60px] px-6">
+            <h2 className="font-bigilla leading-[40px] mb-4 whitespace-nowrap relative text-white text-[40px] md:text-5xl lg:text-7xl">
+              <span className="italic">Save</span> The Date
+            </h2>
             <div
-              className="bg-luma-primary/50 p-6 md:p-8 max-w-xl w-full"
+              className="bg-luma-primary/30 backdrop-blur-sm p-6 md:p-8 max-w-xl w-full"
               aria-label={`Detail acara ${event.name}`}
             >
-              <div className="flex gap-x-2 mb-3 items-center">
-                <BiCalendarEvent className="text-sm lg:text-base text-white" />
+              <h2
+                className={`whitespace-nowrap relative text-white mb-4 text-base md:text-lg lg:text-xl font-light uppercase tracking-[3px] ${rubik.className}`}
+                aria-label={`Judul acara ${event.name}`}
+              >
+                {event?.name}
+              </h2>
+              <div className="flex gap-x-2 mb-3">
+                <BiCalendarEvent className="text-sm lg:text-base text-white min-w-5 mt-1" />
                 <p
                   className={`${rubik.className} text-xs md:text-sm lg:text-base font-light text-white`}
                 >
                   {formatDate(event.date)}
                 </p>
               </div>
-              <div className="flex gap-x-2 mb-3 items-center">
-                <BiTime className="text-sm lg:text-base text-white" />
+              <div className="flex gap-x-2 mb-3">
+                <BiTime className="text-sm lg:text-base text-white min-w-5 mt-1" />
                 <p
                   className={`${rubik.className} text-xs md:text-sm lg:text-base font-light text-white`}
                 >
@@ -67,8 +66,8 @@ const Events: NextPage = () => {
                   {event.end_time !== "Selesai" ? "WITA" : ""}
                 </p>
               </div>
-              <div className="flex gap-x-2 mb-4 items-center">
-                <BiMap className="text-sm lg:text-base text-white" />
+              <div className="flex gap-x-2 mb-4">
+                <BiMap className="text-sm lg:text-base text-white min-w-5 mt-1" />
                 <p
                   className={`${rubik.className} text-xs md:text-sm lg:text-base font-light text-white`}
                 >
@@ -88,7 +87,7 @@ const Events: NextPage = () => {
             </div>
 
             <div
-              className={`p-6 md:p-8 bg-white/80 mt-4 max-w-xl w-full ${rubik.className}`}
+              className={`p-6 md:p-8 bg-white/70 backdrop-blur-sm mt-4 max-w-xl w-full ${rubik.className}`}
               aria-label={`Countdown acara ${event.name}`}
             >
               <div className="grid grid-cols-4 text-luma-primary divide-x divide-luma-dark/10">
@@ -128,7 +127,7 @@ const Events: NextPage = () => {
 const TimeBox = ({ label, value }: { label: string; value: number }) => (
   <div className="flex px-2 flex-col justify-center items-center">
     <h2
-      className="text-xl md:text-2xl lg:text-3xl"
+      className="text-xl md:text-2xl lg:text-2xl"
       aria-label={`${value} ${label}`}
     >
       {value}

@@ -48,7 +48,7 @@ const ParticipantItem = memo(({ data }: ParticipantProps) => {
         interactive={false}
       />
 
-      <div className="absolute z-20 inset-0 bg-gradient-to-b from-transparent to-luma-dark/50 lg:from-luma-dark/50 lg:to-luma-dark/50 flex flex-col justify-end py-[60px] px-8">
+      <div className="absolute z-20 inset-0 bg-gradient-to-b from-transparent to-luma-dark/50 lg:from-luma-dark/50 lg:to-luma-dark/50 flex flex-col justify-end py-[60px] px-6">
         <div className="lg:m-auto flex items-end gap-x-8">
           <div className="h-[70vh] hidden lg:block aspect-[4/5] relative">
             <Image
@@ -69,7 +69,7 @@ const ParticipantItem = memo(({ data }: ParticipantProps) => {
               Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
             </p>
             <h2
-              className="font-bigilla text-white text-4xl md:text-5xl lg:text-7xl mb-4 leading-[36px] md:leading-[50px]"
+              className="font-bigilla text-white text-[40px] md:text-5xl lg:text-7xl mb-4 leading-[36px] md:leading-[50px]"
               aria-label={`Nama mempelai ${data.name}`}
             >
               {data.name}

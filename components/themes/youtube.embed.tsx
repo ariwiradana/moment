@@ -77,7 +77,7 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
   if (!youtubeId) return null;
 
   return (
-    <div className="relative w-full aspect-video overflow-hidden bg-black/20 rounded-md">
+    <div className="relative w-full aspect-video overflow-hidden bg-black/20">
       <Script src="https://www.youtube.com/iframe_api" strategy="lazyOnload" />
       <div
         ref={containerRef}

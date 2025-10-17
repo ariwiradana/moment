@@ -2,18 +2,25 @@
 
 import useLightbox from "@/hooks/themes/useLightbox";
 import { rubik } from "@/lib/fonts";
-import { memo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Grid } from "swiper/modules";
+import { Navigation, Grid, Autoplay } from "swiper/modules";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { NextPage } from "next";
+import useClientStore from "@/store/useClientStore";
+import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
+import { getYouTubeVideoId } from "@/utils/getYoutubeId";
+import YoutubeEmbed from "../../youtube.embed";
+import { getParticipantNames } from "@/utils/getParticipantNames";
 
+// ✅ Dynamic import hanya load Lightbox saat dibuka
 const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
   ssr: false,
+  loading: () => null,
 });
 
 const Photos: NextPage = () => {
@@ -21,16 +28,52 @@ const Photos: NextPage = () => {
     state: { images, isOpen, imageIndex },
     actions: { handleToggleLightbox, setIsOpen },
   } = useLightbox();
+  const { client } = useClientStore();
+  const { videos = [], participants = [] } = client || {};
 
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [isShowVideo, setIsShowVideo] = useState(false);
 
-  if (!images.length) return null;
+  // ✅ Gunakan memo agar filtering YouTube tidak re-run terus
+  const youtubeVideos = useMemo(() => {
+    if (!videos?.length) return [];
+    return (videos as string[]).filter(isYoutubeVideo).map((url) => ({
+      url,
+      youtubeId: getYouTubeVideoId(url),
+    }));
+  }, [videos]);
+
+  const participantNames = useMemo(
+    () => getParticipantNames(participants),
+    [participants]
+  );
+
+  // ✅ Resize throttled dan cleanup aman
+  useEffect(() => {
+    let resizeTimeout: NodeJS.Timeout;
+    const checkDevice = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const width = window.innerWidth;
+        setIsShowVideo(width < 1024 && youtubeVideos.length > 0);
+      }, 200); // throttle 200ms
+    };
+
+    checkDevice(); // run awal
+    window.addEventListener("resize", checkDevice, { passive: true });
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", checkDevice);
+    };
+  }, [youtubeVideos.length]);
+
+  if (!images?.length) return null;
 
   return (
     <>
-      {/* Lightbox */}
+      {/* ✅ Lightbox hanya dirender saat open */}
       {isOpen && (
         <Lightbox
           index={imageIndex}
@@ -44,8 +87,7 @@ const Photos: NextPage = () => {
 
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-gradient-to-b lg:px-20 from-luma-dark/50 to-luma-dark/80 flex flex-col justify-center items-center">
-          {/* Header */}
-          <div className="w-full px-8 flex items-center justify-between lg:justify-center gap-12 mb-6">
+          <div className="w-full px-6 flex items-center justify-between lg:justify-center gap-3 lg:gap-12 mb-6">
             <h2
               className="font-bigilla leading-[40px] text-white text-[40px] md:text-5xl lg:text-7xl"
               aria-label="Judul galeri foto kami"
@@ -72,9 +114,21 @@ const Photos: NextPage = () => {
             </div>
           </div>
 
-          {/* Swiper Gallery */}
           <div className="w-full overflow-x-hidden px-1">
+            {isShowVideo && (
+              <div className="w-full pb-1 lg:hidden">
+                {youtubeVideos.map(({ youtubeId }) => (
+                  <YoutubeEmbed
+                    key={youtubeId}
+                    youtubeId={youtubeId}
+                    title={participantNames}
+                  />
+                ))}
+              </div>
+            )}
+
             <Swiper
+              autoplay={{ delay: 5000, disableOnInteraction: false }}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
                 setIsBeginning(swiper.isBeginning);
@@ -84,27 +138,19 @@ const Photos: NextPage = () => {
                 setIsBeginning(swiper.isBeginning);
                 setIsEnd(swiper.isEnd);
               }}
-              modules={[Navigation, Grid]}
-              breakpoints={{
-                0: {
-                  slidesPerView: 2, // mobile
-                },
-                640: {
-                  slidesPerView: 3, // tablet
-                },
-                1024: {
-                  slidesPerView: 4, // desktop
-                },
-                1280: {
-                  slidesPerView: 5, // large device
-                },
-              }}
-              grid={{ rows: 2, fill: "row" }}
+              modules={[Navigation, Grid, Autoplay]}
+              grid={{ rows: isShowVideo ? 1 : 2, fill: "row" }}
               speed={300}
               spaceBetween={4}
+              breakpoints={{
+                0: { slidesPerView: isShowVideo ? 3 : 2 },
+                640: { slidesPerView: 3 },
+                1024: { slidesPerView: 4 },
+                1280: { slidesPerView: 5 },
+              }}
             >
               {images.map((image, index) => (
-                <SwiperSlide key={`Foto Galeri ${index + 1}`}>
+                <SwiperSlide key={index}>
                   <div
                     className="h-full w-full cursor-pointer"
                     onClick={() => handleToggleLightbox(image.src)}
@@ -116,7 +162,7 @@ const Photos: NextPage = () => {
                         src={image.src}
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                        quality={80}
+                        quality={70} // ✅ turunkan sedikit untuk performa
                         className="object-cover shimmer-dark object-center transition-transform"
                         priority={index < 2}
                         loading={index >= 2 ? "lazy" : "eager"}
@@ -128,8 +174,8 @@ const Photos: NextPage = () => {
             </Swiper>
           </div>
 
-          {/* Footer */}
-          <div className="w-full px-8 pt-6 max-w-md mx-auto">
+          {/* ✅ Footer text tetap */}
+          <div className="w-full px-6 pt-6 max-w-md mx-auto">
             <p
               className={`${rubik.className} text-[10px] md:text-xs lg:text-sm font-light lg:text-center text-justify text-white`}
             >

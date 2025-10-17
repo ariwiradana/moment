@@ -1,3 +1,5 @@
+"use client";
+
 import Cover from "./layouts/cover";
 import Layout from "../layout";
 import useMusic from "@/hooks/themes/useMusic";
@@ -5,19 +7,23 @@ import Music from "./layouts/music";
 import Hero from "./layouts/hero";
 import Image from "next/image";
 import usePhotos from "@/hooks/themes/usePhotos";
-import { useMemo, useRef, lazy, Suspense } from "react";
+import { useMemo, lazy, Suspense, useEffect, useState } from "react";
 import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import LoadingDark from "../loading.dark";
+import YoutubeEmbedPortrait from "../youtube.embed.portrait";
+import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 
+// ✅ Lazy load section terpisah untuk efisiensi
 const Photos = lazy(() => import("./layouts/photos"));
 const RsvpWishes = lazy(() => import("./layouts/rsvp.wishes"));
 const Thankyou = lazy(() => import("./layouts/thankyou"));
 const Participants = lazy(() => import("./layouts/participants"));
 const Events = lazy(() => import("./layouts/events"));
+const Video = lazy(() => import("./layouts/video"));
 
 interface Props {
   untuk: string;
@@ -27,36 +33,47 @@ const Luma = ({ untuk }: Props) => {
   const { state, actions, refs } = useMusic();
   const { isOpen } = useCoverStore();
   const { client } = useClientStore();
+  const { videos = [] } = client || {};
+
   const {
     state: { images },
   } = usePhotos();
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const video = useMemo(
-    () =>
-      Array.isArray(client?.videos) && client.videos.length > 0
-        ? client.videos.filter((v) => !isYoutubeVideo(v))
-        : [],
-    [client?.videos]
-  );
+  const [shouldLoadSections, setShouldLoadSections] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
+  const youtubeVideos = useMemo(() => {
+    if (!videos?.length) return [];
+    return (videos as string[]).filter(isYoutubeVideo).map((url) => ({
+      url,
+      youtubeId: getYouTubeVideoId(url),
+    }));
+  }, [videos]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShouldLoadSections(true), 1200);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (youtubeVideos.length > 0) {
+      const timeout = setTimeout(() => setIsVideoReady(true), 800);
+      return () => clearTimeout(timeout);
+    }
+  }, [youtubeVideos]);
 
   return (
     <Layout>
       <Music actions={actions} refs={refs} state={state} />
       <main className="bg-luma-dark relative overflow-x-hidden">
-        {video.length > 0 ? (
-          <video
-            ref={videoRef}
-            src={video[0]}
-            poster={client?.cover || ""}
-            className="absolute w-full h-full object-cover top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label={`Background video undangan digital ${untuk}`}
-          />
+        {/* ✅ BACKGROUND: pilih antara YouTube atau fallback Swiper */}
+        {youtubeVideos.length > 0 ? (
+          isVideoReady && (
+            <YoutubeEmbedPortrait
+              title={`Video Background ${client?.name}`}
+              youtubeId={youtubeVideos[0].youtubeId as string}
+            />
+          )
         ) : (
           <div
             className="fixed inset-0 mx-auto"
@@ -66,8 +83,8 @@ const Luma = ({ untuk }: Props) => {
             <Swiper
               modules={[Autoplay, EffectFade]}
               effect="fade"
-              speed={1500}
-              autoplay={{ delay: 6000, disableOnInteraction: false }}
+              speed={1200}
+              autoplay={{ delay: 7000, disableOnInteraction: false }}
               className="h-lvh w-full"
             >
               {images.slice(0, 3).map((image, index) => (
@@ -82,10 +99,10 @@ const Luma = ({ untuk }: Props) => {
                     }`}
                     fill
                     sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, 1280px"
-                    priority={index < 2}
-                    loading={index < 2 ? "eager" : "lazy"}
+                    priority={index < 1}
+                    loading={index >= 1 ? "lazy" : "eager"}
+                    quality={70} 
                     className="object-cover shimmer-dark"
-                    quality={80}
                   />
                 </SwiperSlide>
               ))}
@@ -100,13 +117,16 @@ const Luma = ({ untuk }: Props) => {
           <Cover actions={actions} untuk={untuk} />
           <Hero />
 
-          <Suspense fallback={<LoadingDark />}>
-            <Participants />
-            <Events />
-            <Photos />
-            <RsvpWishes />
-            <Thankyou />
-          </Suspense>
+          {shouldLoadSections && (
+            <Suspense fallback={<LoadingDark />}>
+              <Participants />
+              <Events />
+              <Photos />
+              <Video />
+              <RsvpWishes />
+              <Thankyou />
+            </Suspense>
+          )}
         </div>
       </main>
     </Layout>
