@@ -16,6 +16,7 @@ import PreviewNav from "@/components/themes/preview.nav";
 import "aos/dist/aos.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { getClient } from "@/lib/client";
+import { useSearchParams } from "next/navigation";
 
 class ThemeErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -37,7 +38,6 @@ class ThemeErrorBoundary extends React.Component<
 interface PageProps {
   seo: SEO;
   slug: string;
-  untuk: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => ({
@@ -46,7 +46,7 @@ export const getStaticPaths: GetStaticPaths = async () => ({
 });
 
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
-  const { slug, untuk } = context.params as { slug: string; untuk: string };
+  const { slug } = context.params as { slug: string };
 
   try {
     const baseUrl = process.env.API_BASE_URL;
@@ -65,18 +65,19 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
       props: {
         seo: data ?? null,
         slug,
-        untuk: untuk ?? "Tamu Undangan",
       },
-      revalidate: 600,
+      revalidate: 300,
     };
   } catch (error) {
     console.error("ISR SEO fetch error:", error);
     return { notFound: true };
   }
 };
-const MainPage: FC<PageProps> = ({ seo, slug, untuk }) => {
+const MainPage: FC<PageProps> = ({ seo, slug }) => {
   const { setClient, client } = useClientStore();
   const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const untuk = searchParams.get("untuk") || "Tamu Undangan";
 
   const {
     data,
