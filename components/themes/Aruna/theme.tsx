@@ -50,9 +50,8 @@ const Aruna: FC<Props> = ({ untuk }) => {
 
       {isOpen && (
         <div className="flex justify-between">
-          {/* Left side cover */}
           <div className="fixed inset-0 hidden xl:block">
-            <div className="relative xl:w-[70vw] 2xl:w-[75vw] h-dvh">
+            <div className="relative xl:w-[65vw] 2xl:w-[70vw] h-dvh">
               <div className="bg-gradient-to-b from-aruna-dark/40 from-[5%] via-aruna-dark/20 to-[95%] to-aruna-dark absolute inset-0 z-20 flex flex-col justify-end p-[100px]">
                 <p
                   data-aos="fade-up"
@@ -87,7 +86,7 @@ const Aruna: FC<Props> = ({ untuk }) => {
 
           {/* Right side sections */}
           <Suspense fallback={<LoadingDark />}>
-            <div className="relative w-full xl:max-w-[30vw] 2xl:max-w-[25vw] ml-auto space-y-10">
+            <div className="relative w-full xl:max-w-[35vw] 2xl:max-w-[30vw] ml-auto space-y-10">
               <HeroComponent />
               <ParticipantsComponent />
               <EventsComponent />

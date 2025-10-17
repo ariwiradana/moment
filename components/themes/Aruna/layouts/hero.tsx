@@ -30,7 +30,6 @@ const HeroComponent = () => {
 
   const eventNames = useMemo(() => getEventNames(events), [events]);
 
-  // play video on mount
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current

@@ -143,7 +143,7 @@ const Photos: NextPage = () => {
               speed={300}
               spaceBetween={4}
               breakpoints={{
-                0: { slidesPerView: isShowVideo ? 3 : 2 },
+                0: { slidesPerView: 3 },
                 640: { slidesPerView: 3 },
                 1024: { slidesPerView: 4 },
                 1280: { slidesPerView: 5 },
