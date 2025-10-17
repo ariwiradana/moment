@@ -72,7 +72,7 @@ const PackageComponent = () => {
 
   return (
     <section
-      className="py-8 md:py-10 lg:py-16 select-none relative"
+      className="py-8 md:py-10 lg:py-16 select-none relative bg-white"
       id="section4"
     >
       <Head>

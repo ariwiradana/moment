@@ -96,7 +96,7 @@ const NavbarComponent = () => {
       </Head>
 
       <header
-        className={`sticky top-0 inset-x-0 z-30 border-b ${
+        className={`fixed top-0 inset-x-0 z-30 border-b ${
           !isOnTop ? "bg-white border-b-zinc-100" : "border-b-transparent"
         } transition-all ease-in-out`}
       >
@@ -107,7 +107,7 @@ const NavbarComponent = () => {
         >
           <ul
             className={`flex items-center justify-between gap-8 transition-all ease-in-out ${
-              isOnTop ? "h-16 md:h-20 lg:h-24" : "h-14 md:h-20 lg:h-16"
+              isOnTop ? "h-16 md:h-16 lg:h-20" : "h-14 md:h-20 lg:h-16"
             }`}
           >
             {/* Logo */}
@@ -133,7 +133,9 @@ const NavbarComponent = () => {
             {/* Menu utama */}
             {router.pathname === "/" && (
               <>
-                <li className="hidden lg:flex justify-center items-center gap-x-8">
+                <li
+                  className={`hidden justify-center items-center gap-x-8 lg:flex`}
+                >
                   {navData.map(({ title, path }: NavData, index: number) => (
                     <NavItem
                       key={title}

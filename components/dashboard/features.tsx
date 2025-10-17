@@ -35,7 +35,7 @@ const FeaturesComponent = () => {
 
   return (
     <section
-      className="py-8 md:py-10 lg:py-16 relative select-none"
+      className="py-8 md:py-10 lg:py-16 relative select-none bg-white"
       id="section2"
     >
       <Head>
@@ -46,6 +46,7 @@ const FeaturesComponent = () => {
           />
         )}
       </Head>
+
       <div className="px-4 md:px-12 lg:px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6">
         {displayedFeatures.map((f) => (
           <div

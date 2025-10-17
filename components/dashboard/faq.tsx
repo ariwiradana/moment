@@ -128,7 +128,7 @@ const FaqComponent = () => {
 
   return (
     <section
-      className="py-8 md:py-10 lg:py-16 relative select-none"
+      className="py-8 md:py-10 lg:py-16 relative select-none bg-white"
       id="section6"
     >
       <Head>

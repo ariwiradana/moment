@@ -101,8 +101,8 @@ const DashboardPage = () => {
         icon={<BiLogoWhatsapp />}
       />
       <HeroComponent />
-      <FeaturesComponent />
       <ClientComponent />
+      <FeaturesComponent />
       <ThemeComponent />
       <PackageComponent />
       <TestimonialsComponent />

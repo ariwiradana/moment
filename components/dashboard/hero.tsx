@@ -3,11 +3,6 @@ import { redhat } from "@/lib/fonts";
 import useDashboardStore from "@/store/useDashboardStore";
 import { BsChevronRight } from "react-icons/bs";
 import Image from "next/image";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-
 const HeroComponent = () => {
   const { setActiveSection } = useDashboardStore();
 
@@ -19,67 +14,34 @@ const HeroComponent = () => {
     window.scrollTo({ top });
   }, []);
 
-  const { data } = useSWR<{
-    data: { thumbnail: string; name: string }[];
-  }>(`/api/guest/themes/thumbnails`, fetcher, {
-    revalidateOnFocus: false,
-  });
-
   return (
-    <section
-      id="section1"
-      className="w-full bg-white flex flex-col justify-center gap-10 scroll-smooth pb-12"
-    >
-      {/* Hero Text */}
-      <div className="flex lg:hidden max-w-screen-xl mt-8 mx-auto w-full px-4 md:px-12 lg:px-4 flex-col lg:flex-row lg:items-end gap-4 lg:gap-40 transition-opacity duration-700 ease-in-out opacity-100">
-        <h1
-          className="font-tan-pearl uppercase text-5xl md:text-6xl lg:text-7xl font-bold text-dashboard-dark"
-          style={{ lineHeight: "1.2" }}
-        >
-          Moment <br /> Invitation
-        </h1>
-        <p
-          className={`${redhat.className} text-base text-dashboard-dark/70 max-w-lg`}
-        >
-          Buat momen spesial lebih berkesan dengan undangan digital Bali yang
-          minimalis, praktis, cepat, dan mudah dibagikan.
-        </p>
-      </div>
-
-      {/* Visually Hidden SEO Text */}
-      <p className="sr-only">
-        Undangan digital Bali, undangan pernikahan digital Bali, undangan
-        mempandes digital, undangan minimalis Bali, template undangan online
-        Bali.
-      </p>
-
-      {/* Hero Video */}
-      <div className="w-full aspect-[8/4] lg:aspect-[8/3] bg-zinc-50 relative overflow-hidden">
-        {data?.data && data?.data.length > 0 ? (
-          <Swiper
-            autoplay={{
-              delay: 5000,
-            }}
-            speed={1000}
-            modules={[Autoplay]}
-            grabCursor={false}
-            allowTouchMove={false}
+    <section id="section1" className="w-full scroll-smooth bg-white">
+      <div className="pb-12 max-w-screen-xl pt-24 lg:pt-32 mx-auto flex flex-col justify-center gap-10">
+        {/* Hero Text */}
+        <div className="flex w-full px-4 md:px-12 lg:px-4 flex-col lg:flex-row lg:items-end gap-4 lg:gap-40 transition-opacity duration-700 ease-in-out opacity-100">
+          <h1
+            className="font-tan-pearl uppercase text-5xl md:text-6xl lg:text-7xl font-bold text-dashboard-dark"
+            style={{ lineHeight: "1.2" }}
           >
-            {data?.data.map((theme) => (
-              <SwiperSlide
-                key={`Slideshow untuk tema ${theme.name}`}
-                className="w-full aspect-[8/4] lg:aspect-[8/3] relative"
-              >
-                <Image
-                  src={theme.thumbnail}
-                  alt={`Slideshow untuk tema ${theme.name}`}
-                  fill
-                  className="object-cover"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        ) : (
+            Moment <br /> Invitation
+          </h1>
+          <p
+            className={`${redhat.className} text-base text-dashboard-dark/70 max-w-lg`}
+          >
+            Buat momen spesial lebih berkesan dengan undangan digital Bali yang
+            minimalis, praktis, cepat, dan mudah dibagikan.
+          </p>
+        </div>
+
+        {/* Visually Hidden SEO Text */}
+        <p className="sr-only">
+          Undangan digital Bali, undangan pernikahan digital Bali, undangan
+          mempandes digital, undangan minimalis Bali, template undangan online
+          Bali.
+        </p>
+
+        {/* Hero Video */}
+        <div className="w-full aspect-[4/2.2] lg:aspect-[4/1.15] bg-zinc-50 relative overflow-hidden">
           <video
             className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-cover"
             src="/video/hero5.mp4"
@@ -90,33 +52,33 @@ const HeroComponent = () => {
             preload="metadata"
             poster="/video/hero-poster.jpg"
           />
-        )}
 
-        {/* Hidden Image untuk SEO */}
-        <Image
-          quality={40}
-          src="/video/hero-poster.jpg"
-          alt="Undangan digital Bali minimalis dan elegan untuk pernikahan & mempandes"
-          className="hidden"
-          height={100}
-          width={100}
-        />
-      </div>
+          {/* Hidden Image untuk SEO */}
+          <Image
+            quality={40}
+            src="/video/hero-poster.jpg"
+            alt="Undangan digital Bali minimalis dan elegan untuk pernikahan & mempandes"
+            className="hidden"
+            height={100}
+            width={100}
+          />
+        </div>
 
-      {/* Call to Action */}
-      <div className="flex max-w-screen-xl w-full mx-auto px-4 md:px-12 lg:px-4 flex-wrap justify-end items-center gap-4 lg:gap-40 transition-opacity duration-700 ease-in-out opacity-100">
-        <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
-          Buat undangan digital Anda dengan cepat dan mudah.
-        </p>
-        <button
-          onClick={() => {
-            setActiveSection("section3");
-            scrollTo("section3");
-          }}
-          className={`${redhat.className} text-sm flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2 hover:bg-zinc-100 transition-colors duration-300`}
-        >
-          Lihat Katalog Undangan <BsChevronRight />
-        </button>
+        {/* Call to Action */}
+        <div className="flex max-w-screen-xl w-full mx-auto px-4 md:px-12 lg:px-4 flex-wrap justify-end items-center gap-4 lg:gap-40 transition-opacity duration-700 ease-in-out opacity-100">
+          <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
+            Buat undangan digital Anda dengan cepat dan mudah.
+          </p>
+          <button
+            onClick={() => {
+              setActiveSection("section3");
+              scrollTo("section3");
+            }}
+            className={`${redhat.className} text-sm flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2 hover:bg-zinc-100 transition-colors duration-300`}
+          >
+            Lihat Katalog Undangan <BsChevronRight />
+          </button>
+        </div>
       </div>
     </section>
   );
