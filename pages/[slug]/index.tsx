@@ -15,6 +15,7 @@ import { redhat } from "@/lib/fonts";
 import PreviewNav from "@/components/themes/preview.nav";
 import "aos/dist/aos.css";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { getClient } from "@/lib/client";
 
 class ThemeErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -50,23 +51,10 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   try {
     const baseUrl = process.env.API_BASE_URL;
 
-    console.log({ baseUrl });
-
-    const res = await fetch(`${baseUrl}/guest/seo?slug=${slug}`, {
-      next: { revalidate: 60 },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      console.error("SEO fetch failed:", res.status, res.statusText);
-      throw new Error("Failed to fetch SEO data");
-    }
+    const res = await getClient(`${baseUrl}/guest/seo?slug=${slug}`);
+    if (!res.ok) throw new Error("Failed to fetch SEO data");
 
     const { data } = await res.json();
-
-    console.log({ data });
 
     if (!data)
       return {
