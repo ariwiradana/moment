@@ -54,7 +54,7 @@ const ThankyouComponent = () => {
         {client?.closing_title && (
           <h1
             data-aos="fade-up"
-            className="text-white text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase mb-6"
+            className="text-white text-center tracking-[2px] font-medium text-[10px] md:text-xs lg:text-sm uppercase mb-6"
           >
             {client.closing_title}
           </h1>
@@ -64,7 +64,7 @@ const ThankyouComponent = () => {
         {client?.closing_description && (
           <p
             data-aos="fade-up"
-            className={`text-white/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto lg:text-xs text-[10px] my-16 ${raleway.className}`}
+            className={`text-white/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto md:text-xs text-[10px] lg:text-sm my-16 ${raleway.className}`}
           >
             {client.closing_description}
           </p>
@@ -75,13 +75,13 @@ const ThankyouComponent = () => {
           <>
             <p
               data-aos="fade-up"
-              className={`text-white text-[8px] md:text-[10px] uppercase text-center tracking-[6px] ${raleway.className}`}
+              className={`text-white text-[8px] md:text-[10px] lg:text-xs uppercase text-center tracking-[6px] ${raleway.className}`}
             >
               Kami Yang Berbahagia
             </p>
             <h2
               data-aos="fade-up"
-              className="text-white text-center leading-8 text-4xl font-edensor mt-2"
+              className="text-white text-center leading-8 text-4xl lg:text-6xl font-edensor mt-2"
             >
               {participantState.groom?.nickname ?? "-"}{" "}
               <span className="font-italic">dan </span>
@@ -95,7 +95,7 @@ const ThankyouComponent = () => {
           data-aos="zoom-in-up"
           className="flex flex-col justify-center gap-2 items-center relative z-30 mt-[100px]"
         >
-          <li className="flex items-center justify-center gap-2 text-base text-white mt-2">
+          <li className="flex items-center justify-center gap-2 text-base lg:text-lg text-white mt-2">
             <Link
               aria-label="Hubungi kami via WhatsApp"
               target="_blank"
@@ -130,7 +130,7 @@ const ThankyouComponent = () => {
           <li className="mt-2">
             <Link href="/" target="_blank">
               <p
-                className={`${raleway.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
+                className={`${raleway.className} text-center uppercase text-white text-[8px] md:text-[10px] lg:text-xs tracking-[2px]`}
               >
                 Undangan Digital © 2025 | Moment Invitation
               </p>
@@ -141,7 +141,7 @@ const ThankyouComponent = () => {
           {client?.music_title && (
             <li>
               <div
-                className={`flex justify-center items-center gap-x-2 ${raleway.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
+                className={`flex justify-center items-center gap-x-2 ${raleway.className} text-center uppercase text-white text-[8px] md:text-[10px] lg:text-xs tracking-[2px]`}
               >
                 <BiMusic className="animate-pulse" />
                 <p>{client.music_title}</p>

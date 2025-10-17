@@ -529,10 +529,10 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
       if (videoBackground instanceof File) {
         i++;
-        const toastUpload = toast.loading(`Mengunggah vodeo...`);
+        const toastUpload = toast.loading(`Mengunggah video...`);
         try {
           if (videoBackground.size > MAX_SIZE) {
-            toast.error(`Ukuran vodeo terlalu besar (maks 100MB).`, {
+            toast.error(`Ukuran video terlalu besar (maks 100MB).`, {
               id: toastUpload,
             });
             return;
@@ -547,16 +547,16 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           const result = await response.json();
 
           if (result.success) {
-            toast.success(`vodeo berhasil diunggah.`, {
+            toast.success(`video berhasil diunggah.`, {
               id: toastUpload,
             });
             videoFileURL = result.data.secure_url;
           } else {
-            toast.error(`Gagal mengunggah vodeo.`, { id: toastUpload });
+            toast.error(`Gagal mengunggah video.`, { id: toastUpload });
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Terjadi kesalahan saat mengunggah vodeo.`,
+            error.message || `Terjadi kesalahan saat mengunggah video.`,
             { id: toastUpload }
           );
         }

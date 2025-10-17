@@ -24,33 +24,33 @@ const WishItem = memo(
       <div className="py-4 first:pt-0 first:md:pt-4 last:pb-0 last:md:pb-4">
         <div className="flex items-center gap-x-2">
           <div
-            className="w-8 h-8 bg-white aspect-square rounded-full flex justify-center items-center uppercase font-medium text-nirvaya-dark"
+            className="w-8 h-8 lg:w-10 lg:h-10 bg-white aspect-square rounded-full flex justify-center items-center uppercase font-medium text-nirvaya-dark"
             style={{ lineHeight: "none" }}
           >
-            <span className={`${raleway.className} text-xs`}>
+            <span className={`${raleway.className} text-xs lg:text-base`}>
               {getInitial(wish.name ?? "")}
             </span>
           </div>
           <div>
             <h3
-              className={`capitalize text-white text-sm leading-5 line-clamp-1 ${raleway.className}`}
+              className={`capitalize text-white text-sm lg:text-base leading-5 line-clamp-1 ${raleway.className}`}
             >
               {wish.name ?? "-"}
             </h3>
             <p
-              className={`${raleway.className} text-[10px] md:text-xs tracking-[1px] text-white/50`}
+              className={`${raleway.className} text-[10px] md:text-xs lg:text-sm tracking-[1px] text-white/50`}
             >
               {attendantText[wish.attendant ?? ""] ?? "-"}
             </p>
           </div>
         </div>
-        <p className="text-white tracking-[1px] md:text-xs text-[10px] mt-2">
+        <p className="text-white tracking-[1px] md:text-xs text-[10px] lg:text-sm mt-2">
           {wish.wishes ?? "-"}
         </p>
         <div className="flex items-center gap-x-1 text-white/80 mt-1">
-          <BiTime className="text-xs md:text-sm" />
+          <BiTime className="text-xs md:text-sm lg:text-base" />
           <p
-            className={`${raleway.className} text-[10px] md:text-xs tracking-[1px]`}
+            className={`${raleway.className} text-[10px] md:text-xs lg:text-sm lg:mt-1 tracking-[1px]`}
           >
             {wish.created_at ? moment(wish.created_at).fromNow() : "-"}
           </p>
@@ -90,12 +90,12 @@ const RSVPWishesComponent: FC = () => {
           className={`flex flex-col md:flex-row items-center gap-x-6 w-full px-8 max-w-screen-lg mx-auto ${raleway.className}`}
         >
           <div className="flex justify-between items-center gap-x-6 md:gap-x-12 w-full">
-            <h2 className="text-white text-4xl md:text-5xl font-edensor whitespace-nowrap leading-8">
+            <h2 className="text-white text-4xl md:text-6xl font-edensor whitespace-nowrap leading-8">
               RSVP <span className="italic">dan</span> Ucapan
             </h2>
             <div className="h-[1px] bg-white/10 w-full"></div>
           </div>
-          <p className="text-white/50 md:text-right tracking-[2px] md:text-xs text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px]">
+          <p className="text-white/50 md:text-right tracking-[2px] md:text-xs lg:text-sm text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px]">
             Konfirmasi kehadiran Anda melalui RSVP, dan jangan lupa sampaikan
             doa serta ucapan terbaik untuk pengantin di hari bahagia mereka.
           </p>

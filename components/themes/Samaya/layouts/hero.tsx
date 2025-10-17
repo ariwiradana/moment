@@ -57,7 +57,7 @@ const HeroComponent = () => {
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark to-[90%]" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent via-[40%] to-samaya-dark" />
 
       {/* Text overlay */}
       {isOpen && (

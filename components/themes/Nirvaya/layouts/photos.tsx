@@ -34,12 +34,12 @@ const Photos = () => {
             className="flex flex-col md:flex-row items-center gap-x-6 pl-8 md:pl-0"
           >
             <div className="flex justify-between items-center gap-x-6 md:gap-x-12 w-full">
-              <h2 className="text-nirvaya-dark text-4xl md:text-5xl font-edensor whitespace-nowrap leading-8">
+              <h2 className="text-nirvaya-dark text-4xl md:text-6xl font-edensor whitespace-nowrap leading-8">
                 Galeri <span className="italic">Kami</span>
               </h2>
               <div className="h-[1px] bg-nirvaya-dark/10 w-full"></div>
             </div>
-            <p className="text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px]">
+            <p className="text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs lg:text-sm text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px]">
               Momen menjadi awal kisah yang akan dikenang selamanya
             </p>
           </div>

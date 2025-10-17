@@ -64,29 +64,28 @@ const Cover = ({ to, actions }: Props) => {
           <p
             data-aos="fade-up"
             data-aos-delay="200"
-            className="text-white text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+            className="text-white text-center tracking-[2px] font-medium text-[10px] md:text-xs lg:text-sm uppercase"
           >
             Undangan {getEventNames(events || [])}
           </p>
           <h2
             data-aos="fade-up"
             data-aos-delay="400"
-            className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-4xl lg:text-5xl text-center"
+            className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-4xl lg:text-7xl text-center"
           >
             <span>{groom?.nickname}</span>
             <span className="italic"> dan </span>
             <span>{bride?.nickname}</span>
           </h2>
           {isOpen && (
-            <p
-              data-aos="fade-up"
-              className="text-white text-[10px] lg:mt-2 text-center mt-[10px] lg:text-xs max-w-md"
-            >
-              Wahai pasangan suami-isteri, kembangkanlah cinta kasih di dalam
-              dirimu, tekun dan tetaplah berkarma dalam menggapai kebahagiaan.
-              Karena hanya orang yang bersungguh-sungguhlah mendapatkan
-              keberhasilan dalam berkeluarga.
-            </p>
+            <div data-aos="fade-up" className="max-w-md mx-auto">
+              <p className="text-white text-[10px] lg:mt-2 text-center mt-[10px] md:text-xs lg:text-sm">
+                Wahai pasangan suami-isteri, kembangkanlah cinta kasih di dalam
+                dirimu, tekun dan tetaplah berkarma dalam menggapai kebahagiaan.
+                Karena hanya orang yang bersungguh-sungguhlah mendapatkan
+                keberhasilan dalam berkeluarga.
+              </p>
+            </div>
           )}
         </div>
 
@@ -94,21 +93,21 @@ const Cover = ({ to, actions }: Props) => {
           <p
             data-aos="fade-down"
             data-aos-delay="1200"
-            className="text-white text-[10px] lg:text-xs text-center"
+            className="text-white text-[10px] md:text-xs lg:text-sm text-center"
           >
             Yth. Bapak / Ibu / Saudara / i
           </p>
           <h4
             data-aos="fade-down"
             data-aos-delay="1000"
-            className="text-center mt-1 lg:mt-2 text-white font-medium text-lg lg:text-xl my-1 lg:my-2"
+            className="text-center mt-1 lg:mt-2 text-white font-medium text-lg md:text-xl lg:text-3xl my-1 lg:my-2"
           >
             {to}
           </h4>
           <p
             data-aos="fade-down"
             data-aos-delay="800"
-            className="text-white text-[10px] lg:text-xs text-center max-w-[200px] lg:max-w-lg mx-auto mb-4 lg:mb-6"
+            className="text-white text-[10px] md:text-xs lg:text-sm text-center max-w-[200px] lg:max-w-lg mx-auto mb-4 lg:mb-6"
           >
             Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
             acara {getEventNames(events || [])} kami.

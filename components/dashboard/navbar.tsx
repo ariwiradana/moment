@@ -9,7 +9,6 @@ import { BsChevronRight } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { RiErrorWarningFill } from "react-icons/ri";
 import ButtonPrimary from "./elements/button.primary";
-import throttle from "lodash.throttle";
 import Head from "next/head";
 
 const NavItem = memo(
@@ -63,9 +62,8 @@ const NavbarComponent = () => {
 
   useEffect(() => {
     const handleScroll = () => setIsOnTop(window.scrollY === 0);
-    const throttled = throttle(handleScroll, 50);
-    window.addEventListener("scroll", throttled);
-    return () => window.removeEventListener("scroll", throttled);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (section: string) => {
@@ -98,9 +96,9 @@ const NavbarComponent = () => {
       </Head>
 
       <header
-        className={`fixed top-0 inset-x-0 z-30 border-b ${
+        className={`sticky top-0 inset-x-0 z-30 border-b ${
           !isOnTop ? "bg-white border-b-zinc-100" : "border-b-transparent"
-        } transition-all ease-in-out duration-500`}
+        } transition-all ease-in-out`}
       >
         <nav
           className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4"
@@ -108,8 +106,8 @@ const NavbarComponent = () => {
           role="navigation"
         >
           <ul
-            className={`flex items-center justify-between gap-8 transition-all ease-in-out duration-500 ${
-              isOnTop ? "h-16 md:h-20 lg:h-24" : "h-12 md:h-16 lg:h-20"
+            className={`flex items-center justify-between gap-8 transition-all ease-in-out ${
+              isOnTop ? "h-16 md:h-20 lg:h-24" : "h-14 md:h-20 lg:h-16"
             }`}
           >
             {/* Logo */}

@@ -71,14 +71,14 @@ const Hero = () => {
             <div>
               <p
                 data-aos="fade-up"
-                className="text-white text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+                className="text-white text-center tracking-[2px] font-medium text-[10px] md:text-xs lg:text-sm uppercase"
               >
                 Undangan {eventNames}
               </p>
               <h2
                 data-aos="fade-up"
                 data-aos-delay="200"
-                className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-4xl lg:text-5xl text-center"
+                className="text-white font-edensor mt-1 lg:mt-2 leading-10 text-4xl lg:text-7xl text-center"
               >
                 <span>{participantsState.groom?.nickname}</span>
                 <span className="italic"> dan </span>
@@ -87,7 +87,7 @@ const Hero = () => {
               <p
                 data-aos="fade-up"
                 data-aos-delay="400"
-                className="text-white text-[10px] lg:mt-2 text-center mt-[10px] lg:text-xs max-w-md"
+                className="text-white text-[10px] lg:mt-2 text-center mt-[10px] md:text-xs mx-auto lg:text-sm max-w-md"
               >
                 Wahai pasangan suami-isteri, kembangkanlah cinta kasih di dalam
                 dirimu, tekun dan tetaplah berkarma dalam menggapai kebahagiaan.
@@ -106,14 +106,14 @@ const Hero = () => {
               <p
                 data-aos="fade-down"
                 data-aos-delay="1000"
-                className="text-white text-center tracking-[3px] font-medium text-[10px] lg:text-xs uppercase transform transition-all duration-300 ease-in-out opacity-100 translate-y-0"
+                className="text-white text-center tracking-[3px] font-medium text-[10px] md:text-xs lg:text-sm uppercase transform transition-all duration-300 ease-in-out opacity-100 translate-y-0"
               >
                 {countdownData.currentEvent.name}
               </p>
               <p
                 data-aos="fade-down"
                 data-aos-delay="800"
-                className="text-white text-center tracking-[3px] font-medium text-[10px] lg:text-xs uppercase mt-2 transform transition-all duration-300 ease-in-out opacity-100 translate-y-0"
+                className="text-white text-center tracking-[3px] font-medium text-[10px] md:text-xs lg:text-sm uppercase mt-2 transform transition-all duration-300 ease-in-out opacity-100 translate-y-0"
               >
                 {formatEventDate(countdownData.currentEvent.date)}
               </p>
@@ -124,14 +124,14 @@ const Hero = () => {
               >
                 {["days", "hours", "minutes", "seconds"].map((unit, idx) => (
                   <div key={idx} className="text-center">
-                    <h6 className="font-edensor leading-none text-2xl lg:text-3xl text-white">
+                    <h6 className="font-edensor leading-none text-2xl md:text-3xl text-white">
                       {
                         countdownData.currentRemaining[
                           unit as keyof typeof countdownData.currentRemaining
                         ]
                       }
                     </h6>
-                    <p className="text-[10px] lg:text-xs text-white mt-1 font-edensor">
+                    <p className="text-[10px] md:text-xs lg:text-base text-white mt-1 font-edensor">
                       {unit === "days"
                         ? "Hari"
                         : unit === "hours"

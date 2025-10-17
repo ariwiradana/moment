@@ -60,12 +60,12 @@ const Events = () => {
                     : "bg-nirvaya-light-brown/90 text-nirvaya-dark"
                 }`}
               >
-                <h4 className="text-3xl lg:text-4xl leading-8 font-edensor">
+                <h4 className="text-3xl lg:text-5xl leading-8 font-edensor">
                   {event.name?.replaceAll("&", "dan")}
                 </h4>
 
                 <div className="mt-2 lg:mt-3">
-                  <h6 className="uppercase font-edensor text-xs lg:text-sm tracking-[3px]">
+                  <h6 className="uppercase font-edensor text-xs md:text-sm lg:text-base tracking-[3px]">
                     {new Intl.DateTimeFormat("id-ID", {
                       weekday: "long",
                       day: "2-digit",
@@ -73,15 +73,15 @@ const Events = () => {
                       year: "numeric",
                     }).format(new Date(event.date))}
                   </h6>
-                  <h6 className="uppercase font-edensor text-xs lg:text-sm tracking-[3px]">
+                  <h6 className="uppercase font-edensor text-xs md:text-sm lg:text-base tracking-[3px]">
                     {event.start_time} Wita - {event.end_time} Wita
                   </h6>
                 </div>
 
-                <p className="mt-6 lg:mt-7 text-[8px] lg:text-[10px] tracking-[3px] lg:text-xs uppercase">
+                <p className="mt-6 lg:mt-7 text-[8px] lg:text-[10px] tracking-[3px] md:text-xs lg:text-sm uppercase">
                   Bertempat di
                 </p>
-                <p className="mt-1 lg:mt-2 text-[10px] lg:text-xs tracking-[1px]">
+                <p className="mt-1 lg:mt-2 text-[10px] md:text-xs lg:text-sm tracking-[1px]">
                   {event.address}
                 </p>
 

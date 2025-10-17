@@ -15,7 +15,7 @@ const InputCheckbox: FC<Props> = (props) => {
         className={`bg-white bg-opacity-5 w-4 h-4 outline-none accent-nirvaya-dark focus:border focus:border-gray-200 text-sm font-medium text-nirvaya-dark ${raleway.className}`}
       />
       <p
-        className={`text-base ${raleway.className} text-white text-xs md:text-sm mt-[1px]`}
+        className={`text-base ${raleway.className} text-white text-xs md:text-sm lg:text-base mt-[1px]`}
       >
         {props.label}
       </p>

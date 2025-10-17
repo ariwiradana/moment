@@ -23,13 +23,13 @@ const Participants = () => {
       <div className="py-16 px-8 max-w-screen-lg mx-auto">
         <p
           data-aos="fade-up"
-          className="text-nirvaya-dark/50 text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+          className="text-nirvaya-dark/50 text-center tracking-[2px] font-medium text-[10px] md:text-xs lg:text-sm uppercase"
         >
           {client?.opening_title}
         </p>
         <h2
           data-aos="fade-up"
-          className="text-nirvaya-dark text-center leading-8 text-4xl font-edensor mt-4"
+          className="text-nirvaya-dark text-center leading-8 text-4xl lg:text-6xl font-edensor mt-4"
         >
           Selamat Datang di Acara{" "}
           {eventState.events.length > 0 && (
@@ -46,14 +46,14 @@ const Participants = () => {
         </h2>
         <p
           data-aos="fade-up"
-          className="text-nirvaya-dark/50 my-6 text-center tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+          className="text-nirvaya-dark/50 my-6 text-center tracking-[2px] font-medium text-[10px] md:text-xs lg:text-sm uppercase"
         >
           {participantState.groom?.nickname} &{" "}
           {participantState.bride?.nickname}
         </p>
         <p
           data-aos="fade-up"
-          className="text-nirvaya-dark/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto lg:text-xs text-[10px]"
+          className="text-nirvaya-dark/50 mt-6 text-center tracking-[2px] max-w-xl mx-auto md:text-xs lg:text-sm text-[10px]"
         >
           {client?.opening_description}
         </p>
@@ -110,7 +110,7 @@ const ParticipantItem = ({
       <div className={`mt-8 ${order === "odd" ? "text-left" : "text-right"}`}>
         <p
           data-aos="fade-up"
-          className="text-nirvaya-dark/50 tracking-[2px] font-medium text-[10px] lg:text-xs uppercase"
+          className="text-nirvaya-dark/50 tracking-[2px] font-medium text-[10px] md:text-xs lg:text-sm uppercase"
         >
           {participant?.role === "groom"
             ? "Mempelai Pria"
@@ -120,13 +120,13 @@ const ParticipantItem = ({
         </p>
         <h3
           data-aos="fade-up"
-          className="font-edensor text-4xl leading-8 text-nirvaya-dark mt-9"
+          className="font-edensor text-4xl lg:text-5xl leading-8 text-nirvaya-dark mt-9"
         >
           {participant.name}
         </h3>
         <p
           data-aos="fade-up"
-          className="text-nirvaya-dark/50 tracking-[2px] text-[10px] lg:text-xs mt-3"
+          className="text-nirvaya-dark/50 tracking-[2px] text-[10px] md:text-xs lg:text-sm mt-3"
         >
           {participant.role === "groom"
             ? "Putra"
@@ -139,7 +139,7 @@ const ParticipantItem = ({
 
         <div
           data-aos="fade-up"
-          className={`flex mt-9 gap-x-5 text-nirvaya-dark/50 text-xl ${
+          className={`flex mt-9 gap-x-5 text-nirvaya-dark/50 text-xl lg:text-2xl ${
             order === "odd" ? "justify-start" : "justify-end"
           }`}
         >

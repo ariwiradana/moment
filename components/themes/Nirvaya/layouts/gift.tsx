@@ -25,13 +25,13 @@ const Gift: NextPage = () => {
           className="flex flex-col md:flex-row items-center gap-x-6"
         >
           <div className="flex justify-between items-center gap-x-6 md:gap-x-12 w-full">
-            <h2 className="text-nirvaya-dark text-4xl md:text-5xl font-edensor whitespace-nowrap leading-8">
+            <h2 className="text-nirvaya-dark text-4xl md:text-6xl font-edensor whitespace-nowrap leading-8">
               Hadiah <span className="italic">Digital</span>
             </h2>
             <div className="h-[1px] bg-nirvaya-dark/10 w-full"></div>
           </div>
           <p
-            className={`text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px] ${raleway.className}`}
+            className={`text-nirvaya-dark/50 md:text-right tracking-[2px] md:text-xs lg:text-sm text-[10px] pr-8 md:pr-0 mt-2 max-w-[400px] ${raleway.className}`}
           >
             Tanpa mengurangi rasa hormat kami bagi tamu yang ingin mengirimkan
             hadiah kepada kedua mempelai dapat mengirimkannya melalui
@@ -39,19 +39,19 @@ const Gift: NextPage = () => {
         </div>
         <div data-aos="fade-up" className="mt-8 md:mt-16 pr-8 md:pr-0">
           <div className="bg-nirvaya-primary p-4 md:p-8">
-            <h2 className="text-white w-full text-2xl md:text-3xl font-edensor whitespace-nowrap leading-8">
+            <h2 className="text-white w-full text-2xl md:text-3xl lg:text-4xl font-edensor whitespace-nowrap leading-8">
               {client?.status === "active"
                 ? client?.gift_bank_name
                 : "Bank Jago"}
             </h2>
             <div className="flex justify-between items-end mt-6">
               <div>
-                <p className="text-white/60 tracking-[2px] font-medium text-[10px] lg:text-xs uppercase">
+                <p className="text-white/60 tracking-[2px] font-medium text-[10px] md:text-xs lg:text-sm uppercase">
                   {client?.status === "active"
                     ? client?.gift_account_name
                     : "Moment Invitation"}
                 </p>
-                <p className="uppercase font-edensor text-xs lg:text-sm tracking-[3px] mt-1 text-white">
+                <p className="uppercase font-edensor text-xs md:text-sm lg:text-base tracking-[3px] mt-1 text-white">
                   {client?.status === "active"
                     ? formatBankNumber(client?.gift_account_number as number)
                     : formatBankNumber(123456789)}
@@ -60,7 +60,7 @@ const Gift: NextPage = () => {
               {client?.status === "active" && (
                 <button
                   onClick={handleCopy}
-                  className="p-2 md:p-3 rounded-full aspect-square bg-nirvaya-light-brown flex justify-center items-center text-nirvaya-primary text-xs md:text-sm"
+                  className="p-2 md:p-3 rounded-full aspect-square bg-nirvaya-light-brown flex justify-center items-center text-nirvaya-primary text-xs md:text-sm lg:text-base"
                 >
                   <BiSolidCopy />
                 </button>

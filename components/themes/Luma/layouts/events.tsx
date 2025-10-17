@@ -37,24 +37,17 @@ const Events: NextPage = () => {
         >
           <div className="absolute z-20 inset-0 flex flex-col justify-center items-center bg-luma-dark/50 py-[60px] px-8">
             <div className="max-w-xl w-full mb-4 lg:mb-4 relative">
-              <div className="flex justify-between items-end gap-x-4">
-                <p
-                  className={`text-white/70 whitespace-nowrap text-[10px] md:text-xs lg:text-sm lg:text-center uppercase tracking-[3px] ${rubik.className}`}
-                >
-                  Menuju Hari
-                </p>
-                <div className="w-full h-[1px] bg-white/20 mb-2.5 hidden lg:block"></div>
+              <div className="flex justify-between items-end gap-x-4 mb-2">
                 <h2
                   className="font-bigilla leading-[40px] whitespace-nowrap lg:text-center relative -mb-1.5 lg:-mb-2 text-white text-[40px] md:text-5xl lg:text-7xl"
                   aria-label={`Judul acara ${event.name}`}
-                >
-                  {event?.name}
+                > {event?.name}
                 </h2>
               </div>
             </div>
 
             <div
-              className="bg-luma-primary/60 p-6 md:p-8 max-w-xl w-full"
+              className="bg-luma-primary/50 p-6 md:p-8 max-w-xl w-full"
               aria-label={`Detail acara ${event.name}`}
             >
               <div className="flex gap-x-2 mb-3 items-center">

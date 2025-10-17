@@ -8,8 +8,8 @@ import {
   BiEditAlt,
   BiLink,
   BiMessageAdd,
+  BiShow,
   BiSlideshow,
-  BiSolidShow,
   BiTrash,
   BiUserPlus,
 } from "react-icons/bi";
@@ -95,17 +95,22 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             </p>
                           </div>
                         )}
-                        <Link
-                          target="_bank"
-                          href={`/${client.slug}`}
-                          className="text-gray-500 text-lg"
-                        >
-                          <BiSolidShow />
-                        </Link>
                       </div>
 
                       <div className="flex items-center relative gap-x-2">
                         <ButtonActionDialog>
+                          <Link
+                            href={`/${client.slug}`}
+                            target="_blank"
+                            aria-label={`Live preview undangan tema ${client.theme?.name}`}
+                          >
+                            <ButtonText
+                              size="small"
+                              title="Live Preview"
+                              icon={<BiShow className="text-base" />}
+                            />
+                          </Link>
+
                           {client.status === "done" && (
                             <>
                               <ButtonText
@@ -332,15 +337,6 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 </div>
                               )}
                             </div>
-                            <div className="ml-2 flex items-center relative z-10">
-                              <Link
-                                target="_bank"
-                                href={`/${client.slug}`}
-                                className="text-gray-500 text-lg"
-                              >
-                                <BiSolidShow />
-                              </Link>
-                            </div>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -401,6 +397,17 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <ButtonActionDialog>
+                            <Link
+                              href={`/${client.slug}`}
+                              target="_blank"
+                              aria-label={`Live preview undangan tema ${client.theme?.name}`}
+                            >
+                              <ButtonText
+                                size="medium"
+                                title="Live Preview"
+                                icon={<BiShow className="text-base" />}
+                              />
+                            </Link>
                             {client.status === "done" && (
                               <>
                                 <ButtonText
