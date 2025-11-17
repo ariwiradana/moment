@@ -23,7 +23,7 @@ const Lineart = ({ untuk }: Props) => {
           data-aos="zoom-out"
           className={`bg-lineart-light max-w-2xl mx-auto relative w-full p-5 h-dvh overflow-hidden flex flex-col items-center justify-center ${montserrat.className}`}
         >
-          <div className="absolute -top-20 z-10 w-[300px] aspect-video rotate-[18deg]">
+          <div className="absolute -top-20 z-10 w-[280px] aspect-video rotate-[18deg]">
             <Image
               fill
               src="/images/lineart/hiasan.svg"
@@ -31,7 +31,7 @@ const Lineart = ({ untuk }: Props) => {
               alt="Top Hat"
             />
           </div>
-          <div className="absolute bottom-0 left-0 z-10 w-[130px] aspect-square rotate-[18deg]">
+          <div className="absolute bottom-0 -left-8 z-10 w-[120px] aspect-square rotate-[18deg]">
             <Image
               fill
               src="/images/lineart/gift.svg"
@@ -39,7 +39,7 @@ const Lineart = ({ untuk }: Props) => {
               alt="Gift"
             />
           </div>
-          <div className="absolute bottom-32 -right-10 z-10 w-[130px] aspect-square rotate-[-18deg]">
+          <div className="absolute bottom-32 -right-12 z-10 w-[120px] aspect-square rotate-[-18deg]">
             <Image
               fill
               src="/images/lineart/candy.svg"
@@ -47,7 +47,7 @@ const Lineart = ({ untuk }: Props) => {
               alt="Candy"
             />
           </div>
-          <div className="absolute bottom-60 left-10 z-10 w-[28px] md:w-[56px] aspect-square rotate-[-18deg]">
+          <div className="absolute bottom-60 left-4 z-10 w-[28px] md:w-[56px] aspect-square rotate-[-18deg]">
             <Image
               fill
               src="/images/lineart/peer.svg"
@@ -55,7 +55,7 @@ const Lineart = ({ untuk }: Props) => {
               alt="Peer"
             />
           </div>
-          <div className="absolute top-80 right-10 z-10 w-[20px] md:w-[36px] aspect-square rotate-[-18deg]">
+          <div className="absolute top-80 right-4 z-10 w-[20px] md:w-[36px] aspect-square rotate-[-18deg]">
             <Image
               fill
               src="/images/lineart/lingkaran 1.svg"
@@ -63,7 +63,7 @@ const Lineart = ({ untuk }: Props) => {
               alt="Circle"
             />
           </div>
-          <div className="absolute top-40 left-10 z-10 w-[32px] md:w-[64px] aspect-square rotate-[-18deg]">
+          <div className="absolute top-40 left-4 z-10 w-[32px] md:w-[64px] aspect-square rotate-[-18deg]">
             <Image
               fill
               src="/images/lineart/bintang.svg"
