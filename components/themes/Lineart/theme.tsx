@@ -1,11 +1,12 @@
 import Layout from "../layout";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import useClientStore from "@/store/useClientStore";
 import { montserrat } from "@/lib/fonts";
 import ButtonOutlinedPrimary from "./elements/button.outlined.primary";
 import moment from "moment";
 import Link from "next/link";
 import Image from "next/image";
+import useCoverStore from "@/store/useCoverStore";
 
 interface Props {
   untuk: string;
@@ -13,6 +14,11 @@ interface Props {
 
 const Lineart = ({ untuk }: Props) => {
   const { client } = useClientStore();
+  const { toggleIsOpen } = useCoverStore();
+
+  useEffect(() => {
+    if (client) toggleIsOpen();
+  }, [client]);
 
   if (!client) return;
 
