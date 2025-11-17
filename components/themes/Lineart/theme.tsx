@@ -21,7 +21,7 @@ const Lineart = ({ untuk }: Props) => {
       <main className="w-full h-full flex bg-lineart-light justify-center min-h-dvh items-center relative">
         <div
           data-aos="zoom-out"
-          className={`bg-lineart-light max-w-2xl mx-auto relative w-full p-5 h-dvh overflow-hidden flex flex-col items-center justify-center ${montserrat.className}`}
+          className={`bg-lineart-light max-w-2xl mx-auto relative w-full p-5 h-dvh flex flex-col items-center justify-center ${montserrat.className}`}
         >
           <div className="absolute -top-20 z-10 w-[280px] aspect-video rotate-[18deg]">
             <Image
