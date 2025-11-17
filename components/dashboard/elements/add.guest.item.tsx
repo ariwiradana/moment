@@ -14,6 +14,31 @@ interface AddGuestItemProps {
   mutate: () => void;
 }
 
+export const htmlToPlainText = (html: string) => {
+  if (!html) return "";
+
+  let text = html;
+
+  // Ganti <br> atau <br/> dengan newline
+  text = text.replace(/<br\s*\/?>/gi, "\n");
+
+  // Hapus tag <p> di awal, ganti </p> dengan newline
+  text = text.replace(/<p[^>]*>/gi, "");
+  text = text.replace(/<\/p>/gi, "\n");
+
+  // Trim tiap baris
+  const lines = text.split("\n").map((line) => line.trim());
+
+  // Filter double empty line → biar cuma 1 baris kosong
+  const result: string[] = [];
+  lines.forEach((line) => {
+    if (line === "" && result[result.length - 1] === "") return;
+    result.push(line);
+  });
+
+  return result.join("\n");
+};
+
 const AddGuestItem = ({
   value = "",
   mode,
@@ -30,7 +55,10 @@ const AddGuestItem = ({
     if (navigator.share && client) {
       const encodedValue = encodeURIComponent(value).replace(/%20/g, "+");
 
-      const text = `${client?.opening_title},\n\n${client?.opening_description}\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${encodedValue}\n\n${client?.closing_description}\n\n${client?.closing_title}`;
+      const text = `${htmlToPlainText(
+        client.social_description || ""
+      )}${baseURL}/${slug}?untuk=${encodedValue}`;
+
       try {
         await navigator.share({
           title: text,

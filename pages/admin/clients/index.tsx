@@ -8,6 +8,7 @@ import {
   BiEditAlt,
   BiLink,
   BiMessageAdd,
+  BiPlus,
   BiShow,
   BiSlideshow,
   BiTrash,
@@ -25,6 +26,7 @@ import { GetServerSideProps } from "next";
 import { isTokenExpired } from "@/lib/auth";
 import InputSelect from "@/components/admin/elements/select";
 import { clientStatus } from "@/constants/status";
+import ButtonPrimary from "@/components/admin/elements/button.primary";
 
 interface ClientDashboardProps {
   token: string | null;
@@ -47,6 +49,15 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
     <AdminLayout>
       <div className={`w-full ${montserrat.className}`}>
         <h1 className="text-2xl font-bold mb-4">Dashboard Klien</h1>
+        <Link href="/admin/clients/create">
+          <div>
+            <ButtonPrimary
+              size="small"
+              title="Tambah Klien"
+              icon={<BiPlus className="text-lg" />}
+            />
+          </div>
+        </Link>
 
         {state.isLoading ? (
           <Loader />

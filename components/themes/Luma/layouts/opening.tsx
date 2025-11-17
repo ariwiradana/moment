@@ -17,7 +17,7 @@ const Opening: NextPage = () => {
     <section className="h-dvh snap-start w-full relative">
       <div className="absolute inset-0 z-20 flex flex-col justify-end items-center py-[60px] px-6 bg-gradient-to-b from-luma-dark/50 via-luma-dark/30 to-luma-dark/60">
         <h2
-          className="font-bigilla text-white text-4xl md:text-5xl mb-2 leading-[40px] md:leading-[50px]"
+          className="font-butler text-white text-4xl md:text-5xl mb-2 leading-[40px] md:leading-[50px]"
           aria-label={client?.opening_title}
         >
           {client?.opening_title}

@@ -27,7 +27,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           theme_category_id,
         }: Query = request.query;
 
-        let query = `SELECT id, slug, opening_title, opening_description, closing_title, closing_description, name, cover, theme_category_id, package_id, theme_id, status FROM clients`;
+        let query = `SELECT id, slug, opening_title, opening_description, closing_title, closing_description, social_description, name, cover, theme_category_id, package_id, theme_id, status FROM clients`;
         let countQuery = `SELECT COUNT(*) FROM clients`;
 
         const values: (number | string | boolean)[] = [];

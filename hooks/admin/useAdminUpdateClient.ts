@@ -270,6 +270,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         opening_description: currentClient.opening_description,
         closing_title: currentClient.closing_title,
         closing_description: currentClient.closing_description,
+        social_description: currentClient.social_description,
         gift_bank_name: currentClient.gift_bank_name,
         gift_account_number: currentClient.gift_account_number,
         gift_account_name: currentClient.gift_account_name,

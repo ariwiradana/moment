@@ -17,8 +17,12 @@ const config: Config = {
       fontFamily: {
         "tan-pearl": ["TanPearl", "sans-serif"],
         "high-summit": ["HighSummit", "sans-serif"],
+        butler: ["Butler", "sans-serif"],
         edensor: ["Edensor", "sans-serif"],
         bigilla: ["Bigilla", "sans-serif"],
+        ebgaramond: ["EBGaramond", "sans-serif"],
+        "cormorant-upright": ["CormorantUpright", "sans-serif"],
+        "holiday": ["Holiday", "sans-serif"],
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
@@ -66,6 +70,10 @@ const config: Config = {
         luma: {
           dark: "#101010",
           primary: "#383934",
+        },
+        lineart: {
+          light: "#FFFCF4",
+          primary: "#5494C8",
         },
         admin: {
           primary: "#3366FF",

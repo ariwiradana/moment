@@ -5,7 +5,7 @@ import Music from "./layouts/music";
 import Hero from "./layouts/hero";
 import Image from "next/image";
 import usePhotos from "@/hooks/themes/usePhotos";
-import { useMemo, useRef, lazy, Suspense } from "react";
+import { useMemo, useRef, useEffect, lazy, Suspense, memo } from "react";
 import useCoverStore from "@/store/useCoverStore";
 import useClientStore from "@/store/useClientStore";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import LoadingDark from "../loading.dark";
 import Video from "./layouts/video";
+import Gift from "./layouts/gift";
 
 const Photos = lazy(() => import("./layouts/photos"));
 const RsvpWishes = lazy(() => import("./layouts/rsvp.wishes"));
@@ -33,6 +34,8 @@ const Luma = ({ untuk }: Props) => {
   } = usePhotos();
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
   const video = useMemo(
     () =>
       Array.isArray(client?.videos) && client.videos.length > 0
@@ -41,23 +44,62 @@ const Luma = ({ untuk }: Props) => {
     [client?.videos]
   );
 
+  useEffect(() => {
+    const vid = videoRef.current;
+    const img = imageRef.current;
+    if (!vid || !img) return;
+
+    const handlePlay = () => {
+      vid.classList.add("opacity-100");
+      vid.classList.remove("opacity-0");
+
+      // setelah fade-in, hilangkan poster
+      setTimeout(() => {
+        img.classList.add("opacity-0");
+      }, 700);
+    };
+
+    if (!vid.paused) handlePlay();
+
+    vid.addEventListener("playing", handlePlay, { passive: true });
+
+    return () => {
+      vid.removeEventListener("playing", handlePlay);
+    };
+  }, []);
+
   return (
     <Layout>
       <Music actions={actions} refs={refs} state={state} />
       <main className="bg-luma-dark relative overflow-x-hidden">
         {video.length > 0 ? (
-          <video
-            ref={videoRef}
-            src={video[0]}
-            poster={client?.cover || ""}
-            className="absolute w-full h-full object-cover top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label={`Background video undangan digital ${untuk}`}
-          />
+          <div className="absolute inset-0">
+            {/* Poster Image */}
+            {client?.cover && (
+              <Image
+                ref={imageRef}
+                src={client.cover}
+                alt={`Poster undangan digital ${untuk}`}
+                fill
+                priority
+                className="object-cover transition-opacity duration-700 opacity-100"
+              />
+            )}
+
+            {/* Background Video */}
+            <video
+              ref={videoRef}
+              src={video[0]}
+              poster={client?.cover || ""}
+              className="absolute w-full h-full object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-700 opacity-0"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={`Background video undangan digital ${untuk}`}
+            />
+          </div>
         ) : (
           <div
             className="fixed inset-0 mx-auto"
@@ -107,6 +149,7 @@ const Luma = ({ untuk }: Props) => {
             <Photos />
             <Video />
             <RsvpWishes />
+            <Gift />
             <Thankyou />
           </Suspense>
         </div>
@@ -115,4 +158,4 @@ const Luma = ({ untuk }: Props) => {
   );
 };
 
-export default Luma;
+export default memo(Luma);

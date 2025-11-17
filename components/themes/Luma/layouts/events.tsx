@@ -28,6 +28,12 @@ const Events: NextPage = () => {
     }
   };
 
+  const captions = [
+    "Sebuah hari untuk dikenang, bukan hanya dengan kata, tapi dengan rasa.",
+    "Cinta yang tumbuh sederhana, kini dirayakan dalam hangatnya kebersamaan.",
+    "Di antara tawa, doa, dan pelukan, cinta menemukan cara paling indah untuk dirayakan.",
+  ];
+
   return (
     <>
       {events.map((event, index) => (
@@ -36,9 +42,18 @@ const Events: NextPage = () => {
           key={`Acara-${event.name}`}
         >
           <div className="absolute z-20 inset-0 flex flex-col justify-center items-center bg-luma-dark/50 py-[60px] px-6">
-            <h2 className="font-bigilla leading-[40px] mb-4 whitespace-nowrap relative text-white text-[40px] md:text-5xl lg:text-7xl">
-              <span className="italic">Save</span> The Date
+            <h2 className="font-butler leading-[40px] mb-4 whitespace-nowrap relative text-white text-[40px] md:text-5xl lg:text-7xl">
+              {event.name}
             </h2>
+            <div className="w-full px-6 max-w-md mx-auto mb-6">
+              <p
+                className={`${rubik.className} text-[10px] md:text-xs lg:text-sm font-light lg:text-center text-justify text-white`}
+              >
+                <span className="inline-block w-5 h-[1px] bg-white/50 mr-2 mb-1 lg:hidden"></span>
+                {captions[index]}
+              </p>
+            </div>
+
             <div
               className="bg-luma-primary/30 backdrop-blur-sm p-6 md:p-8 max-w-xl w-full"
               aria-label={`Detail acara ${event.name}`}
@@ -49,6 +64,7 @@ const Events: NextPage = () => {
               >
                 {event?.name}
               </h2>
+
               <div className="flex gap-x-2 mb-3">
                 <BiCalendarEvent className="text-sm lg:text-base text-white min-w-5 mt-1" />
                 <p

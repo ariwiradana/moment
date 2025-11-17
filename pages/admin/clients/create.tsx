@@ -22,6 +22,9 @@ import InputChip from "@/components/admin/elements/input.chip";
 import { isTokenExpired } from "@/lib/auth";
 import { GetServerSideProps } from "next";
 import Cookies from "cookies";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface CreateClientProps {
   token: string | null;
@@ -98,7 +101,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             label="Paket"
           />
           <h1 className="text-2xl font-bold mb-4 mt-8">
-            Kalimat Pembuka & Penutup
+            Form Media
           </h1>
           <Input
             value={state.formData.opening_title}
@@ -130,6 +133,19 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             }
             label="Deskripsi Penutup"
           />
+          <div>
+            <label className="block text-dashboard-dark/60 mb-1 text-sm">
+              Social Description
+            </label>
+            <ReactQuill
+              modules={{ toolbar: false }}
+              theme="snow"
+              value={state.formData.social_description || ""}
+              onChange={(value) =>
+                actions.handleChangeClient(value, "social_description")
+              }
+            />
+          </div>
           <h1 className="text-2xl font-bold mb-4 mt-8">Foto & Video</h1>
           <Input
             id="gallery"

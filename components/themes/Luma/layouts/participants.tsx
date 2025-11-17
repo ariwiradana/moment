@@ -69,7 +69,7 @@ const ParticipantItem = memo(({ data }: ParticipantProps) => {
               Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
             </p>
             <h2
-              className="font-bigilla text-white text-[40px] md:text-5xl lg:text-7xl mb-4 leading-[36px] md:leading-[50px]"
+              className="font-butler text-white text-[40px] md:text-5xl lg:text-7xl mb-4 leading-[36px] md:leading-[50px]"
               aria-label={`Nama mempelai ${data.name}`}
             >
               {data.name}

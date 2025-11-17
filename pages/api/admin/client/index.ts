@@ -223,12 +223,13 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               opening_description,
               closing_title,
               closing_description,
+              social_description,
               gift_bank_name,
               gift_account_name,
               gift_account_number,
               music_title
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
             RETURNING *;
           `;
 
@@ -249,6 +250,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           client.opening_description,
           client.closing_title,
           client.closing_description,
+          client.social_description,
           client.gift_bank_name,
           client.gift_account_name,
           client.gift_account_number,
@@ -372,8 +374,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             music_title = $17,
             phone = $18,
             email = $19,
-            updated_at = NOW()
-          WHERE id = $20
+            updated_at = NOW(),
+            social_description = $20
+          WHERE id = $21
           RETURNING *;`;
 
         const sanitizeSlug = createSlug(client.slug as string);
@@ -398,6 +401,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           client.music_title,
           client.phone,
           client.email,
+          client.social_description,
           Number(id),
         ]);
 

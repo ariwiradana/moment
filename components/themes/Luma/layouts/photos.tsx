@@ -89,7 +89,7 @@ const Photos: NextPage = () => {
         <div className="absolute z-20 inset-0 bg-gradient-to-b lg:px-20 from-luma-dark/50 to-luma-dark/80 flex flex-col justify-center items-center">
           <div className="w-full px-6 flex items-center justify-between lg:justify-center gap-3 lg:gap-12 mb-6">
             <h2
-              className="font-bigilla leading-[40px] text-white text-[40px] md:text-5xl lg:text-7xl"
+              className="font-butler leading-[40px] text-white text-[40px] md:text-5xl lg:text-7xl"
               aria-label="Judul galeri foto kami"
             >
               Galeri <span className="font-italic">Kami</span>

@@ -128,6 +128,33 @@
     font-weight: normal;
     font-style: normal;
   }
+
+  @font-face {
+    font-family: "Butler";
+    src: url("/fonts/butler-light.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "EBGaramond";
+    src: url("/fonts/eb-garamond.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "CormorantUpright";
+    src: url("/fonts/cormorant-upright-normal.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Holiday";
+    src: url("/fonts/holiday.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
 }
 
 .no-scroll {

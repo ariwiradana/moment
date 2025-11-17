@@ -69,6 +69,7 @@ export interface Client {
   opening_description: string;
   closing_title: string;
   closing_description: string;
+  social_description?: string;
   gift_bank_name: string;
   gift_account_name: string;
   gift_account_number: string | number;

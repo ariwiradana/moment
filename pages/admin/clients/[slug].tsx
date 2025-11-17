@@ -34,6 +34,10 @@ import Cookies from "cookies";
 import { isTokenExpired } from "@/lib/auth";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { isValidUrl } from "@/utils/checkIsValidURL";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 interface UpdateClientProps {
   slug: string;
   token: string | null;
@@ -243,6 +247,19 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               value={state.formData.media?.music_title || "-"}
               label="Music Title"
             />
+            <div>
+              <label className="block text-dashboard-dark/60 mb-1 text-sm">
+                Social Description
+              </label>
+              <ReactQuill
+                modules={{ toolbar: false }}
+                theme="snow"
+                value={state.formData.social_description || ""}
+                onChange={(value) =>
+                  actions.handleChangeClient(value, "social_description")
+                }
+              />
+            </div>
             <h1 className="text-2xl font-bold mb-4 mt-8">
               Kalimat Pembuka & Penutup
             </h1>

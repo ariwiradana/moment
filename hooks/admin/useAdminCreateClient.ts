@@ -59,6 +59,7 @@ const initalFormData: Client & {
   gift_bank_name: "",
   gift_account_name: "",
   gift_account_number: "",
+  social_description: "",
   theme_id: null,
   package_id: null,
   status: "inactive",

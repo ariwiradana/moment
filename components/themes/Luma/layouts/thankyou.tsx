@@ -44,7 +44,7 @@ const ThankyouComponent = () => {
             >
               Kami Yang Berbahagia
             </p>
-            <h1 className="font-bigilla leading-[40px] md:leading-[56px] lg:leading-[60px] text-white text-5xl lg:text-7xl mb-3 mt-5 lg:mt-8 text-center">
+            <h1 className="font-butler leading-[40px] md:leading-[56px] lg:leading-[60px] text-white text-5xl lg:text-7xl mb-3 mt-5 lg:mt-8 text-center">
               {participantState.groom?.nickname} <br />&{" "}
               {participantState.bride?.nickname}
             </h1>
