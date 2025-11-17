@@ -17,12 +17,12 @@ const Lineart = ({ untuk }: Props) => {
 
   return (
     <Layout>
-      <main className="w-full h-full flex justify-center items-center bg-dashboard-dark">
+      <main className="w-full h-full flex justify-center min-h-screen items-center bg-lineart-light">
         <div
-          className={`bg-lineart-light relative w-full max-w-lg p-5 min-h-screen flex flex-col items-center justify-center ${montserrat.className}`}
+          className={`bg-lineart-light relative w-full max-w-lg p-5 shadow-lg h-screen md:max-h-[95vh] flex flex-col items-center justify-center ${montserrat.className}`}
         >
           <p className="text-center text-lineart-primary text-xs md:text-sm">
-            {client.opening_title} {untuk}!
+            {client.opening_title} <span className="capitalize">{untuk}</span>!
             <br />
             {client?.opening_description}
           </p>
