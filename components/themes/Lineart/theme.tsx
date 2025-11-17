@@ -63,7 +63,7 @@ const Lineart = ({ untuk }: Props) => {
               alt="Circle"
             />
           </div>
-          <div className="absolute top-40 left-16 z-10 w-[32px] md:w-[64px] aspect-square rotate-[-18deg]">
+          <div className="absolute top-40 left-10 z-10 w-[32px] md:w-[64px] aspect-square rotate-[-18deg]">
             <Image
               fill
               src="/images/lineart/bintang.svg"
