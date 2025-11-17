@@ -16,10 +16,8 @@ import {
   BiLayout,
   BiMaleSign,
   BiFemaleSign,
-  BiMessageAdd,
 } from "react-icons/bi";
 import OrderPayment from "./components/payment";
-import OrderSocialDescription from "./components/social.description";
 
 export default function useSteps() {
   const store = useOrderStore();
@@ -92,36 +90,25 @@ export default function useSteps() {
       });
     }
 
-    baseSteps.push(
-      {
-        stepTitle: "Pembuka & Penutup",
-        stepDescription: "Salam pembuka & penutup.",
-        title: "Tambahkan Salam Pembuka & Penutup",
-        description:
-          "Kamu dapat menyesuaikan kalimat pembuka dan penutup undangan sesuai keinginan.",
-        component: <OrderOpeningClosing />,
-        icon: <BiMessageSquareDetail />,
-      },
-      {
-        stepTitle: "Share Sosial Media",
-        stepDescription: "Kalimat Share Sosial Media.",
-        title: "Buat kalimat untuk share ke sosial media",
-        description:
-          "Kamu dapat menyesuaikan kalimat untuk share ke sosial media sesuai keinginan.",
-        component: <OrderSocialDescription />,
-        icon: <BiMessageAdd />,
-      },
-      {
-        stepTitle: "Pembayaran",
-        stepDescription: "Lanjutkan ke Pembayaran.",
-        title: "Pembayaran",
-        description:
-          "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
-        component: <OrderPayment />,
-        icon: <BiCreditCard />,
-      }
-    );
+    baseSteps.push({
+      stepTitle: "Pembuka & Penutup",
+      stepDescription: "Salam pembuka & penutup.",
+      title: "Tambahkan Salam Pembuka & Penutup",
+      description:
+        "Kamu dapat menyesuaikan kalimat pembuka dan penutup undangan sesuai keinginan.",
+      component: <OrderOpeningClosing />,
+      icon: <BiMessageSquareDetail />,
+    });
 
+    baseSteps.push({
+      stepTitle: "Pembayaran",
+      stepDescription: "Lanjutkan ke Pembayaran.",
+      title: "Pembayaran",
+      description:
+        "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
+      component: <OrderPayment />,
+      icon: <BiCreditCard />,
+    });
     return baseSteps;
   }, [store.pkg]);
 

@@ -65,7 +65,6 @@ export const initialForm: Client = {
   gift_account_name: "",
   gift_account_number: "",
   gift_bank_name: "",
-  social_description: "",
   name: "",
   package_id: null,
   events: [initialEvent],
@@ -89,7 +88,7 @@ const initialOrder: Order = {
 
 const useOrderStore = create<StoreState>((set) => ({
   form: initialForm,
-  activeStep: 7,
+  activeStep: 0,
   maxStepReached: 0,
   theme: null,
   pkg: null,
