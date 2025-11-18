@@ -81,10 +81,10 @@ const Floral = ({ untuk }: Props) => {
           <div
             data-aos="zoom-out"
             data-aos-delay="400"
-            className="max-w-xl flex flex-col items-center my-10"
+            className="max-w-xl flex flex-col items-center my-8"
           >
             <h1
-              className={`font-holiday max-w-2xl text-3xl md:text-4xl leading-[48px] md:leading-[54px] transform rotate-[-5deg] text-center text-floral-primary`}
+              className={`font-holiday max-w-2xl text-[28px] md:text-4xl leading-[46px] md:leading-[54px] transform rotate-[-5deg] text-center text-floral-primary`}
             >
               {client?.name} Birthday Party
             </h1>
@@ -99,7 +99,7 @@ const Floral = ({ untuk }: Props) => {
           <h6
             data-aos="zoom-out"
             data-aos-delay="800"
-            className={`font-holiday mt-6 text-xl md:text-2xl text-center text-floral-primary`}
+            className={`font-holiday mt-5 text-xl md:text-2xl text-center text-floral-primary`}
           >
             {moment(client?.events[0].date).locale("en").format("D MMMM")} at{" "}
             {moment(client?.events[0].start_time, "HH:mm")
