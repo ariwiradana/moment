@@ -29,17 +29,17 @@ const Floral = ({ untuk }: Props) => {
           data-aos="zoom-out"
           className={`bg-floral-light relative w-full p-5 h-dvh flex flex-col items-center justify-center ${montserrat.className}`}
         >
-          <div className="absolute top-0 -left-10 md:-left-14 transform z-10 w-[110vw] md:w-[600px] lg:w-[400px] aspect-square">
+          <div className="absolute top-0 -left-10 md:-left-14 transform z-10 w-[120vw] md:w-[600px] lg:w-[400px] aspect-square">
             <Image
               sizes="120vw"
               quality={75}
               fill
               src="/images/floral/flower-top.png"
-              className="fill object-contain opacity-20 md:opacity-100"
+              className="fill object-contain"
               alt="Flower Top"
             />
           </div>
-          <div className="absolute top-0 -right-10 md:-right-14 -scale-x-100 transform z-10 w-[110vw] md:w-[600px] lg:w-[400px] aspect-square">
+          <div className="absolute hidden md:block top-0 -right-10 md:-right-14 -scale-x-100 transform z-10 w-[110vw] md:w-[600px] lg:w-[400px] aspect-square">
             <Image
               sizes="120vw"
               quality={75}
