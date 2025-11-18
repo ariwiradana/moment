@@ -86,7 +86,7 @@ const Floral = ({ untuk }: Props) => {
             <h1
               className={`font-holiday max-w-2xl text-[28px] md:text-4xl leading-[46px] md:leading-[54px] transform rotate-[-5deg] text-center text-floral-primary`}
             >
-              {client?.name} Birthday Party
+              {client?.name}
             </h1>
           </div>
           <p

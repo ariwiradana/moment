@@ -76,7 +76,7 @@ const SplitText: React.FC<SplitTextProps> = ({
   return (
     <p
       ref={ref}
-      className={`split-parent overflow-hidden inline ${className}`}
+      className={`split-parent overflow-hidden ${className}`}
       style={{ textAlign, whiteSpace: "normal", wordWrap: "break-word" }}
     >
       {words.map((word, wordIndex) => (
@@ -99,13 +99,7 @@ const SplitText: React.FC<SplitTextProps> = ({
               </animated.span>
             );
           })}
-          <span
-            style={{
-              display: "inline-block",
-              width: "0.3em",
-              textAlign: "center",
-            }}
-          >
+          <span style={{ display: "inline-block", width: "0.3em" }}>
             &nbsp;
           </span>
         </span>

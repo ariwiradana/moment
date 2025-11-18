@@ -122,12 +122,12 @@ const MainPage: FC<PageProps> = ({ seo, slug }) => {
         />
 
         {(isLoading || swrLoading) && (
-          <div className="w-full h-dvh bg-dashboard-dark flex justify-center items-center">
+          <div className="w-full h-dvh bg-dashboard-dark p-2 flex justify-center items-center">
             <div data-aos="fade-up">
               <SplitText
                 text={seo.name}
                 className={`text-3xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
-                delay={50}
+                delay={30}
                 animationFrom={{
                   opacity: 0,
                   transform: "translate3d(0,50px,0)",
