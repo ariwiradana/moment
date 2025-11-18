@@ -126,7 +126,7 @@ const MainPage: FC<PageProps> = ({ seo, slug }) => {
             <div data-aos="fade-up">
               <SplitText
                 text={seo.name}
-                className={`text-3xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
+                className={`text-3xl md:text-4xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
                 delay={30}
                 animationFrom={{
                   opacity: 0,
