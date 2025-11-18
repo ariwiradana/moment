@@ -29,7 +29,7 @@ const Floral = ({ untuk }: Props) => {
           data-aos="zoom-out"
           className={`bg-floral-light relative w-full p-5 h-dvh flex flex-col items-center justify-center ${montserrat.className}`}
         >
-          <div className="absolute -top-5 -left-10 md:-left-14 transform z-10 w-[120vw] md:w-[600px] lg:w-[400px] aspect-square">
+          <div className="absolute -top-10 -left-10 md:-left-14 transform z-10 w-[120vw] md:w-[600px] lg:w-[400px] aspect-square">
             <Image
               sizes="120vw"
               quality={75}
@@ -39,7 +39,7 @@ const Floral = ({ untuk }: Props) => {
               alt="Flower Top"
             />
           </div>
-          <div className="absolute hidden md:block -top-5 -right-10 md:-right-14 -scale-x-100 transform z-10 w-[110vw] md:w-[600px] lg:w-[400px] aspect-square">
+          <div className="absolute hidden md:block -top-10 -right-10 md:-right-14 -scale-x-100 transform z-10 w-[110vw] md:w-[600px] lg:w-[400px] aspect-square">
             <Image
               sizes="120vw"
               quality={75}
@@ -49,7 +49,7 @@ const Floral = ({ untuk }: Props) => {
               alt="Flower Top"
             />
           </div>
-          <div className="absolute -bottom-10 -left-5 z-10 w-[100vw] md:w-[600px] lg:w-[400px] aspect-square">
+          <div className="absolute -bottom-14 -left-5 z-10 w-[100vw] md:w-[600px] lg:w-[400px] aspect-square">
             <Image
               quality={75}
               sizes="110vw"
@@ -59,7 +59,7 @@ const Floral = ({ untuk }: Props) => {
               alt="Flower-Bottom-1"
             />
           </div>
-          <div className="absolute -bottom-10 -right-5 z-10 w-[100vw] md:w-[600px] lg:w-[400px] transform -scale-x-100 aspect-square">
+          <div className="absolute -bottom-14 -right-5 z-10 w-[100vw] md:w-[600px] lg:w-[400px] transform -scale-x-100 aspect-square">
             <Image
               quality={75}
               sizes="110vw"
