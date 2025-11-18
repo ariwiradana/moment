@@ -1,5 +1,4 @@
 import sql from "@/lib/db";
-import { getEventNames } from "@/utils/getEventNames";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
