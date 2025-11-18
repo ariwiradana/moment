@@ -13,7 +13,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import LoadingDark from "../loading.dark";
 import Video from "./layouts/video";
-import Gift from "./layouts/gift";
 
 const Photos = lazy(() => import("./layouts/photos"));
 const RsvpWishes = lazy(() => import("./layouts/rsvp.wishes"));
@@ -149,7 +148,7 @@ const Luma = ({ untuk }: Props) => {
             <Photos />
             <Video />
             <RsvpWishes />
-            <Gift />
+            {/* <Gift /> */}
             <Thankyou />
           </Suspense>
         </div>

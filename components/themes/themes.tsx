@@ -4,8 +4,15 @@ import Aruna from "./Aruna/theme";
 import Nirvaya from "./Nirvaya/theme";
 import Luma from "./Luma/theme";
 import Lineart from "./Lineart/theme";
+import Floral from "./Floral/theme";
 
-export type ThemeName = "Samaya" | "Aruna" | "Nirvaya" | "Luma" | "Lineart";
+export type ThemeName =
+  | "Samaya"
+  | "Aruna"
+  | "Nirvaya"
+  | "Luma"
+  | "Lineart"
+  | "Floral";
 
 export const themes: Record<ThemeName, React.FC<{ untuk: string }>> = {
   Samaya: Samaya,
@@ -13,4 +20,5 @@ export const themes: Record<ThemeName, React.FC<{ untuk: string }>> = {
   Nirvaya: Nirvaya,
   Luma: Luma,
   Lineart: Lineart,
+  Floral: Floral,
 };

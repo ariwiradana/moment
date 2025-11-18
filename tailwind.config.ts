@@ -22,7 +22,7 @@ const config: Config = {
         bigilla: ["Bigilla", "sans-serif"],
         ebgaramond: ["EBGaramond", "sans-serif"],
         "cormorant-upright": ["CormorantUpright", "sans-serif"],
-        "holiday": ["Holiday", "sans-serif"],
+        holiday: ["Holiday", "sans-serif"],
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
@@ -74,6 +74,10 @@ const config: Config = {
         lineart: {
           light: "#FFFCF4",
           primary: "#5494C8",
+        },
+        floral: {
+          light: "#FFFF",
+          primary: "#80B2CC",
         },
         admin: {
           primary: "#3366FF",
