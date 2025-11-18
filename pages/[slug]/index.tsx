@@ -66,13 +66,14 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
         seo: data ?? null,
         slug,
       },
-      revalidate: 300,
+      revalidate: 30,
     };
   } catch (error) {
     console.error("ISR SEO fetch error:", error);
     return { notFound: true };
   }
 };
+
 const MainPage: FC<PageProps> = ({ seo, slug }) => {
   const { setClient, client } = useClientStore();
   const [isLoading, setIsLoading] = useState(true);
