@@ -84,7 +84,7 @@ const Floral = ({ untuk }: Props) => {
             className="max-w-xl flex flex-col items-center my-10"
           >
             <h1
-              className={`font-holiday max-w-2xl text-3xl md:text-4xl leading-[48px] md:leading-[54px] transform rotate-[-9deg] text-center text-floral-primary`}
+              className={`font-holiday max-w-2xl text-3xl md:text-4xl leading-[48px] md:leading-[54px] transform rotate-[-5deg] text-center text-floral-primary`}
             >
               {client?.name} Birthday Party
             </h1>
