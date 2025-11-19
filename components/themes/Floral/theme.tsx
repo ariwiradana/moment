@@ -74,7 +74,7 @@ const Floral = ({ untuk }: Props) => {
             data-aos-delay="200"
             className="text-center text-floral-primary text-sm md:text-base"
           >
-            {client.opening_title} <span className="capitalize">{untuk}</span>!
+            {client.opening_title} <span className="capitalize">{untuk}</span>,
             <br />
             {client?.opening_description}
           </p>
