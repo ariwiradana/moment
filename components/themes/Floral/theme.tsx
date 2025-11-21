@@ -107,16 +107,32 @@ const Floral = ({ untuk }: Props) => {
               .format("hA")
               .toLocaleLowerCase()}
           </h6>
+          <div className="mt-5 mb-5 p-4">
+            <p
+              data-aos="zoom-out"
+              data-aos-delay="1000"
+              className="text-center text-floral-primary max-w-60 text-sm md:text-base"
+            >
+              Dress Code
+            </p>
+            <p
+              data-aos="zoom-out"
+              data-aos-delay="1200"
+              className="text-center font-holiday text-floral-primary mt-3 max-w-60 text-xl md:text-2xl"
+            >
+              White
+            </p>
+          </div>
           <p
             data-aos="zoom-out"
-            data-aos-delay="1000"
+            data-aos-delay="1400"
             className="text-center text-floral-primary text-sm max-w-60 mt-16 mb-5 md:text-base"
           >
             {client?.events[0].address}
           </p>
           <div
             data-aos="zoom-out"
-            data-aos-delay="1200"
+            data-aos-delay="1600"
             className="relative z-20"
           >
             <Link

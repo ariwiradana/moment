@@ -78,6 +78,7 @@ const config: Config = {
         floral: {
           light: "#FFFF",
           primary: "#80B2CC",
+          dark: '#1A1A1A'
         },
         admin: {
           primary: "#3366FF",
