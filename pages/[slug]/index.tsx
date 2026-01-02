@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
           seo: null,
           slug,
         },
-        revalidate: 10, // retry otomatis
+        revalidate: 300, // retry otomatis
       };
     }
 
@@ -85,7 +85,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
         seo: null,
         slug,
       },
-      revalidate: 10,
+      revalidate: 300,
     };
   }
 };
