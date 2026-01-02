@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
         seo: data,
         slug,
       },
-      revalidate: 30,
+      revalidate: 300,
     };
   } catch (error) {
     console.error("ISR SEO fetch error:", error);
