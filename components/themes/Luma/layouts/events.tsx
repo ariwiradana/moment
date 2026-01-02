@@ -47,9 +47,8 @@ const Events: NextPage = () => {
             </h2>
             <div className="w-full px-6 max-w-md mx-auto mb-6">
               <p
-                className={`${rubik.className} text-[10px] md:text-xs lg:text-sm font-light lg:text-center text-justify text-white`}
+                className={`${rubik.className} text-[10px] md:text-xs lg:text-sm font-light text-center text-white`}
               >
-                <span className="inline-block w-5 h-[1px] bg-white/50 mr-2 mb-1 lg:hidden"></span>
                 {captions[index]}
               </p>
             </div>

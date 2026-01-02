@@ -179,7 +179,6 @@ const Photos: NextPage = () => {
             <p
               className={`${rubik.className} text-[10px] md:text-xs lg:text-sm font-light lg:text-center text-justify text-white`}
             >
-              <span className="inline-block w-5 h-[1px] bg-white/50 mr-2 mb-1 lg:hidden"></span>
               Setiap kisah cinta layak diabadikan, bukan hanya dalam ingatan,
               tapi juga dalam gambar yang tak pernah pudar.
             </p>
