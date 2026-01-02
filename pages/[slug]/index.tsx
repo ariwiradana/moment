@@ -52,25 +52,41 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
     const baseUrl = process.env.API_BASE_URL;
 
     const res = await getClient(`${baseUrl}/guest/seo?slug=${slug}`);
-    if (!res.ok) throw new Error("Failed to fetch SEO data");
+    if (!res.ok) {
+      throw new Error("Failed to fetch SEO data");
+    }
 
     const { data } = await res.json();
 
-    if (!data)
+    // ⛔ JANGAN cache 404 untuk slug dinamis
+    if (!data) {
       return {
-        notFound: true,
+        props: {
+          seo: null,
+          slug,
+        },
+        revalidate: 10, // retry otomatis
       };
+    }
 
     return {
       props: {
-        seo: data ?? null,
+        seo: data,
         slug,
       },
       revalidate: 30,
     };
   } catch (error) {
     console.error("ISR SEO fetch error:", error);
-    return { notFound: true };
+
+    // ⛔ Jangan return notFound di error ISR
+    return {
+      props: {
+        seo: null,
+        slug,
+      },
+      revalidate: 10,
+    };
   }
 };
 
