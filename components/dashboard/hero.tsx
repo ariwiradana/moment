@@ -3,6 +3,8 @@ import { redhat } from "@/lib/fonts";
 import useDashboardStore from "@/store/useDashboardStore";
 import { BsChevronRight } from "react-icons/bs";
 import Image from "next/image";
+import Link from "next/link";
+import ButtonSecondary from "./elements/button.secondary";
 const HeroComponent = () => {
   const { setActiveSection } = useDashboardStore();
 
@@ -15,15 +17,24 @@ const HeroComponent = () => {
   }, []);
 
   return (
-    <section id="section1" className="w-full scroll-smooth bg-white">
+    <section
+      id="section1"
+      role="region"
+      aria-labelledby="hero-title"
+      className="w-full scroll-smooth bg-white"
+    >
       <div className="pb-12 max-w-screen-xl pt-24 lg:pt-32 mx-auto flex flex-col justify-center gap-10">
         {/* Hero Text */}
         <div className="flex w-full px-4 md:px-12 lg:px-4 flex-col lg:flex-row lg:items-end gap-4 lg:gap-40 transition-opacity duration-700 ease-in-out opacity-100">
           <h1
+            id="hero-title"
             className="font-tan-pearl uppercase text-5xl md:text-6xl lg:text-7xl font-bold text-dashboard-dark"
             style={{ lineHeight: "1.2" }}
           >
-            Moment <br /> Invitation
+            Moment Invitation
+            <span className="sr-only">
+              - Undangan Digital Bali Minimalis & Elegan
+            </span>
           </h1>
           <p
             className={`${redhat.className} text-base text-dashboard-dark/70 max-w-lg`}
@@ -35,14 +46,14 @@ const HeroComponent = () => {
 
         {/* Visually Hidden SEO Text */}
         <p className="sr-only">
-          Undangan digital Bali, undangan pernikahan digital Bali, undangan
-          mempandes digital, undangan minimalis Bali, template undangan online
-          Bali.
+          Moment Invitation menyediakan layanan undangan digital Bali untuk
+          pernikahan dan berbagai acara dengan desain minimalis.
         </p>
 
         {/* Hero Video */}
         <div className="w-full aspect-[4/2.2] lg:aspect-[4/1.15] bg-zinc-50 relative overflow-hidden">
           <video
+            aria-label="Contoh undangan digital Bali dari Moment Invitation"
             className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-cover"
             src="/video/hero5.mp4"
             autoPlay
@@ -51,14 +62,21 @@ const HeroComponent = () => {
             playsInline
             preload="metadata"
             poster="/video/hero-poster.jpg"
-          />
+          >
+            <track kind="captions" />
+          </video>
+
+          <p className="sr-only">
+            Video menampilkan contoh undangan digital Bali dengan desain
+            minimalis dan elegan.
+          </p>
 
           {/* Hidden Image untuk SEO */}
           <Image
             quality={40}
             src="/video/hero-poster.jpg"
             alt="Undangan digital Bali minimalis dan elegan untuk pernikahan & mempandes"
-            className="hidden"
+            className="sr-only"
             height={100}
             width={100}
           />
@@ -69,15 +87,23 @@ const HeroComponent = () => {
           <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
             Buat undangan digital Anda dengan cepat dan mudah.
           </p>
-          <button
-            onClick={() => {
+          <Link
+            rel="nofollow"
+            href="#section3"
+            scroll={false}
+            onClick={(e) => {
+              e.preventDefault();
               setActiveSection("section3");
               scrollTo("section3");
             }}
-            className={`${redhat.className} text-sm flex items-center gap-x-2 outline-none border whitespace-nowrap border-zinc-400 rounded-full px-4 py-2 hover:bg-zinc-100 transition-colors duration-300`}
+            aria-label="Lihat katalog undangan digital"
           >
-            Lihat Katalog Undangan <BsChevronRight />
-          </button>
+            <ButtonSecondary
+              size="small"
+              title="Lihat Katalog Undangan"
+              icon={<BsChevronRight />}
+            />
+          </Link>
         </div>
       </div>
     </section>

@@ -38,23 +38,21 @@ const ClientComponent = () => {
     return {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      itemListElement: clients.map((c, index) => ({
-        "@type": "Review",
-        itemReviewed: {
-          "@type": "Organization",
-          name: "Moment Invitation",
-        },
-        author: {
-          "@type": "Person",
-          name: c.name || `Klien ${index + 1}`,
-        },
-        reviewBody: `Klien mempercayakan undangan digital Bali mereka kepada Moment Invitation.`,
+      itemListElement: clients.map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.name,
+        url: "https://momentinvitation.com",
       })),
     };
   }, [clients]);
 
   return (
-    <section className="relative select-none bg-white pb-8 lg:pb-16">
+    <section
+      id="clients"
+      aria-labelledby="clients-title"
+      className="relative bg-white pb-8 lg:pb-16"
+    >
       <Head>
         {jsonLd && (
           <script
@@ -101,7 +99,7 @@ const ClientComponent = () => {
                       c.cover ||
                       `https://placehold.co/400/png?font=red-hat-display&text=${c.name.replaceAll(
                         " ",
-                        "-"
+                        "-",
                       )}`
                     }
                     alt={`Klien Moment Invitation - Undangan digital Bali: ${c.name}`}
@@ -117,13 +115,14 @@ const ClientComponent = () => {
       </div>
 
       <div className="mt-4 md:mt-8 lg:mt-10 flex flex-col lg:flex-row justify-between gap-2 px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto xl:items-center">
-        <h3
-          className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl font-semibold text-dashboard-dark whitespace-nowrap`}
+        <h2
+          id="clients-title"
+          className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl font-semibold text-dashboard-dark max-w-lg`}
         >
           Klien Yang Telah
           <br />
           Menggunakan Jasa Kami
-        </h3>
+        </h2>
         <p className={`${redhat.className} text-base text-dashboard-dark/70`}>
           Beberapa klien yang mempercayakan momen acara spesial mereka kepada
           kami.
@@ -144,8 +143,8 @@ const ClientComponent = () => {
         </div>
       </div>
       <p className="sr-only">
-        Undangan digital Bali, template undangan digital, klien pernikahan
-        Moment Invitation, mempandes digital Bali
+        Daftar klien yang telah menggunakan layanan undangan digital Bali dari
+        Moment Invitation untuk berbagai acara spesial.
       </p>
     </section>
   );

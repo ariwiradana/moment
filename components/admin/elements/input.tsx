@@ -7,9 +7,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   className?: string;
   id?: string;
-  inputSize?: "small" | "medium" | "large";
+  inputSize?: "extrasmall" | "small" | "medium" | "large";
   optional?: boolean;
   description?: string;
+  action?: ReactNode;
 }
 
 const Input: FC<InputProps> = ({
@@ -20,10 +21,13 @@ const Input: FC<InputProps> = ({
   inputSize = "large",
   optional = false,
   description = "",
+  action,
   ...props
 }) => {
-  const paddingStyles = (size: "small" | "medium" | "large") => {
+  const paddingStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
+      case "extrasmall":
+        return "p-1.5";
       case "small":
         return "p-2";
       case "medium":
@@ -36,10 +40,7 @@ const Input: FC<InputProps> = ({
 
   return (
     <div className={`${className ?? ""} ${redhat.className} relative`}>
-      <label
-        htmlFor={id}
-        className="block text-dashboard-dark/60 mb-1 text-sm"
-      >
+      <label htmlFor={id} className="block text-dashboard-dark/60 mb-1 text-sm">
         {label}{" "}
         <span className="text-sm text-gray-400">
           {optional && "(opsional)"}
@@ -62,6 +63,11 @@ const Input: FC<InputProps> = ({
               : "focus:ring-admin-dark border-dashboard-dark/10 "
           } ${paddingStyles(inputSize ?? "large")}`}
         />
+        {action && (
+          <div className="absolute top-1/2 transform -translate-y-1/2 right-2">
+            {action}
+          </div>
+        )}
         {props.type === "password" && (
           <div
             className={`absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center`}

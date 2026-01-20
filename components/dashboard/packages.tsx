@@ -36,45 +36,53 @@ const PackageComponent = () => {
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: packages.map((p, index) => ({
-      "@type": "Product",
+      "@type": "ListItem",
       position: index + 1,
-      name: `Undangan Digital Paket ${p.name}`,
-      description: `Paket ${p.name} untuk undangan digital Bali. Fitur: ${
-        p.custom_opening_closing ? "Custom opening & closing, " : ""
-      }${p.unlimited_revisions ? "Unlimited revisi, " : ""}${
-        p.unlimited_guest_names ? "Nama tamu tidak terbatas, " : ""
-      }${p.countdown ? "Hitung mundur waktu, " : ""}${
-        Number(p.max_events) !== 0 ? `Maksimal ${p.max_events} acara, ` : ""
-      }${
-        Number(p.max_gallery_photos) !== 0
-          ? `Galeri foto ${p.max_gallery_photos} foto, `
-          : ""
-      }${Number(p.max_videos) !== 0 ? `Video ${p.max_videos}, ` : ""}${
-        p.contact_social_media ? "Kontak media sosial, " : ""
-      }${p.background_sound ? "Musik latar, " : ""}${
-        p.rsvp_and_greetings ? "RSVP & ucapan, " : ""
-      }${p.google_maps_integration ? "Lokasi Google Maps, " : ""}${
-        p.add_to_calendar ? "Tambahkan ke kalender, " : ""
-      }${p.custom_cover ? "Custom cover, " : ""}${
-        p.digital_envelope ? "Amplop digital" : ""
-      }`.toLowerCase(),
-      image: `/logo-bg.jpg`,
-      offers: {
-        "@type": "Offer",
-        availability: "https://schema.org/InStock",
-        priceCurrency: "IDR",
-        price: p.price - p.discount,
-        url: `https://momentinvitation.com`,
+      item: {
+        "@type": "Product",
+
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://momentinvitation.com/#paket-${p.name.toLowerCase()}`,
+        },
+
+        name: `Undangan Digital Paket ${p.name}`,
+        description:
+          `Paket ${p.name} untuk undangan digital Bali dengan fitur ${
+            p.unlimited_revisions ? "revisi tanpa batas, " : ""
+          }${p.unlimited_guest_names ? "nama tamu tak terbatas, " : ""}${
+            p.rsvp_and_greetings ? "RSVP & ucapan, " : ""
+          }${p.google_maps_integration ? "Google Maps." : ""}`.trim(),
+
+        image: "https://momentinvitation.com/logo-bg.jpg",
+        url: `https://momentinvitation.com/#paket-${p.name.toLowerCase()}`,
+
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "IDR",
+          price: Math.max(0, p.price - p.discount),
+          availability: "https://schema.org/InStock",
+          url: `https://momentinvitation.com/#paket-${p.name.toLowerCase()}`,
+        },
+
+        brand: {
+          "@type": "Organization",
+          name: "Moment Invitation",
+        },
       },
-      brand: "Moment Invitation",
     })),
   };
 
+
   return (
     <section
+      aria-labelledby="packages-title"
       className="py-8 md:py-10 lg:py-16 select-none relative bg-white"
       id="section4"
     >
+      <h2 id="packages-title" className="sr-only">
+        Paket Undangan Digital Bali
+      </h2>
       <Head>
         <script
           type="application/ld+json"
@@ -123,11 +131,12 @@ const PackageComponent = () => {
             spaceBetween={12}
             modules={[Navigation, Autoplay]}
             navigation={{ nextEl: ".package-next", prevEl: ".package-prev" }}
-            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+            onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
           >
             {packages.map((p, index) => {
               const isLast = index === packages.length - 1;
-              const discountedPrice = p.price - p.discount;
+              const discountedPrice = Math.max(0, p.price - p.discount);
+
               return (
                 <SwiperSlide key={`Paket-${p.name}`}>
                   <div
@@ -169,9 +178,10 @@ const PackageComponent = () => {
                       )}
                     </div>
                     <ul
-                      className={`${redhat.className} mt-4 list-inside text-base capitalize leading-7 marker:text-xs`}
+                      className={`${redhat.className} mt-4 text-base capitalize leading-7 marker:text-xs`}
                     >
                       <li
+                        aria-disabled={!p.unlimited_revisions}
                         className={`list-disc ${
                           !p.unlimited_revisions && "line-through text-gray-300"
                         }`}
@@ -179,6 +189,7 @@ const PackageComponent = () => {
                         Revisi tidak terbatas
                       </li>
                       <li
+                        aria-disabled={!p.unlimited_guest_names}
                         className={`list-disc ${
                           !p.unlimited_guest_names &&
                           "line-through text-gray-300"
@@ -187,6 +198,7 @@ const PackageComponent = () => {
                         Nama tamu tidak terbatas
                       </li>
                       <li
+                        aria-disabled={!p.custom_opening_closing}
                         className={`list-disc ${
                           !p.custom_opening_closing &&
                           "line-through text-gray-300"
@@ -195,18 +207,23 @@ const PackageComponent = () => {
                         Kustomisasi kalimat pembuka & penutup
                       </li>
                       <li
+                        aria-disabled={!p.countdown}
                         className={`list-disc ${
                           !p.countdown && "line-through text-gray-300"
                         }`}
                       >
                         Hitung Mundur Waktu
                       </li>
-                      <li className="list-disc">
+                      <li
+                        aria-disabled={Number(p.max_events) === 0}
+                        className="list-disc"
+                      >
                         {Number(p.max_events) === 0
                           ? "Acara tak terbatas per undangan"
                           : `Maksimal ${p.max_events} acara per undangan`}
                       </li>
                       <li
+                        aria-disabled={Number(p.max_gallery_photos) === 0}
                         className={`list-disc ${
                           Number(p.max_gallery_photos) === 0 &&
                           "line-through text-gray-300"
@@ -217,6 +234,7 @@ const PackageComponent = () => {
                           : "Galeri Foto"}
                       </li>
                       <li
+                        aria-disabled={Number(p.max_videos) === 0}
                         className={`list-disc ${
                           Number(p.max_videos) === 0 &&
                           "line-through text-gray-300"
@@ -227,6 +245,7 @@ const PackageComponent = () => {
                           : "Rekaman video"}
                       </li>
                       <li
+                        aria-disabled={!p.contact_social_media}
                         className={`list-disc ${
                           !p.contact_social_media &&
                           "line-through text-gray-300"
@@ -235,6 +254,7 @@ const PackageComponent = () => {
                         Kontak Media Sosial
                       </li>
                       <li
+                        aria-disabled={!p.background_sound}
                         className={`list-disc ${
                           !p.background_sound && "line-through text-gray-300"
                         }`}
@@ -242,6 +262,7 @@ const PackageComponent = () => {
                         Musik Latar
                       </li>
                       <li
+                        aria-disabled={!p.rsvp_and_greetings}
                         className={`list-disc ${
                           !p.rsvp_and_greetings && "line-through text-gray-300"
                         }`}
@@ -249,6 +270,7 @@ const PackageComponent = () => {
                         RSVP & Ucapan
                       </li>
                       <li
+                        aria-disabled={!p.google_maps_integration}
                         className={`list-disc ${
                           !p.google_maps_integration &&
                           "line-through text-gray-300"
@@ -257,6 +279,7 @@ const PackageComponent = () => {
                         Lokasi terintegrasi dengan Google Maps
                       </li>
                       <li
+                        aria-disabled={!p.add_to_calendar}
                         className={`list-disc ${
                           !p.add_to_calendar && "line-through text-gray-300"
                         }`}
@@ -265,6 +288,7 @@ const PackageComponent = () => {
                       </li>
 
                       <li
+                        aria-disabled={!p.digital_envelope}
                         className={`list-disc ${
                           !p.digital_envelope && "line-through text-gray-300"
                         }`}

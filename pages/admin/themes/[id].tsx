@@ -102,7 +102,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
               label="Fitur Lainnya"
             />
 
-            <div className="flex flex-col gap-6">
+            {/* <div className="flex flex-col gap-6">
               <Input
                 id="thumbnail"
                 accept="image/*"
@@ -142,7 +142,7 @@ const DetailTheme: React.FC<DetailThemeProps> = ({ id, token }) => {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
 
             <div className="flex flex-col gap-6">
               <Input

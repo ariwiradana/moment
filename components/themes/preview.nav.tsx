@@ -24,7 +24,7 @@ const PreviewNav = () => {
               <ButtonLight
                 onClick={() => router.push(`/${client.theme?.slug}/order`)}
                 className="group-hover:scale-105"
-                title="Pesan Tema"
+                title="Coba & Pesan Tema"
                 size="small"
                 icon={<BsCart />}
               />

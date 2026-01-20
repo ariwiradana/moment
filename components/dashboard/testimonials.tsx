@@ -16,7 +16,7 @@ import Head from "next/head";
 const TestimonialsComponent = () => {
   const { data } = useSWR<{ data: Testimonials[] }>(
     "/api/guest/testimonials",
-    fetcher
+    fetcher,
   );
   const testimonials = data?.data || [];
 
@@ -26,41 +26,26 @@ const TestimonialsComponent = () => {
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: testimonials.map((t, index) => ({
-      "@type": "Product",
+      "@type": "ListItem",
       position: index + 1,
-      name: `Undangan Digital - Tema ${t.theme_name}`, // wajib ada
-      image: t.theme_phone_thumbnail || "", // wajib ada minimal 1 image
-      description: `Tema undangan digital ${t.theme_name} dari Moment Invitation`,
-      brand: {
-        "@type": "Organization",
-        name: "Moment Invitation",
-      },
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "IDR",
-        price: "199000",
-        availability: "https://schema.org/InStock",
-        url: `https://www.momentinvitation.com/${t.client_slug}`,
-      },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "5",
-        reviewCount: "10",
-      },
-      review: [
-        {
-          "@type": "Review",
-          author: { "@type": "Person", name: t.name },
-          reviewBody: t.comments,
-          datePublished: t.created_at,
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: "5",
-            bestRating: "5",
-            worstRating: "1",
+      item: {
+        "@type": "Review",
+        author: {
+          "@type": "Person",
+          name: t.name,
+        },
+        reviewBody: t.comments,
+        datePublished: t.created_at,
+        itemReviewed: {
+          "@type": "Service",
+          name: "Undangan Digital Moment Invitation",
+          provider: {
+            "@type": "Organization",
+            name: "Moment Invitation",
+            url: "https://momentinvitation.com",
           },
         },
-      ],
+      },
     })),
   };
 
@@ -68,6 +53,7 @@ const TestimonialsComponent = () => {
     <section
       className="py-8 md:py-10 lg:py-16 relative bg-zinc-50"
       id="section5"
+      aria-labelledby="testimonials-title"
     >
       <Head>
         <script
@@ -78,9 +64,10 @@ const TestimonialsComponent = () => {
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-2 px-4 md:px-12 lg:px-4">
         <div>
           <h2
-            className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl font-semibold text-dashboard-dark`}
+            id="testimonials-title"
+            className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl font-semibold text-dashboard-dark max-w-xl`}
           >
-            Apa Kata Mereka Tentang <br /> Undangan Digital Moment?
+            <h2>Apa Kata Mereka Tentang Undangan Digital Moment?</h2>
           </h2>
           <p
             className={`${redhat.className} text-base text-dashboard-dark/70 mt-2`}

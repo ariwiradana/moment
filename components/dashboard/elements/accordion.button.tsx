@@ -1,5 +1,5 @@
 import { redhat } from "@/lib/fonts";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useId, useState } from "react";
 import { BsChevronRight } from "react-icons/bs";
 
 interface AccordionProps {
@@ -8,33 +8,42 @@ interface AccordionProps {
 }
 
 const Accordion: React.FC<AccordionProps> = ({ title, content }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const id = useId();
+
+  const buttonId = `accordion-button-${id}`;
+  const panelId = `accordion-panel-${id}`;
 
   return (
     <div
-      className={`overflow-hidden ${redhat.className} border border-zinc-200 p-4 transition-colors ease-in-out duration-500`}
+      className={`overflow-hidden ${redhat.className} border border-zinc-200 p-4 transition-colors duration-300`}
     >
       <button
+        id={buttonId}
         type="button"
-        aria-label={`btn-${title.replace(" ", "-").toLowerCase()}`}
-        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={() => setIsOpen((prev) => !prev)}
         className="w-full text-base font-medium flex justify-between text-left"
       >
         <span>{title}</span>
-        <span>
-          <BsChevronRight
-            className={`${
-              isOpen ? "rotate-90" : "rotate-0"
-            } transform transition-all ease-in-out duration-300 text-sm mt-1`}
-          />
-        </span>
+        <BsChevronRight
+          className={`${
+            isOpen ? "rotate-90" : "rotate-0"
+          } transform transition-transform duration-300 text-sm mt-1`}
+          aria-hidden="true"
+        />
       </button>
+
       <div
-        className={`overflow-hidden transition-all ease-in-out duration-300  ${
-          isOpen ? "max-h-[200vh] mt-2" : "max-h-0"
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
+        className={`overflow-hidden transition-all duration-300 ${
+          isOpen ? "max-h-[200vh] mt-4" : "max-h-0"
         }`}
       >
-        {content ? <div className={`mt-4`}>{content}</div> : <></>}
+        {content}
       </div>
     </div>
   );

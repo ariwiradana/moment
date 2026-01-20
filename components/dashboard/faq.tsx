@@ -116,7 +116,8 @@ const FaqComponent = () => {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
+    mainEntity: faqs.map((faq, i) => ({
+      "@id": `https://momentinvitation.com/#faq-${i + 1}`,
       "@type": "Question",
       name: faq.title,
       acceptedAnswer: {

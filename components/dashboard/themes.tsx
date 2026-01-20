@@ -7,12 +7,16 @@ import ThemeShimmer from "./elements/theme.shimmer";
 import ThemeCard from "./partials/theme.card";
 import Head from "next/head";
 
+export const THEME_VIDEOS = new Set(["samaya", "aruna", "nirvaya"]);
+
 const ThemeComponent: FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
   const [themeCategories, setThemeCategories] = useState<ThemeCategory[]>([]);
   const [themes, setThemes] = useState<ThemeUsage[]>([]);
   const [bestSeller, setBestSeller] = useState<string>("");
   const [newest, setNewest] = useState<string>("");
+
+  console.log({ themeCategories });
 
   const { isLoading } = useSWR<{ data: ThemeUsage[] }>(
     `/api/guest/themes/usage`,
@@ -23,7 +27,7 @@ const ThemeComponent: FC = () => {
           const best =
             data.data.length > 0
               ? data.data.reduce((max, theme) =>
-                  theme.usage_count > max.usage_count ? theme : max
+                  theme.usage_count > max.usage_count ? theme : max,
                 )
               : null;
 
@@ -41,7 +45,7 @@ const ThemeComponent: FC = () => {
         }
       },
       revalidateOnFocus: false,
-    }
+    },
   );
 
   useSWR<{ data: ThemeCategory[] }>(`/api/guest/theme-categories`, fetcher, {
@@ -55,16 +59,21 @@ const ThemeComponent: FC = () => {
   });
 
   const displayedThemes = useMemo(() => themes, [themes]);
-  const displayedCategories = useMemo(() => themeCategories, [themeCategories]);
 
-  console.log({ displayedThemes });
   const jsonLdThemes = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: displayedThemes.map((theme, index) => ({
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `https://www.momentinvitation.com/${theme.client_slug}`,
+      },
       "@type": "Product",
       position: index + 1,
-      brand: "Moment Invitation",
+      brand: {
+        "@type": "Organization",
+        name: "Moment Invitation",
+      },
       name: `Undangan Digital Bali - Tema ${theme.name}`,
       description: `Tema undangan digital ${theme.name} dari Moment Invitation`,
       image: theme.phone_thumbnail,
@@ -78,12 +87,7 @@ const ThemeComponent: FC = () => {
         availability: "https://schema.org/InStock",
         itemCondition: "https://schema.org/NewCondition",
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: 5,
-        reviewCount: 10,
-      },
-      video: `/videos/video/themes/${theme.slug}.mp4`
+      video: THEME_VIDEOS.has(theme.slug)
         ? {
             "@type": "VideoObject",
             name: theme.name,
@@ -116,10 +120,9 @@ const ThemeComponent: FC = () => {
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
           <div className="flex flex-col lg:flex-row justify-between lg:items-center w-full gap-x-8 gap-1">
             <h2
-              className={`${redhat.className} text-2xl md:text-3xl lg:text-4xl whitespace-nowrap font-semibold text-white`}
+              className={`${redhat.className} max-w-2xl w-full text-2xl md:text-3xl lg:text-4xl font-semibold text-white`}
             >
-              Koleksi Tema <br />
-              Undangan Kami
+              Koleksi Tema Undangan Digital Bali
             </h2>
             <div className="h-[1px] w-full bg-white/10 hidden lg:block"></div>
             <p
@@ -129,26 +132,6 @@ const ThemeComponent: FC = () => {
               dan elegan, untuk momen spesial Anda.
             </p>
           </div>
-        </div>
-
-        {/* Categories */}
-        <div className="mt-4 gap-2 whitespace-nowrap overflow-x-auto hidden">
-          {displayedCategories.map((tc) => (
-            <button
-              aria-pressed={activeCategoryId === tc.id}
-              key={tc.id}
-              onClick={() => setActiveCategoryId(tc.id)}
-              className={`py-2 lg:py-3 px-4 lg:px-6 border transition-all duration-500 ${
-                redhat.className
-              } text-sm lg:text-base font-medium ${
-                activeCategoryId === tc.id
-                  ? "bg-white text-dashboard-dark border-white"
-                  : "text-white border-white/50"
-              }`}
-            >
-              {tc.name}
-            </button>
-          ))}
         </div>
 
         {/* Themes Grid */}

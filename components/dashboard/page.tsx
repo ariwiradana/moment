@@ -7,34 +7,22 @@ import { BiLogoWhatsapp } from "react-icons/bi";
 import React, { useEffect, useCallback, startTransition } from "react";
 
 // Dynamic import semua komponen client-heavy
-const HeroComponent = dynamic(() => import("@/components/dashboard/hero"), {
-  ssr: false,
-});
-const ClientComponent = dynamic(() => import("@/components/dashboard/client"), {
-  ssr: false,
-});
+const HeroComponent = dynamic(() => import("@/components/dashboard/hero"));
+const ClientComponent = dynamic(() => import("@/components/dashboard/client"));
 const FeaturesComponent = dynamic(
   () => import("@/components/dashboard/features"),
-  { ssr: false }
 );
-const ThemeComponent = dynamic(() => import("@/components/dashboard/themes"), {
-  ssr: false,
-});
+const ThemeComponent = dynamic(() => import("@/components/dashboard/themes"));
 const PackageComponent = dynamic(
   () => import("@/components/dashboard/packages"),
-  { ssr: false }
 );
 const TestimonialsComponent = dynamic(
   () => import("@/components/dashboard/testimonials"),
-  { ssr: false }
 );
 const SharedThemeComponent = dynamic(
   () => import("@/components/dashboard/shared.theme"),
-  { ssr: false }
 );
-const FaqComponent = dynamic(() => import("@/components/dashboard/faq"), {
-  ssr: false,
-});
+const FaqComponent = dynamic(() => import("@/components/dashboard/faq"));
 
 const DashboardPage = () => {
   const { activeSection, setActiveSection, manualScroll, setManualScroll } =
@@ -76,7 +64,7 @@ const DashboardPage = () => {
       const pos = el.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top: pos, behavior: "smooth" });
     },
-    [setManualScroll]
+    [setManualScroll],
   );
 
   // Mounting effects
@@ -96,10 +84,13 @@ const DashboardPage = () => {
     <main className="min-h-dvh">
       <ButtonFloating
         aria-label="Hubungi Kami melalui WhatsApp"
-        onClick={() => window.open(sosmedURLs.whatsapp)}
+        onClick={() =>
+          window.open(sosmedURLs.whatsapp, "_blank", "noopener,noreferrer")
+        }
         className="bg-green-500 text-white"
         icon={<BiLogoWhatsapp />}
       />
+
       <HeroComponent />
       <ClientComponent />
       <FeaturesComponent />

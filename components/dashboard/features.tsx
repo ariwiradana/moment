@@ -31,13 +31,21 @@ const FeaturesComponent = () => {
         },
       })),
     },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Bali, Indonesia",
+    },
   };
 
   return (
     <section
-      className="py-8 md:py-10 lg:py-16 relative select-none bg-white"
       id="section2"
+      aria-labelledby="features-title"
+      className="py-8 md:py-10 lg:py-16 relative select-none bg-white"
     >
+      <h2 id="features-title" className="sr-only">
+        Fitur Undangan Digital Bali
+      </h2>
       <Head>
         {jsonLdFeatures && (
           <script
@@ -47,7 +55,10 @@ const FeaturesComponent = () => {
         )}
       </Head>
 
-      <div className="px-4 md:px-12 lg:px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6">
+      <div
+        id="features-list"
+        className="px-4 md:px-12 lg:px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-4 max-w-screen-xl mx-auto gap-6"
+      >
         {displayedFeatures.map((f) => (
           <div
             className="flex flex-col lg:flex-row gap-2 lg:gap-4"
@@ -57,11 +68,11 @@ const FeaturesComponent = () => {
               {f.icon}
             </div>
             <div>
-              <h5
+              <h3
                 className={`${redhat.className} text-base text-dashboard-dark font-semibold`}
               >
                 {f.title}
-              </h5>
+              </h3>
               <p
                 className={`${redhat.className} text-base text-dashboard-dark/70 mt-1`}
               >
@@ -80,12 +91,13 @@ const FeaturesComponent = () => {
             title="Tampilkan Semua Fitur"
             icon={<BsChevronDown />}
             aria-expanded={isExpanded}
+            aria-controls="features-list"
           />
         </div>
       )}
       <p className="sr-only">
-        Fitur undangan digital Bali, undangan pernikahan online, undangan
-        mempandes digital, template undangan minimalis dan modern.
+        fitur undangan digital Bali dari Moment Invitation untuk pernikahan dan
+        acara lainnya
       </p>
     </section>
   );

@@ -26,16 +26,33 @@ const SharedThemeComponent = () => {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Dataset",
-    name: "Statistik Moment Invitation",
-    creator: "Moment Invitation",
-    description: "Statistik penggunaan undangan digital Moment Invitation",
-    distribution: stats.map((s) => ({
-      "@type": "DataDownload",
-      name: s.label,
-      contentUrl: s.value.toString(),
-    })),
+    "@type": "Organization",
+    name: "Moment Invitation",
+    url: "https://momentinvitation.com",
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Total Klien",
+        value: data.clients,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Total Acara",
+        value: data.events,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Total Tamu Undangan",
+        value: data.guests,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Ucapan & Doa",
+        value: data.wishes,
+      },
+    ],
   };
+
 
   return (
     <section className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden">
@@ -67,20 +84,23 @@ const SharedThemeComponent = () => {
               key={i}
               className="text-dashboard-dark flex flex-col items-center"
             >
-              <Icon className="text-4xl" />
-              <CountUp
-                from={0}
-                to={value}
-                separator=","
-                direction="up"
-                duration={1}
-                className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
-              />
-              <h2 className={`${redhat.className} text-lg text-center`}>
+              <Icon aria-hidden="true" className="text-4xl" />
+              <div aria-live="polite">
+                <CountUp
+                  aria-label={`${value} ${label}`}
+                  from={0}
+                  to={value}
+                  separator=","
+                  direction="up"
+                  duration={1}
+                  className={`${redhat.className} text-2xl font-medium lg:text-3xl`}
+                />
+              </div>
+              <p className={`${redhat.className} text-lg text-center`}>
                 {label}
-              </h2>
+              </p>
             </div>
-          ) : null
+          ) : null,
         )}
       </div>
     </section>

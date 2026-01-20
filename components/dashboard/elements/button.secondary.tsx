@@ -7,7 +7,7 @@ interface ButtonSecondaryProps
   title: string;
   className?: string | "";
   icon?: ReactNode;
-  size?: "small" | "medium" | "large";
+  size?: "extrasmall" | "small" | "medium" | "large";
   isloading?: boolean;
 }
 
@@ -19,8 +19,10 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = ({
   isloading = false,
   ...props
 }) => {
-  const buttonStyles = (size: "small" | "medium" | "large") => {
+  const buttonStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
+      case "extrasmall":
+        return "px-2.5 py-1.5 text-xs gap-x-1";
       case "small":
         return "px-4 py-2 text-sm gap-x-2";
       case "medium":
@@ -30,8 +32,10 @@ const ButtonSecondary: FC<ButtonSecondaryProps> = ({
     }
   };
 
-  const iconStyles = (size: "small" | "medium" | "large") => {
+  const iconStyles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
+      case "extrasmall":
+        return "text-xs";
       case "small":
         return "text-sm";
       case "medium":

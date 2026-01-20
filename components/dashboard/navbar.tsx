@@ -11,6 +11,9 @@ import { RiErrorWarningFill } from "react-icons/ri";
 import ButtonPrimary from "./elements/button.primary";
 import Head from "next/head";
 
+/* =========================
+   Nav Item (Link + onClick)
+========================= */
 const NavItem = memo(
   ({
     title,
@@ -23,67 +26,72 @@ const NavItem = memo(
     activeSection: string;
     onClick: () => void;
   }) => {
+    const sectionId = `section${index + 1}`;
+    const isActive = activeSection === sectionId;
+
     return (
-      <div className="flex group">
-        <button
-          type="button"
-          onClick={onClick}
-          className={`${redhat.className} text-sm cursor-pointer outline-none relative text-dashboard-dark duration-500 uppercase ease-in-out`}
+      <li role="none">
+        <Link
+          href={`#${sectionId}`}
+          scroll={false}
+          onClick={(e) => {
+            e.preventDefault(); // cegah default anchor jump
+            onClick(); // smooth scroll custom
+          }}
           aria-label={`Navigasi ke bagian ${title}`}
+          aria-current={isActive ? "true" : undefined}
+          className={`${redhat.className} relative text-sm uppercase cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-primary`}
         >
           {title}
-          <div
-            className={`absolute group-hover:opacity-100 group-hover:-bottom-2 ${
-              activeSection === `section${index + 1}`
-                ? "opacity-100 -bottom-2"
-                : "opacity-0 -bottom-1"
-            } left-1/2 transform -translate-x-1/2 w-[2px] h-[2px] bg-dashboard-dark rounded-full transition-all ease-in-out duration-500`}
+
+          <span
+            aria-hidden="true"
+            className={`absolute left-1/2 -translate-x-1/2 w-[3px] h-[3px] rounded-full bg-dashboard-dark transition-all duration-300 ${
+              isActive ? "-bottom-2 opacity-100" : "-bottom-1 opacity-0"
+            }`}
           />
-        </button>
-      </div>
+        </Link>
+      </li>
     );
-  }
+  },
 );
 
 NavItem.displayName = "NavItem";
 
+/* =========================
+   Navbar Component
+========================= */
 const NavbarComponent = () => {
   const { activeSection, setActiveSection, setManualScroll } =
     useDashboardStore();
   const router = useRouter();
   const [isOnTop, setIsOnTop] = useState(true);
 
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
-    return () => {
-      document.documentElement.style.scrollBehavior = "";
-    };
-  }, []);
-
+  /* Detect scroll position */
   useEffect(() => {
     const handleScroll = () => setIsOnTop(window.scrollY === 0);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /* Smooth scroll helper */
   const scrollToSection = (section: string) => {
     const element = document.getElementById(section);
     if (!element) return;
+
     const offset = window.innerWidth < 768 ? 50 : 80;
-    const top = element.offsetTop - offset;
-    window.scrollTo({ top });
+    window.scrollTo({
+      top: element.offsetTop - offset,
+      behavior: "smooth",
+    });
   };
 
-  const jsonLd = {
+  /* JSON-LD khusus navigasi */
+  const navJsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    url: "https://moment.id/",
-    name: "Moment",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://momentinvitation.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
+    "@type": "SiteNavigationElement",
+    name: navData.map((n) => n.title),
+    url: navData.map((n) => `https://momentinvitation.com${n.path}`),
   };
 
   return (
@@ -91,101 +99,97 @@ const NavbarComponent = () => {
       <Head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(navJsonLd) }}
         />
       </Head>
 
       <header
-        className={`fixed top-0 inset-x-0 z-30 border-b ${
-          !isOnTop ? "bg-white border-b-zinc-100" : "border-b-transparent"
-        } transition-all ease-in-out`}
+        className={`fixed top-0 inset-x-0 z-30 transition-all ${
+          isOnTop
+            ? "border-b border-transparent"
+            : "bg-white border-b border-zinc-100"
+        }`}
       >
         <nav
-          className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4"
           aria-label="Navigasi utama Moment"
-          role="navigation"
+          className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4"
         >
-          <ul
-            className={`flex items-center justify-between gap-8 transition-all ease-in-out ${
-              isOnTop ? "h-16 md:h-16 lg:h-20" : "h-14 md:h-20 lg:h-16"
+          <div
+            className={`flex items-center justify-between transition-all ${
+              isOnTop ? "h-16 lg:h-20" : "h-14 lg:h-16"
             }`}
           >
-            {/* Logo */}
-            <li className="font-semibold text-dashboard-dark text-xl flex items-center gap-x-2 mr-8">
-              <Link
-                href="/"
-                className="flex items-center"
-                aria-label="Beranda Moment"
-              >
-                <div className="relative w-6 aspect-square">
-                  <Image
-                    alt="Logo Moment"
-                    fill
-                    className="object-contain"
-                    src="/favicon-180x180.png"
-                    sizes="100px"
-                    priority
-                  />
-                </div>
+            {/* ===== Brand ===== */}
+            <div className="flex items-center gap-2">
+              <h1 className="sr-only">Moment – Undangan Digital</h1>
+
+              <Link href="/" aria-label="Beranda Moment">
+                <Image
+                  src="/favicon-180x180.png"
+                  alt="Moment – Platform Undangan Digital"
+                  width={24}
+                  height={24}
+                  priority
+                />
               </Link>
-            </li>
+            </div>
 
-            {/* Menu utama */}
+            {/* ===== Main Navigation ===== */}
             {router.pathname === "/" && (
-              <>
-                <li
-                  className={`hidden justify-center items-center gap-x-8 lg:flex`}
-                >
-                  {navData.map(({ title, path }: NavData, index: number) => (
-                    <NavItem
-                      key={title}
-                      title={title}
-                      index={index}
-                      activeSection={activeSection || ""}
-                      onClick={() => {
-                        setActiveSection(`section${index + 1}`);
-                        if (router.pathname === "/") {
-                          scrollToSection(`section${index + 1}`);
-                        } else {
-                          setManualScroll(false);
-                          router.push(path);
-                        }
-                      }}
-                    />
-                  ))}
-                </li>
-
-                {/* Tombol CTA */}
-                <li>
-                  <ButtonPrimary
-                    size="small"
-                    title="Pesan Sekarang"
-                    icon={<BsChevronRight />}
+              <ul role="list" className="hidden lg:flex items-center gap-x-8">
+                {navData.map((item: NavData, index: number) => (
+                  <NavItem
+                    key={item.title}
+                    title={item.title}
+                    index={index}
+                    activeSection={activeSection || ""}
                     onClick={() => {
-                      setActiveSection(`section3`);
-                      scrollToSection(`section3`);
-                      toast.success(
-                        "Silahkan pilih tema undangan terlebih dahulu!",
-                        {
-                          icon: (
-                            <RiErrorWarningFill className="text-dashboard-primary text-lg" />
-                          ),
-                          className: `${redhat.className} text-sm border border-white/20`,
-                          style: {
-                            boxShadow: "none",
-                            bottom: 0,
-                            backgroundColor: "#101010",
-                            color: "white",
-                            borderRadius: 100,
-                          },
-                        }
-                      );
+                      setActiveSection(`section${index + 1}`);
+
+                      if (router.pathname === "/") {
+                        scrollToSection(`section${index + 1}`);
+                      } else {
+                        setManualScroll(false);
+                        router.push(item.path);
+                      }
                     }}
                   />
-                </li>
-              </>
+                ))}
+              </ul>
             )}
-          </ul>
+
+            {/* ===== CTA ===== */}
+            {router.pathname === "/" && (
+              <div>
+                <ButtonPrimary
+                  size="small"
+                  title="Pesan Sekarang"
+                  aria-label="Pesan undangan digital sekarang"
+                  icon={<BsChevronRight />}
+                  onClick={() => {
+                    setActiveSection("section3");
+                    scrollToSection("section3");
+
+                    toast.success(
+                      "Silahkan pilih tema undangan terlebih dahulu!",
+                      {
+                        icon: (
+                          <RiErrorWarningFill className="text-dashboard-primary text-lg" />
+                        ),
+                        className: `${redhat.className} text-sm`,
+                        style: {
+                          backgroundColor: "#101010",
+                          color: "white",
+                          borderRadius: 100,
+                          boxShadow: "none",
+                        },
+                      },
+                    );
+                  }}
+                />
+              </div>
+            )}
+          </div>
         </nav>
       </header>
     </>
@@ -193,5 +197,4 @@ const NavbarComponent = () => {
 };
 
 NavbarComponent.displayName = "NavbarComponent";
-
 export default NavbarComponent;

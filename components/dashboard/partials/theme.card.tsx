@@ -9,6 +9,7 @@ import { TbNewSection, TbSettingsAutomation, TbStar } from "react-icons/tb";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import ButtonTetiary from "../elements/button.tetiary";
+import { THEME_VIDEOS } from "../themes";
 
 interface Props {
   theme: ThemeUsage;
@@ -37,24 +38,35 @@ const ThemeCard: NextPage<Props> = ({
     }
   }, []);
 
+  const hasVideo = THEME_VIDEOS.has(slug);
+
   return (
     <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015] relative">
       <div
         className="relative"
-        onMouseEnter={handlePlay}
-        onMouseLeave={handlePause}
+        onMouseEnter={hasVideo ? handlePlay : undefined}
+        onMouseLeave={hasVideo ? handlePause : undefined}
       >
-        <video
-          ref={videoRef}
-          poster={phone_thumbnail || ""}
-          className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px] shimmer-dark"
-          src={`/video/themes/${slug}.mp4`}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label={`Tema undangan digital Bali: ${theme.name}`}
-        />
+        {hasVideo ? (
+          <video
+            ref={videoRef}
+            poster={phone_thumbnail || ""}
+            className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px] shimmer-dark"
+            src={`/video/themes/${slug}.mp4`}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label={`Preview video tema undangan digital Bali: ${name}`}
+          />
+        ) : (
+          <img
+            src={phone_thumbnail || ""}
+            alt={`Preview tema undangan digital Bali: ${name}`}
+            className="w-full h-full object-cover rounded-lg md:rounded-3xl lg:rounded-[36px]"
+            loading="lazy"
+          />
+        )}
         {bestSeller && (
           <div
             className={`absolute top-[14px] -right-5 md:top-6 md:-right-7 bg-gradient-to-r from-[#C98C30] via-dashboard-primary to-[#C98C30] gap-x-1 px-4 md:px-8 py-0.5 rotate-45 z-10 flex justify-center items-center text-xs md:text-sm`}
@@ -91,7 +103,7 @@ const ThemeCard: NextPage<Props> = ({
 
             {features.map((feature) => (
               <SwiperSlide
-                key={`Fitur Tambahan Tema ${name}`}
+                key={`${slug}-feature-${feature}`}
                 className="w-auto"
               >
                 <div className="flex justify-center">
@@ -117,12 +129,13 @@ const ThemeCard: NextPage<Props> = ({
         <h6
           className={`${redhat.className} text-xl text-white font-medium mb-3 md:mb-5 leading-6`}
         >
-          {formatToRupiah(start_from - discount)}
+          {formatToRupiah(Math.max(0, start_from - discount))}
         </h6>
 
         <Link
           href={`/${theme.client_slug}`}
           target="_blank"
+          rel="noopener noreferrer"
           className="w-full lg:w-3/4"
           aria-label={`Link Preview Tema ${name}`}
         >
@@ -131,6 +144,7 @@ const ThemeCard: NextPage<Props> = ({
         <Link
           href={`/${theme.slug}/order`}
           target="_blank"
+          rel="noopener noreferrer"
           aria-label={`Link Pesan Tema ${name}`}
           className="mt-3 w-full lg:w-3/4"
         >

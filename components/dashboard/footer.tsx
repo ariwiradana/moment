@@ -7,18 +7,16 @@ import useDashboardStore from "@/store/useDashboardStore";
 import { useRouter } from "next/router";
 import { HiArrowLongUp } from "react-icons/hi2";
 import { sosmedURLs } from "@/constants/sosmed";
-import { TbBrandInstagram, TbBrandTiktok, TbBrandWhatsapp, TbMail } from "react-icons/tb";
+import {
+  TbBrandInstagram,
+  TbBrandTiktok,
+  TbBrandWhatsapp,
+  TbMail,
+} from "react-icons/tb";
 
 // Memoized Footer Nav Button
 const FooterNavButton = memo(
-  ({
-    title,
-    onClick,
-  }: {
-    title: string;
-    index: number;
-    onClick: () => void;
-  }) => (
+  ({ title, onClick }: { title: string; onClick: () => void }) => (
     <button
       key={`footer-${title}`}
       onClick={onClick}
@@ -26,7 +24,7 @@ const FooterNavButton = memo(
     >
       {title}
     </button>
-  )
+  ),
 );
 
 FooterNavButton.displayName = "FooterNavButton";
@@ -35,7 +33,6 @@ const FooterComponent = () => {
   const setActiveSection = useDashboardStore((state) => state.setActiveSection);
   const router = useRouter();
 
-  // Set CSS smooth scroll once
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     return () => {
@@ -75,7 +72,6 @@ const FooterComponent = () => {
                   <FooterNavButton
                     key={`footer-${title}`}
                     title={title}
-                    index={index}
                     onClick={() => {
                       setActiveSection(`section${index + 1}`);
                       if (router.pathname !== "/") router.push(path);
@@ -86,6 +82,7 @@ const FooterComponent = () => {
 
               <div className="flex items-center gap-3 text-xl mt-4 text-white">
                 <Link
+                  rel="noopener noreferrer"
                   aria-label="Hubungi kami via WhatsApp"
                   className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
@@ -93,7 +90,9 @@ const FooterComponent = () => {
                 >
                   <TbBrandWhatsapp />
                 </Link>
+
                 <Link
+                  rel="noopener noreferrer"
                   aria-label="Kunjungi Instagram Moment Invitation"
                   className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
@@ -102,6 +101,7 @@ const FooterComponent = () => {
                   <TbBrandInstagram />
                 </Link>
                 <Link
+                  rel="noopener noreferrer"
                   aria-label="Kunjungi TikTok Moment Invitation"
                   className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
@@ -110,6 +110,7 @@ const FooterComponent = () => {
                   <TbBrandTiktok />
                 </Link>
                 <Link
+                  rel="noopener noreferrer"
                   aria-label="Kirim email ke Moment Invitation"
                   className="h-12 w-12 aspect-square rounded-full text-lg lg:text-xl flex justify-center items-center border border-white/10"
                   target="_blank"
