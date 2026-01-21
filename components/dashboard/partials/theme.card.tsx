@@ -44,7 +44,7 @@ const ThemeCard: NextPage<Props> = ({
   return (
     <div className="px-4 py-6 md:p-8 bg-gradient-to-b from-transparent via-transparent to-white/[0.015] relative">
       <div
-        className="relative"
+        className="relative w-full aspect-[1/2]"
         onMouseEnter={hasVideo ? handlePlay : undefined}
         onMouseLeave={hasVideo ? handlePause : undefined}
       >
@@ -52,7 +52,7 @@ const ThemeCard: NextPage<Props> = ({
           <video
             ref={videoRef}
             poster={phone_thumbnail || ""}
-            className="min-w-full min-h-full rounded-lg md:rounded-3xl lg:rounded-[36px] shimmer-dark"
+            className="aspect-[1/2] shimmer-dark"
             src={`/video/themes/${slug}.mp4`}
             muted
             loop
@@ -65,7 +65,7 @@ const ThemeCard: NextPage<Props> = ({
             fill
             src={phone_thumbnail || ""}
             alt={`Preview tema undangan digital Bali: ${name}`}
-            className="w-full h-full object-cover rounded-lg md:rounded-3xl lg:rounded-[36px]"
+            className="w-full h-full object-contain"
             loading="lazy"
           />
         )}

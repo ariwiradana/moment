@@ -118,7 +118,7 @@ const ThemeComponent: FC = () => {
         </div>
 
         {/* Themes Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mt-8 lg:mt-11">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mt-8 lg:mt-11">
           {isLoading
             ? Array.from({ length: 4 }).map((_, idx) => (
                 <ThemeShimmer key={idx} />
