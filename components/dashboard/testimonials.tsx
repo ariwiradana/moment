@@ -11,7 +11,6 @@ import {
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
 import { BiSolidQuoteAltLeft } from "react-icons/bi";
-import Head from "next/head";
 
 const TestimonialsComponent = () => {
   const { data } = useSWR<{ data: Testimonials[] }>(
@@ -28,31 +27,6 @@ const TestimonialsComponent = () => {
       id="section5"
       aria-labelledby="testimonials-title"
     >
-      <Head>
-        {testimonials.map((testimonial) => (
-          <script
-            key={testimonial.id}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                name: "Moment Invitation",
-                url: "https://momentinvitation.com",
-                review: testimonials.map((t) => ({
-                  "@type": "Review",
-                  author: {
-                    "@type": "Person",
-                    name: t.name,
-                  },
-                  reviewBody: t.comments,
-                  datePublished: t.created_at,
-                })),
-              }),
-            }}
-          />
-        ))}
-      </Head>
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-2 px-4 md:px-12 lg:px-4">
         <div>
           <h2
