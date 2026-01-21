@@ -55,10 +55,6 @@ const ClientComponent = () => {
                   name: "Moment Invitation",
                   url: `https://momentinvitation.com/${client.slug}`,
                 },
-                about: {
-                  "@type": "Product",
-                  name: `Tema ${client.theme?.name}`,
-                },
               }),
             }}
           />
