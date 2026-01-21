@@ -44,7 +44,6 @@ const TestimonialsComponent = () => {
                 reviewBody: testimonial.comments,
                 itemReviewed: {
                   "@type": "Service",
-                  image: testimonial.client_cover,
                   name: testimonial.theme_name,
                 },
               }),
