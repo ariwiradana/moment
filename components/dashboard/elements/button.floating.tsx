@@ -9,7 +9,7 @@ interface ButtonFloatingProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 }
 
 const ButtonFloating: FC<ButtonFloatingProps> = memo(
-  ({ className, icon, isloading = false, onClick, ...rest }) => {
+  ({ className, icon, isloading = false, ...rest }) => {
     return (
       <div className="fixed bottom-6 right-6 md:right-12 md:bottom-12 z-[999]">
         <button
