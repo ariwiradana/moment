@@ -44,11 +44,8 @@ const TestimonialsComponent = () => {
                 reviewBody: testimonial.comments,
                 itemReviewed: {
                   "@type": "Service",
-                  name: `Undangan Digital Tema ${testimonial.theme_name}`,
-                  provider: {
-                    "@type": "Organization",
-                    name: "Moment Invitation",
-                  },
+                  image: testimonial.client_cover,
+                  name: testimonial.theme_name,
                 },
               }),
             }}
