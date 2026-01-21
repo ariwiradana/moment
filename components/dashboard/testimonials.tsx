@@ -36,16 +36,18 @@ const TestimonialsComponent = () => {
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
                 "@context": "https://schema.org",
-                "@type": "Review",
-                author: {
-                  "@type": "Person",
-                  name: testimonial.name,
-                },
-                reviewBody: testimonial.comments,
-                itemReviewed: {
-                  "@type": "Service",
-                  name: testimonial.theme_name,
-                },
+                "@type": "Organization",
+                name: "Moment Invitation",
+                url: "https://momentinvitation.com",
+                review: testimonials.map((t) => ({
+                  "@type": "Review",
+                  author: {
+                    "@type": "Person",
+                    name: t.name,
+                  },
+                  reviewBody: t.comments,
+                  datePublished: t.created_at,
+                })),
               }),
             }}
           />
