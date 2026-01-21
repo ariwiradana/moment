@@ -112,7 +112,7 @@ const MainPage: FC<PageProps> = ({ seo, slug }) => {
       revalidateOnReconnect: false,
       shouldRetryOnError: false,
       refreshInterval: 0,
-    }
+    },
   );
 
   useDisableInspect();

@@ -19,6 +19,7 @@ module.exports = {
       "/samaya",
       "/aruna",
       "/nirvaya",
+      "/luma",
     ];
 
     return dynamicRoutes.map((route) => ({
