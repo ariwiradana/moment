@@ -26,7 +26,7 @@ const NavItem = memo(
     const isActive = activeSection === sectionId;
 
     return (
-      <li role="none">
+      <li>
         <Link
           href={`#${sectionId}`}
           scroll={false}
@@ -117,7 +117,7 @@ const NavbarComponent = () => {
 
             {/* ===== Main Navigation ===== */}
             {router.pathname === "/" && (
-              <ul role="list" className="hidden lg:flex items-center gap-x-8">
+              <ul className="hidden lg:flex items-center gap-x-8">
                 {navData.map((item: NavData, index: number) => (
                   <NavItem
                     key={item.title}
