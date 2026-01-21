@@ -1,21 +1,20 @@
 import Loader from "@/components/admin/elements/loader";
 import React, { FC, ReactNode, memo } from "react";
 
-interface ButtonFloatingProps {
+interface ButtonFloatingProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   icon?: ReactNode;
   size?: "extrasmall" | "small" | "medium" | "large";
   isloading?: boolean;
-  onClick?: () => void;
 }
 
 const ButtonFloating: FC<ButtonFloatingProps> = memo(
-  ({ className, icon, isloading = false, onClick }) => {
+  ({ className, icon, isloading = false, onClick, ...rest }) => {
     return (
       <div className="fixed bottom-6 right-6 md:right-12 md:bottom-12 z-[999]">
         <button
-          onClick={onClick}
-          disabled={isloading}
+          {...rest}
+          disabled={isloading || rest.disabled}
           className={`flex items-center p-2 lg:p-3 shadow-md rounded-full text-dashboard-dark font-medium transition duration-500 justify-center
             ${className ?? ""}
             ${
@@ -30,7 +29,7 @@ const ButtonFloating: FC<ButtonFloatingProps> = memo(
         </button>
       </div>
     );
-  }
+  },
 );
 
 ButtonFloating.displayName = "ButtonFloating";
