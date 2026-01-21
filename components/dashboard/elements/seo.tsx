@@ -61,11 +61,14 @@ export default function Seo({
       "@type": "PostalAddress",
       addressLocality: "Bali",
       addressCountry: "ID",
+      postalCode: "80361",
+      streetAddress:
+        "Gg. Berlian No.12, Kerobokan Kelod, Kec. Kuta Utara, Kabupaten Badung, Bali",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: -8.3405,
-      longitude: 115.092,
+      latitude: -8.676572752269998,
+      longitude: 115.1691080267061,
     },
   };
 
