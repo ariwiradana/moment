@@ -4,10 +4,29 @@ import InputTextarea from "@/components/admin/elements/textarea";
 import { ChildOrderOptions } from "@/constants/childOrder";
 import { Participant } from "@/lib/types";
 import useOrderStore from "@/store/useOrderStore";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { ModalCropImage } from "../modal.crop.image";
+import { BiImageAdd, BiX } from "react-icons/bi";
+import Image from "next/image";
 
 const OrderGroom = () => {
   const store = useOrderStore();
+
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setImageSrc(reader.result as string);
+      setOpen(true);
+    };
+  };
 
   const handleChangeGroom = (name: string, value: string) => {
     const participants = [...store.form.participants];
@@ -17,7 +36,7 @@ const OrderGroom = () => {
     participants[0] = {
       ...(existingGroom as Partial<Participant>),
       role: "groom",
-      gender: 'male',
+      gender: "male",
       child: existingGroom.child ?? "pertama",
       [name]: value,
     } as Participant;
@@ -50,6 +69,66 @@ const OrderGroom = () => {
 
   return (
     <>
+      <div>
+        <label
+          htmlFor="input-image"
+          className="block text-dashboard-dark/60 mb-1 text-sm"
+        >
+          Foto Mempelai
+        </label>
+        <div className="flex items-center gap-x-2">
+          {groomData?.image && (
+            <div
+              role="button"
+              onClick={() => fileRef.current?.click()}
+              className="size-32 object-cover border border-zinc-200 border-dashed relative"
+            >
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleChangeGroom("image", "");
+                }}
+                className="absolute z-10 text-white -top-1.5 -right-1.5 size-5 flex items-center justify-center aspect-square rounded-full bg-admin-danger"
+              >
+                <BiX />
+              </button>
+              <Image
+                src={groomData?.image as string}
+                className="object-cover"
+                fill
+                alt="Preview foto mempelai pria"
+              />
+            </div>
+          )}
+          {!groomData?.image && (
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              className="size-32 bg-zinc-100 flex items-center justify-center border border-zinc-200 border-dashed"
+            >
+              <BiImageAdd className="size-6 text-dashboard-dark" />
+            </button>
+          )}
+        </div>
+      </div>
+      <ModalCropImage
+        open={open}
+        imageSrc={imageSrc}
+        onClose={() => setOpen(false)}
+        onSave={(result) => {
+          handleChangeGroom("image", result);
+        }}
+      />
+
+      <input
+        id="input-image"
+        type="file"
+        accept="image/*"
+        onChange={onSelectFile}
+        ref={fileRef}
+        hidden
+      />
+
       <div className="grid md:grid-cols-2 gap-4">
         <Input
           value={groomData?.name as string}

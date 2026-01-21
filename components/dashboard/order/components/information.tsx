@@ -43,7 +43,7 @@ const OrderInformation = () => {
     }
   }, [slugQuery]);
 
-  const shouldCheckSlug = slugQuery.length > 3 && slugQuery !== initialSlug;
+  const shouldCheckSlug = slugQuery.length > 2 && slugQuery !== initialSlug;
 
   useSWR(
     shouldCheckSlug ? `/api/guest/order/${slugQuery}/check` : null,

@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import ButtonTetiary from "../elements/button.tetiary";
 import { THEME_VIDEOS } from "../themes";
+import Image from "next/image";
 
 interface Props {
   theme: ThemeUsage;
@@ -60,7 +61,8 @@ const ThemeCard: NextPage<Props> = ({
             aria-label={`Preview video tema undangan digital Bali: ${name}`}
           />
         ) : (
-          <img
+          <Image
+            fill
             src={phone_thumbnail || ""}
             alt={`Preview tema undangan digital Bali: ${name}`}
             className="w-full h-full object-cover rounded-lg md:rounded-3xl lg:rounded-[36px]"

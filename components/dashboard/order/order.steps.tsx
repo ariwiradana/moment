@@ -12,12 +12,11 @@ import {
   BiImage,
   BiGift,
   BiMessageSquareDetail,
-  BiCreditCard,
   BiLayout,
   BiMaleSign,
   BiFemaleSign,
 } from "react-icons/bi";
-import OrderPayment from "./components/payment";
+// import OrderPayment from "./components/payment";
 
 export default function useSteps() {
   const store = useOrderStore();
@@ -100,15 +99,15 @@ export default function useSteps() {
       icon: <BiMessageSquareDetail />,
     });
 
-    baseSteps.push({
-      stepTitle: "Pembayaran",
-      stepDescription: "Lanjutkan ke Pembayaran.",
-      title: "Pembayaran",
-      description:
-        "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
-      component: <OrderPayment />,
-      icon: <BiCreditCard />,
-    });
+    // baseSteps.push({
+    //   stepTitle: "Pembayaran",
+    //   stepDescription: "Lanjutkan ke Pembayaran.",
+    //   title: "Pembayaran",
+    //   description:
+    //     "Langkah terakhir sebelum undanganmu aktif! 💌 Tenang, kamu masih bisa revisi nanti — dan kamu akan dihubungi setelah pembayaran berhasil.",
+    //   component: <OrderPayment />,
+    //   icon: <BiCreditCard />,
+    // });
     return baseSteps;
   }, [store.pkg]);
 

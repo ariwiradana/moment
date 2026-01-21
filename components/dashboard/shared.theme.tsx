@@ -9,7 +9,6 @@ import {
   TbUserCheck,
 } from "react-icons/tb";
 import CountUp from "./elements/count.up";
-import Head from "next/head";
 
 const SharedThemeComponent = () => {
   const { data: response } = useSWR("/api/guest/stats", fetcher);
@@ -24,44 +23,8 @@ const SharedThemeComponent = () => {
     { icon: TbMessage, value: data.wishes, label: "Ucapan & Doa" },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Moment Invitation",
-    url: "https://momentinvitation.com",
-    additionalProperty: [
-      {
-        "@type": "PropertyValue",
-        name: "Total Klien",
-        value: data.clients,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Total Acara",
-        value: data.events,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Total Tamu Undangan",
-        value: data.guests,
-      },
-      {
-        "@type": "PropertyValue",
-        name: "Ucapan & Doa",
-        value: data.wishes,
-      },
-    ],
-  };
-
-
   return (
     <section className="py-10 md:py-14 lg:py-16 bg-zinc-50 relative select-none overflow-hidden">
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </Head>
       <div className="absolute inset-0 w-full h-full">
         <video
           className="min-w-full min-h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-cover"

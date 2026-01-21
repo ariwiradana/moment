@@ -46,7 +46,6 @@ const OrderEvents = () => {
     }
   }, [store.pkg]);
 
-  console.log({ evene: store.form });
 
   return (
     <>

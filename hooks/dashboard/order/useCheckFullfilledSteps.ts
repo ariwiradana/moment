@@ -28,6 +28,7 @@ export function useCheckFullfilledSteps() {
       ev.end_time;
 
     const isParticipantComplete = (p: Participant) =>
+      p?.image &&
       p?.name &&
       p?.nickname &&
       p?.parents_male &&
@@ -49,7 +50,7 @@ export function useCheckFullfilledSteps() {
       !!isParticipantComplete(form.participants?.[1]),
 
       // Step 4: Galeri
-      !!form.media?.image_link,
+      !!form.gallery?.length,
     ];
 
     // Step 5: Digital Envelope

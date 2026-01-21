@@ -60,35 +60,36 @@ const ThemeComponent: FC = () => {
 
   const displayedThemes = useMemo(() => themes, [themes]);
 
-  const jsonLdThemes = {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
+    name: "Koleksi Tema Undangan Digital Moment Invitation",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
     itemListElement: displayedThemes.map((theme, index) => ({
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": `https://www.momentinvitation.com/${theme.client_slug}`,
-      },
-      "@type": "Product",
+      "@type": "ListItem",
       position: index + 1,
-      brand: {
-        "@type": "Organization",
-        name: "Moment Invitation",
-      },
-      name: `Undangan Digital Bali - Tema ${theme.name}`,
-      description: `Tema undangan digital ${theme.name} dari Moment Invitation`,
-      image: theme.phone_thumbnail,
-      url: `https://www.momentinvitation.com/${theme.client_slug}`,
-      sku: theme.slug,
-      offers: {
-        "@type": "Offer",
-        url: `https://www.momentinvitation.com/${theme.client_slug}`,
-        priceCurrency: "IDR",
-        price: 199000,
-        availability: "https://schema.org/InStock",
-        itemCondition: "https://schema.org/NewCondition",
-      },
-      video: THEME_VIDEOS.has(theme.slug)
-        ? {
+      item: {
+        "@type": "Product",
+        name: `Tema Undangan Digital ${theme.name}`,
+        description:
+          theme.description ||
+          `Tema undangan digital ${theme.name} dari Moment Invitation`,
+        image: theme.phone_thumbnail,
+        url: `https://momentinvitation.com/${theme.client_slug}`,
+        sku: theme.slug,
+        brand: {
+          "@type": "Organization",
+          name: "Moment Invitation",
+        },
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "IDR",
+          price: theme.start_from,
+          availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/NewCondition",
+        },
+        ...(THEME_VIDEOS.has(theme.slug) && {
+          video: {
             "@type": "VideoObject",
             name: theme.name,
             description:
@@ -100,8 +101,9 @@ const ThemeComponent: FC = () => {
               "@type": "Organization",
               name: "Moment Invitation",
             },
-          }
-        : undefined,
+          },
+        }),
+      },
     })),
   };
 
@@ -113,7 +115,7 @@ const ThemeComponent: FC = () => {
       <Head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdThemes) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
       <div className="px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto">

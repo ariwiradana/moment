@@ -10,30 +10,37 @@ const FeaturesComponent = () => {
 
   const displayedFeatures = isExpanded ? features : features.slice(0, 4);
 
-  const jsonLdFeatures = {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Fitur Undangan Digital Bali",
+    name: "Undangan Digital Moment Invitation",
+    description:
+      "Layanan pembuatan undangan digital modern dan elegan di Bali.",
     provider: {
       "@type": "Organization",
       name: "Moment Invitation",
       url: "https://momentinvitation.com",
     },
+    areaServed: {
+      "@type": "Country",
+      name: "Indonesia",
+    },
+    serviceType: [
+      "Undangan Digital Pernikahan",
+      "Undangan Online Bali",
+      "Undangan Digital",
+    ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Fitur Undangan Digital",
-      itemListElement: features.map((f) => ({
+      itemListElement: features.map((feature) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: f.title,
-          description: f.description,
+          name: feature.title,
+          description: feature.description,
         },
       })),
-    },
-    areaServed: {
-      "@type": "AdministrativeArea",
-      name: "Bali, Indonesia",
     },
   };
 
@@ -47,10 +54,10 @@ const FeaturesComponent = () => {
         Fitur Undangan Digital Bali
       </h2>
       <Head>
-        {jsonLdFeatures && (
+        {jsonLd && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFeatures) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
         )}
       </Head>

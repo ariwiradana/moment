@@ -32,47 +32,35 @@ const PackageComponent = () => {
 
   if (!packages.length) return null;
 
-  const jsonLdPackages = {
+  const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: packages.map((p, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Product",
+    "@type": "Service",
+    name: "Layanan Undangan Digital Moment Invitation",
+    description:
+      "Layanan pembuatan undangan digital pernikahan dan mempandes di Bali dengan berbagai pilihan paket.",
+    provider: {
+      "@type": "Organization",
+      name: "Moment Invitation",
+      url: "https://momentinvitation.com",
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Indonesia",
+    },
 
-        mainEntityOfPage: {
-          "@type": "WebPage",
-          "@id": `https://momentinvitation.com/#paket-${p.name.toLowerCase()}`,
-        },
-
-        name: `Undangan Digital Paket ${p.name}`,
-        description:
-          `Paket ${p.name} untuk undangan digital Bali dengan fitur ${
-            p.unlimited_revisions ? "revisi tanpa batas, " : ""
-          }${p.unlimited_guest_names ? "nama tamu tak terbatas, " : ""}${
-            p.rsvp_and_greetings ? "RSVP & ucapan, " : ""
-          }${p.google_maps_integration ? "Google Maps." : ""}`.trim(),
-
-        image: "https://momentinvitation.com/logo-bg.jpg",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Paket Undangan Digital",
+      itemListElement: packages.map((p) => ({
+        "@type": "Offer",
+        name: `Paket ${p.name}`,
+        priceCurrency: "IDR",
+        price: Math.max(0, p.price - p.discount),
+        availability: "https://schema.org/InStock",
         url: `https://momentinvitation.com/#paket-${p.name.toLowerCase()}`,
-
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "IDR",
-          price: Math.max(0, p.price - p.discount),
-          availability: "https://schema.org/InStock",
-          url: `https://momentinvitation.com/#paket-${p.name.toLowerCase()}`,
-        },
-
-        brand: {
-          "@type": "Organization",
-          name: "Moment Invitation",
-        },
-      },
-    })),
+      })),
+    },
   };
-
 
   return (
     <section
@@ -86,7 +74,7 @@ const PackageComponent = () => {
       <Head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPackages) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
       <div className="max-w-screen-xl mx-auto">

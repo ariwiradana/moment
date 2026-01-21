@@ -11,7 +11,6 @@ import {
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
 import { BiSolidQuoteAltLeft } from "react-icons/bi";
-import Head from "next/head";
 
 const TestimonialsComponent = () => {
   const { data } = useSWR<{ data: Testimonials[] }>(
@@ -22,45 +21,12 @@ const TestimonialsComponent = () => {
 
   if (!testimonials.length) return null;
 
-  const jsonLdReviews = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: testimonials.map((t, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Review",
-        author: {
-          "@type": "Person",
-          name: t.name,
-        },
-        reviewBody: t.comments,
-        datePublished: t.created_at,
-        itemReviewed: {
-          "@type": "Service",
-          name: "Undangan Digital Moment Invitation",
-          provider: {
-            "@type": "Organization",
-            name: "Moment Invitation",
-            url: "https://momentinvitation.com",
-          },
-        },
-      },
-    })),
-  };
-
   return (
     <section
       className="py-8 md:py-10 lg:py-16 relative bg-zinc-50"
       id="section5"
       aria-labelledby="testimonials-title"
     >
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdReviews) }}
-        />
-      </Head>
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 gap-6 md:gap-12 md:grid-cols-2 px-4 md:px-12 lg:px-4">
         <div>
           <h2

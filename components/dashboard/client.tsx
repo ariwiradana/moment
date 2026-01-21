@@ -32,21 +32,6 @@ const ClientComponent = () => {
     return () => window.removeEventListener("resize", updateSlides);
   }, []);
 
-  const jsonLd = useMemo(() => {
-    if (!clients.length) return null;
-
-    return {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      itemListElement: clients.map((c, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: c.name,
-        url: "https://momentinvitation.com",
-      })),
-    };
-  }, [clients]);
-
   return (
     <section
       id="clients"
@@ -54,12 +39,30 @@ const ClientComponent = () => {
       className="relative bg-white pb-8 lg:pb-16"
     >
       <Head>
-        {jsonLd && (
+        {clients.map((client) => (
           <script
+            key={client.id}
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "CreativeWork",
+                name: `Undangan ${client.name}`,
+                image: client.cover,
+                description: `Klien Moment Invitation menggunakan tema ${client.theme?.name}`,
+                creator: {
+                  "@type": "Organization",
+                  name: "Moment Invitation",
+                  url: `https://momentinvitation.com/${client.slug}`,
+                },
+                about: {
+                  "@type": "Product",
+                  name: `Tema ${client.theme?.name}`,
+                },
+              }),
+            }}
           />
-        )}
+        ))}
       </Head>
       <div>
         {isLoading ? (

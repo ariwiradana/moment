@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { BiChevronLeft, BiCheck, BiCreditCard, BiSave } from "react-icons/bi";
+import {
+  BiChevronLeft,
+  BiCheck,
+  BiCreditCard,
+  BiSave,
+  BiMobileAlt,
+} from "react-icons/bi";
 import toast from "react-hot-toast";
 import useOrderStore from "@/store/useOrderStore";
 import { getClient } from "@/lib/client";
@@ -26,9 +32,11 @@ const OrderForm = ({ mutate }: Props) => {
   const isUpdate = router.pathname === "/order/[orderId]";
   const isClientSaved = store.form.id;
   const isLastStep = store.activeStep === steps.length - 1;
+  const isPreviewStep = store.activeStep === steps.length - 2;
+
   const isSettlement = store.order.status === "settlement";
   const isRecreatePayment = ["expire", "deny", "cancel"].includes(
-    store.order.status
+    store.order.status,
   );
 
   const isFullfilledStep = useMemo(() => {
@@ -58,13 +66,13 @@ const OrderForm = ({ mutate }: Props) => {
         if (store.order.status !== result.data.transaction_status) {
           await handleSaveOrderStatus(
             store.order.id as number,
-            result.data.transaction_status
+            result.data.transaction_status,
           );
         }
       },
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -78,7 +86,7 @@ const OrderForm = ({ mutate }: Props) => {
     script.src = midtransUrl;
     script.setAttribute(
       "data-client-key",
-      process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY as string
+      process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY as string,
     );
 
     document.body.appendChild(script);
@@ -142,7 +150,7 @@ const OrderForm = ({ mutate }: Props) => {
         handleMidtransSnapToken(
           store.order.snap_token,
           newOrder,
-          store.form.id
+          store.form.id,
         );
         return;
       }
@@ -157,7 +165,7 @@ const OrderForm = ({ mutate }: Props) => {
       if (result.success && result.data.token) {
         await handleSaveOrderSnapToken(
           newOrder.id as number,
-          result.data.token
+          result.data.token,
         );
         handleMidtransSnapToken(result.data.token, newOrder, store.form.id);
       } else {
@@ -171,13 +179,13 @@ const OrderForm = ({ mutate }: Props) => {
   const handleMidtransSnapToken = (
     snapToken: string,
     order: Order,
-    clientId: number | undefined
+    clientId: number | undefined,
   ) => {
     window.snap?.pay(snapToken, {
       onSuccess: async (result: SnapTransactionResult) => {
         await handleSaveOrderStatus(
           order.id as number,
-          result.transaction_status
+          result.transaction_status,
         );
         await handleSetActiveClient(clientId);
         toast.success("Pembayaran berhasil");
@@ -186,14 +194,14 @@ const OrderForm = ({ mutate }: Props) => {
       onPending: async (result: SnapTransactionResult) => {
         await handleSaveOrderStatus(
           order.id as number,
-          result.transaction_status
+          result.transaction_status,
         );
         router.push(`/order/${order.order_id}`);
       },
       onError: async (result: SnapTransactionResult) => {
         await handleSaveOrderStatus(
           order.id as number,
-          result.transaction_status
+          result.transaction_status,
         );
       },
       onClose: () => console.log("Popup closed"),
@@ -210,7 +218,7 @@ const OrderForm = ({ mutate }: Props) => {
         {
           method: isUpdate || isClientSaved ? "PUT" : "POST",
           body: JSON.stringify(payload),
-        }
+        },
       );
       const result = await response.json();
 
@@ -277,10 +285,14 @@ const OrderForm = ({ mutate }: Props) => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      if (isPreviewStep) {
+        router.push(`/${store.theme?.slug}/order/preview`);
+      }
+
       if (!isLastStep) {
         store.setActiveStep(store.activeStep + 1);
         toast.success(
-          `${steps[store.activeStep].stepTitle} berhasil ditambahkan!`
+          `${steps[store.activeStep].stepTitle} berhasil ditambahkan!`,
         );
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
@@ -298,14 +310,14 @@ const OrderForm = ({ mutate }: Props) => {
         } catch (error) {
           toast.error(
             error instanceof Error ? error.message : "Terjadi kesalahan",
-            { id: toastId }
+            { id: toastId },
           );
         } finally {
           setIsLoading(false);
         }
       }
     },
-    [store]
+    [store],
   );
 
   return (
@@ -337,14 +349,18 @@ const OrderForm = ({ mutate }: Props) => {
             isLastStep && isSettlement
               ? "Simpan Perubahan"
               : isLastStep
-              ? "Bayar Sekarang"
-              : "Lanjut"
+                ? "Bayar Sekarang"
+                : isPreviewStep
+                  ? "Preview Undangan"
+                  : "Lanjut"
           }
           icon={
             isLastStep && isUpdate ? (
               <BiSave />
             ) : isLastStep ? (
               <BiCreditCard />
+            ) : isPreviewStep ? (
+              <BiMobileAlt />
             ) : (
               <BiCheck />
             )

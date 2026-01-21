@@ -32,40 +32,58 @@ export default function Seo({
   locale = "id_ID",
   robots = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
 }: SeoProps) {
-  const jsonLd = {
+  const ogType = type === "article" ? "article" : "website";
+
+  const websiteSchema = {
     "@context": "https://schema.org",
-    "@type": type === "article" ? "Article" : "Organization",
-    ...(type === "article"
-      ? {
-          headline: title,
-          description,
-          image,
-          author: { "@type": "Person", name: author },
-          datePublished: publishedTime,
-          dateModified: updatedTime || publishedTime,
-          publisher: {
-            "@type": "Organization",
-            name: siteName,
-            logo: { "@type": "ImageObject", url: image },
-          },
-        }
-      : {
-          name: siteName,
-          url,
-          logo: image,
-          description,
-          sameAs: [sosmedURLs.email, sosmedURLs.instagram, sosmedURLs.youtube],
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Bali",
-            addressCountry: "ID",
-          },
-          geo: {
-            "@type": "GeoCoordinates",
-            latitude: -8.3405,
-            longitude: 115.092,
-          },
-        }),
+    "@id": `${url}#website`,
+    "@type": "WebSite",
+    name: siteName,
+    url,
+    inLanguage: "id-ID",
+  };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@id": `${url}#organization`,
+    "@type": "Organization",
+    name: siteName,
+    url,
+    logo: image,
+    description,
+    sameAs: [
+      sosmedURLs.instagram,
+      sosmedURLs.youtube,
+      sosmedURLs.tiktok,
+      sosmedURLs.whatsapp,
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Bali",
+      addressCountry: "ID",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: -8.3405,
+      longitude: 115.092,
+    },
+  };
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@id": `${url}#article`,
+    "@type": "Article",
+    headline: title,
+    description,
+    image,
+    author: { "@type": "Person", name: author },
+    datePublished: publishedTime,
+    dateModified: updatedTime || publishedTime,
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+      logo: { "@type": "ImageObject", url: image },
+    },
   };
 
   return (
@@ -75,6 +93,7 @@ export default function Seo({
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
+      <meta httpEquiv="content-language" content="id-ID" />
       <link rel="canonical" href={url} />
 
       {/* Locale */}
@@ -88,7 +107,7 @@ export default function Seo({
       )}
 
       {/* Open Graph */}
-      <meta property="og:type" content={type} />
+      <meta property="og:type" content={ogType} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
@@ -141,11 +160,26 @@ export default function Seo({
       <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
       <meta name="theme-color" content="#ffffff" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
+
+      {type !== "article" && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+      )}
+
+      {type === "article" && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+      )}
     </Head>
   );
 }

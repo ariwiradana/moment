@@ -9,11 +9,7 @@ import { BsChevronRight } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { RiErrorWarningFill } from "react-icons/ri";
 import ButtonPrimary from "./elements/button.primary";
-import Head from "next/head";
 
-/* =========================
-   Nav Item (Link + onClick)
-========================= */
 const NavItem = memo(
   ({
     title,
@@ -86,23 +82,8 @@ const NavbarComponent = () => {
     });
   };
 
-  /* JSON-LD khusus navigasi */
-  const navJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SiteNavigationElement",
-    name: navData.map((n) => n.title),
-    url: navData.map((n) => `https://momentinvitation.com${n.path}`),
-  };
-
   return (
     <>
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(navJsonLd) }}
-        />
-      </Head>
-
       <header
         className={`fixed top-0 inset-x-0 z-30 transition-all ${
           isOnTop

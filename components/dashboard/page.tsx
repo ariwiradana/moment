@@ -5,6 +5,7 @@ import useDisableInspect from "@/hooks/useDisableInspect";
 import useDashboardStore from "@/store/useDashboardStore";
 import { BiLogoWhatsapp } from "react-icons/bi";
 import React, { useEffect, useCallback, startTransition } from "react";
+import Head from "next/head";
 
 // Dynamic import semua komponen client-heavy
 const HeroComponent = dynamic(() => import("@/components/dashboard/hero"));
@@ -80,26 +81,58 @@ const DashboardPage = () => {
 
   useDisableInspect();
 
-  return (
-    <main className="min-h-dvh">
-      <ButtonFloating
-        aria-label="Hubungi Kami melalui WhatsApp"
-        onClick={() =>
-          window.open(sosmedURLs.whatsapp, "_blank", "noopener,noreferrer")
-        }
-        className="bg-green-500 text-white"
-        icon={<BiLogoWhatsapp />}
-      />
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://momentinvitation.com/#organization",
+    name: "Moment Invitation",
+    url: "https://momentinvitation.com",
+    logo: "https://momentinvitation.com/icon.png",
+    sameAs: [
+      sosmedURLs.instagram,
+      sosmedURLs.tiktok,
+      sosmedURLs.whatsapp,
+      sosmedURLs.youtube,
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      availableLanguage: ["id"],
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Bali, Indonesia",
+    },
+  };
 
-      <HeroComponent />
-      <ClientComponent />
-      <FeaturesComponent />
-      <ThemeComponent />
-      <PackageComponent />
-      <TestimonialsComponent />
-      <SharedThemeComponent />
-      <FaqComponent />
-    </main>
+  return (
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </Head>
+      <main className="min-h-dvh">
+        <ButtonFloating
+          aria-label="Hubungi Kami melalui WhatsApp"
+          onClick={() =>
+            window.open(sosmedURLs.whatsapp, "_blank", "noopener,noreferrer")
+          }
+          className="bg-green-500 text-white"
+          icon={<BiLogoWhatsapp />}
+        />
+
+        <HeroComponent />
+        <ClientComponent />
+        <FeaturesComponent />
+        <ThemeComponent />
+        <PackageComponent />
+        <TestimonialsComponent />
+        <SharedThemeComponent />
+        <FaqComponent />
+      </main>
+    </>
   );
 };
 

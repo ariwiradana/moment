@@ -113,11 +113,10 @@ const FaqComponent = () => {
       .join(" ");
   };
 
-  const faqJsonLd = {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((faq, i) => ({
-      "@id": `https://momentinvitation.com/#faq-${i + 1}`,
+    mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.title,
       acceptedAnswer: {
@@ -135,7 +134,7 @@ const FaqComponent = () => {
       <Head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
       <div className="max-w-screen-xl mx-auto px-4 md:px-12 lg:px-4 relative">
