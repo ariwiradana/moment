@@ -60,52 +60,7 @@ const ThemeComponent: FC = () => {
 
   const displayedThemes = useMemo(() => themes, [themes]);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Koleksi Tema Undangan Digital Moment Invitation",
-    itemListOrder: "https://schema.org/ItemListOrderAscending",
-    itemListElement: displayedThemes.map((theme, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Product",
-        name: `Tema Undangan Digital ${theme.name}`,
-        description:
-          theme.description ||
-          `Tema undangan digital ${theme.name} dari Moment Invitation`,
-        image: theme.phone_thumbnail,
-        url: `https://momentinvitation.com/${theme.client_slug}`,
-        sku: theme.slug,
-        brand: {
-          "@type": "Organization",
-          name: "Moment Invitation",
-        },
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "IDR",
-          price: theme.start_from,
-          availability: "https://schema.org/InStock",
-          itemCondition: "https://schema.org/NewCondition",
-        },
-        ...(THEME_VIDEOS.has(theme.slug) && {
-          video: {
-            "@type": "VideoObject",
-            name: theme.name,
-            description:
-              theme.description || `Video tema undangan digital ${theme.name}`,
-            thumbnailUrl: theme.phone_thumbnail,
-            contentUrl: `/video/themes/${theme.slug}.mp4`,
-            uploadDate: theme.created_at,
-            publisher: {
-              "@type": "Organization",
-              name: "Moment Invitation",
-            },
-          },
-        }),
-      },
-    })),
-  };
+  console.log({ displayedThemes });
 
   return (
     <section
@@ -113,10 +68,36 @@ const ThemeComponent: FC = () => {
       id="section3"
     >
       <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        {displayedThemes.map((theme) => (
+          <script
+            key={theme.client_slug}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org/",
+                "@type": "Product",
+                name: theme.name,
+                image: theme.phone_thumbnail,
+                description:
+                  theme.description ||
+                  `Tema undangan digital ${theme.name} dari Moment Invitation`,
+                brand: {
+                  "@type": "Brand",
+                  name: "Moment Invitation",
+                },
+                sku: theme.slug,
+                offers: {
+                  "@type": "Offer",
+                  url: "https://momentinvitation.com/slug",
+                  priceCurrency: "IDR",
+                  price: theme.start_from,
+                  availability: "https://schema.org/OnlineOnly",
+                  itemCondition: "https://schema.org/NewCondition",
+                },
+              }),
+            }}
+          />
+        ))}
       </Head>
       <div className="px-4 md:px-12 lg:px-4 max-w-screen-xl mx-auto">
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
