@@ -53,7 +53,7 @@ const PackageComponent = () => {
       name: "Paket Undangan Digital",
       itemListElement: packages.map((p) => ({
         "@type": "Offer",
-        name: `Paket ${p.name}`,
+        name: `Paket Undangan Digital Bali ${p.name}`,
         priceCurrency: "IDR",
         price: Math.max(0, p.price - p.discount),
         availability: "https://schema.org/InStock",

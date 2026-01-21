@@ -76,7 +76,7 @@ const ThemeComponent: FC = () => {
               __html: JSON.stringify({
                 "@context": "https://schema.org/",
                 "@type": "Product",
-                name: theme.name,
+                name: `Tema Undangan Digital Bali - ${theme.name}`,
                 image: theme.phone_thumbnail,
                 description:
                   theme.description ||

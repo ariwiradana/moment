@@ -46,8 +46,8 @@ const HeroComponent = () => {
 
         {/* Visually Hidden SEO Text */}
         <p className="sr-only">
-          Moment Invitation menyediakan layanan undangan digital Bali untuk
-          pernikahan dan berbagai acara dengan desain minimalis.
+          Buat momen spesial lebih berkesan dengan undangan digital Bali yang
+          minimalis, praktis, cepat, dan mudah dibagikan.
         </p>
 
         {/* Hero Video */}
