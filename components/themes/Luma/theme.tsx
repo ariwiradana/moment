@@ -111,6 +111,7 @@ const Luma = ({ untuk }: Props) => {
             <Swiper
               modules={[Autoplay, EffectFade]}
               effect="fade"
+              fadeEffect={{ crossFade: true }}
               speed={1500}
               autoplay={{ delay: 6000, disableOnInteraction: false }}
               className="h-lvh w-full"

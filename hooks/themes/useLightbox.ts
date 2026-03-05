@@ -15,9 +15,9 @@ const useLightbox = () => {
   const images: Image[] = useMemo(
     () =>
       (client?.gallery as string[])
-        ?.filter((src) => src !== client?.cover) // filter cover
+        ?.filter((src) => src !== client?.cover && src !== client?.seo) // filter cover
         .map((src) => ({ src })) ?? [],
-    [client?.gallery, client?.cover]
+    [client?.gallery, client?.cover],
   );
 
   // Toggle lightbox and set index
@@ -27,7 +27,7 @@ const useLightbox = () => {
       if (index !== -1) setImageIndex(index);
       setIsOpen((prev) => !prev); // toggle tetap aman
     },
-    [images]
+    [images],
   );
 
   return {
