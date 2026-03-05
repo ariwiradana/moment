@@ -15,7 +15,7 @@ const useLightbox = () => {
   const images: Image[] = useMemo(
     () =>
       (client?.gallery as string[])
-        ?.filter((src) => src !== client?.cover && src !== client?.seo) // filter cover
+        ?.filter((src) => src !== client?.seo) // filter cover
         .map((src) => ({ src })) ?? [],
     [client?.gallery, client?.cover],
   );
