@@ -137,7 +137,7 @@ const FooterComponent = () => {
       <p
         className={`${redhat.className} text-zinc-400 text-center bg-dashboard-dark p-3 border-t border-t-white/10 text-xs`}
       >
-        © 2025 Moment | Designed with ❤️ by Moment
+        © {new Date().getFullYear()} Moment | Designed with ❤️ by Moment
       </p>
     </section>
   );

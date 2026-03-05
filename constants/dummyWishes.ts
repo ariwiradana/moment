@@ -8,8 +8,8 @@ export const DummyWishes: Wish[] = [
     attendant: "Hadir",
     wishes:
       "Selamat menempuh hidup baru! Semoga selalu rukun, bahagia, dan saling mendukung satu sama lain 💕",
-    created_at: "2025-04-07T08:12:10.120Z",
-    updated_at: "2025-04-07T08:12:10.120Z",
+    created_at: "2026-02-07T08:12:10.120Z",
+    updated_at: "2026-02-07T08:12:10.120Z",
   },
   {
     id: 68,
@@ -18,8 +18,8 @@ export const DummyWishes: Wish[] = [
     attendant: "Tidak Hadir",
     wishes:
       "Maaf tidak bisa hadir, semoga acaranya berjalan lancar dan penuh sukacita 🙏",
-    created_at: "2025-04-07T09:25:40.520Z",
-    updated_at: "2025-04-07T09:25:40.520Z",
+    created_at: "2026-02-07T09:25:40.520Z",
+    updated_at: "2026-02-07T09:25:40.520Z",
   },
   {
     id: 69,
@@ -28,8 +28,8 @@ export const DummyWishes: Wish[] = [
     attendant: "Hadir",
     wishes:
       "Selamat ya Marta dan Sita 💍 semoga cinta kalian selalu tumbuh setiap hari 🌸",
-    created_at: "2025-04-07T10:47:25.250Z",
-    updated_at: "2025-04-07T10:47:25.250Z",
+    created_at: "2026-02-07T10:47:25.250Z",
+    updated_at: "2026-02-07T10:47:25.250Z",
   },
   {
     id: 70,
@@ -38,7 +38,7 @@ export const DummyWishes: Wish[] = [
     attendant: "Tidak Hadir",
     wishes:
       "Selamat menempuh hidup baru! Moga bahagia selalu meskipun aku gak bisa datang 😅",
-    created_at: "2025-04-07T12:30:18.880Z",
-    updated_at: "2025-04-07T12:30:18.880Z",
+    created_at: "2026-02-07T12:30:18.880Z",
+    updated_at: "2026-02-07T12:30:18.880Z",
   },
 ];

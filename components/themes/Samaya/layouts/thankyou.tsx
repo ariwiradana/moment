@@ -113,7 +113,7 @@ const ThankyouComponent = () => {
             <p
               className={`${raleway.className} text-center text-white text-[10px] md:text-xs`}
             >
-              Undangan Digital © 2025 | Moment Invitation
+              Undangan Digital © {new Date().getFullYear()} | Moment Invitation
             </p>
           </Link>
         </li>

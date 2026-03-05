@@ -82,7 +82,7 @@ const OrderComplete = () => {
           <p
             className={`${redhat.className} text-zinc-400 text-center p-3 mt-2 text-xs`}
           >
-            © 2025 Moment | Designed with ❤️ by Moment
+            © {new Date().getFullYear()} Moment | Designed with ❤️ by Moment
           </p>
         </div>
       </Layout>
