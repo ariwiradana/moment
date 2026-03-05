@@ -17,7 +17,7 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
 
     const iframe = document.createElement("iframe");
 
-    iframe.src = `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&playlist=${youtubeId}&loop=1&modestbranding=1&rel=0&vq=hd1080&mute=1&autoplay=0`;
+    iframe.src = `https://www.youtube.com/embed/${youtubeId}?&playlist=${youtubeId}&autoplay=1&mute=1&loop=1&modestbranding=1&rel=0`;
 
     iframe.className = "absolute top-0 left-0 w-full h-full";
     iframe.title = `${title} Video`;
@@ -25,7 +25,7 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
     iframe.frameBorder = "0";
 
     iframe.allow =
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
 
     iframe.allowFullscreen = true; // ⭐ penting untuk iOS Safari
 
