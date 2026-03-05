@@ -41,7 +41,7 @@ const Luma = ({ untuk }: Props) => {
       Array.isArray(client?.videos) && client.videos.length > 0
         ? client.videos.filter((v) => !isYoutubeVideo(v))
         : [],
-    [client?.videos]
+    [client?.videos],
   );
 
   useEffect(() => {
@@ -67,6 +67,8 @@ const Luma = ({ untuk }: Props) => {
       vid.removeEventListener("playing", handlePlay);
     };
   }, []);
+
+  const imgs = client?.cover ? [client.cover, ...images] : images;
 
   return (
     <Layout>
@@ -113,7 +115,7 @@ const Luma = ({ untuk }: Props) => {
               autoplay={{ delay: 6000, disableOnInteraction: false }}
               className="h-lvh w-full"
             >
-              {images.slice(0, 3).map((image, index) => (
+              {imgs.map((image, index) => (
                 <SwiperSlide key={`hero-slide-${index}`}>
                   <Image
                     src={image}

@@ -55,7 +55,7 @@ const AddGuestItem = ({
     if (navigator.share && client) {
       const encodedValue = encodeURIComponent(value).replace(/%20/g, "+");
 
-      const text = `${client.opening_title}\n\n${client.opening_description}\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n\n${baseURL}/${slug}?untuk=${encodedValue}\n\n${client.closing_description}\n\n${client.closing_title}`;
+      const text = `${client.opening_title}\n\n${client.opening_description}\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n${baseURL}/${slug}?untuk=${encodedValue}\n\n${client.closing_description}\n\n${client.closing_title}`;
 
       try {
         await navigator.share({
