@@ -30,7 +30,7 @@ interface StoreState {
       | Participant[]
       | string[]
       | null
-      | MediaForm
+      | MediaForm,
   ) => void;
   setActiveStep: (step: number) => void;
   setTheme: (theme: Theme) => void;
@@ -71,7 +71,7 @@ export const initialForm: Client = {
   participants: [],
   theme_category_id: null,
   theme_id: null,
-  status: "active",
+  status: "inactive",
   gallery: [],
   music: "",
   videos: [],
@@ -111,7 +111,7 @@ const useOrderStore = create<StoreState>((set) => ({
       | Participant[]
       | string[]
       | null
-      | MediaForm
+      | MediaForm,
   ) =>
     set((state) => ({
       form: {

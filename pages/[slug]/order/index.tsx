@@ -34,14 +34,14 @@ const OrderTheme = () => {
 
           if (!store.form.theme_category_id) {
             const pernikahan = themeData.theme_categories?.find(
-              (tc) => tc.slug === "pernikahan"
+              (tc) => tc.slug === "pernikahan",
             );
             if (pernikahan) store.setForm("theme_category_id", pernikahan.id);
           }
 
           if (!store.pkg && !store.form.package_id) {
             const initialPkg = themeData.packages?.find(
-              (pkg) => pkg.name === "Exclusive"
+              (pkg) => pkg.name === "Exclusive",
             );
             if (initialPkg) {
               store.setForm("package_id", initialPkg.id as number);
@@ -51,12 +51,14 @@ const OrderTheme = () => {
         }
         setIsLoading(false);
       },
-    }
+    },
   );
 
   const isLastStep = store.activeStep === steps.length - 1;
   usePreventLeave(!isLastStep);
   useCheckFullfilledSteps();
+
+  // console.log({ isLastStep });
 
   return (
     <>

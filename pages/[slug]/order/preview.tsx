@@ -13,6 +13,9 @@ import useOrderStore from "@/store/useOrderStore";
 import { useSearchParams } from "next/navigation";
 import useCoverStore from "@/store/useCoverStore";
 import { usePreventLeave } from "@/hooks/dashboard/usePreventLeave";
+// import PreviewNav from "@/components/themes/preview.nav";
+import ButtonLight from "@/components/dashboard/elements/button.light";
+import { BsArrowLeft } from "react-icons/bs";
 
 class ThemeErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -36,8 +39,10 @@ class ThemeErrorBoundary extends React.Component<
 
 const MainPage: FC = () => {
   const { setClient } = useClientStore();
-  const { form, theme } = useOrderStore();
-  const { setIsOpen } = useCoverStore();
+  const { form, theme, activeStep, setActiveStep } = useOrderStore();
+
+  console.log(activeStep);
+  const { setIsOpen, isOpen } = useCoverStore();
 
   const searchParams = useSearchParams();
   const untuk = searchParams.get("untuk") || "Tamu Undangan";
@@ -58,6 +63,8 @@ const MainPage: FC = () => {
   useEffect(() => {
     setIsOpen(false);
   }, []);
+
+  // const router = useRouter();
 
   if (!form) return <ClientNotFound />;
 
@@ -102,7 +109,19 @@ const MainPage: FC = () => {
 
       {ThemeComponent ? (
         <>
-          {/* <PreviewNav /> */}
+          {isOpen && (
+            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 md:bottom-8 z-50">
+              <div className="relative group">
+                <ButtonLight
+                  onClick={() => setActiveStep(activeStep - 1)}
+                  className="group-hover:scale-105"
+                  title="Kembali"
+                  size="small"
+                  icon={<BsArrowLeft />}
+                />
+              </div>
+            </div>
+          )}
           <ThemeErrorBoundary>
             <ThemeComponent untuk={untuk} />
           </ThemeErrorBoundary>

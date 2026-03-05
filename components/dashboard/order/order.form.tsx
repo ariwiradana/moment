@@ -1,19 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  BiChevronLeft,
-  BiCheck,
-  BiCreditCard,
-  BiSave,
-  BiMobileAlt,
-} from "react-icons/bi";
+import React, { useCallback, useMemo, useState } from "react";
+import { BiChevronLeft, BiCheck, BiSave, BiCloudUpload } from "react-icons/bi";
 import toast from "react-hot-toast";
 import useOrderStore from "@/store/useOrderStore";
 import { getClient } from "@/lib/client";
 import { useRouter } from "next/router";
 import useSteps from "./order.steps";
-import useSWR, { KeyedMutator } from "swr";
-import { Client, Order, OrderStatus, SnapTransactionResult } from "@/lib/types";
-import { fetcher } from "@/lib/fetcher";
+import { KeyedMutator } from "swr";
+import { Client, Order } from "@/lib/types";
 import ButtonPrimary from "../elements/button.primary";
 import { redhat } from "@/lib/fonts";
 import { generateInvoiceId } from "@/utils/generateInvoiceId";
@@ -32,12 +25,10 @@ const OrderForm = ({ mutate }: Props) => {
   const isUpdate = router.pathname === "/order/[orderId]";
   const isClientSaved = store.form.id;
   const isLastStep = store.activeStep === steps.length - 1;
-  const isPreviewStep = store.activeStep === steps.length - 2;
 
   const isSettlement = store.order.status === "settlement";
-  const isRecreatePayment = ["expire", "deny", "cancel"].includes(
-    store.order.status,
-  );
+
+  const { slug } = router.query as { slug?: string };
 
   const isFullfilledStep = useMemo(() => {
     if (!store.fullfilledSteps) return false;
@@ -48,165 +39,6 @@ const OrderForm = ({ mutate }: Props) => {
       return Boolean(store.fullfilledSteps[store.activeStep]);
     }
   }, [store.activeStep, store.fullfilledSteps]);
-
-  useSWR(
-    store.order?.order_id
-      ? `/api/guest/order/payment/status?order_id=${store.order.order_id}`
-      : null,
-    fetcher,
-    {
-      onSuccess: async (result) => {
-        if (!result.data || result.data.status_code === "404") return;
-
-        store.setNewOrder({
-          ...store.order,
-          status: result.data.transaction_status,
-        });
-
-        if (store.order.status !== result.data.transaction_status) {
-          await handleSaveOrderStatus(
-            store.order.id as number,
-            result.data.transaction_status,
-          );
-        }
-      },
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  );
-
-  useEffect(() => {
-    const script = document.createElement("script");
-
-    const midtransUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://app.midtrans.com/snap/snap.js"
-        : "https://app.sandbox.midtrans.com/snap/snap.js";
-
-    script.src = midtransUrl;
-    script.setAttribute(
-      "data-client-key",
-      process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY as string,
-    );
-
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const handleSaveOrderStatus = async (id: number, status: OrderStatus) => {
-    try {
-      const res = await getClient("/api/guest/order/status", {
-        method: "POST",
-        body: JSON.stringify({
-          status,
-          id,
-        }),
-      });
-      const result = await res.json();
-      if (result.success) {
-        store.setNewOrder({
-          ...store.order,
-          status,
-        });
-      }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
-    }
-  };
-
-  const handleSaveOrderSnapToken = async (id: number, snap_token: string) => {
-    try {
-      const res = await getClient("/api/guest/order/snap-token", {
-        method: "POST",
-        body: JSON.stringify({ id, snap_token }),
-      });
-      const result = await res.json();
-      if (result.success) {
-        store.setNewOrder({
-          ...store.order,
-          snap_token,
-        });
-      }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
-    }
-  };
-
-  // 🧠 Fungsi utama handlePay
-  const handlePay = async (newOrder: Order) => {
-    if (!newOrder || !store.theme?.slug) return;
-
-    try {
-      const payload: Order = {
-        ...newOrder,
-        client: { ...store.form },
-      };
-
-      // ✅ Jika token sudah ada (misalnya user close popup dan mau bayar lagi)
-      if (store.order.snap_token) {
-        handleMidtransSnapToken(
-          store.order.snap_token,
-          newOrder,
-          store.form.id,
-        );
-        return;
-      }
-
-      // ✅ Kalau belum ada token → buat transaksi baru
-      const res = await getClient(`/api/guest/order/payment`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      const result = await res.json();
-
-      if (result.success && result.data.token) {
-        await handleSaveOrderSnapToken(
-          newOrder.id as number,
-          result.data.token,
-        );
-        handleMidtransSnapToken(result.data.token, newOrder, store.form.id);
-      } else {
-        toast.error("Gagal membuat transaksi pembayaran.");
-      }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
-    }
-  };
-
-  const handleMidtransSnapToken = (
-    snapToken: string,
-    order: Order,
-    clientId: number | undefined,
-  ) => {
-    window.snap?.pay(snapToken, {
-      onSuccess: async (result: SnapTransactionResult) => {
-        await handleSaveOrderStatus(
-          order.id as number,
-          result.transaction_status,
-        );
-        await handleSetActiveClient(clientId);
-        toast.success("Pembayaran berhasil");
-        router.push(`/order/${order.order_id}`);
-      },
-      onPending: async (result: SnapTransactionResult) => {
-        await handleSaveOrderStatus(
-          order.id as number,
-          result.transaction_status,
-        );
-        router.push(`/order/${order.order_id}`);
-      },
-      onError: async (result: SnapTransactionResult) => {
-        await handleSaveOrderStatus(
-          order.id as number,
-          result.transaction_status,
-        );
-      },
-      onClose: () => console.log("Popup closed"),
-    });
-  };
 
   const handleSaveClient = async () => {
     try {
@@ -232,25 +64,6 @@ const OrderForm = ({ mutate }: Props) => {
     }
   };
 
-  const handleSetActiveClient = async (id: number | undefined) => {
-    if (!id) return;
-    try {
-      const res = await getClient("/api/guest/order/client/status", {
-        method: "POST",
-        body: JSON.stringify({
-          status: "active",
-          id,
-        }),
-      });
-      const result = await res.json();
-      if (result.success) {
-        store.setForm("status", status);
-      }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
-    }
-  };
-
   const handleSaveOrder = async (client: Omit<Client, "cover" | "seo">) => {
     if (!client) return;
 
@@ -258,9 +71,7 @@ const OrderForm = ({ mutate }: Props) => {
       const payload: Order = {
         ...store.order,
         client_id: client.id,
-        order_id: isRecreatePayment
-          ? generateInvoiceId()
-          : store.order.order_id,
+        order_id: generateInvoiceId(),
       };
 
       const response = await getClient(`/api/guest/order/create`, {
@@ -285,10 +96,6 @@ const OrderForm = ({ mutate }: Props) => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (isPreviewStep) {
-        router.push(`/${store.theme?.slug}/order/preview`);
-      }
-
       if (!isLastStep) {
         store.setActiveStep(store.activeStep + 1);
         toast.success(
@@ -300,13 +107,12 @@ const OrderForm = ({ mutate }: Props) => {
         const toastId = toast.loading("Menyimpan data pesanan");
         try {
           const newClient = await handleSaveClient();
-          const newOrder = await handleSaveOrder(newClient);
-          if (store.order.status !== "settlement") {
-            await handlePay(newOrder);
-            toast.dismiss(toastId);
-          } else {
-            toast.success("Undanganmu berhasil disimpan", { id: toastId });
+
+          if (!isUpdate || !isClientSaved) {
+            await handleSaveOrder(newClient);
           }
+          toast.success("Undanganmu berhasil disimpan", { id: toastId });
+          router.push(`/${slug}/order/berhasil`);
         } catch (error) {
           toast.error(
             error instanceof Error ? error.message : "Terjadi kesalahan",
@@ -349,18 +155,14 @@ const OrderForm = ({ mutate }: Props) => {
             isLastStep && isSettlement
               ? "Simpan Perubahan"
               : isLastStep
-                ? "Bayar Sekarang"
-                : isPreviewStep
-                  ? "Preview Undangan"
-                  : "Lanjut"
+                ? "Simpan Data"
+                : "Lanjut"
           }
           icon={
             isLastStep && isUpdate ? (
               <BiSave />
             ) : isLastStep ? (
-              <BiCreditCard />
-            ) : isPreviewStep ? (
-              <BiMobileAlt />
+              <BiCloudUpload />
             ) : (
               <BiCheck />
             )

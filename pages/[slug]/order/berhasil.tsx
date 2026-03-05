@@ -50,14 +50,14 @@ const OrderComplete = () => {
             </div>
 
             <h1 className="text-2xl font-semibold text-dashboard-dark mb-2">
-              Pembayaran Berhasil 🎉
+              Data Berhasil Disimpan 🎉
             </h1>
 
             <p className="text-dashboard-dark/60 mb-6">
               Terima kasih,{" "}
               <span className="font-medium">{store.form.name || "Client"}</span>
-              ! Pesananmu telah kami terima dan akan segera diproses. Tim Moment
-              akan menghubungimu dalam waktu dekat. 💌
+              ! Data undanganmu telah kami terima dan akan segera diproses. Tim
+              Moment akan menghubungimu dalam waktu dekat. 💌
             </p>
 
             <div className="bg-dashboard-dark/[0.02] border border-dashboard-dark/10 p-4 text-left mb-6">
@@ -71,10 +71,7 @@ const OrderComplete = () => {
 
             <div className="flex justify-center">
               <Link href="/">
-                <ButtonPrimary
-                  title="Kembali ke Beranda"
-                  icon={<BiHomeAlt />}
-                />
+                <ButtonPrimary title="Kembali ke Home" icon={<BiHomeAlt />} />
               </Link>
             </div>
             <p className="text-xs text-dashboard-dark/40 mt-4">

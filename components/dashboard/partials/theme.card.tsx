@@ -11,7 +11,6 @@ import { Autoplay } from "swiper/modules";
 import ButtonTetiary from "../elements/button.tetiary";
 import { THEME_VIDEOS } from "../themes";
 import Image from "next/image";
-import { sosmedURLs } from "@/constants/sosmed";
 
 interface Props {
   theme: ThemeUsage;
@@ -145,8 +144,7 @@ const ThemeCard: NextPage<Props> = ({
           <ButtonTetiary size="small" title="Live Preview" icon={<BsEye />} />
         </Link>
         <Link
-          // href={`/${theme.slug}/order`}
-          href={sosmedURLs.whatsapp}
+          href={`/${theme.slug}/order`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Link Pesan Tema ${name}`}

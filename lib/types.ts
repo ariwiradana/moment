@@ -180,7 +180,7 @@ export interface ClientForm {
 
 export type ApiHandler = (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) => Promise<void>;
 
 export type Status = "active" | "inactive" | "done";

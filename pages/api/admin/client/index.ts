@@ -75,7 +75,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         SELECT *
         FROM clients c
         ${whereClause}
-        ORDER BY c.is_preview ASC, c.status ASC, c.updated_at DESC
+       ORDER BY
+        CASE
+          WHEN c.status = 'inactive' THEN 1
+          WHEN c.status = 'active' THEN 2
+          WHEN c.status = 'done' THEN 3
+        END,
+        c.is_preview ASC,
+        c.updated_at DESC
         LIMIT $${values.length - 1} OFFSET $${values.length}
       )
       SELECT 
@@ -136,7 +143,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         const { rows } = await sql.query(query, values);
         const { rows: countRows } = await sql.query(
           countQuery,
-          values.slice(0, values.length - 2)
+          values.slice(0, values.length - 2),
         );
 
         return response.status(200).json({
@@ -159,20 +166,20 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           return handleError(
             response,
             new Error(
-              "The theme is required. If no theme is available, please create one."
-            )
+              "The theme is required. If no theme is available, please create one.",
+            ),
           );
         }
 
         if (client.theme_id) {
           const checkTheme = await sql.query(
             `SELECT EXISTS (SELECT 1 FROM themes WHERE id = $1);`,
-            [client.theme_id]
+            [client.theme_id],
           );
           if (!checkTheme.rows[0].exists) {
             return handleError(
               response,
-              new Error("Theme not found with the provided ID.")
+              new Error("Theme not found with the provided ID."),
             );
           }
         }
@@ -180,12 +187,12 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (client.package_id) {
           const checkPackage = await sql.query(
             `SELECT EXISTS (SELECT 1 FROM packages WHERE id = $1);`,
-            [client.package_id]
+            [client.package_id],
           );
           if (!checkPackage.rows[0].exists) {
             return handleError(
               response,
-              new Error("Package not found with the provided ID.")
+              new Error("Package not found with the provided ID."),
             );
           }
         }
@@ -195,12 +202,12 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           sanitizeSlug = createSlug(client.slug);
           const checkSlug = await sql.query(
             `SELECT EXISTS (SELECT 1 FROM clients WHERE slug = $1);`,
-            [sanitizeSlug]
+            [sanitizeSlug],
           );
           if (checkSlug.rows.length > 0 && checkSlug.rows[0].exists) {
             return handleError(
               response,
-              new Error("Client exists with the provided slug.")
+              new Error("Client exists with the provided slug."),
             );
           }
         }
@@ -301,7 +308,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 p.instagram,
                 p.tiktok,
               ]);
-            }
+            },
           );
           await Promise.all(participantPromises);
 
@@ -432,7 +439,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 p.instagram,
                 p.tiktok,
               ]);
-            }
+            },
           );
           await Promise.all(newPrticipantPromises);
         }
@@ -503,7 +510,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
                 p.tiktok,
                 p.id,
               ]);
-            }
+            },
           );
           await Promise.all(participantPromises);
         }
@@ -563,13 +570,13 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             LEFT JOIN events e ON c.id = e.client_id
             WHERE c.id = $1
           `,
-          [Number(id)]
+          [Number(id)],
         );
 
         if (!currentClient.length) {
           return handleError(
             response,
-            new Error("Client does not exist with the provided ID.")
+            new Error("Client does not exist with the provided ID."),
           );
         }
         const env = process.env.NODE_ENV || "development";
@@ -581,11 +588,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (participantImages.length > 0) {
           try {
             const allParticipantImagePublicIDs = participantImages.map(
-              (url) => `${env}/${getCloudinaryID(url)}`
+              (url) => `${env}/${getCloudinaryID(url)}`,
             );
             if (allParticipantImagePublicIDs.length > 0)
               await cloudinary.api.delete_resources(
-                allParticipantImagePublicIDs
+                allParticipantImagePublicIDs,
               );
             console.log("Participants deleted");
           } catch (error) {
@@ -602,7 +609,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (eventImages.length > 0) {
           try {
             const allEventImagePublicIDs = eventImages.map(
-              (url) => `${env}/${getCloudinaryID(url)}`
+              (url) => `${env}/${getCloudinaryID(url)}`,
             );
             if (allEventImagePublicIDs.length > 0)
               await cloudinary.api.delete_resources(allEventImagePublicIDs);
@@ -618,7 +625,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (galleryURLs.length > 0) {
           try {
             const allGalleryPublicIDs = galleryURLs.map(
-              (url) => `${env}/${getCloudinaryID(url)}`
+              (url) => `${env}/${getCloudinaryID(url)}`,
             );
             if (allGalleryPublicIDs.length > 0)
               await cloudinary.api.delete_resources(allGalleryPublicIDs);
@@ -635,7 +642,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         if (videoURLs.length > 0) {
           try {
             const allVideoPublicIDs = videoURLs.map(
-              (url) => `${env}/${getCloudinaryID(url)}`
+              (url) => `${env}/${getCloudinaryID(url)}`,
             );
             if (allVideoPublicIDs.length > 0)
               await cloudinary.api.delete_resources(allVideoPublicIDs);

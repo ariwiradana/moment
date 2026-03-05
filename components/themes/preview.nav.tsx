@@ -6,12 +6,10 @@ import Image from "next/image";
 import useCoverStore from "@/store/useCoverStore";
 import ButtonLight from "../dashboard/elements/button.light";
 import Link from "next/link";
-import { sosmedURLs } from "@/constants/sosmed";
 
 const PreviewNav = () => {
   const { client } = useClientStore();
   const { isOpen } = useCoverStore();
-  // const router = useRouter();
 
   if (!isOpen) return null;
 
@@ -22,9 +20,8 @@ const PreviewNav = () => {
           <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 md:bottom-8 z-50">
             <div className="relative group">
               <div className="w-3 h-3 group-hover:-right-1 transition-all ease-in-out rounded-full aspect-square bg-dashboard-primary animate-pulse absolute -top-1 right-0 z-20"></div>
-              <Link href={sosmedURLs.whatsapp} target="_blank">
+              <Link href={`/${client?.theme?.slug}/order`} target="_blank">
                 <ButtonLight
-                  // onClick={() => router.push(`/${client.theme?.slug}/order`)}
                   className="group-hover:scale-105"
                   title="Pesan Tema"
                   size="small"

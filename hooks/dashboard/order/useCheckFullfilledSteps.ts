@@ -28,7 +28,6 @@ export function useCheckFullfilledSteps() {
       ev.end_time;
 
     const isParticipantComplete = (p: Participant) =>
-      p?.image &&
       p?.name &&
       p?.nickname &&
       p?.parents_male &&
@@ -50,7 +49,7 @@ export function useCheckFullfilledSteps() {
       !!isParticipantComplete(form.participants?.[1]),
 
       // Step 4: Galeri
-      !!form.gallery?.length,
+      !!form.media?.image_link,
     ];
 
     // Step 5: Digital Envelope
@@ -63,7 +62,7 @@ export function useCheckFullfilledSteps() {
         form.opening_description &&
         form.closing_title &&
         form.closing_description
-      )
+      ),
     );
 
     // Step Terakhir: Pembayaran
@@ -78,7 +77,7 @@ export function useCheckFullfilledSteps() {
     checks.push(isLastStepFulfilled);
 
     const isDifferent = checks.some(
-      (fulfilled, i) => fulfilled !== fullfilledSteps[i]
+      (fulfilled, i) => fulfilled !== fullfilledSteps[i],
     );
 
     if (isDifferent) {
