@@ -77,7 +77,7 @@ export default function useSteps() {
       },
     ];
 
-    if (pkgName !== "Basic") {
+    if (!["Basic", "Premium"].includes(pkgName as string)) {
       baseSteps.push({
         stepTitle: "Amplop Digital",
         stepDescription: "Aktifkan fitur hadiah online.",
