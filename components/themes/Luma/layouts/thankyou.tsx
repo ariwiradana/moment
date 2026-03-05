@@ -10,7 +10,6 @@ import {
 } from "react-icons/ai";
 import useClientStore from "@/store/useClientStore";
 import useParticipants from "@/hooks/themes/useParticipants";
-import { BiMusic } from "react-icons/bi";
 
 const ThankyouComponent = () => {
   const { client } = useClientStore();
@@ -94,12 +93,11 @@ const ThankyouComponent = () => {
           </li>
           {music_title && (
             <li>
-              <div
+              <p
                 className={`flex justify-center items-center gap-x-2 ${rubik.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
               >
-                <BiMusic className="animate-pulse" />
-                <p>{music_title}</p>
-              </div>
+                {music_title}
+              </p>
             </li>
           )}
         </ul>

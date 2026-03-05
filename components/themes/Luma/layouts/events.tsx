@@ -7,12 +7,14 @@ import Link from "next/link";
 import ButtonDark from "../elements/button.dark";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { memo } from "react";
+import useClientStore from "@/store/useClientStore";
 
 const Events: NextPage = () => {
   const {
     state: { events, timeRemainings },
     actions,
   } = useEvents();
+  const { client } = useClientStore();
 
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return "";
@@ -123,14 +125,16 @@ const Events: NextPage = () => {
                   value={timeRemainings[index]?.seconds ?? 0}
                 />
               </div>
-              <div className="mt-6">
-                <ButtonDark
-                  onClick={() => actions.handleAddToCalendar(event)}
-                  icon={<HiArrowLongRight />}
-                  title="Simpan Tanggal"
-                  aria-label={`Simpan tanggal acara ${event.name}`}
-                />
-              </div>
+              {client?.package?.name === "exclusive" && (
+                <div className="mt-6">
+                  <ButtonDark
+                    onClick={() => actions.handleAddToCalendar(event)}
+                    icon={<HiArrowLongRight />}
+                    title="Simpan Tanggal"
+                    aria-label={`Simpan tanggal acara ${event.name}`}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </section>

@@ -113,7 +113,7 @@ const RSVPWishesComponent: FC = () => {
       {/* Modal Form */}
       <div
         onClick={() => actions.setIsOpen((state) => !state)}
-        className={`fixed inset-0 bg-luma-dark/80 z-[100] flex items-center px-4 justify-center transition-all ease-in-out duration-300 ${
+        className={`fixed inset-0 bg-luma-dark/80 to-luma-primary/95 z-[100] flex items-center px-4 justify-center transition-all ease-in-out duration-300 ${
           state.isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         aria-hidden={!state.isOpen}
@@ -187,7 +187,7 @@ const RSVPWishesComponent: FC = () => {
 
       {/* Wishes Section */}
       <section className="h-dvh snap-start w-full relative">
-        <div className="absolute z-20 inset-0 bg-luma-dark/80 flex flex-col justify-center items-center py-10">
+        <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/80 to-luma-primary/95 flex flex-col justify-center items-center py-10">
           <div
             className={`w-full px-6 mb-8 lg:mb-12 ${
               state.wishes.length > 0 ? "text-left" : "text-center"
