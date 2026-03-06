@@ -58,18 +58,19 @@ const AddGuestItem = ({
 
       const text = `\n${client.opening_description}\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n${url}\n\n${client.closing_description}\n\n${client.closing_title}`;
 
+      const ua = navigator.userAgent.toLowerCase();
+      const isApple = /iphone|ipad|ipod|mac/.test(ua);
+
       try {
-        // await navigator.share({
-        //   title: client.seo || "",
-        //   text: text,
-        //   url,
-        // });
-        await navigator.share({
-          title: client.opening_title,
-          text,
-        });
-        // await navigator.clipboard.writeText(text);
-        toast.success("Content shared successfully");
+        if (isApple && navigator.share) {
+          await navigator.share({
+            title: client.opening_title,
+            text,
+          });
+        } else {
+          await navigator.clipboard.writeText(text);
+          toast.success("Pesan undangan berhasil disalin");
+        }
       } catch (error) {
         console.error("Error sharing content", error);
       }
