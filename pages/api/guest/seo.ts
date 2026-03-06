@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   try {
     const { slug } = req.query;
@@ -39,7 +39,7 @@ export default async function handler(
     }
 
     // === Generate SEO fields ===
-    const name = client.name || "";
+    const name = client.name?.replace(/\s*&\s*/, "\n&\n") || "";
     const theme_name = client.theme_name || "";
     const description = `${client.opening_title || ""}, ${
       client.opening_description || ""
@@ -50,8 +50,8 @@ export default async function handler(
       client.status === "inactive"
         ? `Preview ${name} | Moment`
         : client.is_preview
-        ? `Preview Undangan Tema ${theme_name} | Moment`
-        : `${name} | Moment`;
+          ? `Preview Undangan Tema ${theme_name} | Moment`
+          : `${name} | Moment`;
 
     const seo = {
       name,

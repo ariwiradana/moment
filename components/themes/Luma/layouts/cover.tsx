@@ -58,8 +58,9 @@ const Cover: NextPage<Props> = ({ untuk, actions }) => {
           data-aos-delay="1400"
           className={`${rubik.className} text-[10px] max-w-md mx-auto md:text-xs lg:text-sm font-light text-center text-white mt-8 mb-6`}
         >
-          Tanpa mengurangi rasa hormat, kami mengundang anda untuk menghadiri
-          acara {eventNames} kami.
+          Tanpa mengurangi rasa hormat, perkenankan kami mengundang
+          Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu di acara{" "}
+          {eventNames} kami.
         </p>
         <div
           className="flex justify-center"

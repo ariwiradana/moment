@@ -106,7 +106,7 @@ const MainPage: FC<PageProps> = ({ seo, slug }) => {
     {
       onSuccess: (data) => {
         setClient(data.data || null);
-        setTimeout(() => setIsLoading(false), 1300);
+        setTimeout(() => setIsLoading(false), 1400);
       },
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

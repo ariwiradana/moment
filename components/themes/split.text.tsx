@@ -26,28 +26,25 @@ const SplitText: React.FC<SplitTextProps> = ({
   textAlign = "center",
   onLetterAnimationComplete,
 }) => {
-  const words = text.split(" ").map((word) => word.split(""));
-  const letters = words.flat();
-  const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
+  const [inView, setInView] = useState(false);
   const animatedCount = useRef(0);
+
+  // Split text into letters, handling line breaks
+  const letters: string[] = text.split("").map((char) => char);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
+          if (ref.current) observer.unobserve(ref.current);
         }
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    if (ref.current) observer.observe(ref.current);
 
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
@@ -63,47 +60,34 @@ const SplitText: React.FC<SplitTextProps> = ({
             if (
               animatedCount.current === letters.length &&
               onLetterAnimationComplete
-            ) {
+            )
               onLetterAnimationComplete();
-            }
           }
         : animationFrom,
       delay: i * delay,
       config: { easing },
-    }))
+    })),
   );
 
   return (
     <p
       ref={ref}
       className={`split-parent overflow-hidden ${className}`}
-      style={{ textAlign, whiteSpace: "normal", wordWrap: "break-word" }}
+      style={{ textAlign, whiteSpace: "pre-wrap", wordWrap: "break-word" }}
     >
-      {words.map((word, wordIndex) => (
-        <span
-          key={wordIndex}
-          style={{ display: "inline-block", whiteSpace: "nowrap" }}
-        >
-          {word.map((letter, letterIndex) => {
-            const index =
-              words.slice(0, wordIndex).reduce((acc, w) => acc + w.length, 0) +
-              letterIndex;
-
-            return (
-              <animated.span
-                key={index}
-                style={springs[index]}
-                className="inline-block transform transition-opacity will-change-transform"
-              >
-                {letter}
-              </animated.span>
-            );
-          })}
-          <span style={{ display: "inline-block", width: "0.3em" }}>
-            &nbsp;
-          </span>
-        </span>
-      ))}
+      {letters.map((letter, index) =>
+        letter === "\n" ? (
+          <br key={index} />
+        ) : (
+          <animated.span
+            key={index}
+            style={springs[index]}
+            className="inline-block transform transition-opacity will-change-transform"
+          >
+            {letter}
+          </animated.span>
+        ),
+      )}
     </p>
   );
 };
