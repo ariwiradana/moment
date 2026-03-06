@@ -15,7 +15,7 @@ export const useAdminWishes = (token: string | null) => {
     success: boolean;
     data: Client[];
     total_rows: number;
-  }>(token ? `/api/admin` : null, (url: string) => fetcher(url, token));
+  }>(token ? `/api/admin/client` : null, (url: string) => fetcher(url, token));
 
   const { data, error, mutate, isLoading } = useSWR<{
     success: boolean;
