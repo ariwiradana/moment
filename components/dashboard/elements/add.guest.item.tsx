@@ -52,23 +52,32 @@ const AddGuestItem = ({
   }`;
 
   const handleShare = async () => {
-    if (navigator.share && client) {
-      const encodedValue = encodeURIComponent(value).replace(/%20/g, "+");
-      const url = `${baseURL}/${slug}?untuk=${encodedValue}`;
+    if (!client) return;
 
-      const text = `${client.opening_title}\n\n${client.opening_description}\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n${url}\n\n${client.closing_description}\n\n${client.closing_title}`;
+    const encodedValue = encodeURIComponent(value).replace(/%20/g, "+");
+    const url = `${baseURL}/${slug}?untuk=${encodedValue}`;
 
-      try {
+    const text = `${client.opening_title}
+
+${client.opening_description}
+
+Undangan dapat dilihat dengan klik link dibawah ini :
+${url}
+
+${client.closing_description}
+
+${client.closing_title}`;
+
+    try {
+      if (navigator.share) {
         await navigator.share({
-          title: client.seo || "",
+          title: "Undangan Pernikahan",
           text: text,
+          url: url,
         });
-        console.log("Content shared successfully");
-      } catch (error) {
-        console.error("Error sharing content", error);
       }
-    } else {
-      alert("Web Share API is not supported in this browser.");
+    } catch (error) {
+      console.error("Share gagal", error);
     }
   };
 
