@@ -9,7 +9,6 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [iframeKey, setIframeKey] = useState(0); // key untuk force remount
 
   // IntersectionObserver untuk lazy load
   useEffect(() => {
@@ -20,7 +19,6 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            setIframeKey((prev) => prev + 1); // force remount saat visible
           }
         });
       },
@@ -38,20 +36,20 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
       ref={containerRef}
       className="relative w-full aspect-video overflow-hidden bg-black/20"
     >
-      {isVisible && (
-        <iframe
-          key={iframeKey} // force remount
-          src={`https://www.youtube.com/embed/${youtubeId}?playlist=${youtubeId}&autoplay=1&mute=1&loop=1&modestbranding=1&rel=0`}
-          title={title}
-          className="absolute top-0 left-0 w-full h-full"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-          onLoad={() => setVideoLoaded(true)}
-        />
-      )}
-
+      <iframe
+        src={
+          isVisible
+            ? `https://www.youtube.com/embed/${youtubeId}?playlist=${youtubeId}&autoplay=1&mute=1&loop=1&modestbranding=1&rel=0`
+            : undefined
+        }
+        title={title}
+        className="absolute top-0 left-0 w-full h-full"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        loading="lazy"
+        onLoad={() => setVideoLoaded(true)}
+      />
       {!videoLoaded && isVisible && (
         <div className="absolute w-full h-full bg-black/40 flex items-center justify-center animate-pulse text-white text-xs">
           Loading Video...
