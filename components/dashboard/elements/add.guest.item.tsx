@@ -69,7 +69,7 @@ const AddGuestItem = ({
           });
         } else {
           await navigator.clipboard.writeText(text);
-          toast.success("Pesan undangan berhasil disalin");
+          toast.success(`Pesan untuk ${value} berhasil disalin`);
         }
       } catch (error) {
         console.error("Error sharing content", error);
