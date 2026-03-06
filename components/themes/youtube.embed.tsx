@@ -45,7 +45,7 @@ const YoutubeEmbed = ({ youtubeId, title }: YouTubeEmbedProps) => {
         title={title}
         className="absolute top-0 left-0 w-full h-full"
         frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
         loading="lazy"
         onLoad={() => setVideoLoaded(true)}
