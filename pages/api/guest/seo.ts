@@ -39,7 +39,7 @@ export default async function handler(
     }
 
     // === Generate SEO fields ===
-    const name = client.name?.replace(/\s*&\s*/, "\n&\n") || "";
+    const name = client.name || "";
     const theme_name = client.theme_name || "";
     const description = `${client.opening_title || ""}, ${
       client.opening_description || ""

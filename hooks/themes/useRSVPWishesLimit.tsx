@@ -68,7 +68,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
       client?.id && client.status === "active"
         ? `/api/guest/wishes?page=${page}&limit=${limit}&client_id=${client.id}`
         : null,
-    [client, page, limit]
+    [client, page, limit],
   );
 
   const { mutate, isLoading: isLoadingWishes } = useSWR<{
@@ -135,7 +135,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
         setLoading(false);
       }
     },
-    [formData, client?.id, icon, mutate]
+    [formData, client?.id, icon, mutate],
   );
 
   // Pagination change handler
@@ -148,7 +148,7 @@ const useRSVPWishesLimit = (icon: ReactNode, limitPage: number) => {
       attendantText: ATTENDANT_TEXT,
       loading,
       errors,
-      wishes: wishes.length > 0 ? wishes : DummyWishes,
+      wishes: client?.status === "active" ? wishes : DummyWishes,
       totalRows,
       formData,
       isOpen,
