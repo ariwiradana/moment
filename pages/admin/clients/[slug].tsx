@@ -252,7 +252,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 Social Description
               </label>
               <ReactQuill
-                modules={{ toolbar: false }}
+                // modules={{ toolbar: false }}
                 theme="snow"
                 value={state.formData.social_description || ""}
                 onChange={(value) =>

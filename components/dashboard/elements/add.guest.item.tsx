@@ -51,12 +51,31 @@ const AddGuestItem = ({
     window.location.port ? `:${window.location.port}` : ""
   }`;
 
+  function renderTemplate(template: string, data: Record<string, string>) {
+    return template.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] ?? "");
+  }
+
+  function htmlToText(html: string) {
+    return html
+      .replace(/<\/p>/g, "\n\n")
+      .replace(/<br\s*\/?>/g, "\n")
+      .replace(/<[^>]+>/g, "")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+
   const handleShare = async () => {
-    if (client) {
+    if (client && client.social_description) {
+      const template = client.social_description;
       const encodedValue = encodeURIComponent(value).replace(/%20/g, "+");
       const url = `${baseURL}/${slug}?untuk=${encodedValue}`;
 
-      const text = `\n${client.opening_description}\n\nUndangan dapat dilihat dengan klik link dibawah ini :\n${url}\n\n${client.closing_description}\n\n${client.closing_title}`;
+      const filledHtml = renderTemplate(template, {
+        name: value,
+        url,
+      });
+
+      const text = htmlToText(filledHtml);
 
       const ua = navigator.userAgent.toLowerCase();
       const isApple = /iphone|ipad|ipod|mac/.test(ua);

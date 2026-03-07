@@ -39,14 +39,14 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
 
   const { data: clientResult, isLoading: isLoadingClient } = useSWR(
     `/api/guest?slug=${slug}`,
-    fetcher
+    fetcher,
   );
 
   const { data, mutate, isLoading } = useSWR(
     token
       ? `/api/admin/client/delete-guest?slug=${slug}&page=${page}&limit=${limit}&search=${searchQuery}`
       : null,
-    (url: string) => fetcher(url, token)
+    (url: string) => fetcher(url, token),
   );
 
   const client: Client | null =
@@ -78,7 +78,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
           method: "POST",
           body: JSON.stringify(payload),
         },
-        token
+        token,
       );
       const result = await response.json();
       if (result.success) {
@@ -105,7 +105,7 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
 
   const handleChangePagination = (
     event: React.ChangeEvent<unknown>,
-    value: number
+    value: number,
   ) => {
     setPage(value);
     setTimeout(() => {
@@ -170,11 +170,11 @@ const DashboardTamu: FC<Props> = ({ slug, token }: Props) => {
               <>
                 {guests.length > 0 && (
                   <div className="flex flex-col divide-y divide-dashboard-dark/10 border border-dashboard-dark/10">
-                    {guests.map((name) => (
+                    {guests.map((name, index) => (
                       <AddGuestItem
                         token={token}
                         client={client}
-                        key={`Tamu Undangan ${name}`}
+                        key={`Tamu Undangan ${name} ${index + 1}`}
                         mutate={mutate}
                         slug={slug}
                         mode="exist"
