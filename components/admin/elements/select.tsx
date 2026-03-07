@@ -16,7 +16,7 @@ const InputSelect: FC<InputSelectProps> = (props) => {
   const styles = (size: "extrasmall" | "small" | "medium" | "large") => {
     switch (size) {
       case "extrasmall":
-        return "px-1 py-1.5";
+        return "px-1 py-1.5 text-sm";
       case "small":
         return "p-2";
       case "medium":

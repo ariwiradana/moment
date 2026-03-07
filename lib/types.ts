@@ -59,6 +59,8 @@ export interface Event {
   updated_at?: Date | string;
 }
 
+export type PaymentStatus = "pending" | "paid" | "cancelled";
+
 export interface Client {
   id?: number;
   name: string;
@@ -86,6 +88,7 @@ export interface Client {
   package?: Package;
   packages?: Package[];
   theme_category?: ThemeCategory;
+  payment_status: PaymentStatus;
   theme?: Theme | null;
   cover?: null | string;
   seo?: null | string;
@@ -184,6 +187,7 @@ export type ApiHandler = (
 ) => Promise<void>;
 
 export type Status = "active" | "inactive" | "done";
+
 export type OrderStatus =
   | "pending"
   | "settlement"

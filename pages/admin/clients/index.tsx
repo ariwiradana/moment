@@ -27,6 +27,7 @@ import { isTokenExpired } from "@/lib/auth";
 import InputSelect from "@/components/admin/elements/select";
 import { clientStatus } from "@/constants/status";
 import ButtonPrimary from "@/components/admin/elements/button.primary";
+import { paymentStatus } from "@/constants/paymentStatus";
 
 interface ClientDashboardProps {
   token: string | null;
@@ -50,7 +51,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
       <div className={`w-full ${montserrat.className}`}>
         <h1 className="text-2xl font-bold mb-4">Dashboard Klien</h1>
         <Link href="/admin/clients/create">
-          <div>
+          <div className="inline-flex">
             <ButtonPrimary
               size="small"
               title="Tambah Klien"
@@ -127,7 +128,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
-                                    `${baseURL}/${client?.slug}/testimoni/`
+                                    `${baseURL}/${client?.slug}/testimoni/`,
                                   )
                                 }
                                 size="small"
@@ -141,7 +142,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
-                                    `${baseURL}/${client?.slug}/tamu`
+                                    `${baseURL}/${client?.slug}/tamu`,
                                   )
                                 }
                                 size="small"
@@ -151,7 +152,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               <ButtonText
                                 onClick={() =>
                                   actions.handleCopyURL(
-                                    `${baseURL}/${client?.slug}`
+                                    `${baseURL}/${client?.slug}`,
                                   )
                                 }
                                 type="button"
@@ -166,7 +167,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             onClick={() =>
                               actions.handleSetAsPreview(
                                 client.id as number,
-                                !client.is_preview
+                                !client.is_preview,
                               )
                             }
                             size="small"
@@ -234,17 +235,10 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                           {client.theme_category?.name ?? "-"}
                         </p>
                       </div>
+
                       <div>
                         <p className="text-gray-500 font-medium text-xs">
-                          Telepon
-                        </p>
-                        <p className="text-gray-800 font-semibold text-sm capitalize">
-                          {client.phone || "-"}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500 font-medium text-xs">
-                          Status Klien
+                          Status Undangan
                         </p>
                         <div className="flex">
                           <InputSelect
@@ -255,7 +249,26 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             onChange={(e) =>
                               actions.handleChangeStatus(
                                 client.id as number,
-                                e.target.value
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 font-medium text-xs">
+                          Status Pembayaran
+                        </p>
+                        <div className="flex">
+                          <InputSelect
+                            full={false}
+                            inputSize="extrasmall"
+                            options={paymentStatus}
+                            value={client.payment_status}
+                            onChange={(e) =>
+                              actions.handleChangePaymentStatus(
+                                client.id as number,
+                                e.target.value,
                               )
                             }
                           />
@@ -275,9 +288,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tl-xl">
                         Klien
                       </td>
-                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Order
-                      </td>
+
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
                         Tema
                       </td>
@@ -288,7 +299,10 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         Paket
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
-                        Status
+                        Status Undangan
+                      </td>
+                      <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100">
+                        Status Pembayaran
                       </td>
                       <td className="px-4 py-1 text-gray-600 font-medium text-sm bg-gray-100 rounded-tr-xl">
                         Aksi
@@ -350,31 +364,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
-                          {client.order ? (
-                            <div className="flex">
-                              <span
-                                className={`capitalize text-xs font-semibold px-2 py-[2px] rounded-lg ${
-                                  client.order?.status === "pending"
-                                    ? "bg-yellow-100 text-yellow-600"
-                                    : client.order?.status === "settlement"
-                                    ? "bg-green-100 text-green-600"
-                                    : client.order?.status === "expire"
-                                    ? "bg-red-100 text-red-600"
-                                    : client.order?.status === "cancel"
-                                    ? "bg-gray-100 text-gray-600"
-                                    : client.order?.status === "deny"
-                                    ? "bg-red-200 text-red-700"
-                                    : "bg-gray-100 text-gray-600"
-                                }`}
-                              >
-                                {client.order?.status}
-                              </span>
-                            </div>
-                          ) : (
-                            "-"
-                          )}
-                        </td>
+
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <p>{client.theme?.name ?? "-"}</p>
                           <p className="text-gray-500 font-medium text-xs">
@@ -386,11 +376,17 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
                           <div className="flex">
-                            <p
-                              className={`text-admin-dark  bg-gray-200 rounded-lg font-semibold px-3 py-1 text-sm`}
+                            <span
+                              className={`text-xs font-semibold px-2 py-[2px] capitalize rounded-lg ${
+                                client.package?.name === "Basic"
+                                  ? "bg-gray-100 text-gray-600"
+                                  : client.package?.name === "Premium"
+                                    ? "bg-blue-100 text-blue-600"
+                                    : "bg-purple-100 text-purple-600"
+                              }`}
                             >
                               {client.package?.name}
-                            </p>
+                            </span>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
@@ -401,7 +397,20 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                             onChange={(e) =>
                               actions.handleChangeStatus(
                                 client.id as number,
-                                e.target.value
+                                e.target.value,
+                              )
+                            }
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-gray-800 font-semibold text-sm">
+                          <InputSelect
+                            inputSize="extrasmall"
+                            options={paymentStatus}
+                            value={client.payment_status}
+                            onChange={(e) =>
+                              actions.handleChangePaymentStatus(
+                                client.id as number,
+                                e.target.value,
                               )
                             }
                           />
@@ -424,7 +433,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleCopyURL(
-                                      `${baseURL}/${client?.slug}/testimoni`
+                                      `${baseURL}/${client?.slug}/testimoni`,
                                     )
                                   }
                                   size="medium"
@@ -438,7 +447,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleCopyURL(
-                                      `${baseURL}/${client?.slug}/tamu`
+                                      `${baseURL}/${client?.slug}/tamu`,
                                     )
                                   }
                                   size="medium"
@@ -449,7 +458,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                                 <ButtonText
                                   onClick={() =>
                                     actions.handleCopyURL(
-                                      `${baseURL}/${client?.slug}`
+                                      `${baseURL}/${client?.slug}`,
                                     )
                                   }
                                   type="button"
@@ -463,7 +472,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ token }) => {
                               onClick={() =>
                                 actions.handleSetAsPreview(
                                   client.id as number,
-                                  !client.is_preview
+                                  !client.is_preview,
                                 )
                               }
                               size="medium"

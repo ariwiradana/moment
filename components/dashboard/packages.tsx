@@ -169,7 +169,6 @@ const PackageComponent = () => {
                       className={`${redhat.className} mt-4 text-base capitalize leading-7 marker:text-xs`}
                     >
                       <li
-                        aria-disabled={!p.unlimited_revisions}
                         className={`list-disc ${
                           !p.unlimited_revisions && "line-through text-gray-300"
                         }`}
@@ -177,7 +176,6 @@ const PackageComponent = () => {
                         Revisi tidak terbatas
                       </li>
                       <li
-                        aria-disabled={!p.unlimited_guest_names}
                         className={`list-disc ${
                           !p.unlimited_guest_names &&
                           "line-through text-gray-300"
@@ -186,7 +184,6 @@ const PackageComponent = () => {
                         Nama tamu tidak terbatas
                       </li>
                       <li
-                        aria-disabled={!p.custom_opening_closing}
                         className={`list-disc ${
                           !p.custom_opening_closing &&
                           "line-through text-gray-300"
@@ -195,23 +192,18 @@ const PackageComponent = () => {
                         Kustomisasi kalimat pembuka & penutup
                       </li>
                       <li
-                        aria-disabled={!p.countdown}
                         className={`list-disc ${
                           !p.countdown && "line-through text-gray-300"
                         }`}
                       >
                         Hitung Mundur Waktu
                       </li>
-                      <li
-                        aria-disabled={Number(p.max_events) === 0}
-                        className="list-disc"
-                      >
+                      <li className="list-disc">
                         {Number(p.max_events) === 0
                           ? "Acara tak terbatas per undangan"
                           : `Maksimal ${p.max_events} acara per undangan`}
                       </li>
                       <li
-                        aria-disabled={Number(p.max_gallery_photos) === 0}
                         className={`list-disc ${
                           Number(p.max_gallery_photos) === 0 &&
                           "line-through text-gray-300"
@@ -222,7 +214,6 @@ const PackageComponent = () => {
                           : "Galeri Foto"}
                       </li>
                       <li
-                        aria-disabled={Number(p.max_videos) === 0}
                         className={`list-disc ${
                           Number(p.max_videos) === 0 &&
                           "line-through text-gray-300"
@@ -233,7 +224,6 @@ const PackageComponent = () => {
                           : "Rekaman video"}
                       </li>
                       <li
-                        aria-disabled={!p.contact_social_media}
                         className={`list-disc ${
                           !p.contact_social_media &&
                           "line-through text-gray-300"
@@ -242,7 +232,6 @@ const PackageComponent = () => {
                         Kontak Media Sosial
                       </li>
                       <li
-                        aria-disabled={!p.background_sound}
                         className={`list-disc ${
                           !p.background_sound && "line-through text-gray-300"
                         }`}
@@ -250,7 +239,6 @@ const PackageComponent = () => {
                         Musik Latar
                       </li>
                       <li
-                        aria-disabled={!p.rsvp_and_greetings}
                         className={`list-disc ${
                           !p.rsvp_and_greetings && "line-through text-gray-300"
                         }`}
@@ -258,7 +246,6 @@ const PackageComponent = () => {
                         RSVP & Ucapan
                       </li>
                       <li
-                        aria-disabled={!p.google_maps_integration}
                         className={`list-disc ${
                           !p.google_maps_integration &&
                           "line-through text-gray-300"
@@ -267,7 +254,6 @@ const PackageComponent = () => {
                         Lokasi terintegrasi dengan Google Maps
                       </li>
                       <li
-                        aria-disabled={!p.add_to_calendar}
                         className={`list-disc ${
                           !p.add_to_calendar && "line-through text-gray-300"
                         }`}
@@ -276,7 +262,6 @@ const PackageComponent = () => {
                       </li>
 
                       <li
-                        aria-disabled={!p.digital_envelope}
                         className={`list-disc ${
                           !p.digital_envelope && "line-through text-gray-300"
                         }`}

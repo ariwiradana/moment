@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
-  BiCartAlt,
   BiChat,
   BiFolder,
   BiLogOut,
@@ -34,7 +33,6 @@ const Sidebar: FC = () => {
   const { data: user } = useSWR("/api/auth/user", fetcher);
 
   const menuItems: MenuItem[] = [
-    { name: "Pesanan", path: "/admin/orders", icon: <BiCartAlt /> },
     { name: "Klien", path: "/admin/clients", icon: <BiUser /> },
     { name: "Tema", path: "/admin/themes", icon: <BiFolder /> },
     { name: "Ucapan", path: "/admin/wishes", icon: <BiChat /> },
@@ -51,7 +49,7 @@ const Sidebar: FC = () => {
   ];
 
   const pageTitle = menuItems.find(
-    (menu) => menu.path === router.pathname
+    (menu) => menu.path === router.pathname,
   )?.name;
 
   const handleLogout = async () => {
@@ -77,7 +75,7 @@ const Sidebar: FC = () => {
           {pageTitle
             ? `${pageTitle} | Moment`
             : `${capitalizeWords(
-                router.pathname.split("/")[2] ?? ""
+                router.pathname.split("/")[2] ?? "",
               )} | Moment`}
         </title>
       </Head>

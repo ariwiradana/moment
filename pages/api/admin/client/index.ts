@@ -123,14 +123,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           WHERE m.client_id = c.id
           ORDER BY m.id ASC
           LIMIT 1
-        ) AS media,
-        (
-          SELECT to_jsonb(o)
-          FROM orders o
-          WHERE o.client_id = c.id
-          ORDER BY o.id ASC
-          LIMIT 1
-        ) AS "order"
+        ) AS media
       FROM filtered_clients c;
     `;
 
@@ -234,9 +227,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
               gift_bank_name,
               gift_account_name,
               gift_account_number,
-              music_title
+              music_title,
+              payment_status
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
             RETURNING *;
           `;
 
@@ -262,6 +256,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           client.gift_account_name,
           client.gift_account_number,
           client.music_title,
+          client.payment_status,
         ]);
         const clientId = resultClient.rows[0].id;
 
@@ -382,8 +377,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             phone = $18,
             email = $19,
             updated_at = NOW(),
-            social_description = $20
-          WHERE id = $21
+            social_description = $20,
+            payment_status = $21
+          WHERE id = $22
           RETURNING *;`;
 
         const sanitizeSlug = createSlug(client.slug as string);
@@ -409,6 +405,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
           client.phone,
           client.email,
           client.social_description,
+          client.payment_status,
           Number(id),
         ]);
 

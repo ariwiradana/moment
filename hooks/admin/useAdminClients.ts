@@ -15,12 +15,12 @@ export const useAdminClients = (token: string | null) => {
     total_rows: number;
   }>(
     token ? `/api/admin/client?page=${page}&limit=${limit}` : null,
-    (url: string) => fetcher(url, token)
+    (url: string) => fetcher(url, token),
   );
 
   const handleChangePagination = (
     event: React.ChangeEvent<unknown>,
-    value: number
+    value: number,
   ) => {
     setPage(value);
   };
@@ -29,7 +29,7 @@ export const useAdminClients = (token: string | null) => {
     const deleteClient = getClient(
       `/api/admin/client?id=${id}`,
       { method: "DELETE" },
-      token
+      token,
     );
 
     toast.promise(deleteClient, {
@@ -63,7 +63,7 @@ export const useAdminClients = (token: string | null) => {
           method: "POST",
           body: JSON.stringify({ id, is_preview }),
         },
-        token
+        token,
       );
 
       const data = await res.json();
@@ -132,7 +132,7 @@ export const useAdminClients = (token: string | null) => {
             method: "POST",
             body: JSON.stringify({ id, status }),
           },
-          token
+          token,
         );
 
         const data = await res.json();
@@ -144,7 +144,67 @@ export const useAdminClients = (token: string | null) => {
         loading: messages.loading,
         success: messages.success,
         error: messages.error,
+      },
+    );
+  };
+
+  const handleChangePaymentStatus = async (
+    id: number,
+    paymentStatus: string,
+  ) => {
+    const statusMessages = (status: string) => {
+      switch (status) {
+        case "paid":
+          return {
+            loading: "Mengonfirmasi pembayaran...",
+            success: "Pembayaran berhasil dikonfirmasi",
+            error: "Gagal mengonfirmasi pembayaran",
+          };
+        case "pending":
+          return {
+            loading: "Mengubah status ke pending...",
+            success: "Status pembayaran menjadi pending",
+            error: "Gagal mengubah status pembayaran",
+          };
+        case "cancelled":
+          return {
+            loading: "Membatalkan pembayaran...",
+            success: "Pembayaran berhasil dibatalkan",
+            error: "Gagal membatalkan pembayaran",
+          };
+        default:
+          return {
+            loading: "Memproses status pembayaran...",
+            success: "Status pembayaran berhasil diperbarui",
+            error: "Gagal memperbarui status pembayaran",
+          };
       }
+    };
+
+    const messages = statusMessages(paymentStatus);
+
+    toast.promise(
+      (async () => {
+        const res = await getClient(
+          "/api/admin/client/payment-status",
+          {
+            method: "POST",
+            body: JSON.stringify({ id, paymentStatus }),
+          },
+          token,
+        );
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+
+        mutate();
+        return data;
+      })(),
+      {
+        loading: messages.loading,
+        success: messages.success,
+        error: messages.error,
+      },
     );
   };
 
@@ -164,6 +224,7 @@ export const useAdminClients = (token: string | null) => {
       handleCopyURL,
       handleSetAsPreview,
       handleChangeStatus,
+      handleChangePaymentStatus,
     },
   };
 };

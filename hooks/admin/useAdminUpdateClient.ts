@@ -69,6 +69,7 @@ const initalFormData: Client & { password: string } = {
   theme_category_id: null,
   password: "",
   media: null,
+  payment_status: "pending",
 };
 
 export const useAdminUpdateClient = (slug: string, token: string | null) => {
@@ -80,7 +81,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     success: boolean;
     data: Client[];
   }>(slug && token ? `/api/admin/client?slug=${slug}` : null, (url: string) =>
-    fetcher(url, token)
+    fetcher(url, token),
   );
 
   const { data: user } = useSWR(`/api/admin/user?slug=${slug}`, fetcher);
@@ -88,7 +89,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [formData, setFormData] = useState<Client & { password: string }>(
-    initalFormData
+    initalFormData,
   );
   const [toggleEndTimes, setToggleEndTimes] = useState<boolean[]>([false]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -112,7 +113,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     },
   ]);
   const [galleryImagesForm, setGalleryImagesForm] = useState<FileList | null>(
-    null
+    null,
   );
   const [videoBackground, setVideoBackground] = useState<FileList | null>(null);
   const [videosForm, setVideosForm] = useState<string[]>([]);
@@ -140,7 +141,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           if (selected) setSelectedTheme(selected);
         }
       },
-    }
+    },
   );
 
   const { data: packages } = useSWR<{
@@ -156,7 +157,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           if (selected) setSelectedPackage(selected);
         }
       },
-    }
+    },
   );
 
   useEffect(() => {
@@ -168,7 +169,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const clearFileInput = () => {
     const galleryInput = document.getElementById("gallery") as HTMLInputElement;
     const videoFileInput = document.getElementById(
-      "video-background"
+      "video-background",
     ) as HTMLInputElement;
     const musicInput = document.getElementById("music") as HTMLInputElement;
 
@@ -221,7 +222,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           twitter: p.twitter,
           instagram: p.instagram,
           tiktok: p.tiktok,
-        })
+        }),
       );
 
       const currentEvents: Event[] = currentClient.events.map((e) => ({
@@ -237,13 +238,13 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       }));
 
       setParticipantImagesForm(
-        new Array(currentParticipants.length).fill(null)
+        new Array(currentParticipants.length).fill(null),
       );
 
       setEventImagesForm(new Array(currentEvents.length).fill(null));
 
       const currentToggleEndtimes: boolean[] = currentClient.events.map((e) =>
-        e.end_time === "Selesai" ? true : false
+        e.end_time === "Selesai" ? true : false,
       );
       setToggleEndTimes(currentToggleEndtimes);
 
@@ -280,6 +281,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         theme_category_id: !currentClient.theme_category_id
           ? (themeCategoryOptions[0].value as number)
           : currentClient.theme_category_id,
+        payment_status: currentClient.payment_status,
       }));
     }
   }, [client, themeOptions, packageOptions]);
@@ -288,7 +290,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
     if (formData.theme_id) {
       if (formData.theme_id) {
         const matchedTheme = themes?.data.find(
-          (th) => th.id === formData.theme_id
+          (th) => th.id === formData.theme_id,
         );
         const options: Option[] = (
           matchedTheme?.theme_categories as ThemeCategory[]
@@ -303,13 +305,13 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
   const handleChangeClient = (
     value: string | number | FileList | File | string[],
-    name: string
+    name: string,
   ) => {
     if (name === "images") {
       setGalleryImagesForm(value as FileList);
     } else if (name === "theme_id") {
       const selectedTheme: Theme = themes?.data.find(
-        (th) => th.id === Number(value)
+        (th) => th.id === Number(value),
       ) as Theme;
       setSelectedTheme(selectedTheme as Theme);
       const options: Option[] =
@@ -327,7 +329,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
       }));
     } else if (name === "package_id") {
       const selectedPackage = packages?.data.find(
-        (pk) => pk.id === Number(value)
+        (pk) => pk.id === Number(value),
       );
       setSelectedPackage(selectedPackage as Package);
       setFormData((state) => ({
@@ -383,7 +385,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const handleChangeParticipant = (
     value: string | number | FileList,
     name: string,
-    index: number
+    index: number,
   ) => {
     let currentParticipants: Participant[] = [...formData.participants];
 
@@ -408,7 +410,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
   const handleChangeEvent = (
     value: string | number | FileList,
     name: string,
-    index: number
+    index: number,
   ) => {
     let currentEvents: Event[] = [...formData.events];
 
@@ -440,7 +442,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         for (const image of Array.from(galleryImagesForm)) {
           i++;
           const toastUpload = toast.loading(
-            `Mengunggah foto ${i} dari ${galleryImagesForm.length}...`
+            `Mengunggah foto ${i} dari ${galleryImagesForm.length}...`,
           );
           try {
             if (image.size > MAX_SIZE) {
@@ -469,7 +471,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           } catch (error: any) {
             toast.error(
               error.message || `Terjadi kesalahan saat mengunggah foto ${i}.`,
-              { id: toastUpload }
+              { id: toastUpload },
             );
           }
         }
@@ -514,7 +516,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         } catch (error: any) {
           toast.error(
             error.message || `Terjadi kesalahan saat mengunggah musik.`,
-            { id: toastUpload }
+            { id: toastUpload },
           );
         }
       }
@@ -558,7 +560,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         } catch (error: any) {
           toast.error(
             error.message || `Terjadi kesalahan saat mengunggah video.`,
-            { id: toastUpload }
+            { id: toastUpload },
           );
         }
       }
@@ -604,7 +606,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           method: "PUT",
           body: JSON.stringify(modifiedFormdata),
         },
-        token
+        token,
       );
 
       if (!response.ok) {
@@ -646,7 +648,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             method: "POST",
             body: JSON.stringify(payload),
           },
-          token
+          token,
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -689,7 +691,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             method: "POST",
             body: JSON.stringify(payload),
           },
-          token
+          token,
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -727,7 +729,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
         const MAX_SIZE = 5 * 1024 * 1024;
 
         const toastUpload = toast.loading(
-          `Mengunggah foto peserta ${i + 1}...`
+          `Mengunggah foto peserta ${i + 1}...`,
         );
 
         try {
@@ -736,7 +738,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
               `Ukuran foto peserta ${i + 1} terlalu besar (maks 5MB).`,
               {
                 id: toastUpload,
-              }
+              },
             );
             continue;
           }
@@ -764,7 +766,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
                     url: currentParticipants[i].image,
                   }),
                 },
-                token
+                token,
               );
             }
 
@@ -774,7 +776,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           toast.error(
             error.message ||
               `Terjadi kesalahan saat mengunggah foto peserta ${i + 1}.`,
-            { id: toastUpload }
+            { id: toastUpload },
           );
         }
       }
@@ -800,7 +802,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
               `Ukuran foto acara ${i + 1} terlalu besar (maks 5MB).`,
               {
                 id: toastUpload,
-              }
+              },
             );
             continue;
           }
@@ -828,7 +830,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
                     url: currentEvents[i].image,
                   }),
                 },
-                token
+                token,
               );
             }
 
@@ -838,7 +840,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           toast.error(
             error.message ||
               `Terjadi kesalahan saat mengunggah foto acara ${i + 1}.`,
-            { id: toastUpload }
+            { id: toastUpload },
           );
         }
       }
@@ -854,7 +856,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           method: "POST",
           body: JSON.stringify({ url, id }),
         },
-        token
+        token,
       );
       if (!response.ok) {
         const errorResult = await response.json();
@@ -884,7 +886,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           method: "POST",
           body: JSON.stringify({ url, id }),
         },
-        token
+        token,
       );
       if (!response.ok) {
         const errorResult = await response.json();
@@ -922,7 +924,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             method: "POST",
             body: JSON.stringify(payload),
           },
-          token
+          token,
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -965,7 +967,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             method: "POST",
             body: JSON.stringify(payload),
           },
-          token
+          token,
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -1002,7 +1004,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           {
             method: "DELETE",
           },
-          token
+          token,
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -1045,7 +1047,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             method: "POST",
             body: JSON.stringify(payload),
           },
-          token
+          token,
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -1074,7 +1076,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
   const handleDeleteParticipant = (
     id: number,
-    imageURL?: string | undefined
+    imageURL?: string | undefined,
   ) => {
     try {
       setLoading(true);
@@ -1084,7 +1086,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
 
         if (imageURL)
           url = `/api/admin/participants?id=${encodeURIComponent(
-            id
+            id,
           )}&image_url=${encodeURIComponent(imageURL)}`;
 
         const response = await getClient(
@@ -1092,7 +1094,7 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
           {
             method: "DELETE",
           },
-          token
+          token,
         );
         if (!response.ok) {
           const errorResult = await response.json();
@@ -1135,13 +1137,13 @@ export const useAdminUpdateClient = (slug: string, token: string | null) => {
             role: "client",
           }),
         },
-        token
+        token,
       );
 
       if (!response.ok) {
         const errorResult = await response.json();
         throw new Error(
-          errorResult.message || "Gagal mengubah kata sandi klien"
+          errorResult.message || "Gagal mengubah kata sandi klien",
         );
       }
 

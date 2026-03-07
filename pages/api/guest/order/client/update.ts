@@ -46,6 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           gift_account_name = $13,
           gift_account_number = $14,
           email = $15,
+          payment_status = $16,
           updated_at = NOW()
       WHERE id = $16
       RETURNING *;
@@ -66,6 +67,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         client.gift_account_name || null,
         client.gift_account_number || null,
         client.email,
+        client.payment_status,
         client.id,
       ]
     );

@@ -10,13 +10,11 @@ import toast from "react-hot-toast";
 import { useDebounce } from "use-debounce";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { useRouter } from "next/router";
 
 const OrderInformation = () => {
-  const router = useRouter();
   const store = useOrderStore();
   const exclusivePackage = store.theme?.packages?.find(
-    (pkg) => pkg.name === "Exclusive"
+    (pkg) => pkg.name === "Exclusive",
   );
 
   type ModalPackage = {
@@ -29,7 +27,6 @@ const OrderInformation = () => {
     component: exclusivePackage as Package,
   });
 
-  const initialSlug = store.order.client?.slug || "";
   const [slugForm, setSlugForm] = useState(store.form.slug || "");
   const [slugQuery] = useDebounce(slugForm, 500);
 
@@ -37,13 +34,9 @@ const OrderInformation = () => {
     if (slugQuery.length === 0) {
       store.setForm("slug", "");
     }
-
-    if (initialSlug === slugQuery) {
-      store.setForm("slug", initialSlug);
-    }
   }, [slugQuery]);
 
-  const shouldCheckSlug = slugQuery.length > 2 && slugQuery !== initialSlug;
+  const shouldCheckSlug = slugQuery.length > 2;
 
   useSWR(
     shouldCheckSlug ? `/api/guest/order/${slugQuery}/check` : null,
@@ -57,15 +50,14 @@ const OrderInformation = () => {
       },
       onError(error) {
         toast.error(
-          error instanceof Error ? error.message : "Terjadi kesalahan"
+          error instanceof Error ? error.message : "Terjadi kesalahan",
         );
         store.setForm("slug", "");
       },
       revalidateOnFocus: false,
-    }
+    },
   );
 
-  const isUpdate = router.pathname === "/order/[orderId]";
 
   return (
     <>
@@ -118,74 +110,72 @@ const OrderInformation = () => {
         label="No Hp / WhatsApp"
       />
 
-      {!isUpdate && (
-        <div className={redhat.className}>
-          <label className="block text-dashboard-dark/60 mb-1 text-sm">
-            Pilih Paket
-          </label>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {store.theme?.packages?.map((pkg) => {
-              const selected = pkg.id === store.form?.package_id;
-              return (
-                <div
-                  onClick={() => {
-                    store.setForm("package_id", pkg.id as number);
-                    store.setPackage(pkg);
-                  }}
-                  className={`${
-                    selected
-                      ? "border border-dashboard-primary"
-                      : "bg-white border"
-                  } relative text-dashboard-dark justify-between items-center p-4`}
-                  key={`Paket Undangan ${pkg.name} ${store.theme?.name}`}
-                >
-                  {selected && (
-                    <div className="absolute text-dashboard-dark top-2 lg:-top-2 right-2 lg:-right-2 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-0.5 text-lg lg:text-xl">
-                      <BiCheck />
-                    </div>
-                  )}
-                  <div>
-                    <h2 className={`text-lg font-semibold text-dashboard-dark`}>
-                      {pkg?.name}
-                    </h2>
-
-                    <div className="flex items-center flex-wrap gap-x-1">
-                      {pkg?.discount && pkg?.discount > 0 ? (
-                        <h2
-                          className={`text-base text-dashboard-dark/30 line-through`}
-                        >
-                          {formatToRupiah(pkg?.price)}
-                        </h2>
-                      ) : null}
-                      {pkg?.price && (
-                        <h2 className={`font-medium text-dashboard-dark`}>
-                          {formatToRupiah(pkg?.price - pkg?.discount)}
-                        </h2>
-                      )}
-                    </div>
+      <div className={redhat.className}>
+        <label className="block text-dashboard-dark/60 mb-1 text-sm">
+          Pilih Paket
+        </label>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {store.theme?.packages?.map((pkg) => {
+            const selected = pkg.id === store.form?.package_id;
+            return (
+              <div
+                onClick={() => {
+                  store.setForm("package_id", pkg.id as number);
+                  store.setPackage(pkg);
+                }}
+                className={`${
+                  selected
+                    ? "border border-dashboard-primary"
+                    : "bg-white border"
+                } relative text-dashboard-dark justify-between items-center p-4`}
+                key={`Paket Undangan ${pkg.name} ${store.theme?.name}`}
+              >
+                {selected && (
+                  <div className="absolute text-dashboard-dark top-2 lg:-top-2 right-2 lg:-right-2 rounded-full aspect-square flex justify-center items-center bg-dashboard-primary p-0.5 text-lg lg:text-xl">
+                    <BiCheck />
                   </div>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setModalPackage({
-                        isOpen: true,
-                        component: pkg,
-                      });
-                    }}
-                    className="mt-4 flex items-center gap-x-1 text-base font-medium"
-                  >
-                    Detail Paket
-                    <span>
-                      <BiChevronRight className="text-base" />
-                    </span>
-                  </button>
+                )}
+                <div>
+                  <h2 className={`text-lg font-semibold text-dashboard-dark`}>
+                    {pkg?.name}
+                  </h2>
+
+                  <div className="flex items-center flex-wrap gap-x-1">
+                    {pkg?.discount && pkg?.discount > 0 ? (
+                      <h2
+                        className={`text-base text-dashboard-dark/30 line-through`}
+                      >
+                        {formatToRupiah(pkg?.price)}
+                      </h2>
+                    ) : null}
+                    {pkg?.price && (
+                      <h2 className={`font-medium text-dashboard-dark`}>
+                        {formatToRupiah(pkg?.price - pkg?.discount)}
+                      </h2>
+                    )}
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setModalPackage({
+                      isOpen: true,
+                      component: pkg,
+                    });
+                  }}
+                  className="mt-4 flex items-center gap-x-1 text-base font-medium"
+                >
+                  Detail Paket
+                  <span>
+                    <BiChevronRight className="text-base" />
+                  </span>
+                </button>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </>
   );
 };

@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (!isExpired) {
       return {
         redirect: {
-          destination: "/admin/orders",
+          destination: "/admin/clients",
           permanent: false,
         },
       };

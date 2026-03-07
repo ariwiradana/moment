@@ -73,6 +73,7 @@ const initalFormData: Client & {
   coverVideo: null,
   theme_category_id: null,
   password: "",
+  payment_status: "pending",
 };
 
 export const useAdminCreateClient = (token: string | null) => {
@@ -120,7 +121,7 @@ export const useAdminCreateClient = (token: string | null) => {
           if (selected) setSelectedTheme(selected);
         }
       },
-    }
+    },
   );
 
   const { data: packages } = useSWR<{
@@ -136,7 +137,7 @@ export const useAdminCreateClient = (token: string | null) => {
           if (selected) setSelectedPackage(selected);
         }
       },
-    }
+    },
   );
 
   const clientSchema = z.object({
@@ -194,7 +195,7 @@ export const useAdminCreateClient = (token: string | null) => {
         for (const image of Array.from(formData.gallery)) {
           i++;
           const toastUpload = toast.loading(
-            `Mengunggah gambar galeri ${i} dari ${images.length}`
+            `Mengunggah gambar galeri ${i} dari ${images.length}`,
           );
           try {
             if (image.size > MAX_SIZE) {
@@ -215,14 +216,14 @@ export const useAdminCreateClient = (token: string | null) => {
             if (result.success) {
               toast.success(
                 `Gambar galeri ${i} dari ${images.length} berhasil diunggah!`,
-                { id: toastUpload }
+                { id: toastUpload },
               );
               imageURLs.push(result.data.secure_url);
             }
           } catch (error: any) {
             toast.error(
               error.message ||
-                `Terjadi kesalahan saat mengunggah gambar galeri ${i} dari ${images.length}`
+                `Terjadi kesalahan saat mengunggah gambar galeri ${i} dari ${images.length}`,
             );
           }
         }
@@ -243,7 +244,7 @@ export const useAdminCreateClient = (token: string | null) => {
         for (const video of Array.from(formData.videos)) {
           i++;
           const toastUpload = toast.loading(
-            `Mengunggah video ${i} dari ${videos.length}`
+            `Mengunggah video ${i} dari ${videos.length}`,
           );
           try {
             if (video.size > MAX_SIZE) {
@@ -264,14 +265,14 @@ export const useAdminCreateClient = (token: string | null) => {
             if (result.success) {
               toast.success(
                 `Video ${i} dari ${videos.length} berhasil diunggah!`,
-                { id: toastUpload }
+                { id: toastUpload },
               );
               videoURLs.push(result.data.secure_url);
             }
           } catch (error: any) {
             toast.error(
               error.message ||
-                `Terjadi kesalahan saat mengunggah video ${i} dari ${videos.length}`
+                `Terjadi kesalahan saat mengunggah video ${i} dari ${videos.length}`,
             );
           }
         }
@@ -313,7 +314,7 @@ export const useAdminCreateClient = (token: string | null) => {
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Terjadi kesalahan saat mengunggah musik`
+            error.message || `Terjadi kesalahan saat mengunggah musik`,
           );
         }
       }
@@ -356,7 +357,8 @@ export const useAdminCreateClient = (token: string | null) => {
           }
         } catch (error: any) {
           toast.error(
-            error.message || `Terjadi kesalahan saat mengunggah video background`
+            error.message ||
+              `Terjadi kesalahan saat mengunggah video background`,
           );
         }
       }
@@ -375,7 +377,7 @@ export const useAdminCreateClient = (token: string | null) => {
         const MAX_SIZE = 5 * 1024 * 1024;
 
         const toastUpload = toast.loading(
-          `Mengunggah foto peserta ${i + 1}...`
+          `Mengunggah foto peserta ${i + 1}...`,
         );
 
         try {
@@ -403,7 +405,7 @@ export const useAdminCreateClient = (token: string | null) => {
         } catch (error: any) {
           toast.error(
             error.message ||
-              `Terjadi kesalahan saat mengunggah foto peserta ${i + 1}`
+              `Terjadi kesalahan saat mengunggah foto peserta ${i + 1}`,
           );
         }
       }
@@ -448,7 +450,7 @@ export const useAdminCreateClient = (token: string | null) => {
         } catch (error: any) {
           toast.error(
             error.message ||
-              `Terjadi kesalahan saat mengunggah foto acara ${i + 1}`
+              `Terjadi kesalahan saat mengunggah foto acara ${i + 1}`,
           );
         }
       }
@@ -474,7 +476,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
   const handleChangeClient = (
     value: string | number | FileList | File | string[],
-    name: string
+    name: string,
   ) => {
     setErrors((state) => ({
       ...state,
@@ -482,7 +484,7 @@ export const useAdminCreateClient = (token: string | null) => {
     }));
 
     const selectedPackage = packages?.data.find(
-      (pk: Package) => pk.id === formData.package_id
+      (pk: Package) => pk.id === formData.package_id,
     );
 
     if (name === "gallery") {
@@ -490,10 +492,10 @@ export const useAdminCreateClient = (token: string | null) => {
         (value as FileList).length > Number(selectedPackage?.max_gallery_photos)
       ) {
         toast.error(
-          `Maximum gallery photos is ${selectedPackage?.max_gallery_photos}`
+          `Maximum gallery photos is ${selectedPackage?.max_gallery_photos}`,
         );
         const galleryInput = document.getElementById(
-          "gallery"
+          "gallery",
         ) as HTMLInputElement;
         if (galleryInput) galleryInput.value = "";
         setFormData((state) => ({
@@ -512,7 +514,7 @@ export const useAdminCreateClient = (token: string | null) => {
 
     if (name === "theme_id") {
       const selectedTheme: Theme = themes?.data.find(
-        (th) => th.id === Number(value)
+        (th) => th.id === Number(value),
       ) as Theme;
       const options: Option[] =
         selectedTheme.theme_categories?.map((tc) => ({
@@ -524,14 +526,14 @@ export const useAdminCreateClient = (token: string | null) => {
       setFormData((state) => ({
         ...state,
         theme_category_id: Number(
-          (selectedTheme.theme_categories as ThemeCategory[])[0].id
+          (selectedTheme.theme_categories as ThemeCategory[])[0].id,
         ),
       }));
     }
 
     if (name === "package_id") {
       const selectedPackage = packages?.data.find(
-        (pk) => pk.id === Number(value)
+        (pk) => pk.id === Number(value),
       );
       setSelectedPackage(selectedPackage as Package);
     }
@@ -559,7 +561,7 @@ export const useAdminCreateClient = (token: string | null) => {
   const handleChangeParticipant = (
     value: string | number | FileList,
     name: string,
-    index: number
+    index: number,
   ) => {
     let currentParticipants: Participant[] = [...formData.participants];
 
@@ -577,7 +579,7 @@ export const useAdminCreateClient = (token: string | null) => {
   const handleChangeEvent = (
     value: string | number | FileList,
     name: string,
-    index: number
+    index: number,
   ) => {
     let currentEvents: Event[] = [...formData.events];
 
@@ -627,7 +629,7 @@ export const useAdminCreateClient = (token: string | null) => {
             method: "POST",
             body: JSON.stringify(modifiedFormdata),
           },
-          token
+          token,
         );
 
         if (!response.ok) {
@@ -660,7 +662,7 @@ export const useAdminCreateClient = (token: string | null) => {
               role: "client",
             }),
           },
-          token
+          token,
         );
 
         if (!response.ok) {

@@ -33,7 +33,7 @@ export const useAdminLogin = () => {
         setIsLoading(false);
       } else {
         if (result.user.role === "admin") {
-          router.push("/admin/orders");
+          router.push("/admin/clients");
         }
       }
     } catch (error: any) {

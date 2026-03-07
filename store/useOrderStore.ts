@@ -18,9 +18,7 @@ interface StoreState {
   pkg: Package | null;
   isLoading: boolean;
   fullfilledSteps: boolean[];
-  order: Omit<Order, "client_id">;
   toggleEndTimes: boolean[];
-  hasRecreateInvoice: boolean;
   setForm: (
     name: string,
     value:
@@ -39,9 +37,7 @@ interface StoreState {
   resetForm: () => void;
   setFullForm: (form: Client) => void;
   setFullfilledSteps: (fullfilledSteps: boolean[]) => void;
-  setNewOrder: (order: Omit<Order, "client_id">) => void;
   setToggleEndTimes: (toggleEndTimes: boolean[]) => void;
-  setHasRecreateInvoice: (hasRecreateInvoice: boolean) => void;
 }
 
 export const initialEvent: Event = {
@@ -75,18 +71,7 @@ export const initialForm: Client = {
   gallery: [],
   music: "",
   videos: [],
-};
-
-const initialOrder: Order = {
-  id: undefined,
-  client_id: undefined,
-  admin_fee: 0,
-  price: 0,
-  order_id: "",
-  discount: 0,
-  status: "pending",
-  created_at: moment().format("DD-MM-YYYY"),
-  snap_token: undefined,
+  payment_status: "pending",
 };
 
 const useOrderStore = create<StoreState>((set) => ({
@@ -98,9 +83,7 @@ const useOrderStore = create<StoreState>((set) => ({
   themes: null,
   isLoading: false,
   fullfilledSteps: [],
-  order: initialOrder,
   toggleEndTimes: [false],
-  hasRecreateInvoice: false,
 
   setForm: (
     name: string,
@@ -138,12 +121,7 @@ const useOrderStore = create<StoreState>((set) => ({
 
   setFullfilledSteps: (fullfilledSteps: boolean[]) => set({ fullfilledSteps }),
 
-  setNewOrder: (order: Omit<Order, "client_id">) => set({ order }),
-
   setToggleEndTimes: (toggleEndTimes: boolean[]) => set({ toggleEndTimes }),
-
-  setHasRecreateInvoice: (hasRecreateInvoice: boolean) =>
-    set({ hasRecreateInvoice }),
 }));
 
 export default useOrderStore;

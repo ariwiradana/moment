@@ -74,6 +74,7 @@ CREATE TABLE clients (
   gift_account_name VARCHAR(100),
   gift_account_number VARCHAR(100),
   guests TEXT[],
+  payment_status VARCHAR(20) CHECK (payment_status IN ('pending', 'paid', 'cancelled'))
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );

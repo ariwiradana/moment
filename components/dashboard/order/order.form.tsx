@@ -1,15 +1,14 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { BiChevronLeft, BiCheck, BiSave, BiCloudUpload } from "react-icons/bi";
+import { BiChevronLeft, BiCheck, BiSave } from "react-icons/bi";
 import toast from "react-hot-toast";
 import useOrderStore from "@/store/useOrderStore";
 import { getClient } from "@/lib/client";
 import { useRouter } from "next/router";
 import useSteps from "./order.steps";
 import { KeyedMutator } from "swr";
-import { Client, Order } from "@/lib/types";
+import { Client } from "@/lib/types";
 import ButtonPrimary from "../elements/button.primary";
 import { redhat } from "@/lib/fonts";
-import { generateInvoiceId } from "@/utils/generateInvoiceId";
 
 interface Props {
   mutate?: KeyedMutator<{ data: Client }>;
@@ -22,11 +21,7 @@ const OrderForm = ({ mutate }: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const isUpdate = router.pathname === "/order/[orderId]";
-  const isClientSaved = store.form.id;
   const isLastStep = store.activeStep === steps.length - 1;
-
-  const isSettlement = store.order.status === "settlement";
 
   const { slug } = router.query as { slug?: string };
 
@@ -43,49 +38,16 @@ const OrderForm = ({ mutate }: Props) => {
   const handleSaveClient = async () => {
     try {
       const payload = { ...store.form };
-      const response = await getClient(
-        `/api/guest/order/client/${
-          isUpdate || isClientSaved ? "update" : "create"
-        }`,
-        {
-          method: isUpdate || isClientSaved ? "PUT" : "POST",
-          body: JSON.stringify(payload),
-        },
-      );
-      const result = await response.json();
-
-      if (result.success) {
-        if (mutate) mutate();
-        store.setForm("id", result.data.id);
-        return result.data;
-      }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
-    }
-  };
-
-  const handleSaveOrder = async (client: Omit<Client, "cover" | "seo">) => {
-    if (!client) return;
-
-    try {
-      const payload: Order = {
-        ...store.order,
-        client_id: client.id,
-        order_id: generateInvoiceId(),
-      };
-
-      const response = await getClient(`/api/guest/order/create`, {
+      const response = await getClient(`/api/guest/order/client/create`, {
         method: "POST",
         body: JSON.stringify(payload),
       });
       const result = await response.json();
 
       if (result.success) {
-        store.setNewOrder({ ...store.order, order_id: result.data.order_id });
-        console.log("hasil save order", result.data);
+        if (mutate) mutate();
+        store.setForm("id", result.data.id);
         return result.data;
-      } else {
-        toast.error(result.message);
       }
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Terjadi kesalahan");
@@ -106,11 +68,8 @@ const OrderForm = ({ mutate }: Props) => {
         setIsLoading(true);
         const toastId = toast.loading("Menyimpan data pesanan");
         try {
-          const newClient = await handleSaveClient();
+          await handleSaveClient();
 
-          if (!isUpdate || !isClientSaved) {
-            await handleSaveOrder(newClient);
-          }
           toast.success("Undanganmu berhasil disimpan", { id: toastId });
           router.push(`/${slug}/order/berhasil`);
         } catch (error) {
@@ -151,22 +110,8 @@ const OrderForm = ({ mutate }: Props) => {
           className="print:hidden"
           disabled={!isFullfilledStep}
           type="submit"
-          title={
-            isLastStep && isSettlement
-              ? "Simpan Perubahan"
-              : isLastStep
-                ? "Simpan Data"
-                : "Lanjut"
-          }
-          icon={
-            isLastStep && isUpdate ? (
-              <BiSave />
-            ) : isLastStep ? (
-              <BiCloudUpload />
-            ) : (
-              <BiCheck />
-            )
-          }
+          title={isLastStep ? "Simpan Data" : "Lanjut"}
+          icon={isLastStep ? <BiSave /> : <BiCheck />}
         />
       </div>
     </form>

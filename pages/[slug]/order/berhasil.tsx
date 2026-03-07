@@ -60,15 +60,6 @@ const OrderComplete = () => {
               Moment akan menghubungimu dalam waktu dekat. 💌
             </p>
 
-            <div className="bg-dashboard-dark/[0.02] border border-dashboard-dark/10 p-4 text-left mb-6">
-              <p className="text-sm text-dashboard-dark/50 mb-1">
-                Nomor Invoice
-              </p>
-              <p className="font-medium text-dashboard-dark">
-                {store.order.order_id}
-              </p>
-            </div>
-
             <div className="flex justify-center">
               <Link href="/">
                 <ButtonPrimary title="Kembali ke Home" icon={<BiHomeAlt />} />

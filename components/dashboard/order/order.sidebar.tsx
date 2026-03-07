@@ -8,10 +8,6 @@ import useSteps from "./order.steps";
 const OrderSidebar = () => {
   const store = useOrderStore();
   const steps = useSteps();
-  // const router = useRouter();
-
-  // const isUpdate = router.pathname === "/order/[orderId]";
-
   return (
     <div className="flex flex-col sticky top-36 space-y-2">
       <div className="flex space-x-3">
@@ -28,7 +24,6 @@ const OrderSidebar = () => {
         const isActive = index === store.activeStep;
         const isLast = index === steps.length - 1;
         const isFullfilled = store.fullfilledSteps[index];
-        const isSettlement = store.order.status === "settlement";
 
         return (
           <div key={index} className="flex gap-x-4 relative py-4">
@@ -45,23 +40,23 @@ const OrderSidebar = () => {
                 className={`w-9 h-9 flex justify-center items-center rounded-full ${
                   isActive
                     ? "bg-dashboard-dark"
-                    : isFullfilled || isSettlement
-                    ? "bg-dashboard-primary"
-                    : "bg-dashboard-dark/10"
+                    : isFullfilled
+                      ? "bg-dashboard-primary"
+                      : "bg-dashboard-dark/10"
                 }`}
               >
                 {isActive ? (
                   <div className="text-white text-lg">{step.icon}</div>
-                ) : isFullfilled || isSettlement ? (
+                ) : isFullfilled ? (
                   <BiCheck className="text-white text-lg" />
                 ) : (
                   <p
                     className={`${
                       isActive
                         ? "text-white"
-                        : isFullfilled || isSettlement
-                        ? "text-dashboard-dark"
-                        : "text-dashboard-dark/30"
+                        : isFullfilled
+                          ? "text-dashboard-dark"
+                          : "text-dashboard-dark/30"
                     }`}
                   >
                     {index + 1}
@@ -72,7 +67,7 @@ const OrderSidebar = () => {
             <div className={`${redhat.className} hidden md:block`}>
               <h5
                 className={`lg:text-lg font-semibold ${
-                  isActive || isFullfilled || isSettlement
+                  isActive || isFullfilled
                     ? "text-dashboard-dark"
                     : "text-dashboard-dark/30"
                 }`}
@@ -81,7 +76,7 @@ const OrderSidebar = () => {
               </h5>
               <p
                 className={`text-sm lg:text-base ${
-                  isActive || isFullfilled || isSettlement
+                  isActive || isFullfilled
                     ? "text-dashboard-dark/70"
                     : "text-dashboard-dark/30"
                 }`}
