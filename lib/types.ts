@@ -97,7 +97,6 @@ export interface Client {
   guests?: string[];
   wishes?: Wish[];
   media?: MediaForm | null;
-  order?: Order;
   created_at?: Date | string;
   updated_at?: Date | string;
 }

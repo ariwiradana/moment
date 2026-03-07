@@ -36,6 +36,7 @@ import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { isValidUrl } from "@/utils/checkIsValidURL";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
+import { clientStatus } from "@/constants/status";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface UpdateClientProps {
@@ -59,36 +60,22 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
           <h1 className="text-2xl font-bold">Klien</h1>
 
           {state.formData.status && (
-            <div className="flex items-center font-semibold text-sm">
-              <div
-                className={`px-3 py-1 rounded-lg flex items-center gap-x-2 ${
-                  montserrat.className
-                } ${
+            <div className="flex">
+              <span
+                className={`text-xs font-semibold px-2 py-[2px] capitalize rounded-lg ${
                   state.formData.status === "active"
-                    ? "bg-admin-success/10 text-admin-success"
+                    ? "bg-green-100 text-green-600"
                     : state.formData.status === "inactive"
-                    ? "bg-gray-300/20 text-gray-500"
-                    : "bg-admin-primary/10 text-admin-primary" // untuk done
+                      ? "bg-gray-100 text-gray-600"
+                      : "bg-blue-100 text-blue-600"
                 }`}
               >
-                <div
-                  className={`w-2 h-2 rounded-lg ${
-                    state.formData.status === "active"
-                      ? "bg-admin-success"
-                      : state.formData.status === "inactive"
-                      ? "bg-gray-400"
-                      : "bg-admin-primary" // untuk done
-                  }`}
-                ></div>
-                <span className="capitalize text-admin-hover-dark">
-                  {state.formData.status === "active"
-                    ? "Aktif"
-                    : state.formData.status === "inactive"
-                    ? "Nonaktif"
-                    : "Selesai"}{" "}
-                  {/* untuk done */}
-                </span>
-              </div>
+                {
+                  clientStatus.find(
+                    (status) => state.formData.status === status.value,
+                  )?.label
+                }
+              </span>
             </div>
           )}
 
@@ -189,9 +176,9 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                     state.formData.password?.length > 0
                       ? "Simpan"
                       : state.showChangePassword &&
-                        state.formData.password?.length === 0
-                      ? "Batal"
-                      : "Ganti Kata Sandi"
+                          state.formData.password?.length === 0
+                        ? "Batal"
+                        : "Ganti Kata Sandi"
                   }
                   className="mb-[10px]"
                 />
@@ -212,7 +199,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 onChange={(e) =>
                   actions.handleChangeClient(
                     Number(e.target.value),
-                    "theme_category_id"
+                    "theme_category_id",
                   )
                 }
                 label="Kategori Tema"
@@ -224,7 +211,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               onChange={(e) => {
                 actions.handleChangeClient(
                   Number(e.target.value),
-                  "package_id"
+                  "package_id",
                 );
 
                 console.log(e.target.value);
@@ -252,7 +239,6 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                 Social Description
               </label>
               <ReactQuill
-                // modules={{ toolbar: false }}
                 theme="snow"
                 value={state.formData.social_description || ""}
                 onChange={(value) =>
@@ -276,7 +262,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               onChange={(e) =>
                 actions.handleChangeClient(
                   e.target.value,
-                  "opening_description"
+                  "opening_description",
                 )
               }
               label="Deskripsi Pembuka"
@@ -294,7 +280,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
               onChange={(e) =>
                 actions.handleChangeClient(
                   e.target.value,
-                  "closing_description"
+                  "closing_description",
                 )
               }
               label="Deskripsi Penutup"
@@ -332,7 +318,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               onClick={() =>
                                 actions.handleDeleteImageGallery(
                                   img,
-                                  state.formData.id as number
+                                  state.formData.id as number,
                                 )
                               }
                               disabled={state.loading || state.isLoading}
@@ -362,7 +348,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                 onClick={() =>
                                   actions.handleSetCover(
                                     img,
-                                    state.formData.id as number
+                                    state.formData.id as number,
                                   )
                                 }
                                 type="button"
@@ -378,7 +364,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                 onClick={() =>
                                   actions.handleSetSeoImage(
                                     img,
-                                    state.formData.id as number
+                                    state.formData.id as number,
                                   )
                                 }
                                 type="button"
@@ -418,7 +404,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                         e.target.files?.length
                           ? (e.target.files[0] as File)
                           : "",
-                        "video-background"
+                        "video-background",
                       )
                     }
                     className="w-full"
@@ -446,7 +432,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                     onClick={() =>
                                       actions.handleDeleteVideo(
                                         video,
-                                        state.formData.id as number
+                                        state.formData.id as number,
                                       )
                                     }
                                     type="button"
@@ -511,7 +497,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                   onChange={(e) =>
                     actions.handleChangeClient(
                       e.target.files?.length ? (e.target.files[0] as File) : "",
-                      "music"
+                      "music",
                     )
                   }
                   className="w-full"
@@ -534,7 +520,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                       onClick={() =>
                         actions.handleDeleteMusic(
                           state.formData.music as string,
-                          state.formData.id as number
+                          state.formData.id as number,
                         )
                       }
                       icon={<BiX />}
@@ -572,7 +558,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                   actions.handleDeleteImageEvent(
                                     state.formData.events[index]
                                       .image as string,
-                                    state.formData.events[index].id as number
+                                    state.formData.events[index].id as number,
                                   )
                                 }
                                 type="button"
@@ -593,7 +579,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               actions.handleChangeEvent(
                                 e.target.value,
                                 "name",
-                                index
+                                index,
                               )
                             }
                             className="w-full"
@@ -606,7 +592,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               actions.handleChangeEvent(
                                 e.target.files as FileList,
                                 "image",
-                                index
+                                index,
                               )
                             }
                             className="w-full"
@@ -620,7 +606,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           actions.handleChangeEvent(
                             e.target.value,
                             "address_url",
-                            index
+                            index,
                           )
                         }
                         className="w-full"
@@ -633,7 +619,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           actions.handleChangeEvent(
                             e.target.value,
                             "address",
-                            index
+                            index,
                           )
                         }
                         label="Alamat"
@@ -644,7 +630,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           actions.handleChangeEvent(
                             e.target.value,
                             "date",
-                            index
+                            index,
                           )
                         }
                         className="w-full"
@@ -658,7 +644,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeEvent(
                               e.target.value,
                               "start_time",
-                              index
+                              index,
                             )
                           }
                           className="w-full"
@@ -674,7 +660,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                 actions.handleChangeEvent(
                                   e.target.value,
                                   "end_time",
-                                  index
+                                  index,
                                 )
                               }
                               className="w-full"
@@ -688,7 +674,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                 actions.handleChangeEvent(
                                   e.target.value,
                                   "end_time",
-                                  index
+                                  index,
                                 )
                               }
                               className="w-full"
@@ -774,7 +760,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                                     state.formData.participants[index]
                                       .image as string,
                                     state.formData.participants[index]
-                                      .id as number
+                                      .id as number,
                                   )
                                 }
                                 type="button"
@@ -795,7 +781,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               actions.handleChangeParticipant(
                                 e.target.value,
                                 "name",
-                                index
+                                index,
                               )
                             }
                           />
@@ -807,7 +793,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                               actions.handleChangeParticipant(
                                 e.target.value,
                                 "nickname",
-                                index
+                                index,
                               )
                             }
                           />
@@ -820,7 +806,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           actions.handleChangeParticipant(
                             e.target.files as FileList,
                             "image",
-                            index
+                            index,
                           )
                         }
                         className="w-full"
@@ -839,7 +825,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "parents_male",
-                              index
+                              index,
                             )
                           }
                         />
@@ -854,7 +840,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "parents_female",
-                              index
+                              index,
                             )
                           }
                         />
@@ -867,7 +853,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "gender",
-                              index
+                              index,
                             )
                           }
                           label="Jenis Kelamin"
@@ -879,7 +865,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "role",
-                              index
+                              index,
                             )
                           }
                           label="Role"
@@ -894,7 +880,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "child",
-                              index
+                              index,
                             )
                           }
                           label="Anak Ke"
@@ -908,7 +894,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "address",
-                            index
+                            index,
                           )
                         }
                       />
@@ -925,7 +911,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "facebook",
-                              index
+                              index,
                             )
                           }
                           label="Facebook"
@@ -939,7 +925,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "twitter",
-                              index
+                              index,
                             )
                           }
                           label="Twitter/X"
@@ -954,7 +940,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "instagram",
-                              index
+                              index,
                             )
                           }
                           label="Instagram"
@@ -968,7 +954,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             actions.handleChangeParticipant(
                               e.target.value,
                               "tiktok",
-                              index
+                              index,
                             )
                           }
                           label="TikTok"
@@ -981,7 +967,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                             onClick={() =>
                               actions.handleDeleteParticipant(
                                 participant.id as number,
-                                participant.image as string
+                                participant.image as string,
                               )
                             }
                             size="small"
@@ -1014,7 +1000,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                     onChange={(e) =>
                       actions.handleChangeClient(
                         e.target.value,
-                        "gift_bank_name"
+                        "gift_bank_name",
                       )
                     }
                     label="Nama Bank / Platform"
@@ -1024,7 +1010,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                     onChange={(e) =>
                       actions.handleChangeClient(
                         e.target.value,
-                        "gift_account_name"
+                        "gift_account_name",
                       )
                     }
                     label="Nama Akun"
@@ -1034,7 +1020,7 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
                     onChange={(e) =>
                       actions.handleChangeClient(
                         e.target.value,
-                        "gift_account_number"
+                        "gift_account_number",
                       )
                     }
                     label="Nomor Akun"
