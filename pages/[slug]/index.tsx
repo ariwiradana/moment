@@ -141,7 +141,7 @@ const MainPage: FC<PageProps> = ({ seo, slug }) => {
           <div className="w-full h-dvh bg-dashboard-dark p-2 flex justify-center items-center">
             <div data-aos="fade-up">
               <SplitText
-                text={seo.name}
+                text={seo.name?.replace(/\s*&\s*/, "\n&\n")}
                 className={`text-3xl md:text-4xl lg:text-5xl font-medium text-center text-white animate-pulse ${redhat.className}`}
                 delay={30}
                 animationFrom={{
