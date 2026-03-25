@@ -89,26 +89,30 @@ const ClientComponent = () => {
               1920: { slidesPerView: 6 },
             }}
           >
-            {clients.map((c, index) => (
-              <SwiperSlide key={c.id}>
-                <div className="aspect-square relative overflow-hidden">
-                  <Image
-                    sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
-                    src={
-                      c.cover ||
-                      `https://placehold.co/400/png?font=red-hat-display&text=${c.name.replaceAll(
-                        " ",
-                        "-",
-                      )}`
-                    }
-                    alt={`Klien Moment Invitation - Undangan digital Bali: ${c.name}`}
-                    fill
-                    className="object-cover"
-                    loading={index < 2 ? "eager" : "lazy"}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
+            {clients.map((c, index) => {
+              if (c.cover) {
+                return (
+                  <SwiperSlide key={c.id}>
+                    <div className="aspect-square relative overflow-hidden">
+                      <Image
+                        sizes="(max-width: 640px) 320px, (max-width: 768px) 460px, (max-width: 1024px) 720px, 720px"
+                        src={
+                          c.cover ||
+                          `https://placehold.co/400/png?font=red-hat-display&text=${c.name.replaceAll(
+                            " ",
+                            "-",
+                          )}`
+                        }
+                        alt={`Klien Moment Invitation - Undangan digital Bali: ${c.name}`}
+                        fill
+                        className="object-cover"
+                        loading={index < 2 ? "eager" : "lazy"}
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              }
+            })}
           </Swiper>
         )}
       </div>

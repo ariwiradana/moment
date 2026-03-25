@@ -16,7 +16,7 @@ const Gift: NextPage = () => {
   if (client?.package?.name === "Exclusive")
     return (
       <section className="h-dvh snap-start w-full relative">
-        <div className="absolute z-20 inset-0 bg-gradient-to-b from-luma-dark/80 to-luma-primary/95 flex flex-col justify-center items-center py-10">
+        <div className="absolute z-20 inset-0 bg-luma-primary/80 flex flex-col justify-center items-center py-10">
           <h2
             className="font-butler leading-[40px] text-white text-[40px] md:text-5xl lg:text-7xl"
             aria-label="Judul galeri foto kami"
@@ -71,7 +71,9 @@ const Gift: NextPage = () => {
               className={`text-white/70 mt-4 text-[10px] md:text-xs lg:text-sm lg:text-center tracking-[3px] mb-3 ${rubik.className}`}
             >
               <span className="lowercase font-light">a/n</span>{" "}
-              <span className="uppercase">{client?.gift_account_name}</span>
+              <span className="uppercase">
+                {client?.gift_account_name || "Moment Invitation"}
+              </span>
             </p>
             <p
               className={`${rubik.className} text-[10px] md:text-xs lg:text-sm font-light text-center text-white`}
