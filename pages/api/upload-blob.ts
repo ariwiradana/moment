@@ -18,19 +18,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           if (err) reject(err);
           else resolve({ fields, files });
         });
-      }
+      },
     );
 
     const { files } = parsedForm;
     const { file } = files as Files;
 
-    const folder = process.env.NODE_ENV || "development";
-
     try {
       if (file?.length) {
         const result = await cloudinary.uploader.upload(file[0].filepath, {
           resource_type: "auto",
-          folder,
         });
         return res.status(200).json({ success: true, data: result });
       }
