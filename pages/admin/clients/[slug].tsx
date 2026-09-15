@@ -236,7 +236,8 @@ const UpdateClient: React.FC<UpdateClientProps> = ({ slug, token }) => {
             />
             <div>
               <label className="block text-dashboard-dark/60 mb-1 text-sm">
-                Social Description
+                Social Description *pastikan isi {"{{name}}"} dan{" "}
+                {"{{url}}"}
               </label>
               <ReactQuill
                 theme="snow"

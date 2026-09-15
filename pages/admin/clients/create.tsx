@@ -86,7 +86,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
               onChange={(e) =>
                 actions.handleChangeClient(
                   Number(e.target.value),
-                  "theme_category_id"
+                  "theme_category_id",
                 )
               }
               label="Kategori Tema"
@@ -100,9 +100,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             }
             label="Paket"
           />
-          <h1 className="text-2xl font-bold mb-4 mt-8">
-            Form Media
-          </h1>
+          <h1 className="text-2xl font-bold mb-4 mt-8">Form Media</h1>
           <Input
             value={state.formData.opening_title}
             onChange={(e) =>
@@ -135,7 +133,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
           />
           <div>
             <label className="block text-dashboard-dark/60 mb-1 text-sm">
-              Social Description
+              Social Description *pastikan isi {"{{name}}"} dan {"{{url}}"}
             </label>
             <ReactQuill
               modules={{ toolbar: false }}
@@ -193,7 +191,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
             onChange={(e) =>
               actions.handleChangeClient(
                 e.target.files?.length ? (e.target.files[0] as File) : "",
-                "music"
+                "music",
               )
             }
             className="w-full"
@@ -223,7 +221,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                         actions.handleChangeEvent(
                           e.target.files as FileList,
                           "image",
-                          index
+                          index,
                         )
                       }
                       className="w-full"
@@ -236,7 +234,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                         actions.handleChangeEvent(
                           e.target.value,
                           "address",
-                          index
+                          index,
                         )
                       }
                       label="Alamat"
@@ -247,7 +245,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                         actions.handleChangeEvent(
                           e.target.value,
                           "address_url",
-                          index
+                          index,
                         )
                       }
                       className="w-full"
@@ -269,7 +267,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeEvent(
                             e.target.value,
                             "start_time",
-                            index
+                            index,
                           )
                         }
                         className="w-full"
@@ -285,7 +283,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                               actions.handleChangeEvent(
                                 e.target.value,
                                 "end_time",
-                                index
+                                index,
                               )
                             }
                             className="w-full"
@@ -299,7 +297,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                               actions.handleChangeEvent(
                                 e.target.value,
                                 "end_time",
-                                index
+                                index,
                               )
                             }
                             className="w-full"
@@ -358,7 +356,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "name",
-                            index
+                            index,
                           )
                         }
                       />
@@ -370,7 +368,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "nickname",
-                            index
+                            index,
                           )
                         }
                       />
@@ -383,7 +381,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                         actions.handleChangeParticipant(
                           e.target.files as FileList,
                           "image",
-                          index
+                          index,
                         )
                       }
                     />
@@ -400,7 +398,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "parents_male",
-                            index
+                            index,
                           )
                         }
                       />
@@ -415,7 +413,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "parents_female",
-                            index
+                            index,
                           )
                         }
                       />
@@ -429,7 +427,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "gender",
-                            index
+                            index,
                           )
                         }
                         label="Jenis Kelamin"
@@ -442,7 +440,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "role",
-                            index
+                            index,
                           )
                         }
                         label="Role"
@@ -456,7 +454,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                           actions.handleChangeParticipant(
                             e.target.value,
                             "child",
-                            index
+                            index,
                           )
                         }
                         label="Anak Ke"
@@ -471,7 +469,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                         actions.handleChangeParticipant(
                           e.target.value,
                           "address",
-                          index
+                          index,
                         )
                       }
                     />
@@ -492,7 +490,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                               actions.handleChangeParticipant(
                                 e.target.value,
                                 "facebook",
-                                index
+                                index,
                               )
                             }
                             label="Facebook"
@@ -507,7 +505,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                               actions.handleChangeParticipant(
                                 e.target.value,
                                 "twitter",
-                                index
+                                index,
                               )
                             }
                             label="Twitter/X"
@@ -522,7 +520,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                               actions.handleChangeParticipant(
                                 e.target.value,
                                 "instagram",
-                                index
+                                index,
                               )
                             }
                             label="Instagram"
@@ -537,7 +535,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                               actions.handleChangeParticipant(
                                 e.target.value,
                                 "tiktok",
-                                index
+                                index,
                               )
                             }
                             label="TikTok"
@@ -575,7 +573,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                   onChange={(e) =>
                     actions.handleChangeClient(
                       e.target.value,
-                      "gift_account_name"
+                      "gift_account_name",
                     )
                   }
                   label="Nama Akun"
@@ -585,7 +583,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ token }) => {
                   onChange={(e) =>
                     actions.handleChangeClient(
                       e.target.value,
-                      "gift_account_number"
+                      "gift_account_number",
                     )
                   }
                   label="Nomor Akun"

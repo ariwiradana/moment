@@ -83,7 +83,7 @@ const AddGuestItem = ({
       try {
         if (isApple && navigator.share) {
           await navigator.share({
-            title: client.opening_title,
+            // title: client.opening_title,
             text,
           });
         } else {
