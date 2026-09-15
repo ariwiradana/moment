@@ -1,6 +1,6 @@
 import useParticipants from "@/hooks/themes/useParticipants";
 import { rubik } from "@/lib/fonts";
-import { Event, Participant } from "@/lib/types";
+import { Participant } from "@/lib/types";
 import { memo, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,34 +12,22 @@ import {
 } from "react-icons/bi";
 import { NextPage } from "next";
 import CurvedLoop from "../elements/curved.loop.text";
-import useEvents from "@/hooks/themes/useEvents";
-import { getEventNames } from "@/utils/getEventNames";
 
 const Participants: NextPage = () => {
   const {
-    state: { bride, groom, participants },
+    state: { bride, groom },
   } = useParticipants();
 
-  const {
-    state: { events },
-  } = useEvents();
-
-  const participantsList = useMemo(
-    () =>
-      [groom, bride, ...participants].filter((p): p is Participant =>
-        Boolean(p),
-      ),
-    [groom, bride, participants],
+  // Memoize participant list supaya tidak dire-render terus
+  const participants = useMemo(
+    () => [groom, bride].filter(Boolean),
+    [groom, bride]
   );
+
   return (
     <>
-      {participantsList.map((p, index) => (
-        <ParticipantItem
-          key={p?.name}
-          index={index}
-          data={p!}
-          events={events}
-        />
+      {participants.map((p) => (
+        <ParticipantItem key={p?.name} data={p!} />
       ))}
     </>
   );
@@ -47,22 +35,16 @@ const Participants: NextPage = () => {
 
 interface ParticipantProps {
   data: Participant;
-  index: number;
-  events: Event[];
 }
 
-const ParticipantItem = memo(({ data, index, events }: ParticipantProps) => {
+const ParticipantItem = memo(({ data }: ParticipantProps) => {
   return (
     <section className="h-dvh snap-start w-full relative">
       <CurvedLoop
-        marqueeText={`${
-          data.role !== "participant"
-            ? `${data.gender === "male" ? "The Groom" : "The Bride"}`
-            : `${getEventNames(events)}`
-        } ✦ `}
+        marqueeText={`The ✦ ${data.gender === "male" ? "Groom" : "Bride"}`}
         speed={2}
         curveAmount={100}
-        direction={index % 2 ? "right" : "left"}
+        direction={data.gender === "male" ? "right" : "left"}
         interactive={false}
       />
 
@@ -70,30 +52,25 @@ const ParticipantItem = memo(({ data, index, events }: ParticipantProps) => {
         <div className="lg:m-auto flex items-end gap-x-8">
           <div className="h-[70vh] hidden lg:block aspect-[4/5] relative">
             <Image
-              src={
-                (data.image as string) ||
-                `https://placehold.co/400/png?font=red-hat-display&text=${data.name}`
-              }
-              alt={`Foto desktop ${data.name}`}
+              src={data.image as string}
+              alt={`Foto desktop mempelai ${data.name}`}
               fill
               className="object-cover shimmer-dark transition-transform transform hover:scale-105 duration-500 ease-in-out"
               sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              quality={80}
-              priority={index === 0}
-              loading={index !== 0 ? "lazy" : "eager"}
+              quality={80} // tetap tajam tapi lebih ringan
+              priority={data.role === "groom"}
+              loading={data.role !== "groom" ? "lazy" : "eager"}
             />
           </div>
           <div className="mb-8">
             <p
               className={`${rubik.className} text-white/70 mb-3 text-[8px] md:text-[10px] lg:text-base uppercase tracking-[3px]`}
             >
-              {data.role !== "participant"
-                ? `Mempelai ${data.gender === "male" ? "Pria" : "Wanita"}`
-                : `Peserta ${getEventNames(events)}`}
+              Mempelai {data.gender === "male" ? "Pria" : "Wanita"}
             </p>
             <h2
               className="font-butler text-white text-[40px] md:text-5xl lg:text-7xl mb-4 leading-[36px] md:leading-[50px]"
-              aria-label={`Nama ${data.name}`}
+              aria-label={`Nama mempelai ${data.name}`}
             >
               {data.name}
             </h2>
@@ -146,21 +123,16 @@ const ParticipantItem = memo(({ data, index, events }: ParticipantProps) => {
           </div>
         </div>
       </div>
-      {data.image && (
-        <Image
-          src={
-            (data.image as string) ||
-            `https://placehold.co/400/png?font=red-hat-display&text=${data.name}`
-          }
-          alt={`Foto ${data.name}`}
-          fill
-          className="object-cover shimmer-dark transition-transform transform lg:grayscale lg:hidden block lg:opacity-50"
-          sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          quality={80} // tetap tajam tapi lebih ringan
-          priority={index === 0}
-          loading={index !== 0 ? "lazy" : "eager"}
-        />
-      )}
+      <Image
+        src={data.image as string}
+        alt={`Foto mempelai ${data.name}`}
+        fill
+        className="object-cover shimmer-dark transition-transform transform lg:grayscale lg:hidden block lg:opacity-50"
+        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        quality={80} // tetap tajam tapi lebih ringan
+        priority={data.role === "groom"}
+        loading={data.role !== "groom" ? "lazy" : "eager"}
+      />
     </section>
   );
 });

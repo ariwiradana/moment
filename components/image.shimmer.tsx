@@ -28,7 +28,8 @@ const ImageShimmer: React.FC<ImageShimmerProps> = (props) => {
       {loading && <ShimmerLoader />}
       <Image
         {...props}
-        onLoadingComplete={() => setLoading(false)}
+        alt={props.alt}
+        onLoad={() => setLoading(false)}
         className={`${loading ? "hidden" : "block"} ${props.className ?? ""}`}
       />
     </div>

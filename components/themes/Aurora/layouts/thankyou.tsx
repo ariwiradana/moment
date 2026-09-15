@@ -1,0 +1,110 @@
+import React, { memo } from "react";
+import { rubik } from "@/lib/fonts";
+import Link from "next/link";
+import { sosmedURLs } from "@/constants/sosmed";
+import {
+  AiOutlineInstagram,
+  AiOutlineMail,
+  AiOutlineTikTok,
+  AiOutlineWhatsApp,
+} from "react-icons/ai";
+import useClientStore from "@/store/useClientStore";
+import useParticipants from "@/hooks/themes/useParticipants";
+
+const ThankyouComponent = () => {
+  const { client } = useClientStore();
+  const { state: participantState } = useParticipants();
+
+  if (!client) return null;
+
+  const { closing_title, closing_description, theme_category, music_title } =
+    client;
+
+  return (
+    <section className="h-dvh snap-start w-full overflow-hidden relative flex flex-col justify-center">
+      <div className="absolute inset-0 bg-luma-primary/80 z-10"></div>
+      <div className="max-w-screen-sm mx-auto py-[60px] h-svh md:py-[100px] px-6 flex flex-col justify-center relative z-30">
+        <p
+          className={`text-white mt-4 text-xs md:text-sm lg:text-base uppercase tracking-[3px] text-center ${rubik.className}`}
+        >
+          {closing_title}
+        </p>
+
+        <p
+          className={`mt-6 text-center max-w-xl mx-auto text-[10px] md:text-xs lg:text-sm font-light text-white my-16 ${rubik.className}`}
+        >
+          {closing_description}
+        </p>
+
+        {theme_category?.name === "Pernikahan" && (
+          <>
+            <p
+              className={`text-white/70 mt-4 text-[10px] md:text-xs lg:text-sm uppercase tracking-[3px] text-center ${rubik.className}`}
+            >
+              Kami Yang Berbahagia
+            </p>
+            <h1 className="font-butler leading-[40px] md:leading-[56px] lg:leading-[60px] text-white text-5xl lg:text-7xl mb-3 mt-5 lg:mt-8 text-center">
+              {participantState.groom?.nickname} <br />&{" "}
+              {participantState.bride?.nickname}
+            </h1>
+          </>
+        )}
+        <ul className="flex flex-col justify-center gap-2 items-center relative z-30 mt-[100px] justify-self-end">
+          <li
+            className={`flex items-center justify-center gap-2 text-base text-white mt-2`}
+          >
+            <Link
+              aria-label="Hubungi kami via WhatsApp"
+              target="_blank"
+              href={sosmedURLs.whatsapp}
+            >
+              <AiOutlineWhatsApp />
+            </Link>
+            <Link
+              aria-label="Lihat galeri kami di Instagram"
+              target="_blank"
+              href={sosmedURLs.instagram}
+            >
+              <AiOutlineInstagram />
+            </Link>
+            <Link
+              aria-label="Lihat video kami di TikTok"
+              target="_blank"
+              href={sosmedURLs.tiktok}
+            >
+              <AiOutlineTikTok />
+            </Link>
+            <Link
+              aria-label="Kirim email ke Moment Invitation"
+              target="_blank"
+              href={sosmedURLs.email}
+            >
+              <AiOutlineMail />
+            </Link>
+          </li>
+          <li className="mt-2">
+            <Link href="/" target="_blank">
+              <p
+                className={`${rubik.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
+              >
+                Undangan Digital © {new Date().getFullYear()} | Moment
+                Invitation
+              </p>
+            </Link>
+          </li>
+          {music_title && (
+            <li>
+              <p
+                className={`flex justify-center items-center gap-x-2 ${rubik.className} text-center uppercase text-white text-[8px] md:text-[10px] tracking-[2px]`}
+              >
+                {music_title}
+              </p>
+            </li>
+          )}
+        </ul>
+      </div>
+    </section>
+  );
+};
+
+export default memo(ThankyouComponent);

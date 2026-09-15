@@ -18,7 +18,7 @@ const Hero: NextPage = () => {
 
   const currentEvent = useMemo(
     () => events?.[currentIndex],
-    [events, currentIndex],
+    [events, currentIndex]
   );
 
   // Format tanggal tanpa moment.js
@@ -88,20 +88,18 @@ const Hero: NextPage = () => {
               </p>
             </div>
           </div>
-          {client?.theme_category?.slug === "pernikahan" && (
-            <h1
-              data-aos="fade-down"
-              className="font-butler leading-[46px] md:leading-[56px] lg:leading-[76px] text-center text-white text-6xl md:text-7xl lg:text-8xl mb-3 mt-5 lg:mt-8"
-            >
-              <span aria-label={`Pengantin pria: ${groom?.nickname}`}>
-                {groom?.nickname}
-              </span>
-              <br />&{" "}
-              <span aria-label={`Pengantin wanita: ${bride?.nickname}`}>
-                {bride?.nickname}
-              </span>
-            </h1>
-          )}
+          <h1
+            data-aos="fade-down"
+            className="font-butler leading-[46px] md:leading-[56px] lg:leading-[76px] text-center text-white text-6xl md:text-7xl lg:text-8xl mb-3 mt-5 lg:mt-8"
+          >
+            <span aria-label={`Pengantin pria: ${groom?.nickname}`}>
+              {groom?.nickname}
+            </span>
+            <br />&{" "}
+            <span aria-label={`Pengantin wanita: ${bride?.nickname}`}>
+              {bride?.nickname}
+            </span>
+          </h1>
 
           <div data-aos="fade-up" data-aos-delay="600"></div>
         </div>
