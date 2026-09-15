@@ -4,31 +4,23 @@ import useLightbox from "@/hooks/themes/useLightbox";
 import { rubik } from "@/lib/fonts";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-// import dynamic from "next/dynamic";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Grid, Autoplay } from "swiper/modules";
-// import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { NextPage } from "next";
 import useClientStore from "@/store/useClientStore";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
 import { getYouTubeVideoId } from "@/utils/getYoutubeId";
 import YoutubeEmbed from "../../youtube.embed";
 import { getParticipantNames } from "@/utils/getParticipantNames";
-
-// ✅ Dynamic import hanya load Lightbox saat dibuka
-// const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
-//   ssr: false,
-//   loading: () => null,
-// });
+import FsLightbox from "fslightbox-react";
 
 const Photos: NextPage = () => {
+  const { client } = useClientStore();
   const {
     state: { images },
-    actions: { handleToggleLightbox },
   } = useLightbox();
-  const { client } = useClientStore();
   const { videos = [], participants = [] } = client || {};
 
   const swiperRef = useRef<SwiperType | null>(null);
@@ -69,21 +61,24 @@ const Photos: NextPage = () => {
     };
   }, [youtubeVideos.length]);
 
-  // if (!images?.length) return null;
+  const [lightboxController, setLightboxController] = useState({
+    toggler: false,
+    slide: 1,
+  });
+
+  function openLightboxOnSlide(number: number) {
+    setLightboxController({
+      toggler: !lightboxController.toggler,
+      slide: number,
+    });
+  }
+
+  const imageList = useMemo(() => images.map((img) => img.src), [images]);
+  if (!images || images.length === 0) return null; // ✅ Cegah render jika tidak ada gambar
 
   return (
     <>
-      {/* ✅ Lightbox hanya dirender saat open */}
-      {/* {isOpen && (
-        <Lightbox
-          index={imageIndex}
-          plugins={[Zoom]}
-          open={isOpen}
-          close={() => setIsOpen(false)}
-          slides={images}
-          aria-label={`Galeri foto ${imageIndex + 1} dari ${images.length}`}
-        />
-      )} */}
+      <FsLightbox toggler={lightboxController.toggler} sources={imageList} />
 
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-gradient-to-b lg:px-20 from-luma-dark/50 to-luma-dark/80 flex flex-col justify-center items-center">
@@ -149,17 +144,17 @@ const Photos: NextPage = () => {
                 1280: { slidesPerView: 5 },
               }}
             >
-              {images.map((image, index) => (
+              {imageList.map((src, index) => (
                 <SwiperSlide key={index}>
                   <div
                     className="h-full w-full cursor-pointer"
-                    onClick={() => handleToggleLightbox(image.src)}
+                    onClick={() => openLightboxOnSlide(index + 1)}
                     aria-label={`Buka Lightbox foto ${index + 1}`}
                   >
                     <div className="aspect-square w-full h-full relative">
                       <Image
                         alt={`Foto Galeri ${index + 1}`}
-                        src={image.src}
+                        src={src}
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
                         quality={70} // ✅ turunkan sedikit untuk performa

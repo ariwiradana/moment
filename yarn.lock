@@ -3005,6 +3005,11 @@ fsevents@~2.3.2:
   resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
+fslightbox-react@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/fslightbox-react/-/fslightbox-react-2.1.1.tgz#23bf4577fa5478e993d968179b7fd0e9ad6352e1"
+  integrity sha512-lRBhLqdj93C8WYSJr4uAAqn+nzfVBH8+6UHyLwR34w6cQlLOtLudlopxnniduzLtCpXYEDilNhQQ39WNnIPj1A==
+
 function-bind@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz"

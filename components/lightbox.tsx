@@ -1,230 +1,153 @@
-import { NextPage } from "next";
+"use client";
+
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
-import { HiOutlineZoomIn, HiOutlineZoomOut, HiX } from "react-icons/hi";
+import { useEffect, useState } from "react";
 
-interface Props {
-  isOpen: boolean;
+type LightboxProps = {
   images: string[];
-  imageIndex?: number;
+  open: boolean;
+  index: number;
   onClose: () => void;
-}
+};
 
-const Lightbox: NextPage<Props> = ({
-  isOpen = false,
-  images = [],
-  imageIndex = 0,
+export default function Lightbox({
+  images,
+  open,
+  index,
   onClose,
-}) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const scrollToIndex = (index: number) => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
-      const width = container.clientWidth;
-      container.scrollTo({ left: width * index, behavior: "instant" });
-    }
-  };
-
-  const scrollNext = () => {
-    if (scrollRef.current) {
-      const width = scrollRef.current.clientWidth;
-      scrollRef.current?.scrollBy({ left: width, behavior: "smooth" });
-      if (currentIndex < images.length - 1)
-        setCurrentIndex((state) => state + 1);
-    }
-  };
-  const scrollPrev = () => {
-    if (scrollRef.current) {
-      const width = scrollRef.current.clientWidth;
-      scrollRef.current?.scrollBy({ left: -width, behavior: "smooth" });
-      if (currentIndex > 0) setCurrentIndex((state) => state - 1);
-    }
-  };
+}: LightboxProps) {
+  const [current, setCurrent] = useState(index);
+  const [startX, setStartX] = useState<number | null>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      setPosition({ x: 0, y: 0 });
-      scrollToIndex(imageIndex);
-      setCurrentIndex(imageIndex);
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
+    if (!open) return;
+
+    setCurrent(index);
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open, index]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+
+      if (e.key === "ArrowLeft") {
+        setCurrent((prev) => Math.max(0, prev - 1));
+      }
+
+      if (e.key === "ArrowRight") {
+        setCurrent((prev) => Math.min(images.length - 1, prev + 1));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, images.length, onClose]);
+
+  if (!open) return null;
+
+  const hasPrev = current > 0;
+  const hasNext = current < images.length - 1;
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    setStartX(e.clientX);
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (startX === null) return;
+
+    const diff = e.clientX - startX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff < 0 && hasNext) {
+        setCurrent((prev) => prev + 1);
+      }
+
+      if (diff > 0 && hasPrev) {
+        setCurrent((prev) => prev - 1);
+      }
     }
-  }, [isOpen, imageIndex]);
 
-  type Zoom = {
-    index: number;
-    zoomed: number;
-  };
-  const [zoomed, setZoomed] = useState<Zoom>({
-    index: 0,
-    zoomed: 0,
-  });
-
-  const handleDoubleTap = (index: number) => {
-    setZoomed((state) => ({
-      ...state,
-      index,
-      zoomed: state.zoomed === 2 ? 0 : state.zoomed + 1,
-    }));
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const [isDragging, setIsDragging] = useState(false);
-  const [startPos, setStartPos] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
-  const [position, setPosition] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (zoomed.zoomed !== 0) {
-      setIsDragging(true);
-      setStartPos({ x: e.clientX - position.x, y: e.clientY - position.y });
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - startPos.x,
-        y: e.clientY - startPos.y,
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
+    setStartX(null);
   };
 
   return (
-    <div
-      onClick={onClose}
-      className={`fixed inset-0 bg-dashboard-dark/70 z-[999] duration-300 transition-all ease-in-out flex justify-center items-center ${
-        isOpen
-          ? "visible opacity-100"
-          : "invisible opacity-0 delay-200 duration-0"
-      }`}
-    >
+    <div className="fixed inset-0 z-[9999] bg-black/95" onClick={onClose}>
+      {/* Image */}
       <div
+        className="absolute inset-0 touch-pan-y"
         onClick={(e) => e.stopPropagation()}
-        className={`relative max-w-5xl w-full ${
-          isOpen
-            ? "opacity-100 translate-y-0 delay-200 duration-100"
-            : "opacity-0 translate-y-4 duration-300"
-        } transition-all ease-in-out transform`}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
       >
-        <div
-          ref={scrollRef}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth w-full h-[100vh] relative"
-        >
-          {images.map((src, i) => {
-            const isZoomed = zoomed.index === i && zoomed.zoomed !== 0;
-            const scale = isZoomed ? zoomed.zoomed * 1.5 : 1;
-            const translate = isZoomed
-              ? `translate(${position.x}px, ${position.y}px)`
-              : "translate(0px, 0px)";
+        <Image
+          src={images[current]}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-contain"
+        />
+      </div>
 
-            return (
-              <div
-                key={i}
-                onDoubleClick={() => handleDoubleTap(i)}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={() => setIsDragging(false)}
-                className={`snap-center min-w-full relative h-full transition-all ease-in-out cursor-${
-                  isZoomed ? (isDragging ? "grabbing" : "grab") : "default"
-                }`}
-                onClick={onClose}
-              >
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 w-full h-full -translate-y-1/2 z-20"
-                />
-                <Image
-                  sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                  quality={100}
-                  fill
-                  src={src}
-                  alt={`image-${i}`}
-                  className="h-full object-contain transition-transform"
-                  style={{
-                    transform: `${translate} scale(${scale})`,
-                    transition: isDragging
-                      ? "none"
-                      : "transform 0.3s ease-in-out",
-                  }}
-                />
-              </div>
-            );
-          })}
+      {/* Close */}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-2xl text-white"
+      >
+        ×
+      </button>
+
+      {/* Previous */}
+      {hasPrev && (
+        <button
+          type="button"
+          aria-label="Previous image"
+          onClick={(e) => {
+            e.stopPropagation();
+            setCurrent((prev) => prev - 1);
+          }}
+          className="absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 text-4xl text-white md:block"
+        >
+          ‹
+        </button>
+      )}
+
+      {/* Next */}
+      {hasNext && (
+        <button
+          type="button"
+          aria-label="Next image"
+          onClick={(e) => {
+            e.stopPropagation();
+            setCurrent((prev) => prev + 1);
+          }}
+          className="absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 text-4xl text-white md:block"
+        >
+          ›
+        </button>
+      )}
+
+      {/* Counter */}
+      {images.length > 1 && (
+        <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 rounded-full bg-black/40 px-3 py-1 text-xs text-white">
+          {current + 1} / {images.length}
         </div>
-      </div>
-      <div
-        className="fixed top-0 right-0 flex"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={() => {
-            setZoomed((state) => ({
-              ...state,
-              index: currentIndex,
-              zoomed: state.zoomed < 2 ? state.zoomed + 1 : 2,
-            }));
-            setPosition({ x: 0, y: 0 });
-          }}
-          className="disabled:pointer-events-none disabled:opacity-50 w-10 md:w-12 flex justify-center items-center aspect-square bg-dashboard-dark/50 hover:bg-dashboard-dark/70 text-white md:text-lg"
-        >
-          <HiOutlineZoomIn />
-        </button>
-        <button
-          onClick={() => {
-            setZoomed((state) => ({
-              ...state,
-              index: currentIndex,
-              zoomed: state.zoomed > 0 ? state.zoomed - 1 : 0,
-            }));
-            setPosition({ x: 0, y: 0 });
-          }}
-          className="disabled:pointer-events-none disabled:opacity-50 w-10 md:w-12 flex justify-center items-center aspect-square bg-dashboard-dark/50 hover:bg-dashboard-dark/70 text-white md:text-lg"
-        >
-          <HiOutlineZoomOut />
-        </button>
-        <button
-          onClick={onClose}
-          className="w-10 md:w-12 flex justify-center items-center aspect-square bg-dashboard-dark/50 hover:bg-dashboard-dark/70 text-white md:text-lg"
-        >
-          <HiX />
-        </button>
-      </div>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          scrollNext();
-        }}
-        className="absolute disabled:pointer-events-none disabled:opacity-50 top-1/2 right-0 md:right-2 transform -translate-y-1/2 bg-dashboard-dark/50 hover:bg-dashboard-dark/70 text-white w-10 md:w-12 flex justify-center items-center text-base md:text-lg aspect-square"
-      >
-        <HiArrowRight />
-      </button>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          scrollPrev();
-        }}
-        className="absolute disabled:pointer-events-none disabled:opacity-50 top-1/ left-0 md:left-2 transform -translate-y-1/2 bg-dashboard-dark/50 hover:bg-dashboard-dark/70 text-white w-10 md:w-12 flex justify-center items-center text-base md:text-lg aspect-square"
-      >
-        <HiArrowLeft />
-      </button>
+      )}
     </div>
   );
-};
-
-export default Lightbox;
+}
