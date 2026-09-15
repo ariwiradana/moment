@@ -1,17 +1,12 @@
 import React, { memo, useMemo, useState, useCallback } from "react";
 import { roboto } from "@/lib/fonts";
 import useClientStore from "@/store/useClientStore";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 import useLightbox from "@/hooks/themes/useLightbox";
-
-const LightboxDynamic = dynamic(() => import("yet-another-react-lightbox"), {
-  ssr: false,
-});
+import FsLightbox from "fslightbox-react";
 
 const GalleryComponent = () => {
   const { client } = useClientStore();
@@ -19,7 +14,7 @@ const GalleryComponent = () => {
 
   const {
     state: { images, imageIndex, isOpen },
-    actions: { handleToggleLightbox, setIsOpen },
+    actions: { handleToggleLightbox },
   } = useLightbox();
 
   const [dragging, setDragging] = useState(false);
@@ -29,7 +24,7 @@ const GalleryComponent = () => {
 
   const participantNames = useMemo(
     () => participants.map((p) => p.nickname).join(" & "),
-    [participants]
+    [participants],
   );
 
   const gridSpan = useCallback((index: number) => {
@@ -51,15 +46,7 @@ const GalleryComponent = () => {
 
   return (
     <>
-      {isOpen && (
-        <LightboxDynamic
-          index={imageIndex}
-          open={isOpen}
-          close={() => setIsOpen(false)}
-          slides={images}
-          plugins={[Zoom]}
-        />
-      )}
+      <FsLightbox toggler={isOpen} sources={images} slide={imageIndex} />
 
       <section
         className="relative bg-aruna-dark overflow-hidden"
@@ -93,10 +80,10 @@ const GalleryComponent = () => {
               <div
                 key={`grid-img-${index}`}
                 className={`${gridSpan(index)} relative overflow-hidden`}
-                onClick={() => handleToggleLightbox(img.src)}
+                onClick={() => handleToggleLightbox(img)}
               >
                 <Image
-                  src={img.src}
+                  src={img}
                   alt={`grid-img-${index + 1}`}
                   fill
                   loading={index < 2 ? "eager" : "lazy"}
@@ -124,11 +111,11 @@ const GalleryComponent = () => {
                     <div
                       className="aspect-square w-full relative"
                       onClick={() => {
-                        if (!dragging) handleToggleLightbox(img.src);
+                        if (!dragging) handleToggleLightbox(img);
                       }}
                     >
                       <Image
-                        src={img.src}
+                        src={img}
                         alt={`slide-img-${index + 1}`}
                         fill
                         loading="lazy"

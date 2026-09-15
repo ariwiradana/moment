@@ -1,10 +1,6 @@
 import useClientStore from "@/store/useClientStore";
 import { useState, useMemo, useCallback, useRef } from "react";
 
-interface Image {
-  src: string;
-}
-
 const useLightbox = () => {
   const { client } = useClientStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -12,20 +8,20 @@ const useLightbox = () => {
   const zoomRef = useRef<HTMLDivElement | null>(null);
 
   // Memoized images array
-  const images: Image[] = useMemo(
+  const images: string[] = useMemo(
     () =>
       (client?.gallery as string[])
         ?.filter((src) => src !== client?.seo) // filter cover
-        .map((src) => ({ src })) ?? [],
-    [client?.gallery, client?.cover],
+        .map((src) => src) ?? [],
+    [client?.gallery, client?.seo],
   );
 
   // Toggle lightbox and set index
   const handleToggleLightbox = useCallback(
     (src: string) => {
-      const index = images.findIndex((img) => img.src === src);
-      if (index !== -1) setImageIndex(index);
-      setIsOpen((prev) => !prev); // toggle tetap aman
+      const index = images.findIndex((img) => img === src);
+      if (index !== -1) setImageIndex(index + 1);
+      setIsOpen((prev) => !prev);
     },
     [images],
   );

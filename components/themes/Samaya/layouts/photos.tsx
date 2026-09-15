@@ -1,30 +1,20 @@
 "use client";
 import React from "react";
 import useLightbox from "@/hooks/themes/useLightbox";
-import Lightbox from "yet-another-react-lightbox";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Image from "next/image";
+import FsLightbox from "fslightbox-react";
 
 const PhotosComponent = () => {
   const {
     state: { images, isOpen, imageIndex },
-    actions: { handleToggleLightbox, setIsOpen },
+    actions: { handleToggleLightbox },
   } = useLightbox();
 
   if (images.length === 0) return null;
 
   return (
     <>
-      {/* --- Lightbox --- */}
-      {isOpen && (
-        <Lightbox
-          index={imageIndex}
-          plugins={[Zoom]}
-          open={isOpen}
-          close={() => setIsOpen(false)}
-          slides={images.map((p) => ({ src: p.src }))}
-        />
-      )}
+      <FsLightbox toggler={isOpen} sources={images} slide={imageIndex} />
 
       <section className="bg-samaya-dark">
         <div className="py-[60px] px-1 md:px-4 md:py-[100px]">
@@ -50,7 +40,7 @@ const PhotosComponent = () => {
             >
               {images.map((img, index) => (
                 <div
-                  onClick={() => handleToggleLightbox(img.src)}
+                  onClick={() => handleToggleLightbox(img)}
                   key={`Foto Galeri ${index + 1} Tema Samaya`}
                   className="relative overflow-hidden group cursor-pointer"
                 >
@@ -60,7 +50,7 @@ const PhotosComponent = () => {
                     priority={index < 3}
                     loading={index < 3 ? "eager" : "lazy"}
                     alt={`Foto Galeri ${index + 1} Tema Samaya`}
-                    src={img.src}
+                    src={img}
                     width={500}
                     height={700}
                     className="w-full h-auto transition-transform duration-500 group-hover:scale-105 bg-white/5"

@@ -19,7 +19,8 @@ import FsLightbox from "fslightbox-react";
 const Photos: NextPage = () => {
   const { client } = useClientStore();
   const {
-    state: { images },
+    state: { images, isOpen, imageIndex },
+    actions: { handleToggleLightbox },
   } = useLightbox();
   const { videos = [], participants = [] } = client || {};
 
@@ -61,24 +62,11 @@ const Photos: NextPage = () => {
     };
   }, [youtubeVideos.length]);
 
-  const [lightboxController, setLightboxController] = useState({
-    toggler: false,
-    slide: 1,
-  });
-
-  function openLightboxOnSlide(number: number) {
-    setLightboxController({
-      toggler: !lightboxController.toggler,
-      slide: number,
-    });
-  }
-
-  const imageList = useMemo(() => images.map((img) => img.src), [images]);
   if (!images || images.length === 0) return null; // ✅ Cegah render jika tidak ada gambar
 
   return (
     <>
-      <FsLightbox toggler={lightboxController.toggler} sources={imageList} />
+      <FsLightbox toggler={isOpen} sources={images} slide={imageIndex} />
 
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-gradient-to-b lg:px-20 from-luma-dark/50 to-luma-dark/80 flex flex-col justify-center items-center">
@@ -144,11 +132,11 @@ const Photos: NextPage = () => {
                 1280: { slidesPerView: 5 },
               }}
             >
-              {imageList.map((src, index) => (
+              {images.map((src, index) => (
                 <SwiperSlide key={index}>
                   <div
                     className="h-full w-full cursor-pointer"
-                    onClick={() => openLightboxOnSlide(index + 1)}
+                    onClick={() => handleToggleLightbox(src)}
                     aria-label={`Buka Lightbox foto ${index + 1}`}
                   >
                     <div className="aspect-square w-full h-full relative">

@@ -2,31 +2,26 @@ import Image from "next/image";
 import React, { useMemo } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Lightbox from "yet-another-react-lightbox";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import useLightbox from "@/hooks/themes/useLightbox";
+import FsLightbox from "fslightbox-react";
 
 const Photos = () => {
   const { state, actions } = useLightbox();
 
   const divide = useMemo(
     () => Math.ceil(state.images.length / 3),
-    [state.images]
+    [state.images],
   );
 
   if (!state.images.length) return null;
 
   return (
     <>
-      {state.isOpen && (
-        <Lightbox
-          index={state.imageIndex}
-          plugins={[Zoom]}
-          open={state.isOpen}
-          close={() => actions.setIsOpen(false)}
-          slides={state.images}
-        />
-      )}
+      <FsLightbox
+        toggler={state.isOpen}
+        sources={state.images}
+        slide={state.imageIndex}
+      />
       <section className="bg-nirvaya-light-brown">
         <div className="max-w-screen-lg mx-auto py-16 md:px-8">
           <div
@@ -54,8 +49,8 @@ const Photos = () => {
                   idx === 0
                     ? "col-span-4 md:col-span-2 row-span-4 aspect-square md:aspect-auto"
                     : idx === 1
-                    ? "col-span-4 md:col-span-2 row-span-2 aspect-square md:aspect-[2/1]"
-                    : "col-span-4 md:col-span-2 row-span-2 aspect-[4/2] md:aspect-[2/1]"
+                      ? "col-span-4 md:col-span-2 row-span-2 aspect-square md:aspect-[2/1]"
+                      : "col-span-4 md:col-span-2 row-span-2 aspect-[4/2] md:aspect-[2/1]"
                 }
               >
                 <Swiper
@@ -72,11 +67,11 @@ const Photos = () => {
                   {state.images
                     .slice(idx * divide, (idx + 1) * divide)
                     .map((img, i) => (
-                      <SwiperSlide key={`Image Part ${idx + 1} ${img.src}`}>
+                      <SwiperSlide key={`Image Part ${idx + 1} ${img}`}>
                         <Image
-                          onClick={() => actions.handleToggleLightbox(img.src)}
+                          onClick={() => actions.handleToggleLightbox(img)}
                           sizes="(max-width: 600px) 480px, (max-width: 1024px) 768px, (max-width: 1440px) 1280px, 1280px"
-                          src={img.src}
+                          src={img}
                           alt={`Image Part ${idx + 1} ${i}`}
                           fill
                           className="object-cover bg-nirvaya-dark/5"
