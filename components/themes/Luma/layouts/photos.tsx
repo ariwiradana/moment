@@ -4,12 +4,12 @@ import useLightbox from "@/hooks/themes/useLightbox";
 import { rubik } from "@/lib/fonts";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Grid, Autoplay } from "swiper/modules";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
+// import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { NextPage } from "next";
 import useClientStore from "@/store/useClientStore";
 import { isYoutubeVideo } from "@/utils/isYoutubeVideo";
@@ -18,15 +18,15 @@ import YoutubeEmbed from "../../youtube.embed";
 import { getParticipantNames } from "@/utils/getParticipantNames";
 
 // ✅ Dynamic import hanya load Lightbox saat dibuka
-const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
-  ssr: false,
-  loading: () => null,
-});
+// const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
+//   ssr: false,
+//   loading: () => null,
+// });
 
 const Photos: NextPage = () => {
   const {
-    state: { images, isOpen, imageIndex },
-    actions: { handleToggleLightbox, setIsOpen },
+    state: { images },
+    actions: { handleToggleLightbox },
   } = useLightbox();
   const { client } = useClientStore();
   const { videos = [], participants = [] } = client || {};
@@ -47,7 +47,7 @@ const Photos: NextPage = () => {
 
   const participantNames = useMemo(
     () => getParticipantNames(participants),
-    [participants]
+    [participants],
   );
 
   // ✅ Resize throttled dan cleanup aman
@@ -69,12 +69,12 @@ const Photos: NextPage = () => {
     };
   }, [youtubeVideos.length]);
 
-  if (!images?.length) return null;
+  // if (!images?.length) return null;
 
   return (
     <>
       {/* ✅ Lightbox hanya dirender saat open */}
-      {isOpen && (
+      {/* {isOpen && (
         <Lightbox
           index={imageIndex}
           plugins={[Zoom]}
@@ -83,7 +83,7 @@ const Photos: NextPage = () => {
           slides={images}
           aria-label={`Galeri foto ${imageIndex + 1} dari ${images.length}`}
         />
-      )}
+      )} */}
 
       <section className="h-dvh snap-start w-full relative">
         <div className="absolute z-20 inset-0 bg-gradient-to-b lg:px-20 from-luma-dark/50 to-luma-dark/80 flex flex-col justify-center items-center">
