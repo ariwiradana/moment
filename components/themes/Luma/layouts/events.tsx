@@ -5,7 +5,7 @@ import { BiCalendarEvent, BiMap, BiTime } from "react-icons/bi";
 import ButtonPrimary from "../elements/button.primary";
 import Link from "next/link";
 import ButtonDark from "../elements/button.dark";
-import { HiArrowLongRight } from "react-icons/hi2";
+import { HiArrowLongRight, HiCalendar } from "react-icons/hi2";
 import { memo } from "react";
 import useClientStore from "@/store/useClientStore";
 
@@ -91,16 +91,24 @@ const Events: NextPage = () => {
                   {event.address}
                 </p>
               </div>
-              <Link
-                href={event.address_url}
-                target="_blank"
-                aria-label={`Petunjuk lokasi ${event.name}`}
-              >
+              <div className="flex gap-3 flex-wrap">
+                <Link
+                  href={event.address_url}
+                  target="_blank"
+                  aria-label={`Petunjuk lokasi ${event.name}`}
+                >
+                  <ButtonPrimary
+                    icon={<HiArrowLongRight />}
+                    title="Petunjuk Lokasi"
+                  />
+                </Link>
+
                 <ButtonPrimary
-                  icon={<HiArrowLongRight />}
-                  title="Petunjuk Lokasi"
+                  icon={<HiCalendar />}
+                  title="Simpan Tanggal"
+                  onClick={() => actions.handleAddToCalendar(event)}
                 />
-              </Link>
+              </div>
             </div>
 
             <div
