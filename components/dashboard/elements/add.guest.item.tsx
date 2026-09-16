@@ -56,12 +56,22 @@ const AddGuestItem = ({
   }
 
   function htmlToText(html: string) {
-    return html
-      .replace(/<\/p>/g, "\n\n")
-      .replace(/<br\s*\/?>/g, "\n")
-      .replace(/<[^>]+>/g, "")
-      .replace(/\n{3,}/g, "\n\n")
-      .trim();
+    return (
+      html
+        // Paragraph
+        .replace(/<\/p>/gi, "\n")
+
+        // Line break
+        .replace(/<br\s*\/?>/gi, "\n")
+
+        // Remove remaining HTML tags
+        .replace(/<[^>]+>/g, "")
+
+        // Cleanup excessive newlines
+        .replace(/\n{3,}/g, "\n\n")
+
+        .trim()
+    );
   }
 
   const handleShare = async () => {
